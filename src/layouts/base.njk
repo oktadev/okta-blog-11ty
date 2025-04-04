@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ meta.lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ meta.title }}</title>
+    {% include "meta.njk" %}
+
+    <style>{% getBundle "css" %}</style>
+
+
+</head>
+<body>
+  <!-- Follow existing for this entire file -->
+  {% include "header.njk" %}
+  <main id="main">
+      {{ content | safe }}
+  </main>
+  {% include "footer.njk" %}
+
+</body>
+
+</html>

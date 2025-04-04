@@ -1,0 +1,96 @@
+import markdownIt from 'markdown-it';
+import markdownItAnchor from 'markdown-it-anchor';
+
+import EleventyPluginNavigation from "@11ty/eleventy-navigation";
+import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
+import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
+import eleventyAsciidoc from "eleventy-plugin-asciidoc";
+import readingTime from "eleventy-plugin-reading-time";
+
+import filters from "./utils/filters.js";
+import transforms from "./utils/transforms.js";
+import shortcodes from "./utils/shortcodes.js";
+
+export default function (eleventyConfig) {
+  // eleventyConfig.setServerPassthroughCopyBehavior("copy");
+  eleventyConfig.addPassthroughCopy("public");
+
+  // Plugins
+  eleventyConfig.addPlugin(EleventyPluginNavigation);
+  eleventyConfig.addPlugin(EleventyPluginRss);
+  eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(eleventyAsciidoc);
+  eleventyConfig.addPlugin(readingTime);
+
+
+  eleventyConfig.addPlugin(EleventyVitePlugin, {
+
+  });
+
+
+  // Filters
+  // Object.keys(filters).forEach((filterName) => {
+  //   eleventyConfig.addFilter(filterName, filters[filterName]);
+  // });
+	eleventyConfig.addPlugin(filters);
+
+  // // Transforms
+  // Object.keys(transforms).forEach((transformName) => {
+  //   eleventyConfig.addTransform(transformName, transforms[transformName]);
+  // });
+
+  // // Shortcodes
+  // Object.keys(shortcodes).forEach((shortcodeName) => {
+  //   eleventyConfig.addShortcode(shortcodeName, shortcodes[shortcodeName]);
+  // });
+
+  // eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
+
+  // Customize Markdown library and settings:
+  // let markdownLibrary = markdownIt({
+  //   html: true,
+  //   breaks: true,
+  //   linkify: true,
+  // }).use(markdownItAnchor, {
+  //   permalink: markdownItAnchor.permalink.ariaHidden({
+  //     placement: "after",
+  //     class: "direct-link",
+  //     symbol: "#",
+  //     level: [1, 2, 3, 4],
+  //   }),
+  //   slugify: eleventyConfig.getFilter("slug"),
+  // });
+  // eleventyConfig.setLibrary("md", markdownLibrary);
+
+  // // Layouts
+  eleventyConfig.addLayoutAlias("base", "base.njk");
+  eleventyConfig.addLayoutAlias("post", "post.njk");
+
+  // // Copy/pass-through files
+  // eleventyConfig.addPassthroughCopy("src/assets/css");
+  // eleventyConfig.addPassthroughCopy("src/assets/js");
+  // Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
+	// Adds the {% css %} paired shortcode
+	eleventyConfig.addBundle("css");
+	// Adds the {% js %} paired shortcode
+	eleventyConfig.addBundle("js", {
+		toFileDirectory: "dist",
+	});
+
+  return {
+    templateFormats: ["md", "njk", "html", "liquid", "11ty.js",
+    ],
+    htmlTemplateEngine: "njk",
+    markdownTemplateEngine: "njk",
+    passthroughFileCopy: true,
+    dir: {
+      input: "src",
+      // better not use "public" as the name of the output folder (see above...)
+      output: "_site",
+      includes: "_includes",
+      layouts: "layouts",
+      data: "_data",
+    },
+  };
+}
