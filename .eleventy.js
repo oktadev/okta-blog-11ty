@@ -1,5 +1,6 @@
 import markdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
+import tailwindcss from '@tailwindcss/vite';
 
 import EleventyPluginNavigation from "@11ty/eleventy-navigation";
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
@@ -25,14 +26,15 @@ export default function (eleventyConfig) {
 
 
   eleventyConfig.addPlugin(EleventyVitePlugin, {
-
+      viteOptions: {
+        plugins: [
+          tailwindcss()
+        ]
+      }
   });
 
 
   // Filters
-  // Object.keys(filters).forEach((filterName) => {
-  //   eleventyConfig.addFilter(filterName, filters[filterName]);
-  // });
 	eleventyConfig.addPlugin(filters);
 
   // // Transforms
@@ -48,20 +50,20 @@ export default function (eleventyConfig) {
   // eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
   // Customize Markdown library and settings:
-  // let markdownLibrary = markdownIt({
-  //   html: true,
-  //   breaks: true,
-  //   linkify: true,
-  // }).use(markdownItAnchor, {
-  //   permalink: markdownItAnchor.permalink.ariaHidden({
-  //     placement: "after",
-  //     class: "direct-link",
-  //     symbol: "#",
-  //     level: [1, 2, 3, 4],
-  //   }),
-  //   slugify: eleventyConfig.getFilter("slug"),
-  // });
-  // eleventyConfig.setLibrary("md", markdownLibrary);
+  let markdownLibrary = markdownIt({
+    html: true,
+    breaks: true,
+    linkify: true,
+  }).use(markdownItAnchor, {
+    permalink: markdownItAnchor.permalink.ariaHidden({
+      placement: "after",
+      class: "direct-link",
+      symbol: "#",
+      level: [1, 2, 3],
+    }),
+    slugify: eleventyConfig.getFilter("slug"),
+  });
+  eleventyConfig.setLibrary("md", markdownLibrary);
 
   // // Layouts
   eleventyConfig.addLayoutAlias("base", "base.njk");

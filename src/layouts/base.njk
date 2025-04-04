@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ meta.title }}</title>
     {% include "meta.njk" %}
-
+    {%- css %}{% include "public/css/index.css" %}{% endcss %}
     <style>{% getBundle "css" %}</style>
 
 
@@ -13,7 +13,7 @@
 <body>
   <!-- Follow existing for this entire file -->
   {% include "header.njk" %}
-  <main id="main">
+  <main>
       {{ content | safe }}
   </main>
   {% include "footer.njk" %}

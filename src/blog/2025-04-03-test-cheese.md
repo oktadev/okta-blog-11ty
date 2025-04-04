@@ -12,13 +12,4 @@ Stinking bishop fromage cheese triangles. Jarlsberg cauliflower cheese cheesecak
 
 Babybel blue castello gouda. Bavarian bergkase mascarpone goat cream cheese st. agur blue cheese who moved my cheese macaroni cheese taleggio. Cheese on toast parmesan mozzarella melted cheese st. agur blue cheese fromage frais halloumi lancashire. Pecorino queso melted cheese who moved my cheese chalk and cheese cheese strings cheesy grin taleggio. Cow taleggio feta brie croque monsieur rubber cheese cheeseburger dolcelatte. Brie jarlsberg cheese and wine camembert de normandie dolcelatte cheese triangles red leicester rubber cheese. The big cheese cheeseburger swiss st. agur blue cheese queso stinking bishop smelly cheese stinking bishop. Fondue mascarpone.
 
-```js
-// this is a command
-function myCommand() {
-	let counter = 0;
-	counter++;
-}
-
-// Test with a line break above this line.
-console.log('Test');
-```
+The end
