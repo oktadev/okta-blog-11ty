@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+
+@theme {
+	--color-okta-carbon: #191919;
+	--color-okta-slate: #6B665F;
+	--color-okta-gravel: #AFABA1;
+  --color-okta-sand: #E8DCC7;
+  --color-okta-cream: #F6F1E7;
+  --color-okta-snow: #FFFEFA;
+  --color-okta-cobalt: #1A31A9;
+  --color-okta-sky: #3F59E4;
+  --color-okta-cloud: #B6C9FF;
+  --color-ocean: #096256;
+  --color-okta-seafoam: #4CB7A3;
+  --color-okta-turquoise: #B1E4DE;
+  --color-okta-white: #fff;
+  --font-okta: "Aeonik", helvetica, arial, sans-serif;
+
+	/* --text-color: var(--color-carbon);
+	--text-color-link: var(--color-carbon);
+  --text-color-hover: var(--color-sky); */
+}
