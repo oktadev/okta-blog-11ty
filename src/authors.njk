@@ -1,0 +1,13 @@
+---
+layout: base
+permalink: /blog/authors/
+eleventyNavigation:
+  key: Authors
+  order: 3
+---
+
+<div class="grid gap-4">
+  <h1>Authors</h1>
+	{% set authorslist = authors %}
+  {% include "authorslist.njk" %}
+</div>

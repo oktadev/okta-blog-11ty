@@ -1,0 +1,10 @@
+<ul class="grid justify-center gap-1 mt-4">
+	{% for key, author in authorslist %}
+		<li>
+			<a href="{{ key }}" class="inline-flex items-center gap-2">
+				{% avatar author.avatar %}
+				<p>{{ author.full_name }}</p>
+			</a>
+		</li>
+	{% endfor %}
+</ul>

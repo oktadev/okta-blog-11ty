@@ -1,6 +1,7 @@
-import markdownIt from 'markdown-it';
-import markdownItAnchor from 'markdown-it-anchor';
-import tailwindcss from '@tailwindcss/vite';
+import markdownIt from "markdown-it";
+import markdownItAnchor from "markdown-it-anchor";
+import tailwindcss from "@tailwindcss/vite";
+import yaml from "js-yaml";
 
 import EleventyPluginNavigation from "@11ty/eleventy-navigation";
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
@@ -15,7 +16,12 @@ import shortcodes from "./utils/shortcodes.js";
 
 export default function (eleventyConfig) {
   // eleventyConfig.setServerPassthroughCopyBehavior("copy");
-  eleventyConfig.addPassthroughCopy("public");
+  eleventyConfig.addPassthroughCopy({
+    "./public/": "/",
+  });
+  eleventyConfig.addPassthroughCopy({
+    "style.out.css": "style.css",
+  });
 
   // Plugins
   eleventyConfig.addPlugin(EleventyPluginNavigation);
@@ -24,30 +30,27 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(eleventyAsciidoc);
   eleventyConfig.addPlugin(readingTime);
 
-
   eleventyConfig.addPlugin(EleventyVitePlugin, {
-      viteOptions: {
-        plugins: [
-          tailwindcss()
-        ]
-      }
+    viteOptions: {
+      plugins: [tailwindcss()],
+    },
   });
 
+  // Data extensions
+  eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));
 
   // Filters
-	eleventyConfig.addPlugin(filters);
+  eleventyConfig.addPlugin(filters);
 
   // // Transforms
   // Object.keys(transforms).forEach((transformName) => {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
   // });
 
-  // // Shortcodes
-  // Object.keys(shortcodes).forEach((shortcodeName) => {
-  //   eleventyConfig.addShortcode(shortcodeName, shortcodes[shortcodeName]);
-  // });
-
-  // eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
+  // Shortcodes
+  eleventyConfig.addNunjucksShortcode("avatar", function (img, size = "small") {
+    return `<img src="/img/${img}" class="w-8 list-none rounded-full" />`;
+  });
 
   // Customize Markdown library and settings:
   let markdownLibrary = markdownIt({
@@ -73,16 +76,15 @@ export default function (eleventyConfig) {
   // eleventyConfig.addPassthroughCopy("src/assets/css");
   // eleventyConfig.addPassthroughCopy("src/assets/js");
   // Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
-	// Adds the {% css %} paired shortcode
-	eleventyConfig.addBundle("css");
-	// Adds the {% js %} paired shortcode
-	eleventyConfig.addBundle("js", {
-		toFileDirectory: "dist",
-	});
+  // Adds the {% css %} paired shortcode
+  eleventyConfig.addBundle("css");
+  // Adds the {% js %} paired shortcode
+  eleventyConfig.addBundle("js", {
+    toFileDirectory: "dist",
+  });
 
   return {
-    templateFormats: ["md", "njk", "html", "liquid", "11ty.js",
-    ],
+    templateFormats: ["md", "njk", "html", "liquid", "11ty.js"],
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
     passthroughFileCopy: true,
