@@ -313,7 +313,7 @@ alex-dahl:
 andrew-hughes:
   full_name: Andrew Hughes
   display_name: Andrew Hughes
-  avatar: avatar-moksamedia.jpg
+  avatar: avatar-moksamedia.jpeg
   github: https://github.com/moksamedia
   twitter: https://twitter.com/oktadev
 
@@ -374,7 +374,7 @@ patrick-mcdowell:
 karl-penzhorn:
   full_name: Karl Penzhorn
   display_name: Karl Penzhorn
-  avatar: avatar-kpenzhorn.jpg
+  avatar: avatar-kpenzhorn.jpeg
 
 david-neal:
   full_name: David Neal
@@ -560,7 +560,7 @@ ivo-katunaric:
 thiago-negri:
   full_name: Thiago Negri
   display_name: Thiago Negri
-  avatar: avatar-thiago-negri.jpg
+  avatar: avatar-thiago-negri.jpeg
   github: https://github.com/thiago-negri
 
 mikel-pascual:
