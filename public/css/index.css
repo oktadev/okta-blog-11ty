@@ -1,23 +1,30 @@
 @import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/preflight.css" layer(base);
 
+@layer base {
+  h1 {
+    font-size: var(--text-3xl);
+  }
+  h2 {
+    font-size: var(--text-2xl);
+  }
+}
 
 @theme {
-	--color-okta-carbon: #191919;
-	--color-okta-slate: #6B665F;
-	--color-okta-gravel: #AFABA1;
-  --color-okta-sand: #E8DCC7;
-  --color-okta-cream: #F6F1E7;
-  --color-okta-snow: #FFFEFA;
-  --color-okta-cobalt: #1A31A9;
-  --color-okta-sky: #3F59E4;
-  --color-okta-cloud: #B6C9FF;
+  --color-okta-carbon: #191919;
+  --color-okta-slate: #6b665f;
+  --color-okta-gravel: #afaba1;
+  --color-okta-sand: #e8dcc7;
+  --color-okta-cream: #f6f1e7;
+  --color-okta-snow: #fffefa;
+  --color-okta-cobalt: #1a31a9;
+  --color-okta-sky: #3f59e4;
+  --color-okta-cloud: #b6c9ff;
   --color-ocean: #096256;
-  --color-okta-seafoam: #4CB7A3;
-  --color-okta-turquoise: #B1E4DE;
+  --color-okta-seafoam: #4cb7a3;
+  --color-okta-turquoise: #b1e4de;
   --color-okta-white: #fff;
   --font-okta: "Aeonik", helvetica, arial, sans-serif;
-
-	/* --text-color: var(--color-carbon);
-	--text-color-link: var(--color-carbon);
-  --text-color-hover: var(--color-sky); */
+  --spacing: 8px;
 }

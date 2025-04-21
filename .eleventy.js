@@ -1,6 +1,6 @@
-import markdownIt from 'markdown-it';
-import markdownItAnchor from 'markdown-it-anchor';
-import tailwindcss from '@tailwindcss/vite';
+import markdownIt from "markdown-it";
+import markdownItAnchor from "markdown-it-anchor";
+import tailwindcss from "@tailwindcss/vite";
 
 import EleventyPluginNavigation from "@11ty/eleventy-navigation";
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
@@ -24,30 +24,24 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(eleventyAsciidoc);
   eleventyConfig.addPlugin(readingTime);
 
-
   eleventyConfig.addPlugin(EleventyVitePlugin, {
-      viteOptions: {
-        plugins: [
-          tailwindcss()
-        ]
-      }
+    viteOptions: {
+      plugins: [tailwindcss()],
+    },
   });
 
-
   // Filters
-	eleventyConfig.addPlugin(filters);
+  eleventyConfig.addPlugin(filters);
 
   // // Transforms
   // Object.keys(transforms).forEach((transformName) => {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
   // });
 
-  // // Shortcodes
-  // Object.keys(shortcodes).forEach((shortcodeName) => {
-  //   eleventyConfig.addShortcode(shortcodeName, shortcodes[shortcodeName]);
-  // });
-
-  // eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
+  // Shortcodes
+  Object.keys(shortcodes).forEach((shortcodeName) => {
+    eleventyConfig.addShortcode(shortcodeName, shortcodes[shortcodeName]);
+  });
 
   // Customize Markdown library and settings:
   let markdownLibrary = markdownIt({
@@ -73,16 +67,15 @@ export default function (eleventyConfig) {
   // eleventyConfig.addPassthroughCopy("src/assets/css");
   // eleventyConfig.addPassthroughCopy("src/assets/js");
   // Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
-	// Adds the {% css %} paired shortcode
-	eleventyConfig.addBundle("css");
-	// Adds the {% js %} paired shortcode
-	eleventyConfig.addBundle("js", {
-		toFileDirectory: "dist",
-	});
+  // Adds the {% css %} paired shortcode
+  eleventyConfig.addBundle("css");
+  // Adds the {% js %} paired shortcode
+  eleventyConfig.addBundle("js", {
+    toFileDirectory: "dist",
+  });
 
   return {
-    templateFormats: ["md", "njk", "html", "liquid", "11ty.js",
-    ],
+    templateFormats: ["md", "njk", "html", "liquid", "11ty.js"],
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
     passthroughFileCopy: true,
