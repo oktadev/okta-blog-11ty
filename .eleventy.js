@@ -2,6 +2,7 @@ import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import tailwindcss from "@tailwindcss/vite";
 import yaml from "js-yaml";
+import slugify from "slugify";
 
 import EleventyPluginNavigation from "@11ty/eleventy-navigation";
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
@@ -45,11 +46,31 @@ export default function (eleventyConfig) {
   // // Transforms
   // Object.keys(transforms).forEach((transformName) => {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
-  // });
 
   // Shortcodes
   eleventyConfig.addNunjucksShortcode("avatar", function (img, size = "small") {
-    return `<img src="/img/${img}" class="w-8 list-none rounded-full" />`;
+    let width;
+
+    switch (size) {
+      case "small":
+        width = 8;
+        break;
+      case "medium":
+        width = 12;
+        break;
+      case "large":
+        width = 16;
+        break;
+    }
+
+    return `<img src="/img/${img}" class="w-${width} list-none rounded-full" />`;
+  });
+
+  eleventyConfig.addFilter("postsAuthorFilter", function (posts, author) {
+    const filtered = posts.filter(
+      (post) => post.data.author == slugify(author).toLowerCase()
+    );
+    return filtered;
   });
 
   // Customize Markdown library and settings:

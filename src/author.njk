@@ -1,0 +1,42 @@
+---
+layout: base
+pagination:
+  data: authors
+  size: 1
+  alias: author
+  resolve: values
+permalink: blog/authors/{{ author.full_name | slugify }}/
+---
+
+<article>
+  {{ collections.posts | log }}
+  {% avatar author.avatar, "large" %}
+  <h2>{{ author.full_name }}</h2>
+  {% if author.bio %}
+    {{ author.bio }}
+  {% endif %}
+  <div>
+    {% if author.github %}
+      {{ author.github }}
+    {% endif %}
+    {% if author.web %}
+      {{ author.web }}
+    {% endif %}
+    {% if author.linkedin %}
+      {{ author.linkedin }}
+    {% endif %}
+    {% if author.email %}
+      {{ author.email }}
+    {% endif %}
+    {% if author.twitter %}
+      {{ author.twitter }}
+    {% endif %}
+  </div>
+  <div>
+    <p>All posts by {{ author.full_name }}</p>
+    <hr>
+    {% for post in collections.posts | postsAuthorFilter(author.full_name) %}
+      {{ post.data.title }}
+    {% endfor %}
+  </div>
+</article>
