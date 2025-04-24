@@ -1,13 +1,13 @@
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import tailwindcss from "@tailwindcss/vite";
+import yaml from "js-yaml";
 
 import EleventyPluginNavigation from "@11ty/eleventy-navigation";
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import eleventyAsciidoc from "eleventy-plugin-asciidoc";
-import readingTime from "eleventy-plugin-reading-time";
 
 import filters from "./utils/filters.js";
 import transforms from "./utils/transforms.js";
@@ -15,14 +15,18 @@ import shortcodes from "./utils/shortcodes.js";
 
 export default function (eleventyConfig) {
   // eleventyConfig.setServerPassthroughCopyBehavior("copy");
-  eleventyConfig.addPassthroughCopy("public");
+  eleventyConfig.addPassthroughCopy({
+    "./public/": "/",
+  });
+  eleventyConfig.addPassthroughCopy({
+    "style.out.css": "style.css",
+  });
 
   // Plugins
   eleventyConfig.addPlugin(EleventyPluginNavigation);
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyAsciidoc);
-  eleventyConfig.addPlugin(readingTime);
 
   eleventyConfig.addPlugin(EleventyVitePlugin, {
     viteOptions: {
@@ -30,13 +34,15 @@ export default function (eleventyConfig) {
     },
   });
 
+  // Data extensions
+  eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));
+
   // Filters
   eleventyConfig.addPlugin(filters);
 
   // // Transforms
   // Object.keys(transforms).forEach((transformName) => {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
-  // });
 
   // Shortcodes
   Object.keys(shortcodes).forEach((shortcodeName) => {
