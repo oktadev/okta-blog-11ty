@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import slugify from "slugify";
 
 export default function(eleventyConfig) {
 
@@ -11,4 +12,11 @@ export default function(eleventyConfig) {
 		// Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
 		return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(format || "dd LLLL yyyy");
 	});
+
+  eleventyConfig.addFilter("postsAuthorFilter", function (posts, author) {
+    const filtered = posts.filter(
+      (post) => post.data.author == slugify(author).toLowerCase()
+    );
+    return filtered;
+  });
 }
