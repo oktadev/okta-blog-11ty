@@ -14,7 +14,7 @@ const avatar = (img, size = "small") => {
 
   switch (size) {
     case "small":
-      width = 8;
+      width = 5;
       break;
     case "medium":
       width = 12;

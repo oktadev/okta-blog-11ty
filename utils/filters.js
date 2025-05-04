@@ -20,4 +20,12 @@ export default function (eleventyConfig) {
     );
     return filtered;
   });
+
+  eleventyConfig.addFilter("authorFilter", function (authors, author) {
+    const filteredAuthor = Object.entries(authors).find(
+      ([key, value]) => key === author
+    );
+
+    return filteredAuthor[1];
+  });
 }
