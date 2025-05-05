@@ -10,7 +10,6 @@ import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import eleventyAsciidoc from "eleventy-plugin-asciidoc";
 
 import filters from "./utils/filters.js";
-import transforms from "./utils/transforms.js";
 import shortcodes from "./utils/shortcodes.js";
 
 export default function (eleventyConfig) {
