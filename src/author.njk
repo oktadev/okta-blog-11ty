@@ -8,9 +8,7 @@ pagination:
 permalink: blog/authors/{{ author.full_name | slugify }}/
 ---
 
-<article>
-  {{ collections.posts | log }}
-  {% avatar author.avatar, "large" %}
+<div class="container m-w-128">
   <h2>{{ author.full_name }}</h2>
   {% if author.bio %}
     {{ author.bio }}
@@ -39,4 +37,4 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
       {{ post.data.title }}
     {% endfor %}
   </div>
-</article>
+</div>

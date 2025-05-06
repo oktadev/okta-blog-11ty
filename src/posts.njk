@@ -1,13 +1,12 @@
 ---
 layout: base
-permalink: /posts/
+permalink: blog/posts/
 eleventyNavigation:
   key: Posts
   order: 2
 ---
 
-<div class="grid gap-4">
-    <h1>Posts</h1>
+<div class="container m-auto m-w-128">
     {% set postslist = collections.posts %}
     {% include "postslist.njk" %}
 </div>

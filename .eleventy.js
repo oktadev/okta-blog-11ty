@@ -8,10 +8,8 @@ import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import eleventyAsciidoc from "eleventy-plugin-asciidoc";
-import readingTime from "eleventy-plugin-reading-time";
 
 import filters from "./utils/filters.js";
-import transforms from "./utils/transforms.js";
 import shortcodes from "./utils/shortcodes.js";
 
 export default function (eleventyConfig) {
@@ -28,7 +26,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyAsciidoc);
-  eleventyConfig.addPlugin(readingTime);
 
   eleventyConfig.addPlugin(EleventyVitePlugin, {
     viteOptions: {
@@ -47,7 +44,9 @@ export default function (eleventyConfig) {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
 
   // Shortcodes
-  eleventyConfig.addPlugin(shortcodes);
+  Object.keys(shortcodes).forEach((shortcodeName) => {
+    eleventyConfig.addShortcode(shortcodeName, shortcodes[shortcodeName]);
+  });
 
   // Customize Markdown library and settings:
   let markdownLibrary = markdownIt({
