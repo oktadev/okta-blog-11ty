@@ -1,0 +1,21 @@
+---
+layout: base
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+permalink: blog/tags/{{ tag | slugify }}/
+---
+
+<div>
+	<ul>
+		{% for postByTag in collections | postsByTagFilter(tag) %}
+		<li>
+			<a href="{{ postByTag.url }}">{% if postByTag.data.title %}{{ postByTag.data.title }}{% else %}<code>{{ postByTag.url }}</code>{% endif %}</a>
+			<time datetime="{{ postByTag.date | htmlDateString }}">{{ postByTag.date | readableDate("LLLL yyyy") }}</time>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{# TODO: Gabi - make post preview component #}

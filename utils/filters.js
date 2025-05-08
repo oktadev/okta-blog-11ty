@@ -28,4 +28,22 @@ export default function (eleventyConfig) {
 
     return filteredAuthor[1];
   });
+
+  eleventyConfig.addFilter("allTagsFilter", function (collections) {
+    const filteredTags = Object.keys(collections).filter(
+      (key) => key !== "all" && key !== "posts"
+    );
+
+    return filteredTags.sort();
+  });
+
+  eleventyConfig.addFilter("postsByTagFilter", function (collections, tag) {
+    const filteredPosts = Object.entries(collections).filter(([key, value]) => {
+      if (key === tag) {
+        return value;
+      }
+    });
+
+    return Object.fromEntries(filteredPosts)[tag];
+  });
 }
