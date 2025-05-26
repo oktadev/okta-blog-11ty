@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 const READING_SPEED = 300;
 
 const readingTime = (content) => {
@@ -27,7 +29,33 @@ const avatar = (img, size = "small") => {
   return `<img src="/img/${img}" class="w-${width} list-none rounded-full" />`;
 };
 
+const postsListItem = (post, author) => {
+  console.log(post.data.author);
+  if (post && post.data && author) {
+    return `<li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
+    <div class="grid gap-1">
+      <a href="${post.url}"><h2>${
+      post.data.title ? post.data.title : `<code>${post.url}</code>`
+    }</h2></a>
+      <div class="flex gap-1 items-center">
+        ${avatar(author.avatar)} |
+        <time datetime="${DateTime.fromJSDate(post.date, {
+          zone: "utc",
+        }).toFormat("yyyy-LL-dd")}">
+          ${DateTime.fromJSDate(post.date, { zone: "utc" }).toFormat(
+            "dd LLLL yyyy"
+          )}
+        </time> |
+        <p>${readingTime(post.content)}</p>
+      </div>
+    </div>
+    ${post.data.description ? `<div>${post.data.description}</div>` : ""}
+        </li>`;
+  }
+};
+
 export default {
   readingTime: (content) => readingTime(content),
   avatar: (img, size) => avatar(img, size),
+  postsListItem: (post, author) => postsListItem(post, author),
 };

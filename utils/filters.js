@@ -36,14 +36,4 @@ export default function (eleventyConfig) {
 
     return filteredTags.sort();
   });
-
-  eleventyConfig.addFilter("postsByTagFilter", function (collections, tag) {
-    const filteredPosts = Object.entries(collections).filter(([key, value]) => {
-      if (key === tag) {
-        return value;
-      }
-    });
-
-    return Object.fromEntries(filteredPosts)[tag];
-  });
 }

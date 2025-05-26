@@ -9,13 +9,11 @@ permalink: blog/tags/{{ tag | slugify }}/
 
 <div>
 	<ul>
-		{% for postByTag in collections | postsByTagFilter(tag) %}
-		<li>
-			<a href="{{ postByTag.url }}">{% if postByTag.data.title %}{{ postByTag.data.title }}{% else %}<code>{{ postByTag.url }}</code>{% endif %}</a>
-			<time datetime="{{ postByTag.date | htmlDateString }}">{{ postByTag.date | readableDate("LLLL yyyy") }}</time>
-		</li>
+		{% for post in collections.posts %}
+      {%- set author = authors | authorFilter(post.data.author) %}
+      {% if (post.data.tags) and (post.data.tags.includes(tag)) %}
+        {% postsListItem post, author %}
+      {% endif %}
 		{% endfor %}
 	</ul>
 </div>
-
-{# TODO: Gabi - make post preview component #}
