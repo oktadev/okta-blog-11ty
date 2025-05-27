@@ -35,7 +35,7 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
     <p>All posts by {{ author.full_name }}</p>
     <hr>
     {% for post in collections.posts | postsAuthorFilter(author.full_name) %}
-      {{ post.data.title }}
+      {% postsListItem post, author %}
     {% endfor %}
   </div>
 </div>
