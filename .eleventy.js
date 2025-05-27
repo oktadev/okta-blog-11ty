@@ -45,7 +45,10 @@ export default function (eleventyConfig) {
 
   // Shortcodes
   Object.keys(shortcodes).forEach((shortcodeName) => {
-    eleventyConfig.addShortcode(shortcodeName, shortcodes[shortcodeName]);
+    eleventyConfig.addNunjucksShortcode(
+      shortcodeName,
+      shortcodes[shortcodeName]
+    );
   });
 
   // Customize Markdown library and settings:

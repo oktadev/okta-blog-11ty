@@ -1,18 +1,8 @@
-<ol reversed class="flex flex-col justify-center m-auto max-w-125">
+<ol reversed class="flex flex-col justify-center m-auto max-w-128">
   {%- for post in postslist | reverse %}
     {%- set author = authors | authorFilter(post.data.author) %}
-    <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
-      <div class="grid gap-1">
-        <a href="{{ post.url }}"><h2>{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</h2></a>
-        <div class="flex gap-1 items-center">
-          {% avatar author.avatar, "small" %}|
-          <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time> |
-          <p>{% readingTime post.content %}</p>
-        </div>
-      </div>
-      <div>
-        {{ post.data.description}}
-      </div>
-    </li>
+    {% if author %}
+      {% postsListItem post, author %}
+    {% endif %}
   {%- endfor %}
 </ol>

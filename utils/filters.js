@@ -28,4 +28,12 @@ export default function (eleventyConfig) {
 
     return filteredAuthor[1];
   });
+
+  eleventyConfig.addFilter("allTagsFilter", function (collections) {
+    const filteredTags = Object.keys(collections).filter(
+      (key) => key !== "all" && key !== "posts"
+    );
+
+    return filteredTags.sort();
+  });
 }

@@ -1,0 +1,13 @@
+---
+layout: base
+permalink: /blog/tags/
+---
+
+<div class="grid gap-4 max-w-128">
+  <h1>Tags</h1>
+	<div class="grid justify-center gap-1">
+		{% for tag in collections | allTagsFilter() %}
+			<a href="{{ tag }}/">{{ tag }}</a>
+		{% endfor %}
+	</div>
+</div>

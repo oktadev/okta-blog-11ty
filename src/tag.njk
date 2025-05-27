@@ -1,0 +1,19 @@
+---
+layout: base
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+permalink: blog/tags/{{ tag | slugify }}/
+---
+
+<div>
+	<ul>
+		{% for post in collections.posts %}
+      {%- set author = authors | authorFilter(post.data.author) %}
+      {% if (post.data.tags) and (post.data.tags.includes(tag)) %}
+        {% postsListItem post, author %}
+      {% endif %}
+		{% endfor %}
+	</ul>
+</div>

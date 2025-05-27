@@ -9,6 +9,7 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
 ---
 
 <div class="container m-w-128">
+  {% avatar author.avatar, "large" %}
   <h2>{{ author.full_name }}</h2>
   {% if author.bio %}
     {{ author.bio }}
@@ -34,7 +35,7 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
     <p>All posts by {{ author.full_name }}</p>
     <hr>
     {% for post in collections.posts | postsAuthorFilter(author.full_name) %}
-      {{ post.data.title }}
+      {% postsListItem post, author %}
     {% endfor %}
   </div>
 </div>
