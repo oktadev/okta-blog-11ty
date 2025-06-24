@@ -8,6 +8,7 @@ import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import eleventyAsciidoc from "eleventy-plugin-asciidoc";
+import pluginTOC from "eleventy-plugin-toc";
 
 import filters from "./utils/filters.js";
 import shortcodes from "./utils/shortcodes.js";
@@ -26,6 +27,11 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyAsciidoc);
+
+  eleventyConfig.addPlugin(pluginTOC, {
+    tags: ["h2", "h3"],
+    wrapper: "div",
+  });
 
   eleventyConfig.addPlugin(EleventyVitePlugin, {
     viteOptions: {
