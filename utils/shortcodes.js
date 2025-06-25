@@ -56,8 +56,19 @@ const postsListItem = (post, author) => {
   }
 };
 
+const youtube = (url, t, w, h) => {
+  const videoUrl = new URL(url);
+  const id = videoUrl.searchParams.get("v");
+  const width = w || 560;
+  const height = h || 315;
+  const title = t || "YouTube video player";
+
+  return `<div class="grid justify-center m-4"><iframe width=${width} height=${height} src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
+};
+
 export default {
   readingTime: (content) => readingTime(content),
   avatar: (img, size) => avatar(img, size),
   postsListItem: (post, author) => postsListItem(post, author),
+  youtube: (id) => youtube(id),
 };
