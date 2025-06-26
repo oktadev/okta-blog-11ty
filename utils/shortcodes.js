@@ -56,9 +56,7 @@ const postsListItem = (post, author) => {
   }
 };
 
-const youtube = (url, t, w, h) => {
-  const videoUrl = new URL(url);
-  const id = videoUrl.searchParams.get("v");
+const youtube = (id, t, w, h) => {
   const width = w || 560;
   const height = h || 315;
   const title = t || "YouTube video player";
