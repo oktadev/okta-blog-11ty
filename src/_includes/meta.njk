@@ -1,3 +1,14 @@
-{% set absolutePageUrl %}{{ page.url | url | absoluteUrl(meta.url) }}{% endset %}
+<meta name="description" content="{{ description | default(page.description | default('')) }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="https://developer.okta.com/feed.xml">
 
-{# Follow existing blog format #}
+<link rel="canonical" href="{{ absolutePageUrl | toAbsoluteUrl }}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ absolutePageUrl | toAbsoluteUrl }}" />
+<meta property="og:title" content="{{ title }}" />
+{% if description %}
+  <meta property="og:description" content="{{ description }}" />
+{% endif %}
+{% if image %}
+  <meta property="og:image" content="{{ image | toAbsoluteUrl }}" />
+{% endif %}
+<meta property="og:site_name" content="{{ site.title }}" />
