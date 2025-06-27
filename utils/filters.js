@@ -36,4 +36,31 @@ export default function (eleventyConfig) {
 
     return filteredTags.sort();
   });
+
+  eleventyConfig.addFilter("toAbsoluteUrl", (url) => {
+    return new URL(url, "https://developer.okta.com").href;
+  });
+
+  eleventyConfig.addFilter("toBlogUrl", (url) => {
+    return new URL(url, "https://developer.okta.com").href;
+  });
+
+  eleventyConfig.addFilter("postBySlug", function (posts, slug) {
+    const filtered = posts.find((post) => post.fileSlug === slug);
+
+    return filtered;
+  });
+
+  // eleventyConfig.addFilter("toAbsoluteBlogImageUrl", async () => {
+  //   const imageOptions = {
+  //     widths: [width],
+  //     formats: [null],
+  //     outputDir: "_site/img/blog",
+  //     urlPath: "public/img/blog",
+  //   };
+  //   const stats = await Image(src, imageOptions);
+  //   const imageUrl = Object.values(stats)[0][0].url;
+
+  //   return toAbsoluteUrl(imageUrl);
+  // });
 }
