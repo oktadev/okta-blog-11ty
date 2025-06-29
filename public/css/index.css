@@ -9,6 +9,16 @@
   h2 {
     font-size: var(--text-2xl);
   }
+  a {
+    color: #1662dd;
+    transition: 0.4s color;
+    text-decoration: none;
+
+    &:hover {
+      color: #3b7eeb;
+      text-decoration: underline;
+    }
+  }
 }
 
 @theme {
