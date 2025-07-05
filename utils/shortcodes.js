@@ -64,9 +64,14 @@ const youtube = (id, t, w, h) => {
   return `<div class="grid justify-center m-4"><iframe width=${width} height=${height} src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
 };
 
+const pluginLink = () => {
+  return `<a href="https://github.com/oktadev/okta-maven-plugin" target="_blank" rel="noopener noreferrer">Okta Maven Plugin</a>`;
+};
+
 export default {
   readingTime: (content) => readingTime(content),
   avatar: (img, size) => avatar(img, size),
   postsListItem: (post, author) => postsListItem(post, author),
   youtube: (id) => youtube(id),
+  pluginLink: () => pluginLink(),
 };
