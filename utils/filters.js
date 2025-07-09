@@ -41,6 +41,16 @@ export default function (eleventyConfig) {
     return new URL(url, "https://developer.okta.com").href;
   });
 
+  eleventyConfig.addFilter("toBlogUrl", (url) => {
+    return new URL(url, "https://developer.okta.com").href;
+  });
+
+  eleventyConfig.addFilter("postBySlug", function (posts, slug) {
+    const filtered = posts.find((post) => post.fileSlug === slug);
+
+    return filtered;
+  });
+
   // eleventyConfig.addFilter("toAbsoluteBlogImageUrl", async () => {
   //   const imageOptions = {
   //     widths: [width],
