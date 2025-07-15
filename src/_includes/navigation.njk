@@ -1,6 +1,6 @@
 <nav>
   {# Nav Links stubbed in but should match current layout #}
-  <ul class="nav__menu">
+  <ul class="nav__menu flex flex-row justify-around">
     {% for item in collections.all | eleventyNavigation %}
     {% if item.url %}
     {% set isCurrent = (item.url == page.url) %}
