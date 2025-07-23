@@ -8,10 +8,10 @@ import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import eleventyAsciidoc from "eleventy-plugin-asciidoc";
-import svgSprite from "eleventy-plugin-svg-sprite";
 
 import filters from "./utils/filters.js";
 import shortcodes from "./utils/shortcodes.js";
+import shortcodesAsync from "./utils/shortcodes-async.js";
 
 export default function (eleventyConfig) {
   // eleventyConfig.setServerPassthroughCopyBehavior("copy");
@@ -27,9 +27,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyAsciidoc);
-  eleventyConfig.addPlugin(svgSprite, {
-    path: "./public/img",
-  });
 
   eleventyConfig.addPlugin(EleventyVitePlugin, {
     viteOptions: {
@@ -52,6 +49,13 @@ export default function (eleventyConfig) {
     eleventyConfig.addNunjucksShortcode(
       shortcodeName,
       shortcodes[shortcodeName]
+    );
+  });
+  // Shortcodes - Async
+  Object.keys(shortcodesAsync).forEach((shortcodeName) => {
+    eleventyConfig.addNunjucksAsyncShortcode(
+      shortcodeName,
+      shortcodesAsync[shortcodeName]
     );
   });
 
