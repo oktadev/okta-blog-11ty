@@ -8,8 +8,5 @@ layout: base
     {% if description %}
       <p class="description">{{ description }}</p>
     {% endif %}
-    {% if toc %}
-      {% include 'toc.njk' %}
-    {% endif %}
     {{ content | safe }}
 </article>
