@@ -71,7 +71,6 @@ export default function (eleventyConfig) {
     .use(markdownItAttrs)
     .use(markdownItToc, {
       includeLevel: [1, 2],
-      containerHeaderHtml: "<h1>Table of Contents</h1>",
       listType: "ul",
     });
   eleventyConfig.setLibrary("md", markdownLibrary);
