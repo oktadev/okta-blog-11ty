@@ -18,6 +18,20 @@
       color: #3b7eeb;
       text-decoration: underline;
     }
+
+  p {
+    padding: var(--spacing);
+  }
+}
+
+@layer components {
+  code,
+  pre {
+    font-family: var(--default-mono-font-family);
+    background-color: var(--color-okta-snow);
+    padding: var(--spacing);
+    margin: var(--spacing) 0;
+    white-space: pre-wrap;
   }
 }
 
