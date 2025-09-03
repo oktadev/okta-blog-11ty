@@ -1,7 +1,7 @@
 import Image from "@11ty/eleventy-img";
 
 const svgIcon = async function (src, alt, widths = [30], sizes = "") {
-  const x = await Image(`./public/img/${src}.svg`, {
+  return await Image(`./public/img/${src}.svg`, {
     widths,
     formats: ["svg"],
     outputDir: "_site/img/",
@@ -15,9 +15,6 @@ const svgIcon = async function (src, alt, widths = [30], sizes = "") {
       },
     },
   });
-
-  console.log({ x });
-  return x;
 };
 
 export default {
