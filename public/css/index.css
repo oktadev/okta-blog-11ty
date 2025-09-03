@@ -19,8 +19,9 @@
       text-decoration: underline;
     }
 
-  p {
-    padding: var(--spacing);
+    p {
+      padding: var(--spacing);
+    }
   }
 }
 
