@@ -13,6 +13,7 @@ import eleventyAsciidoc from "eleventy-plugin-asciidoc";
 
 import filters from "./utils/filters.js";
 import shortcodes from "./utils/shortcodes.js";
+import shortcodesAsync from "./utils/shortcodes-async.js";
 
 export default function (eleventyConfig) {
   // eleventyConfig.setServerPassthroughCopyBehavior("copy");
@@ -50,6 +51,13 @@ export default function (eleventyConfig) {
     eleventyConfig.addNunjucksShortcode(
       shortcodeName,
       shortcodes[shortcodeName]
+    );
+  });
+  // Shortcodes - Async
+  Object.keys(shortcodesAsync).forEach((shortcodeName) => {
+    eleventyConfig.addNunjucksAsyncShortcode(
+      shortcodeName,
+      shortcodesAsync[shortcodeName]
     );
   });
 
