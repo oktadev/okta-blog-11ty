@@ -23,6 +23,17 @@ export default function (eleventyConfig) {
     "style.out.css": "style.css",
   });
 
+  // Pre Processor
+  eleventyConfig.addPreprocessor(
+    "macro-inject",
+    ".njk,.md",
+    (data, content) => {
+      return (
+        `{% import "src/_macros/index.njk" as macro with context %}\n` + content
+      );
+    }
+  );
+
   // Plugins
   eleventyConfig.addPlugin(EleventyPluginNavigation);
   eleventyConfig.addPlugin(EleventyPluginRss);
