@@ -26,7 +26,7 @@ const avatar = (img, size = "small") => {
       break;
   }
 
-  return `<img src="/img/${img}" class="w-${width} list-none rounded-full" />`;
+  return `<img src="/img/avatar/${img}" class="w-${width} list-none rounded-full" alt="${img}" />`;
 };
 
 const postsListItem = (post, author) => {
@@ -68,5 +68,5 @@ export default {
   readingTime: (content) => readingTime(content),
   avatar: (img, size) => avatar(img, size),
   postsListItem: (post, author) => postsListItem(post, author),
-  youtube: (id) => youtube(id),
+  youtube: (id, t, w, h) => youtube(id, t, w, h),
 };

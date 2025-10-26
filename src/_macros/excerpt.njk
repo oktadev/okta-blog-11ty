@@ -1,0 +1,6 @@
+{% set post = collections.posts | postBySlug(params.slug) %}
+{% if post %}
+  {% if post.title %}
+    {{ post.title | safe }}
+  {% endif %}
+{% endif %}

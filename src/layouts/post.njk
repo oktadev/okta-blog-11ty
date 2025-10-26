@@ -3,10 +3,15 @@ layout: base
 ---
 {% css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %}
 
-<article>
+<article class="flex flex-col max-w-[1000] m-auto">
     <h1>{{ title }}</h1>
-    {% if description %}
-      <p class="description">{{ description }}</p>
+    {% if image %}
+      {% img image, "" %}
     {% endif %}
-    {{ content | safe }}
+    <div>
+      {% if description %}
+        <p class="description">{{ description }}</p>
+      {% endif %}
+      {{ content | safe }}
+    </div>
 </article>
