@@ -39,8 +39,13 @@ const postsListItem = (post, author) => {
               ${post.data.title ? post.data.title : `<code>${post.url}</code>`}
             </h2>
           </a>
-          <div class="flex gap-1 items-center">
-            ${avatar(author.avatar)} |
+          <div class="flex gap-2 items-center">
+          <a href="/authors/${
+            author.slug
+          }/" class="inline-flex items-center gap-1">
+            ${avatar(author.avatar)} ${author.display_name}
+          </a>
+            |
             <time datetime="${DateTime.fromJSDate(post.date, {
               zone: "utc",
             }).toFormat("yyyy-LL-dd")}">
@@ -51,7 +56,8 @@ const postsListItem = (post, author) => {
             <p>${readingTime(post.content)}</p>
           </div>
         </div>
-        ${post.data.description ? `<div>${post.data.description}</div>` : ""}
+        ${post.data.description ? `<p>${post.data.description}</p>` : ""}
+        <a href="${post.url}">Read more</a>
       </li>`;
   }
 };
