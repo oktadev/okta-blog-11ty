@@ -1,0 +1,1 @@
+find ./src/blog/posts -name '*.md' -exec sed -i '' -e ':a' -e 'N' -e '$!ba' -e 's/layout: blog_post\n//g' -e 's/* Table of Contents\n{:toc}/[[toc]]/g' -e 's/* Table of Contents\n{% include toc.md %}/[[toc]]/g' -e 's/image: blog\//image: /g' -e 's/{% /{%- /g' -e 's/ %}/ -%}/g' -e 's/{%- capture/{%- set/g' -e 's/{%- endcapture/{%- endset/g' {} \;
