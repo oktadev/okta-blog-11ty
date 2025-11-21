@@ -313,7 +313,7 @@ alex-dahl:
 andrew-hughes:
   full_name: Andrew Hughes
   display_name: Andrew Hughes
-  avatar: avatar-moksamedia.jpeg
+  avatar: avatar-moksamedia.jpg
   github: https://github.com/moksamedia
   twitter: https://twitter.com/oktadev
 
@@ -374,7 +374,7 @@ patrick-mcdowell:
 karl-penzhorn:
   full_name: Karl Penzhorn
   display_name: Karl Penzhorn
-  avatar: avatar-kpenzhorn.jpeg
+  avatar: avatar-kpenzhorn.jpg
 
 david-neal:
   full_name: David Neal
@@ -560,7 +560,7 @@ ivo-katunaric:
 thiago-negri:
   full_name: Thiago Negri
   display_name: Thiago Negri
-  avatar: avatar-thiago-negri.jpeg
+  avatar: avatar-thiago-negri.jpg
   github: https://github.com/thiago-negri
 
 mikel-pascual:
@@ -731,7 +731,7 @@ cale-switzer:
   github: https://github.com/Tennyx
   linkedin: https://www.linkedin.com/in/cale-switzer-380a8630
 
-e-dunham:
+edunham:
   full_name: E. Dunham
   display_name: E. Dunham
   avatar: avatar-edunham.jpg
@@ -980,3 +980,39 @@ nesh-popovic:
   avatar: avatar-nesh-popovic.jpeg
   linkedin: https://www.linkedin.com/in/nesh-popovi%C4%87-219aa11/
   bio: As a Developer and Solutions Engineer for the past 20+ years, I've been involved in developing and selling secure and robust software solutions. When not helping my sales team deal with the complexities of software platforms, you can usually find me playing pickleball, basketball or backgammon.
+
+akanksha-bhasin:
+  full_name: Akanksha Bhasin
+  display_name: Akanksha Bhasin
+  avatar: avatar-akanksha-bhasin.jpeg
+  linkedin: https://www.linkedin.com/in/akankshabhasin
+  github: https://github.com/akankshabhasin
+  twitter: https://twitter.com/Akii_20
+  bio: Akanksha has a developer background and experience building global developer communities. She has given talks on various technologies, hosted large-scale events and hackathons, advocated for developers, and fostered partnerships and open-source initiatives. Outside work, she loves dancing and traveling; you'll often find her capturing serene skies through her phone.
+
+sohail-pathan:
+  full_name: Sohail Pathan
+  display_name: Sohail Pathan
+  avatar: avatar-sohail-pathan.jpeg
+  linkedin: https://www.linkedin.com/in/iamspathan
+  github: https://github.com/iamspathan
+  twitter: https://twitter.com/iamspathan
+  bio: Sohail is a Senior Developer Advocate at Okta with roots in mobile app development and hands-on experience designing, building, and publishing APIs. Now, he helps developers secure their apps by turning complex OAuth and API topics into clear, actionable guides. When he's not coding or speaking at conferences, you'll find him on a quest for the perfect plate of biryani.
+
+emmanuel-folaranmi:
+  full_name: Emmanuel Folaranmi
+  display_name: Emmanuel Folaranmi
+  avatar: avatar-emmanuel-folaranmi.jpg
+  bio: Emmanuel is a software engineer @toptal. He enjoys trying out and learning new technologies and has written articles on a small number of topics. In his free time he learns the guitar and plays video games.
+
+darko-spasovski:
+  full_name: Darko Spasovski
+  display_name: Darko Spasovski
+  avatar: avatar-darko-spasovski.jpeg
+
+swetha-selvanayagam:
+  full_name: Swetha Selvanayagam
+  display_name: Swetha Selvanayagam
+  avatar: avatar-swetha-selvanayagam.jpeg
+  linkedin: https://www.linkedin.com/in/swetha-selvanayagam
+  bio: Swetha is a Product Manager at Okta who takes care of Developer Products such as the Terraform Provider, SDKs & the Okta MCP server. She's always curious about the latest technologies and enjoys building customer experiences around them. Outside of work, she is a big movie buff, who loves making & watching movies.

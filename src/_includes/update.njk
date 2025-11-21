@@ -7,7 +7,7 @@
   </p>
   {% set post = collections.posts | postBySlug(updated.slug) %}
   <p class="text-green-800">For an updated version of this blog post, {% if post.data.title %}see {% endif -%}
-    <a class="font-bold" href="{{ post.url | toBlogUrl }}">
+    <a class="font-bold" href="{{ post.url | toAbsoluteUrl}}">
       {% if post.data.title %}{{ post.data.title }}</a>.
         {% else %}click here</a>.
       {% endif %}

@@ -2,7 +2,9 @@
 	{% for key, author in authorslist|dictsort|sort(attribute='author.full_name') %}
 		<li>
 			<a href="{{ key }}/" class="inline-flex items-center gap-2">
-				{% avatar author.avatar %}
+				{% if author.avatar %}
+          {% avatar author.avatar %}
+        {% endif %}
 				<p>{{ author.full_name }}</p>
 			</a>
 		</li>

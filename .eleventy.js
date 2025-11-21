@@ -28,7 +28,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPreprocessor(
     "macro-inject",
     ".njk,.md",
-    (data, content) => {
+    (_data, content) => {
       return (
         `{% import "src/_macros/index.njk" as macro with context %}\n` + content
       );
