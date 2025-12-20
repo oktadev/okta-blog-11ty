@@ -70,9 +70,30 @@ const youtube = (id, t, w, h) => {
   return `<div class="grid justify-center m-4"><iframe width=${width} height=${height} src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
 };
 
+const excerpt = (stemPath, excerpts) => {
+  const post = excerpts.find((p) => p.fileSlug === stemPath);
+
+  if (post) {
+    return `
+      <div class="flex-col border-2 border-solid">
+        <a href="${post.url}">${post.title}</a>
+        <p>${post.description}</p>
+        <div class="flex items-center gap-1">
+          <p>${avatar(post.author.avatar)}</p>
+          <a href="/blog/authors/${post.author.slug}/">${
+      post.author.display_name
+    }</a>
+        </div>
+      </div>`;
+  }
+
+  return "BLOG EXCERPT NOT FOUND";
+};
+
 export default {
   readingTime: (content) => readingTime(content),
   avatar: (img, size) => avatar(img, size),
   postsListItem: (post, author) => postsListItem(post, author),
-  youtube: (id, t, w, h) => youtube(id, t, w, h),
+  youtube: (id) => youtube(id),
+  excerpt: (stemPath, excerpts) => excerpt(stemPath, excerpts),
 };

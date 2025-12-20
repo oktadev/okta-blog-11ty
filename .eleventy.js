@@ -57,14 +57,39 @@ export default function (eleventyConfig) {
   // Object.keys(transforms).forEach((transformName) => {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
 
+  let excerpts = [];
+
+  // Collections
+  eleventyConfig.addCollection("excerpts", function (collectionApi) {
+    excerpts = collectionApi.getFilteredByTag("posts").map((post) => {
+      const author = post.data.authors[post.data.author];
+
+      return {
+        fileSlug: post.fileSlug,
+        url: post.url,
+        title: post.data.title,
+        description: post.data.description,
+        author: { ...author, slug: post.data.author },
+      };
+    });
+
+    return excerpts;
+  });
+
   // Shortcodes
   Object.keys(shortcodes).forEach((shortcodeName) => {
-    eleventyConfig.addNunjucksShortcode(
-      shortcodeName,
-      shortcodes[shortcodeName]
-    );
+    if (shortcodeName === "excerpt") {
+      eleventyConfig.addNunjucksShortcode(shortcodeName, function (stemPath) {
+        return shortcodes[shortcodeName](stemPath, excerpts);
+      });
+    } else {
+      eleventyConfig.addNunjucksShortcode(
+        shortcodeName,
+        shortcodes[shortcodeName]
+      );
+    }
   });
-  // Shortcodes - Async
+
   Object.keys(shortcodesAsync).forEach((shortcodeName) => {
     eleventyConfig.addNunjucksAsyncShortcode(
       shortcodeName,
