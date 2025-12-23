@@ -9,7 +9,9 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
 ---
 
 <div class="container m-w-128">
-  {% avatar author.avatar, "large" %}
+  {% if author.avatar%}
+    {% avatar author.avatar, "large" %}
+  {% endif %}
   <h2>{{ author.full_name }}</h2>
   {% if author.bio %}
     {{ author.bio }}

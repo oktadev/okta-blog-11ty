@@ -23,25 +23,21 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("authorFilter", function (authors, author) {
     const filteredAuthor = Object.entries(authors).find(
-      ([key, value]) => key === author
+      ([key]) => key === author
     );
 
     return filteredAuthor[1];
   });
 
   eleventyConfig.addFilter("allTagsFilter", function (collections) {
-    const filteredTags = Object.keys(collections).filter(
-      (key) => key !== "all" && key !== "posts"
-    );
+    const filteredTags = Object.keys(collections).filter((key) => {
+      return key !== "all" && key !== "posts" && key;
+    });
 
     return filteredTags.sort();
   });
 
   eleventyConfig.addFilter("toAbsoluteUrl", (url) => {
-    return new URL(url, "https://developer.okta.com").href;
-  });
-
-  eleventyConfig.addFilter("toBlogUrl", (url) => {
     return new URL(url, "https://developer.okta.com").href;
   });
 
