@@ -84,7 +84,7 @@ export SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET="{clientSec
 
 {% endif %} {% endif %}
 
-{%- set jhipsterDocs = 'https://www.jhipster.tech/security/#okta' -%} {%- set tokenDocs = 'https://developer.okta.com/docs/guides/create-an-api-token/create-the-token/' -%} {%- set oktaDocs -%} https://developer.okta.com/docs/guides/sign-into- {%- if params.type == "native" -%}mobile {%- else -%}{{ params.type }} {%- endif -%} {%- if params.type != "spa" -%}-app/{% else %}/{%- endif -%} {%- if params.framework -%} {%- if "Spring Boot" in params.framework -%}springboot {%- elif "ASP.NET Core" in params.framework -%}aspnetcore3 {%- else -%}{{params.framework.replace(' ','-') | downcase}} {%- endif -%} {%- else -%}- {%- endif -%} /create-okta-application/ {%- endset -%}
+{%- set jhipsterDocs = 'https://www.jhipster.tech/security/#okta' -%} {%- set tokenDocs = 'https://developer.okta.com/docs/guides/create-an-api-token/create-the-token/' -%} {%- set oktaDocs -%} https://developer.okta.com/docs/guides/sign-into- {%- if params.type == "native" -%}mobile {%- else -%}{{ params.type }} {%- endif -%} {%- if params.type != "spa" -%}-app/{% else %}/{%- endif -%} {%- if params.framework -%} {%- if "Spring Boot" in params.framework -%}springboot {%- elif "ASP.NET Core" in params.framework -%}aspnetcore3 {%- else -%}{{params.framework.replace(' ','-') | lower }} {%- endif -%} {%- else -%}- {%- endif -%} /create-okta-application/ {%- endset -%}
 
 {%- if params.type == "service" -%} {%- set oktaDocs = 'https://developer.okta.com/docs/guides/implement-oauth-for-okta-serviceapp/overview/' %} {%- endif -%}
 

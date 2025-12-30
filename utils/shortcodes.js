@@ -29,35 +29,42 @@ const avatar = (img, size = "small") => {
   return `<img src="/img/avatar/${img}" class="w-${width} list-none rounded-full" alt="${img}" />`;
 };
 
-const postsListItem = (post, author) => {
-  if (post && post.data && author) {
+const postsListItem = (post, authorsList) => {
+  if (post && post.data && authorsList) {
+    const authorsHtml = Object.values(authorsList)
+      .map((author) => {
+        return `<a href="/authors/${
+          author.slug
+        }/" class="inline-flex items-center gap-1">${avatar(author.avatar)} ${
+          author.display_name
+        }</a>`;
+      })
+      .filter(Boolean)
+      .join("");
+
     return `
       <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
-        <div class="grid gap-1">
-          <a href="${post.url}">
-            <h2>
-              ${post.data.title ? post.data.title : `<code>${post.url}</code>`}
-            </h2>
-          </a>
-          <div class="flex gap-2 items-center">
-          <a href="/authors/${
-            author.slug
-          }/" class="inline-flex items-center gap-1">
-            ${avatar(author.avatar)} ${author.display_name}
-          </a>
-            |
-            <time datetime="${DateTime.fromJSDate(post.date, {
-              zone: "utc",
-            }).toFormat("yyyy-LL-dd")}">
-              ${DateTime.fromJSDate(post.date, { zone: "utc" }).toFormat(
-                "dd LLLL yyyy"
-              )}
-            </time> |
-            <p>${readingTime(post.content)}</p>
-          </div>
+      <div class="grid gap-1">
+        <a href="${post.url}">
+        <h2>
+          ${post.data.title ? post.data.title : `<code>${post.url}</code>`}
+        </h2>
+        </a>
+        <div class="flex gap-1 items-center">
+        ${authorsHtml}
+        |
+        <time datetime="${DateTime.fromJSDate(post.date, {
+          zone: "utc",
+        }).toFormat("yyyy-LL-dd")}">
+          ${DateTime.fromJSDate(post.date, { zone: "utc" }).toFormat(
+            "dd LLLL yyyy"
+          )}
+        </time> |
+        <p>${readingTime(post.content)}</p>
         </div>
-        ${post.data.description ? `<p>${post.data.description}</p>` : ""}
-        <a href="${post.url}">Read more</a>
+      </div>
+      ${post.data.description ? `<p>${post.data.description}</p>` : ""}
+      <a href="${post.url}">Read more</a>
       </li>`;
   }
 };

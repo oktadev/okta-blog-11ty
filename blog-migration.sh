@@ -1,1 +1,24 @@
-find ./src/blog/posts -name '*.md' -exec sed -i '' -e ':a' -e 'N' -e '$!ba' -e 's/layout: blog_post\n//g' -e 's/* Table of Contents\n{:toc}/[[toc]]/g' -e 's/* Table of Contents\n{% include toc.md %}/[[toc]]/g' -e 's/image: blog\//image: /g' -e 's/{%- capture/{%- set/g' -e 's/{%- endcapture/{%- endset/g' -e 's/{%- img \([^ ]*\) alt:"\([^"]*\)" width:"\([^"]*\)" -%}/{%- img "\1", "\2", "\3" -%}/g' -e 's/{%- include setup\/integrator\.md \(.*\) -%}/{{ macro.integrator({\1}) }}/g' -e 's/\([a-zA-Z][a-zA-Z]*\)="\([^"]*\)"/\1: "\2"/g' -e 's/" \([a-zA-Z][a-zA-Z]*\): "/", \1: "/g' -e 's/{% /{%- /g' -e 's/ %}/ -%}/g' -e 's/{%- comment -%} *\(.*\) *{%- endcomment -%}/{#\1#}/g' {} \;
+find ./src/blog/posts -name '*.md' -exec sed -i '' \
+  -e ':a' -e 'N' -e '$!ba' \
+  -e 's/layout: blog_post\n//g' \
+  -e 's/ markdown: "[^"]*"//g' \
+  -e 's/ class: "[^"]*"//g' \
+  -e 's/ *class:="" "no_toc"=""//g' \
+  -e 's/{%- /{% /g' \
+  -e 's/ -%}/ %}/g' \
+  -e 's/* Table of Contents\n{:toc}/[[toc]]/g' \
+  -e 's/* Table of Contents\n{% include toc.md %}/[[toc]]/g' \
+  -e 's/{% include toc.md %}/[[toc]]/g' \
+  -e 's/image: blog\//image: /g' \
+  -e 's/{% capture/{% set/g' \
+  -e 's/{% endcapture/{% endset/g' \
+  -e 's/{% img blog\/\([^ ]*\) alt:"\([^"]*\)" width:"\([^"]*\)" %}/{% img "\1", "\2", "\3" %}/g' \
+  -e 's/{% include setup\/integrator\.md \([^%]*\) %}/{{ macro.integrator({\1}) }}/g' \
+  -e 's/{% include setup\/cli\.md \([^%]*\) %}/{{ macro.cli({\1}) }}/g' \
+  -e 's/\([a-zA-Z][a-zA-Z]*\)="\([^"]*\)"/\1: "\2"/g' \
+  -e 's/" \([a-zA-Z][a-zA-Z]*\): "/", \1: "/g' \
+  -e 's/{% comment %}/{#/g' \
+  -e 's/{% endcomment %}/#}/g' \
+  -e 's/{% include integrator-org-warning.html %}/{% include "integrator-org-warning.njk" %}/g' \
+  -e 's/<\([a-zA-Z][a-zA-Z0-9]*\)[^>]*=""[^>]*>/<\1>/g' \
+  {} \;

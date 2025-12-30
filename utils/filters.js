@@ -21,12 +21,12 @@ export default function (eleventyConfig) {
     return filtered;
   });
 
-  eleventyConfig.addFilter("authorFilter", function (authors, author) {
-    const filteredAuthor = Object.entries(authors).find(
-      ([key]) => key === author
-    );
+  eleventyConfig.addFilter("authorFilter", function (authorsList, authors) {
+    const authorsArray = Array.isArray(authors) ? authors : [authors];
 
-    return filteredAuthor[1];
+    return authorsArray.map((authorKey) => {
+      return authorsList[authorKey];
+    });
   });
 
   eleventyConfig.addFilter("allTagsFilter", function (collections) {

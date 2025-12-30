@@ -1,8 +1,8 @@
 <ol reversed class="flex flex-col justify-center m-auto max-w-128">
   {%- for post in postslist | reverse %}
-    {%- set author = authors | authorFilter(post.data.author) %}
-    {% if author %}
-      {% postsListItem post, author %}
+    {%- set authorsList = authors | authorFilter(post.data.author) %}
+    {% if authorsList %}
+      {% postsListItem post, authorsList %}
     {% endif %}
   {%- endfor %}
 </ol>
