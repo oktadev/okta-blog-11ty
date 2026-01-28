@@ -40,7 +40,7 @@ const img = async function (
   alt,
   header = false,
   widths = [100, 300, 600, 1000],
-  sizes = ""
+  sizes = "",
 ) {
   const imgAttributes = header
     ? {
@@ -79,7 +79,7 @@ const img = async function (
     } else if (imageSrc.includes(".jpeg")) {
       image = await processImage(imageSrc, ["jpeg"]);
     } else {
-      image = await processImage(imageSrc, ["webp", "png"]);
+      image = await processImage(imageSrc, ["webp", "png", "gif"]);
     }
   } catch (error) {
     // If file not found, try alternate jpg/jpeg extension

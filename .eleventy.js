@@ -32,7 +32,7 @@ export default function (eleventyConfig) {
       return (
         `{% import "src/_macros/index.njk" as macro with context %}\n` + content
       );
-    }
+    },
   );
 
   // Plugins
@@ -57,18 +57,25 @@ export default function (eleventyConfig) {
   // Object.keys(transforms).forEach((transformName) => {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
 
+  let postsCollection = [];
+  eleventyConfig.addCollection("posts", (collectionApi) => {
+    postsCollection = collectionApi.getFilteredByGlob(
+      "./src/blog/posts/**/*.md",
+    );
+    return postsCollection;
+  });
+
   // Shortcodes
   Object.keys(shortcodes).forEach((shortcodeName) => {
-    eleventyConfig.addNunjucksShortcode(
-      shortcodeName,
-      shortcodes[shortcodeName]
+    eleventyConfig.addNunjucksShortcode(shortcodeName, (...args) =>
+      shortcodes[shortcodeName](...args, postsCollection),
     );
   });
   // Shortcodes - Async
   Object.keys(shortcodesAsync).forEach((shortcodeName) => {
     eleventyConfig.addNunjucksAsyncShortcode(
       shortcodeName,
-      shortcodesAsync[shortcodeName]
+      shortcodesAsync[shortcodeName],
     );
   });
 
