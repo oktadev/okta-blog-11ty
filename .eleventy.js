@@ -71,7 +71,7 @@ export default function (eleventyConfig) {
       shortcodes[shortcodeName](...args, postsCollection),
     );
   });
-  // Shortcodes - Async
+
   Object.keys(shortcodesAsync).forEach((shortcodeName) => {
     eleventyConfig.addNunjucksAsyncShortcode(
       shortcodeName,
