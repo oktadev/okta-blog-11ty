@@ -4,7 +4,7 @@ const svgIcon = async function (src, alt, widths = [30], sizes = "") {
   return await Image(`./public/img/${src}.svg`, {
     widths,
     formats: ["svg"],
-    // outputDir: "_site/public/img/",
+    outputDir: "_site/img/",
     returnType: "html", // new in v6.0
     htmlOptions: {
       imgAttributes: {
@@ -21,7 +21,8 @@ const svg = async function (src, alt, widths = [30], sizes = "") {
   return await Image(`./public/img/blog/${src}.svg`, {
     widths,
     formats: ["svg"],
-    // outputDir: "_site/public/img/",
+    outputDir: "_site/img/blog/",
+    urlPath: "_site/img/blog/",
     returnType: "html", // new in v6.0
     htmlOptions: {
       imgAttributes: {
@@ -59,7 +60,10 @@ const img = async function (
 
   return await Image(`./public/img/blog/${src}`, {
     widths,
+    formats: ["webp", "jpeg", "png", "jpg"],
     returnType: "html",
+    outputDir: `_site/img/blog/${src}`,
+    urlPath: `/img/blog/${src}`,
     htmlOptions: {
       imgAttributes,
     },
