@@ -18,9 +18,6 @@ import shortcodesAsync from "./utils/shortcodes-async.js";
 export default function (eleventyConfig) {
   // eleventyConfig.setServerPassthroughCopyBehavior("copy");
   eleventyConfig.addPassthroughCopy({
-    "./public/": "/",
-  });
-  eleventyConfig.addPassthroughCopy({
     "style.out.css": "style.css",
   });
 

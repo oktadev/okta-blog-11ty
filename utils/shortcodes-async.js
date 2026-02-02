@@ -4,7 +4,7 @@ const svgIcon = async function (src, alt, widths = [30], sizes = "") {
   return await Image(`./public/img/${src}.svg`, {
     widths,
     formats: ["svg"],
-    outputDir: "_site/img/",
+    // outputDir: "_site/public/img/",
     returnType: "html", // new in v6.0
     htmlOptions: {
       imgAttributes: {
@@ -18,10 +18,10 @@ const svgIcon = async function (src, alt, widths = [30], sizes = "") {
 };
 
 const svg = async function (src, alt, widths = [30], sizes = "") {
-  return await Image(`./public/img/${src}.svg`, {
+  return await Image(`./public/img/blog/${src}.svg`, {
     widths,
     formats: ["svg"],
-    outputDir: "_site/public/img/",
+    // outputDir: "_site/public/img/",
     returnType: "html", // new in v6.0
     htmlOptions: {
       imgAttributes: {
@@ -57,48 +57,13 @@ const img = async function (
         decoding: "async",
       };
 
-  let imageSrc = `./public/img/blog/${src}`;
-
-  let image;
-
-  const processImage = async (src, formats) => {
-    return await Image(src, {
-      widths,
-      formats,
-      outputDir: "_site/public/img/blog",
-      returnType: "html",
-      htmlOptions: {
-        imgAttributes,
-      },
-    });
-  };
-
-  try {
-    if (imageSrc.includes(".jpg")) {
-      image = await processImage(imageSrc, ["jpg"]);
-    } else if (imageSrc.includes(".jpeg")) {
-      image = await processImage(imageSrc, ["jpeg"]);
-    } else {
-      image = await processImage(imageSrc, ["webp", "png", "gif"]);
-    }
-  } catch (error) {
-    // If file not found, try alternate jpg/jpeg extension
-    if (error.code === "ENOENT") {
-      if (imageSrc.includes(".jpeg")) {
-        const newImageSrc = imageSrc.replace(".jpeg", ".jpg");
-        image = await processImage(newImageSrc, ["jpg"]);
-      } else if (imageSrc.includes(".jpg")) {
-        const newImageSrc = imageSrc.replace(".jpg", ".jpeg");
-        image = await processImage(newImageSrc, ["jpeg"]);
-      } else {
-        throw error;
-      }
-    } else {
-      throw error;
-    }
-  }
-
-  return image;
+  return await Image(`./public/img/blog/${src}`, {
+    widths,
+    returnType: "html",
+    htmlOptions: {
+      imgAttributes,
+    },
+  });
 };
 
 export default {
