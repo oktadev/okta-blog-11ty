@@ -10,23 +10,23 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("readableDate", (dateObj, format, zone) => {
     // Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
     return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(
-      format || "dd LLLL yyyy"
+      format || "dd LLLL yyyy",
     );
   });
 
   eleventyConfig.addFilter("postsAuthorFilter", function (posts, author) {
     const filtered = posts.filter(
-      (post) => post.data.author == slugify(author).toLowerCase()
+      (post) => post.data.author == slugify(author).toLowerCase(),
     );
     return filtered;
   });
 
-  eleventyConfig.addFilter("authorFilter", function (authors, author) {
-    const filteredAuthor = Object.entries(authors).find(
-      ([key]) => key === author
-    );
+  eleventyConfig.addFilter("authorFilter", function (authorsList, authors) {
+    const authorsArray = Array.isArray(authors) ? authors : [authors];
 
-    return filteredAuthor[1];
+    return authorsArray.map((authorKey) => {
+      return authorsList[authorKey];
+    });
   });
 
   eleventyConfig.addFilter("allTagsFilter", function (collections) {

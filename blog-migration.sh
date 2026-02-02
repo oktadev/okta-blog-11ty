@@ -1,0 +1,38 @@
+find ./src/blog/posts -name '*.md' -exec sed -i '' \
+  -e ':a' -e 'N' -e '$!ba' \
+  -e 's/layout: blog_post[[:space:]]*\n//' \
+  -e '/^$/d' \
+  -e 's/ "no_toc"=""//g' \
+  -e 's/{%- /{% /g' \
+  -e 's/ -%}/ %}/g' \
+  -e 's/* Table of Contents\n{:toc}/[[toc]]/g' \
+  -e 's/* Table of Contents\n{% include toc.md %}/[[toc]]/g' \
+  -e 's/{% include toc.md %}/[[toc]]/g' \
+  -e 's/{% capture/{% set/g' \
+  -e 's/{% endcapture/{% endset/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *alt:"\([^"]*\)" *width:"\([^"]*\)" *%}/{% img "\1", "\2", "\3" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *width:"\([^"]*\)" *alt:"\([^"]*\)" *%}/{% img "\1", "\3", "\2" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *alt:"\([^"]*\)" *height:"\([^"]*\)" *width:"\([^"]*\)" *%}/{% img "\1", "\2", "\4" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *alt:"\([^"]*\)" *width:"\([^"]*\)" *height:"\([^"]*\)" *%}/{% img "\1", "\2", "\3" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *width:"\([^"]*\)" *alt:"\([^"]*\)" *height:"\([^"]*\)" *%}/{% img "\1", "\3", "\2" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *width:"\([^"]*\)" *height:"\([^"]*\)" *alt:"\([^"]*\)" *%}/{% img "\1", "\4", "\2" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *height:"\([^"]*\)" *alt:"\([^"]*\)" *width:"\([^"]*\)" *%}/{% img "\1", "\3", "\4" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *height:"\([^"]*\)" *width:"\([^"]*\)" *alt:"\([^"]*\)" *%}/{% img "\1", "\4", "\3" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *alt:"\([^"]*\)" *height:"\([^"]*\)" *%}/{% img "\1", "\2" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *height:"\([^"]*\)" *alt:"\([^"]*\)" *%}/{% img "\1", "\3" %}/g' \
+  -e 's/{% *img *blog\/\([^ ]*\) *alt:"\([^"]*\)" *%}/{% img "\1", "\2" %}/g' \
+  -e 's/{: \.center-image }//g' \
+  -e 's/{% include setup\/integrator\.md \([^%]*\) %}/{{ macro.integrator({\1}) }}/g' \
+  -e 's/{% include setup\/cli\.md \([^%]*\) %}/{{ macro.cli({\1}) }}/g' \
+  -e 's/\([a-zA-Z][a-zA-Z]*\)="\([^"]*\)"/\1: "\2"/g' \
+  -e 's/" \([a-zA-Z][a-zA-Z]*\): "/", \1: "/g' \
+  -e 's/{% comment %}/{#/g' \
+  -e 's/{% endcomment %}/#}/g' \
+  -e 's/{% include integrator-org-warning.html %}/{% include "integrator-org-warning.njk" %}/g' \
+  -e 's/<\([a-zA-Z][a-zA-Z0-9]*\)[^>]*=""[^>]*>/<\1>/g' \
+  -e 's/{% include setup\/oidcdebugger\.md %}/{{ macro.oidcdebugger() }}/g' \
+  -e 's/{% *speakerdeck *\([a-zA-Z0-9]*\) *\([0-9]*\)px *%}/{% speakerdeck "\1", \2 %}/g' \
+  -e 's/<\([a-zA-Z][a-zA-Z0-9]*\) style: /<\1 style=/g' \
+  -e 's/{% *excerpt *[^ ]*\/\([^ ]*\) *%}/{% excerpt "\1" %}/g' \
+  {} \;
+

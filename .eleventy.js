@@ -17,10 +17,7 @@ import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
 
 export default function (eleventyConfig) {
-  // eleventyConfig.setServerPassthroughCopyBehavior("copy");
-  eleventyConfig.addPassthroughCopy({
-    "./public/": "/",
-  });
+  eleventyConfig.setServerPassthroughCopyBehavior("copy");
   eleventyConfig.addPassthroughCopy({
     "style.out.css": "style.css",
   });
@@ -59,37 +56,19 @@ export default function (eleventyConfig) {
   // Object.keys(transforms).forEach((transformName) => {
   //   eleventyConfig.addTransform(transformName, transforms[transformName]);
 
-  let excerpts = [];
-
-  // Collections
-  eleventyConfig.addCollection("excerpts", function (collectionApi) {
-    excerpts = collectionApi.getFilteredByTag("posts").map((post) => {
-      const author = post.data.authors[post.data.author];
-
-      return {
-        fileSlug: post.fileSlug,
-        url: post.url,
-        title: post.data.title,
-        description: post.data.description,
-        author: { ...author, slug: post.data.author },
-      };
-    });
-
-    return excerpts;
+  let postsCollection = [];
+  eleventyConfig.addCollection("posts", (collectionApi) => {
+    postsCollection = collectionApi.getFilteredByGlob(
+      "./src/blog/posts/**/*.md",
+    );
+    return postsCollection;
   });
 
   // Shortcodes
   Object.keys(shortcodes).forEach((shortcodeName) => {
-    if (shortcodeName === "excerpt") {
-      eleventyConfig.addNunjucksShortcode(shortcodeName, function (stemPath) {
-        return shortcodes[shortcodeName](stemPath, excerpts);
-      });
-    } else {
-      eleventyConfig.addNunjucksShortcode(
-        shortcodeName,
-        shortcodes[shortcodeName],
-      );
-    }
+    eleventyConfig.addNunjucksShortcode(shortcodeName, (...args) =>
+      shortcodes[shortcodeName](...args, postsCollection),
+    );
   });
 
   Object.keys(shortcodesAsync).forEach((shortcodeName) => {
