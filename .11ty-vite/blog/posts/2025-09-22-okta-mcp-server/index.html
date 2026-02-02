@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Introducing the Okta MCP Server</title>
+  <meta name="description" content="Learn how the Okta MCP Server connects AI agents to Okta APIs, enabling secure automation of identity and access management tasks.">
+<link rel="alternate" type="application/rss+xml" title="Okta Developer Blog" href="https://developer.okta.com/feed.xml">
+
+<link rel="canonical" href="https://developer.okta.com/undefined">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://developer.okta.com/undefined">
+<meta property="og:title" content="Introducing the Okta MCP Server">
+
+  <meta property="og:description" content="Learn how the Okta MCP Server connects AI agents to Okta APIs, enabling secure automation of identity and access management tasks.">
+
+
+  <meta property="og:image" content="https://developer.okta.com/okta-mcp-server/okta-mcp-server-social-image.jpeg">
+
+<meta property="og:site_name" content="Okta Developer Blog">
+
+  
+  <style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+@import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/preflight.css" layer(base);
+
+@layer base {
+  h1 {
+    font-size: var(--text-3xl);
+  }
+  h2 {
+    font-size: var(--text-2xl);
+  }
+  a {
+    color: #1662dd;
+    transition: 0.4s color;
+    text-decoration: none;
+
+    &:hover {
+      color: #3b7eeb;
+      text-decoration: underline;
+    }
+  }
+  p {
+    padding: var(--spacing);
+  }
+  ol {
+    padding-left: 20px;
+    list-style-type: decimal;
+  }
+  blockquote {
+    border-left: 4px solid var(--color-okta-sand);
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: var(--spacing);
+    color: var(--color-okta-carbon);
+    font-style: italic;
+    background-color: var(--color-okta-cream);
+  }
+}
+
+@layer components {
+  code,
+  pre {
+    font-family: var(--default-mono-font-family);
+    background-color: var(--color-okta-snow);
+    padding: var(--spacing);
+    margin: var(--spacing) 0;
+    white-space: pre-wrap;
+  }
+
+  .center-image {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@theme {
+  --color-okta-carbon: #191919;
+  --color-okta-slate: #6b665f;
+  --color-okta-gravel: #afaba1;
+  --color-okta-sand: #e8dcc7;
+  --color-okta-cream: #f6f1e7;
+  --color-okta-snow: #fffefa;
+  --color-okta-cobalt: #1a31a9;
+  --color-okta-sky: #3f59e4;
+  --color-okta-cloud: #b6c9ff;
+  --color-ocean: #096256;
+  --color-okta-seafoam: #4cb7a3;
+  --color-okta-turquoise: #b1e4de;
+  --color-okta-white: #fff;
+  --font-okta: "Aeonik", helvetica, arial, sans-serif;
+  --spacing: 8px;
+}</style>
+</head>
+<body class="bg-okta-white font-okta text-okta-carbon">
+  <!-- Follow existing for this entire file -->
+  <header>
+  <nav>
+  
+  <ul class="nav__menu">
+    
+    
+    
+    
+    <li class="nav__item nav__item--active">
+      <a class="nav__link" href="/blog/">
+        Home
+      </a>
+    </li>
+    
+    
+    
+    
+    
+    <li class="nav__item nav__item--active">
+      <a class="nav__link" href="/blog/posts/">
+        Posts
+      </a>
+    </li>
+    
+    
+    
+    
+    
+    <li class="nav__item">
+      <a class="nav__link" href="/blog/authors/">
+        Authors
+      </a>
+    </li>
+    
+    
+  </ul>
+</nav>
+
+</header>
+
+  <div class="relative bg-okta-seafoam text-okta-white display-flex z-50 py-2 px-3">
+  <p>
+    <span class="inline-block mb-[-12px] pr-1.5"><img alt="megaphone" loading="lazy" decoding="async" src="/img/7SsPrbIWBe-26.svg" width="26" height="32"></span>
+  Integrator Free Plan available! Existing Okta Developer Edition orgs will
+  be deactivated starting July 18, 2025. Sign up for the Integrator Free Plan
+  to continue building and integrating. Learn more on the
+    <a href="/blog/2025/05/13/okta-developer-edition-changes">Okta Developer blog</a>
+  </p>
+</div>
+
+  <main class="mt-12 mb-28 mx-4 m-auto">
+      
+
+<article class="flex flex-col max-w-[1000] m-auto">
+    <h1>Introducing the Okta MCP Server</h1>
+    
+      <picture><source type="image/webp" srcset="/img/GxIzcccou4-100.webp 100w, /img/GxIzcccou4-300.webp 300w, /img/GxIzcccou4-600.webp 600w, /img/GxIzcccou4-1000.webp 1000w" sizes="auto"><img alt="" loading="lazy" decoding="async" src="/img/GxIzcccou4-100.jpeg" width="1000" height="523" srcset="/img/GxIzcccou4-100.jpeg 100w, /img/GxIzcccou4-300.jpeg 300w, /img/GxIzcccou4-600.jpeg 600w, /img/GxIzcccou4-1000.jpeg 1000w" sizes="auto"></picture>
+    
+    <div>
+      
+        <p class="description">Learn how the Okta MCP Server connects AI agents to Okta APIs, enabling secure automation of identity and access management tasks.</p>
+      
+      <p>As AI agents and AI threats proliferate at an unprecedented rate, it becomes imperative to enable them to communicate safely with the backend systems that matter the most.</p>
+<p>A Model Context Protocol (MCP) server acts as the bridge between an LLM and an external system. It translates natural language intent into structured API calls, enabling agents to perform tasks like provisioning users, managing groups, or pulling reports, all while respecting the system's security model. Establishing a universal protocol eliminates the need to build custom integrations. Enterprises can now easily connect their AI agents with Okta's backend systems to achieve automation of complex chains of activities, quick resolution of issues, and increased performance throughput.</p>
+<p><strong :="" class="hide">Table of Contents</strong></p>
+<div class="table-of-contents"><ul><li><a href="#what-the-okta-mcp-server-brings">What the Okta MCP Server brings </a></li><li><a href="#tools-and-capabilities">Tools and capabilities </a></li><li><a href="#highlights-at-a-glance">Highlights at a glance </a></li><li><a href="#getting-started-with-the-okta-mcp-server">Getting started with the Okta MCP Server </a></li><li><a href="#using-the-okta-mcp-server-with-vs-code">Using the Okta MCP Server with VS Code </a></li><li><a href="#examples-in-action">Examples in action </a></li><li><a href="#read-more-about-cross-app-access-oauth-2.0-and-securing-your-applications">Read more about Cross App Access, OAuth 2.0, and securing your applications </a></li></ul></div>
+<h2 id="what-the-okta-mcp-server-brings" tabindex="-1">What the Okta MCP Server brings <a class="direct-link" href="#what-the-okta-mcp-server-brings" aria-hidden="true">#</a></h2>
+<p>The Okta MCP Server brings this capability to your identity and access management workflows. It connects directly to Okta's Admin Management APIs, giving your LLM agents the ability to safely automate organization management.</p>
+<p>Think of it as unlocking a new interface for Okta, one where you can ask an agent:</p>
+<ul>
+<li>&quot;Add this new employee to the engineering group.&quot;</li>
+<li>&quot;Generate a report of inactive users in the last 90 days.&quot;</li>
+<li>&quot;Deactivate all users who tried to log in within the last 30 minutes.&quot;</li>
+</ul>
+<h2 id="tools-and-capabilities" tabindex="-1">Tools and capabilities <a class="direct-link" href="#tools-and-capabilities" aria-hidden="true">#</a></h2>
+<p>In its current form, the server allows the following actions:</p>
+<ul>
+<li><strong>User Management</strong>: Create, list, retrieve, update, and deactivate users.</li>
+<li><strong>Group Management</strong>: Create, list, retrieve, update, and delete groups.</li>
+<li><strong>Group Operations</strong>: View assigned members, view assigned applications, add, and remove users.</li>
+<li><strong>System Information</strong>: Retrieve Okta system logs.</li>
+</ul>
+<p>And many more actions with <strong>application and policies APIs</strong> as well.</p>
+<p>Using the above operations as a base, complex real-life actions can also be performed. For example, you can ask the MCP server to generate a security audit report for the last 30 days and highlight all changes to user and group memberships according to your desired report template.</p>
+<h2 id="highlights-at-a-glance" tabindex="-1">Highlights at a glance <a class="direct-link" href="#highlights-at-a-glance" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>Flexible Authentication</strong>: The server supports both interactive login (via Device Authorization Grant) and fully automated, browserless login (via Private Key JWT). Whether you're experimenting in development or running a headless agent in production, you can authenticate in the way that fits your workflow.</li>
+<li><strong>More Secure Credential Handling</strong>: Your authentication details are managed through scoped API access and environment variables, keeping secrets out of code. Tokens are issued only with the permissions you explicitly grant, following least-privilege best practices.</li>
+<li><strong>Seamless Integration with Okta APIs</strong>: Built on Okta's official SDK, the server is tightly integrated with Okta's Admin Management APIs. That means reliable performance, support for a wide range of identity management tasks, and an extensible foundation for adding more endpoints over time.</li>
+</ul>
+<h2 id="getting-started-with-the-okta-mcp-server" tabindex="-1">Getting started with the Okta MCP Server <a class="direct-link" href="#getting-started-with-the-okta-mcp-server" aria-hidden="true">#</a></h2>
+<p>Now that you know what the Okta MCP server is and why it's useful, let's dive into how to set it up and run it. Before you proceed, you will need VS Code, Python environment (Python 3.9 or above), and uv.</p>
+<h3 id="initializing-the-project" tabindex="-1">Initializing the project <a class="direct-link" href="#initializing-the-project" aria-hidden="true">#</a></h3>
+<p>The Okta MCP server comes packaged for quick setup so you can clone and run it. We use <code>uv</code> (a fast Python package manager) to help ensure your environment is reproducible and lightweight.</p>
+<ul>
+<li>
+<p>Install <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a></p>
+</li>
+<li>
+<p>Clone the repository:</p>
+</li>
+</ul>
+<pre class="language-sh"><code class="language-sh"><span class="token function">git</span> clone https://github.com/okta/okta-mcp-server.git</code></pre>
+<ul>
+<li>Install dependencies and set up the project:</li>
+</ul>
+<pre class="language-sh"><code class="language-sh"><span class="token builtin class-name">cd</span> okta-mcp-server <span class="token operator">&amp;&amp;</span> uv <span class="token function">sync</span></code></pre>
+<p>At this point, you have a working copy of the server. Next, we'll connect it to your Okta org.</p>
+<h3 id="authentication-and-authorization" tabindex="-1">Authentication and authorization <a class="direct-link" href="#authentication-and-authorization" aria-hidden="true">#</a></h3>
+<p>Every MCP server needs a way to prove its identity and access your Okta APIs more securely. We support two authentication modes, and your choice depends on your use case.</p>
+<h5 id="option-a:-device-authorization-grant-(recommended-for-interactive-use)" tabindex="-1"><strong>Option A: Device authorization grant (recommended for interactive use)</strong> <a class="direct-link" href="#option-a:-device-authorization-grant-(recommended-for-interactive-use)" aria-hidden="true">#</a></h5>
+<p>This flow is best if you're running the MCP server locally and want a quick, user-friendly login. After you start the server, it triggers a prompt to log in via your browser. Here, the server exchanges your browser login for a secure token that it can use to communicate with Okta APIs.</p>
+<p>Use this if you're experimenting, developing, or want the simplest way to authenticate.</p>
+<!-- TODO: include integrator statement -->
+<blockquote>
+<p><strong>Note:</strong> While creating the app integration, make sure to select the <strong>Device Authorization</strong> in the Grant type.</p>
+</blockquote>
+<p>Once the app is created, follow these steps:</p>
+<ol>
+<li :="" class="center-image">Grant API scopes (for example: <code>okta.users.read</code>, <code>okta.groups.manage</code>).<br>
+<picture><source type="image/webp" srcset="/img/KPcbqZHMSt-100.webp 100w, /img/KPcbqZHMSt-300.webp 300w, /img/KPcbqZHMSt-600.webp 600w, /img/KPcbqZHMSt-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/KPcbqZHMSt-100.jpeg" width="1000" height="859" srcset="/img/KPcbqZHMSt-100.jpeg 100w, /img/KPcbqZHMSt-300.jpeg 300w, /img/KPcbqZHMSt-600.jpeg 600w, /img/KPcbqZHMSt-1000.jpeg 1000w" sizes="auto"></picture></li>
+<li :="" class="center-image">Copy the Client ID for later use.<br>
+<picture><source type="image/webp" srcset="/img/1UCqJO0fdH-100.webp 100w, /img/1UCqJO0fdH-300.webp 300w, /img/1UCqJO0fdH-600.webp 600w, /img/1UCqJO0fdH-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/1UCqJO0fdH-100.jpeg" width="1000" height="765" srcset="/img/1UCqJO0fdH-100.jpeg 100w, /img/1UCqJO0fdH-300.jpeg 300w, /img/1UCqJO0fdH-600.jpeg 600w, /img/1UCqJO0fdH-1000.jpeg 1000w" sizes="auto"></picture></li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> Why &quot;Native App&quot; and not &quot;Service&quot;?<br>
+Device Auth is designed for user-driven flows, so it assumes someone is present to open the browser.</p>
+</blockquote>
+<h5 id="option-b:-private-key-jwt-(best-for-automation-cicd-and-&quot;headless&quot;-environments)" tabindex="-1"><strong>Option B: Private key JWT (best for automation, CI/CD, and &quot;headless&quot; environments)</strong> <a class="direct-link" href="#option-b:-private-key-jwt-(best-for-automation-cicd-and-&quot;headless&quot;-environments)" aria-hidden="true">#</a></h5>
+<p>This flow is perfect if your MCP server needs to run without human intervention, for example, inside a CI/CD pipeline or as part of a backend service. Instead of prompting a person to log in, the server authenticates using a cryptographic key pair.</p>
+<p>Here's how it works:</p>
+<ul>
+<li>You generate or upload a public/private key pair to Okta.</li>
+<li>The server uses the private key locally to sign authentication requests.</li>
+<li>Okta validates the signature against the public key you registered, ensuring that only your authorized server can act on behalf of that client.</li>
+</ul>
+<p>Use this if you're automating, scheduling jobs, or integrating into infrastructure.</p>
+<ol>
+<li :="" class="center-image">In your Okta org, create a new API Services App Integration.<br>
+<picture><source type="image/webp" srcset="/img/ATljdeq3G9-100.webp 100w, /img/ATljdeq3G9-300.webp 300w, /img/ATljdeq3G9-600.webp 600w, /img/ATljdeq3G9-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/ATljdeq3G9-100.jpeg" width="1000" height="587" srcset="/img/ATljdeq3G9-100.jpeg 100w, /img/ATljdeq3G9-300.jpeg 300w, /img/ATljdeq3G9-600.jpeg 600w, /img/ATljdeq3G9-1000.jpeg 1000w" sizes="auto"></picture>{: .center-image }<br>
+<picture><source type="image/webp" srcset="/img/XvpuHv7gSj-100.webp 100w, /img/XvpuHv7gSj-300.webp 300w, /img/XvpuHv7gSj-600.webp 600w, /img/XvpuHv7gSj-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/XvpuHv7gSj-100.jpeg" width="1000" height="311" srcset="/img/XvpuHv7gSj-100.jpeg 100w, /img/XvpuHv7gSj-300.jpeg 300w, /img/XvpuHv7gSj-600.jpeg 600w, /img/XvpuHv7gSj-1000.jpeg 1000w" sizes="auto"></picture></li>
+<li :="" class="center-image">Under Client Authentication, select Public Key / Private Key.<br>
+<picture><source type="image/webp" srcset="/img/dfuBQjJvdv-100.webp 100w, /img/dfuBQjJvdv-300.webp 300w, /img/dfuBQjJvdv-600.webp 600w, /img/dfuBQjJvdv-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/dfuBQjJvdv-100.jpeg" width="1000" height="1214" srcset="/img/dfuBQjJvdv-100.jpeg 100w, /img/dfuBQjJvdv-300.jpeg 300w, /img/dfuBQjJvdv-600.jpeg 600w, /img/dfuBQjJvdv-1000.jpeg 1000w" sizes="auto"></picture></li>
+<li :="" class="center-image">Add a public key: either generate it in Okta (recommended) and copy it in PEM format, or upload your own keys.<br>
+<picture><source type="image/webp" srcset="/img/l3P_KNHdnT-100.webp 100w, /img/l3P_KNHdnT-300.webp 300w, /img/l3P_KNHdnT-600.webp 600w, /img/l3P_KNHdnT-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/l3P_KNHdnT-100.jpeg" width="1000" height="1235" srcset="/img/l3P_KNHdnT-100.jpeg 100w, /img/l3P_KNHdnT-300.jpeg 300w, /img/l3P_KNHdnT-600.jpeg 600w, /img/l3P_KNHdnT-1000.jpeg 1000w" sizes="auto"></picture></li>
+<li :="" class="center-image">Copy the Client ID and Key ID (KID).<br>
+<picture><source type="image/webp" srcset="/img/XdpSJtPEf1-100.webp 100w, /img/XdpSJtPEf1-300.webp 300w, /img/XdpSJtPEf1-600.webp 600w, /img/XdpSJtPEf1-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/XdpSJtPEf1-100.jpeg" width="1000" height="1177" srcset="/img/XdpSJtPEf1-100.jpeg 100w, /img/XdpSJtPEf1-300.jpeg 300w, /img/XdpSJtPEf1-600.jpeg 600w, /img/XdpSJtPEf1-1000.jpeg 1000w" sizes="auto"></picture></li>
+<li :="" class="center-image">Grant the necessary API scopes (e.g., <code>okta.users.read</code>, <code>okta.groups.manage</code>) and provide Super Administrator access.<br>
+<picture><source type="image/webp" srcset="/img/KPcbqZHMSt-100.webp 100w, /img/KPcbqZHMSt-300.webp 300w, /img/KPcbqZHMSt-600.webp 600w, /img/KPcbqZHMSt-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/KPcbqZHMSt-100.jpeg" width="1000" height="859" srcset="/img/KPcbqZHMSt-100.jpeg 100w, /img/KPcbqZHMSt-300.jpeg 300w, /img/KPcbqZHMSt-600.jpeg 600w, /img/KPcbqZHMSt-1000.jpeg 1000w" sizes="auto"></picture>{: .center-image }<br>
+<picture><source type="image/webp" srcset="/img/UEnX5R_HMs-100.webp 100w, /img/UEnX5R_HMs-300.webp 300w, /img/UEnX5R_HMs-600.webp 600w, /img/UEnX5R_HMs-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/UEnX5R_HMs-100.jpeg" width="1000" height="290" srcset="/img/UEnX5R_HMs-100.jpeg 100w, /img/UEnX5R_HMs-300.jpeg 300w, /img/UEnX5R_HMs-600.jpeg 600w, /img/UEnX5R_HMs-1000.jpeg 1000w" sizes="auto"></picture></li>
+</ol>
+<h3 id="configuring-your-client" tabindex="-1">Configuring your client <a class="direct-link" href="#configuring-your-client" aria-hidden="true">#</a></h3>
+<p>You can use Okta's MCP server with any MCP-compatible client. Whether running a lightweight desktop agent, experimenting in a local environment, or wiring it into a production workflow, the setup pattern is the same.</p>
+<p>For this guide, we'll walk through the setup in Visual Studio Code with GitHub Copilot - one of the most popular environments for developers. The steps will be similar if you use another client like Claude Desktop or AWS Bedrock.</p>
+<h2 id="using-the-okta-mcp-server-with-vs-code" tabindex="-1">Using the Okta MCP Server with VS Code <a class="direct-link" href="#using-the-okta-mcp-server-with-vs-code" aria-hidden="true">#</a></h2>
+<h3 id="enable-agent-mode-in-github-copilot" tabindex="-1">Enable agent mode in GitHub Copilot <a class="direct-link" href="#enable-agent-mode-in-github-copilot" aria-hidden="true">#</a></h3>
+<p>The Okta MCP server integrates with VS Code through Copilot's agent mode.</p>
+<ol>
+<li>
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot">GitHub Copilot extension</a> Open the Copilot Chat view in VS Code.</p>
+</li>
+<li>
+<p>To enable the Agent mode, checkout the steps mentioned in the <a href="https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode#_enable-agent-mode-in-vs-code"> VS Code docs</a>.</p>
+</li>
+</ol>
+<h3 id="update-your-vs-code-settings" tabindex="-1">Update your VS Code settings <a class="direct-link" href="#update-your-vs-code-settings" aria-hidden="true">#</a></h3>
+<p>Next, you'll tell VS Code how to start and communicate with the Okta MCP server. This is done in your <code>settings.json</code>. You can also create your own <code>mcp.json</code> and set this up.</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"mcp"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"inputs"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"promptString"</span><span class="token punctuation">,</span>
+        <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"Okta Organization URL (e.g., https://trial-123456.okta.com)"</span><span class="token punctuation">,</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"OKTA_ORG_URL"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"promptString"</span><span class="token punctuation">,</span>
+        <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"Okta Client ID"</span><span class="token punctuation">,</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"OKTA_CLIENT_ID"</span><span class="token punctuation">,</span>
+        <span class="token property">"password"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"promptString"</span><span class="token punctuation">,</span>
+        <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"Okta Scopes (separated by whitespace, e.g., 'okta.users.read okta.groups.manage')"</span><span class="token punctuation">,</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"OKTA_SCOPES"</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"promptString"</span><span class="token punctuation">,</span>
+        <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"Okta Private Key. Required for 'browserless' auth."</span><span class="token punctuation">,</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"OKTA_PRIVATE_KEY"</span><span class="token punctuation">,</span>
+        <span class="token property">"password"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"promptString"</span><span class="token punctuation">,</span>
+        <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"Okta Key ID (KID) for the private key. Required for 'browserless' auth."</span><span class="token punctuation">,</span>
+        <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"OKTA_KEY_ID"</span><span class="token punctuation">,</span>
+        <span class="token property">"password"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"servers"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"okta-mcp-server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"uv"</span><span class="token punctuation">,</span>
+        <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"run"</span><span class="token punctuation">,</span> <span class="token string">"--directory"</span><span class="token punctuation">,</span> <span class="token string">"/path/to/the/okta-mcp-server"</span><span class="token punctuation">,</span> <span class="token string">"okta-mcp-server"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"env"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"OKTA_ORG_URL"</span><span class="token operator">:</span> <span class="token string">"${input:OKTA_ORG_URL}"</span><span class="token punctuation">,</span>
+          <span class="token property">"OKTA_CLIENT_ID"</span><span class="token operator">:</span> <span class="token string">"${input:OKTA_CLIENT_ID}"</span><span class="token punctuation">,</span>
+          <span class="token property">"OKTA_SCOPES"</span><span class="token operator">:</span> <span class="token string">"${input:OKTA_SCOPES}"</span><span class="token punctuation">,</span>
+          <span class="token property">"OKTA_PRIVATE_KEY"</span><span class="token operator">:</span> <span class="token string">"${input:OKTA_PRIVATE_KEY}"</span><span class="token punctuation">,</span>
+          <span class="token property">"OKTA_KEY_ID"</span><span class="token operator">:</span> <span class="token string">"${input:OKTA_KEY_ID}"</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Running the server for the first time prompts you to enter the following information:</p>
+<ul>
+<li><strong>Okta Organization URL</strong>: Your Okta tenant URL.</li>
+<li><strong>Okta Client ID</strong>: The client ID of the application you created in your Okta organization.</li>
+<li><strong>Okta Scopes</strong>: The scopes you want to grant to the application, separated by spaces. For example:</li>
+</ul>
+<pre class="language-json"><code class="language-json">    <span class="token property">"OKTA_SCOPES"</span><span class="token operator">:</span> <span class="token string">"${input:OKTA_SCOPES = okta.users.read okta.users.manage okta.groups.read okta.groups.manage okta.logs.read okta.policies.read okta.policies.manage okta.apps.read okta.apps.manage}"</span></code></pre>
+<blockquote>
+<p><strong>Note:</strong> Add scopes only for the APIs that you will be using.</p>
+</blockquote>
+<ul>
+<li><strong>Okta Private Key and Key ID:</strong> You only need to enter this key when using browserless authentication. If you're not using that method, just press <strong>Enter</strong> to skip this step and use the Device Authorization flow instead.</li>
+</ul>
+<h3 id="start-the-server" tabindex="-1">Start the server <a class="direct-link" href="#start-the-server" aria-hidden="true">#</a></h3>
+<p>When you open VS Code, you'll now see <strong>okta-mcp-server</strong> as an option to start.</p>
+<ol>
+<li>Click <strong>Start</strong> to launch the server in your <code>mcp.json</code> file.</li>
+</ol>
+<p :="" class="center-image"><picture><source type="image/webp" srcset="/img/KbmWk7UCaJ-100.webp 100w, /img/KbmWk7UCaJ-300.webp 300w, /img/KbmWk7UCaJ-600.webp 600w, /img/KbmWk7UCaJ-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/KbmWk7UCaJ-100.jpeg" width="1000" height="1034" srcset="/img/KbmWk7UCaJ-100.jpeg 100w, /img/KbmWk7UCaJ-300.jpeg 300w, /img/KbmWk7UCaJ-600.jpeg 600w, /img/KbmWk7UCaJ-1000.jpeg 1000w" sizes="auto"></picture></p>
+<p>2. The server will check your authentication method:</p>
+<ul>
+<li>If using <strong>Device Authorization</strong>, it triggers a prompt to log in via your browser.</li>
+</ul>
+<p :="" class="center-image"><picture><source type="image/webp" srcset="/img/764MX8104q-100.webp 100w, /img/764MX8104q-300.webp 300w, /img/764MX8104q-600.webp 600w, /img/764MX8104q-892.webp 892w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/764MX8104q-100.jpeg" width="892" height="726" srcset="/img/764MX8104q-100.jpeg 100w, /img/764MX8104q-300.jpeg 300w, /img/764MX8104q-600.jpeg 600w, /img/764MX8104q-892.jpeg 892w" sizes="auto"></picture></p>
+<ul>
+<li>If using <strong>Private Key JWT</strong>, it will authenticate silently using your key.</li>
+</ul>
+<p>3. Once connected, Copilot will automatically recognize the Okta commands you can use.</p>
+<p>At this point, the MCP server has established a connection between VS Code and your Okta organization.You can now manage your organization using natural language commands directly in your editor.</p>
+<h2 id="examples-in-action" tabindex="-1">Examples in action <a class="direct-link" href="#examples-in-action" aria-hidden="true">#</a></h2>
+<p><strong>1. Listing Users</strong></p>
+<p :="" class="center-image"><picture><source type="image/webp" srcset="/img/FH4TiFmmQM-100.webp 100w, /img/FH4TiFmmQM-300.webp 300w, /img/FH4TiFmmQM-600.webp 600w, /img/FH4TiFmmQM-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/FH4TiFmmQM-100.jpeg" width="1000" height="513" srcset="/img/FH4TiFmmQM-100.jpeg 100w, /img/FH4TiFmmQM-300.jpeg 300w, /img/FH4TiFmmQM-600.jpeg 600w, /img/FH4TiFmmQM-1000.jpeg 1000w" sizes="auto"></picture></p>
+<p><strong>2. Creating Users</strong></p>
+<p :="" class="center-image"><picture><source type="image/webp" srcset="/img/HqmaJt54vo-100.webp 100w, /img/HqmaJt54vo-300.webp 300w, /img/HqmaJt54vo-600.webp 600w, /img/HqmaJt54vo-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/HqmaJt54vo-100.jpeg" width="1000" height="1314" srcset="/img/HqmaJt54vo-100.jpeg 100w, /img/HqmaJt54vo-300.jpeg 300w, /img/HqmaJt54vo-600.jpeg 600w, /img/HqmaJt54vo-1000.jpeg 1000w" sizes="auto"></picture></p>
+<p><strong>3. Group Assignment</strong></p>
+<p :="" class="center-image"><picture><source type="image/webp" srcset="/img/ki8-xEFhkb-100.webp 100w, /img/ki8-xEFhkb-300.webp 300w, /img/ki8-xEFhkb-600.webp 600w, /img/ki8-xEFhkb-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/ki8-xEFhkb-100.jpeg" width="1000" height="1674" srcset="/img/ki8-xEFhkb-100.jpeg 100w, /img/ki8-xEFhkb-300.jpeg 300w, /img/ki8-xEFhkb-600.jpeg 600w, /img/ki8-xEFhkb-1000.jpeg 1000w" sizes="auto"></picture></p>
+<p><strong>4. Creating an Audit Report</strong></p>
+<p :="" class="center-image"><picture><source type="image/webp" srcset="/img/4liD9KummG-100.webp 100w, /img/4liD9KummG-300.webp 300w, /img/4liD9KummG-600.webp 600w, /img/4liD9KummG-1000.webp 1000w" sizes="auto"><img alt=" " loading="lazy" decoding="async" src="/img/4liD9KummG-100.jpeg" width="1000" height="1524" srcset="/img/4liD9KummG-100.jpeg 100w, /img/4liD9KummG-300.jpeg 300w, /img/4liD9KummG-600.jpeg 600w, /img/4liD9KummG-1000.jpeg 1000w" sizes="auto"></picture></p>
+<p>We invite you to try out our MCP server and experience the future of identity and access management. Meet us at Oktane, and if you run into issues, please open an issue in our <a href="https://github.com/okta/okta-mcp-server/">GitHub</a> repository.</p>
+<h2 id="read-more-about-cross-app-access-oauth-2.0-and-securing-your-applications" tabindex="-1">Read more about Cross App Access, OAuth 2.0, and securing your applications <a class="direct-link" href="#read-more-about-cross-app-access-oauth-2.0-and-securing-your-applications" aria-hidden="true">#</a></h2>
+<ul>
+<li><a href="/blog/2025/06/23/enterprise-ai">Integrate Your Enterprise AI Tools with Cross App Access</a></li>
+<li><a href="/blog/2025/09/03/cross-app-access">Build Secure Agent-to-App Connections with Cross App Access (XAA)</a></li>
+<li><a href="https://developer.okta.com/docs/concepts/oauth-openid">OAuth 2.0 and OpenID Connect overview</a></li>
+<li><a href="/blog/2023/09/25/oauth-api-tokens">Why You Should Migrate to OAuth 2.0 From Static API Tokens</a></li>
+<li><a href="https://sec.okta.com/articles/appsofthefuture/">How to Secure the SaaS Apps of the Future</a></li>
+</ul>
+<p>Follow us on <a href="https://www.linkedin.com/company/oktadev">LinkedIn</a>, <a href="https://twitter.com/oktadev">Twitter</a>, and subscribe to our <a href="https://www.youtube.com/c/oktadev">YouTube</a> channel for more developer content. If you have any questions, please leave a comment below!</p>
+
+    </div>
+</article>
+
+  </main>
+  <footer>
+	FOOTER
+</footer>
+
+
+</body>
+
+</html>
