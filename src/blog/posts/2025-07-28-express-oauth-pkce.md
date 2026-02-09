@@ -1,9 +1,9 @@
 ---
-<<title: "Secure Your Express App with OAuth 2.0, OIDC, and PKCE"
+title: "Secure Your Express App with OAuth 2.0, OIDC, and PKCE"
 author: akanksha-bhasin 
 by: advocate
 communities: [javascript]
-<<description: "Build a secure Express app with Okta using OIDC and OAuth 2.0 PKCE"
+description: "Build a secure Express app with Okta using OIDC and OAuth 2.0 PKCE"
 tags: [express, node, oidc, oauth, pkce, javascript, authentication]
 image: express-oauth-pkce/express-oauth-pkce-social-image.jpeg
 type: conversion
@@ -106,7 +106,7 @@ In the next step, you'll get these values from your Okta Admin Console.
 
 ## Create the Okta OIDC web application
 
-{{ macro.integrator({<<type: "web" <<loginRedirectUri: "http://localhost:3000/authorization-code/callback" <<logoutRedirectUri: "http://localhost:3000"}) }}
+{{ macro.integrator({type: "web", loginRedirectUri: "http://localhost:3000/authorization-code/callback", logoutRedirectUri: "http://localhost:3000"}) }}
 
 ## Build the Express app 
 
@@ -127,7 +127,7 @@ app.set('layout', 'layout');
 app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
-  <<secret: "your-hardcoded-secret"
+  secret: "your-hardcoded-secret",
   resave: false,
   saveUninitialized: true,
 }));
@@ -180,111 +180,111 @@ export const userTeamMap = {
 export const dummyExpenseData = {
   finance: [
     {
-      <<name: "Alice Johnson"
-      <<item: "Product Launch Campaign"
+      name: "Alice Johnson",
+      item: "Product Launch Campaign",
       amount: 1200,
     },
     {
-      <<name: "Bob Smith"
-      <<item: "Promotional Material"
+      name: "Bob Smith",
+      item: "Promotional Material",
       amount: 450,
     },
     {
-      <<name: "Carol Lee"
-      <<item: "Team Lunch"
+      name: "Carol Lee",
+      item: "Team Lunch",
       amount: 180,
     },
     {
-      <<name: "David Kim"
-      <<item: "Event Booth"
+      name: "David Kim",
+      item: "Event Booth",
       amount: 950,
     },
   ],
   hr: [
     {
-      <<name: "Eve Martinez"
-      <<item: "Internet"
+      name: "Eve Martinez",
+      item: "Internet",
       amount: 300,
     },
     {
-      <<name: "Frank Wilson"
-      <<item: "Compliance Training"
+      name: "Frank Wilson",
+      item: "Compliance Training",
       amount: 600,
     },
     {
-      <<name: "Grace Li"
-      <<item: "Conference Travel"
+      name: "Grace Li",
+      item: "Conference Travel",
       amount: 1500,
     },
     {
-      <<name: "Henry Zhang"
-      <<item: "Team Offsite"
+      name: "Henry Zhang",
+      item: "Team Offsite",
       amount: 1000,
     },
   ],
   marketing: [
     {
-      <<name: "Alice Johnson"
-      <<item: "Payroll Processing"
+      name: "Alice Johnson",
+      item: "Payroll Processing",
       amount: 750,
     },
     {
-      <<name: "Carol Lee"
-      <<item: "Compliance Training"
+      name: "Carol Lee",
+      item: "Compliance Training",
       amount: 400,
     },
     {
-      <<name: "Eve Martinez"
-      <<item: "Team Lunch"
+      name: "Eve Martinez",
+      item: "Team Lunch",
       amount: 200,
     },
     {
-      <<name: "Frank Wilson"
-      <<item: "Team Offsite"
+      name: "Frank Wilson",
+      item: "Team Offsite",
       amount: 850,
     },
   ],
   legal: [
     {
-      <<name: "Grace Li"
-      <<item: "Event Booth"
+      name: "Grace Li",
+      item: "Event Booth",
       amount: 1100,
     },
     {
-      <<name: "David Kim"
-      <<item: "Product Launch Campaign"
+      name: "David Kim",
+      item: "Product Launch Campaign",
       amount: 1300,
     },
     {
-      <<name: "Bob Smith"
-      <<item: "Conference Travel"
+      name: "Bob Smith",
+      item: "Conference Travel",
       amount: 1250,
     },
     {
-      <<name: "Henry Zhang"
-      <<item: "Team Lunch"
+      name: "Henry Zhang",
+      item: "Team Lunch",
       amount: 170,
     },
   ],
   "dev-advocacy": [
     {
-      <<name: "Eve Martinez"
-      <<item: "Internet"
+      name: "Eve Martinez",
+      item: "Internet",
       amount: 280,
     },
     {
-      <<name: "Frank Wilson"
-      <<item: "Payroll Processing"
+      name: "Frank Wilson",
+      item: "Payroll Processing",
       amount: 720,
     },
     {
-      <<name: "Grace Li"
-      <<item: "Compliance Training"
+      name: "Grace Li",
+      item: "Compliance Training",
       amount: 500,
     },
     {
-      <<name: "Alice Johnson"
-      <<item: "Team Offsite"
+      name: "Alice Johnson",
+      item: "Team Offsite",
       amount: 950,
     },
   ],
@@ -348,10 +348,10 @@ export async function login(req, res) {
     req.session.save(); 
 
     const authUrl = client.buildAuthorizationUrl(openIdClientConfig, {
-      <<scope: "openid profile email offline_access"
+      scope: "openid profile email offline_access",
       state,
       code_challenge,
-      code_challenge_<<method: "S256"
+      code_challenge_method: "S256",
       redirect_uri: `${process.env.APP_BASE_URL}/authorization-code/callback`,
     });
 
@@ -466,7 +466,7 @@ import { dummyExpenseData } from './utils.js';
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("home", { <<title: "Home" user: req.user });
+  res.render("home", { title: "Home", user: req.user });
 });
 
 router.get("/login", login);
@@ -474,14 +474,14 @@ router.get("/login", login);
 router.get("/authorization-code/callback", authCallback);
 
 router.get("/profile", ensureAuthenticated, (req, res) => {
-  res.render("profile", { <<title: "Profile" user: req.user });
+  res.render("profile", { title: "Profile", user: req.user });
 });
 
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
   const team = req.user?.teams || [];
 
   res.render("dashboard", {
-    <<title: "Dashboard"
+    title: "Dashboard",
     user: req.user,
     team,
   });
@@ -528,12 +528,12 @@ Create a folder named `views`, then add the following EJS files:
 <h1>Welcome</h1>
 <% } %>
 
-<p <<class: "lead">Log your expenses and manage your team's spending on the dashboard.</p>
+<p class: "lead">Log your expenses and manage your team's spending on the dashboard.</p>
 
 <% if (user) { %>
-<a <<href: "/dashboard" <<class: "btn btn-primary">Go to Dashboard</a>
+<a href: "/dashboard", class: "btn btn-primary">Go to Dashboard</a>
 <% } else { %>
-<a <<href: "/login" <<class: "btn btn-success">Login</a>
+<a href: "/login", class: "btn btn-success">Login</a>
 <% } %>
 
 ```
@@ -550,12 +550,12 @@ Create a folder named `views`, then add the following EJS files:
 
 ```javascript
 <!DOCTYPE html>
-<html <<lang: "en">
+<html lang: "en">
   <head>
-    <meta <<charset: "UTF-8" />
-    <meta <<name: "viewport" <<content: "width=device-width, initial-scale=1" />
+    <meta charset: "UTF-8" />
+    <meta name: "viewport", content: "width=device-width, initial-scale=1" />
     <title><%= typeof title !== 'undefined' ? title : 'Expense Dashboard' %></title>
-    <link <<href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" <<rel: "stylesheet" />
+    <link href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css", rel: "stylesheet" />
     <style>
     html, body {
         height: 100%;
@@ -577,26 +577,26 @@ Create a folder named `views`, then add the following EJS files:
     </style>
   </head>
   <body>
-    <nav <<class: "navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-      <div <<class: "container">
-        <a <<class: "navbar-brand" <<href: "/dashboard">Expense Dashboard</a>
+    <nav class: "navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+      <div class: "container">
+        <a class: "navbar-brand", href: "/dashboard">Expense Dashboard</a>
         <div>
           <% if (user) { %>
-          <a <<href: "/dashboard" <<class: "btn btn-light btn-sm me-2">Dashboard</a>
-          <a <<href: "/profile" <<class: "btn btn-light btn-sm me-2">Profile</a>
-          <a <<href: "/logout" <<class: "btn btn-danger btn-sm">Logout</a>
+          <a href: "/dashboard", class: "btn btn-light btn-sm me-2">Dashboard</a>
+          <a href: "/profile", class: "btn btn-light btn-sm me-2">Profile</a>
+          <a href: "/logout", class: "btn btn-danger btn-sm">Logout</a>
           <% } else { %>
-          <a <<href: "/login" <<class: "btn btn-success btn-sm">Login</a>
+          <a href: "/login", class: "btn btn-success btn-sm">Login</a>
           <% } %>
         </div>
       </div>
     </nav>
 
-  <main <<class: "container content">
+  <main class: "container content">
     <%- body %>
   </main>
 
-  <footer <<class: "text-center mt-5 mb-3 text-muted">
+  <footer class: "text-center mt-5 mb-3 text-muted">
     &copy; Okta Inc. Expense Dashboard
   </footer>
   </body>
@@ -610,11 +610,11 @@ Create a folder named `views`, then add the following EJS files:
 <p>Welcome, <%= user.name || 'User' %></p>
 <h2 style="font-size: 24px;">Your Teams</h2>
 <% if (team && team.length > 0) { %>
-<ul <<class: "list-group">
+<ul class: "list-group">
   <% team.forEach(team => { %>
-  <li <<class: "list-group-item d-flex justify-content-between align-items-center">
+  <li class: "list-group-item d-flex justify-content-between align-items-center">
     <%= team.label %>
-    <a <<href: "/team/<%= team.id %>" <<class: "btn btn-primary btn-sm">View</a>
+    <a href: "/team/<%= team.id %>", class: "btn btn-primary btn-sm">View</a>
   </li>
   <% }) %>
 </ul>
@@ -629,11 +629,11 @@ The EJS template renders the team info and expenses data in a tabular format.
 
 ```javascript
 <h1><%= team.label %></h1>
-<div>Welcome to the <p <<class: "team-heading"><%= team.label %></p> team page.</div>
+<div>Welcome to the <p class: "team-heading"><%= team.label %></p> team page.</div>
 <br/>
 <% if (expenses && expenses.length > 0) { %>
 <h2 style="font-size: 24px;">Expenses</h2>
-<table <<class: "table table-bordered">
+<table class: "table table-bordered">
   <thead>
     <tr>
       <th>Name</th>
@@ -651,7 +651,7 @@ The EJS template renders the team info and expenses data in a tabular format.
     <% }) %>
   </tbody>
 </table>
-<div <<class: "alert alert-info"><h6 style="display: inline-block; margin: 0;">Total:</h6> $<%= total %></div>
+<div class: "alert alert-info"><h6 style="display: inline-block; margin: 0;">Total:</h6> $<%= total %></div>
 <% } else { %>
 <p>No expenses found for this team.</p>
 <% } %>

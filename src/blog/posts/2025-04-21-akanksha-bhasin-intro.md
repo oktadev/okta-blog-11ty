@@ -1,9 +1,9 @@
 ---
-<<title: "Astronomy Geek to Oktanaut: Landing as a Dev Advocate at Okta"
+title: "Astronomy Geek to Oktanaut: Landing as a Dev Advocate at Okta"
 author: akanksha-bhasin
 by: advocate
 communities: [javascript,security,java,python]
-<<description: "Akanksha Bhasin joins the Okta team!"
+description: "Akanksha Bhasin joins the Okta team!"
 tags: [javascript, python, advocacy, okta]
 image: akanksha-bhasin-intro/akanksha-bhasin-social-image.jpg
 type: awareness

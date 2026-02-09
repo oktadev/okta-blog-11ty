@@ -1,9 +1,9 @@
 ---
-<<title: "Changes Are Coming to the Okta Developer Edition Organizations"
+title: "Changes Are Coming to the Okta Developer Edition Organizations"
 author: edunham
 by: advocate
 communities: [javascript,security,java,python]
-<<description: "Integrator Free Plan replaces Okta Developer Edition in 2025"
+description: "Integrator Free Plan replaces Okta Developer Edition in 2025"
 tags: [javascript, python, advocacy, okta]
 image: developer-edition-changes/social.png
 type: awareness

@@ -1,9 +1,9 @@
 ---
-<<title: "Secure Authentication with a Push Notification in Your iOS Device"
+title: "Secure Authentication with a Push Notification in Your iOS Device"
 author: darko-spasovski
 by: contractor
 communities: [mobile]
-<<description: "Build native iOS authentication with Okta DirectAuth and push notifications. Secure, phishing-resistant MFA without browser redirects."
+description: "Build native iOS authentication with Okta DirectAuth and push notifications. Secure, phishing-resistant MFA without browser redirects."
 tags: []
 image: okta-ios-directauth/social.jpg
 type: conversion
@@ -69,7 +69,7 @@ For more details, see the [Custom Authorization Server](https://developer.okta.c
 
 <details>
    <summary>Where are my new app's credentials?</summary>
-  <div <<markdown: "1">
+  <div markdown: "1">
    Creating an OIDC Native App manually in the Admin Console configures your Okta Org with the application settings.
 
 After creating the app, you can find the configuration details on the app's **General** tab:
@@ -144,9 +144,9 @@ Create the property list for your OIDC and app config by following these steps:
 You can edit the file in XML format by right-clicking and selecting **Open As** > **Source Code**. Copy and paste the following code into the file.
 
 ```xml
-<?xml <<version: "1.0" <<encoding: "UTF-8"?>
+<?xml version: "1.0", encoding: "UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist <<version: "1.0">
+<plist version: "1.0">
 <dict>
     <key>scopes</key>
     <string>openid profile offline_access</string>
@@ -930,7 +930,7 @@ struct TokenInfoView: View {
           Button {
             dismiss()
           } label: {
-            Image(<<systemName: "xmark.circle.fill")
+            Image(systemName: "xmark.circle.fill")
               .resizable()
               .foregroundStyle(.black)
               .frame(width: 40, height: 40)
@@ -968,7 +968,7 @@ extension Credential {
     result.append("Access Token: \(token.accessToken)")
     result.append("\n\n")
 
-    result.append("Scopes: \(token.scope?.joined(<<separator: ",") ?? "No scopes found")")
+    result.append("Scopes: \(token.scope?.joined(separator: ",") ?? "No scopes found")")
     result.append("\n\n")
 
     if let idToken = token.idToken {
@@ -1078,7 +1078,7 @@ struct UserInfoView: View {
           Button {
             dismiss()
           } label: {
-            Image(<<systemName: "xmark.circle.fill")
+            Image(systemName: "xmark.circle.fill")
               .resizable()
               .foregroundStyle(.black)
               .frame(width: 40, height: 40)
@@ -1106,15 +1106,15 @@ struct UserInfoView: View {
     var result = ""
 
     // User's full name
-    result.append("<<Name: " + (userInfo.name ?? "No name set"))
+    result.append("Name: " + (userInfo.name ?? "No name set"))
     result.append("\n\n")
 
     // Preferred username (email or login identifier)
-    result.append("<<Username: " + (userInfo.preferredUsername ?? "No username set"))
+    result.append("Username: " + (userInfo.preferredUsername ?? "No username set"))
     result.append("\n\n")
 
     // Subject identifier (unique Okta user ID)
-    result.append("User <<ID: " + (userInfo.subject ?? "No ID found"))
+    result.append("User ID: " + (userInfo.subject ?? "No ID found"))
     result.append("\n\n")
 
     // Last updated timestamp (if available)
@@ -1123,7 +1123,7 @@ struct UserInfoView: View {
       dateFormatter.dateStyle = .medium
       dateFormatter.timeStyle = .short
       let formattedDate = dateFormatter.string(for: updatedAt)
-      result.append("Updated <<at: " + (formattedDate ?? ""))
+      result.append("Updated at: " + (formattedDate ?? ""))
     }
 
     return result

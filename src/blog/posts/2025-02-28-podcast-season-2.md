@@ -1,9 +1,9 @@
 ---
-<<title: "Integrators Assemble!"
+title: "Integrators Assemble!"
 author: edunham
 by: advocate
 communities: [devops,security,mobile,.net,java,javascript,go,php,python,ruby]
-<<description: "Meet the hosts and learn what we're planning for you"
+description: "Meet the hosts and learn what we're planning for you"
 tags: [podcast]
 tweets:
 - ""

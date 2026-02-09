@@ -1,15 +1,15 @@
 ---
-<<title: "Build Secure Agent-to-App Connections with Cross App Access (XAA)"
+title: "Build Secure Agent-to-App Connections with Cross App Access (XAA)"
 author: sohail-pathan
 by: advocate
-communities: [javascript]
-<<description: "Learn how to unlock enterprise AI security by connecting agents to applications using Cross App Access (XAA) in this comprehensive guide."
+communities: [javascript,security]
+description: "Learn how to unlock enterprise AI security by connecting agents to applications using Cross App Access (XAA) in this comprehensive guide."
 tags: [xaa, cross-app-access, enterprise-ai, agentic-ai, mcp, oauth, sso]
 tweets:
-  - ""
-  - ""
-  - ""
-  - ""
+- ""
+- ""
+- ""
+- ""
 image: cross-app-access/social.jpg
 type: conversion
 ---
@@ -19,6 +19,8 @@ Secure access with enterprise IT oversight between independent applications that
 ## What is Cross App Access (XAA)?
 
 Cross App Access (XAA) is a new protocol that lets integrators enable secure agent-to-app and app-to-app access. Instead of scattered integrations and repeated logins, enterprise IT admins gain centralized control: they can decide what connects, enforce security policies, and see exactly what's being accessed. This unlocks seamless, scalable integrations across apps — whether it's just two like Google Calendar and Zoom, or hundreds across the enterprise. Read more about Cross App Access in this post:
+
+{% excerpt "enterprise-ai" %}
 
 Or watch the video about Cross App Access:
 
@@ -34,28 +36,31 @@ If you'd rather watch a video of the setup and how XAA works, check this one out
 
 To set up secure agent-to-app connections with Cross App Access (XAA), you'll need the following:
 
-1. **Okta Developer Account (Integrator Free Plan):** You'll need an Okta Developer Account with the Integrator Free Plan. This account will act as your Identity Provider (IdP) for setting up Cross App Access.
-   - If you don't already have an account, sign up for a new one here: [Okta Integrator Free Plan](https://developer.okta.com/signup)
-   - Once created, sign in to your new org
-2. **AWS Credentials:** You'll need an **AWS Access Key ID** and **AWS Secret Access Key**
-   - The IAM user or role associated with these credentials must have access to **Amazon Bedrock,** specifically the **Claude 3.7 Sonnet model,** enabled
-   - If you don't know how to obtain the credentials, [follow this guide](https://github.com/oktadev/okta-cross-app-access-mcp/blob/main/guide/aws-bedrock.md)
-3. **Developer Tools:** These tools are essential for cloning, editing, building, and running your demo applications
-   - **[Git](https://git-scm.com/downloads)** – to clone and manage the repository
-   - **[VS Code](https://code.visualstudio.com/Download)** – for reading and modifying the sample source code
-   - **[Dev Containers Extension (VS Code)](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)** – recommended, as it automatically configures dependencies and environments when you open the project
-   - **[Docker](https://www.docker.com/products/docker-desktop/)** – required by the Dev Container to build and run the sample applications in isolated environments
+1. **Okta Developer Account (Integrator Free Plan):** You'll need an Okta Developer Account with the Integrator Free Plan. This account will act as your Identity Provider (IdP) for setting up Cross App Access.  
+   * If you don't already have an account, sign up for a new one here: [Okta Integrator Free Plan](https://developer.okta.com/signup)  
+   * Once created, sign in to your new org
+
+2. **AWS Credentials:** You'll need an **AWS Access Key ID** and **AWS Secret Access Key**  
+   * The IAM user or role associated with these credentials must have access to **Amazon Bedrock,** specifically the **Claude 3.7 Sonnet model,** enabled  
+   * If you don't know how to obtain the credentials, [follow this guide](https://github.com/oktadev/okta-cross-app-access-mcp/blob/main/guide/aws-bedrock.md)
+
+3. **Developer Tools:** These tools are essential for cloning, editing, building, and running your demo applications  
+   * **[Git](https://git-scm.com/downloads)** – to clone and manage the repository  
+   * **[VS Code](https://code.visualstudio.com/Download)** – for reading and modifying the sample source code  
+   * **[Dev Containers Extension (VS Code)](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)** – recommended, as it automatically configures dependencies and environments when you open the project  
+   * **[Docker](https://www.docker.com/products/docker-desktop/)** – required by the Dev Container to build and run the sample applications in isolated environments
 
 **Table of Contents**{: .hide }
+
 [[toc]]
 
 ## Use Okta to secure AI applications with OAuth 2.0 and OpenID Connect (OIDC)
 
 Before we dive into the code, we need to register our apps with Okta. In this demo:
 
-- **Agent0**: the AI agent **requesting app** (makes the API call on behalf of the user)
-- **Todo0**: the **resource app** (owns the protected API)
-- **Managed connection**: the trust relationship between the two apps, created in Okta
+* **Agent0**: the AI agent **requesting app** (makes the API call on behalf of the user)
+* **Todo0**: the **resource app** (owns the protected API)
+* **Managed connection**: the trust relationship between the two apps, created in Okta
 
 We'll create both apps in your Okta Integrator Free Plan account, grab their client credentials, and then connect them.
 
@@ -63,42 +68,44 @@ We'll create both apps in your Okta Integrator Free Plan account, grab their cli
 
 > ⚠️ **Note:** Cross App Access is currently a **self-service Early Access (EA) feature**. It must be enabled through the Admin Console before the apps appear in the catalog. If you don't see the option right away, refresh and confirm you have the necessary admin permissions. Learn more in the [Okta documentation on managing EA and beta features](https://help.okta.com/oie/en-us/content/topics/security/manage-ea-and-beta-features.htm).
 
-1. Sign in to your Okta Integrator Free plan account
-2. In the **Okta Admin Console**, select **Settings > Features**
-3. Navigate to **Early access**
-4. Find **Cross App Access** and select **Turn on** (enable the toggle)
+1. Sign in to your Okta Integrator Free plan account 
+2. In the **Okta Admin Console**, select **Settings > Features**  
+3. Navigate to **Early access**  
+4. Find **Cross App Access** and select **Turn on** (enable the toggle)  
 5. Refresh the Admin Console
+
+{% img "cross-app-access/image9.jpg", "Enable Cross App Access feature in Okta Admin Console", "800" %}
 
 ### Create the resource app (Todo0)
 
-1. In the Okta Admin console, navigate to **Applications > Applications**
-2. Select **Browse App Catalog**
-3. Search for **Todo0 - Cross App Access (XAA) Sample Resource App**, and select it
-4. Select **Add Integration**
-5. Enter "Todo0" in the Application label field and click **Done**
+1. In the Okta Admin console, navigate to **Applications > Applications**  
+2. Select **Browse App Catalog**  
+3. Search for **Todo0 - Cross App Access (XAA) Sample Resource App**, and select it  
+4. Select **Add Integration**  
+5. Enter "Todo0" in the Application label field and click **Done**  
 6. Click the **Sign On** tab to view the **Client ID** and **Client secret**. These are required to include in your `.env.todo`
 
-{% img "cross-app-access/image1.jpg", "View Client ID and Client Secret for Todo0 Resource App in Okta Admin Console" %}
+{% img "cross-app-access/image1.jpg", "View Client ID and Client Secret for Todo0 Resource App in Okta Admin Console", "800" %}
 
 ### Create the requesting app (Agent0)
 
-1. Go back to **Applications > Applications**
-2. Select **Browse App Catalog**
-3. Search for **Agent0 - Cross App Access (XAA) Sample Requesting App**, and select it
-4. Select **Add Integration**
-5. Enter **Agent0** in the Application label field and click **Done**
+1. Go back to **Applications > Applications**  
+2. Select **Browse App Catalog**  
+3. Search for **Agent0 - Cross App Access (XAA) Sample Requesting App**, and select it  
+4. Select **Add Integration**  
+5. Enter **Agent0** in the Application label field and click **Done**  
 6. Click the **Sign On** tab to view the **Client ID** and **Client secret**. These are required to be included in your `.env.agent`
 
-{% img "cross-app-access/image10.jpg", "View Client ID and Client Secret for Agent0 Requesting App in Okta Admin Console" %}
+{% img "cross-app-access/image10.jpg", "View Client ID and Client Secret for Agent0 Requesting App in Okta Admin Console", "800" %}
 
 ### Establishing connections between Todo0 & AI agent (Agent0)
 
-1. From the **Applications** page, select the **Agent0** app
-2. Go to the **Manage Connections** tab
-3. Under **App granted consent**, select **Add requesting apps**, select **Todo0**, then **Save**
+1. From the **Applications** page, select the **Agent0** app  
+2. Go to the **Manage Connections** tab  
+3. Under **App granted consent**, select **Add requesting apps**, select **Todo0**, then **Save**  
 4. Under **Apps providing consent**, select **Add resource apps**, select **Todo0**, then **Save**
 
-{% img "cross-app-access/image8.jpg", "Connect Agent0 and Todo0 apps in Okta by managing connections" %}
+{% img "cross-app-access/image8.jpg", "Connect Agent0 and Todo0 apps in Okta by managing connections", "800" %}
 
 Now **Agent0** and **Todo0** are connected. If you check the **Manage Connection** tab for either app, you'll see that the connection has been established.
 
@@ -108,25 +115,25 @@ Now that the apps are in place, we need a test user who will sign in and trigger
 
 ### Create the test user
 
-1. In the **Okta Admin Console**, go to **Directory > People**
-2. Select **Add Person**
-3. Fill in the details:
-   - **First name:** Bob
-   - **Last name:** Tables
-   - **Username / Email:** `bob@tables.fake`
-4. Under **Activations**, select **Activate now**, mark **☑️ I will set password,** and create a temporary password
-5. Optional: You can mark **☑️ User must change password on first login**
+1. In the **Okta Admin Console**, go to **Directory > People**  
+2. Select **Add Person**  
+3. Fill in the details:  
+   * **First name:** Bob  
+   * **Last name:** Tables  
+   * **Username / Email:** `bob@tables.fake`  
+4. Under **Activations**, select **Activate now**, mark **☑️ I will set password,** and create a temporary password  
+5. Optional: You can mark **☑️ User must change password on first login**  
 6. Select **Save** (If you don't see the new user right away, refresh the page)
 
-{% img "cross-app-access/image11.jpg", "Create a test user Bob Tables in Okta Admin Console" %}
+{% img "cross-app-access/image11.jpg", "Create a test user Bob Tables in Okta Admin Console", "800" %}
 
 ### Assign the Okta applications to the test user
 
-1. Open the **Bob Tables** user profile
-2. Select **Assign Applications**
+1. Open the **Bob Tables** user profile  
+2. Select **Assign Applications**  
 3. Assign both **Agent0** (requesting app) and **Todo0** (resource app) to Bob
 
-{% img "cross-app-access/image5.jpg", "Assign Agent0 and Todo0 applications to Bob Tables user in Okta" %}
+{% img "cross-app-access/image5.jpg", "Assign Agent0 and Todo0 applications to Bob Tables user in Okta", "800" %}
 
 This ensures Bob can sign in to Agent0, and Agent0 can securely request access to Todo0 on his behalf.
 
@@ -138,22 +145,22 @@ With your Okta environment (apps and user) ready, let's set up the local project
 
 1. Clone the repository:
 
-   ```shell
-   git clone https://github.com/oktadev/okta-cross-app-access-mcp
-   ```
+    ```shell
+    git clone https://github.com/oktadev/okta-cross-app-access-mcp
+    ```
 
 2. Change into the project directory:
 
-   ```shell
-   cd okta-cross-app-access-mcp
-   ```
+    ```shell
+    cd okta-cross-app-access-mcp
+    ```
 
 3. Open **VS Code Command Palette** and run **"Dev Containers: Open Folder in Container"**  
    To open Command Palette, select View > Command Palette..., MacOS keyboard shortcut `Cmd+Shift+P`, or Windows keyboard shortcut `Ctrl+Shift+P`
 
 > ⚠️ Note: This sets up all dependencies, including Node, Redis, Prisma ORM, and Yarn.
 
-{% img "cross-app-access/image7.jpg", "Open project in VS Code Dev Container for local development" %}
+{% img "cross-app-access/image7.jpg", "Open project in VS Code Dev Container for local development", "800" %}
 
 ### The Cross App Access MCP project at a glance
 
@@ -171,7 +178,7 @@ okta-cross-app-access-mcp/
 ├─ guide/                   # Docs used by the README
 ├─ images/                  # Diagrams/screens used in README
 ├─ scripts/                 # Helper scripts
-├─ package.json
+├─ package.json             
 └─ tsconfig.json
 ```
 
@@ -179,12 +186,12 @@ okta-cross-app-access-mcp/
 
 At this point, you have:
 
-- **Client IDs and Client Secrets** for both **Agent0** and **Todo0** (from the Okta Admin Console)
-- Your **Okta org URL**, visible in the Okta Admin Console profile menu of the Admin Console. It usually looks like
+* **Client IDs and Client Secrets** for both **Agent0** and **Todo0** (from the Okta Admin Console)  
+* Your **Okta org URL**, visible in the Okta Admin Console profile menu of the Admin Console. It usually looks like
 
-  ```text
-  https://integrator-123456.okta.com
-  ```
+    ```
+    https://integrator-123456.okta.com
+    ```
 
 This URL will be your **IdP issuer URL** and is shared across both apps.
 
@@ -198,9 +205,9 @@ yarn setup:env
 
 This scaffolds the following files:
 
-- `packages/authorization-server/.env.todo`
-- `packages/authorization-server/.env.agent`
-- `packages/agent0/.env`
+* `packages/authorization-server/.env.todo`  
+* `packages/authorization-server/.env.agent`  
+* `packages/agent0/.env`
 
 ### Configure AI and resource application connection values
 
@@ -208,7 +215,7 @@ Open each file and update the placeholder with your org-specific values:
 
 **`authorization-server/.env.todo`**
 
-```bash
+```
 CUSTOMER1_EMAIL_DOMAIN=tables.fake
 CUSTOMER1_AUTH_ISSUER=<Your integrator account URL>
 CUSTOMER1_CLIENT_ID=<Todo0 client id>
@@ -217,7 +224,7 @@ CUSTOMER1_CLIENT_SECRET=<Todo0 client secret>
 
 **`authorization-server/.env.agent`**
 
-```bash
+```
 CUSTOMER1_EMAIL_DOMAIN=tables.fake
 CUSTOMER1_AUTH_ISSUER=<Your integrator account URL>
 CUSTOMER1_CLIENT_ID=<Agent0 client id>
@@ -226,15 +233,14 @@ CUSTOMER1_CLIENT_SECRET=<Agent0 client secret>
 
 **`agent0/.env`**
 
-```bash
+```
 AWS_ACCESS_KEY_ID=<your AWS access key id>
 AWS_SECRET_ACCESS_KEY=<your AWS secret access key>
 ```
 
-> **⚠️ Note:**
->
-> 1. The **issuer URL** (`CUSTOMER1_AUTH_ISSUER`) is the same in both `.env.todo` and `.env.agent`
-> 2. The **Client ID/Client secret** values differ because they come from the respective apps you created
+> **⚠️ Note:**  
+> 1. The **issuer URL** (`CUSTOMER1_AUTH_ISSUER`) is the same in both `.env.todo` and `.env.agent`  
+> 2. The **Client ID/Client secret** values differ because they come from the respective apps you created  
 > 3. AWS credentials are required only for Agent0 (requesting app)
 
 ### Register OAuth 2.0 redirect URIs for both apps
@@ -243,27 +249,27 @@ Finally, we need to tell Okta where to send the authentication response for each
 
 **For Agent0:**
 
-1. From your Okta Admin Console, navigate to **Applications > Applications**
-2. Open the **Agent0** app
-3. Navigate to the **Sign On** tab
-4. In the **Settings** section, select **Edit**
+1. From your Okta Admin Console, navigate to **Applications > Applications**  
+2. Open the **Agent0** app  
+3. Navigate to the **Sign On** tab  
+4. In the **Settings** section, select **Edit**  
 5. In the **Redirect URIs** field, add
 
-   ```text
-   http://localhost:5000/openid/callback/customer1
-   ```
+    ```
+    http://localhost:5000/openid/callback/customer1
+    ```
 
 6. Select **Save**
 
 **Repeat the same steps for Todo0:**
 
-1. Open the **Todo0** app
-2. Go to the **Sign On** tab > **Settings** > **Edit**
+1. Open the **Todo0** app  
+2. Go to the **Sign On** tab > **Settings** > **Edit**  
 3. In the **Redirect URIs** field, add:
 
-   ```text
-   http://localhost:5001/openid/callback/customer1
-   ```
+    ```
+    http://localhost:5001/openid/callback/customer1
+    ```
 
 4. Select **Save**
 
@@ -293,8 +299,8 @@ yarn start
 
 Open the following ports in your Chrome browser's tab:
 
-- **Todo0 (Resource App):** [http://localhost:3001](http://localhost:3001)
-- **Agent0 (Requesting App):** [http://localhost:3000](http://localhost:3000)
+* **Todo0 (Resource App):** [http://localhost:3001](http://localhost:3001)  
+* **Agent0 (Requesting App):** [http://localhost:3000](http://localhost:3000)
 
 At this point, both apps should be live and connected through Okta. 🎉
 
@@ -305,52 +311,43 @@ With everything configured, it's time to see Cross App Access in action.
 ### Interact with Todo0, the XAA resource app, by creating tasks
 
 1. In the **Work Email** field, enter: `bob@tables.fake`, and select **Continue**
-
-{% img "cross-app-access/image14.jpg", "Sign in to Todo0 app using Bob Tables test user" %}
-
-2\. You'll be redirected to the Okta Login page. Sign in with the test user credentials:
-**Username:** `bob@tables.fake`
-**Password:** the temporary password you created earlier
-
-3\. The first time you sign in, you'll be prompted to:
-
-Set a new password
-Enroll in [**Okta Verify**](https://help.okta.com/en-us/content/topics/mobile/okta-verify-overview.htm) for MFA
-
-4\. Once logged in, add several tasks to your to-do list
-5\. Select one of the tasks and mark it as complete to verify that the application updates the status accurately
-{% img "cross-app-access/image6.jpg", "Add and complete tasks in Todo0 Resource App UI" %}
+{% img "cross-app-access/image14.jpg", "Sign in to Todo0 app using Bob Tables test user", "800" %}
+2. You'll be redirected to the Okta Login page. Sign in with the test user credentials:  
+    - **Username:** `bob@tables.fake`  
+    - **Password:** the temporary password you created earlier  
+3. The first time you sign in, you'll be prompted to:  
+    - Set a new password  
+    - Enroll in [**Okta Verify**](https://help.okta.com/en-us/content/topics/mobile/okta-verify-overview.htm) for MFA  
+4. Once logged in, add several tasks to your to-do list  
+5. Select one of the tasks and mark it as complete to verify that the application updates the status accurately
+{% img "cross-app-access/image6.jpg", "Add and complete tasks in Todo0 Resource App UI", "800" %}
 
 ### Let the AI agent, the requesting app, access your todos
 
 1. Open the **Agent0** app in your browser
-
-{% img "cross-app-access/image2.jpg", "Initialize AWS Bedrock client in Agent0 Requesting App" %} 2. Select **Initialize** to set up the AWS Bedrock client. Once connected, you'll see the following message:  
- `✅ Successfully connected to AWS Bedrock! You can now start chatting.`
-
-3\. Select the **Connect to IdP** button
-
-- Behind the scenes, Agent0 requests an identity assertion from Okta and exchanges it for an access token to Todo0
-- If everything is configured correctly, you'll see the following message  
-   `Authentication completed successfully! Welcome back.`
-  {% img "cross-app-access/image13.jpg", "Authenticate Agent0 app with Okta and receive tokens" %}
-
-4\. To confirm that **Agent0** is actually receiving tokens from Okta:
-
-- Open a new browser tab and navigate to: `http://localhost:3000/api/tokens`
-- You should see a JSON payload containing: **`accessToken`, `jagToken`, and `idToken`** This verifies that Agent0 successfully authenticated through Okta and obtained the tokens needed to call Todo0
-  {% img "cross-app-access/image15.jpg", "JSON payload containing tokens"  %}
-
-5\. Now interact with Agent0 using natural prompts. For example: write this prompt
-`What's on my plate in my to-do list?` > **⚠️ Note:** Agent0 will call the Todo0 API using the access token and return your pending tasks
-{% img "cross-app-access/image17.jpg", "Agent0 app displays pending tasks from Todo0 using Cross App Access" %}
-
-6\. Let's try some more prompts
-
-- Ask Agent0 to **add a new task**
-- Ask it to **mark an existing task complete**
-- Refresh the Todo0 app — you'll see the changes reflected instantly
-  {% img "cross-app-access/image4.jpg", "Add and complete tasks in Todo0 Resource App UI" %}
+{% img "cross-app-access/image2.jpg", "Initialize AWS Bedrock client in Agent0 Requesting App", "800" %}
+2. Select **Initialize** to set up the AWS Bedrock client. Once connected, you'll see the following message:  
+   `✅ Successfully connected to AWS Bedrock! You can now start chatting.`
+3. Select the **Connect to IdP** button  
+   - Behind the scenes, Agent0 requests an identity assertion from Okta and exchanges it for an access token to Todo0  
+   - If everything is configured correctly, you'll see the following message  
+     `Authentication completed successfully! Welcome back.`
+{% img "cross-app-access/image13.jpg", "Authenticate Agent0 app with Okta and receive tokens", "800" %}
+4. To confirm that **Agent0** is actually receiving tokens from Okta:  
+   - Open a new browser tab and navigate to: `http://localhost:3000/api/tokens`  
+   - You should see a JSON payload containing: **`accessToken`, `jagToken`, and `idToken`** This verifies that Agent0 successfully authenticated through Okta and obtained the tokens needed to call Todo0
+{% img "cross-app-access/image15.jpg", "JSON payload containing tokens", "800" %}
+5. Now interact with Agent0 using natural prompts. For example: write this prompt
+    ```
+    What's on my plate in my to-do list?
+    ```
+    > **⚠️ Note:** Agent0 will call the Todo0 API using the access token and return your pending tasks
+{% img "cross-app-access/image17.jpg", "Agent0 app displays pending tasks from Todo0 using Cross App Access", "800" %}
+6. Let's try some more prompts  
+   - Ask Agent0 to **add a new task**  
+   - Ask it to **mark an existing task complete**  
+   - Refresh the Todo0 app — you'll see the changes reflected instantly
+{% img "cross-app-access/image4.jpg", "Add and complete tasks in Todo0 Resource App UI", "800" %}
 
 ## Behind the scenes: the OAuth 2.0 Identity Assertion Authorization Grant
 
@@ -359,7 +356,7 @@ Enroll in [**Okta Verify**](https://help.okta.com/en-us/content/topics/mobile/ok
 🔄 Okta vouches for Bob and exchanges that assertion for an access token  
 👋 **Agent0** uses that token to securely call the **Todo0 (resource app)** API
 
-{% img "cross-app-access/mermaid.svg", "Illustration showing secure agent-to-app connections using Okta Cross App Access" %}
+{% img "cross-app-access/mermaid.svg", "Illustration showing secure agent-to-app connections using Okta Cross App Access", "800" %}
 
 **🎉 Congratulations! You've successfully configured and run the Cross App Access project.**
 
@@ -373,16 +370,16 @@ If you're interested in implementing **Cross App Access (XAA)** in your own appl
 
 If this walkthrough helped you understand how Cross App Access works in practice, you might enjoy diving deeper into the standards and conversations shaping it. Here are some resources to continue your journey
 
-- 📘 [Cross App Access Documentation](https://help.okta.com/oie/en-us/content/topics/apps/apps-cross-app-access.htm) – official guides and admin docs to configure and manage Cross App Access in production
-- 🎙️ [Developer Podcast on MCP and Cross App Access](https://www.youtube.com/watch?v=qKs4k5Y1x_s) – hear the backstory, use cases, and why this matters for developers
-- 📄 [OAuth Identity Assertion Authorization Grant (IETF Draft)](https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/) – the emerging standard that powers this flow
+* 📘 [Cross App Access Documentation](https://help.okta.com/oie/en-us/content/topics/apps/apps-cross-app-access.htm) – official guides and admin docs to configure and manage Cross App Access in production
+* 🎙️ [Developer Podcast on MCP and Cross App Access](https://www.youtube.com/watch?v=qKs4k5Y1x_s) – hear the backstory, use cases, and why this matters for developers
+* 📄 [OAuth Identity Assertion Authorization Grant (IETF Draft)](https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/) – the emerging standard that powers this flow
 
 If you're new to OAuth or want to understand the basics behind secure delegated access, check out these resources:
 
-- [What the Heck is OAuth?](/blog/2017/06/21/what-the-heck-is-oauth)
-- [What's the Difference Between OAuth, OpenID Connect, and SAML?](https://www.okta.com/identity-101/whats-the-difference-between-oauth-openid-connect-and-saml/)
-- [Secure Your Express App with OAuth 2.0, OIDC, and PKCE](/blog/2025/07/28/express-oauth-pkce)
-- [Why You Should Migrate to OAuth 2.0 From Static API Tokens](/blog/2023/09/25/oauth-api-tokens)
-- [How to Get Going with the On-Demand SaaS Apps Workshops](/blog/2023/07/27/enterprise-ready-getting-started)
+* [What the Heck is OAuth?](/blog/2017/06/21/what-the-heck-is-oauth) 
+* [What's the Difference Between OAuth, OpenID Connect, and SAML?](https://www.okta.com/identity-101/whats-the-difference-between-oauth-openid-connect-and-saml/)
+* [Secure Your Express App with OAuth 2.0, OIDC, and PKCE](/blog/2025/07/28/express-oauth-pkce)
+* [Why You Should Migrate to OAuth 2.0 From Static API Tokens](/blog/2023/09/25/oauth-api-tokens)
+* [How to Get Going with the On-Demand SaaS Apps Workshops](/blog/2023/07/27/enterprise-ready-getting-started)
 
 Follow us on [LinkedIn](https://www.linkedin.com/company/oktadev), [Twitter](https://twitter.com/oktadev), and subscribe to our [YouTube](https://www.youtube.com/c/oktadev) channel for more developer content. If you have any questions, please leave a comment below!

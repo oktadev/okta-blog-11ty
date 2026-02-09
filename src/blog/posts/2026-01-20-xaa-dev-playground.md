@@ -1,9 +1,9 @@
 ---
-<<title: "Introducing xaa.dev: A Playground for Cross App Access"
+title: "Introducing xaa.dev: A Playground for Cross App Access"
 author: sohail-pathan
 by: advocate
-communities: [javascript, security, python, .net, java, go]
-<<description: "Explore Cross App Access end-to-end with xaa.dev, a free, open playground that lets you test the XAA protocol without any local setup or infrastructure."
+communities: [javascript,security,python,.net,java,go]
+description: "Explore Cross App Access end-to-end with xaa.dev, a free, open playground that lets you test the XAA protocol without any local setup or infrastructure."
 tags: [xaa, cross-app-access, enterprise-ai, agentic-ai, oauth]
 tweets:
 image: xaa-dev-playground/social.jpg
@@ -12,7 +12,7 @@ type: awareness
 
 AI agents are quickly becoming part of everyday enterprise development. They summarize emails, coordinate calendars, query internal systems, and automate workflows across tools.
 
-But once an AI agent needs to access an enterprise application _on behalf of a user_, things get complicated.
+But once an AI agent needs to access an enterprise application *on behalf of a user*, things get complicated.
 
 How do you securely let an AI-powered app act for a user without exposing credentials, spamming consent prompts, or losing administrative control?
 
@@ -56,6 +56,8 @@ The result:
 
 For a deeper dive into why this matters for enterprise AI, read more about Cross App Access in this post:
 
+{% excerpt "enterprise-ai" %}
+
 ## The problem: testing XAA is hard
 
 XAA is built on an emerging OAuth extension called the [Identity Assertion JWT Authorization Grant](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-identity-assertion-authz-grant) – an IETF draft that Okta, along with public and industry contributors, has been actively contributing to. It's powerful, but it's also new, and new protocols need experimentation.
@@ -80,23 +82,18 @@ We pre-configured all the components so you can focus on understanding the flow,
 The playground gives you hands-on access to every role in the Cross App Access flow:
 
 ### Requesting App
-
 Step into the shoes of an AI agent or client application. Authenticate a user, request an ID-JAG from the IdP, and exchange it for an access token at the resource server.
 
 ### Resource App
-
 See the other side of the transaction. Watch how a resource server validates the identity assertion, verifies the trust relationship, and issues scoped access tokens.
 
 ### Identity Provider
-
 We've built a simulated IdP with pre-configured test users. Log in, see how ID-JAGs are minted, and inspect the cryptographic claims that make XAA secure.
 
 ### Resource MCP Server
-
 Connect your AI agents using the Model Context Protocol (MCP). The playground provides a ready-to-use MCP server that acts as a resource application, letting you test how AI agents can securely access protected resources through the Cross App Access flow.
 
 ### Bring your own Requesting App
-
 The built-in Requesting App is great for learning, but the real power comes when you test with your own application, whether it's a traditional app or an MCP client. [Register a client](https://xaa.dev/developer/register) on the playground, grab the configuration, and integrate it into your local app. This lets you validate your XAA implementation against a working IdP and Resource App without spinning up your own infrastructure. The [playground documentation](https://xaa.dev/docs) walks you through the setup step-by-step.
 
 ## How to get started
@@ -120,6 +117,7 @@ That's it. No local tools installations, Docker containers, environment variable
 Watch this walkthrough video of the playground if you'd like a guided tour:
 
 {% youtube hXZ4o2Oasc0 %}
+ 
 
 ## Why we built a testing site for cross app access
 
@@ -134,6 +132,7 @@ xaa.dev lowers the barrier. It helps you:
 ## Inspect the XAA flow
 
 XAA is how enterprise applications will securely connect in an AI-first world. Whether you're building agents, integrating SaaS tools, or just curious about modern OAuth patterns, [xaa.dev](https://xaa.dev) gives you a risk-free environment to learn. Check it out and let us know how it works for you!
+
 
 ## Learn more
 

@@ -1,9 +1,9 @@
 ---
-<<title: "Take User Provisioning to the Next Level with Entitlements"
+title: "Take User Provisioning to the Next Level with Entitlements"
 author: alisa-duncan
 by: advocate
 communities: [javascript]
-<<description: "Manage user entitlements with automated user provisioning in this hands-on workshop."
+description: "Manage user entitlements with automated user provisioning in this hands-on workshop."
 tags: [express, typescript, workshop, enterprise-ready-workshops, entitlements]
 tweets:
   - ""
@@ -21,7 +21,7 @@ Managing users across domains is critical to making B2B apps enterprise-scalable
 <table>
 <tr>
     <td style="font-size: 3rem;">️ℹ️</td>
-    <td <<markdown: "span">
+    <td markdown: "span">
       **Note** <br/>
     This post requires Okta Identity Governance (OIG) features in your Okta org. [Sign up for a new Integrator Free plan](https://developer.okta.com/signup/) to continue.
     </td>
@@ -64,11 +64,15 @@ The Todo app tech stack uses a React frontend and an Express API backend. For th
 
 Follow the instructions in the getting started guide for installing the required tools and serving the Todo application.
 
+{% excerpt "enterprise-ready-getting-started" %}
+
 You'll build upon a prior workshop introducing syncing users across systems using the [System for Cross-domain Identity Management](https://scim.cloud/) (SCIM) protocol.
 
 In this workshop, you'll dive deeper into automated user provisioning by adding the user attributes required for access management, such as user roles, licensing, permissions, or something else you use to denote what actions a user has access to. The access management attributes of users are known by the generic term, user entitlements. Then, we will continue diving deeper into supporting customized user entitlements using the SCIM protocol.
 
 Before we get going with user entitlements, you'll first step through the interactive and fun [Enterprise-Ready Workshop: Manage Users with SCIM](/blog/2023/07/28/scim-workshop) workshop to get the SCIM overview, set up the code and your Okta account, and see how the protocol works. I'll settle down with a cup of tea and a good book and wait while you learn about SCIM and are ready to continue! 🫖🍵📚
+
+{% excerpt "scim-workshop" %}
 
 ### Prepare the Express.js API project
 
@@ -197,14 +201,14 @@ const prisma = new PrismaClient();
 async function main() {
   const org = await prisma.org.create({
     data: {
-      <<domain: "gridco.example"
-      <<apikey: "123123"
+      domain: "gridco.example",
+      apikey: "123123",
     },
   });
   console.log("Created org Portal", org);
 
   // Roles defined by the Todo app
-  const roles = [{ <<name: "Todo-er" }, { <<name: "Todo Auditor" }, { <<name: "Manager" }];
+  const roles = [{ name: "Todo-er" }, { name: "Todo Auditor" }, { name: "Manager" }];
 
   const createdRoles = await Promise.all(roles.map((data) => prisma.role.create({ data })));
 
@@ -214,11 +218,11 @@ async function main() {
 
   const somnusUser = await prisma.user.create({
     data: {
-      <<name: "Somnus Henderson"
-      <<email: "somnus.henderson@gridco.example"
-      <<password: "correct horse battery staple"
+      name: "Somnus Henderson",
+      email: "somnus.henderson@gridco.example",
+      password: "correct horse battery staple",
       orgId: org.id,
-      <<externalId: "31"
+      externalId: "31",
       active: true,
     },
   });
@@ -226,11 +230,11 @@ async function main() {
 
   const trinityUser = await prisma.user.create({
     data: {
-      <<name: "Trinity JustTrinity"
-      <<email: "trinity@gridco.example"
-      <<password: "Zion"
+      name: "Trinity JustTrinity",
+      email: "trinity@gridco.example",
+      password: "Zion",
       orgId: org.id,
-      <<externalId: "32"
+      externalId: "32",
       active: true,
       roles: {
         connect: {
@@ -439,8 +443,8 @@ rolesRoute.route("/").get(async (req, res) => {
   const roles: IOktaRole[] = [
     {
       schemas: [SCHEMA_OKTA_ROLE],
-      <<id: "one"
-      <<displayName: "Todo-er"
+      id: "one",
+      displayName: "Todo-er",
     },
   ];
 
@@ -497,8 +501,8 @@ rolesRoute.route("/").get(async (req, res) => {
   const roles: IOktaRole[] = [
     {
       schemas: [SCHEMA_OKTA_ROLE],
-      <<id: "one"
-      <<displayName: "Todo-er"
+      id: "one",
+      displayName: "Todo-er",
     },
   ];
 
@@ -650,13 +654,13 @@ resourceTypesRoute.route("/").get((req, res) => {
   const resourceTypes: IResourceType[] = [
     {
       schemas: [SCHEMA_RESOURCE_TYPE],
-      <<id: "Role"
-      <<name: "Role"
-      <<endpoint: "/Roles"
-      <<description: "Roles you can set on users of Todo App"
+      id: "Role",
+      name: "Role",
+      endpoint: "/Roles",
+      description: "Roles you can set on users of Todo App",
       schema: SCHEMA_OKTA_ROLE,
       meta: {
-        <<resourceType: "ResourceType"
+        resourceType: "ResourceType",
       },
     },
   ];
@@ -758,7 +762,7 @@ const user = await prisma.user.create({
   },
 });
 
-console.log("Account Created <<ID: ", user.id);
+console.log("Account Created ID: ", user.id);
 ```
 
 One more place to update in the `POST /Users` call. We need to return the roles in the response. Right below the `console.log()` update the `userResponse` to
@@ -776,7 +780,7 @@ userResponse = {
     {
       primary: true,
       value: user.email,
-      <type="work"
+      type: "work",
     },
   ],
   displayName: name,
@@ -835,7 +839,7 @@ usersResponse["Resources"] = users.map((user) => {
       {
         primary: true,
         value: user.email,
-        <<type: "work"
+        type: "work",
       },
     ],
     displayName: user.name,
@@ -894,7 +898,7 @@ userResponse = {
     {
       primary: true,
       value: email,
-      <<type: "work"
+      type: "work",
     },
   ],
   displayName: name,
@@ -951,7 +955,7 @@ userResponse = {
     {
       primary: true,
       value: updatedUser.email,
-      <<type: "work"
+      type: "work",
     },
   ],
   displayName: updatedUser.name,
@@ -986,7 +990,7 @@ Make sure to keep the API running! There's more work to do here!
 
 Navigate to the **Governance** tab. The tab you see is **Entitlements**. Do you see **Role** in the sidenav below the **Search** input? If not, hang tight. Because an app may have many defined entitlements, Okta starts a background job to discover roles asynchronously. It could take up to 10 minutes for the roles to populate.
 
-Eventually, you'll see **Role**; when you select it, you'll see metadata about it, such as the variable name, data type, and description. We also see the <<values: "Manager," "Todo Auditor," and "Todo-er."
+Eventually, you'll see **Role**; when you select it, you'll see metadata about it, such as the variable name, data type, and description. We also see the values: "Manager," "Todo Auditor," and "Todo-er."
 
 {% img "user-entitlements-workshop/entitlements-roles.jpg", "Governance tab with roles discovered by Okta", "800" %}
 
@@ -1124,23 +1128,23 @@ Now, it's time to define the `/Schemas` route. The `/Schemas` endpoint returns a
 schemasRoute.route("/").get((_, res) => {
   const characteristic: ISchema = {
     id: SCHEMA_CHARACTERISTIC,
-    <<name: "Characteristic"
-    <<description: "User characteristics for entitlements"
+    name: "Characteristic",
+    description: "User characteristics for entitlements",
     attributes: [
       {
-        <<name: "is_tall"
-        <<description: "Profile entitlement extension for tallness factor"
-        <<type: "string"
+        name: "is_tall",
+        description: "Profile entitlement extension for tallness factor",
+        type: "string",
         multiValued: false,
         required: false,
-        <<mutability: "readWrite"
-        <<returned: "default"
+        mutability: "readWrite",
+        returned: "default",
         caseExact: false,
-        <<uniqueness: "none"
+        uniqueness: "none",
       },
     ],
     meta: {
-      <<resourceType: "Schema"
+      resourceType: "Schema",
       location: `/v2/Schemas/${SCHEMA_CHARACTERISTIC}`,
     },
   };
@@ -1169,9 +1173,9 @@ characteristicsRoute.route("/").get((_, res) => {
     Resources: [
       {
         schemas: [SCHEMA_CHARACTERISTIC],
-        <<type: "Characteristic"
-        <<id: "is_tall"
-        <<displayName: "This user is so tall"
+        type: "Characteristic",
+        id: "is_tall",
+        displayName: "This user is so tall",
       },
     ],
   };
@@ -1188,22 +1192,22 @@ Lastly, we must add the new characteristic resource type to the `/ResourceTypes`
 const resourceTypes: IResourceType[] = [
   {
     schemas: [SCHEMA_RESOURCE_TYPE],
-    <<id: "Role"
-    <<name: "Role"
-    <<endpoint: "/Roles"
-    <<description: "Roles you can set on users of Todo App"
+    id: "Role",
+    name: "Role",
+    endpoint: "/Roles",
+    description: "Roles you can set on users of Todo App",
     schema: SCHEMA_OKTA_ROLE,
     meta: {
-      <<resourceType: "ResourceType"
+      resourceType: "ResourceType",
     },
   },
   {
     schemas: [SCHEMA_RESOURCE_TYPE],
-    <<id: "Characteristic"
-    <<name: "Characteristic"
-    <<endpoint: "/Characteristics"
-    <<description: "This resource type is user characteristics"
-    <<schema: "urn:okta:scim:schemas:core:1.0:Entitlement"
+    id: "Characteristic",
+    name: "Characteristic",
+    endpoint: "/Characteristics",
+    description: "This resource type is user characteristics",
+    schema: "urn:okta:scim:schemas:core:1.0:Entitlement",
     schemaExtensions: [
       {
         schema: SCHEMA_CHARACTERISTIC,
@@ -1211,7 +1215,7 @@ const resourceTypes: IResourceType[] = [
       },
     ],
     meta: {
-      <<resourceType: "ResourceType"
+      resourceType: "ResourceType",
     },
   },
 ];
@@ -1253,7 +1257,7 @@ In this workshop, we defined roles for the entire Todo app. But what if your Saa
 <table>
 <tr>
     <td style="font-size: 3rem;">️ℹ️</td>
-    <td <<markdown: "span">
+    <td markdown: "span">
       **Note** <br/>
       We used an API key for demonstration purposes, but we recommend using OAuth to secure the calls from Okta to your API for production applications.
     </td>

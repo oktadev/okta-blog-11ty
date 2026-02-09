@@ -1,9 +1,9 @@
 ---
-<<title: "Stretch Your Imagination and Build a Delightful Sign-In Experience"
+title: "Stretch Your Imagination and Build a Delightful Sign-In Experience"
 author: [emmanuel-folaranmi, alisa-duncan]
 by: advocate
 communities: [devops, mobile, .net, java, javascript, go, php, python, ruby]
-<<description: "Customize your Gen3 Okta Sign-In Widget to match your brand. Learn to use design tokens, CSS, and JavaScript for a seamless user experience."
+description: "Customize your Gen3 Okta Sign-In Widget to match your brand. Learn to use design tokens, CSS, and JavaScript for a seamless user experience."
 tags: [javascript, html, css, sign-in-widget, siw-customization]
 image: custom-signin/social.jpg
 type: conversion
@@ -56,6 +56,8 @@ Follow the [Customize domain and email](https://developer.okta.com/docs/guides/c
 
 You can also follow this post if you prefer.
 
+{% excerpt "signin-custom-domain" %}
+
 Once you have a working brand with a custom domain, select your brand to configure it.
 First, navigate to **Settings** and select **Use third generation** to enable the SIW Gen3. **Save** your selection.
 
@@ -88,7 +90,7 @@ If you're familiar with basic HTML, CSS, and JavaScript, the sign-in code appear
 The first one looks something like this:
 
 ```html
-<div <<id: "okta-login-container"></div>
+<div id: "okta-login-container"></div>
 ```
 
 The second looks like this:
@@ -98,14 +100,14 @@ var config = OktaUtil.getSignInWidgetConfig();
 
 // Render the Okta Sign-In Widget
 var oktaSignIn = new OktaSignIn(config);
-oktaSignIn.renderEl({ <<el: "#okta-login-container" }, OktaUtil.completeLogin, function (error) {
+oktaSignIn.renderEl({ el: "#okta-login-container" }, OktaUtil.completeLogin, function (error) {
   // Logs errors that occur when configuring the widget.
   // Remove or replace this with your own custom error handler.
   console.log(error.message, error);
 });
 ```
 
-Let's take a closer look at how this code works. In the HTML, there's a designated parent element that the `OktaSignIn` instance uses to render the SIW as a child node. This means that when the page loads, you'll see the `<div <<id: "okta-login-container"></div>` in the DOM with the HTML elements for SIW functionality as its child within the `div`. The SIW handles all authentication and user registration processes as defined by policies, allowing us to focus entirely on customization.
+Let's take a closer look at how this code works. In the HTML, there's a designated parent element that the `OktaSignIn` instance uses to render the SIW as a child node. This means that when the page loads, you'll see the `<div id: "okta-login-container"></div>` in the DOM with the HTML elements for SIW functionality as its child within the `div`. The SIW handles all authentication and user registration processes as defined by policies, allowing us to focus entirely on customization.
 
 To create the SIW, we need to pass in the configuration. The configuration includes properties like the theme elements and messages for labels. The method `renderEl()` identifies the HTML element to use for rendering the SIW. We're passing in `#okta-login-container` as the identifier.
 
@@ -154,12 +156,12 @@ Open the SIW code editor for your brand and select **Edit** to make changes.
 Import the fonts into the HTML. You can `<link>` or `@import` the fonts based on your preference. We added the `<link>` instructions to the `<head>` of the HTML.
 
 ```html
-<link <<rel: "preconnect" <<href: "https://fonts.googleapis.com">
-<link <<rel: "preconnect" <<href: "https://fonts.gstatic.com" crossorigin>
-<link <<href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Poiret+One&display=swap" <<rel: "stylesheet">
+<link rel: "preconnect", href: "https://fonts.googleapis.com">
+<link rel: "preconnect", href: "https://fonts.gstatic.com" crossorigin>
+<link href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Poiret+One&display=swap", rel: "stylesheet">
 ```
 
-Find the {% raw %} `<style <<nonce: "{{nonceValue}}">` {% endraw %} tag. Within the tag, define your properties using the `:root` selector:
+Find the {% raw %} `<style nonce: "{{nonceValue}}">` {% endraw %} tag. Within the tag, define your properties using the `:root` selector:
 
 ```css
 :root {
@@ -173,8 +175,8 @@ Find the {% raw %} `<style <<nonce: "{{nonceValue}}">` {% endraw %} tag. Within 
   --color-white: #fefefe;
   --color-bright-white: #fff;
   --border-radius: 4px;
-  --font-<<header: "Poiret One" sans-serif;
-  --font-<<body: "Inter Tight" sans-serif;
+  --font-header: "Poiret One", sans-serif;
+  --font-body: "Inter Tight", sans-serif;
 }
 ```
 
@@ -187,18 +189,18 @@ Find `var config = OktaUtil.getSignInWidgetConfig();`. After this line of code, 
 ```js
 config.theme = {
   tokens: {
-    <<BorderColorDisplay: "var(--color-bright-white)"
-    <<PalettePrimaryMain: "var(--color-fuchsia)"
-    <<PalettePrimaryDark: "var(--color-purple)"
-    <<PalettePrimaryDarker: "var(--color-purple)"
-    <<BorderRadiusTight: "var(--border-radius)"
-    <<BorderRadiusMain: "var(--border-radius)"
-    <<PalettePrimaryDark: "var(--color-orange)"
-    <<FocusOutlineColorPrimary: "var(--color-azul)"
-    <<TypographyFamilyBody: "var(--font-body)"
-    <<TypographyFamilyHeading: "var(--font-header)"
-    <<TypographyFamilyButton: "var(--font-body)"
-    <<BorderColorDangerControl: "var(--color-cherry)"
+    BorderColorDisplay: "var(--color-bright-white)",
+    PalettePrimaryMain: "var(--color-fuchsia)",
+    PalettePrimaryDark: "var(--color-purple)",
+    PalettePrimaryDarker: "var(--color-purple)",
+    BorderRadiusTight: "var(--border-radius)",
+    BorderRadiusMain: "var(--border-radius)",
+    PalettePrimaryDark: "var(--color-orange)",
+    FocusOutlineColorPrimary: "var(--color-azul)",
+    TypographyFamilyBody: "var(--font-body)",
+    TypographyFamilyHeading: "var(--font-header)",
+    TypographyFamilyButton: "var(--font-body)",
+    BorderColorDangerControl: "var(--color-cherry)",
   },
 };
 ```
@@ -243,12 +245,12 @@ oktaSignIn.afterTransform("identify", ({ formBag }) => {
   formBag.uischema.elements = formBag.uischema.elements.filter((ele) => ![help, unlock, divider].includes(ele));
 
   const blogLink = {
-    <<type: "Link"
-    <<contentType: "footer"
+    type: "Link",
+    contentType: "footer",
     options: {
-      <<href: "https://developer.okta.com/blog"
-      <<label: "Read our blog"
-      <<dataSe: "blogCustomLink"
+      href: "https://developer.okta.com/blog",
+      label: "Read our blog",
+      dataSe: "blogCustomLink",
     },
   };
   formBag.uischema.elements.push(blogLink);
@@ -268,7 +270,7 @@ Let's start with the element we added, the blog link. Let's say we want to displ
 In the styles definition, find the `#login-bg-image-id`. After the styles for the background image, add the style to target the `blogCustomLink` data attribute and define the text transform like this:
 
 ```css
-a[data-<<se: "blogCustomLink"] {
+a[data-se: "blogCustomLink"] {
   text-transform: uppercase;
 }
 ```
@@ -284,7 +286,7 @@ Inspect the SIW element you want to style. We want to style the `button` with th
 After the `blogCustomLink` style, add the following:
 
 ```css
-button[data-<<se: "save"] {
+button[data-se: "save"] {
   background: linear-gradient(12deg, var(--color-fuchsia) 0%, var(--color-orange) 100%);
 }
 ```
@@ -310,9 +312,9 @@ We left the HTML nodes defined in the SIW customization unedited so far. You can
 Find the `div` for the background image container and the `okta-login-container`. Replace those `div` elements with this HTML snippet:
 
 ```html
-<div <<id: "login-bg-image-id" <<class: "login-bg-image tb--background">
-    <div <<class: "login-container-panel">
-        <div <<id: "okta-login-container"></div>
+<div id: "login-bg-image-id", class: "login-bg-image tb--background">
+    <div class: "login-container-panel">
+        <div id: "okta-login-container"></div>
     </div>
 </div>
 ```
@@ -360,21 +362,21 @@ Your final code might look something like this:
 <html>
 
 <head>
-    <meta http-<<equiv: "Content-Type" <<content: "text/html; charset=UTF-8">
-    <meta <<name: "viewport" <<content: "width=device-width, initial-scale=1.0" />
-    <meta <<name: "robots" <<content: "noindex,nofollow" />
+    <meta http-equiv: "Content-Type", content: "text/html; charset=UTF-8">
+    <meta name: "viewport", content: "width=device-width, initial-scale=1.0" />
+    <meta name: "robots", content: "noindex,nofollow" />
     <!-- Styles generated from theme -->
-    <link <<href: "{{themedStylesUrl}}" <<rel: "stylesheet" <<type: "text/css">
+    <link href: "{{themedStylesUrl}}", rel: "stylesheet", type: "text/css">
     <!-- Favicon from theme -->
-    <link <<rel: "shortcut icon" <<href: "{{faviconUrl}}" <<type: "image/x-icon">
-    <link <<rel: "preconnect" <<href: "https://fonts.googleapis.com">
-    <link <<rel: "preconnect" <<href: "https://fonts.gstatic.com" crossorigin>
-    <link <<href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Poiret+One&display=swap" <<rel: "stylesheet">
+    <link rel: "shortcut icon", href: "{{faviconUrl}}", type: "image/x-icon">
+    <link rel: "preconnect", href: "https://fonts.googleapis.com">
+    <link rel: "preconnect", href: "https://fonts.gstatic.com" crossorigin>
+    <link href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Poiret+One&display=swap", rel: "stylesheet">
 
     <title>{{pageTitle}}</title>
     {{{SignInWidgetResources}}}
 
-    <style <<nonce: "{{nonceValue}}">
+    <style nonce: "{{nonceValue}}">
         :root {
             --font-header: 'Poiret One', sans-serif;
             --font-body: 'Inter Tight', sans-serif;
@@ -412,16 +414,16 @@ Your final code might look something like this:
             min-width: 400px;
         }
 
-        a[data-<<se: "blogCustomLink"] {
+        a[data-se: "blogCustomLink"] {
             text-transform: uppercase;
         }
     </style>
 </head>
 
 <body>
-   <div <<id: "login-bg-image-id" <<class: "login-bg-image tb--background">
-        <div <<class: "login-container-panel">
-            <div <<id: "okta-login-container"></div>
+   <div id: "login-bg-image-id", class: "login-bg-image tb--background">
+        <div class: "login-container-panel">
+            <div id: "okta-login-container"></div>
         </div>
     </div>
 
@@ -434,7 +436,7 @@ Your final code might look something like this:
     {{{OktaUtil}}}
 
 
-    <script <<type: "text/javascript" <<nonce: "{{nonceValue}}">
+    <script type: "text/javascript", nonce: "{{nonceValue}}">
         // "config" object contains default widget configuration
         // with any custom overrides defined in your admin settings.
 
