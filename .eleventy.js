@@ -5,7 +5,6 @@ import markdownItToc from "markdown-it-table-of-contents";
 import tailwindcss from "@tailwindcss/vite";
 import yaml from "js-yaml";
 
-import EleventyPluginNavigation from "@11ty/eleventy-navigation";
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
@@ -34,7 +33,6 @@ export default function (eleventyConfig) {
   );
 
   // Plugins
-  eleventyConfig.addPlugin(EleventyPluginNavigation);
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyAsciidoc);
