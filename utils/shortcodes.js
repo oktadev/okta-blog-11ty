@@ -86,6 +86,7 @@ const speakerdeck = (id, width = 600) => {
 
 const excerpt = (stemPath, postsCollection) => {
   const post = postsCollection.find((p) => p.page.fileSlug === stemPath);
+  console.log({ post });
   const authorKeys = Array.isArray(post.data.author)
     ? post.data.author
     : [post.data.author];

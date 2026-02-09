@@ -32,7 +32,7 @@ Before we dive into possible solutions, let's review the three authentication fa
       {% img "authentication-identity-security/factor-knowledge.jpg", "Icon of someone thinking" %}
       </td>
     <td>
-      <span class="font-semibold">Something you know</span> <br />
+      <span class: "font-semibold">Something you know</span> <br />
       Knowledge factors include passwords and PINs
     </td>
   </tr>
@@ -41,7 +41,7 @@ Before we dive into possible solutions, let's review the three authentication fa
       {% img "authentication-identity-security/factor-possession.jpg", "Icon showing devices such as computer, tablet, and phone" %}
     </td>
     <td>
-      <span class="font-semibold">Something you have</span> <br />
+      <span class: "font-semibold">Something you have</span> <br />
       Possession factors include devices such as smart cards, security keys, phones, and tablets
     </td>
   </tr>
@@ -50,7 +50,7 @@ Before we dive into possible solutions, let's review the three authentication fa
       {% img "authentication-identity-security/factor-inherence.jpg", "Icon of a hand with fingerprint" %}
     </td>
     <td>
-      <span class="font-semibold">Something you are</span> <br />
+      <span class: "font-semibold">Something you are</span> <br />
       Inference factors include biometrics such as fingerprints and facial recognition
     </td>
   </tr>
@@ -65,14 +65,14 @@ Phishing-resistant authentication relies on biometrics and specialized devices o
 
 Phishing-resistant factors include the following forms.
 
-<h3 class="no_toc">Smart cards and PIV cards</h3>
+<h3 class: "no_toc">Smart cards and PIV cards</h3>
 Large enterprises, regulated industries, and government entities widely use smart cards and PIV cards. These organizations may issue smart cards for attaching personal profiles to shared workstation access, as seen in banks or hospitals. Organizations may issue cards to their workforce even when the employee uses an issued laptop as an extra security measure.
 
 **Pros**: Secure, can be uniquely tied to the user, and well utilized in industries
 
 **Cons**: Requires a physical device that can be lost or stolen, not scalable to use for public and consumer security due to hardware requirements and convenience
 
-<h3 class="no_toc">Security keys and hardware devices</h3>
+<h3 class: "no_toc">Security keys and hardware devices</h3>
 
 Hardware security keys are another elevated security mechanism organizations use for their workforce. Security keys can have differing levels of security, from the older and less secure Time-based One-Time Password (TOTP) keys, Near Field Communication (NFC) keys that require a secondary device such as a phone, and keys requiring biometrics. For the highest level of security, you'll want to use keys and hardware with biometric capabilities. Security keys work by storing the credentials on hardware, which requires registering the key on each device you use. While keys that plug into computers may be familiar, biometric-capable hardware, such as a laptop, and capable software can also be a phishing-resistant authentication factor. Okta FastPass on a biometric-capable computer is an example of a phishing-resistant hardware device.
 
@@ -80,7 +80,7 @@ Hardware security keys are another elevated security mechanism organizations use
 
 **Cons**: It may require a physical device, you need to register the key on each device you use, and it isn't scalable for public and consumer security due to hardware requirements and convenience. Device manufacturers can make them small and lightweight for convenience, alleviating concerns about relying on bulky equipment. But what happens if the user loses or damages this device? How long would it take before they have access to the system again?
 
-<h3 class="no_toc">FIDO2 with WebAuthn and Passkeys</h3>
+<h3 class: "no_toc">FIDO2 with WebAuthn and Passkeys</h3>
 
 FIDO2 and WebAuthn combined are a strong authentication factor that utilizes biometrics on capable devices and new capabilities in web frameworks to increase user security reliably. This factor requires a biometric-capable device meeting FIDO standards, such as a phone or a laptop, and capable software. The [World Wide Web Consortium spec for web authentication](https://www.w3.org/TR/webauthn-2/) (WebAuthn) means JavaScript-based web apps can support phishing-resistant authentication right in the browser. The difference between phishing-resistant hardware factors, such as security keys or Okta FastPass on biometric devices and Passkeys, is discoverability and the ability to port credentials. Instead of storing credentials on the hardware, discoverable FIDO authentication stores credentials outside software, such as in the iCloud Keychain or Android Keystore. The credential storage makes authenticating on the same site across different devices within the same ecosystem possible without re-registering.
 
@@ -90,7 +90,7 @@ FIDO2 and WebAuthn combined are a strong authentication factor that utilizes bio
 
 For the highest levels of identity security, use phishing-resistant factors.
 
-<h3 class="no_toc">Phishing-resistant factors decision tree</h3>
+<h3 class: "no_toc">Phishing-resistant factors decision tree</h3>
 We recommend phishing-resistant factors at Okta as they offer the best application protection. You have identity assurances built in, along with authentication security. Consider this decision tree for your authentication needs:
 
 {% svg "authentication-identity-security/phr-decision-tree", "Decision tree for phishing-resistant factors. If the target user type are consumers, choose passkeys. For workforce users, if the user base require shared kiosks or hardware, elect hardware keys or smart cards. In all other cases, use FIDO2 with WebAuthn." %}{.center-image }
@@ -111,19 +111,19 @@ sequenceDiagram
 
 We no longer live in a world where passwords alone are good enough to secure sensitive resources. Studies have shown that over [80% of data breaches result from compromised credentials](https://www.verizon.com/business/resources/reports/dbir/). We must elevate authentication methods by avoiding weak credentials and preferring more substantial forms. Look towards industry leaders in cybersecurity, including companies such as Okta, nonprofit foundations such as OWASP, and government standards such as [NIST](https://pages.nist.gov/800-63-4/) and [NCSC](https://www.ncsc.gov.uk/collection/10-steps/identity-and-access-management), to guide you towards strong factors and away from weak ones. In particular, be wary of legacy factors.
 
-<h3 class="no_toc">Avoid security questions as a factor</h3>
+<h3 class: "no_toc">Avoid security questions as a factor</h3>
 
 Cybersecurity organizations do not recommend security questions, as they are neither secure nor reliable. Security questions are vulnerable to social engineering attacks. It's best to avoid this method.
 
-<h3 class="no_toc">SMS one-time codes are unsafe</h3>
+<h3 class: "no_toc">SMS one-time codes are unsafe</h3>
 
 Attackers can access those messages through SIM-swapping and interception attacks. NIST proposes deprecating SMS as an authentication factor, so consider alternate authentication methods.
 
-<h3 class="no_toc">Email Time-based One-Time Passwords (TOTP) have similar security issues as SMS</h3>
+<h3 class: "no_toc">Email Time-based One-Time Passwords (TOTP) have similar security issues as SMS</h3>
 
 Using email for TOTP presents similar security issues as SMS codes. Attackers can intercept email. Emails may mistakenly get flagged as spam. Email delivery delays can result in configuring longer time validity periods, causing lower security.
 
-<h3 class="no_toc">Avoid password antipatterns</h3>
+<h3 class: "no_toc">Avoid password antipatterns</h3>
 
 Passwords must evolve by allowing longer character lengths and character variety. Avoid antipatterns such as complexity requirements and forced password resets. Enforce strong passwords by checking them against compromised password databases. Password managers can offset user risks by recommending unique, strong passwords for each site and applying the stored passwords. Still, password managers aren't failproof, and users may use insecure passwords for the password manager themselves.
 
@@ -133,11 +133,11 @@ These factors do offer a weak barrier to sensitive resources, but a key element 
 
 Identity security isn't a one-size-fits-all solution. FIDO2 with WebAuthn factors such as Okta FastPass for workforce use cases and Passkeys for consumer use cases can be the standard methodology.
 
-<h3 class="no_toc">Consider Adaptive MFA for conditional authentication requirements</h3>
+<h3 class: "no_toc">Consider Adaptive MFA for conditional authentication requirements</h3>
 
 Complex use cases call for more tailoring. Your needs may change depending on use factors such as geographic location, IP addresses, device attributes, and threat detection. Identity Providers offer solutions that help you tailor authentication security. For example, Okta supports features such as [Adaptive MFA](https://www.okta.com/identity-101/adaptive-authentication/), which adjusts authentication requirements depending on context, and [Identity Threat Protection](https://help.okta.com/oie/en-us/content/topics/itp/overview.htm), which continuously monitors threats and can react by terminating authenticated sessions. If your industry requires the highest levels of identity security or your application contains highly sensitive resources, look to these options.
 
-<h3 class="no_toc">Revalidate identity for sensitive resource requests</h3>
+<h3 class: "no_toc">Revalidate identity for sensitive resource requests</h3>
 
 Identity assurances don't have to happen only at application entry. When sensitive actions and data require elevated authentication, consider using the [Step Up Authentication Challenge](https://auth0.com/blog/what-is-step-up-authentication-when-to-use-it/) to protect resources. The Step Up Authentication Challenge is an OAuth standard for requiring secure factors or recent authentication when performing actions within the application.
 
@@ -149,17 +149,17 @@ What do all these recommendations mean for developers working on these applicati
 
 We developers have a tough job. We must ensure our applications meet compliance requirements and guard against security threats, all while delivering product features. Authentication is foundational, but not your entire product line. It's an expectation that doesn't drive product innovations for your app, but detrimental when implemented incorrectly.
 
-<h3 class="no_toc">Use an Identity Provider (IDP) that supports OAuth 2.1 and OpenID Connect (OIDC)</h3>
+<h3 class: "no_toc">Use an Identity Provider (IDP) that supports OAuth 2.1 and OpenID Connect (OIDC)</h3>
 
 To best protect your application and free yourself from getting into the weeds of implementing authentication, delegate it to your Identity Provider (IdP) whenever possible. When you delegate authentication to an IdP like Okta, you can access industry-recognized best practices, such as using OAuth 2.1 and OpenID Connect (OIDC) standards with user redirect for the authentication challenge. Redirecting the user to the Okta-hosted Sign-in Widget frees you from managing authentication methods manually. It allows you to leverage the Sign-in Widget user challenge with the Okta Identity Engine (OIE) for phishing-resistant authentication factors. Using the Okta Identity Engine means your app accesses the latest and greatest features for secure identity management.
 
-<h3 class="no_toc">Delegate authentication to your Identity Provider (IDP)</h3>
+<h3 class: "no_toc">Delegate authentication to your Identity Provider (IDP)</h3>
 
 When you redirect the user to Okta for sign-in, you make authentication Okta's problem. And that's great because it provides you with the most security and the least amount of work. Your Okta administrator can configure authentication policies and add business rules to those authentication user challenges. You don't have to worry about how to implement WebAuthn in your app, ensuring you have all the user controls to handle push notifications, or track sign-in context to adapt authentication factors. It's all handled. All you need to know is whether the user completed authentication challenges, and then you can return to delivering features.
 
 If you're concerned a browser redirect for sign in degrades user experience or if your application's use case demands a custom look and feel, you can customize the Okta-hosted Sign-In Widget's styles. When you combine a custom-branded Sign-In Widget with a custom domain, your users may never know they leave your site. We're continuing to build out capabilities in this area so you can deliver both secure identity and branding requirements. Be on the lookout for content about customizing sign in.
 
-<h3 class="no_toc">Use a vetted and well-maintained OIDC client library</h3>
+<h3 class: "no_toc">Use a vetted and well-maintained OIDC client library</h3>
 
 A vetted, well-maintained OIDC client library increases implementation speed, lowers developer effort, and, most importantly, is crucial for authentication security. Because OAuth 2.1 and OIDC are open standards, writing your code to handle the required transactions is tempting. Resist the temptation for the sake of your application security and the efforts for the continued maintenance that good authentication libraries require. It's too easy to introduce developer error in something like the Proof-Key for Code Exchange (PKCE) verification steps or to miss something in the token verification, for example. [Many more subtle errors can adversely affect your application](https://salt.security/blog/traveling-with-oauth-account-takeover-on-booking-com). Resist the temptation.
 
