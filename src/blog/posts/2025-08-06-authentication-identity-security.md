@@ -93,7 +93,7 @@ For the highest levels of identity security, use phishing-resistant factors.
 <h3 class="no_toc">Phishing-resistant factors decision tree</h3>
 We recommend phishing-resistant factors at Okta as they offer the best application protection. You have identity assurances built in, along with authentication security. Consider this decision tree for your authentication needs:
 
-{% svg "authentication-identity-security/phr-decision-tree", "Decision tree for phishing-resistant factors. If the target user type are consumers, choose passkeys. For workforce users, if the user base require shared kiosks or hardware, elect hardware keys or smart cards. In all other cases, use FIDO2 with WebAuthn." %}{.center-image }
+{% svg {src:"authentication-identity-security/phr-decision-tree", alt:"Decision tree for phishing-resistant factors. If the target user type are consumers, choose passkeys. For workforce users, if the user base require shared kiosks or hardware, elect hardware keys or smart cards. In all other cases, use FIDO2 with WebAuthn."} %}{.center-image}
 
 <!--
 Tweak the diagram on https://mermaid.live/ with the following content
