@@ -13,15 +13,16 @@ github: https://github.com/oktadev/okta-ios-swift-directauth-example
 Building secure and seamless sign-in experiences is a core challenge for today's iOS developers. Users expect authentication that feels instant, yet protects them with strong safeguards like multi-factor authentication (MFA). With Okta's DirectAuth and push notification support, you can achieve both – delivering native, phishing-resistant MFA flows without ever leaving your app.
 
 In this post, we'll walk you through how to:
-  1. Set up your Okta developer account
-  2. Configure your Okta org for DirectAuth and push notification factor
-  3. Enable your iOS app to drive DirectAuth flows natively
-  4. Create an AuthService with the support of DirectAuth
-  5. Build a fully working SwiftUI demo leveraging the AuthService
+
+1. Set up your Okta developer account
+2. Configure your Okta org for DirectAuth and push notification factor
+3. Enable your iOS app to drive DirectAuth flows natively
+4. Create an AuthService with the support of DirectAuth
+5. Build a fully working SwiftUI demo leveraging the AuthService
 
 Note: This guide assumes you're comfortable developing in Xcode using Swift and have basic familiarity with Okta's identity flows.
 
-If you want to skip the tutorial and run the project, you can [follow the instructions in the project's README](https://github.com/oktadev/okta-ios-swift-directauth-example).  
+If you want to skip the tutorial and run the project, you can [follow the instructions in the project's README](https://github.com/oktadev/okta-ios-swift-directauth-example).
 
 **Table of Contents**{: .hide }
 [[toc]]
@@ -34,54 +35,56 @@ This means your app can seamlessly verify credentials, obtain tokens, and trigge
 
 Before you begin, you'll need an Okta Integrator Free Plan account. To get one, sign up for an [Integrator account](https://developer.okta.com/login). Once you have an account, sign in to your [Integrator account](https://developer.okta.com/login). Next, in the Admin Console:
 
-  1. Go to **Applications** > **Applications**
-  2. Select **Create App Integration**
-  3. Select **OIDC - OpenID Connect** as the sign-in method
-  4. Select **Native Application** as the application type, then select **Next**
-  5. Enter an app integration name
-  6. Configure the redirect URIs:
-     * **Redirect URI**: `com.okta.{yourOktaDomain}:/callback`
-     * **Post Logout Redirect URI**: `com.okta.{yourOktaDomain}:/` (where `{yourOktaDomain}.okta.com` is your Okta domain name). Your domain name is reversed to provide a unique scheme to open your app on a device.
-  7. Select **Advanced v**.
-     * Select the **OOB** and **MFA OOB** grant types.
-  8. In the **Controlled access** section, select the appropriate access level
-  9. Select **Save**
+1. Go to **Applications** > **Applications**
+2. Select **Create App Integration**
+3. Select **OIDC - OpenID Connect** as the sign-in method
+4. Select **Native Application** as the application type, then select **Next**
+5. Enter an app integration name
+6. Configure the redirect URIs:
+   - **Redirect URI**: `com.okta.{yourOktaDomain}:/callback`
+   - **Post Logout Redirect URI**: `com.okta.{yourOktaDomain}:/` (where `{yourOktaDomain}.okta.com` is your Okta domain name). Your domain name is reversed to provide a unique scheme to open your app on a device.
+7. Select **Advanced v**.
+   - Select the **OOB** and **MFA OOB** grant types.
+8. In the **Controlled access** section, select the appropriate access level
+9. Select **Save**
 
 NOTE: When using a custom authorization server, you need to set up authorization policies. Complete these additional steps:
 
-  1. In the Admin Console, go to **Security** > **API** > **Authorization Servers**
-  2. Select your custom authorization server (`default`)
-  3. On the Access Policies tab, ensure you have at least one policy:
-     * If no policies exist, select **Add New Access Policy**
-     * Give it a name like "Default Policy"
-     * Set **Assign** to "All clients"
-     * Click **Create Policy**
-  4. For your policy, ensure you have at least one rule:
-     * Select **Add Rule** if no rules exist
-     * Give it a name like "Default Rule"
-     * Set **Grant type** is to "Authorization Code"
-     * Select **Advanced** and enable "MFA OOB"
-     * Set **User is** to "Any user assigned the app"
-     * Set **Scopes requested** to "Any scopes"
-     * Select **Create Rule**
+1. In the Admin Console, go to **Security** > **API** > **Authorization Servers**
+2. Select your custom authorization server (`default`)
+3. On the Access Policies tab, ensure you have at least one policy:
+   - If no policies exist, select **Add New Access Policy**
+   - Give it a name like "Default Policy"
+   - Set **Assign** to "All clients"
+   - Click **Create Policy**
+4. For your policy, ensure you have at least one rule:
+   - Select **Add Rule** if no rules exist
+   - Give it a name like "Default Rule"
+   - Set **Grant type** is to "Authorization Code"
+   - Select **Advanced** and enable "MFA OOB"
+   - Set **User is** to "Any user assigned the app"
+   - Set **Scopes requested** to "Any scopes"
+   - Select **Create Rule**
 
 For more details, see the [Custom Authorization Server](https://developer.okta.com/docs/concepts/auth-servers/#custom-authorization-server) documentation.
 
 <details>
    <summary>Where are my new app's credentials?</summary>
-  <div markdown: "1">
+  <div markdown="1">
    Creating an OIDC Native App manually in the Admin Console configures your Okta Org with the application settings.
 
 After creating the app, you can find the configuration details on the app's **General** tab:
-  * **Client ID**: Found in the **Client Credentials** section
-  * **Issuer**: Found in the **Issuer URI** field for the authorization server that appears by selecting **Security** > **API** from the navigation pane.
-  
-  ```
-  Issuer:    https://dev-133337.okta.com/oauth2/default
-  Client ID: 0oab8eb55Kb9jdMIr5d6
-  ```
+
+- **Client ID**: Found in the **Client Credentials** section
+- **Issuer**: Found in the **Issuer URI** field for the authorization server that appears by selecting **Security** > **API** from the navigation pane.
+
+```
+Issuer:    https://dev-133337.okta.com/oauth2/default
+Client ID: 0oab8eb55Kb9jdMIr5d6
+```
 
 **NOTE**: You can also use the [Okta CLI Client](https://github.com/okta/okta-cli-client) or [Okta PowerShell Module](https://github.com/okta/okta-powershell-cli) to automate this process. See this guide for more information about setting up your app.
+
 </div>
 </details>
 
@@ -99,32 +102,33 @@ Navigate to **Security** > **Authenticators**. Find **Okta Verify** and select *
 
 Before integrating Okta DirectAuth and Push Notification MFA, make sure your development environment meets the following requirements:
 
-  * Xcode 15.0 or later – This guide assumes you're comfortable developing iOS apps in Swift using Xcode.
-  * Swift 5+ – All examples use modern Swift language features.
-  * Swift Package Manager (SPM) – Dependency manager handled through SPM, which is built into Xcode.
+- Xcode 15.0 or later – This guide assumes you're comfortable developing iOS apps in Swift using Xcode.
+- Swift 5+ – All examples use modern Swift language features.
+- Swift Package Manager (SPM) – Dependency manager handled through SPM, which is built into Xcode.
 
 Once your environment is ready, create a new iOS project in Xcode and prepare it for integration with Okta's mobile libraries.
 
 ## Authenticate your iOS app using Okta DirectAuth
 
 If you are starting from scratch, create a new iOS app:
-  1. Open Xcode
-  2. Go to **File** > **New** > **Project**
-  3. Select **iOS App** and select **Next**
-  4. Enter the name of the project, such as "okta-mfa-direct-auth"
-  5. Set the Interface to SwiftUI
-  6. Select **Next** and save your project locally
+
+1. Open Xcode
+2. Go to **File** > **New** > **Project**
+3. Select **iOS App** and select **Next**
+4. Enter the name of the project, such as "okta-mfa-direct-auth"
+5. Set the Interface to SwiftUI
+6. Select **Next** and save your project locally
 
 To integrate Okta's Direct Authentication SDK into your iOS app, we'll use Swift Package Manager (SPM) – the recommended and modern way to manage dependencies in Xcode.
 
 Follow these steps:
 
-  1. Open your project in Xcode (or create a new one if needed)
-  2. Go to **File** > **Add Package Dependencies**
-  3. In the search field at the top-right, enter: `https://github.com/okta/okta-mobile-swift` and press <kbd>Return</kbd>. Xcode will automatically fetch the available packages.
-  4. Select the **latest version** (recommended) or specify a compatible version with your setup
-  5. When prompted to choose which products to add, ensure that you select your app target next to **OktaDirectAuth** and **AuthFoundation**
-  6. Select **Add Package**
+1. Open your project in Xcode (or create a new one if needed)
+2. Go to **File** > **Add Package Dependencies**
+3. In the search field at the top-right, enter: `https://github.com/okta/okta-mobile-swift` and press <kbd>Return</kbd>. Xcode will automatically fetch the available packages.
+4. Select the **latest version** (recommended) or specify a compatible version with your setup
+5. When prompted to choose which products to add, ensure that you select your app target next to **OktaDirectAuth** and **AuthFoundation**
+6. Select **Add Package**
 
 These packages provide all the tools you need to implement native authentication flows using OAuth 2.0 and OpenID Connect (OIDC) with DirectAuth, including secure token handling and MFA challenge management – without relying on a browser session.
 
@@ -135,11 +139,12 @@ Once the integration is complete, you'll see **OktaMobileSwift** and its depende
 The cleanest and most scalable way to manage configuration is to use a property list file for Okta stored in your app bundle.
 
 Create the property list for your OIDC and app config by following these steps:
-  1. Right-click on the root folder of the project
-  2. Select **New File from Template** (**New File** in legacy Xcode versions)
-  3. Ensure you have iOS selected on the top picker
-  4. Select **Property List template** and select **Next**
-  5. Name the template `Okta` and select Create to create an `Okta.plist` file
+
+1. Right-click on the root folder of the project
+2. Select **New File from Template** (**New File** in legacy Xcode versions)
+3. Ensure you have iOS selected on the top picker
+4. Select **Property List template** and select **Next**
+5. Name the template `Okta` and select Create to create an `Okta.plist` file
 
 You can edit the file in XML format by right-clicking and selecting **Open As** > **Source Code**. Copy and paste the following code into the file.
 
@@ -335,7 +340,7 @@ func signIn(username: String, password: String) {
 Let's break down what's happening step by step:
 
 **1. Start the sign-in process**
-   
+
 When the function is called, it launches a new asynchronous Task and sets the UI state to .authenticating.
 It then initiates the DirectAuth flow using the provided username and password:
 
@@ -346,7 +351,7 @@ let result = try await flow?.start(username, with: .password(password))
 This sends the user's credentials to Okta's Direct Authentication API and waits for a response.
 
 **2. Handle successful authentication**
-   
+
 If Okta validates the credentials and no additional verification is needed, the result will be `.success(token)`.
 
 The returned Token object contains access, refresh, and ID tokens.
@@ -362,7 +367,7 @@ state = .authorized(token)
 This marks the user as authenticated and updates the app state, allowing your UI to transition to the signed-in experience.
 
 **3. Handle MFA with push notification**
-   
+
 If Okta determines that an MFA challenge is required, the result will be .mfaRequired.
 The app updates its state to .waitingForPush, prompting the user to approve the login on their Okta Verify app:
 
@@ -405,20 +410,20 @@ The following diagram illustrates how the authentication flow works under the ho
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
 flowchart TD
-    A["User
-    (enters creds)"] --> B("iOS App (Swift)
-    AuthService.signIn()")
-    B --> C("Okta DirectAuth API
-    Validates credentials")
-    C --> D{"MFA Required?"}
-    D -->|No| E[Tokens]
-    D -->|Yes| F["Okta Verify Push Notification
-    (user approves sign-in)"]
-    F --> G["iOS App resumes flow
-    flow.resume(.oob(push))"]
-    G -->H["Token issued and stored
-    Credential.store(token)"]
-    H -->I[fa:fa-circle-check User authenticated]
+A["User
+(enters creds)"] --> B("iOS App (Swift)
+AuthService.signIn()")
+B --> C("Okta DirectAuth API
+Validates credentials")
+C --> D{"MFA Required?"}
+D -->|No| E[Tokens]
+D -->|Yes| F["Okta Verify Push Notification
+(user approves sign-in)"]
+F --> G["iOS App resumes flow
+flow.resume(.oob(push))"]
+G -->H["Token issued and stored
+Credential.store(token)"]
+H -->I[fa:fa-circle-check User authenticated]
 #}
 
 ### Sign-out users when using DirectAuth
@@ -439,7 +444,7 @@ func signOut() async {
 
 Let's look at what each step does:
 **1. Check for an existing credential**
-   
+
 ```swift
 if let credential = Credential.default {
 ```
@@ -448,7 +453,7 @@ The method first checks if a stored credential (token) exists in memory.
 `Credential.default` represents the current authenticated session created earlier during sign-in.
 
 **2. Revoke the tokens from Okta**
-   
+
 ```swift
 try? await credential.revoke()
 ```
@@ -469,7 +474,7 @@ After revoking the tokens, the app clears the local credential object.
 This removes any sensitive authentication data from memory, ensuring that no valid tokens remain on the device.
 
 **4. Reset the authentication state**
-   
+
 ```swift
 state = .idle
 ```
@@ -482,7 +487,7 @@ The protocol confirmation is almost complete, and we only have two functions rem
 
 ### Refresh access tokens securely
 
-Access tokens issued by Okta have a limited lifetime to reduce the risk of misuse if compromised. OAuth clients that can't maintain secrets, like mobile apps, require short access token lifetimes for security. 
+Access tokens issued by Okta have a limited lifetime to reduce the risk of misuse if compromised. OAuth clients that can't maintain secrets, like mobile apps, require short access token lifetimes for security.
 
 To maintain a seamless user experience, your app should refresh tokens automatically before they expire.
 The `refreshTokenIfNeeded()` method handles this process securely using `AuthFoundation`'s built-in token management APIs.
@@ -498,7 +503,7 @@ func refreshTokenIfNeeded() async throws {
 
 **1. Check for an existing credential**
 
-```swift   
+```swift
 guard let credential = Credential.default else { return }
 ```
 
@@ -542,7 +547,7 @@ func userInfo() async throws -> UserInfo? {
 }
 ```
 
-**1. Return the cached user info** 
+**1. Return the cached user info**
 
 ```swift
 if let userInfo = Credential.default?.userInfo {
@@ -577,7 +582,7 @@ etc...
 The `AuthFoundation` SDK handles the request and parsing for you, returning a `UserInfo` object.
 
 **3. Handle errors gracefully**
-   
+
 ```swift
 catch {
   return nil
@@ -1230,7 +1235,7 @@ Access tokens have a limited lifetime to ensure your app's security. When a toke
 
 In this section, you'll add support for token refresh, allowing users to stay authenticated without repeating the entire sign-in and MFA flow.
 
-You'll add an action in the UI that calls the `refreshTokenIfNeeded()` method from your `AuthService`, which silently exchanges the refresh token for a new set of valid tokens. We're making this call manually, but you can watch for upcoming expiry and refresh the token before it happens preemptively. While we don't show it here, you should use **Refresh Token Rotation** to ensure refresh tokens are also short-lived as a security measure. 
+You'll add an action in the UI that calls the `refreshTokenIfNeeded()` method from your `AuthService`, which silently exchanges the refresh token for a new set of valid tokens. We're making this call manually, but you can watch for upcoming expiry and refresh the token before it happens preemptively. While we don't show it here, you should use **Refresh Token Rotation** to ensure refresh tokens are also short-lived as a security measure.
 
 First, we need to add the `refreshTokenButton`, which we'll add to the `AuthView`. Open the `AuthView`, scroll down to the last private extension in the "Action Buttons" mark, and add the following button at the end of the extension:
 
@@ -1307,6 +1312,7 @@ init() {
   }
 }
 ```
+
 ## Build your own secure native sign-in iOS app
 
 You've now built a fully native authentication flow on iOS using Okta DirectAuth with push notification MFA – no browser redirects required. You can check your work against [the GitHub repo](https://github.com/oktadev/okta-ios-swift-directauth-example) for this project.
@@ -1315,8 +1321,9 @@ Your app securely signs users in, handles multi-factor verification through Okta
 By combining `AuthFoundation` and `OktaDirectAuth`, you've implemented a modern, phishing-resistant authentication system that balances strong security with a seamless user experience – all directly within your SwiftUI app.
 
 If you found this post interesting, you may want to check out these resources:
-* [How to Build a Secure iOS App with MFA](/blog/2025/08/20/ios-mfa)
-* [Introducing the New Okta Mobile SDKs](/blog/2022/08/30/introducing-the-new-okta-mobile-sdks)
-* [A History of the Mobile SSO (Single Sign-On) Experience in iOS](/blog/2022/01/13/mobile-sso)
+
+- [How to Build a Secure iOS App with MFA](/blog/2025/08/20/ios-mfa)
+- [Introducing the New Okta Mobile SDKs](/blog/2022/08/30/introducing-the-new-okta-mobile-sdks)
+- [A History of the Mobile SSO (Single Sign-On) Experience in iOS](/blog/2022/01/13/mobile-sso)
 
 Follow OktaDev on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube channel](https://www.youtube.com/c/OktaDev/) to learn about secure authentication and other exciting content. We also want to hear from you about topics you want to see and questions you may have. Leave us a comment below!
