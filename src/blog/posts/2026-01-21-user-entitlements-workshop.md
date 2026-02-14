@@ -21,7 +21,7 @@ Managing users across domains is critical to making B2B apps enterprise-scalable
 <table>
 <tr>
     <td style="font-size: 3rem;">️ℹ️</td>
-    <td markdown="span">
+    <td markdown="div">
       **Note** <br/>
     This post requires Okta Identity Governance (OIG) features in your Okta org. [Sign up for a new Integrator Free plan](https://developer.okta.com/signup/) to continue.
     </td>
@@ -1257,7 +1257,7 @@ In this workshop, we defined roles for the entire Todo app. But what if your Saa
 <table>
 <tr>
     <td style="font-size: 3rem;">️ℹ️</td>
-    <td markdown="span">
+    <td markdown="div">
       **Note** <br/>
       We used an API key for demonstration purposes, but we recommend using OAuth to secure the calls from Okta to your API for production applications.
     </td>

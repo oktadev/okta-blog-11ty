@@ -29,21 +29,21 @@ Before we dive into possible solutions, let's review the three authentication fa
 <table>
 <tr>
     <td>{% img "authentication-identity-security/factor-knowledge.jpg", "Icon of someone thinking", "100" %}</td>
-    <td markdown="span">
+    <td markdown="div">
       **Something you know** <br/>
       Knowledge factors include passwords and PINs
     </td>
 </tr>
 <tr>
     <td>{% img "authentication-identity-security/factor-possession.jpg", "Icon showing devices such as computer, tablet, and phone", "100" %}</td>
-    <td markdown="span">
+    <td markdown="div">
     **Something you have**<br/>
     Possession factors include devices such as smart cards, security keys, phones, and tablets
     </td>
 </tr>
 <tr>
     <td>{% img "authentication-identity-security/factor-inherence.jpg", "Icon of a hand with fingerprint", "100" %}</td>
-    <td markdown="span">
+    <td markdown="div">
     **Something you are**<br/>
     Inference factors include biometrics such as fingerprints and facial recognition
     </td>
