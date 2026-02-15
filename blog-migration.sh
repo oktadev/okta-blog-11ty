@@ -1,6 +1,7 @@
 find ./src/blog/posts -name '*.md' -exec sed -i '' \
   -e ':a' -e 'N' -e '$!ba' \
   -e 's/layout: blog_post[[:space:]]*\n//' \
+  -e 's/image: blog\//image: /' \
   -e '/^$/d' \
   -e 's/ "no_toc"=""//g' \
   -e 's/{%- /{% /g' \
