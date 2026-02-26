@@ -86,6 +86,11 @@ const speakerdeck = (id, width = 600) => {
 
 const excerpt = (stemPath, postsCollection) => {
   const post = postsCollection.find((p) => p.page.fileSlug === stemPath);
+
+  if (!post) {
+    return "";
+  }
+
   const authorKeys = Array.isArray(post.data.author)
     ? post.data.author
     : [post.data.author];
@@ -93,23 +98,20 @@ const excerpt = (stemPath, postsCollection) => {
     .map((key) => post.data.authors[key])
     .filter(Boolean);
 
-  if (post) {
-    const authorsHtml = authors
-      ? authors
-          .map((author) => {
-            return `<a href="/authors/${author.slug}/" class="inline-flex items-center gap-1">${avatar(author.avatar)} ${author.display_name}</a>`;
-          })
-          .join("")
-      : "";
+  const authorsHtml = authors
+    ? authors
+        .map((author) => {
+          return `<a href="/authors/${author.slug}/" class="inline-flex items-center gap-1">${avatar(author.avatar)} ${author.display_name}</a>`;
+        })
+        .join("")
+    : "";
 
-    return `
-      <div class="flex-col border-1 border-solid px-2">
-        <a href="${post.url}">${post.data.title}</a>
-        <p>${post.data.description}</p>
-        <div class="flex-col">${authorsHtml}</div>
-      </div>`;
-  }
-  return "";
+  return `
+    <div class="flex-col border-1 border-solid px-2">
+      <a href="${post.url}">${post.data.title}</a>
+      <p>${post.data.description}</p>
+      <div class="flex-col">${authorsHtml}</div>
+    </div>`;
 };
 
 export default {
