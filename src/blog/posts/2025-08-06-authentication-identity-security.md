@@ -27,33 +27,27 @@ Let's navigate this balancing act together so you can find the right path for yo
 Before we dive into possible solutions, let's review the three authentication factor categories:
 
 <table>
-  <tr>
-    <td>
-      {% img "authentication-identity-security/factor-knowledge.jpg", "Icon of someone thinking" %}
-      </td>
-    <td>
-      <span class="font-semibold">Something you know</span> <br />
+<tr>
+    <td>{% img "authentication-identity-security/factor-knowledge.jpg", "Icon of someone thinking", "100" %}</td>
+    <td markdown="div">
+      **Something you know** <br/>
       Knowledge factors include passwords and PINs
     </td>
-  </tr>
-  <tr>
-    <td>
-      {% img "authentication-identity-security/factor-possession.jpg", "Icon showing devices such as computer, tablet, and phone" %}
+</tr>
+<tr>
+    <td>{% img "authentication-identity-security/factor-possession.jpg", "Icon showing devices such as computer, tablet, and phone", "100" %}</td>
+    <td markdown="div">
+    **Something you have**<br/>
+    Possession factors include devices such as smart cards, security keys, phones, and tablets
     </td>
-    <td>
-      <span class="font-semibold">Something you have</span> <br />
-      Possession factors include devices such as smart cards, security keys, phones, and tablets
+</tr>
+<tr>
+    <td>{% img "authentication-identity-security/factor-inherence.jpg", "Icon of a hand with fingerprint", "100" %}</td>
+    <td markdown="div">
+    **Something you are**<br/>
+    Inference factors include biometrics such as fingerprints and facial recognition
     </td>
-  </tr>
-  <tr>
-    <td>
-      {% img "authentication-identity-security/factor-inherence.jpg", "Icon of a hand with fingerprint" %}
-    </td>
-    <td>
-      <span class="font-semibold">Something you are</span> <br />
-      Inference factors include biometrics such as fingerprints and facial recognition
-    </td>
-  </tr>
+</tr>
 </table>
 
 Authentication relies on one or more factor categories to establish identity assurances before granting users access to applications.
@@ -66,6 +60,7 @@ Phishing-resistant authentication relies on biometrics and specialized devices o
 Phishing-resistant factors include the following forms.
 
 <h3 class="no_toc">Smart cards and PIV cards</h3>
+
 Large enterprises, regulated industries, and government entities widely use smart cards and PIV cards. These organizations may issue smart cards for attaching personal profiles to shared workstation access, as seen in banks or hospitals. Organizations may issue cards to their workforce even when the employee uses an issued laptop as an extra security measure.
 
 **Pros**: Secure, can be uniquely tied to the user, and well utilized in industries
@@ -91,21 +86,22 @@ FIDO2 and WebAuthn combined are a strong authentication factor that utilizes bio
 For the highest levels of identity security, use phishing-resistant factors.
 
 <h3 class="no_toc">Phishing-resistant factors decision tree</h3>
+
 We recommend phishing-resistant factors at Okta as they offer the best application protection. You have identity assurances built in, along with authentication security. Consider this decision tree for your authentication needs:
 
-{% svg "authentication-identity-security/phr-decision-tree", "Decision tree for phishing-resistant factors. If the target user type are consumers, choose passkeys. For workforce users, if the user base require shared kiosks or hardware, elect hardware keys or smart cards. In all other cases, use FIDO2 with WebAuthn." %}{.center-image }
+{% img "authentication-identity-security/phr-decision-tree.svg", "Decision tree for phishing-resistant factors. If the target user type are consumers, choose passkeys. For workforce users, if the user base require shared kiosks or hardware, elect hardware keys or smart cards. In all other cases, use FIDO2 with WebAuthn.", "800" %}
 
-<!--
+{#
 Tweak the diagram on https://mermaid.live/ with the following content
 sequenceDiagram
-    participant C as Client
-    participant A as Authorization Server
-    C->>+A: Redirect to sign-in page for user challenge
-    A->>-C: Redirect to client with authorization code
-    C->C: Generate public/private key and DPoP proof
-    C->>+A: Request token sending DPoP proof and code
-    A->>-C: Token bound to proof
--->
+participant C as Client
+participant A as Authorization Server
+C-->>+A: Redirect to sign-in page for user challenge
+A-->>-C: Redirect to client with authorization code
+C->C: Generate public/private key and DPoP proof
+C->>+A: Request token sending DPoP proof and code
+A->>-C: Token bound to proof
+#}
 
 ## Avoid weak authentication methods
 
@@ -128,6 +124,20 @@ Using email for TOTP presents similar security issues as SMS codes. Attackers ca
 Passwords must evolve by allowing longer character lengths and character variety. Avoid antipatterns such as complexity requirements and forced password resets. Enforce strong passwords by checking them against compromised password databases. Password managers can offset user risks by recommending unique, strong passwords for each site and applying the stored passwords. Still, password managers aren't failproof, and users may use insecure passwords for the password manager themselves.
 
 These factors do offer a weak barrier to sensitive resources, but a key element is missing: identity assurance. The weak authentication factors lack the safeguards to ensure the users making the authentication challenge are who they say they are.
+
+## Elevate authentication security with Multi-factor Authentication (MFA)
+
+Passwords alone require caution, but a combination of passwords and other factors elevates identity security. A single legacy authentication factor is rarely secure enough to protect any resource; it isn't safe enough to access your users and Okta configuration.
+
+Adding factors such as authenticator apps supporting TOTP and push authentication increases the barriers to sensitive data. Raising the barriers helps protect your application by requiring more effort for impersonators trying to hack accounts. However, using the weakest authentication factors combined isn't as strong as phishing-resistant.
+
+<h3 class="no_toc">Combine strong authentication factors</h3>
+
+The best way to ensure authentication security and reasonable identity assurances is to combine moderate to high authentication factors. Doing so supports good security with secure fallback systems. For example, if you can't use phishing-resistant authentication in a consumer scenario, layer a password with push authentication. Allow the consumer to opt into Passkeys while supporting MFA. For workforce scenarios, issue hardware keys as a backup factor in addition to Okta FastPass.
+
+Okta's authentication policy builder can help you create strong authentication requirements to access Okta services and applications protected by Okta's sign-in while tailoring session lifetimes to your needs.
+
+> **It's time we evolve our application's authentication security and favor phishing-resistant factors.**
 
 ## Customize authentication requirements dynamically
 
