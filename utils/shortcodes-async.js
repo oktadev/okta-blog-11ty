@@ -1,28 +1,29 @@
 import Image from "@11ty/eleventy-img";
 
-const svgIcon = async function (src, alt, widths = [30], sizes = "") {
-  return await Image(`./public/img/${src}.svg`, {
-    widths,
-    formats: ["svg"],
-    outputDir: "_site/img/",
-    returnType: "html", // new in v6.0
-    htmlOptions: {
-      imgAttributes: {
-        alt, // required, though "" works fine
-        sizes, // required with more than one width, optional if single width output
-        loading: "lazy", // optional
-        decoding: "async", // optional
-      },
-    },
-  });
-};
+const svg = async function ({
+  src,
+  alt,
+  widths = [30],
+  sizes = "",
+  type = "blog",
+  class: className = "",
+}) {
+  let dir = "img/blog/";
+  switch (type) {
+    case "logo":
+    case "icon":
+      dir = "img/";
+      break;
+    case "blog":
+      dir = "img/blog/";
+      break;
+  }
 
-const svg = async function (src, alt, widths = [30], sizes = "") {
-  return await Image(`./public/img/blog/${src}.svg`, {
+  return await Image(`./public/${dir}${src}.svg`, {
     widths,
     formats: ["svg"],
-    outputDir: "_site/img/blog/",
-    urlPath: "_site/img/blog/",
+    outputDir: `_site/${dir}`,
+    urlPath: `/${dir}`,
     returnType: "html", // new in v6.0
     htmlOptions: {
       imgAttributes: {
@@ -30,6 +31,7 @@ const svg = async function (src, alt, widths = [30], sizes = "") {
         sizes, // required with more than one width, optional if single width output
         loading: "lazy", // optional
         decoding: "async", // optional
+        className,
       },
     },
   });
@@ -71,7 +73,8 @@ const img = async function (
 };
 
 export default {
-  svgIcon: (src, alt, sizes) => svgIcon(src, alt, sizes),
-  svg: (src, alt, sizes) => svg(src, alt, sizes),
-  img: (src, alt, sizes) => img(src, alt, sizes),
+  svg: ({ src, alt, widths, sizes, type, class: className }) =>
+    svg({ src, alt, widths, sizes, type, class: className }),
+  img: (src, alt, header, widths, sizes) =>
+    img(src, alt, header, widths, sizes),
 };

@@ -1,17 +1,54 @@
-<nav>
-  {# Nav Links stubbed in but should match current layout #}
-  <ul class="nav__menu">
-    {% for item in collections.all | eleventyNavigation %}
-    {% if item.url %}
+<nav class="bg-okta-dark-blue h-11 px-3.5 flex items-center justify-between text-okta-white">
+  <div>
+    {% set isHome = page.url === "/blog/" %}
+    <a {% if isHome %}disabled aria-disabled="true"{% endif %} href="/blog/" class="{{ 'pointer-events-none' if isHome else '' }}">{% svg {src:"logotype", alt:"Okta Logo", type:"logo"} %}</a>
+
+  </div>
+
+  <div>
+    <label>
+      <input type="search" placeholder="Search..." class="pl-2 pr-1 py-2 rounded-s bg-white/10 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30" />
+    </label>
+  </div>
+
+  <div class="relative group">
+    <button type="button" aria-haspopup="true" aria-expanded="false" class="text-white inline-flex items-center gap-1">
+    Community
+      <svg class="w-2 h-2 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    <div class="absolute right-0 pt-2 bg-okta-white border border-white/20 rounded-md shadow-lg group-hover:block group-focus-within:block z-51 py-1 px-1.5 w-15 hidden before:content-[''] before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 top-4" role="menu">
+      <div class="absolute -top-[9px] right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-okta-white"></div>
+      <ul role="menu" aria-label="Community options" class="py-1 flex gap-1.5 flex-col text-sm">
+        <li role="menuitem"><a href="https://devforum.okta.com/" class="block text-okta-carbon hover:bg-white/10 text-sm">Forum</a></li>
+        <li role="menuitem"><a href="https://toolkit.okta.com/" class="block text-okta-carbon hover:bg-white/10 text-sm">Toolkit</a></li>
+      </ul>
+      <hr class="text-okta-carbon border-y-1"/>
+      <ul class="inline-flex gap-2 py-1">
+        <li role="menuitem"><a href="https://github.com/oktadev" class="block text-okta-carbon hover:bg-white/10">{% svg {src:"github", alt:"Github", type: "icon"} %}</a></li>
+        <li role="menuitem"><a href="https://twitter.com/OktaDev" class="block text-okta-carbon hover:bg-white/10">{% svg {src:"twitter", alt:"X", type: "icon"} %}</a></li>
+        <li role="menuitem"><a href="https://www.youtube.com/channel/UC5AMiWqFVFxF1q9Ya1FuZ_Q/featured" class="block text-okta-carbon hover:bg-white/10">{% svg {src:"youtube", alt:"Youtube", type: "icon"} %}</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  {% set items = [
+    { url: "https://developer.okta.com/pricing/", title: "Pricing", external: true },
+    { url: "https://www.okta.com/", title: "Okta", external: true },
+    { url: "https://login.okta.com/", title: "Admin", external: true },
+    { url: "https://developer.okta.com/signup/", title: "Sign Up", external: true }
+  ] %}
+  <ul class="flex gap-2.25">
+    {% for item in items %}
     {% set isCurrent = (item.url == page.url) %}
     {% set isParent = item.url != '/' and item.url in page.url %}
-    <li class="nav__item{% if isCurrent or isParent %} nav__item--active{% endif %}">
-      <a class="nav__link" href="{% if isCurrent %}#main{% else %}{{ item.url | url }}{% endif %}" {% if isCurrent %}
-        aria-current="page" {% endif %}>
-        {{ item.title }}
+    <li class="nav__item{% if isCurrent %} nav__item--active{% endif %}">
+      <a class="nav__link {% if isCurrent %}pointer-events-none{% endif %} inline-flex gap-0.5 text-white" href="{{ item.url | url }}"{% if isCurrent %} aria-current="page"{% endif %}>
+        {{ item.title }} {% if item.external %}{% svg {src:"external-link", alt:"(opens in a new tab)", type:"icon"} %}{% endif %}
       </a>
     </li>
-    {% endif %}
     {% endfor %}
   </ul>
 </nav>
