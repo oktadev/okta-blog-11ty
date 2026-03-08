@@ -1,11 +1,13 @@
 ---
 layout: base
 permalink: blog/index.html
-eleventyNavigation:
-  key: Home
-  order: 1
 ---
 
 <div class="container">
   <h1>OktaDev Blog</h1>
+
+  <div class="container m-auto m-w-128">
+    {% set postslist = collections.posts %}
+    {% include "postslist.njk" %}
+  </div>
 </div>
