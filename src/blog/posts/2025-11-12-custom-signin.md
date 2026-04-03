@@ -27,11 +27,11 @@ In this tutorial, we will customize the Sign In Widget for a fictional to-do app
 
 Without any changes, when you try to sign in to your Okta account, you see something like this:
 
-{% img "custom-signin/default-siw.jpg", "Default Okta-hosted Sign-In Widget", "800" %}
+{% img {src: "custom-signin/default-siw.jpg", alt: "Default Okta-hosted Sign-In Widget", header: "800"} %}
 
 At the end of the tutorial, your login screen will look something like this 🎉
 
-{% img "custom-signin/final-siw.jpg", "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles", "800" %}
+{% img {src: "custom-signin/final-siw.jpg", alt: "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles", header: "800"} %}
 
 We'll use the SIW gen3 along with new recommendations to customize form elements and style using design tokens.
 
@@ -67,7 +67,7 @@ First, navigate to **Settings** and select **Use third generation** to enable th
 
 Navigate to **Theme**. You'll see a default brand page that looks something like this:
 
-{% img "custom-signin/default-siw-styles.jpg", "Default styles for the Okta-hosted SIW", "800" %}
+{% img {src: "custom-signin/default-siw-styles.jpg", alt: "Default styles for the Okta-hosted SIW", header: "800"} %}
 
 Let's start making it more aligned with the theme we have in mind. Change the primary and secondary colors, then the logo and favicon images with your preferred options
 

@@ -2,12 +2,11 @@ import markdownIt from "markdown-it";
 import markdownItAttrs from "markdown-it-attrs";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
-import tailwindcss from "@tailwindcss/vite";
 import yaml from "js-yaml";
 
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
-import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
+// import EleventyVitePlugin from "@11ty/eleventy-plugin-vite"; // disabled: incompatible with macOS-mounted output dir (EPERM on rm, ENOTEMPTY on rename)
 import eleventyAsciidoc from "eleventy-plugin-asciidoc";
 import embedTwitter from "eleventy-plugin-embed-twitter";
 
@@ -16,10 +15,8 @@ import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
 
 export default function (eleventyConfig) {
-  eleventyConfig.setServerPassthroughCopyBehavior("copy");
-  eleventyConfig.addPassthroughCopy({
-    "style.out.css": "style.css",
-  });
+  // Static files (style.css, fonts/, js/) are pre-copied by npm scripts using
+  // shell redirection / cp -rn, which avoids EPERM unlink failures on macOS-mounted fs.
 
   // Pre Processor
   eleventyConfig.addPreprocessor(
@@ -38,11 +35,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(eleventyAsciidoc);
   eleventyConfig.addPlugin(embedTwitter);
 
-  eleventyConfig.addPlugin(EleventyVitePlugin, {
-    viteOptions: {
-      plugins: [tailwindcss()],
-    },
-  });
+  // EleventyVitePlugin disabled: see comment on import above.
 
   // Data extensions
   eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));

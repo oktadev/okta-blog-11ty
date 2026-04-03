@@ -20,7 +20,7 @@ This is the problem **Cross App Access (XAA)** is designed to solve.
 
 Today, we're introducing **[xaa.dev](https://xaa.dev)**, a free, open playground that lets you explore Cross App Access end-to-end. **No local setup. No infrastructure to provision.** Just a working environment where you can see the protocol in action.
 
-{% img "xaa-dev-playground/xaa-dev-homepage.jpg", "xaa.dev playground homepage showing the Cross App Access flow", "800" %}
+{% img {src: "xaa-dev-playground/xaa-dev-homepage.jpg", alt: "xaa.dev playground homepage showing the Cross App Access flow", header: "800"} %}
 
 > **Note:** xaa.dev is currently in beta. We're actively developing new features for the next release, and your feedback helps shape what comes next.
 
@@ -116,7 +116,7 @@ That's it. No local tools installations, Docker containers, environment variable
 
 Watch this walkthrough video of the playground if you'd like a guided tour:
 
-{% youtube hXZ4o2Oasc0 %}
+{% youtube "hXZ4o2Oasc0" %}
  
 
 ## Why we built a testing site for cross app access

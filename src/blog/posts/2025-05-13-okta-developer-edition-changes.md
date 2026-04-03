@@ -44,7 +44,7 @@ In July 2025, existing Okta Developer Edition organization will be deactivated. 
 
 To check whether an organization is in Okta Developer Edition, navigate to **Applications** > **Applications** in the Okta Admin Console. If you're on Developer Edition, large text will inform you that "Developer Edition provides a limited number of apps". This message appears below the Applications heading and above the Create App Integration button. 
 
-{% img "developer-edition-changes/dev-org-banner.jpg", "Screenshot of developer edition app limit banner", "800" %}
+{% img {src: "developer-edition-changes/dev-org-banner.jpg", alt: "Screenshot of developer edition app limit banner", header: "800"} %}
 
 Organizations in which this banner is absent from the Applications list are not part of Developer Edition, and are unaffected by the Developer Edition deprecation. 
 
@@ -52,7 +52,7 @@ Organizations in which this banner is absent from the Applications list are not 
 
 Creating an Integrator Free Plan organization will give you a clean slate to test and develop in. However, you might want to replicate setup steps that you've performed in your Okta Developer Edition organization to continue work in progress. Several options are available for migrating your configuration from your Okta Developer Edition organization to your Integrator Free Plan  organization. 
 
-{% img "developer-edition-changes/flowchart.jpg", "flowchart for deciding if and how to migrate data", "800" %}
+{% img {src: "developer-edition-changes/flowchart.jpg", alt: "flowchart for deciding if and how to migrate data", header: "800"} %}
 
 ### Migrating published integrations
 

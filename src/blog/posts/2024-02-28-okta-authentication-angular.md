@@ -258,13 +258,13 @@ npm start
 You should see something like this when you start the application:
 
 <div style="border: 1px silver solid; display: flex; justify-content: center">
-{% img "okta-authentication-angular/app-start.jpg", "Screenshot of application start showing a sign in button and a link to the Okta Developer site", "800" %}
+{% img {src: "okta-authentication-angular/app-start.jpg", alt: "Screenshot of application start showing a sign in button and a link to the Okta Developer site", header: "800"} %}
 </div>
 
 The links for the profile and protected routes display after you sign in.
 
 <div style="border: 1px silver solid; display: flex; justify-content: center">
-{% img "okta-authentication-angular/app-authenticated.jpg", "Screenshot of application after authenticating showing a sign out button, links to profile and protected routes, and a link to the Okta Developer site", "800" %}
+{% img {src: "okta-authentication-angular/app-authenticated.jpg", alt: "Screenshot of application after authenticating showing a sign out button, links to profile and protected routes, and a link to the Okta Developer site", header: "800"} %}
 </div>
 
 I made no claims about building a _beautiful_ app.
@@ -312,7 +312,7 @@ export class ProfileComponent {
 When you sign in and navigate to the profile route, you'll see something like this.
 
 <div style="border: 1px silver solid; display: flex; justify-content: center">
-{% img "okta-authentication-angular/app-profile.jpg", "Screenshot of profile route displaying a welcome message with the user's name", "800" %}
+{% img {src: "okta-authentication-angular/app-profile.jpg", alt: "Screenshot of profile route displaying a welcome message with the user's name", header: "800"} %}
 </div>
 
 With this, you should now have a working app that allows you to sign in, navigate to protected to see there's nothing there, navigate to profile and feel welcomed, and lastly sign out. Most applications with authentication need an interceptor to add the `Authorization` header. Even though we aren't calling an API, let's put it in to walk through the steps.

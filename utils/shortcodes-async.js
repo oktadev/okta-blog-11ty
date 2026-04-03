@@ -38,13 +38,21 @@ const svg = async function ({
 };
 
 // TODO: allow multiple sizes
-const img = async function (
+const img = async function ({
   src,
   alt,
+  avatar = false,
   header = false,
   widths = [100, 300, 600, 1000],
   sizes = "",
-) {
+}) {
+  const dir = avatar ? "img/avatar" : "img/blog";
+  const subdir = src.includes("/")
+    ? src.substring(0, src.lastIndexOf("/"))
+    : "";
+  const outputDir = subdir ? `_site/${dir}/${subdir}` : `_site/${dir}`;
+  const urlPath = subdir ? `/${dir}/${subdir}` : `/${dir}`;
+
   const imgAttributes = header
     ? {
         alt,
@@ -60,12 +68,12 @@ const img = async function (
         decoding: "async",
       };
 
-  return await Image(`./public/img/blog/${src}`, {
+  return await Image(`./public/${dir}/${src}`, {
     widths,
     formats: ["webp", "jpeg", "png", "jpg"],
     returnType: "html",
-    outputDir: `_site/img/blog/${src}`,
-    urlPath: `/img/blog/${src}`,
+    outputDir,
+    urlPath,
     htmlOptions: {
       imgAttributes,
     },
@@ -73,8 +81,6 @@ const img = async function (
 };
 
 export default {
-  svg: ({ src, alt, widths, sizes, type, class: className }) =>
-    svg({ src, alt, widths, sizes, type, class: className }),
-  img: (src, alt, header, widths, sizes) =>
-    img(src, alt, header, widths, sizes),
+  svg: (args) => svg(args),
+  img: (args) => img(args),
 };

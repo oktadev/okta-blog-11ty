@@ -405,7 +405,7 @@ It authenticates the user, manages token storage securely, and handles push-base
 
 The following diagram illustrates how the authentication flow works under the hood when using Okta DirectAuth with push notification authentication factor:
 
-{% img "okta-ios-directauth/diagram.svg", "Flowchart showing the sequence of steps for authentication flow", "800" %}
+{% img {src: "okta-ios-directauth/diagram.svg", alt: "Flowchart showing the sequence of steps for authentication flow", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content

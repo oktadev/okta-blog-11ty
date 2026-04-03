@@ -8,12 +8,12 @@
   {%- endif -%}
 {% endif %}
 
-{%- if params.type == "spa" -%}
+{%- if params.type == "spa" and params.loginRedirectUri -%}
   {%- set parts = params.loginRedirectUri.split('/callback') -%}
   {%- set baseUrl = parts[0] -%}
 {%- endif -%}
 
-{%- if params.type == "web" -%}
+{%- if params.type == "web" and params.loginRedirectUri -%}
   {%- set parts = params.loginRedirectUri.split('/authorization-code/callback') -%}
   {%- set baseUrl = parts[0] -%}
 {%- endif -%}
@@ -51,7 +51,7 @@
    - **Sign-out redirect URIs**: {{ params.logoutRedirectUri }}
     {% elif params.loginRedirectUri %}- **Sign-in redirect URIs**: {{ params.loginRedirectUri }}
    - **Sign-out redirect URIs**: {{ baseUrl }}
-    {% else %}- Accept the default redirect URI values{% if params.framework.includes("Spring Boot") %}:
+    {% else %}- Accept the default redirect URI values{% if params.framework and params.framework.includes("Spring Boot") %}:
      - **Sign-in redirect URIs**: http://localhost:8080/login/oauth2/code/okta
      - **Sign-out redirect URIs**: http://localhost:8080{% endif %}
     {% endif %}

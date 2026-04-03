@@ -671,15 +671,15 @@ Click **Login** and authenticate with your Okta account. The app then displays y
 
 #### Admin view:   
 
-{% img "express-oauth-pkce/admin-view.jpeg", "Admin View Dashboard", "1000" %}
+{% img {src: "express-oauth-pkce/admin-view.jpeg", alt: "Admin View Dashboard", header: "1000"} %}
 
 #### User view: 
 
-{% img "express-oauth-pkce/user-view.jpeg", "User View Dashboard", "1000" %}
+{% img {src: "express-oauth-pkce/user-view.jpeg", alt: "User View Dashboard", header: "1000"} %}
 
 #### Expenses view: 
 
-{% img "express-oauth-pkce/expenses.jpeg", "Expenses View", "1000" %}
+{% img {src: "express-oauth-pkce/expenses.jpeg", alt: "Expenses View", header: "1000"} %}
 
 And that's it\! You've built a secure Expense Dashboard and connected your Express application to Okta using OIDC and OAuth. 
 

@@ -232,7 +232,7 @@ Our setup used the `client_credentials` grant type to authenticate and get an ac
 
 Constraining the token sender is one way to make the access token more secure. How can you do that? By adding the Demonstrating Proof of Possession (DPoP) OAuth extension method to the access token interaction. The technique adds a sender-generated token for each call it makes. Doing so prevents replay attacks even before tokens expire since each call needs a fresh DPoP token. Here is the detailed flow:
 
-{% img "dpop-oauth-node/dpopflow.jpg", "Sequence diagram that displays the back and forth between the client, authorization server, and resource server for Demonstrating Proof-of-Possession", "800" %}
+{% img {src: "dpop-oauth-node/dpopflow.jpg", alt: "Sequence diagram that displays the back and forth between the client, authorization server, and resource server for Demonstrating Proof-of-Possession", header: "800"} %}
 
 You'll enable DPoP in Okta application settings to experiment with sender-constrained tokens. Open the Okta Admin Console in your browser and navigate to **Application** > **Application** to see the list of Okta applications in your Okta account. Open the service application to edit it.
 

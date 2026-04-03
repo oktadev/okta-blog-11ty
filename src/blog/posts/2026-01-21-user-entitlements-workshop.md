@@ -147,7 +147,7 @@ HTTP/1.1 200 OK
 
 Take a look at the terminal output. You'll see output recording the `GET` request!
 
-{% img "user-entitlements-workshop/morgan.jpg", "Terminal output showing the GET request to the /Roles route and a 200OK HTTP response", "800" %}
+{% img {src: "user-entitlements-workshop/morgan.jpg", alt: "Terminal output showing the GET request to the /Roles route and a 200OK HTTP response", header: "800"} %}
 
 The project uses [Morgan](https://github.com/expressjs/morgan), a library that automatically adds HTTP logging to the Express API. The terminal output includes `POST` and `PUT` request payloads, so it's an excellent way to track the SCIM calls as you work through the workshop.
 
@@ -279,7 +279,7 @@ which launches a web interface to view the database. The site URL is usually `ht
 
 The SCIM Client (the identity provider, Okta) makes requests upon objects held by the SCIM Server (the Todo app).
 
-{% img "scim-workshop/scim-diagram.jpg", "SCIM workflow showing the Identity Provider requests the SCIM server with GET, POST, PUT, and DEL user calls and the SCIM server responds with a standard SCIM interface", "800" %}
+{% img {src: "scim-workshop/scim-diagram.jpg", alt: "SCIM workflow showing the Identity Provider requests the SCIM server with GET, POST, PUT, and DEL user calls and the SCIM server responds with a standard SCIM interface", header: "800"} %}
 
 First, we need to serve the API so Okta can access it. You'll use a temporary tunnel for local development that makes `localhost:3333` publicly accessible so that Okta, the SCIM client, can call your API, the SCIM server. I'll include the instructions using an NPM library that we don't have to install or sign up for, but feel free to use your favorite tunneling system if you have one.
 
@@ -351,7 +351,7 @@ In the first SCIM workshop, you learned about SCIM's `User` resource and built o
 
 A `Resource` represents an object SCIM operates on, such as a user or group. SCIM identified core properties each `Resource` must define, such as `id` and a link to the resource's schema definition. From there, a user extends from the core properties and adds attributes specific to the object, such as adding `userName` and their emails. A standard published schema exists for all those user-specific attributes within the SCIM spec. You can continue extending resources as needed to represent new resources, such as another SCIM standard-defined schema for Enterprise User.
 
-{% img "user-entitlements-workshop/resource-class-diagram.svg", "Class diagram representing core Resource properties, User class extending from core Resource adds username and emails properties. The Enterprise User class extends from User adds department and costCenter properties. Group class extends from core Resource and adds displayName and members properties. Other class extends from core Resource demonstrating new resource representations.", "800" %}
+{% img {src: "user-entitlements-workshop/resource-class-diagram.svg", alt: "Class diagram representing core Resource properties, User class extending from core Resource adds username and emails properties. The Enterprise User class extends from User adds department and costCenter properties. Group class extends from core Resource and adds displayName and members properties. Other class extends from core Resource demonstrating new resource representations.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
@@ -371,7 +371,7 @@ EnterpriseUser : costCenter
 
 What's an example resource other than a user or group? If you said "role" or an "entitlement," you're correct! Those resource types must have an `id` and `schemas`. Here, Okta used SCIM's extensibility to define a new resource type.
 
-{% img "user-entitlements-workshop/resource-role-class-diagram.svg", "Class diagram representing core Resource properties. The User, Group, OktaRole, and Other class extends from core Resource.", "800" %}
+{% img {src: "user-entitlements-workshop/resource-role-class-diagram.svg", alt: "Class diagram representing core Resource properties. The User, Group, OktaRole, and Other class extends from core Resource.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
@@ -456,7 +456,7 @@ rolesRoute.route("/").get(async (req, res) => {
 >
 > TypeScript, a superset of JavaScript, supports type safety. Type safety means we'll catch errors within the IDE or at build time instead of getting caught by surprise with a runtime error. Here, we state the `roles` array is of type `IOktaRole[]`. Try commenting out the required `schemas` property. You'll see an error in an IDE that supports TypeScript or when you try to serve the API as console output. We can use type safety to ensure we meet the expectations of required SCIM properties in our calls.
 >
-> {% img "user-entitlements-workshop/type-error.jpg", "IDE and terminal showing the type error when `schemas` is commented out", "600" %}
+> {% img {src: "user-entitlements-workshop/type-error.jpg", alt: "IDE and terminal showing the type error when `schemas` is commented out", header: "600"} %}
 
 Every code change deserves a quick check. Serve the API and double check everything still works for you when you make the HTTP call to
 
@@ -992,7 +992,7 @@ Navigate to the **Governance** tab. The tab you see is **Entitlements**. Do you 
 
 Eventually, you'll see **Role**; when you select it, you'll see metadata about it, such as the variable name, data type, and description. We also see the values: "Manager," "Todo Auditor," and "Todo-er."
 
-{% img "user-entitlements-workshop/entitlements-roles.jpg", "Governance tab with roles discovered by Okta", "800" %}
+{% img {src: "user-entitlements-workshop/entitlements-roles.jpg", alt: "Governance tab with roles discovered by Okta", header: "800"} %}
 
 You can define policies for users that automatically assign their entitlements when adding them to this integration app. While that's pretty nifty, this post focuses on building out the SCIM endpoints for entitlements, so I'll include links to resources that explain this feature in more detail at the end of the post.
 

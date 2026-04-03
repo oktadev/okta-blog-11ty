@@ -25,8 +25,6 @@ find ./src/blog/posts -name '*.md' -exec sed -i '' \
   -e 's/{: \.center-image }//g' \
   -e 's/{% include setup\/integrator\.md \([^%]*\) %}/{{ macro.integrator({\1}) }}/g' \
   -e 's/{% include setup\/cli\.md \([^%]*\) %}/{{ macro.cli({\1}) }}/g' \
-  -e 's/\([a-zA-Z][a-zA-Z]*\)="\([^"]*\)"/\1: "\2"/g' \
-  -e 's/" \([a-zA-Z][a-zA-Z]*\): "/", \1: "/g' \
   -e 's/{% comment %}/{#/g' \
   -e 's/{% endcomment %}/#}/g' \
   -e 's/{% include integrator-org-warning.html %}/{% include "integrator-org-warning.njk" %}/g' \

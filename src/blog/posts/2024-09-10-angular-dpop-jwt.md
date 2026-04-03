@@ -125,17 +125,17 @@ After you sign in, the Angular app will display routes for "Profile" and "Users.
 
 After signing in, you have the OAuth 2.0 access token and the OIDC ID token. Okta stores the tokens in browser storage. In DevTools, open the **Application** tab to view browser storage data. Okta Auth JS defaults to local storage for tokens and is configurable based on your application needs. Expand **Local storage**, select the application, and expand the `okta-token-storage` key to see the tokens and token metadata. The `tokenType` property is `Bearer`.
 
-{% img "angular-dpop-jwt/local-storage-tokens.jpg", "Browser local storage showing Okta's token storage. The access token has the token in JWT format as well as scopes, claims, and token type as top-level properties.", "800" %}
+{% img {src: "angular-dpop-jwt/local-storage-tokens.jpg", alt: "Browser local storage showing Okta's token storage. The access token has the token in JWT format as well as scopes, claims, and token type as top-level properties.", header: "800"} %}
 
 Let's see the API calls in action in the application. Navigate to both routes. In the **Network** tab, you see the initial `/token`, `/userinfo`, and Users API requests.
 
 Let's inspect the Users API request. 
 
-{% img "angular-dpop-jwt/bearer-network-users-api.jpg", "Network requests showing calls to token, userinfo, and users endpoints. the users api call shows a 200 OK status code.", "800" %}
+{% img {src: "angular-dpop-jwt/bearer-network-users-api.jpg", alt: "Network requests showing calls to token, userinfo, and users endpoints. the users api call shows a 200 OK status code.", header: "800"} %}
 
 The request includes the `Authorization` header containing the token scheme and access token. You see the format `Bearer <access_token>`.
 
-{% img "angular-dpop-jwt/bearer-network-users-api-request-headers.jpg", "Users API request headers showing the Authorization header.", "800" %}
+{% img {src: "angular-dpop-jwt/bearer-network-users-api-request-headers.jpg", alt: "Users API request headers showing the Authorization header.", header: "800"} %}
 
 The entity holding the token can legitimately request resources. Let's try using the token in another client and impersonating the actions an attacker can take if they manage to capture it. 
 
@@ -214,7 +214,7 @@ Once the application rebuilds and reloads in the browser, make sure you have deb
 
 When you sign in, you'll see the initial call to the `/token` endpoint fails.  
 
-{% img "angular-dpop-jwt/dpop-token-fail.jpg", "Network requests showing the first call fails with HTTP status 400 and the second call succeeds.", "800" %}
+{% img {src: "angular-dpop-jwt/dpop-token-fail.jpg", alt: "Network requests showing the first call fails with HTTP status 400 and the second call succeeds.", header: "800"} %}
 
 Take a look at the call's request headers. You'll see a header called `DPoP`, which contains the DPoP proof in JWT format, which means we can decode it and inspect its contents. You can use a trustworthy online tool such as [JWT.io debugger](jwt.io) or Base64 decode the header and payload sections of the JWT locally. In the JWT format, the content from the beginning up to the first <kdb>.</kbd> character is the header, and the content between the two <kbd>.</kbd> characters is the payload. 
 

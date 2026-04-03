@@ -19,7 +19,7 @@ My tech journey has been quite a ride\! I began by experimenting with various th
 
 What piqued my interest wasn't just web development and the scope of AI applications. Back in 2018, when Google Assistant came out, I was fascinated by how voice could fit into our everyday lives, from controlling appliances to using apps, all with your voice\! So, I started building Voice AI applications for Google Assistant and Alexa and eventually began teaching what I learned at professional meetups and colleges all over India, which then led to being featured at Google I/O for my work in Voice AI. 
 
-{% img "akanksha-bhasin-intro/google-io.jpeg", "Photo of Akanksha featured at Google I/O", "800" %}
+{% img {src: "akanksha-bhasin-intro/google-io.jpeg", alt: "Photo of Akanksha featured at Google I/O", header: "800"} %}
 
 ## Building developer communities: my passion and journey
 
@@ -27,7 +27,7 @@ Driven by a passion for community building that began with Voice AI technology, 
 
 My fondest memory has been in Mumbai, where I got to teach how to build AI applications in areas without much tech awareness and opportunities. Seeing someone's face light up when they finally understood new technology was priceless and kept me going. Life is about giving back. Even if you have impacted just one person's life, you have done something priceless. 
 
-{% img "akanksha-bhasin-intro/wiv-award.jpeg", "Akanksha won the Women in Voice award", "800" %}
+{% img {src: "akanksha-bhasin-intro/wiv-award.jpeg", alt: "Akanksha won the Women in Voice award", header: "800"} %}
 
 ## Embracing developer advocacy at Okta
 
