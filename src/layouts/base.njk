@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>{{ title }}</title>
   {% include "meta.njk" %}
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="{{ '/style.css' | hashFile }}">
 </head>
 <body class="bg-okta-white font-okta text-okta-carbon">
   <!-- Follow existing for this entire file -->

@@ -1,5 +1,8 @@
 import { DateTime } from "luxon";
 import slugify from "slugify";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 
 export default function (eleventyConfig) {
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
@@ -59,4 +62,16 @@ export default function (eleventyConfig) {
 
   //   return toAbsoluteUrl(imageUrl);
   // });
+
+  eleventyConfig.addFilter("hashFile", function (url) {
+    const filePath = path.join("_site", url);
+    try {
+      const content = readFileSync(filePath);
+      const hash = createHash("md5").update(content).digest("hex").slice(0, 10);
+      return `${url}?v=${hash}`;
+    } catch {
+      // File not yet built; return URL without hash
+      return url;
+    }
+  });
 }

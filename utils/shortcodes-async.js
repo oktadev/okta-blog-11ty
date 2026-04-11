@@ -70,7 +70,7 @@ const img = async function ({
 
   return await Image(`./public/${dir}/${src}`, {
     widths,
-    formats: ["webp", "jpeg", "png", "jpg"],
+    formats: ["webp"],
     returnType: "html",
     outputDir,
     urlPath,

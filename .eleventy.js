@@ -11,6 +11,7 @@ import eleventyAsciidoc from "eleventy-plugin-asciidoc";
 import embedTwitter from "eleventy-plugin-embed-twitter";
 
 import filters from "./utils/filters.js";
+import transforms from "./utils/transforms.js";
 import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
 
@@ -34,6 +35,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyAsciidoc);
   eleventyConfig.addPlugin(embedTwitter);
+  eleventyConfig.addPlugin(transforms);
 
   // EleventyVitePlugin disabled: see comment on import above.
 
@@ -42,10 +44,6 @@ export default function (eleventyConfig) {
 
   // Filters
   eleventyConfig.addPlugin(filters);
-
-  // // Transforms
-  // Object.keys(transforms).forEach((transformName) => {
-  //   eleventyConfig.addTransform(transformName, transforms[transformName]);
 
   let postsCollection = [];
   eleventyConfig.addCollection("posts", (collectionApi) => {
