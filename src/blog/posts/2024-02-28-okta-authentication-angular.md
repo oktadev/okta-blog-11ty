@@ -145,18 +145,18 @@ You'll add the code for the components using the Okta SDK to sign in, sign out, 
 Open `app.component.html`. Copy the following code into the file.
 
 ```html
-<div class: "toolbar">
+<div class="toolbar">
   @if (isAuthenticated$ | async) {
   <div>
-    <nav class: "routes">
+    <nav class="routes">
       <a routerLink: "/">Home</a>
       <a routerLink: "/profile">Profile</a>
       <a routerLink: "/protected">Protected</a>
     </nav>
   </div>
-  <a class: "auth" (click)="signOut()">Sign out</a>
+  <a class="auth" (click)="signOut()">Sign out</a>
   } @else {
-  <a class: "auth" (click)="signIn()">Sign in</a>
+  <a class="auth" (click)="signIn()">Sign in</a>
   }
 </div>
 
