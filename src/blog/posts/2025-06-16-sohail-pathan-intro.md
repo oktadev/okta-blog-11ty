@@ -21,7 +21,7 @@ School never captivated me much, but the computer lab was a magical place. Recog
 
 My professional path started at an EdTech startup. Here, my first role as an Android developer unfolded with both excitement and nervous anticipation. I vividly remember my early days, meticulously building and refining app features, driven by the genuine joy of seeing students interact with the app. On the go, my involvement quickly expanded beyond just coding. I found myself drawn to answering student queries on forums and guiding them through their learning journeys.
 
-{% img "sohail-pathan-intro/image2.jpg", "Me standing with an amazing group of students and developers, all smiles and ready to learn", "782" %}
+{% img {src: "sohail-pathan-intro/image2.jpg", alt: "Me standing with an amazing group of students and developers, all smiles and ready to learn", header: "782"} %}
 <cite style="display: block; text-align: center;">Image: Post meetup group photo with attendees (I'm the one in black blazer 🕴️).</cite>
 
 One fine afternoon, the founders approached me. They said – **\*You have a gift for connecting with our users. We'd like you to be our first Developer Community Manager**.\* That moment changed everything. I started organizing meetups where we taught about open-source opportunities like [GSOC](https://summerofcode.withgoogle.com/) and [Hacktoberfest](https://hacktoberfest.com/). I used to spend most of my time answering questions on our forums, helping learners one-on-one, and cheering them on as they built their first projects.
@@ -34,7 +34,7 @@ The DevRel adventure deepened when I joined a deeptech startup that aimed to sol
 
 So, it was time to roll up my sleeves. I organized virtual and inperson meetups where developers could share their struggles and ideas. We even hosted hackathons, challenging participants to push the tool's limits and tell us what worked and what didn't. Week after week, I collected feedback, sifting through every comment and suggestion.
 
-{% img "sohail-pathan-intro/image3.jpg", "Live session building the Disco Diwane app during an Android Study Jam in Nagpur", "782" %}
+{% img {src: "sohail-pathan-intro/image3.jpg", alt: "Live session building the Disco Diwane app during an Android Study Jam in Nagpur", header: "782"} %}
 <cite style="display: block; text-align: center;">Image:Live session on building the Disco Diwane app during an Android Study Jam in Nagpur.</cite>
 
 For four intense months, we listened, iterated, and tried to find product market fit. Unfortunately, despite our best efforts, technical roadblocks and limited demand meant we couldn't go forward. The founders made the tough call to shut down the company. While it wasn't the happy ending I'd hoped for, this chapter taught me lessons money can't buy: **the value of listening closely to your community, the courage to make hard decisions, and the resilience to keep moving forward.**
@@ -49,7 +49,7 @@ I still remember the excitement of helping the team prepare for very first publi
 
 Every week brought new adventures: I delivered talks on API design, cataloged hundreds of APIs, and explained API specifications in simple terms. We sponsored hackathon tracks that challenged participants to build real projects using our APIs, and rewarded the best ideas.
 
-{% img "sohail-pathan-intro/image1.jpg", "Delivered session at Google Cloud Community Days in Kolkata, 2023, to an audience of 3,500 developers", "782" %}
+{% img {src: "sohail-pathan-intro/image1.jpg", alt: "Delivered session at Google Cloud Community Days in Kolkata, 2023, to an audience of 3,500 developers", header: "782"} %}
 <cite style="display: block; text-align: center;">Image: Delivered session at Google Cloud Community Days in Kolkata, 2023, to an audience of 3,500 developers.</cite>
 
 Living in a startup meant wearing many hats. One moment, I was designing microservices used by over 40,000+ developers; the next, I was learning the ins and outs of API gateway, containers, and load balancing – things that require a backend to run smoothly. This hands-on experience deepened my expertise in REST architecture and DevOps practices.
@@ -66,7 +66,7 @@ I'm beyond excited to be at Okta, a place where security isn't just a department
 
 Ready to dive in! I'm excited to share my knowledge of APIs and identity, and even more so to learn from this amazing community. Our collective efforts can build a future where technology empowers everyone – securely, effortlessly, and intelligently.
 
-{% img "sohail-pathan-intro/image4.jpg", "A photo captured on my first day at the Okta Campus in Bengaluru, near my workstation", "782" %}
+{% img {src: "sohail-pathan-intro/image4.jpg", alt: "A photo captured on my first day at the Okta Campus in Bengaluru, near my workstation", header: "782"} %}
 <cite style="display: block; text-align: center;">Image: A photo captured on my first day at the Okta Campus in Bengaluru, near my workstation.</cite>
 
 ### A little fun fact about me

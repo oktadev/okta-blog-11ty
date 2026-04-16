@@ -31,7 +31,7 @@ You will write your application in Visual Studio Code and use the Azure extensio
 - [Okta CLI](https://cli.okta.com)
   > [Okta](https://developer.okta.com/) has Authentication and User Management APIs that reduce development time with instant-on, scalable user infrastructure. Okta's intuitive API and expert support make it easy for developers to authenticate, manage and secure users and roles in any application.
 - [Visual Studio Code](https://code.visualstudio.com/)
-  - [Azure Functions VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
+  - [Azure Functions VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) 
   - [Azure Static Web Apps VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestaticwebapps)
 
 If you want to see the code, you can download it or fork it [from the example on GitHub](https://github.com/oktadev/okta-react-azure-functions-example).
@@ -125,7 +125,6 @@ This component creates the routes for your `Home` and `LoginCallback` components
 Next, add `Home.jsx` to your `src` folder and add the following code.
 
 {% raw %}
-
 ```jsx
 import { useOktaAuth } from "@okta/okta-react";
 import { useState } from "react";
@@ -147,7 +146,7 @@ function Home() {
     var data = new FormData();
     data.append("file", image);
 
-    // Ideally the Azure Function should call the `/userprofile` endpoint to get
+    // Ideally the Azure Function should call the `/userprofile` endpoint to get  
     // the user name instead of relying on the client to send it since the client
     // could manipulate the data
     data.append("firstLetter", authState.idToken.claims.name[0]);
@@ -217,7 +216,9 @@ function Home() {
           }}
         >
           <p>
-            A Small demo using <a href="https://developer.okta.com/">Okta</a> to Secure an <a href="https://azure.microsoft.com/en-us/services/app-service/static/">Azure Static Web App </a> with a serverless <a href="https://azure.microsoft.com/en-us/services/functions/">Function</a>
+            A Small demo using <a href="https://developer.okta.com/">Okta</a> to Secure an{" "}
+            <a href="https://azure.microsoft.com/en-us/services/app-service/static/">Azure Static Web App </a> with a serverless{" "}
+            <a href="https://azure.microsoft.com/en-us/services/functions/">Function</a>
           </p>
           <p>
             By <a href="https://github.com/nickolasfisher">Nik Fisher</a>
@@ -230,10 +231,9 @@ function Home() {
 
 export default Home;
 ```
-
 {% endraw %}
 
-This file contains the bulk of your logic. First, it provides Login/Logout functionality using the `useOktaAuth` hook. With this hook, you can determine the user's authenticated state. If the user is not authenticated, prompt them to do so; otherwise, you will allow them to use the badge creator.
+This file contains the bulk of your logic. First, it provides Login/Logout functionality using the `useOktaAuth` hook. With this hook, you can determine the user's authenticated state. If the user is not authenticated,  prompt them to do so; otherwise, you will allow them to use the badge creator.
 
 The badge creator logic prompts users to upload a photo of themselves for the template. It then posts this to the nebulous `api/CreateBadge`. This route stands for the `CreateBadge` function that you will create later in this article. Azure will know how to find that route whether you're running this application locally on Azure's emulator or Azure's infrastructure. It will even be able to route to the appropriate environment on Azure's servers.
 
@@ -318,7 +318,7 @@ const drawImage = async (req) => {
   const canvas = createCanvas(templateWH[0], templateWH[1]);
   const ctx = canvas.getContext("2d");
 
-  // Ideally this Azure Function should call the `/userprofile` endpoint to get
+  // Ideally this Azure Function should call the `/userprofile` endpoint to get  
   // the user name instead of relying on the client to send it
   const firstLetter = parts.filter((r) => r.name === "firstLetter")[0].data.toString();
 
@@ -355,15 +355,15 @@ The other primary function of this code is to take the image uploaded by the use
 
 Click into the Azure VS Code extension again, and under the `Static Web Apps` section, click **Create Static Web App...**. Follow the prompts and add the following information. If you are new to Azure, you'll first need to create a "Subscription". Then answer the prompts as shown below:
 
-- **Azure Subscription Name** - "My Azure Subscription"
-- **Azure Web App name** - `azure-static-app`
-- **GitHub repo** - `azure-static-app`
-- **Commit Message** - `initial commit`
-- **Region** - Select the region closest to you
-- **Framework** - React
-- **Root of your app** - `azure-static-app`
-- **Root of your api** (if asked) - `api`
-- **Build** - leave this blank
+* **Azure Subscription Name** - "My Azure Subscription"
+* **Azure Web App name** - `azure-static-app`
+* **GitHub repo** - `azure-static-app`
+* **Commit Message** - `initial commit`
+* **Region** - Select the region closest to you
+* **Framework** - React
+* **Root of your app** - `azure-static-app`
+* **Root of your api** (if asked) - `api`
+* **Build** - leave this blank
 
 Everything will need a few moments to build. This process creates a new git repo on your GitHub account, configures the CI/CD for Azure Static Web Apps using GitHub Actions, creates your Azure Static Web App, and deploys your function and SPA code. Once it's complete, you should be able to navigate to your newly created site.
 
@@ -373,17 +373,17 @@ You will need to configure your Okta application for your newly deployed applica
 
 Edit your application and under the **Login** section, add your Azure domain with the `/login/callback` endpoint to the **Sign-in redirect URIs** section. Next, add the domain's home page to your **Sign-out redirect URIs** section.
 
-{% img "react-azure-functions/edit-okta-application.jpg", "Screenshot depicting Okta application after updates to include new Azure domain", "800" %}
+{% img {src: "react-azure-functions/edit-okta-application.jpg", alt: "Screenshot depicting Okta application after updates to include new Azure domain", header: "800"} %}
 
 Next, navigate to **Security** > **API** and click **Trusted Origins**. Add your Azure domain to this list.
 
-{% img "react-azure-functions/edit-okta-trusted-origins.jpg", "Screenshot depicting Okta trusted origins overview after updates to include new Azure domain", "800" %}
+{% img {src: "react-azure-functions/edit-okta-trusted-origins.jpg", alt: "Screenshot depicting Okta trusted origins overview after updates to include new Azure domain", header: "800"} %}
 
 ## Run your application
 
 Finally, navigate back to your Azure domain and log in using Okta. Select an image you want to use for your profile picture and click **Upload**. After a moment, your function should return your new badge.
 
-{% img "react-azure-functions/finished-app.jpg", "Screenshot depicting final application with an Intergalactic Mining Federation Agent badge that includes a profile image of your choosing along with your name", "800" %}
+{% img {src: "react-azure-functions/finished-app.jpg", alt: "Screenshot depicting final application with an Intergalactic Mining Federation Agent badge that includes a profile image of your choosing along with your name", header: "800"} %}
 
 ### Use the Azure emulator
 
@@ -407,10 +407,9 @@ It's possible to run this app from the build directory, but you will lose the be
 ## Wrap up
 
 In this tutorial, you learned how to create a React app and deploy it to Azure as a Static Web App. You also learned how to build a Function in Azure and call it from your Static Web App. Finally, you learned how to secure both the Function and the Static Web App using Okta.
-Want to explore some related resources for building apps on the Azure platform? Take a look at some of these other Okta Developer blog posts.
-
-- [How to Deploy Your .NET Core App to Google Cloud, AWS or Azure](/blog/2020/12/09/dotnet-cloud-host-publish)
-- [Build a Simple Microservice with C# Azure Functions](/blog/2019/11/13/build-simple-microservice-csharp-azure-functions)
-- [Use Azure Cosmos DB with Your ASP.NET App](/blog/2019/07/11/aspnet-azure-cosmosdb-tutorial)
+Want to explore some related resources for building apps on the Azure platform? Take a look at some of these other Okta Developer blog posts. 
+* [How to Deploy Your .NET Core App to Google Cloud, AWS or Azure](/blog/2020/12/09/dotnet-cloud-host-publish)
+* [Build a Simple Microservice with C# Azure Functions](/blog/2019/11/13/build-simple-microservice-csharp-azure-functions)
+* [Use Azure Cosmos DB with Your ASP.NET App](/blog/2019/07/11/aspnet-azure-cosmosdb-tutorial)
 
 Make sure you follow us on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube](https://www.youtube.com/c/oktadev) channel. If you have any questions or want to share what tutorial you'd like to see next, please comment below.

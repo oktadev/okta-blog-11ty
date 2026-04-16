@@ -55,7 +55,7 @@ You'll need the following accounts:
 
 It is essential to understand the key components and their roles in the CI/CD process. This integration of GitHub, Terraform, AWS, and Okta allows for secure and efficient infrastructure management and deployment. The following overview details each component and its function.
 
-{% img "terraform-ci-cd/architecture-overview.jpg", "The developer creates code that interacts with GitHub which triggers workflows in GitHub Actions. A GitHub action starts GitHub OIDC IdP interactions with AWS to create roles and temporary credentials. GitHub Actions then triggers Terraform to use AWS resources to capture state and secrets and then calls Okta to create resources.", "800" %}
+{% img {src: "terraform-ci-cd/architecture-overview.jpg", alt: "The developer creates code that interacts with GitHub which triggers workflows in GitHub Actions. A GitHub action starts GitHub OIDC IdP interactions with AWS to create roles and temporary credentials. GitHub Actions then triggers Terraform to use AWS resources to capture state and secrets and then calls Okta to create resources.", header: "800"} %}
 
 **User**
  * **Develop Code**: Develops Terraform code on their local machine using a preferred IDE. Uses Git to push code to the GitHub repository.
@@ -83,7 +83,7 @@ It is essential to understand the key components and their roles in the CI/CD pr
 
 At a high level, this is what we aim to build out through this article. We'll set up a CI/CD pipeline that automates infrastructure deployment using GitHub, Terraform, AWS, and Okta. Here's a simplified overview of the workflow:
 
-{% img "terraform-ci-cd/workflow.jpg", "There are two Git branches: main and develop. A commit to the develop branch triggers the GitHub Action to build, then creates a pull request to main. The GitHub action also creates a production plan and merges develop into main. The GitHub action then builds prod.", "800" %}
+{% img {src: "terraform-ci-cd/workflow.jpg", alt: "There are two Git branches: main and develop. A commit to the develop branch triggers the GitHub Action to build, then creates a pull request to main. The GitHub action also creates a production plan and merges develop into main. The GitHub action then builds prod.", header: "800"} %}
 
 1. **Branch Creation**: Developers create and work on a `develop` branch.
 2. **Push to Develop**: Code changes are committed locally and pushed to the remote `develop` branch.
@@ -389,11 +389,11 @@ okta_secret_id    = "dev/okta_terraform_key"
 
 The repository includes a directory module containing a resource okta_groups.tf, which we will use to provide a group for your Okta tenant. In doing so, we'll also go through a core tenet of the previously mentioned variables, where we will define both input and output variables. This may be a little confusing initially, so take some time to understand how the different files and modules interact! The following diagram may help contextualize the various files we are going to step through:
 
-{% img "terraform-ci-cd/module-files.jpg", "The parent module contains tfvars, which contains variable values that lead to main.ts. This then has reference variables which lead ", "800" %}
+{% img {src: "terraform-ci-cd/module-files.jpg", alt: "The parent module contains tfvars, which contains variable values that lead to main.ts. This then has reference variables which lead ", header: "800"} %}
 
 Open `terraform/modules/directory/variables.tf` and uncomment the following entry. This is the variables file for the directory module and it defines which input variables are required. Each module you develop will have its own variables file.
 
-```tf
+```hcl
 variable "okta_group_name" {
   type = string
 }
@@ -401,7 +401,7 @@ variable "okta_group_name" {
 
 Open `terraform/modules/directory/okta_groups.tf` and uncomment the following entry. This is a resource block. The resource block has two parts: firstly, the resource type, `okta_group` , and the resource name, `okta_test_group`. Feel free to change the resource block name (okta_test_group) to something you choose. Within the resource block body are the configuration arguments for the resource. We have one argument defined, which is the name,  referencing the input variable okta_group_name
 
-```tf
+```hcl
 resource "okta_group" "okta_test_group" {
   name = var.okta_group_name
 }
@@ -409,7 +409,7 @@ resource "okta_group" "okta_test_group" {
 
 Open `terraform/variables.tf` and uncomment the following entry. This is the variables file for the parent or main module. The variables within this file are assigned via the `tfvars` files, which are passed in with environment-specific configurations via the Terraform CLI:
 
-```tf
+```hcl
 variable "okta_group_name" {
   type = string
 }

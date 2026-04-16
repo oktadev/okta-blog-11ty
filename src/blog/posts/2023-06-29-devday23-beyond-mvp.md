@@ -28,7 +28,7 @@ In this installment of creating an enterprise-ready SaaS app, we'll cover this a
 
 Aaron Parecki, Security Architect Group Manager at Okta, shared ways you can level up your SaaS app at [WIC Devday 23](https://developerday.com/events/devday23-wic) virtual conference:
 
-{% youtube XCHVUPEKxs4 %} 
+{% youtube "XCHVUPEKxs4" %} 
 
 ## Learn more about Okta Workflows, provisioning, and SaaS application maturity
 

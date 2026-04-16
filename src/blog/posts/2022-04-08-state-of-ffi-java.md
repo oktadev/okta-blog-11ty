@@ -18,7 +18,7 @@ Java 18 was released last month (March 2022), and with it comes the second incub
 
 If you would prefer to follow along by watching a video, here's the recording of my FOSDEM'22 talk on this topic, from the [the OktaDev YouTube channel](https://youtu.be/lW69_AtAXzE).
 
-{% youtube lW69_AtAXzE %}
+{% youtube "lW69_AtAXzE" %}
 
 ## What is a Foreign Function Interface?
 
@@ -171,7 +171,7 @@ Since JNI is the current standard and Panama aims to replace that, it makes sens
 
 ### JNI
 
-{% img "state-of-ffi-java/JNI-getpid.png", "getpid with JNI", "800" %}
+{% img {src: "state-of-ffi-java/JNI-getpid.png", alt: "getpid with JNI", header: "800"} %}
 
 As you can see here, there are precisely six steps to make this simple native call using JNI. You start by writing a Java class that declares the native method. Then you use `javac` to generate a header file and a C class for this. These are the native bindings. Next, you will implement the C class. Remember, these are Java developers writing C code. This means you must write memory-safe C code, which has access to the entire JVM via the `JNIEnv` variable passed to the C class.  In many scenarios, the developer may not have much experience in C. So that will be fun... or more like a security nightmare. Next, you will compile the C code into a platform-specific dynamic library and determine where to place that binary. Pray, if you must, that all this works without exposing the app to a security vulnerability. Then, you will load this into the Java class and compile and run the class, and hopefully, it works.
 
@@ -179,7 +179,7 @@ Ooof! This was just a simple `getpid` call; imagine writing something like an Op
 
 ### Panama
 
-{% img "state-of-ffi-java/panama-getpid.png", "getpid with panama", "800" %}
+{% img {src: "state-of-ffi-java/panama-getpid.png", alt: "getpid with panama", header: "800"} %}
 
 Using the new Panama APIs, you can do the same thing in two different ways, either by manually looking up and loading the native function or using the jextract tool.
 

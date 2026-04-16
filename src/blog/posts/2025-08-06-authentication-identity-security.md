@@ -28,21 +28,21 @@ Before we dive into possible solutions, let's review the three authentication fa
 
 <table>
 <tr>
-    <td>{% img "authentication-identity-security/factor-knowledge.jpg", "Icon of someone thinking", "100" %}</td>
+    <td>{% img {src: "authentication-identity-security/factor-knowledge.jpg", alt: "Icon of someone thinking", header: "100"} %}</td>
     <td markdown="div">
       **Something you know** <br/>
       Knowledge factors include passwords and PINs
     </td>
 </tr>
 <tr>
-    <td>{% img "authentication-identity-security/factor-possession.jpg", "Icon showing devices such as computer, tablet, and phone", "100" %}</td>
+    <td>{% img {src: "authentication-identity-security/factor-possession.jpg", alt: "Icon showing devices such as computer, tablet, and phone", header: "100"} %}</td>
     <td markdown="div">
     **Something you have**<br/>
     Possession factors include devices such as smart cards, security keys, phones, and tablets
     </td>
 </tr>
 <tr>
-    <td>{% img "authentication-identity-security/factor-inherence.jpg", "Icon of a hand with fingerprint", "100" %}</td>
+    <td>{% img {src: "authentication-identity-security/factor-inherence.jpg", alt: "Icon of a hand with fingerprint", header: "100"} %}</td>
     <td markdown="div">
     **Something you are**<br/>
     Inference factors include biometrics such as fingerprints and facial recognition
@@ -89,7 +89,7 @@ For the highest levels of identity security, use phishing-resistant factors.
 
 We recommend phishing-resistant factors at Okta as they offer the best application protection. You have identity assurances built in, along with authentication security. Consider this decision tree for your authentication needs:
 
-{% img "authentication-identity-security/phr-decision-tree.svg", "Decision tree for phishing-resistant factors. If the target user type are consumers, choose passkeys. For workforce users, if the user base require shared kiosks or hardware, elect hardware keys or smart cards. In all other cases, use FIDO2 with WebAuthn.", "800" %}
+{% img {src: "authentication-identity-security/phr-decision-tree.svg", alt: "Decision tree for phishing-resistant factors. If the target user type are consumers, choose passkeys. For workforce users, if the user base require shared kiosks or hardware, elect hardware keys or smart cards. In all other cases, use FIDO2 with WebAuthn.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content

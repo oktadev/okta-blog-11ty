@@ -48,15 +48,15 @@ If you are using Visual Studio 2022 you can follow the instructions below.
 
 First, open Visual Studio and then click **Create Project**. In the *Create a new project* pane select `ASP.Net Core Web App (Model-View-Controller)` as your template.  
 
-{% img "dotnet-di-compare/image1.png", "visual studio create a new project dialog", "800" %}
+{% img {src: "dotnet-di-compare/image1.png", alt: "visual studio create a new project dialog", header: "800"} %}
 
 Click **Next** and under *Configure your new project* and name it `OktaDependencyInjection` and press **Next**.
 
-{% img "dotnet-di-compare/image2.png", "visual studio configure your project dialog", "800" %}
+{% img {src: "dotnet-di-compare/image2.png", alt: "visual studio configure your project dialog", header: "800"} %}
 
 Under additional info make sure you have `.NET 5.0` selected as your framework. You can leave the other options as the default.
 
-{% img "dotnet-di-compare/image3.png", "visual studio additional information dialog", "800" %}
+{% img {src: "dotnet-di-compare/image3.png", alt: "visual studio additional information dialog", header: "800"} %}
 
 Click **Create** and give Visual Studio a moment to scaffold your project.
 
@@ -227,7 +227,7 @@ Finally, you will want to update your `Views/Shared/_Layout.cshtml` view. This s
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a>OktaDependencyInjection</a>
+                <a class="navbar-brand" asp-area asp-controller="Home" asp-action="Index">OktaDependencyInjection</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -235,10 +235,10 @@ Finally, you will want to update your `Views/Shared/_Layout.cshtml` view. This s
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a>Home</a>
+                            <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a>Privacy</a>
+                            <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
@@ -618,11 +618,11 @@ The `ILogger` is boilerplate for all controller code. The other services are inj
 
 Start your application and you should see your homepage.  
 
-{% img "dotnet-di-compare/image4.png", "home screen demo after 1 visit", "800" %}
+{% img {src: "dotnet-di-compare/image4.png", alt: "home screen demo after 1 visit", header: "800"} %}
 
 As you can see, the first time you visit the page you are presented with a wacky-looking title, a banner telling you that there has been one hit so far, and a list of users. In my case, I only have one user in my Okta account so it's just me. Refresh this page five or six times.
 
-{% img "dotnet-di-compare/image5.png", "home screen demo after several visits", "800" %}
+{% img {src: "dotnet-di-compare/image5.png", alt: "home screen demo after several visits", header: "800"} %}
 
 Now you can see that the number of hits counter is up to six and the uppercase and lowercase letters on the title of the application are randomized differently. Success! All your services are set up correctly and working as intended.
 

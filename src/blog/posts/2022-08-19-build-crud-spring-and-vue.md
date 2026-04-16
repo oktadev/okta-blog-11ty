@@ -2,25 +2,25 @@
 title: "Build a Simple CRUD App with Spring Boot and Vue.js"
 author: andrew-hughes
 by: contractor
-communities: [java, javascript]
+communities: [java,javascript]
 description: "Create a CRUD (create, read, update, and delete) application using Spring Boot and Vue.js."
 tags: [java, spring-boot, vue, javascript, auth0]
 tweets:
-  - "Build a secure Spring Boot + Vue.js app with this in-depth tutorial!"
-  - "💚 Vue and Spring Boot? This full-stack tutorial is for you!"
-  - "Learn how to build a full-stack application with Spring Boot and @vuejs in this excellent tutorial."
+- "Build a secure Spring Boot + Vue.js app with this in-depth tutorial!"
+- "💚 Vue and Spring Boot? This full-stack tutorial is for you!"
+- "Learn how to build a full-stack application with Spring Boot and @vuejs in this excellent tutorial."
 image: spring-boot-vue3/spring-boot-vue.jpg
 type: conversion
 github: https://github.com/oktadev/okta-spring-boot-vue-crud-example
 changelog:
-  - 2025-05-19: Added warning about org type name change
-  - 2023-04-26: Updated to use the Okta Spring Boot starter, which supports Auth0 in v3.0.3. You can find the changes to this post in [okta-blog#1365](https://github.com/oktadev/okta-blog/pull/1365) and the example app's changes in [okta-spring-boot-vue-crud-example#8](https://github.com/oktadev/okta-spring-boot-vue-crud-example/pull/8).
-  - 2023-01-20: Updated post to add Auth0 and use Spring Boot 3.0. You can find the changes to this post in [okta-blog#1284](https://github.com/oktadev/okta-blog/pull/1284). Example app changes can be found in [okta-spring-boot-vue-crud-example#6](https://github.com/oktadev/okta-spring-boot-vue-crud-example/pull/6).
+- 2025-05-19: Added warning about org type name change
+- 2023-04-26: Updated to use the Okta Spring Boot starter, which supports Auth0 in v3.0.3. You can find the changes to this post in [okta-blog#1365](https://github.com/oktadev/okta-blog/pull/1365) and the example app's changes in [okta-spring-boot-vue-crud-example#8](https://github.com/oktadev/okta-spring-boot-vue-crud-example/pull/8).
+- 2023-01-20: Updated post to add Auth0 and use Spring Boot 3.0. You can find the changes to this post in [okta-blog#1284](https://github.com/oktadev/okta-blog/pull/1284). Example app changes can be found in [okta-spring-boot-vue-crud-example#6](https://github.com/oktadev/okta-spring-boot-vue-crud-example/pull/6).
 ---
 
 You will use Vue and Spring Boot to build a todo list web application. The application will include CRUD abilities, meaning that you can **c**reate, **r**ead, **u**pdate, and **d**elete the todo items on the Spring Boot API via the client. The Vue frontend client will use the Quasar framework for the presentation. OAuth 2.0 and OpenID Connect (OIDC) will secure the Spring Boot API and the Vue client, initially by using Okta as the security provider. Then, at the end of the tutorial, you will also see how to use Auth0 as the security provider.
 
-{% img "spring-boot-vue3/spring-and-vue.png", "Spring Boot, Vue, and Okta logos", "500" %}
+{% img {src: "spring-boot-vue3/spring-and-vue.png", alt: "Spring Boot, Vue, and Okta logos", header: "500"} %}
 
 This project has two major parts:
 
@@ -35,7 +35,7 @@ Before you dig into the tutorial, I want to quickly introduce the technologies f
 
 If you're more of a visual learner, this tutorial is also available [as a screencast](https://youtu.be/8v2m2eoKVnM).
 
-{% youtube 8v2m2eoKVnM %}
+{% youtube "8v2m2eoKVnM" %}
 
 [[toc]]
 
@@ -88,7 +88,7 @@ cd spring-boot-vue-crud
 
 {{ macro.cli({type: "spa", framework: "Vue", loginRedirectUri: "http://localhost:8080/callback"}) }}
 
-Copy the client ID and issuer URI somewhere safe. You'll need them for both the client and resource server applications.
+Copy the client ID and issuer URI somewhere safe. You'll need them for both the client and resource server applications. 
 
 **TIP**: You can also use Auth0 to [secure Spring Boot](#use-auth0-to-secure-the-api) and the [Vue client](#update-the-vue-client-to-use-auth0).
 
@@ -234,7 +234,7 @@ public class DemoApplication {
             config.exposeIdsFor(Todo.class);
         }
     }
-
+    
 }
 ```
 
@@ -264,7 +264,7 @@ import jakarta.persistence.Entity;
 @NoArgsConstructor
 public class Todo {
 
-    @Id
+    @Id 
     @GeneratedValue
     private Long id;
 
@@ -272,7 +272,7 @@ public class Todo {
     private String title;
 
     private Boolean completed = false;
-
+    
 }
 ```
 
@@ -313,7 +313,7 @@ http :9000/todos
 You should see a response like the following:
 
 ```bash
-HTTP/1.1 200
+HTTP/1.1 200 
 ...
 
 {
@@ -389,7 +389,7 @@ http :9000/todos
 You will get an error.
 
 ```bash
-HTTP/1.1 401
+HTTP/1.1 401 
 ...
 
 401 Unauthorized
@@ -405,7 +405,7 @@ Use the Vue CLI to create a new application **from the project's root directory*
 vue create client
 ```
 
-Pick **Default ([Vue 3] babel, eslint)** when prompted. Wait for it to finish.
+Pick **Default ([Vue 3] babel, eslint)** when prompted. Wait for it to finish. 
 
 ```bash
 cd client
@@ -444,43 +444,47 @@ Replace `main.js` with the following. Look at the `OktaAuth` configuration objec
 `src/main.js`
 
 ```js
-import { createApp } from "vue";
-import App from "./App.vue";
-import { Quasar } from "quasar";
-import quasarUserOptions from "./quasar-user-options";
-import VueLogger from "vuejs3-logger";
-import router from "./router";
-import createApi from "./Api";
+import { createApp } from 'vue'
+import App from './App.vue'
+import { Quasar } from 'quasar'
+import quasarUserOptions from './quasar-user-options'
+import VueLogger from 'vuejs3-logger'
+import router from './router'
+import createApi from './Api'
 
-import { OktaAuth } from "@okta/okta-auth-js";
-import OktaVue from "@okta/okta-vue";
+import { OktaAuth } from '@okta/okta-auth-js'
+import OktaVue from '@okta/okta-vue'
 
 if (process.env.VUE_APP_ISSUER_URI == null || process.env.VUE_APP_CLIENT_ID == null || process.env.VUE_APP_SERVER_URI == null) {
-  throw "Please define VUE_APP_ISSUER_URI, VUE_APP_CLIENT_ID, and VUE_APP_SERVER_URI in .env file";
+  throw 'Please define VUE_APP_ISSUER_URI, VUE_APP_CLIENT_ID, and VUE_APP_SERVER_URI in .env file'
 }
 
 const oktaAuth = new OktaAuth({
-  issuer: process.env.VUE_APP_ISSUER_URI, // pulled from .env file
-  clientId: process.env.VUE_APP_CLIENT_ID, // pulled from .env file
-  redirectUri: window.location.origin + "/callback",
-  scopes: ["openid", "profile", "email"],
-});
+  issuer: process.env.VUE_APP_ISSUER_URI,  // pulled from .env file
+  clientId: process.env.VUE_APP_CLIENT_ID,  // pulled from .env file
+  redirectUri: window.location.origin + '/callback',
+  scopes: ['openid', 'profile', 'email']
+})
 
 const options = {
   isEnabled: true,
-  logLevel: "debug",
+  logLevel: 'debug',
   stringifyArguments: false,
   showLogLevel: true,
   showMethodName: false,
-  separator: "|",
-  showConsoleColors: true,
+  separator: '|',
+  showConsoleColors: true
 };
 
-const app = createApp(App).use(Quasar, quasarUserOptions).use(VueLogger, options).use(OktaVue, { oktaAuth }).use(router);
+const app = createApp(App)
+  .use(Quasar, quasarUserOptions)
+  .use(VueLogger, options)
+  .use(OktaVue, {oktaAuth})
+  .use(router)
 
-app.config.globalProperties.$api = createApi(app.config.globalProperties.$auth);
+app.config.globalProperties.$api = createApi(app.config.globalProperties.$auth)
 
-app.mount("#app");
+app.mount('#app')
 ```
 
 Stated very briefly, the file above creates the main Vue app and configures it to use the dependencies you added: Quasar, VueLogger, OktaVue, and the router. It also creates the API class that handles the requests to the resource server and passes it the `$auth` object it needs to get the JWT.
@@ -504,10 +508,10 @@ Replace `App.vue` with the following.
 `src/App.vue`
 
 {% raw %}
-
-```vue
+```html
 <template>
   <q-layout view="hHh lpR fFf">
+
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title>
@@ -516,52 +520,52 @@ Replace `App.vue` with the following.
           </q-avatar>
           Todo App
         </q-toolbar-title>
-        {{ this.claims && this.claims.email ? claims.email : "" }}
-        <q-btn flat round dense icon="logout" v-if="authState && authState.isAuthenticated" @click="logout" />
-        <q-btn flat round dense icon="account_circle" v-else @click="login" />
+        {{ this.claims && this.claims.email ? claims.email : '' }}
+        <q-btn flat round dense icon="logout" v-if='authState && authState.isAuthenticated' @click="logout"/>
+        <q-btn flat round dense icon="account_circle" v-else @click="login"/>
       </q-toolbar>
     </q-header>
 
     <q-page-container>
       <router-view></router-view>
     </q-page-container>
+
   </q-layout>
 </template>
 
 <script>
 export default {
-  name: "LayoutDefault",
+  name: 'LayoutDefault',
   data: function () {
     return {
-      claims: null,
-    };
+      claims: null
+    }
   },
   watch: {
-    "authState.isAuthenticated"() {
-      this.$log.debug("watch triggered!");
-      this.updateClaims();
-    },
+    'authState.isAuthenticated'() {
+      this.$log.debug(('watch triggered!'))
+      this.updateClaims()
+    }
   },
   created() {
-    this.updateClaims();
+    this.updateClaims()
   },
   methods: {
     async updateClaims() {
       if (this.authState && this.authState.isAuthenticated) {
-        this.claims = await this.$auth.getUser();
+        this.claims = await this.$auth.getUser()
       }
     },
     async login() {
-      await this.$auth.signInWithRedirect({ originalUri: "/todos" });
+      await this.$auth.signInWithRedirect({ originalUri: '/todos' })
     },
     async logout() {
-      await this.$auth.signOut();
-    },
+      await this.$auth.signOut()
+    }
   },
-};
+}
 </script>
 ```
-
 {% endraw %}
 
 This top-level component defines the header bar and includes the router component. The header bar has a login or logout button and will show the authenticated user's email address when logged in.
@@ -573,57 +577,54 @@ Create a new file to encapsulate the resource server access logic.
 `src/Api.js`
 
 ```js
-import axios from "axios";
+import axios from 'axios'
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_SERVER_URI,
-  timeout: 2000,
+  timeout: 2000
 });
 
 const createApi = (auth) => {
-  instance.interceptors.request.use(
-    async function (config) {
-      const accessToken = auth.getAccessToken();
-      config.headers = {
-        Authorization: `Bearer ${accessToken}`,
-      };
-      return config;
-    },
-    function (error) {
-      return Promise.reject(error);
-    },
-  );
+
+  instance.interceptors.request.use(async function (config) {
+    const accessToken = auth.getAccessToken()
+    config.headers = {
+      Authorization: `Bearer ${accessToken}`
+    }
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+  });
 
   return {
+
     // (C)reate
     createNew(text, completed) {
-      return instance.post("/todos", { title: text, completed: completed });
+      return instance.post('/todos', {title: text, completed: completed})
     },
 
     // (R)ead
     getAll() {
-      return instance.get("/todos", {
-        transformResponse: [
-          function (data) {
-            return data ? JSON.parse(data)._embedded.todos : data;
-          },
-        ],
-      });
+      return instance.get('/todos', {
+        transformResponse: [function (data) {
+          return data ? JSON.parse(data)._embedded.todos : data;
+        }]
+      })
     },
 
     // (U)pdate
     updateForId(id, text, completed) {
-      return instance.put("todos/" + id, { title: text, completed: completed });
+      return instance.put('todos/' + id, {title: text, completed: completed})
     },
 
     // (D)elete
     removeForId(id) {
-      return instance.delete("todos/" + id);
-    },
-  };
-};
+      return instance.delete('todos/' + id)
+    }
+  }
+}
 
-export default createApi;
+export default createApi
 ```
 
 All of the requests to the server go through this module. Take a look at how the access token is retrieved from the global `auth` object and injected into every request.
@@ -633,35 +634,35 @@ Create the router file.
 `src/router/index.js`
 
 ```js
-import { createRouter, createWebHistory } from "vue-router";
-import { navigationGuard } from "@okta/okta-vue";
-import Todos from "@/components/Todos";
-import Home from "@/components/Home";
-import { LoginCallback } from "@okta/okta-vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import { navigationGuard } from '@okta/okta-vue'
+import Todos from '@/components/Todos';
+import Home from '@/components/Home';
+import { LoginCallback } from '@okta/okta-vue'
 
 const routes = [
   {
-    path: "/",
-    component: Home,
+    path: '/',
+    component: Home
   },
   {
-    path: "/todos",
+    path: '/todos',
     component: Todos,
     meta: {
-      requiresAuth: true,
-    },
+      requiresAuth: true
+    }
   },
-  { path: "/callback", component: LoginCallback },
-];
+  { path: '/callback', component: LoginCallback },
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+})
 
-router.beforeEach(navigationGuard);
+router.beforeEach(navigationGuard)
 
-export default router;
+export default router
 ```
 
 The router has three paths. The home path and the todos path are straightforward. The Okta Vue SDK provides the last path, `/callback`, to handle the login redirect from the Okta servers after authentication.
@@ -671,13 +672,12 @@ Create the `Home` component.
 `src/components/Home.vue`
 
 {% raw %}
-
-```vue
+```html
 <template>
   <div class="column justify-center items-center" id="row-container">
     <q-card class="my-card">
       <q-card-section style="text-align: center">
-        <div v-if="authState && authState.isAuthenticated">
+        <div v-if='authState && authState.isAuthenticated'>
           <h6 v-if="claims && claims.email">You are logged in as {{ claims.email }}</h6>
           <h6 v-else>You are logged in</h6>
           <q-btn flat color="primary" @click="todo">Go to Todo app</q-btn>
@@ -693,35 +693,34 @@ Create the `Home` component.
 
 <script>
 export default {
-  name: "home-component",
+  name: 'home-component',
   data: function () {
     return {
-      claims: "",
-    };
+      claims: ''
+    }
   },
-  created() {
-    this.setup();
+  created() { 
+    this.setup() 
   },
   methods: {
     async setup() {
       if (this.authState && this.authState.isAuthenticated) {
-        this.claims = await this.$auth.getUser();
+        this.claims = await this.$auth.getUser()
       }
     },
     todo() {
-      this.$router.push("/todos");
+      this.$router.push('/todos')
     },
     async login() {
-      await this.$auth.signInWithRedirect({ originalUri: "/todos" });
+      await this.$auth.signInWithRedirect({ originalUri: '/todos' })
     },
     async logout() {
-      await this.$auth.signOut();
-    },
-  },
-};
+      await this.$auth.signOut()
+    }
+  }
+}
 </script>
 ```
-
 {% endraw %}
 
 Create the `TodoItem` component.
@@ -729,87 +728,87 @@ Create the `TodoItem` component.
 `src/components/TodoItem.vue`
 
 {% raw %}
-
-```vue
+```html
 <template>
   <q-item-section avatar class="check-icon" v-if="this.item.completed">
-    <q-icon color="green" name="done" @click="handleClickSetCompleted(false)" />
+    <q-icon color="green" name="done" @click="handleClickSetCompleted(false)"/>
   </q-item-section>
   <q-item-section avatar class="check-icon" v-else>
-    <q-icon color="gray" name="check_box_outline_blank" @click="handleClickSetCompleted(true)" />
+    <q-icon color="gray" name="check_box_outline_blank" @click="handleClickSetCompleted(true)"/>
   </q-item-section>
   <q-item-section v-if="!editing">{{ this.item.title }}</q-item-section>
   <q-item-section v-else>
-    <input class="list-item-input" type="text" name="textinput" ref="input" v-model="editingTitle" @change="handleDoneEditing" @blur="handleCancelEditing" />
+    <input
+        class="list-item-input"
+        type="text"
+        name="textinput"
+        ref="input"
+        v-model="editingTitle"
+        @change="handleDoneEditing"
+        @blur="handleCancelEditing"
+    />
   </q-item-section>
   <q-item-section avatar class="hide-icon" @click="handleClickEdit">
-    <q-icon color="primary" name="edit" />
+    <q-icon color="primary" name="edit"/>
   </q-item-section>
   <q-item-section avatar class="hide-icon close-icon" @click="handleClickDelete">
-    <q-icon color="red" name="close" />
+    <q-icon color="red" name="close"/>
   </q-item-section>
 </template>
 <script>
-import { nextTick } from "vue";
+
+import { nextTick } from 'vue'
 
 export default {
-  name: "TodoItem",
+  name: 'TodoItem',
   props: {
     item: Object,
     deleteMe: Function,
     showError: Function,
     setCompleted: Function,
-    setTitle: Function,
+    setTitle: Function
   },
   data: function () {
     return {
       editing: false,
       editingTitle: this.item.title,
-    };
+    }
   },
   methods: {
     handleClickEdit() {
-      this.editing = true;
-      this.editingTitle = this.item.title;
-      nextTick(
-        function () {
-          this.$refs.input.focus();
-        }.bind(this),
-      );
+      this.editing = true
+      this.editingTitle = this.item.title
+      nextTick(function () {
+        this.$refs.input.focus()
+      }.bind(this))
     },
     handleCancelEditing() {
-      this.editing = false;
+      this.editing = false
     },
     handleDoneEditing() {
-      this.editing = false;
-      this.$api
-        .updateForId(this.item.id, this.editingTitle, this.item.completed)
-        .then((response) => {
-          this.setTitle(this.item.id, this.editingTitle);
-          this.$log.info("Item updated:", response.data);
-        })
-        .catch((error) => {
-          this.showError("Failed to update todo title");
-          this.$log.debug(error);
-        });
+      this.editing = false
+      this.$api.updateForId(this.item.id, this.editingTitle, this.item.completed).then((response) => {
+        this.setTitle(this.item.id, this.editingTitle)
+        this.$log.info('Item updated:', response.data);
+      }).catch((error) => {
+        this.showError('Failed to update todo title')
+        this.$log.debug(error)
+      });
     },
     handleClickSetCompleted(value) {
-      this.$api
-        .updateForId(this.item.id, this.item.title, value)
-        .then((response) => {
-          this.setCompleted(this.item.id, value);
-          this.$log.info("Item updated:", response.data);
-        })
-        .catch((error) => {
-          this.showError("Failed to update todo completed status");
-          this.$log.debug(error);
-        });
+      this.$api.updateForId(this.item.id, this.item.title, value).then((response) => {
+        this.setCompleted(this.item.id, value)
+        this.$log.info('Item updated:', response.data);
+      }).catch((error) => {
+        this.showError('Failed to update todo completed status')
+        this.$log.debug(error)
+      });
     },
     handleClickDelete() {
-      this.deleteMe(this.item.id);
-    },
-  },
-};
+      this.deleteMe(this.item.id)
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -836,7 +835,6 @@ input.list-item-input {
 }
 </style>
 ```
-
 {% endraw %}
 
 This component encapsulates a single todo item. It has logic for editing the title, setting the completed status, and deleting items. If you look closely at the code, you'll notice that it sends changes to the server and updates the local copy stored in the `todos` array in the parent component.
@@ -845,177 +843,192 @@ Create the `Todos` component.
 
 `src/components/Todos.vue`
 {% raw %}
-
-```vue
+```html
 <template>
   <div class="column justify-center items-center" id="row-container">
     <q-card class="my-card">
       <q-card-section>
         <div class="text-h4">Todos</div>
         <q-list padding>
-          <q-item v-for="item in filteredTodos" :key="item.id" clickable v-ripple rounded class="todo-item">
-            <TodoItem :item="item" :deleteMe="handleClickDelete" :showError="handleShowError" :setCompleted="handleSetCompleted" :setTitle="handleSetTitle" v-if="filter === 'all' || (filter === 'incomplete' && !item.completed) || (filter === 'complete' && item.completed)"></TodoItem>
+          <q-item
+              v-for="item in filteredTodos" :key="item.id"
+              clickable
+              v-ripple
+              rounded
+              class="todo-item"
+          >
+            <TodoItem
+                :item="item"
+                :deleteMe="handleClickDelete"
+                :showError="handleShowError"
+                :setCompleted="handleSetCompleted"
+                :setTitle="handleSetTitle"
+                v-if="filter === 'all' || (filter === 'incomplete' && !item.completed) || (filter === 'complete' && item.completed)"
+            ></TodoItem>
           </q-item>
         </q-list>
       </q-card-section>
       <q-card-section>
         <q-item>
           <q-item-section avatar class="add-item-icon">
-            <q-icon color="green" name="add_circle_outline" />
+            <q-icon color="green" name="add_circle_outline"/>
           </q-item-section>
           <q-item-section>
-            <input type="text" ref="newTodoInput" v-model="newTodoTitle" @change="handleDoneEditingNewTodo" @blur="handleCancelEditingNewTodo" />
+            <input
+                type="text"
+                ref="newTodoInput"
+                v-model="newTodoTitle"
+                @change="handleDoneEditingNewTodo"
+                @blur="handleCancelEditingNewTodo"
+            />
           </q-item-section>
         </q-item>
       </q-card-section>
       <q-card-section style="text-align: center">
-        <q-btn color="amber" text-color="black" label="Remove Completed" style="margin-right: 10px" @click="handleDeleteCompleted"></q-btn>
+        <q-btn color="amber" text-color="black" label="Remove Completed" style="margin-right: 10px" 
+               @click="handleDeleteCompleted"></q-btn>
         <q-btn-group>
-          <q-btn glossy :color="filter === 'all' ? 'primary' : 'white'" text-color="black" label="All" @click="handleSetFilter('all')" />
-          <q-btn glossy :color="filter === 'complete' ? 'primary' : 'white'" text-color="black" label="Completed" @click="handleSetFilter('complete')" />
-          <q-btn glossy :color="filter === 'incomplete' ? 'primary' : 'white'" text-color="black" label="Incomplete" @click="handleSetFilter('incomplete')" />
-          <q-tooltip> Filter the todos </q-tooltip>
+          <q-btn glossy :color="filter === 'all' ? 'primary' : 'white'" text-color="black" label="All" 
+                 @click="handleSetFilter('all')"/>
+          <q-btn glossy :color="filter === 'complete' ? 'primary' : 'white'" text-color="black" label="Completed" 
+                 @click="handleSetFilter('complete')"/>
+          <q-btn glossy :color="filter === 'incomplete' ? 'primary' : 'white'" text-color="black" label="Incomplete" 
+                 @click="handleSetFilter('incomplete')"/>
+          <q-tooltip>
+            Filter the todos
+          </q-tooltip>
         </q-btn-group>
       </q-card-section>
     </q-card>
     <div v-if="error" class="error">
-      <q-banner inline-actions class="text-white bg-red" @click="handleErrorClick"> ERROR: {{ this.error }} </q-banner>
+      <q-banner inline-actions class="text-white bg-red" @click="handleErrorClick">
+        ERROR: {{ this.error }}
+      </q-banner>
     </div>
   </div>
 </template>
 
 <script>
-import TodoItem from "@/components/TodoItem";
-import { ref } from "vue";
+
+import TodoItem from '@/components/TodoItem';
+import { ref } from 'vue'
 
 export default {
-  name: "LayoutDefault",
+  name: 'LayoutDefault',
   components: {
-    TodoItem,
+    TodoItem
   },
 
-  data: function () {
+  data: function() {
     return {
       todos: [],
-      newTodoTitle: "",
-      visibility: "all",
+      newTodoTitle: '',
+      visibility: 'all',
       loading: true,
-      error: "",
-      filter: "all",
-    };
+      error: '',
+      filter: 'all'
+    }
   },
 
   setup() {
     return {
       alert: ref(false),
-    };
+    }
   },
   mounted() {
-    this.$api
-      .getAll()
-      .then((response) => {
-        this.$log.debug("Data loaded: ", response.data);
-        this.todos = response.data;
-      })
-      .catch((error) => {
-        this.$log.debug(error);
-        this.error = "Failed to load todos";
-      })
-      .finally(() => (this.loading = false));
+    this.$api.getAll()
+        .then(response => {
+          this.$log.debug('Data loaded: ', response.data)
+          this.todos = response.data
+        })
+        .catch(error => {
+          this.$log.debug(error)
+          this.error = 'Failed to load todos'
+        })
+        .finally(() => this.loading = false)
   },
 
   computed: {
     filteredTodos() {
-      if (this.filter === "all") return this.todos;
-      else if (this.filter === "complete") return this.todos.filter((todo) => todo.completed);
-      else if (this.filter === "incomplete") return this.todos.filter((todo) => !todo.completed);
-      else return [];
-    },
+      if (this.filter === 'all') return this.todos
+      else if (this.filter === 'complete') return this.todos.filter(todo => todo.completed)
+      else if (this.filter === 'incomplete') return this.todos.filter(todo => !todo.completed)
+      else return []
+    }
   },
 
   methods: {
     handleSetFilter(value) {
-      this.filter = value;
+      this.filter = value
     },
 
     handleClickDelete(id) {
-      const todoToRemove = this.todos.find((todo) => todo.id === id);
-      this.$api
-        .removeForId(id)
-        .then(() => {
-          this.$log.debug("Item removed:", todoToRemove);
-          this.todos.splice(this.todos.indexOf(todoToRemove), 1);
-        })
-        .catch((error) => {
-          this.$log.debug(error);
-          this.error = "Failed to remove todo";
-        });
+      const todoToRemove = this.todos.find(todo => todo.id === id)
+      this.$api.removeForId(id).then(() => {
+        this.$log.debug('Item removed:', todoToRemove);
+        this.todos.splice(this.todos.indexOf(todoToRemove), 1)
+      }).catch((error) => {
+        this.$log.debug(error);
+        this.error = 'Failed to remove todo'
+      });
     },
 
     handleDeleteCompleted() {
-      const completed = this.todos.filter((todo) => todo.completed);
-      Promise.all(
-        completed.map((todoToRemove) => {
-          return this.$api
-            .removeForId(todoToRemove.id)
-            .then(() => {
-              this.$log.debug("Item removed:", todoToRemove);
-              this.todos.splice(this.todos.indexOf(todoToRemove), 1);
-            })
-            .catch((error) => {
-              this.$log.debug(error);
-              this.error = "Failed to remove todo";
-              return error;
-            });
-        }),
-      );
+      const completed = this.todos.filter(todo => todo.completed)
+      Promise.all(completed.map(todoToRemove => {
+        return this.$api.removeForId(todoToRemove.id).then(() => {
+          this.$log.debug('Item removed:', todoToRemove);
+          this.todos.splice(this.todos.indexOf(todoToRemove), 1)
+        }).catch((error) => {
+          this.$log.debug(error);
+          this.error = 'Failed to remove todo'
+          return error
+        })
+      }))
     },
 
     handleDoneEditingNewTodo() {
-      const value = this.newTodoTitle && this.newTodoTitle.trim();
+      const value = this.newTodoTitle && this.newTodoTitle.trim()
       if (!value) {
-        return;
+        return
       }
-      this.$api
-        .createNew(value, false)
-        .then((response) => {
-          this.$log.debug("New item created:", response);
-          this.newTodoTitle = "";
-          this.todos.push({
-            id: response.data.id,
-            title: value,
-            completed: false,
-          });
-          this.$refs.newTodoInput.blur();
+      this.$api.createNew(value, false).then((response) => {
+        this.$log.debug('New item created:', response)
+        this.newTodoTitle = ''
+        this.todos.push({
+          id: response.data.id,
+          title: value,
+          completed: false
         })
-        .catch((error) => {
-          this.$log.debug(error);
-          this.error = "Failed to add todo";
-        });
+        this.$refs.newTodoInput.blur()
+      }).catch((error) => {
+        this.$log.debug(error);
+        this.error = 'Failed to add todo'
+      });
     },
     handleCancelEditingNewTodo() {
-      this.newTodoTitle = "";
+      this.newTodoTitle = ''
     },
 
     handleSetCompleted(id, value) {
-      let todo = this.todos.find((todo) => id === todo.id);
-      todo.completed = value;
+      let todo = this.todos.find(todo => id === todo.id)
+      todo.completed = value
     },
 
     handleSetTitle(id, value) {
-      let todo = this.todos.find((todo) => id === todo.id);
-      todo.title = value;
+      let todo = this.todos.find(todo => id === todo.id)
+      todo.title = value
     },
 
     handleShowError(message) {
-      this.error = message;
+      this.error = message
     },
 
     handleErrorClick() {
       this.error = null;
     },
   },
-};
+}
 </script>
 
 <style>
@@ -1035,7 +1048,6 @@ export default {
 }
 </style>
 ```
-
 {% endraw %}
 
 This component encapsulates the card that holds all of the todos and the todo-associated interface elements. It also handles the rest of the functions related to updating todos on the server and in the local cache.
@@ -1058,15 +1070,15 @@ npm run serve
 
 Open a browser and navigate to `http://localhost:8080`. You'll see the "please log in" page.
 
-{% img "spring-boot-vue3/please-log-in.png", "Please log in", "800" %}
+{% img {src: "spring-boot-vue3/please-log-in.png", alt: "Please log in", header: "800"} %}
 
 Log into the app using Okta's sign-in interface.
 
-{% img "spring-boot-vue3/okta-login.png", "Okta SSO login", "500" %}
+{% img {src: "spring-boot-vue3/okta-login.png", alt: "Okta SSO login", header: "500"} %}
 
 That will redirect you to the Todo app's main screen.
 
-{% img "spring-boot-vue3/app-main-screen.png", "Todo app main screen", "800" %}
+{% img {src: "spring-boot-vue3/app-main-screen.png", alt: "Todo app main screen", header: "800"} %}
 
 You should be able to delete items, add new items, rename, and filter items. All data is stored on the Spring Boot resource server and is presented by the Vue + Quasar frontend.
 
@@ -1122,21 +1134,21 @@ auth0 apis create -n myapi --identifier http://my-api
 Just press enter three times to accept the default values for scopes, token lifetime, and allow offline access. The scopes here refer to custom scopes, not the standard scopes (email, profile, and openid) that you will need for OIDC and OAuth.
 
 ```bash
- Scopes:
+ Scopes: 
  Token Lifetime: 86400
  Allow Offline Access: No
 
 === dev-0xb84jzp.us.auth0.com API created
 
-  ID                    6323478u98u98919206c2f73e6d
-  NAME                  myapi
-  IDENTIFIER            http://my-api
-  SCOPES
-  TOKEN LIFETIME        86400
-  ALLOW OFFLINE ACCESS  ✗
+  ID                    6323478u98u98919206c2f73e6d  
+  NAME                  myapi                     
+  IDENTIFIER            http://my-api             
+  SCOPES                                          
+  TOKEN LIFETIME        86400                     
+  ALLOW OFFLINE ACCESS  ✗      
 ```
 
-Use Auth0 CLI to create a token. **Don't forget to set the audience!**
+Use Auth0 CLI to create a token.  **Don't forget to set the audience!**
 
 ```bash
 auth0 test token -a http://my-api
@@ -1176,7 +1188,7 @@ auth0 apps create
 
 ```bash
  Name: vue-spring-boot
- Description:
+ Description: 
  Type: Single Page Web Application
  Callback URLs: http://localhost:8080
  Allowed Logout URLs: http://localhost:8080
@@ -1212,51 +1224,50 @@ npm remove @okta/okta-vue
 Update `src/main.js` to the following. This configures and installs the Auth0 plugin for Vue.
 
 ```js
-import { createApp } from "vue";
-import App from "./App.vue";
-import { Quasar } from "quasar";
-import quasarUserOptions from "./quasar-user-options";
-import VueLogger from "vuejs3-logger";
-import router from "./router";
-import createApi from "./Api";
+import { createApp } from 'vue'
+import App from './App.vue'
+import { Quasar } from 'quasar'
+import quasarUserOptions from './quasar-user-options'
+import VueLogger from 'vuejs3-logger'
+import router from './router'
+import createApi from './Api'
 
-import { createAuth0 } from "@auth0/auth0-vue";
+import { createAuth0 } from '@auth0/auth0-vue';
 
 const options = {
   isEnabled: true,
-  logLevel: "debug",
+  logLevel: 'debug',
   stringifyArguments: false,
   showLogLevel: true,
   showMethodName: false,
-  separator: "|",
-  showConsoleColors: true,
+  separator: '|',
+  showConsoleColors: true
 };
 
 const app = createApp(App)
   .use(Quasar, quasarUserOptions)
   .use(VueLogger, options)
   .use(router)
-  .use(
-    createAuth0({
+  .use(createAuth0({
       domain: process.env.VUE_APP_AUTH0_DOMAIN,
       clientId: process.env.VUE_APP_CLIENT_ID,
       authorizationParams: {
         redirect_uri: window.location.origin,
-        audience: process.env.VUE_APP_AUTH0_AUDIENCE,
-      },
-    }),
+        audience: process.env.VUE_APP_AUTH0_AUDIENCE
+      }
+    })
   );
 
 // pass auth0 to the api (to get a JWT), which is set as a global property
-app.config.globalProperties.$api = createApi(app.config.globalProperties.$auth0);
+app.config.globalProperties.$api = createApi(app.config.globalProperties.$auth0)
 
-app.mount("#app");
+app.mount('#app')
 ```
 
 Update one line in `src/Api.js`. You need to change the following line.
 
 ```js
-const accessToken = auth.getAccessToken();
+const accessToken = auth.getAccessToken()
 ```
 
 To this.
@@ -1285,7 +1296,7 @@ const createApi = (auth) => {
   });
 
   ...
-
+ 
 }
 
 export default createApi
@@ -1294,10 +1305,10 @@ export default createApi
 Update `src/App.vue`.
 
 {% raw %}
-
-```vue
+```html
 <template>
   <q-layout view="hHh lpR fFf">
+
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title>
@@ -1307,22 +1318,25 @@ Update `src/App.vue`.
           Todo App
         </q-toolbar-title>
         {{ isAuthenticated ? user.email : "" }}
-        <q-btn flat round dense icon="logout" v-if="isAuthenticated" @click="logout" />
-        <q-btn flat round dense icon="account_circle" v-else @click="login" />
+        <q-btn flat round dense icon="logout" v-if='isAuthenticated' @click="logout"/>
+        <q-btn flat round dense icon="account_circle" v-else @click="login"/>
       </q-toolbar>
     </q-header>
 
     <q-page-container>
       <router-view></router-view>
     </q-page-container>
+
   </q-layout>
 </template>
 
 <script>
-import { useAuth0 } from "@auth0/auth0-vue";
+
+import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
   setup() {
+
     const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
 
     return {
@@ -1333,26 +1347,24 @@ export default {
         logout({ logoutParams: { returnTo: window.location.origin } });
       },
       user,
-      isAuthenticated,
+      isAuthenticated
     };
-  },
-};
+  }
+}
 </script>
 ```
-
 {% endraw %}
 
 Update `src/components/Home.vue`.
 
 {% raw %}
-
-```vue
+```html
 <template>
   <div class="column justify-center items-center" id="row-container">
     <q-card class="my-card">
       <q-card-section style="text-align: center">
-        <div v-if="isAuthenticated">
-          <h6>You are logged in as {{ user.email }}</h6>
+        <div v-if='isAuthenticated'>
+          <h6>You are logged in as {{user.email}}</h6>
           <q-btn flat color="primary" @click="todo">Go to Todo app</q-btn>
           <q-btn flat @click="logout">Log out</q-btn>
         </div>
@@ -1365,14 +1377,16 @@ Update `src/components/Home.vue`.
 </template>
 
 <script>
-import { useAuth0 } from "@auth0/auth0-vue";
-import { useRouter } from "vue-router";
+
+import { useAuth0 } from '@auth0/auth0-vue';
+import { useRouter } from 'vue-router'
 
 export default {
-  name: "HomeComponent",
+  name: 'HomeComponent',
   setup() {
+
     const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
-    const router = useRouter();
+    const router = useRouter()
 
     return {
       login: () => {
@@ -1382,45 +1396,44 @@ export default {
         logout({ returnTo: window.location.origin });
       },
       todo() {
-        router.push("/todos");
+        router.push('/todos')
       },
       user,
-      isAuthenticated,
+      isAuthenticated
     };
-  },
-};
+  }
+}
 </script>
 ```
-
 {% endraw %}
 
 Finally, update `src/router/index.js`.
 
 ```js
-import { createRouter, createWebHistory } from "vue-router";
-import Todos from "@/components/Todos";
-import Home from "@/components/Home";
+import { createRouter, createWebHistory } from 'vue-router'
+import Todos from '@/components/Todos';
+import Home from '@/components/Home';
 
 const routes = [
   {
-    path: "/",
-    component: Home,
+    path: '/',
+    component: Home
   },
   {
-    path: "/todos",
+    path: '/todos',
     component: Todos,
     meta: {
-      requiresAuth: true,
-    },
+      requiresAuth: true
+    }
   },
-];
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+})
 
-export default router;
+export default router
 ```
 
 The usage of the Auth0 SDK is pretty similar to the Okta Vue SDK. If you have any questions, [take a look at the auth0-vue GitHub repository](https://github.com/auth0/auth0-vue).
@@ -1433,7 +1446,7 @@ npm run serve
 
 This time when you log in you will be directed to Auth0.
 
-{% img "spring-boot-vue3/auth0-login.png", "Auth0 Login", "500" %}
+{% img {src: "spring-boot-vue3/auth0-login.png", alt: "Auth0 Login", header: "500"} %}
 
 After that, you will be redirected back to the todo app.
 

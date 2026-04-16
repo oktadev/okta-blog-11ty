@@ -6,19 +6,19 @@ communities: [javascript]
 description: "In this tutorial, you'll create a complete web application with security built in from the ground up. The project features a React frontend and a Fastify API backend, managed in a Lerna monorepo. "
 tags: [react, typescript, fastify, authentication, javascript]
 tweets:
-  - "Create a complete web application project with security built in from the ground up in this tutorial using React, Fastify, and PostgreSQL! "
+- "Create a complete web application project with security built in from the ground up in this tutorial using React, Fastify, and PostgreSQL! "
 image: react-fastify-postgres/social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-react-fastify-postgresql-example
 ---
 
-The National Aeronautics and Space Administration (NASA) is an independent agency of the US federal government, responsible for space exploration and research, with field facilities across the United States. In this tutorial, we'll set up an app to keep track of what NASA facilities we've visited and which ones we still want to check out.
+The National Aeronautics and Space Administration (NASA) is an independent agency of the US federal government, responsible for space exploration and research, with field facilities across the United States. In this tutorial, we'll set up an app to keep track of what NASA facilities we've visited and which ones we still want to check out. 
 
 Our app will be a [monorepo](https://en.wikipedia.org/wiki/Monorepo) with Okta authentication, using React for the frontend and Fastify for the backend. [Fastify](https://www.fastify.io/) is a highly performant web framework with low overhead that we'll connect to a PostgreSQL database. We'll also use [Lerna](https://lerna.js.org/) to manage the frontend and backend apps in a monorepo.
 
 **Prerequisites**
 
-_Create React App_ currently requires Node >= 14.0.0 and npm >= 5.6. The latest required versions can be found at [https://reactjs.org/docs/create-a-new-react-app.html](https://reactjs.org/docs/create-a-new-react-app.html). This tutorial was created using Node v18.8.1 and npm v8.11.0.
+*Create React App* currently requires Node >= 14.0.0 and npm >= 5.6. The latest required versions can be found at [https://reactjs.org/docs/create-a-new-react-app.html](https://reactjs.org/docs/create-a-new-react-app.html). This tutorial was created using Node v18.8.1 and npm v8.11.0.
 
 A [Docker installation](https://docs.docker.com/engine/install/) is required as well.
 
@@ -34,7 +34,7 @@ We'll be using [Okta's SPA redirect model](https://developer.okta.com/docs/guide
 
 **NOTE:** Take note of your client ID and issuer as this will be used in a subsequent step.
 
-## Setup Lerna for monorepo management
+## Setup Lerna for monorepo management 
 
 [Lerna](https://lerna.js.org/) is a tool used to manage multi-package repositories. In this project, it'll allow us to have a single repository where both our frontend and API packages live.
 
@@ -43,13 +43,11 @@ We'll be using [Okta's SPA redirect model](https://developer.okta.com/docs/guide
 2. Create a project root directory named `okta-react-fastify`.
 
 3. Add Lerna to your project by running the following in your project root directory:
-
 ```bash
 npx lerna@latest init
 ```
 
 4. Create the `frontend` and `api` packages:
-
 ```bash
 cd packages
 mkdir frontend api
@@ -60,13 +58,11 @@ mkdir frontend api
 ## Add needed Fastify backend and React frontend dependencies with TypeScript
 
 1. In `packages/api`, run:
-
 ```bash
 npm init fastify
 ```
 
 2. Add the required backend packages:
-
 ```bash
 npx lerna add @fastify/postgres@5.1.0 packages/api
 npx lerna add dotenv@16.0.2 packages/api
@@ -75,20 +71,17 @@ npx lerna add pg@8.8.0 packages/api
 ```
 
 3. Add TypeScript and needed types to the backend repository:
-
 ```bash
 npx lerna add @types/pg@8.6.5 packages/api --dev
 npx lerna add typescript@4.8.3 packages/api --dev
 ```
 
 4. Next, let's create a basic React application using [Create React App](https://github.com/facebook/create-react-app). We'll use the template for TypeScript with it as well. In the created `packages/frontend` directory, run:
-
 ```bash
 npx create-react-app . --template typescript
 ```
 
 5. Add the frontend Okta dependencies:
-
 ```bash
 npx lerna add @okta/okta-auth-js@7.0.1 packages/frontend
 npx lerna add @okta/okta-react@6.7.0 packages/frontend
@@ -101,8 +94,7 @@ npx lerna add @okta/okta-react@6.7.0 packages/frontend
 ## Set up the PostgreSQL Docker instance
 
 1. In your project's root directory, create a file `docker-compose.yml`:
-   {% raw %}
-
+{% raw %}
 ```yml
 services:
   postgres:
@@ -115,11 +107,10 @@ services:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: "${POSTGRES_DB}"
 ```
-
 {% endraw %}
 
-{:start="2"} 2. Create a `.env` file in the same project root directory and add the following:
-
+{:start="2"}
+2. Create a `.env` file in the same project root directory and add the following:
 ```yml
 POSTGRES_USERNAME=postgres
 POSTGRES_PASSWORD=postgres
@@ -129,7 +120,6 @@ POSTGRES_DB=nasa-facilities
 3. To use the Docker configuration we created, run `docker compose up`.
 
 4. There is a provided PostgrSQL data dump `./nasa-facilities_20200910.sql` [in the example repo](https://github.com/oktadev/okta-react-fastify-postgresql-example/blob/main/nasa-facilities_20200910.sql). You can import it by running the following from the project root directory:
-
 ```bash
 docker exec -i nasa-facilities psql -U postgres nasa-facilities < ./nasa-facilities_20200910.sql
 ```
@@ -143,7 +133,6 @@ Your newly created Docker instance is now running a PostgreSQL database with the
 1. In the command line, go to your backend repository root directory at `packages/api`.
 
 2. Update `package.json` by adding the following to allow the backend application to compile using TypeScript:
-
 ```json
 {
   "main": "build/index.js",
@@ -154,19 +143,16 @@ Your newly created Docker instance is now running a PostgreSQL database with the
 ```
 
 3. Initialize a Typescript config file by running:
-
 ```bash
 npx tsc --init
 ```
 
 4. Add the following to `tsconfig.json` to output the build files to the proper directory:
-
 ```json
 "outDir": "build"
 ```
 
 5. Create a `.env` file with the following and replace the Okta values with the prior output from the CLI:
-
 ```yml
 CONNECTION_STRING=PostgreSQL://postgres:postgres@localhost:5432/nasa-facilities
 OKTA_ISSUER=https://{yourOktaDomain}/oauth2/default
@@ -214,9 +200,11 @@ const start = async () => {
   }
 };
 start();
+
 ```
 
-{:start="7"} 7. Next, let's create our Fastify API routes along with their appropriate CRUD operations in a new file `routes/facilities.ts`:
+{:start="7"}
+7. Next, let's create our Fastify API routes along with their appropriate CRUD operations in a new file `routes/facilities.ts`:
 
 ```ts
 import { FastifyInstance } from "fastify";
@@ -235,75 +223,86 @@ interface IFacility {
 async function facilitiesRoutes(fastify: FastifyInstance) {
   const client = await fastify.pg.connect();
 
-  fastify.get("/facilities", async (request: FastifyRequest, reply: FastifyReply) => {
-    let facilities: IFacility[] = [];
+  fastify.get(
+    "/facilities",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      let facilities: IFacility[] = [];
 
-    try {
-      const { rows } = await client.query("SELECT * FROM facilities");
-      if (rows.length == 0) throw new Error("No facilities found");
+      try {
+        const { rows } = await client.query("SELECT * FROM facilities");
+        if (rows.length == 0) throw new Error("No facilities found");
 
-      facilities = rows;
-      reply
-        .code(200)
-        .header("Content-Type", "application/json; charset=utf-8")
-        .send([...facilities]);
-    } catch (error) {
-      const errorMessage = (error as Error).message;
-      throw new Error(errorMessage);
+        facilities = rows;
+        reply
+          .code(200)
+          .header("Content-Type", "application/json; charset=utf-8")
+          .send([...facilities]);
+      } catch (error) {
+        const errorMessage = (error as Error).message;
+        throw new Error(errorMessage);
+      }
     }
-  });
+  );
 
-  fastify.patch("/facilities/:id", async (request: FastifyRequest, reply: FastifyReply) => {
-    const { id } = request.params as { id: bigint };
-    const { visited } = request.body as { visited: boolean };
+  fastify.patch(
+    "/facilities/:id",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      const { id } = request.params as { id: bigint };
+      const { visited } = request.body as { visited: boolean };
 
-    const query = {
-      text: `UPDATE public.facilities SET 
+      const query = {
+        text: `UPDATE public.facilities SET 
                 "Visited" = COALESCE($1, "Visited")
                 WHERE id = $2`,
-      values: [visited, id],
-    };
+        values: [visited, id],
+      };
 
-    try {
-      await client.query(query);
-      reply.code(204);
-    } catch (error) {
-      const errorMessage = (error as Error).message;
-      throw new Error(errorMessage);
+      try {
+        await client.query(query);
+        reply.code(204);
+      } catch (error) {
+        const errorMessage = (error as Error).message;
+        throw new Error(errorMessage);
+      }
     }
-  });
+  );
 
-  fastify.delete("/facilities/:id", async (request: FastifyRequest, reply: FastifyReply) => {
-    const { id } = request.params as { id: bigint };
+  fastify.delete(
+    "/facilities/:id",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      const { id } = request.params as { id: bigint };
 
-    const query = {
-      text: `DELETE FROM public.facilities
+      const query = {
+        text: `DELETE FROM public.facilities
                   WHERE id = $1 RETURNING *`,
-      values: [id],
-    };
+        values: [id],
+      };
 
-    try {
-      await client.query(query);
-      reply.code(204);
-    } catch (error) {
-      const errorMessage = (error as Error).message;
-      throw new Error(errorMessage);
+      try {
+        await client.query(query);
+        reply.code(204);
+      } catch (error) {
+        const errorMessage = (error as Error).message;
+        throw new Error(errorMessage);
+      }
     }
-  });
+  );
 }
 
 export default facilitiesRoutes;
+
 ```
 
-{:start="8"} 8. To register these routes with our Fastify instance, add the following to `index.ts`:
-
+{:start="8"}
+8. To register these routes with our Fastify instance, add the following to `index.ts`:
 ```ts
 fastify.register(facilitiesRoutes);
 ```
 
 **NOTE:** Don't forget to also import the `facilitiesRoutes` after adding the above line.
 
-{:start="9"} 9. Then we'll create a `utils/jwt-verifier.ts` file that will include logic to verify the access token included in API calls from the frontend:
+{:start="9"}
+9. Then we'll create a `utils/jwt-verifier.ts` file that will include logic to verify the access token included in API calls from the frontend:
 
 ```ts
 import OktaJwtVerifier from "@okta/jwt-verifier";
@@ -314,12 +313,15 @@ dotenv.config();
 
 const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: process.env.OKTA_ISSUER || "",
-  clientId: process.env.OKTA_CLIENT_ID,
+  clientId: process.env.OKTA_CLIENT_ID
 });
 
 const audience = process.env.OKTA_AUDIENCE;
 
-export const jwtVerifier = async (request: FastifyRequest, reply: FastifyReply) => {
+export const jwtVerifier = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
   const { authorization } = request.headers;
 
   request.log.info({ authorization });
@@ -336,7 +338,10 @@ export const jwtVerifier = async (request: FastifyRequest, reply: FastifyReply) 
 
   try {
     const accessToken = match[1];
-    const { claims } = await oktaJwtVerifier.verifyAccessToken(accessToken, audience || "");
+    const { claims } = await oktaJwtVerifier.verifyAccessToken(
+      accessToken,
+      audience || ""
+    );
 
     request.log.info({ claims });
 
@@ -348,9 +353,11 @@ export const jwtVerifier = async (request: FastifyRequest, reply: FastifyReply) 
     reply.code(401).send();
   }
 };
+
 ```
 
-{:start="10"} 10. We'll then add a [Fastify Prehandler Hook](https://www.fastify.io/docs/latest/Reference/Hooks/#prehandler) to `index.ts` that will run the `jwtVerifier` logic with each Fastify route:
+{:start="10"}
+10. We'll then add a [Fastify Prehandler Hook](https://www.fastify.io/docs/latest/Reference/Hooks/#prehandler) to `index.ts` that will run the `jwtVerifier` logic with each Fastify route:
 
 ```ts
 fastify.decorate("jwtVerify", (request: FastifyRequest) => {
@@ -365,7 +372,6 @@ fastify.addHook("preHandler", async (request, reply, done) => {
 **NOTE:** An import will also need to be added for `jwtVerifier`.
 
 Your final `packages/api/index.ts` file should look like this:
-
 ```ts
 import fastifyPostgres from "@fastify/postgres";
 import Fastify, { FastifyInstance, FastifyRequest } from "fastify";
@@ -416,6 +422,7 @@ const start = async () => {
   }
 };
 start();
+
 ```
 
 ## Configure the React app
@@ -423,7 +430,6 @@ start();
 1. Add `"proxy": "http://localhost:3000"` to `packages/frontend/package.json` so that React knows what base URL our API calls will need to make.
 
 2. In a `.env` file in the `packages/frontend` directory, add the needed environment variables:
-
 ```yml
 PORT=3001
 REACT_APP_OKTA_ISSUER=https://{yourOktaDomain}/oauth2/default
@@ -467,6 +473,7 @@ export function Login() {
     </div>
   );
 }
+
 ```
 
 **NOTE:** Our app uses [React Router v6](https://reactrouter.com/en/main), which utilizes the new `useNavigate` to replace `useHistory` to programmatically navigate.
@@ -524,7 +531,10 @@ function Facilities() {
     apiCall();
   }, [authState]);
 
-  const handleVisitedClick = (e: React.ChangeEvent<HTMLInputElement>, facilityId: bigint) => {
+  const handleVisitedClick = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    facilityId: bigint
+  ) => {
     const url = `/facilities/${facilityId}`;
 
     const apiCall = async () => {
@@ -599,10 +609,17 @@ function Facilities() {
                       <td>{facility.City}</td>
                       <td>{facility.State}</td>
                       <td>
-                        <input type="checkbox" defaultChecked={facility.Visited} onChange={(e) => handleVisitedClick(e, facility.id)} />
+                        <input
+                          type="checkbox"
+                          defaultChecked={facility.Visited}
+                          onChange={(e) => handleVisitedClick(e, facility.id)}
+                        />
                       </td>
                       <td>
-                        <button className="button-delete" onClick={() => handleDeleteClick(facility.id)}>
+                        <button
+                          className="button-delete"
+                          onClick={() => handleDeleteClick(facility.id)}
+                        >
                           DELETE
                         </button>
                       </td>
@@ -622,10 +639,10 @@ function Facilities() {
 }
 
 export default Facilities;
+
 ```
 
 #### secureRoute.tsx
-
 In this file we'll create a custom `SecureRoute` component to work with React Router v6.
 
 ```tsx
@@ -643,7 +660,10 @@ export const RequiredAuth: React.FC = () => {
     }
 
     if (!authState?.isAuthenticated) {
-      const originalUri = toRelativeUrl(window.location.href, window.location.origin);
+      const originalUri = toRelativeUrl(
+        window.location.href,
+        window.location.origin
+      );
       oktaAuth.setOriginalUri(originalUri);
       oktaAuth.signInWithRedirect();
     }
@@ -655,6 +675,7 @@ export const RequiredAuth: React.FC = () => {
 
   return <Outlet />;
 };
+
 ```
 
 **NOTE:** The `okta/okta-react` package includes a `SecureRoute` component, but it does not support React Router v6 to stay router version agnostic. For more information, please see the issue comment at [https://github.com/okta/okta-react/issues/178#issuecomment-1150407182](https://github.com/okta/okta-react/issues/178#issuecomment-1150407182).
@@ -695,7 +716,7 @@ function App() {
           <Route path="/callback" element={<LoginCallback />} />
           <Route path="/" element={<Login />} />
           <Route path="/facilities" element={<RequiredAuth />}>
-            <Route>} />
+            <Route path element={<Facilities />} />
           </Route>
         </Routes>
       </Security>
@@ -838,41 +859,41 @@ button.button-delete {
   margin-bottom: 0;
   min-width: unset;
 }
+
 ```
 
 ## Running the app
 
 You can start the demo app by running `npx lerna run start`.
 
-{% img "react-fastify-postgres/login-screen.jpg", "Screenshot of login window", "600" %}
+{% img {src: "react-fastify-postgres/login-screen.jpg", alt: "Screenshot of login window", header: "600"} %}
 
 If we're not authenticated, our app will land us at the login page. Here, we click login to go through the Okta login process. Once authenticated, we're redirected to `/facilities`. If we're already authenticated when we land on the root URL, our app will automatically navigate us to `/facilities`. Once our table loads, we'll see the following:
 
-{% img "react-fastify-postgres/nasa-facilities-table.jpg", "Screenshot of table with nasa facilities data", "600" %}
+{% img {src: "react-fastify-postgres/nasa-facilities-table.jpg", alt: "Screenshot of table with nasa facilities data", header: "600"} %}
 
 To render the facilities table, our app has made a call to our API which includes the access token to fetch the data from the backend `/facilities` API endpoint.
 
 In `packages/frontend/facilities.tsx`:
-
 ```tsx
-useEffect(() => {
-  const apiCall = async () => {
-    if (authState?.isAuthenticated && authState.accessToken?.accessToken) {
-      try {
-        const response = await fetch("/facilities", {
-          headers: {
-            Authorization: authState.accessToken.accessToken,
-          },
-        });
-        const data = await response.json();
-        setData(data);
-      } catch (error: unknown) {
-        setErrors(getErrorMessage(error));
+  useEffect(() => {
+    const apiCall = async () => {
+      if (authState?.isAuthenticated && authState.accessToken?.accessToken) {
+        try {
+          const response = await fetch("/facilities", {
+            headers: {
+              Authorization: authState.accessToken.accessToken,
+            },
+          });
+          const data = await response.json();
+          setData(data);
+        } catch (error: unknown) {
+          setErrors(getErrorMessage(error));
+        }
       }
-    }
-  };
-  apiCall();
-}, [authState]);
+    };
+    apiCall();
+  }, [authState]);
 ```
 
 The backend verified the access token using the `jwtVerifier` utility we created.
@@ -880,25 +901,27 @@ The backend verified the access token using the `jwtVerifier` utility we created
 The backend connects to our PostgreSQL instance and has used the query we specified to fetch the needed data at the `/facilities` route.
 
 In `packages/api/routes/facilities.ts`:
-
 ```ts
-fastify.get("/facilities", async (request: FastifyRequest, reply: FastifyReply) => {
-  let facilities: IFacility[] = [];
+fastify.get(
+    "/facilities",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      let facilities: IFacility[] = [];
 
-  try {
-    const { rows } = await client.query("SELECT * FROM facilities");
-    if (rows.length == 0) throw new Error("No facilities found");
+      try {
+        const { rows } = await client.query("SELECT * FROM facilities");
+        if (rows.length == 0) throw new Error("No facilities found");
 
-    facilities = rows;
-    reply
-      .code(200)
-      .header("Content-Type", "application/json; charset=utf-8")
-      .send([...facilities]);
-  } catch (error) {
-    const errorMessage = (error as Error).message;
-    throw new Error(errorMessage);
-  }
-});
+        facilities = rows;
+        reply
+          .code(200)
+          .header("Content-Type", "application/json; charset=utf-8")
+          .send([...facilities]);
+      } catch (error) {
+        const errorMessage = (error as Error).message;
+        throw new Error(errorMessage);
+      }
+    }
+  );
 ```
 
 The same process repeats when a user clicks on the `Visited` checkbox or `Delete` button for the appropriate API endpoints and PostgreSQL queries.

@@ -16,11 +16,11 @@ The Okta Sign-In Widget (SIW) built into the sign-in page does the heavy lifting
 
 But you may think the sign-in page and the SIW are a little bland. And maybe too Okta for your needs? What if you can have a page like this?
 
-{% img "okta-custom-sign-in-page/final-siw-desktop.jpg", "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles", "800" %}
+{% img {src: "okta-custom-sign-in-page/final-siw-desktop.jpg", alt: "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles", header: "800"} %}
 
 With a bright and colorful responsive design change befitting a modern lifestyle.
 
-{% img "okta-custom-sign-in-page/final-siw-responsive.jpg", "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles for smaller form factors", "800" %}
+{% img {src: "okta-custom-sign-in-page/final-siw-responsive.jpg", alt: "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles for smaller form factors", header: "800"} %}
 
 Let's add some color, life, and customization to the sign-in page. 
 
@@ -70,6 +70,7 @@ On to the code. In the **Theme** tab:
 
 You'll see the lightweight IDE already has code scaffolded. Press **Edit** and replace the existing code with the following.
 
+{% raw %}
 {% raw %}
 ```html
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -183,6 +184,7 @@ You'll see the lightweight IDE already has code scaffolded. Press **Edit** and r
 </body>
 </html>
 ```
+{% endraw %}
 {% endraw %}
 
 This code adds style configuration to the SIW elements and configures the text for the title when signing in. Press **Save to draft**.
@@ -356,7 +358,7 @@ The event listener watches for the `alpine:init` event and runs a function that 
 
 When you save and publish, you'll see the modal upon site reload! 
 
-{% img "okta-custom-sign-in-page/modal-siw.jpg", "A modal which displays on top of the sign-in page where the user must accept terms before continuing", "800" %}
+{% img {src: "okta-custom-sign-in-page/modal-siw.jpg", alt: "A modal which displays on top of the sign-in page where the user must accept terms before continuing", header: "800"} %}
 
 We made the modal fixed even if the user presses <kbd>Esc</kbd> or selects the scrim. Users must agree to the terms to continue.
 
@@ -442,7 +444,7 @@ document.addEventListener('alpine:init', () => {
 
 Save and publish your changes. You'll now notice a slight delay before the modal eases into view. So smooth!
 
-{% img "okta-custom-sign-in-page/final-siw-desktop.jpg", "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles", "800" %}
+{% img {src: "okta-custom-sign-in-page/final-siw-desktop.jpg", alt: "A customized Okta-hosted Sign-In Widget with custom elements, colors, and styles", header: "800"} %}
 
 It's worth noting that our solution isn't foolproof; a savvy user can hide the modal and continue interacting with the sign-in widget by manipulating elements in the browser's debugger. You'll need to add extra checks and more robust code for foolproof methods. Still, this example provides a general idea of capabilities and how one might approach adding interactive components to the sign-in experience.
 

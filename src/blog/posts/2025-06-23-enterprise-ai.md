@@ -41,16 +41,16 @@ In this example, we'll use Agent0 (a hypothetical MCP client) as the Enterprise 
 
 First, the user logs in to Agent0 through the IdP as normal. This results in Agent0 getting either an ID token or SAML assertion from the IdP, which tells Agent0 who the user is. (This works the same for SAML assertions or ID tokens, so we'll use ID tokens in the example from here out.) This is no different than what the user would do today when signing in to Agent0.
 
-{% img "enterprise-ai/agent0-auth-okta.jpg", "A diagram flow of cross-app auth to Okta.", "800" %}
+{% img {src: "enterprise-ai/agent0-auth-okta.jpg", alt: "A diagram flow of cross-app auth to Okta.", header: "800"} %}
 
 Then, instead of prompting the user to connect to Todo0, Agent0 takes the ID token back to the IdP in a request that says, "Agent0 is requesting access to this user's Todo0 account."
 The IdP validates the ID token, sees that it was issued to Agent0, and verifies that the admin has allowed Agent0 to access Todo0 on behalf of the given user. Assuming everything checks out, the IdP issues a new token back to Agent0.
 
-{% img "enterprise-ai/cross-domain-jwt.jpg", "A diagram flow of cross-app jwt returned.", "800" %}
+{% img {src: "enterprise-ai/cross-domain-jwt.jpg", alt: "A diagram flow of cross-app jwt returned.", header: "800"} %}
 
 Agent0 takes the intermediate token from the IdP to Todo0, saying, "Hi, I would like an access token for the Todo0 MCP server. The IdP gave me this token with the details of the user to issue the access token for." Todo0 validates the token the same way it would have validated an ID token. (Remember, Todo0 is already configured for SSO to the IdP for this customer as well, so it already has a way to validate these tokens.) Todo0 is able to issue an access token giving Agent0 access to this user's resources in its MCP server.
 
-{% img "enterprise-ai/jwt-validation.jpg", "A diagram flow of cross-app jwt return.", "800" %}
+{% img {src: "enterprise-ai/jwt-validation.jpg", alt: "A diagram flow of cross-app jwt return.", header: "800"} %}
 
 This solves the two big problems:
 
@@ -69,7 +69,7 @@ Let's go through it step by step. For this example, we'll use the following enti
 - Todo0 - the "Resource Application", which has the resources being accessed through MCP
 - Okta - the enterprise identity provider that users at the example company can use to sign in to both apps
 
-{% img "enterprise-ai/full-sequence-diagram.jpg", "A diagram flow of cross-app jwt return.", "800" %}
+{% img {src: "enterprise-ai/full-sequence-diagram.jpg", alt: "A diagram flow of cross-app jwt return.", header: "800"} %}
 
 ### Single Sign-On
 
@@ -168,7 +168,7 @@ Now that Agent0 has the access token, it can request the (hypothetical) Todo0 MC
 
 Here's the flow again, this time as a sequence diagram.
 
-{% img "enterprise-ai/cross-app-access-sequence-diagram.jpg", "Cross-app access sequence diagram", "800" %}
+{% img {src: "enterprise-ai/cross-app-access-sequence-diagram.jpg", alt: "Cross-app access sequence diagram", header: "800"} %}
 
 - The client initiates a login request
 - The user's browser is redirected to the IdP

@@ -6,17 +6,17 @@ communities: [java, javascript]
 description: "React is one of the most popular JavaScript frameworks, and Spring Boot is wildly popular in the Java ecosystem. This article shows you how to use them in the same app and secure it all with Okta."
 tags: [java, spring-boot, react, auth0]
 tweets:
-  - "React + Spring Boot makes for a nice development experience. Learn how to make them work together with OIDC authentication."
-  - "Spring Boot with @java + React with @javascript == 💙. Learn how to build a @springboot + @reactjs CRUD app today!"
+- "React + Spring Boot makes for a nice development experience. Learn how to make them work together with OIDC authentication."
+- "Spring Boot with @java + React with @javascript == 💙. Learn how to build a @springboot + @reactjs CRUD app today!"
 image: featured/okta-react-bottle-headphones.jpg
 type: conversion
 github: https://github.com/oktadev/okta-spring-boot-react-crud-example
 changelog:
-  - 2025-05-19: Added warning about org type name change
-  - 2023-04-26: Updated to use the Okta Spring Boot starter, which supports Auth0 in v3.0.3. You can find the changes to this post in [okta-blog#1364](https://github.com/oktadev/okta-blog/pull/1364) and the example app's changes in [okta-spring-boot-react-crud-example#59](https://github.com/oktadev/okta-spring-boot-react-crud-example#59).
-  - 2022-12-09: Updated to use Spring Boot 3 and Spring Security 6. You can find the changes to this post in [okta-blog#1319](https://github.com/oktadev/okta-blog/pull/1319) and the example app's changes in [okta-spring-boot-react-crud-example#54](https://github.com/oktadev/okta-spring-boot-react-crud-example/pull/54).
-  - 2022-11-04: Updated to use H2 version 2 and Spring Boot 2.7.5. You can find the changes to this post in [okta-blog#1301](https://github.com/oktadev/okta-blog/pull/1301) and the example app's changes in [okta-spring-boot-react-crud-example#50](https://github.com/oktadev/okta-spring-boot-react-crud-example/pull/50).
-  - 2022-09-16: Updated to Spring Boot 2.7.3, React 18.0.2, and added a section for Auth0. You can find the changes to this article in [okta-blog#1271](https://github.com/oktadev/okta-blog/pull/1271). What's required to switch to Auth0 can be viewed in [the `auth0` branch](https://github.com/oktadev/okta-spring-boot-react-crud-example/compare/auth0).
+- 2025-05-19: Added warning about org type name change
+- 2023-04-26: Updated to use the Okta Spring Boot starter, which supports Auth0 in v3.0.3. You can find the changes to this post in [okta-blog#1364](https://github.com/oktadev/okta-blog/pull/1364) and the example app's changes in [okta-spring-boot-react-crud-example#59](https://github.com/oktadev/okta-spring-boot-react-crud-example#59).
+- 2022-12-09: Updated to use Spring Boot 3 and Spring Security 6. You can find the changes to this post in [okta-blog#1319](https://github.com/oktadev/okta-blog/pull/1319) and the example app's changes in [okta-spring-boot-react-crud-example#54](https://github.com/oktadev/okta-spring-boot-react-crud-example/pull/54).
+- 2022-11-04: Updated to use H2 version 2 and Spring Boot 2.7.5. You can find the changes to this post in [okta-blog#1301](https://github.com/oktadev/okta-blog/pull/1301) and the example app's changes in [okta-spring-boot-react-crud-example#50](https://github.com/oktadev/okta-spring-boot-react-crud-example/pull/50).
+- 2022-09-16: Updated to Spring Boot 2.7.3, React 18.0.2, and added a section for Auth0. You can find the changes to this article in [okta-blog#1271](https://github.com/oktadev/okta-blog/pull/1271). What's required to switch to Auth0 can be viewed in [the `auth0` branch](https://github.com/oktadev/okta-spring-boot-react-crud-example/compare/auth0).
 ---
 
 React was designed to make it painless to create interactive UIs. Its state management is efficient and only updates components when your data changes. Component logic is written in JavaScript, meaning you can keep state out of the DOM and create encapsulated components.
@@ -27,7 +27,7 @@ Today, I'll show you how to create a basic CRUD app with Spring Boot and React. 
 
 This tutorial is also available [as a screencast](https://youtu.be/B5tcZoNyqGI).
 
-{% youtube B5tcZoNyqGI %}
+{% youtube "B5tcZoNyqGI" %}
 
 **Prerequisites:**
 
@@ -45,12 +45,12 @@ Why am I telling you this? Because I thought it'd be fun to create a "JUG Tours"
 
 To begin, navigate to [start.spring.io](https://start.spring.io) and make the following selections:
 
-- **Project:** `Maven Project`
-- **Group:** `com.okta.developer`
-- **Artifact:** `jugtours`
-- **Dependencies**: `JPA`, `H2`, `Web`, `Lombok`
+* **Project:** `Maven Project`
+* **Group:** `com.okta.developer`
+* **Artifact:** `jugtours`
+* **Dependencies**: `JPA`, `H2`, `Web`, `Lombok`
 
-{% img "spring-boot-react/spring-initializr.png", "Spring Initializr" %}
+{% img {src: "spring-boot-react/spring-initializr.png", alt: "Spring Initializr"} %}
 
 Click **Generate Project**, expand `jugtours.zip` after downloading, and open the project in your favorite IDE.
 
@@ -223,7 +223,7 @@ class Initializer implements CommandLineRunner {
 If you start your app (using `./mvnw spring-boot:run`) it should result in something like:
 
 ```
-Group(id=1, name=Seattle JUG, address=null, city=null, stateOrProvince=null, country=null, postalCode=null, user=null,
+Group(id=1, name=Seattle JUG, address=null, city=null, stateOrProvince=null, country=null, postalCode=null, user=null, 
   events=[Event(id=5, date=2022-09-13T17:00:00Z, title=Micro Frontends for Java Developers, description=JHipster now has microfrontend support!, attendees=[])])
 Group(id=2, name=Denver JUG, address=null, city=null, stateOrProvince=null, country=null, postalCode=null, user=null, events=[])
 Group(id=3, name=Dublin JUG, address=null, city=null, stateOrProvince=null, country=null, postalCode=null, user=null, events=[])
@@ -338,7 +338,7 @@ You'll use Bootstrap's CSS and Reactstrap's components to make the UI look bette
 Add Bootstrap's CSS file as an import in `app/src/index.js`.
 
 ```js
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 ```
 
 ## Call your Spring Boot API and display the results
@@ -346,23 +346,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 Modify `app/src/App.js` to use the following code that calls `/api/groups` and displays the list in the UI.
 
 ```jsx
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { useEffect, useState } from 'react';
+import logo from './logo.svg';
+import './App.css';
 
 const App = () => {
+
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
 
-    fetch("api/groups")
-      .then((response) => response.json())
-      .then((data) => {
+    fetch('api/groups')
+      .then(response => response.json())
+      .then(data => {
         setGroups(data);
         setLoading(false);
-      });
+      })
   }, []);
 
   if (loading) {
@@ -375,14 +376,16 @@ const App = () => {
         <img src={logo} className="App-logo" alt="logo" />
         <div className="App-intro">
           <h2>JUG List</h2>
-          {groups.map((group) => (
-            <div key={group.id}>{group.name}</div>
-          ))}
+          {groups.map(group =>
+            <div key={group.id}>
+              {group.name}
+            </div>
+          )}
         </div>
       </header>
     </div>
   );
-};
+}
 
 export default App;
 ```
@@ -396,109 +399,97 @@ To proxy from `/api` to `http://localhost:8080/api`, add a proxy setting to `app
 "proxy": "http://localhost:8080",
 ```
 
-To learn more about proxying API requests, see Create React App's [documentation](https://create-react-app.dev/docs/proxying-api-requests-in-development/#docsNav).
+To learn more about proxying API requests, see Create React App's [documentation](https://create-react-app.dev/docs/proxying-api-requests-in-development/#docsNav). 
 
-Make sure Spring Boot is running, then run `npm start` in your `app` directory. You should see the list of default groups.
+Make sure Spring Boot is running, then run `npm start` in your `app` directory. You should see the list of default groups. 
 
-{% img "spring-boot-react/jug-list.png", "JUG List", "800" %}
+{% img {src: "spring-boot-react/jug-list.png", alt: "JUG List", header: "800"} %}
 
 ## Build a React `GroupList` component
 
 React is all about components, and you don't want to render everything in your main `App`, so create `app/src/GroupList.js` and populate it with the following JavaScript.
 
 {% raw %}
-
 ```jsx
-import React, { useEffect, useState } from "react";
-import { Button, ButtonGroup, Container, Table } from "reactstrap";
-import AppNavbar from "./AppNavbar";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Button, ButtonGroup, Container, Table } from 'reactstrap';
+import AppNavbar from './AppNavbar';
+import { Link } from 'react-router-dom';
 
 const GroupList = () => {
+
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
 
-    fetch("api/groups")
-      .then((response) => response.json())
-      .then((data) => {
+    fetch('api/groups')
+      .then(response => response.json())
+      .then(data => {
         setGroups(data);
         setLoading(false);
-      });
+      })
   }, []);
 
   const remove = async (id) => {
     await fetch(`/api/group/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     }).then(() => {
-      let updatedGroups = [...groups].filter((i) => i.id !== id);
+      let updatedGroups = [...groups].filter(i => i.id !== id);
       setGroups(updatedGroups);
     });
-  };
+  }
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  const groupList = groups.map((group) => {
-    const address = `${group.address || ""} ${group.city || ""} ${group.stateOrProvince || ""}`;
-    return (
-      <tr key={group.id}>
-        <td style={{ whiteSpace: "nowrap" }}>{group.name}</td>
-        <td>{address}</td>
-        <td>
-          {group.events.map((event) => {
-            return (
-              <div key={event.id}>
-                {new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "2-digit",
-                }).format(new Date(event.date))}: {event.title}
-              </div>
-            );
-          })}
-        </td>
-        <td>
-          <ButtonGroup>
-            <Button size="sm" color="primary" tag={Link} to={"/groups/" + group.id}>
-              Edit
-            </Button>
-            <Button size="sm" color="danger" onClick={() => remove(group.id)}>
-              Delete
-            </Button>
-          </ButtonGroup>
-        </td>
-      </tr>
-    );
+  const groupList = groups.map(group => {
+    const address = `${group.address || ''} ${group.city || ''} ${group.stateOrProvince || ''}`;
+    return <tr key={group.id}>
+      <td style={{whiteSpace: 'nowrap'}}>{group.name}</td>
+      <td>{address}</td>
+      <td>{group.events.map(event => {
+        return <div key={event.id}>{new Intl.DateTimeFormat('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: '2-digit'
+        }).format(new Date(event.date))}: {event.title}</div>
+      })}</td>
+      <td>
+        <ButtonGroup>
+          <Button size="sm" color="primary" tag={Link} to={"/groups/" + group.id}>Edit</Button>
+          <Button size="sm" color="danger" onClick={() => remove(group.id)}>Delete</Button>
+        </ButtonGroup>
+      </td>
+    </tr>
   });
 
   return (
     <div>
-      <AppNavbar />
+      <AppNavbar/>
       <Container fluid>
         <div className="float-end">
-          <Button color="success" tag={Link} to="/groups/new">
-            Add Group
-          </Button>
+          <Button color="success" tag={Link} to="/groups/new">Add Group</Button>
         </div>
         <h3>My JUG Tour</h3>
         <Table className="mt-4">
           <thead>
-            <tr>
-              <th width="20%">Name</th>
-              <th width="20%">Location</th>
-              <th>Events</th>
-              <th width="10%">Actions</th>
-            </tr>
+          <tr>
+            <th width="20%">Name</th>
+            <th width="20%">Location</th>
+            <th>Events</th>
+            <th width="10%">Actions</th>
+          </tr>
           </thead>
-          <tbody>{groupList}</tbody>
+          <tbody>
+          {groupList}
+          </tbody>
         </Table>
       </Container>
     </div>
@@ -507,33 +498,26 @@ const GroupList = () => {
 
 export default GroupList;
 ```
-
 {% endraw %}
 
 Create `AppNavbar.js` in the same directory to establish a common UI feature between components.
 
 {% raw %}
-
 ```jsx
-import React, { useState } from "react";
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from "reactstrap";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 const AppNavbar = () => {
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/">
-        Home
-      </NavbarBrand>
-      <NavbarToggler
-        onClick={() => {
-          setIsOpen(!isOpen);
-        }}
-      />
+      <NavbarBrand tag={Link} to="/">Home</NavbarBrand>
+      <NavbarToggler onClick={() => { setIsOpen(!isOpen) }}/>
       <Collapse isOpen={isOpen} navbar>
-        <Nav className="justify-content-end" style={{ width: "100%" }} navbar>
+        <Nav className="justify-content-end" style={{width: "100%"}} navbar>
           <NavItem>
             <NavLink href="https://twitter.com/oktadev">@oktadev</NavLink>
           </NavItem>
@@ -548,30 +532,27 @@ const AppNavbar = () => {
 
 export default AppNavbar;
 ```
-
 {% endraw %}
 
 Create `app/src/Home.js` to serve as the landing page for your app.
 
 ```jsx
-import React from "react";
-import "./App.css";
-import AppNavbar from "./AppNavbar";
-import { Link } from "react-router-dom";
-import { Button, Container } from "reactstrap";
+import React from 'react';
+import './App.css';
+import AppNavbar from './AppNavbar';
+import { Link } from 'react-router-dom';
+import { Button, Container } from 'reactstrap';
 
 const Home = () => {
   return (
     <div>
-      <AppNavbar />
+      <AppNavbar/>
       <Container fluid>
-        <Button color="link">
-          <Link to="/groups">Manage JUG Tour</Link>
-        </Button>
+        <Button color="link"><Link to="/groups">Manage JUG Tour</Link></Button>
       </Container>
     </div>
   );
-};
+}
 
 export default Home;
 ```
@@ -579,23 +560,23 @@ export default Home;
 Also, change `app/src/App.js` to use React Router to navigate between components.
 
 ```jsx
-import React from "react";
-import "./App.css";
-import Home from "./Home";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import GroupList from "./GroupList";
-import GroupEdit from "./GroupEdit";
+import React from 'react';
+import './App.css';
+import Home from './Home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import GroupList from './GroupList';
+import GroupEdit from './GroupEdit';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/groups" exact={true} element={<GroupList />} />
+        <Route exact path="/" element={<Home/>}/>
+        <Route path='/groups' exact={true} element={<GroupList/>}/>
       </Routes>
     </Router>
-  );
-};
+  )
+}
 
 export default App;
 ```
@@ -603,19 +584,18 @@ export default App;
 To make your UI a bit more spacious, add a top margin to Bootstrap's container classes in `app/src/App.css`.
 
 ```css
-nav + .container,
-nav + .container-fluid {
+nav + .container, nav + .container-fluid {
   margin-top: 20px;
-}
+} 
 ```
 
 Your React app should update itself as you make changes, and you should see a screen like the following at `http://localhost:3000`.
 
-{% img "spring-boot-react/home-with-link.png", "Home screen with Manage JUG Tour link", "800" %}
+{% img {src: "spring-boot-react/home-with-link.png", alt: "Home screen with Manage JUG Tour link", header: "800"} %}
 
 Click on **Manage JUG Tour** and you should see a list of the default groups.
 
-{% img "spring-boot-react/group-list.png", "Group List screen", "800" %}
+{% img {src: "spring-boot-react/group-list.png", alt: "Group List screen", header: "800"} %}
 
 It's great that you can see your Spring Boot API's data in your React app, but it's no fun if you can't edit it!
 
@@ -624,98 +604,100 @@ It's great that you can see your Spring Boot API's data in your React app, but i
 Create `app/src/GroupEdit.js` and use `useEffect()` to fetch the group resource with the ID from the URL.
 
 ```jsx
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
-import AppNavbar from "./AppNavbar";
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import AppNavbar from './AppNavbar';
 
 const GroupEdit = () => {
   const initialFormState = {
-    name: "",
-    address: "",
-    city: "",
-    stateOrProvince: "",
-    country: "",
-    postalCode: "",
+    name: '',
+    address: '',
+    city: '',
+    stateOrProvince: '',
+    country: '',
+    postalCode: ''
   };
   const [group, setGroup] = useState(initialFormState);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    if (id !== "new") {
+    if (id !== 'new') {
       fetch(`/api/group/${id}`)
-        .then((response) => response.json())
-        .then((data) => setGroup(data));
+        .then(response => response.json())
+        .then(data => setGroup(data));
     }
   }, [id, setGroup]);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
 
-    setGroup({ ...group, [name]: value });
-  };
+    setGroup({ ...group, [name]: value })
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await fetch(`/api/group${group.id ? `/${group.id}` : ""}`, {
-      method: group.id ? "PUT" : "POST",
+    await fetch(`/api/group${group.id ? `/${group.id}` : ''}`, {
+      method: (group.id) ? 'PUT' : 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(group),
+      body: JSON.stringify(group)
     });
     setGroup(initialFormState);
-    navigate("/groups");
-  };
+    navigate('/groups');
+  }
 
-  const title = <h2>{group.id ? "Edit Group" : "Add Group"}</h2>;
+  const title = <h2>{group.id ? 'Edit Group' : 'Add Group'}</h2>;
 
-  return (
-    <div>
-      <AppNavbar />
+  return (<div>
+      <AppNavbar/>
       <Container>
         {title}
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="name">Name</Label>
-            <Input type="text" name="name" id="name" value={group.name || ""} onChange={handleChange} autoComplete="name" />
+            <Input type="text" name="name" id="name" value={group.name || ''}
+                   onChange={handleChange} autoComplete="name"/>
           </FormGroup>
           <FormGroup>
             <Label for="address">Address</Label>
-            <Input type="text" name="address" id="address" value={group.address || ""} onChange={handleChange} autoComplete="address-level1" />
+            <Input type="text" name="address" id="address" value={group.address || ''}
+                   onChange={handleChange} autoComplete="address-level1"/>
           </FormGroup>
           <FormGroup>
             <Label for="city">City</Label>
-            <Input type="text" name="city" id="city" value={group.city || ""} onChange={handleChange} autoComplete="address-level1" />
+            <Input type="text" name="city" id="city" value={group.city || ''}
+                   onChange={handleChange} autoComplete="address-level1"/>
           </FormGroup>
           <div className="row">
             <FormGroup className="col-md-4 mb-3">
               <Label for="stateOrProvince">State/Province</Label>
-              <Input type="text" name="stateOrProvince" id="stateOrProvince" value={group.stateOrProvince || ""} onChange={handleChange} autoComplete="address-level1" />
+              <Input type="text" name="stateOrProvince" id="stateOrProvince" value={group.stateOrProvince || ''}
+                     onChange={handleChange} autoComplete="address-level1"/>
             </FormGroup>
             <FormGroup className="col-md-5 mb-3">
               <Label for="country">Country</Label>
-              <Input type="text" name="country" id="country" value={group.country || ""} onChange={handleChange} autoComplete="address-level1" />
+              <Input type="text" name="country" id="country" value={group.country || ''}
+                     onChange={handleChange} autoComplete="address-level1"/>
             </FormGroup>
             <FormGroup className="col-md-3 mb-3">
               <Label for="country">Postal Code</Label>
-              <Input type="text" name="postalCode" id="postalCode" value={group.postalCode || ""} onChange={handleChange} autoComplete="address-level1" />
+              <Input type="text" name="postalCode" id="postalCode" value={group.postalCode || ''}
+                     onChange={handleChange} autoComplete="address-level1"/>
             </FormGroup>
           </div>
           <FormGroup>
-            <Button color="primary" type="submit">
-              Save
-            </Button> <Button color="secondary" tag={Link} to="/groups">
-              Cancel
-            </Button>
+            <Button color="primary" type="submit">Save</Button>{' '}
+            <Button color="secondary" tag={Link} to="/groups">Cancel</Button>
           </FormGroup>
         </Form>
       </Container>
     </div>
-  );
+  )
 };
 
 export default GroupEdit;
@@ -726,35 +708,35 @@ The `useParams()` hook is used to grab the ID from the URL and `useNavigate()` a
 Modify `app/src/App.js` to import `GroupEdit` and specify a path to it.
 
 ```jsx
-import GroupEdit from "./GroupEdit";
+import GroupEdit from './GroupEdit';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         ...
-        <Route path="/groups/:id" element={<GroupEdit />} />
+        <Route path='/groups/:id' element={<GroupEdit/>}/>
       </Routes>
     </Router>
-  );
-};
+  )
+}
 ```
 
 Now you should be able to add and edit groups!
 
-{% img "spring-boot-react/add-group.png", "Add Group screen", "800" %}
+{% img {src: "spring-boot-react/add-group.png", alt: "Add Group screen", header: "800"} %}
 
-{% img "spring-boot-react/edit-group.png", "Edit Group screen", "800" %}
+{% img {src: "spring-boot-react/edit-group.png", alt: "Edit Group screen", header: "800"} %}
 
 ## Add authentication with Okta
 
 It's pretty cool to build a CRUD app, but it's even cooler to build a _secure_ one. To achieve that, you'll want to add authentication so users have to log in before viewing/modifying groups. To make this simple, you can use Okta's API for OIDC. At Okta, our goal is to make [identity management](https://developer.okta.com/product/user-management/) a lot easier, more secure, and more scalable than what you're used to. Okta is a cloud service that allows developers to create, edit, and securely store user accounts and user account data, and connect them with one or multiple applications. Our API enables you to:
 
-- [Authenticate](https://developer.okta.com/product/authentication/) and [authorize](https://developer.okta.com/product/authorization/) your users
-- Store data about your users
-- Perform password-based and [social login](https://developer.okta.com/authentication-guide/social-login/)
-- Secure your application with [multi-factor authentication](https://developer.okta.com/use_cases/mfa/)
-- And much more! Check out our [product documentation](https://developer.okta.com/documentation/)
+* [Authenticate](https://developer.okta.com/product/authentication/) and [authorize](https://developer.okta.com/product/authorization/) your users
+* Store data about your users
+* Perform password-based and [social login](https://developer.okta.com/authentication-guide/social-login/)
+* Secure your application with [multi-factor authentication](https://developer.okta.com/use_cases/mfa/)
+* And much more! Check out our [product documentation](https://developer.okta.com/documentation/)
 
 Are you sold? [Register for a forever-free developer account](https://developer.okta.com/signup/), and when you're done, come on back so you can learn more about building secure apps with Spring Boot!
 
@@ -817,7 +799,7 @@ auth0 apps create \
   --reveal-secrets
 ```
 
-Modify your `src/main/resources/application.properties` to include your Auth0 issuer, client ID, and client secret.
+Modify your `src/main/resources/application.properties` to include your Auth0 issuer, client ID, and client secret. 
 
 ```properties
 # make sure to include the trailing slash for the Auth0 issuer
@@ -826,7 +808,7 @@ okta.oauth2.issuer.client-id=<your-client-id>
 okta.oauth2.issuer.client-secret=<your-client-secret>
 ```
 
-Of course, you can also use your [Auth0 dashboard](https://manage.auth0.com) to configure your application. Just make sure to use the same URLs specified above.
+Of course, you can also use your [Auth0 dashboard](https://manage.auth0.com) to configure your application. Just make sure to use the same URLs specified above. 
 
 After configuring Spring Security in the section below, update `UserController.java` and its `logout()` method to work with Auth0:
 
@@ -896,7 +878,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public RequestCache refererRequestCache() {
+    public RequestCache refererRequestCache() { 
         return new HttpSessionRequestCache() {
             @Override
             public void saveRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -913,7 +895,7 @@ public class SecurityConfiguration {
 }
 ```
 
-This class has a lot going on, so let me explain a few things. In previous versions of Spring Security, there was an `authorizeRequests()` lambda you could use to secure paths. It still exists, but it's deprecated in Spring Security 6. It's permissive by default, which means any paths you don't specify will be allowed. The recommended way, shown here with `authorizeHttpRequests()` denies by default. This means you have to specify the resources you want to allow Spring Security to serve up, as well as the ones that the React app has.
+This class has a lot going on, so let me explain a few things. In previous versions of Spring Security, there was an `authorizeRequests()` lambda you could use to secure paths. It still exists, but it's deprecated in Spring Security 6. It's permissive by default, which means any paths you don't specify will be allowed. The recommended way, shown here with `authorizeHttpRequests()` denies by default. This means you have to specify the resources you want to allow Spring Security to serve up, as well as the ones that the React app has. 
 
 The `requestMatchers` lines defines what URLs are allowed for anonymous users. You will soon configure things so your React app is served up by your Spring Boot app, hence the reason for allowing "/", "/index.html", and web files. You might also notice an exposed `/api/user` path.
 
@@ -1009,7 +991,7 @@ public class UserController {
 }
 ```
 
-You'll also want to add user information when creating groups so that you can filter by _your_ JUG tour. Add a `UserRepository.java` in the same directory as `GroupRepository.java`.
+You'll also want to add user information when creating groups so that you can filter by _your_ JUG tour. Add a `UserRepository.java` in the same directory as `GroupRepository.java`. 
 
 ```java
 package com.okta.developer.jugtours.model;
@@ -1020,7 +1002,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 }
 ```
 
-Add a new `findAllByUserId(String id)` method to `GroupRepository.java`.
+Add a new `findAllByUserId(String id)` method to `GroupRepository.java`. 
 
 ```java
 List<Group> findAllByUserId(String id);
@@ -1082,7 +1064,7 @@ class GroupController {
         log.info("Request to create group: {}", group);
         Map<String, Object> details = principal.getAttributes();
         String userId = details.get("sub").toString();
-
+ 
         // check to see if user already exists
         Optional<User> user = userRepository.findById(userId);
         group.setUser(user.orElse(new User(userId,
@@ -1109,7 +1091,7 @@ class GroupController {
 }
 ```
 
-To magnify the changes, they're in the `groups()` and `createGroup()` methods. It's pretty slick that Spring JPA will create the `findAllByUserId()` method/query for you and `userRepository.findById()` uses Java 8's [Optional](http://www.baeldung.com/java-optional).
+To magnify the changes, they're in the `groups()` and `createGroup()` methods. It's pretty slick that Spring JPA will create the `findAllByUserId()` method/query for you and `userRepository.findById()` uses Java 8's [Optional](http://www.baeldung.com/java-optional). 
 
 ```java
 @GetMapping("/groups")
@@ -1140,40 +1122,41 @@ ResponseEntity<Group> createGroup(@Valid @RequestBody Group group,
 You'll need to make a few changes to your React components to make them identity-aware. The first thing you'll want to do is modify `src/index.js` to wrap everything in a `CookieProvider`. This component allows you to read the CSRF cookie and send it back as a header.
 
 ```jsx
-import { CookiesProvider } from "react-cookie";
+import { CookiesProvider } from 'react-cookie';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <CookiesProvider>
-      <App />
+      <App/>
     </CookiesProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
 ```
 
 Modify `app/src/Home.js` to call `/api/user` to see if the user is logged in. If they're not, show a `Login` button.
 
 ```jsx
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import AppNavbar from "./AppNavbar";
-import { Link } from "react-router-dom";
-import { Button, Container } from "reactstrap";
-import { useCookies } from "react-cookie";
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import AppNavbar from './AppNavbar';
+import { Link } from 'react-router-dom';
+import { Button, Container } from 'reactstrap';
+import { useCookies } from 'react-cookie';
 
 const Home = () => {
+
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(undefined);
-  const [cookies] = useCookies(["XSRF-TOKEN"]);
+  const [cookies] = useCookies(['XSRF-TOKEN']);
 
   useEffect(() => {
     setLoading(true);
-    fetch("api/user", { credentials: "include" })
-      .then((response) => response.text())
-      .then((body) => {
-        if (body === "") {
+    fetch('api/user', { credentials: 'include' })
+      .then(response => response.text())
+      .then(body => {
+        if (body === '') {
           setAuthenticated(false);
         } else {
           setUser(JSON.parse(body));
@@ -1181,46 +1164,40 @@ const Home = () => {
         }
         setLoading(false);
       });
-  }, [setAuthenticated, setLoading, setUser]);
+  }, [setAuthenticated, setLoading, setUser])
 
   const login = () => {
-    let port = window.location.port ? ":" + window.location.port : "";
-    if (port === ":3000") {
-      port = ":8080";
+    let port = (window.location.port ? ':' + window.location.port : '');
+    if (port === ':3000') {
+      port = ':8080';
     }
     // redirect to a protected URL to trigger authentication
     window.location.href = `//${window.location.hostname}${port}/api/private`;
-  };
+  }
 
   const logout = () => {
-    fetch("/api/logout", {
-      method: "POST",
-      credentials: "include",
-      headers: { "X-XSRF-TOKEN": cookies["XSRF-TOKEN"] },
+    fetch('/api/logout', {
+      method: 'POST', credentials: 'include',
+      headers: { 'X-XSRF-TOKEN': cookies['XSRF-TOKEN'] }
     })
-      .then((res) => res.json())
-      .then((response) => {
-        window.location.href = `${response.logoutUrl}?id_token_hint=${response.idToken}` + `&post_logout_redirect_uri=${window.location.origin}`;
+      .then(res => res.json())
+      .then(response => {
+        window.location.href = `${response.logoutUrl}?id_token_hint=${response.idToken}`
+          + `&post_logout_redirect_uri=${window.location.origin}`;
       });
-  };
+  }
 
-  const message = user ? <h2>Welcome, {user.name}!</h2> : <p>Please log in to manage your JUG Tour.</p>;
+  const message = user ?
+    <h2>Welcome, {user.name}!</h2> :
+    <p>Please log in to manage your JUG Tour.</p>;
 
-  const button = authenticated ? (
+  const button = authenticated ?
     <div>
-      <Button color="link">
-        <Link to="/groups">Manage JUG Tour</Link>
-      </Button>
-      <br />
-      <Button color="link" onClick={logout}>
-        Logout
-      </Button>
-    </div>
-  ) : (
-    <Button color="primary" onClick={login}>
-      Login
-    </Button>
-  );
+      <Button color="link"><Link to="/groups">Manage JUG Tour</Link></Button>
+      <br/>
+      <Button color="link" onClick={logout}>Logout</Button>
+    </div> :
+    <Button color="primary" onClick={login}>Login</Button>;
 
   if (loading) {
     return <p>Loading...</p>;
@@ -1228,23 +1205,23 @@ const Home = () => {
 
   return (
     <div>
-      <AppNavbar />
+      <AppNavbar/>
       <Container fluid>
         {message}
         {button}
       </Container>
     </div>
   );
-};
+}
 
 export default Home;
 ```
 
 There are some things you should be aware of in this component:
 
-1. `useCookies()` is used for access to cookies. Then you can fetch a cookie with `cookies['XSRF-TOKEN']`.
+1. `useCookies()` is used for access to cookies. Then you can fetch a cookie with `cookies['XSRF-TOKEN']`. 
 2. When using `fetch()`, you need to include `{credentials: 'include'}` to transfer cookies. You will get a 403 Forbidden if you do not include this option.
-3. The CSRF cookie from Spring Security has a different name than the header you need to send back. The cookie name is `XSRF-TOKEN`, while the header name is `X-XSRF-TOKEN`.
+3. The CSRF cookie from Spring Security has a different name than the header you need to send back. The cookie name is `XSRF-TOKEN`, while the header name is `X-XSRF-TOKEN`. 
 
 Update `app/src/GroupList.js` to have similar changes. The good news is you don't need to make any changes to the `render()` method.
 
@@ -1285,7 +1262,7 @@ Update `GroupEdit.js` too.
 import { useCookies } from 'react-cookie';
 
 const GroupEdit = () => {
-
+  
   ...
   const [cookies] = useCookies(['XSRF-TOKEN']);
 
@@ -1317,9 +1294,9 @@ export default GroupEdit;
 
 After all these changes, you should be able to restart both Spring Boot and React and witness the glory of planning your very own JUG Tour!
 
-{% img "spring-boot-react/react-login.png", "React Login", "800" %}
+{% img {src: "spring-boot-react/react-login.png", alt: "React Login", header: "800"} %}
 
-{% img "spring-boot-react/my-jug-tour.png", "My JUG Tour", "800" %}
+{% img {src: "spring-boot-react/my-jug-tour.png", alt: "My JUG Tour", header: "800"} %}
 
 ## Configure Maven to build and package React with Spring Boot
 
@@ -1432,9 +1409,9 @@ While you're at it, add the active profile setting to `src/main/resources/applic
 spring.profiles.active=@spring.profiles.active@
 ```
 
-After adding this, you should be able to run `./mvnw spring-boot:run -Pprod` and see your app running on `http://localhost:8080`.
+After adding this, you should be able to run `./mvnw spring-boot:run -Pprod` and see your app running on `http://localhost:8080`. 
 
-{% img "spring-boot-react/localhost-8080.png", "App Running with Maven", "800" %}
+{% img {src: "spring-boot-react/localhost-8080.png", alt: "App Running with Maven", header: "800"} %}
 
 Everything will work just fine if you start at the root, since React will handle routing. However, if you refresh the page when you're at `http://localhost:8080/groups`, you'll get a 404 error since Spring Boot doesn't have a route for `/groups`. To fix this, add a `SpaWebFilter` that conditionally forwards to the React app.
 
@@ -1486,11 +1463,11 @@ You can find the example created in this tutorial on GitHub at [https://github.c
 
 We've written some other cool Spring Boot and React tutorials. Check them out if you're interested.
 
-- [Creating a TypeScript React Application with Vite](/blog/2022/03/14/react-vite-number-converter)
-- [How to Create a React App with Storybook](/blog/2022/01/20/react-storybook)
-- [How to Build and Deploy a Serverless React App on Azure](/blog/2022/04/13/react-azure-functions)
-- [A Quick Guide to Elasticsearch with Spring Data and Spring Boot](/blog/2022/02/16/spring-data-elasticsearch)
-- [Full Stack Java with React, Spring Boot, and JHipster](/blog/2021/11/22/full-stack-java)
-- [Build a CRUD Application with Kotlin and React](/blog/2020/01/13/kotlin-react-crud)
+* [Creating a TypeScript React Application with Vite](/blog/2022/03/14/react-vite-number-converter)
+* [How to Create a React App with Storybook](/blog/2022/01/20/react-storybook)
+* [How to Build and Deploy a Serverless React App on Azure](/blog/2022/04/13/react-azure-functions)
+* [A Quick Guide to Elasticsearch with Spring Data and Spring Boot](/blog/2022/02/16/spring-data-elasticsearch)
+* [Full Stack Java with React, Spring Boot, and JHipster](/blog/2021/11/22/full-stack-java)
+* [Build a CRUD Application with Kotlin and React](/blog/2020/01/13/kotlin-react-crud)
 
 If you have any questions, please don't hesitate to leave a comment below or ask us on our [Okta Developer Forums](https://devforum.okta.com/). Follow us [on Twitter](https://twitter.com/oktadev) if you want to see more tutorials like this one!

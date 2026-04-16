@@ -147,7 +147,7 @@ Then a K-Drama fan adds a new comment with safe markup.
 
 Because the `CommentsComponent` uses interpolation to populate the comments, the comments will display in the browser in text like this:
 
-{% img "angular-security-xss/interpolation.jpg", "Screenshot of comments as shown in the browser. Is it the text of each comment include code blocks as text.", "800" %}
+{% img {src: "angular-security-xss/interpolation.jpg", alt: "Screenshot of comments as shown in the browser. Is it the text of each comment include code blocks as text.", header: "800"} %}
 
 That's not what we want! We want to interpret the HTML and allow the `<strong>` text, so we change our component template to bind it to the HTML `innerHTML` property.
 
@@ -161,13 +161,13 @@ That's not what we want! We want to interpret the HTML and allow the `<strong>` 
 
 Now, the site displays only the second comment correctly formatted like this:
 
-{% img "angular-security-xss/binding.jpg", "Screenshot of comments in the browser when bound to the innerHTML property. It shows a broken image and the new comment in strong font-weight.", "800" %}
+{% img {src: "angular-security-xss/binding.jpg", alt: "Screenshot of comments in the browser when bound to the innerHTML property. It shows a broken image and the new comment in strong font-weight.", header: "800"} %}
 
 The first comment with the `anchor` tag doesn't display the alert when clicked! The second comment with the attack in the `onerror` handler only shows the broken image and doesn't run the error code! Angular doesn't publish a list of unsafe tags. Still, we can sneak a peek into the codebase to see Angular considers tags such as `form`, `textarea`, `button`, `embed`, `link`, `style`, `template` as suspicious and may altogether remove the tag or remove specific attributes/child elements.
 
 As we learned earlier, sanitizing removes suspicious code while keeping safe code. Angular automatically strips out unsafe attributes from safe elements. You will see a warning in the console letting you know Angular cleaned the content up. 
 
-{% img "angular-security-xss/console-warning.jpg", "Screenshot of DevTools console showing a warning. The warning says, 'WARNING: sanitizing HTML stripped some content, see https\://g.co/ng/security#xss'", "800" %}
+{% img {src: "angular-security-xss/console-warning.jpg", alt: "Screenshot of DevTools console showing a warning. The warning says, 'WARNING: sanitizing HTML stripped some content, see https\://g.co/ng/security#xss'", header: "800"} %}
 
 By handling values "the Angular way," our application is well protected against security woes! Success!
 

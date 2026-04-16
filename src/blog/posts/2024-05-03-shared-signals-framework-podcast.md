@@ -17,7 +17,7 @@ The Okta Workforce Identity Developer Podcast returns to discuss the OpenID Foun
 
 ## Watch on the OktaDev YouTube channel
 
-{% youtube PfkQmwNZ6S8 %}
+{% youtube "PfkQmwNZ6S8" %}
 
 ## Learn more about the Shared Signals Framework 
 

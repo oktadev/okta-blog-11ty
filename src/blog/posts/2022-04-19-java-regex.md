@@ -203,7 +203,7 @@ Several resources are available to help you with using regular expressions. Here
 
 To use a community pattern, you must first select a pattern, click on its URL, or double-click the list to load the full pattern. You can also use the right arrow icon to load the expression or text. In the screenshot below, we have picked an existing community pattern for password validation. We have run some tests to ensure that it does proper password validation as per the regex.
 
-{% img "regular-expressions-java/regexr.png", "Regexr screenshot", "800" %}
+{% img {src: "regular-expressions-java/regexr.png", alt: "Regexr screenshot", header: "800"} %}
 
 ### GitHub Copilot
 
@@ -211,7 +211,7 @@ Thanks to [GitHub Copilot](https://copilot.github.com/), an AI tool developed by
 
 The following screenshot shows Copilot suggesting a regex for email validation. In the IntelliJ Idea IDE, we can press `TAB` to accept the suggestion.
 
-{% img "regular-expressions-java/github-copilot.png", "GitHub Copilot", "800" %}
+{% img {src: "regular-expressions-java/github-copilot.png", alt: "GitHub Copilot", header: "800"} %}
 
 ### JavaVerbalExpressions
 

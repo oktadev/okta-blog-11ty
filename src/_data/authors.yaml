@@ -313,7 +313,7 @@ alex-dahl:
 andrew-hughes:
   full_name: Andrew Hughes
   display_name: Andrew Hughes
-  avatar: avatar-moksamedia.jpg
+  avatar: avatar-moksamedia.jpeg
   github: https://github.com/moksamedia
   twitter: https://twitter.com/oktadev
 
@@ -337,7 +337,7 @@ braden-kelley:
 team-okta:
   full_name: Team Okta
   display_name: Team Okta
-  avatar: avatar-oktadev.png
+  avatar: avatar-okta_logo.jpg
   email: devrel@okta.com
   github: https://github.com/oktadev
   twitter: https://twitter.com/oktadev
@@ -374,7 +374,7 @@ patrick-mcdowell:
 karl-penzhorn:
   full_name: Karl Penzhorn
   display_name: Karl Penzhorn
-  avatar: avatar-kpenzhorn.jpg
+  avatar: avatar-kpenzhorn.jpeg
 
 david-neal:
   full_name: David Neal
@@ -502,7 +502,7 @@ lindsay-brunner:
 peter-yaworsky:
   full_name: Peter Yaworsky and Himanshu Ghai
   display_name: Peter Yaworsky and Himanshu Ghai
-  avatar: avatar-oktadev.png
+  avatar: avatar-okta_logo.jpg
   email: peter.yaworsky@okta.com
 
 charlie-holland:
@@ -560,7 +560,7 @@ ivo-katunaric:
 thiago-negri:
   full_name: Thiago Negri
   display_name: Thiago Negri
-  avatar: avatar-thiago-negri.jpg
+  avatar: avatar-thiago-negri.jpeg
   github: https://github.com/thiago-negri
 
 mikel-pascual:

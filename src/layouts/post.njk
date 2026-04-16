@@ -6,7 +6,7 @@ layout: base
 <article class="flex flex-col max-w-[1000] m-auto">
     <h1>{{ title }}</h1>
     {% if image %}
-      {% img image, "" %}
+      {% img {src: image, alt: "", header: true} %}
     {% endif %}
     <div>
       {% if description %}

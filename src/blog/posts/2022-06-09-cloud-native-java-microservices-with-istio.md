@@ -41,7 +41,7 @@ Let's get started!
 
 If you prefer to follow along by watching a video, see [How to Build Low-Code Microservices on the Cloud Using Istio, JHipster, and Kubernetes] on the [OktaDev YouTube channel](https://youtube.com/oktadev).
 
-{% youtube zGpnIhRgMaM %}
+{% youtube "zGpnIhRgMaM" %}
 
 ## Why build cloud-native microservices using a service mesh?
 
@@ -62,7 +62,7 @@ Istio specifically provides the following features.
 
 Let's take a quick look at Istio internals. The Istio architecture can be classified into two distinct planes.
 
-{% img "cloud-native-java-microservices-with-istio/istio-architecture.png", "Istio Service Mesh Architecture", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/istio-architecture.png", alt: "Istio Service Mesh Architecture", header: "900"} %}
 
 **Control plane**: It consists of the istiod demon, and it manages and configures the envoy proxies to route traffic. The control plane also enforces policies and collects telemetry, and includes components like Pilot for traffic management, Citadel to manage security, and Galley to manage configurations.
 
@@ -76,7 +76,7 @@ Before you proceed, ensure you have installed JHipster. If not, install it using
 
 We will be using the [JHipster Domain Language (JDL)](https://www.jhipster.tech/jdl/intro) to define our microservices, entities, and deployment options. But first, let's take a look at the architecture we will be building today.
 
-{% img "cloud-native-java-microservices-with-istio/istio-ms-architecture.png", "Istio Microservice Architecture", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/istio-ms-architecture.png", alt: "Istio Microservice Architecture", header: "900"} %}
 
 We have the Istio control plane taking care of policy, load balancing, etc. We also have the Istio Ingress gateway to route all external traffic to our applications. We have four microservices. First is a gateway application created by JHipster that acts as our React GUI and authentication layer. The remaining are services that provide APIs. Each of our containers will have an envoy proxy as an auto-injected sidecar. We hook up Grafana, Prometheus, Zipkin, and Kiali to the telemetry provided by Istio so that we have monitoring and observability for our cluster. Each microservice also has its own database.
 
@@ -335,7 +335,7 @@ gcloud container clusters create hello-hipster \
 
 This could take anywhere from 5 to 15 minutes. `--machine-type` is important as we need more CPU than available in the default setup. Once the cluster is created, it should be set automatically as the current Kubernetes context. You can verify that by running `kubectl config current-context`. If the new cluster is not set as the current context, you can set it by running `gcloud container clusters get-credentials hello-hipster`.
 
-{% img "cloud-native-java-microservices-with-istio/kdash-clusters.png", "GKE Cluster nodes", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/kdash-clusters.png", alt: "GKE Cluster nodes", header: "900"} %}
 
 > **Note**: I'm using [KDash](https://kdash.cli.rs/) to monitor the cluster; you can try it or use kubectl, [k9s](https://github.com/derailed/k9s), and so on as you prefer.
 
@@ -376,7 +376,7 @@ kubectl apply -f samples/addons/kiali.yaml
 kubectl apply -f samples/addons/extras/zipkin.yaml
 ```
 
-{% img "cloud-native-java-microservices-with-istio/istio-pods.png", "GKE Cluster with Istio pods", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/istio-pods.png", alt: "GKE Cluster with Istio pods", header: "900"} %}
 
 If we look at the istio-system namespace, we can see all the Istio components along with Grafana, Prometheus, Kiali, and Zipkin running. You can also see this by running the following command .
 
@@ -417,7 +417,7 @@ jhipster jdl deployment.jdl
 
 This will create a new folder, **kubernetes**, with all the required Kubernetes manifests like deployments, services, Istio virtual services, gateways, and so on, for all the applications, databases, and monitoring.
 
-{% img "cloud-native-java-microservices-with-istio/k8s-deployment.png", "JHipster JDL deployment", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/k8s-deployment.png", alt: "JHipster JDL deployment", header: "900"} %}
 
 Each of the services will also have an Istio [virtual service](https://istio.io/latest/docs/reference/config/networking/virtual-service/) and [destination rule](https://istio.io/latest/docs/reference/config/networking/destination-rule/). For example, the invoice service will have the following destination rule defining traffic policies.
 
@@ -565,11 +565,11 @@ cd kubernetes
 
 Once the deployments are done, we must wait for the pods to be in **RUNNING** status. Useful links will be printed on the terminal; make a note of them.
 
-{% img "cloud-native-java-microservices-with-istio/jhipster-deployment.png", "GKE cluster with application pods", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/jhipster-deployment.png", alt: "GKE cluster with application pods", header: "900"} %}
 
 You can now access the application at the given `http://store.jhipster.<istio-ingress-gateway-external-ip>.nip.io` URI and log in with the default credentials.
 
-{% img "cloud-native-java-microservices-with-istio/jh-store-app.png", "Store gateway application", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/jh-store-app.png", alt: "Store gateway application", header: "900"} %}
 
 > **Note**: Currently, the JHipster OIDC setup does not work with Istio and there is an [open issue](https://github.com/jhipster/generator-jhipster/issues/17384) in JHipster issue tracker for this. Alternative solutions would be to use an [external authorization server](https://istio.io/latest/blog/2021/better-external-authz/) with something like [Open Policy Agent](https://www.openpolicyagent.org/). We will cover this in a later blog post.
 
@@ -581,19 +581,19 @@ Since we deployed tools for observability, let's see what we have.
 
 First up are Grafana and Prometheus for metrics and dashboards. Click the URI for Grafana from the previous deployment step. Click **General** at the top left corner and click the **istio** folder. You should see multiple preconfigured dashboards. You can monitor the performance of the workloads and the istio system itself here. You can also create your own dashboards if you like. Prometheus provides the data visualized on Grafana.
 
-{% img "cloud-native-java-microservices-with-istio/grafana.png", "Grafana dashboard", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/grafana.png", alt: "Grafana dashboard", header: "900"} %}
 
 #### Kiali
 
 Kiali is a management console for Istio service mesh, and it provides a web interface for visualizing the network topology of your service mesh. You can use it to explore the network topology of your cluster and see the network traffic flowing through it. Click **Graph** on the left side menu to see the network topology.
 
-{% img "cloud-native-java-microservices-with-istio/kiali.png", "Kiali dashboard", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/kiali.png", alt: "Kiali dashboard", header: "900"} %}
 
 #### Zipkin
 
 Zipkin is a distributed tracing solution for distributed systems. It is a tool for capturing distributed traces and providing a centralized view of the traces. This is essential for a microservice setup where a request could span multiple services, and debugging would require tracing them. Click **RUN QUERY** on the home screen to fetch recent traces, and click **SHOW** on one of them.
 
-{% img "cloud-native-java-microservices-with-istio/zipkin.png", "Zipkin dashboard", "900" %}
+{% img {src: "cloud-native-java-microservices-with-istio/zipkin.png", alt: "Zipkin dashboard", header: "900"} %}
 
 ### Cleanup the GCP cluster
 

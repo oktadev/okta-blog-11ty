@@ -272,7 +272,7 @@ php artisan serve
 
 This will run your server, typically on `localhost:8000`. Open it in your browser, and you'll see that there are currently no posts on your website.
 
-{% img "elasticsearch-laravel/no-posts-available.png", "There are no posts available", "800" %}
+{% img {src: "elasticsearch-laravel/no-posts-available.png", alt: "There are no posts available", header: "800"} %}
 
 
 ### Add authentication with Okta
@@ -285,11 +285,11 @@ If you don't already have an Okta account, go ahead and [create one](https://dev
 
 In the pop-up, select **OIDC - OpenID Connect** and **Web Application**, then click **Next**.
 
-{% img "elasticsearch-laravel/create-new-app-integration.jpg", "Create new app integration", "800" %}
+{% img {src: "elasticsearch-laravel/create-new-app-integration.jpg", alt: "Create new app integration", header: "800"} %}
 
 Next, on the page that opens, you'll enter details about the new integration. In the first section, you need to enter the app's name. For **Grant Type**, choose **Client Credentials**, and for **Sign-in redirect URIs**, enter http://localhost:8000/login/redirect. Later, this is where you'll handle the authentication.
 
-{% img "elasticsearch-laravel/configure-app.png", "Configure app settings", "800" %}
+{% img {src: "elasticsearch-laravel/configure-app.png", alt: "Configure app settings", header: "800"} %}
 
 At the bottom of the form, under **Assignments**, choose **Allow everyone in your organization to access**. This allows any user in your Okta organization to log in to the blog.
 
@@ -304,7 +304,7 @@ OKTA_REDIRECT_URI=http://localhost:8000/login/redirect
 
 The last thing you need is your organization's Okta base URL, which can be found by going to **Security**, then **API**. It'll be in the table under **Issuer URI**. You only need the authority, not the full path.
 
-{% img "elasticsearch-laravel/get-base-uri.png", "Get the base URI from the issuer URI", "800" %}
+{% img {src: "elasticsearch-laravel/get-base-uri.png", alt: "Get the base URI from the issuer URI", header: "800"} %}
 
 Okta is now ready to be used for authentication!
 
@@ -376,7 +376,7 @@ Change the URL of the **Sign In** link in `resources/views/layout.blade.php`:
 
 Now when you open the home page again and click the **Sign In** link in the navigation bar, you'll be taken to Okta's authentication screen.
 
-{% img "elasticsearch-laravel/okta-login-prompt.png", "Okta login prompt", "400" %}
+{% img {src: "elasticsearch-laravel/okta-login-prompt.png", alt: "Okta login prompt", header: "400"} %}
 
 Before you can test the authentication, you need to add the redirect route that will handle the response of the successful authentication.
 
@@ -428,7 +428,7 @@ You can now test the authentication. Fill out the Okta form with your name and p
 
 After logging in, you'll be redirected to the home page, and you'll see that the link in the navigation bar has changed to **Add Post**. You'll also see your name on the right side of the navigation bar.
 
-{% img "elasticsearch-laravel/logged-in.png", "Logged-in dashboard view", "800" %}
+{% img {src: "elasticsearch-laravel/logged-in.png", alt: "Logged-in dashboard view", header: "800"} %}
 
 ### Add your post page
 
@@ -489,7 +489,7 @@ Change the URL of the **Add Post** link in the navigation bar in `resources/view
 
 If you go to the home page and click on **Add Post**, you'll be taken to the form you just created.
 
-{% img "elasticsearch-laravel/new-post-page.png", "New post page", "800" %}
+{% img {src: "elasticsearch-laravel/new-post-page.png", alt: "New post page", header: "800"} %}
 
 To add the form POST request handler route, add the following to `app/Http/Controllers/BlogController.php`:
 
@@ -662,7 +662,7 @@ use Elasticsearch;
 
 Opening the home page now, you'll see a search bar. If you enter a search term, the results will show posts with the term you entered in their title or content.
 
-{% img "elasticsearch-laravel/search-bar.png", "Search bar", "800" %}
+{% img {src: "elasticsearch-laravel/search-bar.png", alt: "Search bar", header: "800"} %}
 
 ## Learn more about Elasticsearch, Laravel, and Okta
 

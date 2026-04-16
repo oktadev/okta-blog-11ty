@@ -17,11 +17,11 @@ Whether or not you use Okta's products, you may find yourself working on softwar
 
 For a high-level perspective on the benefits of building to the open standards supported by the OIN, which also lets you easily support any other identity provider's integration marketplace, here's Director of Identity Standards Aaron Parecki: 
 
-{% youtube  YIvslsPaknI %}
+{% youtube "YIvslsPaknI" %}
 
 And to learn about what the integration submission process looks like on a more technical level, the OIN 101 Walkthrough can help: 
 
-{% youtube aHvSrXoOWDw %}
+{% youtube "aHvSrXoOWDw" %}
 
 Check out Okta's [Saas Security page](https://www.okta.com/saas-security/) and [integrator help hub](https://support.okta.com/help/s/product-hub/application-integrations?language=en_US) for more resources.
 

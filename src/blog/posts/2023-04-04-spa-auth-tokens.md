@@ -21,14 +21,14 @@ As part of authentication, your client application makes multiple calls to an au
 
 There's a [companion video for this post](https://youtu.be/UZQ_ke8BuRU) if you want to check out how to run a SPA sample application, look at browser storage, and inspect network calls. 
 
-{% youtube UZQ_ke8BuRU %}
+{% youtube "UZQ_ke8BuRU" %}
 
 {% include "integrator-org-warning.njk" %}
 
 ## Authentication and Authorization using OAuth 2.0 + OpenID Connect (OIDC)
 OAuth 2.0 with OIDC is the best practice for adding authentication and authorization to your software applications. Authentication verifies the identity of who you claim to be, and authorization verifies you have access to data you want to see or actions you want to perform. It is lightweight with less effort to set up and use than Security Assertion Markup Language (SAML), an alternate authentication and authorization mechanism that pre-existing systems may use. For newer systems, you'll want to use OAuth 2.0 + OIDC.
 
-{% img "spa-auth-tokens/oauth-oidc-logos.jpg", "OAuth and OpenID Connect logos", "600" %}
+{% img {src: "spa-auth-tokens/oauth-oidc-logos.jpg", alt: "OAuth and OpenID Connect logos", header: "600"} %}
 
 OAuth 2.0 handles authorization to resources, such as when your front-end application gets data from a backend API by making an HTTP request. OAuth 2.0 standards have the flexibility to support authorization across your entire application system through different flows and grant types. For example, different OAuth 2.0 flows support JavaScript-based front-end applications, for your APIs and back-end services to communicate, and even for IOT devices in your home automation system. OpenID Connect (OIDC) is an identity layer on OAuth 2.0 that provides standardized identity information.
 
@@ -37,11 +37,11 @@ SPAs and other JavaScript front-ends are public clients, which means they can't 
 
 Let's see how this flow works step-by-step following what happens when a cute dinosaur named Sunny prepares to sign in to the "Rawr" app.
 
-{% img "spa-auth-tokens/flow-1-sign-in-start.jpg", "Sunny, a cute smiley dinosaur, is ready to sign in to the Rawr app", "800" %}
+{% img {src: "spa-auth-tokens/flow-1-sign-in-start.jpg", alt: "Sunny, a cute smiley dinosaur, is ready to sign in to the Rawr app", header: "800"} %}
 
 The client application starts the process and generates a random, long string — the code verifier. Then it creates a code challenge from the code verifier. This step is part of the PKCE extension.
 
-{% img "spa-auth-tokens/flow-2-client-pkce.jpg", "The client application processing the sign-in to create a code verifier and code challenge", "800" %}
+{% img {src: "spa-auth-tokens/flow-2-client-pkce.jpg", alt: "The client application processing the sign-in to create a code verifier and code challenge", header: "800"} %}
 
 The client application holds on to the code verifier. It then makes an authorization code request to your authorization server, in this case, represented by Okta. The authorization code request includes the code challenge along with some critical pieces of information, such as
 * Client ID
@@ -52,34 +52,34 @@ The client application holds on to the code verifier. It then makes an authoriza
 * Redirect URI for the callback location within the client application when sign-in is complete
 * A random alphanumeric string for preventing Cross-Site Request Forgery (CSRF)
 
-{% img "spa-auth-tokens/flow-3-authorization-code-request.jpg", "The client application making an authorization code request to the authorization server, Okta, with the information mentioned above", "800" %}
+{% img {src: "spa-auth-tokens/flow-3-authorization-code-request.jpg", alt: "The client application making an authorization code request to the authorization server, Okta, with the information mentioned above", header: "800"} %}
 
 The authorization server redirects the user, Sunny, to a web page it hosts to sign in and provide authorization consent.
 
-{% img "spa-auth-tokens/flow-4-authorization-code-redirect.jpg", "The client application redirects to Okta hosted sign-in screen, and Sunny authenticates and grant consent", "800" %}
+{% img {src: "spa-auth-tokens/flow-4-authorization-code-redirect.jpg", alt: "The client application redirects to Okta hosted sign-in screen, and Sunny authenticates and grant consent", header: "800"} %}
 
 Yay! Sign-in success! The authorization server returns an authorization code to the client application. 
 
-{% img "spa-auth-tokens/flow-5-authorization-code-response.jpg", "The authorization server redirects back to the client application and returns an authorization code", "800" %}
+{% img {src: "spa-auth-tokens/flow-5-authorization-code-response.jpg", alt: "The authorization server redirects back to the client application and returns an authorization code", header: "800"} %}
 
 Now that there's an authorization code, the client application makes a request to the token endpoint of the authorization server and sends the authorization code and the code verifier. 
 
-{% img "spa-auth-tokens/flow-6-token-request.jpg", "The client making a token request and sending the information listed above in the payload", "800" %}
+{% img {src: "spa-auth-tokens/flow-6-token-request.jpg", alt: "The client making a token request and sending the information listed above in the payload", header: "800"} %}
 
 To process the token endpoint request the authorization server ensures the authorization code is still valid and that the code verifier matches the code challenge sent in the authorization request. This step is part of the PKCE extension.
 
-{% img "spa-auth-tokens/flow-7-token-pkce.jpg", "The authorization server verifying the authorization code and the code verifier", "800" %}
+{% img {src: "spa-auth-tokens/flow-7-token-pkce.jpg", alt: "The authorization server verifying the authorization code and the code verifier", header: "800"} %}
 
 Yay! Success! The authorization server returns three tokens:
 1. Access token
 2. ID token
 3. Refresh token
 
-{% img "spa-auth-tokens/flow-8-token-response.jpg", "The authorization server responds to the token request with three tokens", "800" %}
+{% img {src: "spa-auth-tokens/flow-8-token-response.jpg", alt: "The authorization server responds to the token request with three tokens", header: "800"} %}
 
 Now that Sunny successfully signed in, they can continue their rawring lessons!
 
-{% img "spa-auth-tokens/flow-9-signed-in.jpg", "A happy dinosaur getting ready to start a lesson in how to rawr", "800" %}
+{% img {src: "spa-auth-tokens/flow-9-signed-in.jpg", alt: "A happy dinosaur getting ready to start a lesson in how to rawr", header: "800"} %}
 
 
 Now that you have these three tokens let's better understand what each one is for.
@@ -112,7 +112,7 @@ Authorization servers have standard, public endpoints for discovery by clients. 
 
 The OpenID Connect specification requires a standardized mechanism for client discovery. You can find it at `{Issuer}/.well-known/openid-configuration`. Open up a browser tab to the OIDC discovery endpoint. It is also JSON formatted data that looks something like this:
 
-{% img "spa-auth-tokens/well-known-oidc.jpg", "Example OIDC well-known discovery document", "800" %}
+{% img {src: "spa-auth-tokens/well-known-oidc.jpg", alt: "Example OIDC well-known discovery document", header: "800"} %}
 
 In the discovery response, we have the endpoints for the authorization and token requests which we'll use in the following steps. We also have a user info endpoint to query for user information and endpoints to validate the ID token. If you find the property for `claims_supported`, you'll see the claims cover various identifying information about the user. 
 
@@ -120,7 +120,7 @@ In the discovery response, we have the endpoints for the authorization and token
 
 We can see this OAuth flow using the [OpenID Connect Debugger](https://oidcdebugger.com/) tool. Open the site on a browser with good developer debugging capabilities. You'll see something like this:
 
-{% img "spa-auth-tokens/oidc-debugger.jpg", "OIDC debugger site showing form fields", "800" %}
+{% img {src: "spa-auth-tokens/oidc-debugger.jpg", alt: "OIDC debugger site showing form fields", header: "800"} %}
 
 Some fields are pre-populated, which is helpful. Add the other key information needed:
 * **Authorize URI (required)** - the authorize endpoint from the discovery doc
@@ -134,13 +134,13 @@ At the bottom of the page, you'll see how the authorization code request is form
 
 First, you'll authenticate using Okta if you still need to sign in by redirecting to an Okta-hosted sign-in page. Redirecting to the Identity Provider's hosted sign-in page is the best practice for security, so it's also a common practice you'll see across Identity Providers. Completing sign-in redirects you back to the OIDC debugger with a success message. You'll see the authorization code automatically exchanged for tokens.
 
-{% img "spa-auth-tokens/oidc-debugger-success.jpg", "Authorization code and tokens returned in the OIDC debugger upon successful sign-in", "800" %}
+{% img {src: "spa-auth-tokens/oidc-debugger-success.jpg", alt: "Authorization code and tokens returned in the OIDC debugger upon successful sign-in", header: "800"} %}
 
 The token format for ID tokens is JSON Web Token (JWT). The access token from Okta is also a JWT. JWT is an open standard (RFC 7519) that allows systems to exchange information in JSON format securely. They are compact and safe from modifications, but our tokens contain public information. Don't worry! They are secure, just not confidential. 
 
 You can copy the access token or ID token value from the response and read the contents using a [JWT debugger](https://jwt.io/). 
 
-{% img "spa-auth-tokens/jwt-inspection.jpg", "JWT inspection in the JWT debugger", "800" %}
+{% img {src: "spa-auth-tokens/jwt-inspection.jpg", alt: "JWT inspection in the JWT debugger", header: "800"} %}
 
 So this is cool, but what do we do with the tokens in our SPA? Let's bring these concepts into our front-end application.
 
@@ -186,14 +186,14 @@ Now try rerunning the SPA. If you inspect the network request, you'll see the re
 
 Now that we have these tokens in our SPA, what do we do with them? Let a trusted OIDC library, such as the Okta SDKs, handle all the token requests and refresh them for us. Behind the scenes, the OIDC library is hard at work exchanging tokens.
 
-{% img "spa-auth-tokens/refresh-token.jpg", "Refresh token call to the authorization server and returning new tokens", "800" %}
+{% img {src: "spa-auth-tokens/refresh-token.jpg", alt: "Refresh token call to the authorization server and returning new tokens", header: "800"} %}
 
 We're primarily interested in the contents of the ID token and using the access token.
 
 ### How to use the access token
 The access token gives us access to resources. That means we use access tokens in outgoing API requests that our application needs, like for Sunny to get their next rawring lesson.
 
-{% img "spa-auth-tokens/access-token.jpg", "Sunny starting up a new lesson makes a call to the Rawr site's /lesson endpoint passing in the access token", "800" %}
+{% img {src: "spa-auth-tokens/access-token.jpg", alt: "Sunny starting up a new lesson makes a call to the Rawr site's /lesson endpoint passing in the access token", header: "800"} %}
 
 You'll send the access token as a Bearer token in the HTTP call's Authorization header. So in the case of Sunny, the outgoing HTTP call looks like this.
 
@@ -211,7 +211,7 @@ You can see access tokens in action within the SPA you previously created. If yo
 ### How to use the ID token
 Since the ID token contains user identity information, you can use it to start populating your user store and for supporting identifiers you need immediately, such as their name.
 
-{% img "spa-auth-tokens/id-token.jpg", "Sunny looking at his profile in the Rawr app where they see their name, dinosaur family, and their avatar", "800" %}
+{% img {src: "spa-auth-tokens/id-token.jpg", alt: "Sunny looking at his profile in the Rawr app where they see their name, dinosaur family, and their avatar", header: "800"} %}
 
 In the SPA you previously created, you can see all your claims if you navigate to **Profile**.
 

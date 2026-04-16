@@ -17,11 +17,11 @@ This tutorial is part of the on-demand workshop series. In this workshop, you'll
 
 Watch this video to follow the workshop steps. 
 
-{% youtube 12Ldo6t3hmo %}
+{% youtube "12Ldo6t3hmo" %}
 
 You built a software as a service (SaaS) Todo application: 
 
-{% img "workflows-workshop/Workflows_todoapp.jpg", "The Todo application showing five tasks", "800" %}
+{% img {src: "workflows-workshop/Workflows_todoapp.jpg", alt: "The Todo application showing five tasks", header: "800"} %}
 
 The application allows entering todo items and marking them completed when done. 
 
@@ -31,7 +31,7 @@ You need to add a report that summarizes all the Todo items for your organizatio
 
 The email report looks like this: 
 
-{% img "workflows-workshop/Workflows_email_report.jpg", "Todo email report showing each todo item from the Todo application with a boolean indicating completed state", "800" %}
+{% img {src: "workflows-workshop/Workflows_email_report.jpg", alt: "Todo email report showing each todo item from the Todo application with a boolean indicating completed state", header: "800"} %}
 
 
 In this workshop, you'll enhance the SaaS Todo application by creating an automated report using Okta's no-code Workflows platform. 
@@ -127,7 +127,7 @@ To access Workflows:
 
 You will see the Workflows home page:
 
-{% img "workflows-workshop/Workflows_console_main.jpg", "Workflows home page" %}
+{% img {src: "workflows-workshop/Workflows_console_main.jpg", alt: "Workflows home page"} %}
 
 ## Creating a flow
 To start, you will create a new flow. 
@@ -140,11 +140,11 @@ To start, you will create a new flow.
 1. Check the **Save all data that passes through the Flow?** checkbox. You will be using this capability later in this tutorial
 1. Click **Save** to save the flow name and description
 
-{% img "workflows-workshop/Workflows_create_new_flow.jpg", "Creating new flow" %}
+{% img {src: "workflows-workshop/Workflows_create_new_flow.jpg", alt: "Creating new flow"} %}
 
 Congratulations, you created a Workflows flow. 
 
-{% img "workflows-workshop/Workflows_new_flow_created.jpg", "A new Workflows flow" %}
+{% img {src: "workflows-workshop/Workflows_new_flow_created.jpg", alt: "A new Workflows flow"} %}
 
 ## Okta Workflows building blocks
 Before building the flow, you should learn about Workflows building blocks. 
@@ -158,7 +158,7 @@ This is an example of the **Text - Length** card. This card calculates and retur
 - The **text** field is the card's input
 - The **length** field is the card's output (the lower grey area)
 
-{% img "workflows-workshop/Workflows_Text_Length_card.jpg", "The Text-Length card calculates text length" %}
+{% img {src: "workflows-workshop/Workflows_Text_Length_card.jpg", alt: "The Text-Length card calculates text length"} %}
 
 There are two types of cards:
 
@@ -258,7 +258,7 @@ Prisma Studio is up on http://localhost:5555
 
 In a new browser window, go to http://localhost:5555 to view the database. The screenshot below shows the application database. The database has two users. 
 
-{% img "workflows-workshop/Workflows_prisma_db.jpg", "Application database" %}
+{% img {src: "workflows-workshop/Workflows_prisma_db.jpg", alt: "Application database"} %}
 
 To create a new organiziation in the application database: 
 
@@ -271,7 +271,7 @@ To create a new organiziation in the application database:
 
 The organziation record should look like this (some columns are filtered/hidden to show domain, API, and User columns)
 
-{% img "workflows-workshop/Workflows_prisma_db_org_record.jpg", "Database with new organization" %}
+{% img {src: "workflows-workshop/Workflows_prisma_db_org_record.jpg", alt: "Database with new organization"} %}
 
 
 You are ready to start the application and create the todo items. 
@@ -291,7 +291,7 @@ The create serveral todo items:
     - Use one of the users written to the console in step **Creating the database**
 1. Enter several todo items
 
-{% img "workflows-workshop/Workflows_todoapp.jpg", "Todo application with several items" %}
+{% img {src: "workflows-workshop/Workflows_todoapp.jpg", alt: "Todo application with several items"} %}
 
 You can also use Prisma Studio to view the todo items in the database. 
 
@@ -421,7 +421,7 @@ In this step, you will create a connection to the API service.
 
 The card API connection is shown at the top: 
 
-{% img "workflows-workshop/Workflows_Get_card_connection.jpg", "Card connection" %}
+{% img {src: "workflows-workshop/Workflows_Get_card_connection.jpg", alt: "Card connection"} %}
 
 
 _Setting the service URL_
@@ -444,7 +444,7 @@ Click the **Save** button to save changes.
 The **API Connector - Get** card looks like this: 
 
 
-{% img "workflows-workshop/Workflows_Get_card.jpg", "The API Connector - Get card" %}
+{% img {src: "workflows-workshop/Workflows_Get_card.jpg", alt: "The API Connector - Get card"} %}
 
 _Testing the card_
 
@@ -455,18 +455,18 @@ To test the **API Connector - Get** card:
 3. Expand the **Body** field to see the tasks from the application
 
 
-{% img "workflows-workshop/Workflows_Get_card_testing.jpg", "Testing the Get card" %}
+{% img {src: "workflows-workshop/Workflows_Get_card_testing.jpg", alt: "Testing the Get card"} %}
 
 To test the  flow: 
 
 1. Click the **Close** button to go back to the
 1. Click the **Run** button in the toolbar to run and test the flow
 
-{% img "workflows-workshop/Workflows_Run_button.jpg", "Workflows Run button to run and test a flow" %}
+{% img {src: "workflows-workshop/Workflows_Run_button.jpg", alt: "Workflows Run button to run and test a flow"} %}
 
 The **Execution History** page shows data passed from card to card for each card flow. 
 
-{% img "workflows-workshop/Workflows_Get_card_testing_history.jpg", "Testing the flow" %}
+{% img {src: "workflows-workshop/Workflows_Get_card_testing_history.jpg", alt: "Testing the flow"} %}
 
 In the next section, you will create the text message. 
 
@@ -485,7 +485,7 @@ Todo Items
 
 The **Compose** card looks like this: 
 
-{% img "workflows-workshop/Workflows_Compose_card.jpg", "The Compose card" %}
+{% img {src: "workflows-workshop/Workflows_Compose_card.jpg", alt: "The Compose card"} %}
 
 You can test the **Compose** card. Click the ▶️ button at the bottom of the card. 
 
@@ -495,7 +495,7 @@ Now, let's take the output from the **API Connector - Get** card and pass it to 
     * Place the cursor after **Todo Items** and press enter to create more space between the lines if needed
 
 
-{% img "workflows-workshop/workflows_get_connect_compose.gif", "Passing data to the Compose card" %}
+{% img {src: "workflows-workshop/workflows_get_connect_compose.gif", alt: "Passing data to the Compose card"} %}
 
 
 Click the **Test** button at the top of the flow to test it. 
@@ -508,7 +508,7 @@ For now, you build a flow that calls an external API service and displays the ou
 
 Next, you are going to add a step to email the result. 
 
-{% img "workflows-workshop/Workflows_flow_history.jpg", "Flow history" %}
+{% img {src: "workflows-workshop/Workflows_flow_history.jpg", alt: "Flow history"} %}
 
 Next, let's work on emailing the message. 
 
@@ -531,7 +531,7 @@ To email the message, you will use the **Gmail** card.
 
 The card looks like this:
 
-{% img "workflows-workshop/Workflows_Gmail_Send_card.jpg", "The Gmail - Send Email card" %}
+{% img {src: "workflows-workshop/Workflows_Gmail_Send_card.jpg", alt: "The Gmail - Send Email card"} %}
 
 
 Next, you need to set fields on the **Send Email** card. 
@@ -556,13 +556,13 @@ _Testing the flow_
  
 The flow looks like this: 
 
-{% img "workflows-workshop/Workflows_Todo_report_flow.jpg", "The Todo Report flow" %}
+{% img {src: "workflows-workshop/Workflows_Todo_report_flow.jpg", alt: "The Todo Report flow"} %}
 
 To test the flow, click the **Run** button and check that you received the email. 
 
 The email looks like this: 
 
-{% img "workflows-workshop/Workflows_email_report_not_formatted.jpg", "An email with the todo report" %}
+{% img {src: "workflows-workshop/Workflows_email_report_not_formatted.jpg", alt: "An email with the todo report"} %}
 
 The email is not formatted yet. But it's neat that you can call an API, create a message, and email it without writing any code. 
 
@@ -574,15 +574,15 @@ In this step, you will configure the flow to run on schedule.
 
 1. In the flow editor, move to the beginning of the flow, to the area before the **API Connector - Get** card
 1. In the box where it says **When this happens**, click the **Add event** button
-{% img "workflows-workshop/Workflows_add_Schedule_card.jpg", "Adding the Schedule card" %}
+{% img {src: "workflows-workshop/Workflows_add_Schedule_card.jpg", alt: "Adding the Schedule card"} %}
 
 3. You will see the **Flow Schedule** dialog where you set when to run the flow
-{% img "workflows-workshop/Workflows_flow_schedule_settings.jpg", "Flow schedule" %}
+{% img {src: "workflows-workshop/Workflows_flow_schedule_settings.jpg", alt: "Flow schedule"} %}
 
 4. Update the flow to run every **Friday at 9 am local time**
     * You can set a schedule that works for you
     * To test the flow, you don't need to wait for the schedule. You can always use the **Run** button
-{% img "workflows-workshop/Workflows_flow_schedule_settings2.jpg", "Running the flow every Friday at 9 am" %}
+{% img {src: "workflows-workshop/Workflows_flow_schedule_settings2.jpg", alt: "Running the flow every Friday at 9 am"} %}
 
 5. Click the **Save** to save the schedule
 
@@ -591,15 +591,15 @@ To see when the flow runs next:
 1. Open the **Flow is OFF** button menu
 1. Toggle **Flow is OFF** to **Flow is ON**
 
-{% img "workflows-workshop/Workflows_flow_off.jpg", "The flow is off" %}
+{% img {src: "workflows-workshop/Workflows_flow_off.jpg", alt: "The flow is off"} %}
 
 When the flow is on, you will see a time countdown until its next run:
 
-{% img "workflows-workshop/Workflows_flow_on.jpg", "The flow is on" %}
+{% img {src: "workflows-workshop/Workflows_flow_on.jpg", alt: "The flow is on"} %}
 
 Your flow should look like this: 
 
-{% img "workflows-workshop/Workflows_Todo_flow_final_1.jpg", "A flow to get the todo summary and send it via email" %}
+{% img {src: "workflows-workshop/Workflows_Todo_flow_final_1.jpg", alt: "A flow to get the todo summary and send it via email"} %}
 
 > You can turn off the flow while you build it. You can also remove and re-add the **Flow Schedule** card later.
 
@@ -679,7 +679,7 @@ A flow becomes a helper flow when the first card (step) is the **Helper Flow** c
 2. Under **Okta Apps**, select the **Helper Flow** card
 
 Your flow should look like this:
-{% img "workflows-workshop/Workflows_helper_flow.jpg", "A helper flow" %}
+{% img {src: "workflows-workshop/Workflows_helper_flow.jpg", alt: "A helper flow"} %}
 
 In the next step, you will set up the flow inputs. 
 
@@ -689,13 +689,13 @@ In this step, you will define inputs the main flow will pass to the helper flow.
 
 1. To add a flow input field, click inside the **Click or drag and create** box and enter **Item**
 2. Move the mouse over the field type indicated by **Aa**, open the list, and select **Object** from the list
-{% img "workflows-workshop/workflows_create_helper_flow_inputs.gif", "Creating helper flow inputs" %}3. Under the **Item** field, create two fields:
+{% img {src: "workflows-workshop/workflows_create_helper_flow_inputs.gif", alt: "Creating helper flow inputs"} %}3. Under the **Item** field, create two fields:
     - Name: **task**, type: **Text**
     - Name: **completed**, type: **Text**
 
 The **Helper Flow** card should look like this: 
 
-{% img "workflows-workshop/Workflows_helper_flow_inputs.jpg", "Helper flow inputs" %}
+{% img {src: "workflows-workshop/Workflows_helper_flow_inputs.jpg", alt: "Helper flow inputs"} %}
 
 You need to create one more input field. This will be a new field, not part of the **Item** object.
 
@@ -703,7 +703,7 @@ You need to create one more input field. This will be a new field, not part of t
 
 The final **Helper Flow** card looks like this:
 
-{% img "workflows-workshop/Workflows_helper_flow_inputs_final.jpg", "Helper flow with inputs" %}
+{% img {src: "workflows-workshop/Workflows_helper_flow_inputs_final.jpg", alt: "Helper flow with inputs"} %}
 
 Your helper flow is set up to accept two inputs. A JSON object with two fields: **task** and **completed** and a text field (**memo**). 
 
@@ -722,7 +722,7 @@ You will use the **Compose** card to create the message in this step.
 
 The **Compose** card looks like this: 
 
-{% img "workflows-workshop/Workflows_Compose_card_helper_flow.jpg", "The Compose card" %}
+{% img {src: "workflows-workshop/Workflows_Compose_card_helper_flow.jpg", alt: "The Compose card"} %}
 
 **Returning the message to the main flow**
 
@@ -733,7 +733,7 @@ You need to return the message to the **Todo Report** flow using the **Return** 
 
 The helper flow looks like this: 
 
-{% img "workflows-workshop/Workflows_helper_flow_final.jpg", "Completed helper flow" %}
+{% img {src: "workflows-workshop/Workflows_helper_flow_final.jpg", alt: "Completed helper flow"} %}
 
 Next, you will update the main flow to call this helper flow. 
 
@@ -749,7 +749,7 @@ _Adding the Reduce card_
 
 The flow will look like this:
 
-{% img "workflows-workshop/Workflows_add_Reduce_card.jpg", "Adding the Reduce card" %}
+{% img {src: "workflows-workshop/Workflows_add_Reduce_card.jpg", alt: "Adding the Reduce card"} %}
 
 _Updating the Get card_
 
@@ -760,7 +760,7 @@ The **Reduce** card expects a list as input.  To pass a todo list from the **Get
 
 The new field looks like this: 
 
-{% img "workflows-workshop/Workflows_Get_card_adding_todos.jpg", "Adding the todos field on the Get card" %}
+{% img {src: "workflows-workshop/Workflows_Get_card_adding_todos.jpg", alt: "Adding the todos field on the Get card"} %}
 
 _Setting up the Reduce card_
 
@@ -771,12 +771,12 @@ In this stept, you will pass data and configure the **Reduce** card.
 1. Click on the **Default Folder**, select the **Todo Report_Helper** flow and click **Choose**
 1. For the **memo** field, change its type to **Text** and enter **Todo Items** (delete the quotes)
 1. For the **Item** field, click the arrow on the right side of the field and select **Item** from the list
-{% img "workflows-workshop/Workflows_Reduce_card_helperflow_input1.jpg", "Selecting the data to send to the helper flow" %}
+{% img {src: "workflows-workshop/Workflows_Reduce_card_helperflow_input1.jpg", alt: "Selecting the data to send to the helper flow"} %}
 1. For the **item** in the output section of the card, set its type to **Text**. 
 
 The **Reduce** card looks like this:
 
-{% img "workflows-workshop/Workflows_Reduce_card_final.jpg", "The Reduce card" %} 
+{% img {src: "workflows-workshop/Workflows_Reduce_card_final.jpg", alt: "The Reduce card"} %} 
 
 _Passing data to the Gmail card card_
 
@@ -787,7 +787,7 @@ To send the list to the **Gmail** card:
 
 The final flow looks like this:
 
-{% img "workflows-workshop/Workflows_Todo_flow_final_with_Reduce.jpg", "The Completed Todo Report flow" %}
+{% img {src: "workflows-workshop/Workflows_Todo_flow_final_with_Reduce.jpg", alt: "The Completed Todo Report flow"} %}
 
 **How does the Reduce card work**
 
@@ -811,7 +811,7 @@ Todo Items
 ```
 
 
-{% img "workflows-workshop/Workflows_Reduce_flowhistory_test1.jpg", "Helper flow first run" %}
+{% img {src: "workflows-workshop/Workflows_Reduce_flowhistory_test1.jpg", alt: "Helper flow first run"} %}
 
 _Second run_
 
@@ -832,7 +832,7 @@ Todo Item
 
 > Watch a Workflows video (false)
 ```
-{% img "workflows-workshop/Workflows_Reduce_flowhistory_test2.jpg", "Helper flow second run" %}
+{% img {src: "workflows-workshop/Workflows_Reduce_flowhistory_test2.jpg", alt: "Helper flow second run"} %}
 
 _Third run_
 
@@ -858,7 +858,7 @@ Todo Items
 > Build your first automation (false)
 ```
 
-{% img "workflows-workshop/Workflows_Reduce_flowhistory_test3.jpg", "Helper flow third run" %}
+{% img {src: "workflows-workshop/Workflows_Reduce_flowhistory_test3.jpg", alt: "Helper flow third run"} %}
 
 _Fourth run_
 
@@ -888,7 +888,7 @@ Todo Items
 > Read Workflows docs (true)
 ```
 
-{% img "workflows-workshop/Workflows_Reduce_flowhistory_test4.jpg", "Helper flow fourth run" %}
+{% img {src: "workflows-workshop/Workflows_Reduce_flowhistory_test4.jpg", alt: "Helper flow fourth run"} %}
 
 Since all the items were processed, the **Reduce** card is done and the flow execution moves on to the next card, the **Send Email** card. 
 
@@ -898,11 +898,11 @@ Congratulations! You built an automation using no-code.
 
 This is the final **Todo Report** flow: 
 
-{% img "workflows-workshop/Workflows_Todo_flow_final_with_Reduce.jpg", "The flow continues after the Reduce card processes all the items" %}
+{% img {src: "workflows-workshop/Workflows_Todo_flow_final_with_Reduce.jpg", alt: "The flow continues after the Reduce card processes all the items"} %}
 
 This is the final **Todo Report_Helper** flow: 
 
-{% img "workflows-workshop/Workflows_helper_flow_final.jpg", "Completed helper flow" %}
+{% img {src: "workflows-workshop/Workflows_helper_flow_final.jpg", alt: "Completed helper flow"} %}
 
 You are ready to test the automation.
 
@@ -917,7 +917,7 @@ To test the flow:
 
 You will receive an email like this:
 
-{% img "workflows-workshop/Workflows_email_report.jpg", "Todo email report" %}
+{% img {src: "workflows-workshop/Workflows_email_report.jpg", alt: "Todo email report"} %}
 
 ## What you learned
 In this workshop, you learned the following:

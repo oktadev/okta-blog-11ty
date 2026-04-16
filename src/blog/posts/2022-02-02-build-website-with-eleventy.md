@@ -6,13 +6,13 @@ communities: [javascript]
 description: "A tutorial that shows you how to build a website with Eleventy and Okta."
 tags: [eleventy, sign-in-widget, markdown, javascript]
 tweets:
-  - "Curious about @eleven_ty? Learn how to create a secure Eleventy app using @okta! 🤯"
+- "Curious about @eleven_ty? Learn how to create a secure Eleventy app using @okta! 🤯"
 image: build-website-with-eleventy/website-eleventy-social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-website-eleventy-example
 ---
 
-11ty is a fantastic tool for quickly creating static sites using a variety of templating languages. 11ty makes designing and developing static sites simple. It supports HTML, Markdown, JavaScript, Nunjucks, Handlebars, and many other template styles, along with built-in support for layouts, pagination, and slugify. 11ty aims to compete against other frameworks such as Jekyll, Hugo, Hexo, Gatsby, and Nuxt. The framework is indeed as simple and powerful as its creators claim.
+11ty is a fantastic tool for quickly creating static sites using a variety of templating languages. 11ty makes designing and developing static sites simple. It supports HTML, Markdown, JavaScript, Nunjucks, Handlebars, and many other template styles, along with built-in support for layouts, pagination, and slugify. 11ty aims to compete against other frameworks such as Jekyll, Hugo, Hexo, Gatsby, and Nuxt. The framework is indeed as simple and powerful as its creators claim. 
 
 This tutorial will teach how to secure your 11ty site using Okta. 11ty will produce static pages, which means you won't have the luxury of servers and states to help manage your authentication. But Okta still has a solution for this. To authenticate users, you will use the [Okta Sign-In Widget](https://developer.okta.com/code/javascript/okta_sign-in_widget/). Then you will store the `id token` returned from the Okta authentication server. You can then use that `id token` to query Okta's servers for many operations, including [verifying if the token is valid](https://developer.okta.com/docs/reference/api/oidc/#introspect) or obtaining user information.
 
@@ -31,7 +31,7 @@ This tutorial will teach how to secure your 11ty site using Okta. 11ty will prod
 
 ## Create your 11ty site
 
-If you wish to follow along using the completed project you can [check out the GitHub repository here](https://github.com/oktadev/okta-website-eleventy-example).
+If you wish to follow along using the completed project you can [check out the GitHub repository here](https://github.com/oktadev/okta-website-eleventy-example).  
 
 The first step is to create your 11ty site. Create your project directory.
 
@@ -59,18 +59,18 @@ Enter the following command to start 11ty:
 npx @11ty/eleventy --serve
 ```
 
-By default, 11ty will attempt to use port `8080` on localhost, so navigate to `http://localhost:8080`, and you can see your **Hello World** page.
+By default, 11ty will attempt to use port `8080` on localhost, so navigate to `http://localhost:8080`, and you can see your **Hello World** page.  
 
-**NOTE:** If you are using Windows, you will need to open the index file you just created and resave it with `UTF-8` encoding, as 11ty uses `UTF-16 LE` by default.
+**NOTE:** If you are using Windows, you will need to open the index file you just created and resave it with `UTF-8` encoding, as 11ty uses `UTF-16 LE` by default.  
 
 ## Add a couple of static pages
 
 Now you can add some content to your site. Your site will consist of the following pages:
 
-- An index page to greet users (`index.html`)
-- A login page (`login.html`)
-- A readme to demonstrate the usage of markdown (`README.md`)
-- A page that is under authentication (`protected.html`)
+ - An index page to greet users (`index.html`)
+ - A login page (`login.html`)
+ - A readme to demonstrate the usage of markdown (`README.md`)
+ - A page that is under authentication (`protected.html`)
 
 First, open the `index.html` file you just created and replace the code with the following.
 
@@ -80,14 +80,18 @@ layout: _layout_unauthenticated.11ty.js
 ---
 
 <div class="row align-items-md-stretch">
-  <div class="col-md-12">
-    <div class="h-100 p-5 text-white bg-secondary rounded-3">
-      <h2>Using Okta with 11ty</h2>
-      <p>A small tutorial on writing static sites with <a class="text-dark" href="https://www.11ty.dev/" target="_blank">11ty</a>, secured by <a class="text-dark" href="https://www.okta.com/" target="_blank">Okta</a> written by <a class="text-dark" href="https://profile.fishbowlllc.com/" target="_blank">Nik Fisher.</a></p>
-      <a class="btn btn-outline-light" role="button" href="Login">Login Now</a>
-      <a class="btn btn-light" role="button" href="README">README</a>
+    <div class="col-md-12">
+        <div class="h-100 p-5 text-white bg-secondary rounded-3">
+            <h2>Using Okta with 11ty</h2>
+            <p>A small tutorial on writing static sites with 
+                <a class="text-dark" href="https://www.11ty.dev/" target="_blank">11ty</a>, 
+                secured by <a class="text-dark" href="https://www.okta.com/" target="_blank">Okta</a>
+                written by <a class="text-dark" href="https://profile.fishbowlllc.com/" target="_blank">Nik Fisher.</a>
+            </p>
+            <a class="btn btn-outline-light" role="button" href="Login">Login Now</a>
+            <a class="btn btn-light" role="button" href="README">README</a>
+        </div>
     </div>
-  </div>
 </div>
 ```
 
@@ -102,29 +106,23 @@ layout: _layout_unauthenticated.11ty.js
 
 <div id="okta-login-container"></div>
 <script>
-  oktaSignIn.authClient.token.getUserInfo().then(
-    function (user) {
-      window.location = "/protected";
-    },
-    function (error) {
-      oktaSignIn
-        .showSignInToGetTokens({
-          el: "#okta-login-container",
-        })
-        .then(function (tokens) {
-          oktaSignIn.authClient.tokenManager.setTokens(tokens);
-          oktaSignIn.remove();
-          window.location = "/protected";
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-    },
-  );
+  oktaSignIn.authClient.token.getUserInfo().then(function(user) {
+    window.location='/protected';
+  },function(error) {
+    oktaSignIn.showSignInToGetTokens({
+      el: '#okta-login-container'
+    }).then(function(tokens) {
+      oktaSignIn.authClient.tokenManager.setTokens(tokens);
+      oktaSignIn.remove();
+      window.location='/protected';
+    }).catch(function(err) {
+      console.error(err);
+    });
+  });
 </script>
 ```
 
-The only HTML in this page here is a `div` with `id="okta-login-container"`. You call the `OktaSignIn` features and display the login screen to the user with the JavaScript code on this page. Okta will create the login form and handle the actual authentication. All you need to do is call the `showSignInToGetTokens` method and handle the promise to set the token using the `tokenManager`. Once you have done that, you will redirect the user to the `protected` page.
+The only HTML in this page here is a `div` with `id="okta-login-container"`. You call the `OktaSignIn` features and display the login screen to the user with the JavaScript code on this page. Okta will create the login form and handle the actual authentication. All you need to do is call the `showSignInToGetTokens` method and handle the promise to set the token using the `tokenManager`. Once you have done that, you will redirect the user to the `protected` page. 
 
 You can add the `protected.html` page now. Add the following code to it.
 
@@ -136,14 +134,14 @@ layout: _layout_authenticated.11ty.js
 <div id="content"></div>
 
 <script>
-  function loadPage() {
-    //replace with API call
-    document.getElementById("content").innerHTML = "<h2>Congrats</h2><h5>You've reached a protected page</h5>";
-  }
+    function loadPage(){
+        //replace with API call 
+        document.getElementById('content').innerHTML = "<h2>Congrats</h2><h5>You've reached a protected page</h5>"
+    }
 </script>
 ```
 
-Since you haven't seen the `_layout_authenticated.11ty.js` page yet, this will need some explanation. After verifying that the user has authenticated, the `loadPage` function is called by the layout.
+Since you haven't seen the `_layout_authenticated.11ty.js` page yet, this will need some explanation. After verifying that the user has authenticated, the `loadPage` function is called by the layout.  
 
 There's a comment to replace the code here with an API call. You can add an API call to verify the ID token on the server-side before displaying any content to the user.
 
@@ -168,14 +166,15 @@ The `README.md`you've just added is a truncated version of the [README file](htt
 
 ## Add layout pages
 
-It's now time to add the layout pages for your static files. 11ty enables you to write layouts in several templating languages. For this project, you will use the stock `11ty.js` format. Create a new folder called `_includes` using the command `mkdir _includes`.
+It's now time to add the layout pages for your static files. 11ty enables you to write layouts in several templating languages. For this project, you will use the stock `11ty.js` format. Create a new folder called `_includes` using the command `mkdir _includes`. 
 
 Add a file called `_layout_base.11ty.js` and add the following code to it.
 
 {% raw %}
-
 ```javascript
-exports.data = {};
+exports.data = {
+
+};
 
 exports.render = function (data) {
   return `<!doctype html>
@@ -217,19 +216,18 @@ exports.render = function (data) {
 </html>`;
 };
 ```
-
 {% endraw %}
 
 Be sure to replace the placeholder variables with your actual Okta information.
 
-This file will be the base layout for all of your pages. It loads `bootstrap` into all of your pages and also initializes the `OktaSignIn` widget on each page. In this way, you can access it in the JavaScript of your file no matter where you are.
+This file will be the base layout for all of your pages.  It loads `bootstrap` into all of your pages and also initializes the `OktaSignIn` widget on each page.  In this way, you can access it in the JavaScript of your file no matter where you are.
 
 Next, add a file for `_layout_unauthenticated.11ty.js` and then add the following code.
 
 ```javascript
 exports.data = {
   title: "11ty And Okta",
-  layout: "_layout_base.11ty.js",
+  layout:  "_layout_base.11ty.js"
 };
 
 exports.render = function (data) {
@@ -256,12 +254,12 @@ Finally, add a new file called `_layout_authenticated.11ty.js`. Then, add the fo
 
 ```javascript
 exports.data = {
-  title: "11ty And Okta",
-  layout: "_layout_base.11ty.js",
+title: "11ty And Okta",
+layout: "_layout_base.11ty.js",
 };
 
 exports.render = function (data) {
-  return `
+return `
 
 <header
     class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -311,19 +309,19 @@ npx @11ty/eleventy --serve
 
 The command will build your templates into static pages and then serve the site on `localhost:8080`. Navigate to `http://localhost:8080` to see the home page.
 
-{% img "build-website-with-eleventy/home-page.png", "Home Page", "800" %}
+{% img {src: "build-website-with-eleventy/home-page.png", alt: "Home Page", header: "800"} %}
 
 Next, click the login button to see the Okta Sign-In Widget in action. You can log in with your Okta credentials.
 
-{% img "build-website-with-eleventy/login-page.png", "Login Page", "800" %}
+{% img {src: "build-website-with-eleventy/login-page.png", alt: "Login Page", header: "800"} %}
 
 If everything goes well, you should see the protected page.
 
-{% img "build-website-with-eleventy/protected-page.png", "Protected Page", "800" %}
+{% img {src: "build-website-with-eleventy/protected-page.png", alt: "Protected Page", header: "800"} %}
 
 ## Learn more about working with 11ty
 
-11ty is an excellent tool for building static websites using several different templating languages. Together with Okta, you can create secure static sites easily and quickly.
+11ty is an excellent tool for building static websites using several different templating languages. Together with Okta, you can create secure static sites easily and quickly.  
 
 In this article, you learned how to write static pages with HTML and Markdown and use 11ty to convert pages into a static site. Then you saw how to create a page under authentication and protect it using Okta's Sign-In Widget. Finally, I showed how you can use 11ty's layout feature to streamline your coding experience.
 

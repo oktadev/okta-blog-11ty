@@ -43,7 +43,7 @@ And once you have a SCIM-compliant integration with Okta, we invite you to [Okta
 ## How to submit your SCIM integration to the Okta Integration Network (OIN)
 Here is a video walkthrough on creating your SCIM provisioning instance for OIN testing and submission.
 
-{% youtube xbX0Kxi9wik %}
+{% youtube "xbX0Kxi9wik" %}
 
 **Prerequisites**
 - [Okta Integrator Free Plan](https://developer.okta.com/signup/)

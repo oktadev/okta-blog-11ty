@@ -17,7 +17,7 @@ The Okta Workforce Identity Developer Podcast returns with an exploration of our
 
 ## Watch on the OktaDev YouTube channel
 
-{% youtube ADnxvCYLL9A %}
+{% youtube "ADnxvCYLL9A" %}
 
 You can find the source of the Okta PowerShell Module, and documentation in the README, [on GitHub](https://github.com/okta/okta-powershell-cli). 
 

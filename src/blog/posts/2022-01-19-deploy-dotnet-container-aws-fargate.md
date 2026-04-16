@@ -218,13 +218,13 @@ dotnet new page -n Chat
 Edit **Pages/Shared/\_Layout.cshtml** and modify the second nav item from this:
 
 ```html
-<a>Privacy</a>
+<a class="nav-link text-dark" asp-area asp-page="/Privacy">Privacy</a>
 ```
 
 To this:
 
 ```html
-<a>Chat</a>
+<a class="nav-link text-dark" asp-area asp-page="/Chat">Chat</a>
 ```
 
 Now, if you run the `dotnet run` command or run the application from Visual Studio, you should be able to navigate to the chat page with the heading **"Chat"**. Make sure that it runs successfully before moving on to the next step.
@@ -265,7 +265,7 @@ Now add a **.dockerignore** file with the below content so that they are not cop
 
 If you use Visual Studio, you'll now have the ability to debug right into a running container in your debug toolbar. If you press **F5** or click the play button, you'll run your app in a Docker Container.
 
-{% img "dotnet-aws-ecs-fargate/11-DebugDocker.PNG", "VS Docker debug", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/11-DebugDocker.PNG", alt: "VS Docker debug", header: "800"} %}
 
 If you are not using Visual Studio, run the following command to build and start the container.
 
@@ -513,11 +513,11 @@ Click **Create Repository**.
 
 For visibility settings, choose **Private** and name your repository. Then click **Create Repository** at the bottom of the wizard.
 
-{% img "dotnet-aws-ecs-fargate/16-reponaming.png", "AWS Create repo", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/16-reponaming.png", alt: "AWS Create repo", header: "800"} %}
 
 Navigate to **okta-chat** and click **View push commands**. This has all the steps you'll need to build and push your image to ECR.
 
-{% img "dotnet-aws-ecs-fargate/17-PushCommands.png", "Push commands", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/17-PushCommands.png", alt: "Push commands", header: "800"} %}
 
 Follow the steps and push the images to ECR. Make sure to pass `--build-arg CERT_PASSWORD=mypass123` to the `docker build` command like below.
 
@@ -527,7 +527,7 @@ docker build --build-arg CERT_PASSWORD=mypass123 -t okta-chat .
 
 Select the copy button in the URI column next to your image and save that for later. This is the path to your image.
 
-{% img "dotnet-aws-ecs-fargate/18-oktaChatRepo.png", "AWS save URI", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/18-oktaChatRepo.png", alt: "AWS save URI", header: "800"} %}
 
 ### Set up the ECS Fargate cluster
 
@@ -537,7 +537,7 @@ On the left menu, click **Clusters** under **Amazon ECS**, then click the **Crea
 
 Click **Networking Only** > **Next step** from the options.
 
-{% img "dotnet-aws-ecs-fargate/19-NetworkOnly.PNG", "AWS Networking Only", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/19-NetworkOnly.PNG", alt: "AWS Networking Only", header: "800"} %}
 
 I named my cluster "okta-test", name yours as you see fit, and click **Create** on the following screen. Then click **View Cluster**.
 
@@ -547,7 +547,7 @@ Click **Task Definitions** on the left menu and click **Create new Task Definiti
 
 For launch type, select **FARGATE** and click **Next step**.
 
-{% img "dotnet-aws-ecs-fargate/20-LaunchType.PNG", "Fargate launch type", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/20-LaunchType.PNG", alt: "Fargate launch type", header: "800"} %}
 
 For the **Task Definition Name**, I named mine **okta-chat**.
 
@@ -556,7 +556,7 @@ Set the **Task CPU** to 0.25 vCPU.
 
 .NET Core applications are very efficient, as are containers. For many applications, you'll find you can serve many requests with smaller boxes than you might expect.
 
-{% img "dotnet-aws-ecs-fargate/21-TaskSize.PNG", "Task size", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/21-TaskSize.PNG", alt: "Task size", header: "800"} %}
 
 Leave other options unchanged.
 
@@ -568,7 +568,7 @@ For the **Image**, you'll need the path you copied from the ECR repository earli
 
 Set the soft limit to 512, and add ports 80 and 443.
 
-{% img "dotnet-aws-ecs-fargate/22-AddContainer.PNG", "Add container ports", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/22-AddContainer.PNG", alt: "Add container ports", header: "800"} %}
 
 Scroll down to the **ENVIRONMENT** section and add the following key-value pairs:
 
@@ -579,33 +579,33 @@ ASPNETCORE_Kestrel__Certificates__Default__Password="mypass123"
 ASPNETCORE_Kestrel__Certificates__Default__Path=./aspnetapp.pfx
 ```
 
-{% img "dotnet-aws-ecs-fargate/27-add-env-vars.png", "Run new task", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/27-add-env-vars.png", alt: "Run new task", header: "800"} %}
 
 Click **Add** at the bottom of the pop-up. Now click **Create** at the bottom of the page. Go back to your cluster, click on the **Tasks** tab, and click **Run new Task**.
 
 > **Note**: Here's a recommendation: Create services instead of tasks for production to take full advantage of the elastic scaling capabilities of ECS. I'm using tasks directly for the simplicity of the demo. When using an ALB (application load balancer) to route traffic to the application, use of services is also required.
 
-{% img "dotnet-aws-ecs-fargate/23-RunNewTask.PNG", "Run new task", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/23-RunNewTask.PNG", alt: "Run new task", header: "800"} %}
 
 Select **FARGATE** as **Launch type**.
 
 Select your default VPC and Subnets under **VPC and security groups**.
 
-{% img "dotnet-aws-ecs-fargate/24-TaskSettings.png", "Task settings", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/24-TaskSettings.png", alt: "Task settings", header: "800"} %}
 
 Click the **Edit** button next to the **security groups**. Click on **Add rule** to add a new inbound rule for HTTPS port 443. Click **Save** on the pop-up.
 
-{% img "dotnet-aws-ecs-fargate/28-security-group.png", "Task settings", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/28-security-group.png", alt: "Task settings", header: "800"} %}
 
 Now, click **Run Task**.
 
 You'll be taken back to your cluster. Select the task you created by clicking its ID. Make a note of its public IP; you'll need that to adjust your Okta application settings.
 
-{% img "dotnet-aws-ecs-fargate/25-RunningTask.png", "Running task", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/25-RunningTask.png", alt: "Running task", header: "800"} %}
 
 In your Okta Developer Portal, go to **Applications** > **Applications** and click the application's name you created using the CLI. Edit the **General Settings** and add URI for **Sign-in redirect URIs** and **Sign-out redirect URIs** using the IP address from your running task as shown below:
 
-{% img "dotnet-aws-ecs-fargate/26-update-okta.png", "Update Okta", "800" %}
+{% img {src: "dotnet-aws-ecs-fargate/26-update-okta.png", alt: "Update Okta", header: "800"} %}
 
 Now, if you navigate to `https://YOUR_FARGET_TASK_PUBLIC_IP`, you'll see you are the proud owner of a fully functional chat application, secured with Okta, running in an ECS Fargate container.
 

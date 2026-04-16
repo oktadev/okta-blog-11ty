@@ -31,7 +31,7 @@ In this workshop, you will be wearing the hat of a SaaS developer who will up-le
 Today, we'll walk through adding OIDC to our Todo sample application. If you want to jump to the completed project, you can find it in the [oidc-workshop-complete](https://github.com/oktadev/okta-enterprise-ready-workshops/tree/oidc-workshop-complete) GitHub repository.
 
 For an in-depth walkthrough of developing and troubleshooting the code in this workshop, follow along on with the video: 
-{% youtube -gwgEAa4TkU %}
+{% youtube "-gwgEAa4TkU" %}
 
 [[toc]]
 
@@ -151,7 +151,7 @@ To handle both OIDC and non-OIDC users, the app should first prompt for the user
 The first change in `apps/todo-app/src/app/components/signin.tsx` is hiding the password field when the page is first loaded. Find the `div` containing the password, give it an identifier, and set it to be hidden by default: 
 
 ```html
-<div id: "password-field", className: "mb-6" hidden>
+<div id="password-field" className="mb-6" hidden>
 ```
 
 ### Submit the email address to server

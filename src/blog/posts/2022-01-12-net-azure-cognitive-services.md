@@ -6,8 +6,8 @@ communities: [.net]
 description: "This tutorial shows you how to call Azure Cognitive Services to verify faces and store profiles pics in Azure Storage in a .NET MVC app."
 tags: [dotnet, dotnetcore, csharp, aspnet, aspnetcore, dotnet5, azure]
 tweets:
-  - "Snap a selfie! 📸  Analyze and detect faces using #azure cognitive services in this #dotnet app!"
-  - "Are you who you say you are? Analyze and detect faces using #azure cognitive services in this #dotnet app! 💻"
+- "Snap a selfie! 📸  Analyze and detect faces using #azure cognitive services in this #dotnet app!" 
+- "Are you who you say you are? Analyze and detect faces using #azure cognitive services in this #dotnet app! 💻"
 image: net-azure-cognitive-services/azure-cognitive-services-social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-dotnet-azure-cognitive-services-example
@@ -19,19 +19,18 @@ In this article, you will learn how to use the Vision [Face API](https://docs.mi
 
 At the end of this post, you'll be able to upload a profile picture in your app and get information about image error conditions, such as when zero or more than one face is detected or when your facial features don't match a new picture.
 
-{% img "net-azure-cognitive-services/final.jpg", "Final project with user profile info and a profile picture.", "800" %}
+{% img {src: "net-azure-cognitive-services/final.jpg", alt: "Final project with user profile info and a profile picture.", header: "800"} %}
 
-{% img "net-azure-cognitive-services/errors.jpg", "Two error screenclips. One showing three faces detected instead of one, and the other with an unrecognized facial features.", "800" %}
+{% img {src: "net-azure-cognitive-services/errors.jpg", alt: "Two error screenclips. One showing three faces detected instead of one, and the other with an unrecognized facial features.", header: "800"} %}
 
 [[toc]]
 
 **Prerequisites**
-
-- Basic knowledge of C#
-- [.NET 5.0 runtime and SDK](https://dotnet.microsoft.com/en-us/download/dotnet/5.0), which includes the .NET CLI
-- Your favorite IDE that supports .NET projects, such as [Visual Studio](https://visualstudio.microsoft.com/downloads/), [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/), [VS Code](https://code.visualstudio.com/), or [JetBrains Rider](https://www.jetbrains.com/rider/)
-- [Okta CLI](https://cli.okta.com/)
-- A [Microsoft Azure Account](https://azure.microsoft.com/en-us/free/) (Azure free account)
+* Basic knowledge of C#
+* [.NET 5.0 runtime and SDK](https://dotnet.microsoft.com/en-us/download/dotnet/5.0), which includes the .NET CLI
+* Your favorite IDE that supports .NET projects, such as [Visual Studio](https://visualstudio.microsoft.com/downloads/), [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/), [VS Code](https://code.visualstudio.com/), or [JetBrains Rider](https://www.jetbrains.com/rider/)
+* [Okta CLI](https://cli.okta.com/)
+* A [Microsoft Azure Account](https://azure.microsoft.com/en-us/free/) (Azure free account)
 
 {% include "integrator-org-warning.njk" %}
 
@@ -70,9 +69,9 @@ Open `appsettings.Development.json` to add a new section, `Okta`, with authentic
 {
   "Logging": {
     "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
+    "Default": "Information",
+    "Microsoft": "Warning",
+    "Microsoft.Hosting.Lifetime": "Information"
     }
   },
   "Okta": {
@@ -157,37 +156,36 @@ namespace OktaProfilePicture.Controllers
 We'll create an empty view for the `Account` controller as a placeholder. Create a new folder named `Account` in the `Views` directory. The `Account` folder is where the views to display and edit your profile will go. Add the file `Profile.cshtml` to the new `Account` folder, and paste in the following code.
 
 {% raw %}
-
 ```html
-@{ ViewData["Title"] = "User Profile"; }
+@{
+    ViewData["Title"] = "User Profile";
+}
 
 <h1>Your Profile</h1>
 ```
-
 {% endraw %}
 
 Next we can update the initial view to add login and logout. Open `Views/Shared/_Layout.cshtml` and add the following markup above the `<ul class="navbar-nav flex-grow-1">` tag:
 
 {% raw %}
-
 ```html
-@if (User.Identity.IsAuthenticated) {
-<ul class="nav navbar-nav navbar-right">
-  <li><p class="navbar-text">Hello, @User.Identity.Name</p></li>
-  @*
-  <li><a class="nav-link" asp-controller="Account" asp-action="Profile" id="profile-button">Profile</a></li>
-  *@
-  <li>
-    <form class="form-inline" asp-controller="Account" asp-action="LogOut" method="post">
-      <button type="submit" class="nav-link btn btn-link text-dark" id="logout-button">Sign Out</button>
-    </form>
-  </li>
-</ul>
-} else {
-<a>@Html.ActionLink("Sign In", "LogIn", "Account")</a>
+@if (User.Identity.IsAuthenticated)
+{
+  <ul class="nav navbar-nav navbar-right">
+    <li><p class="navbar-text">Hello, @User.Identity.Name</p></li>
+    @* <li><a class="nav-link" asp-controller="Account" asp-action="Profile" id="profile-button">Profile</a></li> *@
+    <li>
+      <form class="form-inline" asp-controller="Account" asp-action="LogOut" method="post">
+        <button type="submit" class="nav-link btn btn-link text-dark" id="logout-button">Sign Out</button>
+      </form>
+    </li>
+  </ul>
+}
+else
+{
+  <a>@Html.ActionLink("Sign In", "LogIn", "Account")</a>
 }
 ```
-
 {% endraw %}
 
 The parent `div` for the element we added needs some updates to the styles. Replace the
@@ -197,6 +195,7 @@ The parent `div` for the element we added needs some updates to the styles. Repl
 with
 
 `<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">`
+
 
 If you run the app now, you can log in and log out, but there's nothing to see yet.
 
@@ -210,7 +209,7 @@ dotnet add OktaProfilePicture package Okta.Sdk --version 5.3.1
 
 The Okta management SDK requires an API token that we manually generate. Log in to the [Okta admin dashboard](https://developer.okta.com/login/). Then navigate to **Security** > **API** > **Tokens** tab and press the **Create Token** button. Enter a name for the token (I will use "OktaProfilePicture") and press the **Create Token** button to finish creating the token. Make sure you copy the token value because you won't be able to view it again:
 
-{% img "net-azure-cognitive-services/token.jpg", "Screenshot of Okta dashboard to create a token", "800" %}
+{% img {src: "net-azure-cognitive-services/token.jpg", alt: "Screenshot of Okta dashboard to create a token", header: "800"} %}
 
 Now we can add the token to the settings file. Open `appSettings.Development.json`, and add a new property named `ApiToken` inside the Okta section. Add your token value. Your settings file should look like this.
 
@@ -218,9 +217,9 @@ Now we can add the token to the settings file. Open `appSettings.Development.jso
 {
   "Logging": {
     "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
+    "Default": "Information",
+    "Microsoft": "Warning",
+    "Microsoft.Hosting.Lifetime": "Information"
     }
   },
   "Okta": {
@@ -230,6 +229,7 @@ Now we can add the token to the settings file. Open `appSettings.Development.jso
     "ApiToken": "{token}"
   }
 }
+
 ```
 
 We want to add the Okta management SDK client to the Dependency Injection (DI) system to use it in the controller. Open `Startup.cs` and add the following code to `ConfigureServices` method before the method call `services.AddControllersWithViews();`.
@@ -293,7 +293,6 @@ We want to protect the `Profile` method against non-authenticated calls. With th
 Let's update the profile view with user information. Open `Views/Account/Profile.cshtml` and replace the existing code displaying your user info and a profile pic. You won't have a profile pic to show yet, but that's coming up soon!
 
 {% raw %}
-
 ```html
 @model Okta.Sdk.IUser
 
@@ -329,14 +328,13 @@ Let's update the profile view with user information. Open `Views/Account/Profile
   </div>
 </div>
 ```
-
 {% endraw %}
 
 Now that we have a `Profile` method, we can update the main navbar. Open `Views/Shared/_Layout.cshtml` and uncomment the line of code that links to the "Profile" view.
 
 You can view your profile, but the edit button doesn't work yet.
 
-{% img "net-azure-cognitive-services/profile-no-image.jpg", "Profile view displaying name, email, city, and country. There is no picture.", "800" %}
+{% img {src: "net-azure-cognitive-services/profile-no-image.jpg", alt: "Profile view displaying name, email, city, and country. There is no picture.", header: "800"} %}
 
 ## Edit your Okta profile
 
@@ -421,9 +419,12 @@ public async Task<IActionResult> EditProfile(UserProfileViewModel profile)
 Let's add the view for editing. Create a new view named `EditProfile.cshtml` in `Views/Account` folder. Copy the code below and replace the contents of `EditProfile.cshtml` with it.
 
 {% raw %}
-
 ```html
-@model UserProfileViewModel @{ ViewData["Title"] = "Edit Profile"; }
+@model UserProfileViewModel
+
+@{
+  ViewData["Title"] = "Edit Profile";
+}
 
 <h1>Edit Profile</h1>
 
@@ -459,7 +460,7 @@ Let's add the view for editing. Create a new view named `EditProfile.cshtml` in 
       <div class="form-group">
         <label asp-for="ProfileImage" class="control-label"></label>
         <div class="custom-file">
-          <input asp-for="ProfileImage" class="custom-file-input" id="customFile" />
+          <input asp-for="ProfileImage" class="custom-file-input" id="customFile">
           <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
         <span asp-validation-for="ProfileImage" class="text-danger"></span>
@@ -472,28 +473,28 @@ Let's add the view for editing. Create a new view named `EditProfile.cshtml` in 
 </div>
 
 <div>
-  <a asp-action="Profile">Back to Profile</a>
+    <a asp-action="Profile">Back to Profile</a>
 </div>
 
-@section Scripts { @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script type="text/javascript">
-  const fileInput = document.querySelector(".custom-file-input");
-  fileInput.addEventListener("change", (event) => {
-    const fileName = event.target.value.split("\\").pop();
-    document.querySelector(".custom-file-label").textContent = fileName;
-  });
-</script>
+  <script type="text/javascript">
+    const fileInput = document.querySelector('.custom-file-input');
+    fileInput.addEventListener('change', (event) => {
+      const fileName = event.target.value.split("\\").pop();
+      document.querySelector('.custom-file-label').textContent = fileName;
+    });
+  </script>
 }
 ```
-
 {% endraw %}
 
 Lastly, open `Views/Account/Profile.cshtml` to uncomment a line of code towards the bottom of the file. Uncomment the line that displays a button to edit profile - the line with `<a class="btn btn-primary" role="button" asp-action="EditProfile">EditProfile</a>`.
 
 Now you should be able to edit your profile information except for your profile picture. Next we'll make it so your app persists your profile picture.
 
-{% img "net-azure-cognitive-services/edit-profile.jpg", "Edit profile form field.", "800" %}
+{% img {src: "net-azure-cognitive-services/edit-profile.jpg", alt: "Edit profile form field.", header: "800"} %}
 
 ## Add Azure Storage
 
@@ -504,34 +505,33 @@ First, we'll create the custom attributes in Okta using the Okta admin dashboard
 Log in to the [Okta admin dashboard](https://developer.okta.com/login/). Then navigate to **Directory** > **Profile Editor**. You should see an item named **User (default)** in the list, which is Okta's default user profile template. Select **User (default)** to open the **Profile Editor**. Press the **+Add Attribute** button.
 
 You'll add two string attributes, `profileImageKey` and `personId`:
-
 1. Use "Profile Image Key" as the display name and `profileImageKey` as the variable name.
 2. Use "Person Id" as the display name for the second attribute and `personId` as the variable name.
 
 See the image below for the "Profile Image Key" attribute inputs.
 
-{% img "net-azure-cognitive-services/custom-attribute.jpg", "Custom attribute settings showing display and variable name for 'Profile Image Key'", "800" %}
+{% img {src: "net-azure-cognitive-services/custom-attribute.jpg", alt: "Custom attribute settings showing display and variable name for 'Profile Image Key'", header: "800"} %}
 
 Create another attribute named `personId`. If you look at the "User (default)" user type attribute list, you should see your two new attributes listed at the bottom.
 
-{% img "net-azure-cognitive-services/all-attributes.jpg", "User (default) user type list of attributes with the two new attributes for 'Profile Image Key' and 'Person ID'.", "800" %}
+{% img {src: "net-azure-cognitive-services/all-attributes.jpg", alt: "User (default) user type list of attributes with the two new attributes for 'Profile Image Key' and 'Person ID'.", header: "800"} %}
 
 Next, we'll create Azure Storage. If you don't already have an Azure subscription, [make a free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin. We'll walk through the steps using the Azure Portal, but if you are an Azure pro, feel free to use the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) or [Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/?view=azps-7.0.0).
 
 Once you have an Azure subscription, open the [Azure Portal](https://portal.azure.com). Open the menu by pressing the _hamburger menu_ on the left, and select **Storage accounts**. Press **+Create** to create a storage account. In the **Create a storage account** view, create a Resource Group if you don't already have one for test projects. I named my Resource Group "OktaDemo". Enter `oktaprofilepicture` as the storage name, select a region (Azure's default selection is fine here), then select **Standard** performance and **Locally-redundant storage (LRS)** for redundancy. Press the **Review + create** button at the bottom as the default options for the remaining selections are acceptable. Press **Create** to complete creating the storage account.
 
-{% img "net-azure-cognitive-services/azure-storage.jpg", "Settings to create an Azure storage account.", "800" %}
+{% img {src: "net-azure-cognitive-services/azure-storage.jpg", alt: "Settings to create an Azure storage account.", header: "800"} %}
 
 Next, we need to get the access keys for integrating the storage account SDK in the app. In the `oktaprofilepicture` storage account, open **Access keys** below the **Security + networking** section in the nav menu. Then press **Show keys** and copy the first **Connection string** field. Now we can move to the code!
 
-{% img "net-azure-cognitive-services/azure-storage-access-keys.jpg", "Visual representation of steps to get connection string.", "800" %}
+{% img {src: "net-azure-cognitive-services/azure-storage-access-keys.jpg", alt: "Visual representation of steps to get connection string.", header: "800"} %}
 
 We're going to add a new section for Azure resources to the `appsettings.Development.json` file in the solution to connect to the Azure resource. Open `appsettings.Development.json` and add a new key named "Azure" with a property called "BlobStorageConnectionString" like the following code snippet.
 
 ```json
 {
   ... Logging and Okta sections here,
-
+  
   "Azure": {
     "BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=oktaprofilepicture;AccountKey=eWlJUj.....A==;EndpointSuffix=core.windows.net"
   }
@@ -568,7 +568,7 @@ public AccountController(OktaClient oktaClient, BlobServiceClient blobServiceCli
 }
 ```
 
-Update the `Profile()` and `EditProfile(UserProfileViewModel profile)` methods to upload and view the blob container image. First, let's update the `Profile()` method.
+Update the `Profile()` and `EditProfile(UserProfileViewModel profile)` methods to upload and view the blob container image. First, let's update the `Profile()` method. 
 
 The blob container's access level is private, so we need to generate a [shared access signature](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview) that creates a read-only, temporary URL that we can use in the view. We'll also use the custom attribute `profileImageKey` to retrieve an existing image if one exists.
 
@@ -648,14 +648,14 @@ Finally, we get to check out Azure Cognitive Services for facial analysis. We'll
 
 First, we need to create the Azure resource and get the access keys. Open the [Cognitive Services Face](https://portal.azure.com/#create/Microsoft.CognitiveServicesFace) resource page in the Azure portal. Press **+ Create** to open the **Create Face** view. Select "OktaBlog" as the **Resource group** (or a Resource group of your choosing) and name the instance "OktaProfilePicture". Since this is for demo purposes, I used the "Free F0" pricing tier. Press **Review + create** to create the resource. Open "OktaProfilePicture" Face service instance and open **Keys and Endpoint**. You will need both the key and the **Endpoint**.
 
-{% img "net-azure-cognitive-services/azure-face-account.jpg", "Settings to create an Azure Cognitive Services Face account.", "800" %}
+{% img {src: "net-azure-cognitive-services/azure-face-account.jpg", alt: "Settings to create an Azure Cognitive Services Face account.", header: "800"} %}
 
 Open the `appsettings.Development.json` file and add two new fields in the `Azure` section named `SubscriptionKey` and `FaceClientEndpoint`. Copy and paste the key and endpoint values from the Azure **Keys and Endpoint** view. The `Azure` section of your `appsettings.Development.json` will now look like the following.
 
 ```json
 {
   ... Logging and Okta sections here,
-
+  
   "Azure": {
     "BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=oktaprofilepicture;AccountKey=eWlJUj.....A==;EndpointSuffix=core.windows.net",
     "SubscriptionKey": "{FaceResourceKey}",
@@ -729,7 +729,6 @@ Now, if you try running the app and upload an image with you and your friends, y
 ## Perform facial analysis
 
 Next, let's add the facial analysis. We need to handle two scenarios.
-
 1. You're adding a profile picture for the first time — this sets the baseline for the facial features to use in future comparisons
 2. You're updating your profile picture — facial analysis runs against the face in this image and compares it to the baseline
 

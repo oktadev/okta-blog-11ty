@@ -82,7 +82,7 @@ We now have a web app with basic authentication capabilities. Let's kick up auth
 
 Before we jump into Step Up Authentication, let's take a step back and cover how authentication works in an application. In most circumstances, you'd require authentication before allowing the user to navigate anywhere within the app. You can prevent them from entering a URL:
 
-{% img "stepup-authentication/initial-flow.svg", "Sequence diagram where you want to view transactions, your app stops you because you aren't authenticated, you're redirected to Okta to sign in with username and password, Okta responds with your access and id tokens so you can view the transactions.", "800" %}
+{% img {src: "stepup-authentication/initial-flow.svg", alt: "Sequence diagram where you want to view transactions, your app stops you because you aren't authenticated, you're redirected to Okta to sign in with username and password, Okta responds with your access and id tokens so you can view the transactions.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
@@ -98,7 +98,7 @@ sequenceDiagram
 
 The Step Up Authentication Challenge idea builds upon the foundation of OAuth 2.0 and OpenID Connect (OIDC). Your app enforces authentication assurances from the user for different actions. Authentication and identity assurance determine the certainty that the user is who they say they are. The specification supports defining authentication strength and recency and responds with a standard error `insufficient_user_authentication`. Let's say the authenticated user now wants to make a new transaction. Creating a new transaction is a sensitive action and requires elevated authentication assurances:
 
-{% img "stepup-authentication/elevated-flow.svg", "Sequence diagram where you want to make a new transaction, your app stops you because it requires elevated authentication, you're redirected to Okta to sign in with elevated authentication, Okta responds with your access and id tokens so you can make a new transactions.", "800" %}
+{% img {src: "stepup-authentication/elevated-flow.svg", alt: "Sequence diagram where you want to make a new transaction, your app stops you because it requires elevated authentication, you're redirected to Okta to sign in with elevated authentication, Okta responds with your access and id tokens so you can make a new transactions.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
@@ -113,7 +113,7 @@ sequenceDiagram
 
 Your app needs to verify you have the correct authentication assurances for your requested action. Your frontend app's OIDC library evaluates your ID token for authenticated state and the value of a specific claim called Authentication Context Class Reference (ACR). The `acr` claim value contains the client's authentication assurance level. If the ACR claim value doesn't meet the required assurance profile, the client requests the correct level using the `acr_values` parameter when communicating with Okta. Let's take another look at the previous diagram, this time incorporating `acr` and `acr_values` properties:
 
-{% img "stepup-authentication/evaluate-acr-flow.svg", "Sequence diagram where you want to make a new transaction, your app checks your ID token's acr claim and denies the resource because the action requires a different acr claim value, you're redirected to Okta to sign in with elevated authentication by passing in the required authentication level using the acr_values property, Okta responds with your access and id tokens so you can make a new transactions.", "800" %}
+{% img {src: "stepup-authentication/evaluate-acr-flow.svg", alt: "Sequence diagram where you want to make a new transaction, your app checks your ID token's acr claim and denies the resource because the action requires a different acr claim value, you're redirected to Okta to sign in with elevated authentication by passing in the required authentication level using the acr_values property, Okta responds with your access and id tokens so you can make a new transactions.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
@@ -193,7 +193,7 @@ You may wonder why checking the `acr` claim in your API is necessary when you ha
 
 The flow works like this:
 
-{% img "stepup-authentication/api-response-flow.svg", "Sequence diagram where you make an API call to a resource server, the resource server checks the access token's acr claim and denies the resource because the action requires elevated acr value. The API returns the insufficient_user_authentication error. The app redirects you to Okta to sign in with elevated authentication by passing in the required authentication level using the acr_values property. Okta responds with new access and id tokens. The app re-requests the resource from the resource server using the new access token.", "800" %}
+{% img {src: "stepup-authentication/api-response-flow.svg", alt: "Sequence diagram where you make an API call to a resource server, the resource server checks the access token's acr claim and denies the resource because the action requires elevated acr value. The API returns the insufficient_user_authentication error. The app redirects you to Okta to sign in with elevated authentication by passing in the required authentication level using the acr_values property. Okta responds with new access and id tokens. The app re-requests the resource from the resource server using the new access token.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
