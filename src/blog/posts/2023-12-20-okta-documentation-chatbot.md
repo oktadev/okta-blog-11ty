@@ -16,7 +16,7 @@ changelog:
 
 In today's fast-paced world of technology, developers must navigate through detailed API documentation to integrate with software solutions. As a Developer Support Intern at Okta, I noticed developers underutilizing [Okta's Developer Documentation](https://developer.okta.com/). To help them benefit from the wealth of information in these docs, I was inspired to build a tool using OpenAI. Leveraging ChatGPT, I built ✨Oktanaut✨, a versatile Python chatbot running on Jupyter Notebook that makes access to information on Okta's Developer Documentation simple and straightforward.
 
-{% img {src: "okta-documentation-chatbot/oktadevforumsdk.jpeg", alt: "OktaDev Forum and SDK logo"} %} 
+{% img "okta-documentation-chatbot/oktadevforumsdk.jpeg", "OktaDev Forum and SDK logo" %} 
 – Image source: <cite>[Okta Developer GitHub](https://raw.githubusercontent.com/oktadev/.github/main/images/okta-dev-header.png)</cite> 
 
 ## Evolution of Oktanaut, a Python Chatbot 
@@ -61,7 +61,7 @@ Key terms to note before diving into the Python code:
 ```py
 def continue_conversation(messages, temperature=0):
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model: "gpt-3.5-turbo",
         messages=messages,
         temperature=temperature,
     )
@@ -95,8 +95,8 @@ pn.extension()
 
 panels = []
 
-client_prompt = pn.widgets.TextInput(value="Hi", placeholder='Enter your questions here...')
-button_conversation = pn.widgets.Button(name="Chat with Oktanaut!")
+client_prompt = pn.widgets.TextInput(value: "Hi", placeholder='Enter your questions here...')
+button_conversation = pn.widgets.Button(name: "Chat with Oktanaut!")
 
 interactive_conversation = pn.bind(add_prompts_conversation, button_conversation)
 
@@ -125,7 +125,7 @@ These packages work with the GPT-3.5 model, create the web interface, and manage
 
 3. Create an OpenAI account and follow these [instructions](https://help.openai.com/en/articles/4936850-where-do-i-find-my-api-key) to obtain an API Key. On line 161 of `GPTChatbot.ipynb`, replace the API Key code snippet with your API Key. ChatGPT used to offer free credits to use, but it now costs five or more dollars to purchase API usage.
 
-{% img {src: "okta-documentation-chatbot/openai-api-key.jpeg", alt: "Image with an arrow pointing to where the OpenAI API key should be added in the code."} %}
+{% img "okta-documentation-chatbot/openai-api-key.jpeg", "Image with an arrow pointing to where the OpenAI API key should be added in the code." %}
 
 4. Download the Okta Developer Documentation files from [here](https://github.com/oktadev/okta-python-chatbot-example/tree/tar-file), and extract the archive. Upload the archive contents to a folder named 'oktanaut' in your Google Drive.  
  Make sure the training files are in the `oktanaut` folder, not in an additional folder within it. If you change the name of the folder where you keep the files in your Google Drive, update line 167 of `GPTChatbot.ipynb` to the correct path.  Alternatively, you can download the files directly from the Okta Developer Documentation Repository, or supply your own custom training data.
@@ -144,7 +144,7 @@ These packages work with the GPT-3.5 model, create the web interface, and manage
 
 11. To end the session, say "Thank you" or leave the web page. 
 
-{% img {src: "okta-documentation-chatbot/openai-oidc.jpeg", alt: "Image of Oktanaut's answer to, 'What is OIDC?'"} %}
+{% img "okta-documentation-chatbot/openai-oidc.jpeg", "Image of Oktanaut's answer to, 'What is OIDC?'" %}
 
 ## Further Python Chatbot Improvements
 I am enthusiastic about enhancing Oktanaut's training by incorporating information from the Okta Dev Forum and Okta's Software Developer Kits (SDKs). In the future, I hope to collaborate with the Okta Developer Documentation team to improve information gaps in the documentation. I also want to add a feature to automatically update to the latest version of the Okta Developer Documentation so that the data Oktanaut references is up-to-date and reliable.

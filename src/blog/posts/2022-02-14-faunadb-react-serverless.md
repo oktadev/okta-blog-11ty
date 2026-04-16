@@ -1,14 +1,14 @@
 ---
 title: "Create a Secure Serverless Application with FaunaDB"
-author: nickolas-fisher 
-by: contractor 
+author: nickolas-fisher
+by: contractor
 communities: [javascript]
 description: "Use Fauna and Okta together so you never have to worry about database provisioning, scaling, sharding, or identity."
 tags: [javascript]
 tweets:
-- "Did you know you can secure your @fauna database with @okta? This tutorial shows you how!"
-- "Learn how to use React and FaunaDB securely in this quick example."
-- "Serverless apps made easy with @fauna and @okta!"
+  - "Did you know you can secure your @fauna database with @okta? This tutorial shows you how!"
+  - "Learn how to use React and FaunaDB securely in this quick example."
+  - "Serverless apps made easy with @fauna and @okta!"
 image: fauna-react/fauna-react.jpg
 type: conversion
 github: https://github.com/oktadev/okta-faunadb-react-example
@@ -34,15 +34,15 @@ Once you have created the application you will need to set up a custom authoriza
 
 Run `okta login` and open the resulting URL in your favorite browser. Log in and navigate to **Security** > **API**. Select **Add Authorization Server** and give it a meaningful name and description. You can set your audience to anything (it cannot be left blank), but you will need to change this after setting up your FaunaDB database.
 
-{% img {src: "fauna-react/add-authz-server.png", alt: "Add Authorization Server", header: "800"} %}
+{% img "fauna-react/add-authz-server.png", "Add Authorization Server", "800" %}
 
 Next, click on **Access Policies** > **Add Policy**. Name it "Default" and give it a description.
 
-{% img {src: "fauna-react/add-policy.png", alt: "Add Policy", header: "648"} %}
+{% img "fauna-react/add-policy.png", "Add Policy", "648" %}
 
-Press **Create Policy**  and then click **Add Rule**. Name the rule "Default Rule" and make sure  **Authorization Code** is selected in the *Grant Type* section. You can leave the rest of the rule as it is, but I encourage you to review these settings should you need to change them in the future.
+Press **Create Policy** and then click **Add Rule**. Name the rule "Default Rule" and make sure **Authorization Code** is selected in the _Grant Type_ section. You can leave the rest of the rule as it is, but I encourage you to review these settings should you need to change them in the future.
 
-{% img {src: "fauna-react/add-rule.png", alt: "Add Rule", header: "669"} %}
+{% img "fauna-react/add-rule.png", "Add Rule", "669" %}
 
 Finally, return to the **Settings** tab and open the **Metadata URI** link. You will need the `jwks_uri` and `issuer` values from this page.
 
@@ -50,13 +50,13 @@ You can now create your Fauna database but leave the Okta Admin Console open as 
 
 ## Create a Fauna database
 
-Next, head over to [Fauna](https://fauna.com/) and sign up for a new account. After you've registered and authenticated, click on **Create Database** and name your database "Products". Select the **Classic** Region Group for this tutorial. Click on the **Use demo data** checkbox and click **Create**. Fauna will automatically build a new database for you with data collections for *customers*, *managers*, *orders*, *products*, and *stores*. You can click on any of these collections to see the same data behind them.
+Next, head over to [Fauna](https://fauna.com/) and sign up for a new account. After you've registered and authenticated, click on **Create Database** and name your database "Products". Select the **Classic** Region Group for this tutorial. Click on the **Use demo data** checkbox and click **Create**. Fauna will automatically build a new database for you with data collections for _customers_, _managers_, _orders_, _products_, and _stores_. You can click on any of these collections to see the same data behind them.
 
 Now you will need to add a new role to the database. Fauna requires that you assign a custom role to your provider. Under the **Security** tab, navigate to **Roles**. Click **New Role**. Name your role "User" and add the `products` collection to it. Give this role **Read** access. Click **Save** to save the changes.
 
-{% img {src: "fauna-react/new-role.png", alt: "Add a new role to Fauna", header: "800"} %}
+{% img "fauna-react/new-role.png", "Add a new role to Fauna", "800" %}
 
-Now you will want to list Okta as a registered provider for this database. Select the **Providers** tab and select **New Access Provider**. Name the new provider "Okta" and add the details for your *Issuer* and *JSON Web Key Secret URI* that you retrieved from Okta earlier. Add the `User` role to the provider and click **Save**. Now Fauna will accept the token from Okta and treat the user as though they are part of the `User` role, giving that user access to read the product's collection.
+Now you will want to list Okta as a registered provider for this database. Select the **Providers** tab and select **New Access Provider**. Name the new provider "Okta" and add the details for your _Issuer_ and _JSON Web Key Secret URI_ that you retrieved from Okta earlier. Add the `User` role to the provider and click **Save**. Now Fauna will accept the token from Okta and treat the user as though they are part of the `User` role, giving that user access to read the product's collection.
 
 Finally, under the **Providers** tab click the settings wheel next to Okta. Copy the **audience** URL from here and return to your Okta Admin Console. Under your authorization server click **Edit** and replace the placeholder audience value with the one you copied from Fauna.
 
@@ -94,18 +94,17 @@ REACT_APP_OKTA_APP_BASE_URL=http://localhost:3000
 Next, add a new file to your `src` directory called `AppWithRouterAccess.jsx`. Add the following code to it.
 
 ```jsx
-import React from 'react';
-import { Route, useHistory } from 'react-router-dom';
-import { Security, LoginCallback } from '@okta/okta-react';
-import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import React from "react";
+import { Route, useHistory } from "react-router-dom";
+import { Security, LoginCallback } from "@okta/okta-react";
+import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 
-import Home from './Pages/Home';
+import Home from "./Pages/Home";
 
 const AppWithRouterAccess = () => {
-  const issuer = process.env.REACT_APP_OKTA_URL_BASE + '/oauth2/' +
-    process.env.REACT_APP_OKTA_AUTHORIZATION_SERVER_ID;
+  const issuer = process.env.REACT_APP_OKTA_URL_BASE + "/oauth2/" + process.env.REACT_APP_OKTA_AUTHORIZATION_SERVER_ID;
   const clientId = process.env.REACT_APP_OKTA_CLIENTID;
-  const redirect = process.env.REACT_APP_OKTA_APP_BASE_URL + '/callback';
+  const redirect = process.env.REACT_APP_OKTA_APP_BASE_URL + "/callback";
 
   const oktaAuth = new OktaAuth({
     issuer: issuer,
@@ -116,13 +115,13 @@ const AppWithRouterAccess = () => {
   const history = useHistory();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
-    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+    history.replace(toRelativeUrl(originalUri || "/", window.location.origin));
   };
 
   return (
     <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-      <Route path='/' exact={true} component={Home}/>
-      <Route path='/callback' component={LoginCallback}/>
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/callback" component={LoginCallback} />
     </Security>
   );
 };
@@ -135,18 +134,18 @@ This file sets up your Okta authentication and wraps your routes with the `<Secu
 You will need to add it to your stock `App.js` file to make this file work. Open `src/App.js` and replace the code there with the following.
 
 ```jsx
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AppWithRouterAccess from './AppWithRouterAccess';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppWithRouterAccess from "./AppWithRouterAccess";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   return (
     <Router>
-      <AppWithRouterAccess/>
+      <AppWithRouterAccess />
     </Router>
   );
-}
+};
 
 export default App;
 ```
@@ -160,14 +159,14 @@ npm i react-bootstrap@2.1.2 bootstrap@5.1.3
 Add the pages and components that will bring your application to life. Then add two new folders to your `src` directory; `Components` and `Pages`. In the `Pages` directory, add a file called `Home.jsx` and put the following code in it.
 
 ```jsx
-import React, { Component } from 'react';
-import { Container } from 'react-bootstrap';
-import faunadb from 'faunadb';
+import React, { Component } from "react";
+import { Container } from "react-bootstrap";
+import faunadb from "faunadb";
 
-import { withOktaAuth } from '@okta/okta-react';
+import { withOktaAuth } from "@okta/okta-react";
 
-import Header from '../Components/Header';
-import Products from '../Components/Products';
+import Header from "../Components/Header";
+import Products from "../Components/Products";
 
 export default withOktaAuth(
   class Home extends Component {
@@ -189,20 +188,20 @@ export default withOktaAuth(
       });
 
       const client = new faunadb.Client({
-        domain: 'db.fauna.com',
+        domain: "db.fauna.com",
         secret: accessToken,
-        scheme: 'https',
+        scheme: "https",
       });
       const q = faunadb.query;
 
-      const {Documents, Collection} = q;
+      const { Documents, Collection } = q;
 
       client
         .query(
           q.Map(
-            q.Paginate(Documents(Collection('products'))),
-            q.Lambda((x) => q.Get(x))
-          )
+            q.Paginate(Documents(Collection("products"))),
+            q.Lambda((x) => q.Get(x)),
+          ),
         )
         .then((result) => {
           cb(null, result);
@@ -224,32 +223,19 @@ export default withOktaAuth(
     };
 
     componentDidMount = () => {
-      if (
-        this.props.authState?.isAuthenticated &&
-        !this.state.pendingProducts &&
-        !this.state.products
-      ) {
-        this.getProducts(
-          this.props.authState.accessToken.accessToken,
-          this.handleResult
-        );
+      if (this.props.authState?.isAuthenticated && !this.state.pendingProducts && !this.state.products) {
+        this.getProducts(this.props.authState.accessToken.accessToken, this.handleResult);
       }
     };
 
     render() {
       return (
         <Container>
-          <Header
-            authState={this.props.authState}
-            oktaAuth={this.props.oktaAuth}
-          ></Header>
-          <Products
-            authState={this.props.authState}
-            products={this.state.products}
-          ></Products>
+          <Header authState={this.props.authState} oktaAuth={this.props.oktaAuth}></Header>
+          <Products authState={this.props.authState} products={this.state.products}></Products>
 
-          <footer className='text-muted'>
-            <div className='container'>
+          <footer className="text-muted">
+            <div className="container">
               <p>A Small demo using Okta to authentication calls to FaunaDB</p>
               <p>By Nik Fisher</p>
             </div>
@@ -257,7 +243,7 @@ export default withOktaAuth(
         </Container>
       );
     }
-  }
+  },
 );
 ```
 
@@ -270,33 +256,41 @@ If the user is logged in but the data hasn't loaded from Fauna, you can display 
 Next, in your `Components` folder add a file named `Header.jsx`. Add the following code for it.
 
 ```jsx
-import React from 'react';
-import { Navbar, Nav, Form, Button } from 'react-bootstrap'
+import React from "react";
+import { Navbar, Nav, Form, Button } from "react-bootstrap";
 
-const Header = ({authState, oktaAuth}) => {
-
+const Header = ({ authState, oktaAuth }) => {
   if (authState?.isPending) {
     return <div>Loading...</div>;
   }
 
-  const button = authState?.isAuthenticated ?
-    <Button variant='secondary' onClick={() => {
-      oktaAuth.signOut('/');
-    }}>Logout</Button> :
-    <Button variant='secondary' onClick={() => {
-      oktaAuth.signInWithRedirect()
-    }}>Login</Button>
+  const button = authState?.isAuthenticated ? (
+    <Button
+      variant="secondary"
+      onClick={() => {
+        oktaAuth.signOut("/");
+      }}
+    >
+      Logout
+    </Button>
+  ) : (
+    <Button
+      variant="secondary"
+      onClick={() => {
+        oktaAuth.signInWithRedirect();
+      }}
+    >
+      Login
+    </Button>
+  );
 
   return (
-    <Navbar bg='light' expand='lg'>
-      <Navbar.Brand href='/'>Products with FaunaDB</Navbar.Brand>
-      <Navbar.Toggle aria-controls='basic-navbar-nav'/>
-      <Navbar.Collapse id='basic-navbar-nav'>
-        <Nav className='mr-auto'>
-        </Nav>
-        <Form className='d-flex'>
-          {button}
-        </Form>
+    <Navbar bg="light" expand="lg">
+      <Navbar.Brand href="/">Products with FaunaDB</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto"></Nav>
+        <Form className="d-flex">{button}</Form>
       </Navbar.Collapse>
     </Navbar>
   );
@@ -310,27 +304,22 @@ This file gives a home button for the user as well as a logout button for logged
 Finally, add a file for `Products.jsx` in your `Components` folder and add the following code.
 
 ```jsx
-import React from 'react';
+import React from "react";
 
-const Products = ({authState, products}) => {
+const Products = ({ authState, products }) => {
   if (!authState?.isAuthenticated) {
     return (
-      <div className='row'>
-        <div className='col-lg-12'>
-          <p>
-            Hey there, it looks like you aren't logged in yet. To log in, click
-            here.
-          </p>
+      <div className="row">
+        <div className="col-lg-12">
+          <p>Hey there, it looks like you aren't logged in yet. To log in, click here.</p>
         </div>
       </div>
     );
   } else if (!products) {
     return (
-      <div className='row'>
-        <div className='col-lg-12'>
-          <p>
-            Loading...
-          </p>
+      <div className="row">
+        <div className="col-lg-12">
+          <p>Loading...</p>
         </div>
       </div>
     );
@@ -338,29 +327,24 @@ const Products = ({authState, products}) => {
 
   return (
     <div>
-      <table className='table table-striped'>
+      <table className="table table-striped">
         <thead>
-        <tr>
-          <th>Product</th>
-          <th>Description</th>
-          <th>Price</th>
-        </tr>
+          <tr>
+            <th>Product</th>
+            <th>Description</th>
+            <th>Price</th>
+          </tr>
         </thead>
         <tbody>
-        {products.map((product, i) => {
-          return (
-            <tr key={i}>
-              <td>{product.data.name}</td>
-              <td>{product.data.description}</td>
-              <td>
-                {'$ ' +
-                  product.data.price
-                    .toFixed(2)
-                    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-              </td>
-            </tr>
-          );
-        })}
+          {products.map((product, i) => {
+            return (
+              <tr key={i}>
+                <td>{product.data.name}</td>
+                <td>{product.data.description}</td>
+                <td>{"$ " + product.data.price.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -376,7 +360,7 @@ This component handles the presentation of the products once they have returned 
 
 With your application ready you can execute the command `npm start` to see your application. Log in using your Okta credentials and wait a moment for the data to be returned from FaunaDB.
 
-{% img {src: "fauna-react/run-app.png", alt: "React + Fauna app!", header: "800"} %}
+{% img "fauna-react/run-app.png", "React + Fauna app!", "800" %}
 
 ## Learn more about FaunaDB and React
 

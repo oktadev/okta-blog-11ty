@@ -19,7 +19,7 @@ If you're ready to start automating Okta administration tasks, where should you 
 
 ## Find the OktaDev Workforce podcast on approaching identity automation
 
-{% youtube "LilghHdW18Q" %} 
+{% youtube LilghHdW18Q %} 
 
 Listen to the [audio version on Casted](https://listen.casted.us/public/49/Workforce-Identity-Developer-Podcast-4ce90a5f/59f5cd1e). 
 

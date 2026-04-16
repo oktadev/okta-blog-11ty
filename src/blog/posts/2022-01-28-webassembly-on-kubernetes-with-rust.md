@@ -21,7 +21,7 @@ You can learn more about WebAssembly at [WebAssembly.org](https://webassembly.or
 
 Though initially designed for [the web](https://www.w3.org/wasm/), WebAssembly proved to be an ideal format for writing platform and language-agnostic applications. You may be aware of something similar in the container world—Docker containers. People, including Docker co-founder Solomon Hykes, recognized the similarity and acknowledged that WebAssembly is even more efficient since it's fast, portable, and secure, running at native speeds. This means that you can use WebAssembly alongside containers as workloads on Kubernetes. Another WebAssembly initiative known as [WebAssembly System Interface (WASI)](https://wasi.dev/) along with the [Wasmtime](https://github.com/bytecodealliance/wasmtime) project make this possible.
 
-https://twitter.com/i/status/1111004913222324225
+https://x.com/linclark/status/1110920999061594113
 
 WebAssembly on Kubernetes is relatively new and has some rough edges at the moment, but it's already proving to be revolutionary. Wasm workloads can be extremely fast as they can execute faster than a container takes to start. The workloads are sandboxed and hence much more secure than containers; they are way smaller in size due to the binary format than containers.
 
@@ -268,7 +268,7 @@ wasm-to-oci push target/wasm32-wasi/release/rust-wasm.wasm ghcr.io/<your GitHub 
 
 You should see a successful message. Now check the GitHub Packages page on your profile, and you should see the artifact listed.
 
-{% img {src: "webassembly-on-kubernetes-with-rust/gchr_repo.png", alt: "GitHub Packages Registry", header: "800"} %}
+{% img "webassembly-on-kubernetes-with-rust/gchr_repo.png", "GitHub Packages Registry", "800" %}
 
 By default, the artifact would be private, but you need to make it public so that you can access it from the Krustlet cluster. Click the package name and click the **Package settings** button, scroll down, click **Change visibility**, and change to **public**.
 

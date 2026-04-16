@@ -87,7 +87,7 @@ When creating integrations listed in the OIN, you can test your integration as p
 
 When calling Okta APIs, we recommend using OAuth 2.0, and API Service Integrations if you create an API integration for the OIN. If you have limitations using OAuth 2.0 for your use case, use API Tokens.
 
-{% img {src: "api-integrations/flowchart.jpg", alt: "Flowchart describing first using OAuth, then using  API Services Integration in cases of OIN application. Lastly use an API Token if there are no other options.", header: "800"} %}
+{% img "api-integrations/flowchart.jpg", "Flowchart describing first using OAuth, then using  API Services Integration in cases of OIN application. Lastly use an API Token if there are no other options.", "800" %}
 
 ## Learn more about connecting to Okta APIs using OAuth Client Credentials
 

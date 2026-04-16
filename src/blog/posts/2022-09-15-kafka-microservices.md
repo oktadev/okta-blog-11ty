@@ -6,9 +6,9 @@ communities: [java]
 description: "This tutorial shows you how to add asynchronous messaging between Java microservices using Apache Kafka."
 tags: [java, kafka, microservices, jhipster]
 tweets:
-- "Want to see how to use @apachekafka to communicate between microservices? This tutorial shows you how!"
-- "Did you know @jhipster supports #Kafka as a communications mechanism between microservices?"
-- "Microservice architectures ❤️ asynchronous messaging! Learn how to use @apachekafka to implement it. →"
+  - "Want to see how to use @apachekafka to communicate between microservices? This tutorial shows you how!"
+  - "Did you know @jhipster supports #Kafka as a communications mechanism between microservices?"
+  - "Microservice architectures ❤️ asynchronous messaging! Learn how to use @apachekafka to implement it. →"
 image: kafka-microservices/kafka-microservices.png
 github: https://github.com/oktadev/okta-kafka-microservices-example
 type: conversion
@@ -43,6 +43,7 @@ Traditional messaging models are queue and publish-subscribe. In a queue, each r
 The **Consumer Group** in Kafka is an abstraction that combines both models. Record processing can be load balanced among the members of a consumer group and Kafka allows you to broadcast messages to multiple consumer groups. It is the same publish-subscribe semantic where the subscriber is a cluster of consumers instead of a single process.
 
 Popular use cases of Kafka include:
+
 - Traditional messaging, to decouple data producers from processors with better latency and scalability.
 - Site activity tracking with real-time publish-subscribe feeds.
 - As a replacement for file-based log aggregation, where event data becomes a stream of messages.
@@ -55,6 +56,7 @@ Popular use cases of Kafka include:
 Let's build a microservices architecture with JHipster and Kafka support. In this tutorial, you'll create `store` and `alert` microservices. The store microservices will create and update store records. The `alert` microservice will receive update events from `store` and send an email alert.
 
 > **Prerequisites:**
+>
 > - [Java 11+](https://adoptopenjdk.net/)
 > - [Docker 20.10.17](https://docs.docker.com/install)
 > - [Node.js 16.17.0](https://nodejs.org/en/)
@@ -172,9 +174,9 @@ The generator will ask you to define the following things:
 2. Type of gateway: **JHipster gateway based on Spring Cloud Gateway**
 3. Leave the root directory for services as default: **../**
 4. Which applications to include: **gateway**, **store**, **alert**
-4. Which applications do you want to use with clustered databases: **(none)**
-5. If monitoring should be enabled: **No**
-6. Password for JHipster Registry: `<default>`
+5. Which applications do you want to use with clustered databases: **(none)**
+6. If monitoring should be enabled: **No**
+7. Password for JHipster Registry: `<default>`
 
 Almost when the generator completes, a warning shows in the output:
 
@@ -227,8 +229,8 @@ spring:
             issuer-uri: https://{yourOktaDomain}/oauth2/default
         registration:
           oidc:
-            client-id: {yourClientId}
-            client-secret: {yourClientSecret}
+            client-id: { yourClientId }
+            client-secret: { yourClientSecret }
 ```
 
 The registry, gateway, store, and alert applications are all configured to read this configuration on startup.
@@ -258,6 +260,7 @@ public interface KafkaStoreAlertProducer {
     MessageChannel output();
 }
 ```
+
 Include the outbound binding in the `WebConfigurer`:
 
 ```java
@@ -462,6 +465,7 @@ public interface KafkaStoreAlertConsumer {
     MessageChannel input();
 }
 ```
+
 Include the binding in the `WebConfigurer`:
 
 ```java
@@ -571,7 +575,7 @@ Add a new property to `alert/src/main/resources/config/application.yml` **and** 
 
 ```yaml
 alert:
-  distribution-list: {distributionListAddress}
+  distribution-list: { distributionListAddress }
 ```
 
 **NOTE:** You'll need to set a value for the email (e.g. `list@email.com` will work) in `src/test/.../application.yml` for tests to pass. For Docker, you'll override the `{distributionListAddress}` and `{username}` + `{password}` placeholder values with environment variables below.
@@ -687,7 +691,7 @@ docker compose up
 
 You will see a huge amount of logging while each service starts. Wait a minute or two, then open `http://localhost:8761` and log in with your Okta account. This is the JHipster Registry which you can use to monitor your apps' statuses. Wait for all the services to be up.
 
-{% img {src: "kafka-microservices-update/jhipster-registry.png", alt: "JHipster Registry", header: "800"} %}
+{% img "kafka-microservices-update/jhipster-registry.png", "JHipster Registry", "800" %}
 
 Open a new terminal window and tail the `alert` microservice logs to verify it's processing `StoreAlert` records:
 

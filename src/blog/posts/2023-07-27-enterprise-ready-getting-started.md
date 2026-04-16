@@ -45,7 +45,7 @@ Do you want to see your framework of choice in a workshop? Let us know your pref
 
 Each tech stack has the required tooling to install on your machine. While knowledge of JavaScript, REST concepts, and command line operations are helpful, we provided a [companion video](https://youtu.be/FCSNMtLtwRg) to walk you through the installation process and running the application.
 
-{% youtube "FCSNMtLtwRg" %}
+{% youtube FCSNMtLtwRg %}
 
 ### Install Node.js
 
@@ -108,11 +108,11 @@ npm start
 
 The React frontend todo application serves on `localhost:3000`, so open it up in your favorite web browser. You should see the following sign-in page:
 
-{% img {src: "enterprise-ready-getting-started/signin.jpg", alt: "Screenshot of initial sign-in"} %}
+{% img "enterprise-ready-getting-started/signin.jpg", "Screenshot of initial sign-in" %}
 
 You will sign in using the email and password of one of the two users, which will navigate you to the Todo app where you can start adding, completing, and deleting todos.
 
-{% img {src: "enterprise-ready-getting-started/todolist.jpg", alt: "Screenshot of todo list"} %}
+{% img "enterprise-ready-getting-started/todolist.jpg", "Screenshot of todo list" %}
 
 This is a bare-bones implementation of a todo application, so you won't have the user experience niceties like error notifications for entering email and passwords incorrectly.
 

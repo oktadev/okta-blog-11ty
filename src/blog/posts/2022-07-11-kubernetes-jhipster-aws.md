@@ -395,12 +395,12 @@ Error: failed to create cluster "okta-k8s"
 
 When I logged into AWS and opened CloudFormation, I saw this on the console.
 
-{% img {src: "kubernetes-jhipster-aws/cloud-formation.png", alt: "CloudFormation", header: "1000"} %}
+{% img "kubernetes-jhipster-aws/cloud-formation.png", "CloudFormation", "1000" %}
 
 
 The cluster was created successfully, but the node group failed. I clicked on the node group name. Then I selected the **events** tab. Scrolling down, I found the error.
 
-{% img {src: "kubernetes-jhipster-aws/node-group-create-error-cropped.png", alt: "Node group create error", header: "1000"} %}
+{% img "kubernetes-jhipster-aws/node-group-create-error-cropped.png", "Node group create error", "1000" %}
 
 The error reads:
 
@@ -482,7 +482,7 @@ store-mongodb-0                       1/1     Running   0          15m
 
 In K8s Lens, here's what it looks like:
 
-{% img {src: "kubernetes-jhipster-aws/lens-status-green.png", alt: "Lens status green", header: "1000"} %}
+{% img "kubernetes-jhipster-aws/lens-status-green.png", "Lens status green", "1000" %}
 
 
 Another useful command is `describe` (I won't replicate the output here). This is great for more detailed information for debugging.
@@ -507,7 +507,7 @@ Open a browser and navigate to http://localhost:8761. You may have to log in if 
 
 You want to see a lot of green.
 
-{% img {src: "kubernetes-jhipster-aws/registry-green.png", alt: "Registry status OK", header: "1000"} %}
+{% img "kubernetes-jhipster-aws/registry-green.png", "Registry status OK", "1000" %}
 
 If everything is good, `control-c` to stop forwarding the registry. Forward the gateway and open it.
 
@@ -519,17 +519,17 @@ Open http://localhost:8080
 
 You'll see the front page of the demo application.
 
-{% img {src: "kubernetes-jhipster-aws/jhipster-demo-front.png", alt: "JHipster front page", header: "1000"} %}
+{% img "kubernetes-jhipster-aws/jhipster-demo-front.png", "JHipster front page", "1000" %}
 
 Go to **Account** and **Sign in**.
 
 If you are already logged into Okta, you won't have to log in again. Otherwise you'll be redirected to the Okta SSO sign-in page.
 
-{% img {src: "kubernetes-jhipster-aws/okta-sign-in.png", alt: "Okta sign-in page", header: "400"} %}
+{% img "kubernetes-jhipster-aws/okta-sign-in.png", "Okta sign-in page", "400" %}
 
 Once you're authenticated, you'll be directed to the authenticated front page.
 
-{% img {src: "kubernetes-jhipster-aws/jhipster-authenticated.png", alt: "Authenticated", header: "1000"} %}
+{% img "kubernetes-jhipster-aws/jhipster-authenticated.png", "Authenticated", "1000" %}
 
 To verify that the application works, try and create a product and a blog. Go to the **Entities** menu and click on **Product**. Click **Create a new Product** and fill in the form with dummy values. You should be able to successfully create a new product. Do the same thing with **Entities** and **Blog**. You should be able to create a blog and a blog post.
 
@@ -566,7 +566,7 @@ Copy your client secret (from `kubernetes/registry-k8s/application-configmap.yml
 
 Click **Encrypt**.
 
-{% img {src: "kubernetes-jhipster-aws/encrypting-client-secret.png", alt: "Encrypting the client secret", header: "800"} %}
+{% img "kubernetes-jhipster-aws/encrypting-client-secret.png", "Encrypting the client secret", "800" %}
 
 Copy that value, including the `{cipher}` part, and paste it back over the old value. 
 

@@ -4,10 +4,10 @@ author: arek-nawo
 by: contractor
 communities: [javascript]
 description: "Learn how to set up a secure Node.js API with search capabilities using Express.js and Elasticsearch. Then secure the API with Okta so it's only accessible to authorized users."
-tags: [api-security, elasticsearch, express, node] 
+tags: [api-security, elasticsearch, express, node]
 tweets:
-- "No matter what software system you're working on, searching capabilities are an expectation of the highest degree. Develop some solutions of your own by leveraging Elasticsearch in Node.js."
-- "The difference between a good search tool and a great search tool is all in the details. In this tutorial, we're teaching you how to build a fully functional Node.js API with searching capabilities."
+  - "No matter what software system you're working on, searching capabilities are an expectation of the highest degree. Develop some solutions of your own by leveraging Elasticsearch in Node.js."
+  - "The difference between a good search tool and a great search tool is all in the details. In this tutorial, we're teaching you how to build a fully functional Node.js API with searching capabilities."
 image: ultimate-guide-elasticsearch-nodejs/social-image.png
 github: https://github.com/oktadev/okta-elasticsearch-node-example
 type: conversion
@@ -30,17 +30,17 @@ At its core, Elasticsearch is a NoSQL analytics database with an extensive JSON-
 Over time, Elasticsearch and its ecosystem have evolved dramatically, turning into a set of software components called the Elastic Stack (also known as ELK Stack). This stack includes the Elasticsearch service as the core, Kibana for data visualization and management, and Logstash for processing and indexing data into Elasticsearch.
 
 Elasticsearch and the accompanying Elastic Stack provide solutions for a growing number of use cases, such as the following:
+
 - **Search services:** Whether it's inside an app or website or across an enterprise's internal data sets, Elasticsearch can power all kinds of search experiences.
 - **Data analytics:** Because of its near-real-time data querying and easy data injection, Elasticsearch is suitable for analyzing data from system logs or business operations.
 - **Monitoring:** Apart from analytics, Elasticsearch is also suitable for all kinds of monitoring, serving as a central hub for different data sources.
 
-
 ## Integrating Elasticsearch with Express
 
 Before getting started with the app, you'll first want to ensure you have the following software installed:
+
 - [Node.js](https://nodejs.org/en/) together with NPM (v12.2.0 or newer)
 - [Okta CLI](https://cli.okta.com/)
-
 
 ### Backend setup
 
@@ -52,13 +52,13 @@ npm install express body-parser express-async-errors express-openid-connect dote
 ```
 
 Installed dependencies are as follows:
+
 - **[Express](https://expressjs.com/):** The Node.js framework
 - **[Body parser](http://expressjs.com/en/resources/middleware/body-parser.html):** Express middleware for parsing incoming request's bodies
 - **[Express async errors](https://github.com/davidbanham/express-async-errors):** Module for improved handling of `async`/`await` errors in Express routes
 - **[Express OpenID Connect](https://github.com/auth0/express-openid-connect):** Express middleware wrapper around [openid-client](https://github.com/panva/node-openid-client)
 - **[Dotenv](https://github.com/motdotla/dotenv):** Module for loading `.env` files
 - **Elasticsearch Node.js client:** Simplifies the use of the Elasticsearch REST API in Node.js
-
 
 ### Elastic Cloud setup
 
@@ -68,11 +68,11 @@ Remember that you can always switch to a self-hosted Elasticsearch instance with
 
 To get started, create a new Elastic Cloud account or log in to an existing one.
 
-{% img {src: "ultimate-guide-elasticsearch-nodejs/creating-elastic-cloud-account.png", alt: "Creating Elastic Cloud account", header: "800"} %}
+{% img "ultimate-guide-elasticsearch-nodejs/creating-elastic-cloud-account.png", "Creating Elastic Cloud account", "800" %}
 
 Inside the dashboard, click **Start your free trial** and configure a new deployment.
 
-{% img {src: "ultimate-guide-elasticsearch-nodejs/configuring-elastic-cloud-deployment.png", alt: "Configuring Elastic Cloud deployment", header: "800"} %}
+{% img "ultimate-guide-elasticsearch-nodejs/configuring-elastic-cloud-deployment.png", "Configuring Elastic Cloud deployment", "800" %}
 
 Copy the resulting deployment credentials and put them inside the **.elastic.env** file inside the **backend** folder:
 
@@ -83,7 +83,7 @@ ELASTIC_PASSWORD="your-password"
 
 The last detail you need is your deployment's Cloud ID. To get that, return to your dashboard and go to the deployment settings. You can access the settings by clicking on the cog next to the deployment name under the **Elasticsearch Service** section.
 
-{% img {src: "ultimate-guide-elasticsearch-nodejs/elastic-cloud-dashboard.png", alt: "Elastic Cloud dashboard", header: "800"} %}
+{% img "ultimate-guide-elasticsearch-nodejs/elastic-cloud-dashboard.png", "Elastic Cloud dashboard", "800" %}
 
 From there, copy the Cloud ID and paste it into the **.elastic.env** file as `ELASTIC_CLOUD_ID`:
 
@@ -92,7 +92,6 @@ ELASTIC_CLOUD_ID="your-cloud-id"
 ELASTIC_USERNAME="your-username"
 ELASTIC_PASSWORD="your-password"
 ```
-
 
 ### Creating the Elasticsearch index
 
@@ -121,7 +120,6 @@ The script loads the environment variables with `dotenv` and initializes the cli
 
 The initiated client is then exported for use in other files. This includes **create-index.js**, in which a new **posts** index for storing sample blog post data is created:
 
-
 ```javascript
 // backend/create-index.js
 const elasticClient = require("./elastic-client");
@@ -135,7 +133,6 @@ createIndex("posts");
 ```
 
 Running the script with **node create-index.js** will initiate the index and prepare Elasticsearch for the next steps.
-
 
 ### Creating Express routes
 
@@ -211,7 +208,6 @@ For this example, only `fuzzy` matching (matching the term closely rather than e
 
 You might have noticed that the root route (`/`) redirects to port `3000`—that's where the frontend will be located.
 
-
 ### Frontend setup
 
 To see how this backend setup integrates with a modern frontend, let's create a new React app powered by [Vite](https://vitejs.dev/).
@@ -227,6 +223,7 @@ npm run dev
 ```
 
 The dependencies include the following:
+
 - **[MUI](https://mui.com/):** React component framework with accompanying libraries and submodules like icons and data-grid component
 - **[Faker](https://fakerjs.dev/):** Library to quickly generate fake data for development and testing purposes
 - **[Axios](https://axios-http.com):** Isomorphic (can run in both Node.js and browsers with the same codebase) HTTP client
@@ -234,10 +231,7 @@ The dependencies include the following:
 To complete the setup, make sure to link the Roboto font inside the **index.html** file, [as recommended by MUI](https://mui.com/getting-started/installation/#roboto-font):
 
 ```html
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 ```
 
 Additionally, to make the development and integration with the backend smooth (without unnecessary [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) issues), make sure to set up Vite proxy from the **vite.config.js** file:
@@ -261,7 +255,6 @@ export default defineConfig({
 
 With the above configuration, all requests to the Vite development server's `/api` route will be redirected to the back-end server, allowing access to both from the same host.
 
-
 ### Building the UI
 
 While not the primary focus of this tutorial, thanks to MUI, it's easy to make a good-looking frontend without much effort.
@@ -280,7 +273,7 @@ ReactDOM.render(
     <CssBaseline />
     <App />
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 ```
 
@@ -289,17 +282,9 @@ The added `<CssBaseline/>` component will apply an MUI-specific CSS reset styles
 Inside **App.jsx**, the `<App/>` component will be at the center of the whole UI, managing the state and core components. This component sets up the state for holding the search query, current selection, and all the posts, while also building the UI with help of MUI components.
 
 {% raw %}
+
 ```javascript
-import {
-  AppBar,
-  Box,
-  Container,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Toolbar,
-} from "@mui/material";
+import { AppBar, Box, Container, Button, IconButton, InputAdornment, TextField, Toolbar } from "@mui/material";
 import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Add, Search, Delete } from "@mui/icons-material";
@@ -308,7 +293,7 @@ import faker from "@faker-js/faker";
 import { useEffect } from "react";
 
 const api = {
-    // ...
+  // ...
 };
 const columns = [
   {
@@ -373,21 +358,9 @@ const App = () => {
             ),
           }}
         ></TextField>
-        <EditMenu
-          selection={selection}
-          addPost={addPost}
-          removePosts={removePosts}
-        />
+        <EditMenu selection={selection} addPost={addPost} removePosts={removePosts} />
         <div style={{ width: "100%" }}>
-          <DataGrid
-            autoHeight
-            rows={posts}
-            columns={columns}
-            pageSize={100}
-            checkboxSelection
-            onSelectionModelChange={(model) => setSelection(model)}
-            selectionModel={selection}
-          />
+          <DataGrid autoHeight rows={posts} columns={columns} pageSize={100} checkboxSelection onSelectionModelChange={(model) => setSelection(model)} selectionModel={selection} />
         </div>
       </Container>
     </>
@@ -396,6 +369,7 @@ const App = () => {
 
 export default App;
 ```
+
 {% endraw %}
 
 The app consists of a search bar, editing menu, and a table to display and manage the data. You can see the structure for API integration in the form of the `api` object, table configuration for the incoming data in the `columns`, and multiple state management functions right inside the `<App/>` component.
@@ -403,6 +377,7 @@ The app consists of a search bar, editing menu, and a table to display and manag
 The `<TopMenu/>` and `<EditMenu/>` components will serve as the app bar and data-edit controls, respectively. Where necessary, they'll use the state and control methods provided through props to control the state.
 
 {% raw %}
+
 ```javascript
 // ...
 const TopMenu = (props) => {
@@ -417,21 +392,10 @@ const TopMenu = (props) => {
 const EditMenu = (props) => {
   return (
     <div>
-      <Button
-        startIcon={<Add />}
-        variant="contained"
-        sx={{ my: 1, mr: 1 }}
-        onClick={props.addPost}
-      >
+      <Button startIcon={<Add />} variant="contained" sx={{ my: 1, mr: 1 }} onClick={props.addPost}>
         Add
       </Button>
-      <Button
-        startIcon={<Delete />}
-        variant="contained"
-        disabled={!props.selection.length}
-        sx={{ my: 1, mr: 1 }}
-        onClick={() => props.removePosts(props.selection)}
-      >
+      <Button startIcon={<Delete />} variant="contained" disabled={!props.selection.length} sx={{ my: 1, mr: 1 }} onClick={() => props.removePosts(props.selection)}>
         Remove
       </Button>
     </div>
@@ -439,12 +403,12 @@ const EditMenu = (props) => {
 };
 // ...
 ```
+
 {% endraw %}
 
 With this setup, the app will look like this:
 
-{% img {src: "ultimate-guide-elasticsearch-nodejs/initial-frontend.png", alt: "The initial frontend", header: "800"} %}
-
+{% img "ultimate-guide-elasticsearch-nodejs/initial-frontend.png", "The initial frontend", "800" %}
 
 ### Integrating the frontend with the backend
 
@@ -505,7 +469,7 @@ const search = async () => {
   setSelection(
     response.hits.hits.map((hit) => {
       return hit._id;
-    })
+    }),
   );
 };
 // ...
@@ -525,7 +489,7 @@ useEffect(() => {
           response.hits.hits.map((hit) => ({
             id: hit._id,
             ...hit._source,
-          }))
+          })),
         );
       });
     }
@@ -536,15 +500,13 @@ useEffect(() => {
 
 Now, ensure both your backend and frontend servers are running, and check out all the features of your app!
 
-{% img {src: "ultimate-guide-elasticsearch-nodejs/frontend-app-with-data.png", alt: "Frontend app with populated data", header: "800"} %}
-
+{% img "ultimate-guide-elasticsearch-nodejs/frontend-app-with-data.png", "Frontend app with populated data", "800" %}
 
 ## Securing data access with Okta
 
 While the app is working, it's completely exposed to unauthorized access, which can be harmful to your data, code, and infrastructure as a whole. To fix that, you can use [Okta](https://developer.okta.com/signup).
 
 The entire process is quite simple and requires only a few changes on both ends of the app.
-
 
 ### Securing the backend
 
@@ -578,13 +540,13 @@ app.use(
       scope: "openid profile",
       response_type: "code",
     },
-  })
+  }),
 );
 // ...
 ```
 
-The middleware not only secures the endpoints but also handles the callback and creates new `/login` and `/logout` routes for the configured 
- OpenID provider — we're using Okta.
+The middleware not only secures the endpoints but also handles the callback and creates new `/login` and `/logout` routes for the configured
+OpenID provider — we're using Okta.
 
 By setting `authRequired` to `false`, you get to selectively choose which endpoints to secure. In this case, this will include all endpoints related to Elasticsearch:
 
@@ -634,7 +596,6 @@ app.get("/is-authenticated", (req, res) => {
 
 Additionally, the endpoint returns the username of the authorized user.
 
-
 ### Integrating the frontend
 
 Inside the **src/App.jsx** file on the frontend, add the `isAuthenticated()` method to the `api` object:
@@ -680,7 +641,7 @@ const App = () => {
             response.hits.hits.map((hit) => ({
               id: hit._id,
               ...hit._source,
-            }))
+            })),
           );
         });
       }
@@ -692,12 +653,7 @@ const App = () => {
       <TopMenu username={username} />
       <Container maxWidth="md">
         {/* ... */}
-        <EditMenu
-          username={username}
-          selection={selection}
-          addPost={addPost}
-          removePosts={removePosts}
-        />
+        <EditMenu username={username} selection={selection} addPost={addPost} removePosts={removePosts} />
         {/* ... */}
       </Container>
     </>
@@ -709,6 +665,7 @@ const App = () => {
 Finally, in the menus, disable editing and show the **LOGIN** button in the app bar. If the user is logged in, show the **LOGOUT** button instead alongside his username:
 
 {% raw %}
+
 ```javascript
 const TopMenu = (props) => {
   return (
@@ -736,36 +693,24 @@ const TopMenu = (props) => {
 const EditMenu = (props) => {
   return (
     <div>
-      <Button
-        startIcon={<Add />}
-        variant="contained"
-        sx={{ my: 1, mr: 1 }}
-        onClick={props.addPost}
-        disabled={!props.username}
-      >
+      <Button startIcon={<Add />} variant="contained" sx={{ my: 1, mr: 1 }} onClick={props.addPost} disabled={!props.username}>
         ADD
       </Button>
-      <Button
-        startIcon={<Delete />}
-        variant="contained"
-        disabled={!props.username || !props.selection.length}
-        sx={{ my: 1, mr: 1 }}
-        onClick={() => props.removePosts(props.selection)}
-      >
+      <Button startIcon={<Delete />} variant="contained" disabled={!props.username || !props.selection.length} sx={{ my: 1, mr: 1 }} onClick={() => props.removePosts(props.selection)}>
         REMOVE
       </Button>
     </div>
   );
 };
 ```
+
 {% endraw %}
 
 With this done, the app is now fully secured with Okta, both on the frontend and the backend!
 
-{% img {src: "ultimate-guide-elasticsearch-nodejs/final-result.png", alt: "Final result", header: "800"} %}
+{% img "ultimate-guide-elasticsearch-nodejs/final-result.png", "Final result", "800" %}
 
 If you want to see the entire project, you can clone it from [GitHub here](https://github.com/oktadev/okta-elasticsearch-node-example).
-
 
 ## Build more with Node and Elasticsearch
 
@@ -778,6 +723,6 @@ If you'd like to learn more about building web apps with Node.js, you might want
 - [Simple Node Authentication](/blog/2018/04/24/simple-node-authentication)
 - [Build a Basic CRUD App with Vue.js and Node](/blog/2018/02/15/build-crud-app-vuejs-node)
 
-If you enjoyed working through this tutorial, you can keep up with our content for developers by following [@oktadev](https://twitter.com/oktadev) on Twitter, connecting with us on [LinkedIn](https://www.linkedin.com/company/oktadev/), or subscribing to our [YouTube](https://www.youtube.com/oktadev) channel. 
+If you enjoyed working through this tutorial, you can keep up with our content for developers by following [@oktadev](https://twitter.com/oktadev) on Twitter, connecting with us on [LinkedIn](https://www.linkedin.com/company/oktadev/), or subscribing to our [YouTube](https://www.youtube.com/oktadev) channel.
 
 If you have any questions or want to add suggestions for future tutorials, please add a comment below.

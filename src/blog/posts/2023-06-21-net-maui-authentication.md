@@ -45,7 +45,7 @@ To create a new .NET MAUI project, follow these steps:
 5. Restore your project's dependencies and build your solution to ensure everything is in place.
 6. Select the desired target platform in the Debug Target drop-down and launch your application. You will see a screen like the following:
 
-{% img {src: "net-maui-authentication/maui-start.jpg", alt: "Starting application"} %}
+{% img "net-maui-authentication/maui-start.jpg", "Starting application" %}
 
 That's it! You have successfully created a .NET MAUI application using Visual Studio 2022. Now, it's time to improve the security of your application by integrating Okta to enable authentication.
 
@@ -55,7 +55,7 @@ That's it! You have successfully created a .NET MAUI application using Visual St
 
 ## Add authentication to your MAUI application
 
-{{ macro.cli({type: "native", loginRedirectUri: "myapp://callback", logoutRedirectUri: "myapp://callback"}) }}
+{{ macro.cli({type: "native", loginRedirectUri: "myapp://callback", logoutRedirectUri: "myapp://callback" }) }}
 
 You'll need the application's configuration values from the Okta CLI output to set up authentication in your MAUI application. You can run the following command in the Okta CLI to show your application's configuration:
 
@@ -95,9 +95,9 @@ namespace OktaMauiSampleApp.Okta
         public OktaClientConfiguration Configuration { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OktaClient"/> class.
+        /// Initializes a new instance of the <see cref: "OktaClient"/> class.
         /// </summary>
-        /// <param name="configuration">The OktaClient configuration.</param>
+        /// <param name: "configuration">The OktaClient configuration.</param>
 
         public OktaClient(OktaClientConfiguration configuration)
         {
@@ -110,7 +110,7 @@ namespace OktaMauiSampleApp.Okta
         /// <summary>
         /// Starts the authorization flow.
         /// </summary>
-        /// <param name="cancellationToken">A cancellation token that can be used to cancel the request.</param>
+        /// <param name: "cancellationToken">A cancellation token that can be used to cancel the request.</param>
         /// <returns>The login result.</returns>
         public async Task<LoginResult> LoginAsync(CancellationToken cancellationToken = default)
         {
@@ -122,8 +122,8 @@ namespace OktaMauiSampleApp.Okta
         /// <summary>
         /// Ends the user's Okta session in the browser.
         /// </summary>
-        /// <param name="idToken">The id token.</param>
-        /// <param name="cancellationToken">A cancellation token to cancel the request.</param>
+        /// <param name: "idToken">The id token.</param>
+        /// <param name: "cancellationToken">A cancellation token to cancel the request.</param>
         /// <returns>The logout result.</returns>
         public async Task<LogoutResult> LogoutAsync(string idToken, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace OktaMauiSampleApp.Okta
         /// <summary>
         /// Build a new <c>OidcClientOptions</c> instance based on user's configuration.
         /// </summary>
-        /// <param name="configuration">The <see cref="OktaClientConfiguration"/> configuration.</param>
+        /// <param name: "configuration">The <see cref: "OktaClientConfiguration"/> configuration.</param>
         /// <returns>A new instance of <c>OidcClientOptions</c>.</returns>
         private static OidcClientOptions BuildOidcClient(OktaClientConfiguration configuration)
         {
@@ -167,9 +167,9 @@ namespace OktaMauiSampleApp.Okta
         /// <summary>
         /// Retrieves and sets the Provider Information taking into account Okta's multiple authorization servers
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name: "cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref: "InvalidOperationException"></exception>
         private async Task EnsureProviderInformationAsync(CancellationToken cancellationToken = default)
         {
             var oktaOrgAuthorizationServer =
@@ -352,79 +352,79 @@ public static class MauiProgram
 Now, it's time to update the UI to display the sign in and sign out buttons, plus the user's claims once they're authenticated. Open the `MainPage.xaml` file and replace the content with the following:
 
 ```csharp
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version: "1.0", encoding: "utf-8" ?>
 <ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="OktaMauiSampleApp.MainPage">
+    xmlns: "http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x: "http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class: "OktaMauiSampleApp.MainPage">
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-            <StackLayout x:Name="LoginView">
+            Spacing: "25"
+            Padding: "30,0"
+            VerticalOptions: "Center">
+            <StackLayout x:Name: "LoginView">
                 <Image
-                    Source="dotnet_bot.png"
-                    SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                    HeightRequest="200"
-                    HorizontalOptions="Center" />
+                    Source: "dotnet_bot.png"
+                    SemanticProperties.Description: "Cute dot net bot waving hi to you!"
+                    HeightRequest: "200"
+                    HorizontalOptions: "Center" />
 
                 <Label
-                    Text="Hello, World!"
-                    SemanticProperties.HeadingLevel="Level1"
-                    FontSize="32"
-                    HorizontalOptions="Center" />
+                    Text: "Hello, World!"
+                    SemanticProperties.HeadingLevel: "Level1"
+                    FontSize: "32"
+                    HorizontalOptions: "Center" />
 
                 <Label
-                    Text="Welcome to .NET Multi-platform App UI"
-                    SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="Welcome to dot net Multi-platform App UI"
-                    FontSize="18"
-                    HorizontalOptions="Center" />
+                    Text: "Welcome to .NET Multi-platform App UI"
+                    SemanticProperties.HeadingLevel: "Level2"
+                    SemanticProperties.Description: "Welcome to dot net Multi-platform App UI"
+                    FontSize: "18"
+                    HorizontalOptions: "Center" />
 
                 <Button
-                    x:Name="CounterBtn"
-                    Text="Click me"
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="OnCounterClicked"
-                    HorizontalOptions="Center"
-                    Margin="10"/>
+                    x:Name: "CounterBtn"
+                    Text: "Click me"
+                    SemanticProperties.Hint: "Counts the number of times you click"
+                    Clicked: "OnCounterClicked"
+                    HorizontalOptions: "Center"
+                    Margin: "10"/>
 
                 <Button
-                    x:Name="LoginBtn"
-                    Text="Log In"
-                    SemanticProperties.Hint="Click to log in"
-                    Clicked="OnLoginClicked"
-                    HorizontalOptions="Center" />
+                    x:Name: "LoginBtn"
+                    Text: "Log In"
+                    SemanticProperties.Hint: "Click to log in"
+                    Clicked: "OnLoginClicked"
+                    HorizontalOptions: "Center" />
             </StackLayout>
 
             <StackLayout
-                x:Name="HomeView"
-                IsVisible="false">
+                x:Name: "HomeView"
+                IsVisible: "false">
 
                 <Label
-                    x:Name="HelloLbl"
-                    Text="Hello, World!"
-                    SemanticProperties.HeadingLevel="Level5"
-                    FontSize="25"
-                    HorizontalOptions="Center" />
+                    x:Name: "HelloLbl"
+                    Text: "Hello, World!"
+                    SemanticProperties.HeadingLevel: "Level5"
+                    FontSize: "25"
+                    HorizontalOptions: "Center" />
 
                 <Button
-                    x:Name="LogoutBtn"
-                    Text="Log Out"
-                    SemanticProperties.Hint="Click to log out"
-                    Clicked="OnLogoutClicked"
-                    HorizontalOptions="Center"
-                    Margin="0,30"/>
+                    x:Name: "LogoutBtn"
+                    Text: "Log Out"
+                    SemanticProperties.Hint: "Click to log out"
+                    Clicked: "OnLogoutClicked"
+                    HorizontalOptions: "Center"
+                    Margin: "0,30"/>
 
-                <ListView x:Name="UserInfoLvw">
+                <ListView x:Name: "UserInfoLvw">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
-                            <Grid HeightRequest="50">
-                                <Label LineBreakMode="NoWrap"
-                                       Margin="10,0,0,0" Text="Claims" FontAttributes="Bold"
-                                       FontSize="18" TextColor="Black" HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
+                            <Grid HeightRequest: "50">
+                                <Label LineBreakMode: "NoWrap"
+                                       Margin: "10,0,0,0", Text: "Claims", FontAttributes: "Bold"
+                                       FontSize: "18", TextColor: "Black", HorizontalOptions: "Center"
+                                       VerticalOptions: "Center"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
@@ -546,16 +546,16 @@ This class contains the intent filter that accepts `myapp` as the scheme for the
 Finally, open the `AndroidManifest.xml` file located in the same folder and add the content highlighted below to make the intent visible. Your `AndroidManifest.xml` should look like the following:
 
 ```csharp
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+<?xml version: "1.0", encoding: "utf-8"?>
+<manifest xmlns:android: "http://schemas.android.com/apk/res/android">
+    <application android:allowBackup: "true" android:icon: "@mipmap/appicon" android:roundIcon: "@mipmap/appicon_round" android:supportsRtl: "true"></application>
+    <uses-permission android:name: "android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name: "android.permission.INTERNET" />
 
     <!-- 👇 new code -->
     <queries>
         <intent>
-            <action android:name="android.support.customtabs.action.CustomTabsService" />
+            <action android:name: "android.support.customtabs.action.CustomTabsService" />
         </intent>
     </queries>
   <!-- 👆 new code -->
@@ -565,7 +565,7 @@ Finally, open the `AndroidManifest.xml` file located in the same folder and add 
 
 Woohoo! It's time to test the Android version application. It should look like this:
 
-{% img {src: "net-maui-authentication/demo.gif", alt: "Completed application"} %}
+{% img "net-maui-authentication/demo.gif", "Completed application" %}
 
 ## Keep experimenting with MAUI, .NET, OAuth, and OIDC
 

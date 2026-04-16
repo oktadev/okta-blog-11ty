@@ -2,13 +2,13 @@
 title: "Winners of the AI and Identity Okta Hackathon 2023"
 author: michael-palermo
 by: advocate
-communities: [devops,security,mobile,.net,java,javascript,go,php,python,ruby]
+communities: [devops, security, mobile, .net, java, javascript, go, php, python, ruby]
 description: "Winners of the AI and Identity Okta Hackathon 2023 are announced along with awards to supporting community members."
 tags: [hackathon, ai, identity, announcements]
 tweets:
-- ""
-- ""
-- ""
+  - ""
+  - ""
+  - ""
 image: ai-identity-hackathon-winners/social.jpg
 type: awareness
 ---
@@ -49,7 +49,6 @@ All were in competition for the following awards:
 </tr>
 </table>
 
-
 Who are the winners? Let's get right to it starting with our first place winner!
 
 ## First Place
@@ -63,8 +62,7 @@ Who are the winners? Let's get right to it starting with our first place winner!
 >
 > – <cite>Comments by the judging panel</cite>
 
-{% youtube "EKO7RXgAUXk" %}
-
+{% youtube EKO7RXgAUXk %}
 
 ## Second Place
 
@@ -77,7 +75,7 @@ Who are the winners? Let's get right to it starting with our first place winner!
 >
 > – <cite>Comments by the judging panel</cite>
 
-{% youtube "k2oDrZKNpaQ" %}
+{% youtube k2oDrZKNpaQ %}
 
 ## Third Place
 
@@ -90,7 +88,7 @@ Who are the winners? Let's get right to it starting with our first place winner!
 >
 > – <cite>Comments by the judging panel</cite>
 
-{% youtube "4TChaWqtLs8" %}
+{% youtube 4TChaWqtLs8 %}
 
 ## Honorable Mention
 
@@ -103,7 +101,7 @@ Who are the winners? Let's get right to it starting with our first place winner!
 >
 > – <cite>Comments by the judging panel</cite>
 
-{% youtube "S18FAtAkrBw" %}
+{% youtube S18FAtAkrBw %}
 
 ---
 
@@ -113,10 +111,9 @@ We would like to also acknowledge and reward those for their community involveme
 **Monish Basaniwal** ($700 USD)<br/>
 **Deependra Gaur** ($200 USD)<br/>
 
+## Summary
 
-## Summary 
-
-We're thrilled with the results of this AI and Identity Hackathon experiment, delighted by the creative range of submission, and the diversity of the qualifying submissions. Our eligible submissions came from the United States and India, and overall participation was from dozens of countries. 
+We're thrilled with the results of this AI and Identity Hackathon experiment, delighted by the creative range of submission, and the diversity of the qualifying submissions. Our eligible submissions came from the United States and India, and overall participation was from dozens of countries.
 We congratulate all the winners, supporters, and participants for making this an exciting hackathon!
 
 Have a story to share? Let us know with a comment below or reach out to us at `dev-advocacy` at okta dot com. For more interesting content, follow [@oktadev on Twitter](https://twitter.com/oktadev), connect with us [on LinkedIn](https://www.linkedin.com/company/oktadev), and subscribe to [our YouTube channel](https://www.youtube.com/oktadev).

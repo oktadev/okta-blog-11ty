@@ -14,7 +14,7 @@ On an iPhone, when we log in to an app, we click a login button, and a website p
 
 However, in 2017, a new prompt appeared in the login flow, before you were taken to the website. The following screenshot came from an iOS app preparing to log you in with Facebook. The interface prompt informs you that a specific app, the Yelp app in this example, wants to use a specific website to sign you in, and it warns you about information sharing. 
 
-{% img {src: "mobile-sso/ASWebAuthenticationSession-prompt-from-yelp.jpeg", alt: "app login prompt when authenticating with ASWebAuthenticationSession", header: "300"} %}
+{% img "mobile-sso/ASWebAuthenticationSession-prompt-from-yelp.jpeg", "app login prompt when authenticating with ASWebAuthenticationSession", "300" %}
 
 The main reason this prompt was added was to provide users more context about why a third-party website is about to appear, as well as surface the website domain to the user in a system-level prompt that can't be faked by the app. Without the prompt, the user would immediately be taken to the Facebook login screen. A malicious app might open a fake website that mimics the Facebook login screen and try to steal the user's credentials. With this prompt in place, the user will first see the domain the app is launching, in this case "facebook.com", and would provide the user with an opportunity to recognize a phishing attempt before seeing the login page.
 
@@ -53,7 +53,7 @@ In 2018, Apple deprecated `SFAuthenticationSession`, but introduced [`ASWebAuthe
 
 Both `SFAuthenticationSession` and `ASWebAuthenticationSession` are designed specifically for OAuth 2.0 authentication, not for showing general web content. To avoid abuse, when `SFAuthenticationSession` or `ASWebAuthenticationSession` are used, Apple always displays the prompt we saw earlier. The prompt is designed explicitly for user sign-in, and indicates that cookies are shared. 
 
-{% img {src: "mobile-sso/ASWebAuthenticationSession-prompt.jpeg", alt: "permission prompt about information sharing", header: "500"} %}
+{% img "mobile-sso/ASWebAuthenticationSession-prompt.jpeg", "permission prompt about information sharing", "500" %}
 
 Apple does not know whether an `ASWebAuthenticationSession` is invoked for sign in, sign out, or general web browsing. This is why the prompt text is generic. It only states that your app is trying to **Sign In**, regardless of the actual use case.
 
@@ -82,7 +82,7 @@ I also use SVC as shorthand for `SFSafariViewController` and WAS as shorthand fo
 
 In the following iOS cookie behavior demo video, you can see how the session cookie and the persistent cookie are shared. The session cookie sharing behavior is not intuitive. Even when App1 is closed (which should clear all session cookies), opening App2 would make it possible to see App1's session cookie. 
 
-{% youtube "mDytgEU0bO8" %}
+{% youtube mDytgEU0bO8 %}
 
 It is worth noting that in iOS 14 and later you can specify another browser, such as Chrome, as the default. This does not affect the sharing behavior. `SFSafariViewController` and `ASWebAuthenticationSession` always use Safari under the hood, so they will never share cookies with browsers other than Safari, even if they are set as the default. The term *system browser*, often used in online articles, is synonymous with Safari. 
 

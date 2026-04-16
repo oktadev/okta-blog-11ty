@@ -64,9 +64,9 @@ The packaging type for the project is `war`, not `jar`, and the Maven War plugin
 Lastly, the Jetty Maven plugin has also been included. You can peruse [the docs here](http://www.eclipse.org/jetty/documentation/jetty-11/programming-guide/index.html#jetty-maven-plugin). It is designed to make the development and testing of Jetty servlets easy by adding Maven goals to run and test the app.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version: "1.0", encoding: "UTF-8"?>
+<project xmlns: "http://maven.apache.org/POM/4.0.0" xmlns:xsi: "http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation: "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.demo</groupId>
@@ -275,7 +275,7 @@ Kesugi Ridge
 POST a new hike:
 
 ```bash
-http -f POST :8080/hikes hike="Pear Lake"
+http -f POST :8080/hikes hike: "Pear Lake"
 ```
 
 ```
@@ -436,9 +436,9 @@ This is done in the `pom.xml` file by these two dependency configuration blocks.
 Here is the full `pom.xml`. Notice the Spring Boot version is 3.0.6 and the Jakarta Servlet version is set to 5.0.0. This is because Jetty does not yet support Servlet 6.0.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version: "1.0", encoding: "UTF-8"?>
+<project xmlns: "http://maven.apache.org/POM/4.0.0" xmlns:xsi: "http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation: "http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -748,7 +748,7 @@ From the `spring-boot-jetty-maven-okta` subdirectory, open a shell and start the
 From a different shell, try to POST a new hike:
 
 ```bash
-http -f POST :8080/hikes hike="Pear Lake"
+http -f POST :8080/hikes hike: "Pear Lake"
 ```
 
 ```bash
@@ -767,11 +767,11 @@ HTTP/1.1 403 Forbidden
 
 To access the protected endpoints, you need to generate an access token JWT. {{ macro.oidcdebugger() }}
 
-{% img {src: "java-jetty/oidc-debugger.png", alt: "OIDC Debugger Configuration", header: "650"} %}
+{% img "java-jetty/oidc-debugger.png", "OIDC Debugger Configuration", "650" %}
 
 Scroll down and click **Send Request**.
 
-{% img {src: "java-jetty/oidc-debugger-success.jpg", alt: "OIDC Debugger Success", header: "800"} %}
+{% img "java-jetty/oidc-debugger-success.jpg", "OIDC Debugger Success", "800" %}
 
 Copy the access token to your clipboard and store it in a shell variable in the shell window you use to make requests.
 
@@ -782,7 +782,7 @@ TOKEN=eyJraWQiOiJIb05xb01mNE9jREltWnBGRnBINjZGTkFOM0J...
 Now try and POST a new hike and then remove it.
 
 ```bash
-http -f POST :8080/hikes hike="Pear Lake" "Authorization: Bearer $TOKEN"
+http -f POST :8080/hikes hike: "Pear Lake" "Authorization: Bearer $TOKEN"
 ```
 
 ```
@@ -897,7 +897,7 @@ TOKEN=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZ...
 Add a new hike using the token.
 
 ```bash
-http -f POST :8080/hikes hike="Pear Lake" "Authorization: Bearer $TOKEN"
+http -f POST :8080/hikes hike: "Pear Lake" "Authorization: Bearer $TOKEN"
 ```
 
 ```bash

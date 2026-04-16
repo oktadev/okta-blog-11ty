@@ -81,7 +81,7 @@ Host: authorization-server.com
 <plus required configuration properties + credentials>
   ```
 
-{:start="2"}
+{:start: "2"}
 2. The caller uses the token value in the API request as a value in the `Authorization` header of the HTTP request using the `Bearer` scheme. The HTTP request may look something like this:
 
   ```http

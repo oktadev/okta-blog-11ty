@@ -28,7 +28,7 @@ We recently hosted a half-day virtual conference covering this topic at [WIC Dev
 
 You can check out the keynote presentation here:
 
-{% youtube "PAsoROn6Cao" %}
+{% youtube PAsoROn6Cao %}
 
 ## Discover and learn more about becoming enterprise-ready
 

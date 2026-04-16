@@ -2,7 +2,7 @@
 title: "Introducing the Okta MCP Server"
 author: swetha-selvanayagam
 by: advocate
-communities: [security,python]
+communities: [security, python]
 description: "Learn how the Okta MCP Server connects AI agents to Okta APIs, enabling secure automation of identity and access management tasks."
 tags: [enterprise-ai, agentic-ai, mcp, oauth, sso, cross-app-access]
 image: okta-mcp-server/okta-mcp-server-social-image.jpeg
@@ -12,7 +12,7 @@ github: https://github.com/okta/okta-mcp-server
 
 As AI agents and AI threats proliferate at an unprecedented rate, it becomes imperative to enable them to communicate safely with the backend systems that matter the most.
 
-A Model Context Protocol (MCP) server acts as the bridge between an LLM and an external system. It translates natural language intent into structured API calls, enabling agents to perform tasks like provisioning users, managing groups, or pulling reports, all while respecting the system's security model.  Establishing a universal protocol eliminates the need to build custom integrations. Enterprises can now easily connect their AI agents with Okta's backend systems to achieve automation of complex chains of activities, quick resolution of issues, and increased performance throughput.
+A Model Context Protocol (MCP) server acts as the bridge between an LLM and an external system. It translates natural language intent into structured API calls, enabling agents to perform tasks like provisioning users, managing groups, or pulling reports, all while respecting the system's security model. Establishing a universal protocol eliminates the need to build custom integrations. Enterprises can now easily connect their AI agents with Okta's backend systems to achieve automation of complex chains of activities, quick resolution of issues, and increased performance throughput.
 
 **Table of Contents**{: .hide }
 [[toc]]
@@ -23,18 +23,18 @@ The Okta MCP Server brings this capability to your identity and access managemen
 
 Think of it as unlocking a new interface for Okta, one where you can ask an agent:
 
-* "Add this new employee to the engineering group."  
-* "Generate a report of inactive users in the last 90 days."  
-* "Deactivate all users who tried to log in within the last 30 minutes."
+- "Add this new employee to the engineering group."
+- "Generate a report of inactive users in the last 90 days."
+- "Deactivate all users who tried to log in within the last 30 minutes."
 
 ## Tools and capabilities
 
 In its current form, the server allows the following actions:
 
-* **User Management**: Create, list, retrieve, update, and deactivate users.  
-* **Group Management**: Create, list, retrieve, update, and delete groups.  
-* **Group Operations**: View assigned members, view assigned applications, add, and remove users.  
-* **System Information**: Retrieve Okta system logs.
+- **User Management**: Create, list, retrieve, update, and deactivate users.
+- **Group Management**: Create, list, retrieve, update, and delete groups.
+- **Group Operations**: View assigned members, view assigned applications, add, and remove users.
+- **System Information**: Retrieve Okta system logs.
 
 And many more actions with **application and policies APIs** as well.
 
@@ -42,9 +42,9 @@ Using the above operations as a base, complex real-life actions can also be perf
 
 ## Highlights at a glance
 
-* **Flexible Authentication**: The server supports both interactive login (via Device Authorization Grant) and fully automated, browserless login (via Private Key JWT). Whether you're experimenting in development or running a headless agent in production, you can authenticate in the way that fits your workflow.  
-* **More Secure Credential Handling**: Your authentication details are managed through scoped API access and environment variables, keeping secrets out of code. Tokens are issued only with the permissions you explicitly grant, following least-privilege best practices.  
-* **Seamless Integration with Okta APIs**: Built on Okta's official SDK, the server is tightly integrated with Okta's Admin Management APIs. That means reliable performance, support for a wide range of identity management tasks, and an extensible foundation for adding more endpoints over time.
+- **Flexible Authentication**: The server supports both interactive login (via Device Authorization Grant) and fully automated, browserless login (via Private Key JWT). Whether you're experimenting in development or running a headless agent in production, you can authenticate in the way that fits your workflow.
+- **More Secure Credential Handling**: Your authentication details are managed through scoped API access and environment variables, keeping secrets out of code. Tokens are issued only with the permissions you explicitly grant, following least-privilege best practices.
+- **Seamless Integration with Okta APIs**: Built on Okta's official SDK, the server is tightly integrated with Okta's Admin Management APIs. That means reliable performance, support for a wide range of identity management tasks, and an extensible foundation for adding more endpoints over time.
 
 ## Getting started with the Okta MCP Server
 
@@ -54,13 +54,16 @@ Now that you know what the Okta MCP server is and why it's useful, let's dive in
 
 The Okta MCP server comes packaged for quick setup so you can clone and run it. We use `uv` (a fast Python package manager) to help ensure your environment is reproducible and lightweight.
 
-* Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
-* Clone the repository:  
+- Clone the repository:
+
 ```sh
 git clone https://github.com/okta/okta-mcp-server.git
-``` 
-* Install dependencies and set up the project: 
+```
+
+- Install dependencies and set up the project:
+
 ```sh
 cd okta-mcp-server && uv sync
 ```
@@ -83,18 +86,18 @@ Use this if you're experimenting, developing, or want the simplest way to authen
 
 Once the app is created, follow these steps:
 
-1. Grant API scopes (for example: `okta.users.read`, `okta.groups.manage`).
+1.  Grant API scopes (for example: `okta.users.read`, `okta.groups.manage`).
 
-    {% img {src: "okta-mcp-server/image10.jpeg", alt: " ", header: "700"} %}
-<br>
+        {% img "okta-mcp-server/image10.jpeg", " ", "700" %}
 
-2. Copy the Client ID for later use.
+    <br>
 
-    {% img {src: "okta-mcp-server/image14.jpeg", alt: " ", header: "700"} %}
+2.  Copy the Client ID for later use.
+
+    {% img "okta-mcp-server/image14.jpeg", " ", "700" %}
 
 > **Note:** Why "Native App" and not "Service"?  
 > Device Auth is designed for user-driven flows, so it assumes someone is present to open the browser.
-
 
 ##### **Option B: Private key JWT (best for automation, CI/CD, and "headless" environments)**
 
@@ -102,38 +105,45 @@ This flow is perfect if your MCP server needs to run without human intervention,
 
 Here's how it works:
 
-* You generate or upload a public/private key pair to Okta.  
-* The server uses the private key locally to sign authentication requests.  
-* Okta validates the signature against the public key you registered, ensuring that only your authorized server can act on behalf of that client.
+- You generate or upload a public/private key pair to Okta.
+- The server uses the private key locally to sign authentication requests.
+- Okta validates the signature against the public key you registered, ensuring that only your authorized server can act on behalf of that client.
 
 Use this if you're automating, scheduling jobs, or integrating into infrastructure.
 
-1. In your Okta org, create a new API Services App Integration.
+1.  In your Okta org, create a new API Services App Integration.
 
-    {% img {src: "okta-mcp-server/image11.jpeg", alt: " ", header: "700"} %}
+        {% img "okta-mcp-server/image11.jpeg", " ", "700" %}
 
-    {% img {src: "okta-mcp-server/image18.jpeg", alt: " ", header: "700"} %}
-<br>
-2. Under Client Authentication, select Public Key / Private Key.
+        {% img "okta-mcp-server/image18.jpeg", " ", "700" %}
 
-    {% img {src: "okta-mcp-server/image19.jpeg", alt: " ", header: "700"} %}
-<br>
-3. Add a public key: either generate it in Okta (recommended) and copy it in PEM format, or upload your own keys.
+    <br>
 
-    {% img {src: "okta-mcp-server/image13.jpeg", alt: " ", header: "700"} %}
-<br>
-4. Copy the Client ID and Key ID (KID).
+2.  Under Client Authentication, select Public Key / Private Key.
 
-    {% img {src: "okta-mcp-server/image12.jpeg", alt: " ", header: "700"} %}
-<br>
+        {% img "okta-mcp-server/image19.jpeg", " ", "700" %}
 
-5. Disable **Proof of Possession** in the General tab.
+    <br>
 
-6. Grant the necessary API scopes (e.g., `okta.users.read`, `okta.groups.manage`) and provide Super Administrator access.
+3.  Add a public key: either generate it in Okta (recommended) and copy it in PEM format, or upload your own keys.
 
-    {% img {src: "okta-mcp-server/image10.jpeg", alt: " ", header: "700"} %}
+        {% img "okta-mcp-server/image13.jpeg", " ", "700" %}
 
-    {% img {src: "okta-mcp-server/image3.jpeg", alt: " ", header: "700"} %}
+    <br>
+
+4.  Copy the Client ID and Key ID (KID).
+
+        {% img "okta-mcp-server/image12.jpeg", " ", "700" %}
+
+    <br>
+
+5.  Disable **Proof of Possession** in the General tab.
+
+6.  Grant the necessary API scopes (e.g., `okta.users.read`, `okta.groups.manage`) and provide Super Administrator access.
+
+    {% img "okta-mcp-server/image10.jpeg", " ", "700" %}
+
+    {% img "okta-mcp-server/image3.jpeg", " ", "700" %}
 
 ### Configuring your client
 
@@ -145,7 +155,7 @@ For this guide, we'll walk through the setup in Visual Studio Code with GitHub C
 
 ### Enable agent mode in GitHub Copilot
 
-The Okta MCP server integrates with VS Code through Copilot's agent mode. 
+The Okta MCP server integrates with VS Code through Copilot's agent mode.
 
 1. Install the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) Open the Copilot Chat view in VS Code.
 
@@ -212,15 +222,17 @@ Next, you'll tell VS Code how to start and communicate with the Okta MCP server.
 
 Running the server for the first time prompts you to enter the following information:
 
-* **Okta Organization URL**: Your Okta tenant URL.  
-* **Okta Client ID**: The client ID of the application you created in your Okta organization.  
-* **Okta Scopes**: The scopes you want to grant to the application, separated by spaces. For example: 
+- **Okta Organization URL**: Your Okta tenant URL.
+- **Okta Client ID**: The client ID of the application you created in your Okta organization.
+- **Okta Scopes**: The scopes you want to grant to the application, separated by spaces. For example:
+
 ```json
     "OKTA_SCOPES": "${input:OKTA_SCOPES = okta.users.read okta.users.manage okta.groups.read okta.groups.manage okta.logs.read okta.policies.read okta.policies.manage okta.apps.read okta.apps.manage}"
 ```
+
 > **Note:** Add scopes only for the APIs that you will be using.
 
-* **Okta Private Key and Key ID:** You only need to enter this key when using browserless authentication. If you're not using that method, just press **Enter** to skip this step and use the Device Authorization flow instead.
+- **Okta Private Key and Key ID:** You only need to enter this key when using browserless authentication. If you're not using that method, just press **Enter** to skip this step and use the Device Authorization flow instead.
 
 ### Start the server
 
@@ -228,14 +240,14 @@ When you open VS Code, you'll now see **okta-mcp-server** as an option to start.
 
 1. Click **Start** to launch the server in your `mcp.json` file.
 
-    {% img {src: "okta-mcp-server/image2.jpeg", alt: " ", header: "700"} %}
- 
-2. The server will check your authentication method:  
-   * If using **Device Authorization**, it triggers a prompt to log in via your browser.
+   {% img "okta-mcp-server/image2.jpeg", " ", "700" %}
 
-        {% img {src: "okta-mcp-server/image7.jpeg", alt: " ", header: "700"} %}
+2. The server will check your authentication method:
+   - If using **Device Authorization**, it triggers a prompt to log in via your browser.
 
-   * If using **Private Key JWT**, it will authenticate silently using your key.
+     {% img "okta-mcp-server/image7.jpeg", " ", "700" %}
+
+   - If using **Private Key JWT**, it will authenticate silently using your key.
 
 3. Once connected, Copilot will automatically recognize the Okta commands you can use.
 
@@ -245,28 +257,28 @@ At this point, the MCP server has established a connection between VS Code and y
 
 **1\. Listing Users**
 
-{% img {src: "okta-mcp-server/image9.jpeg", alt: " ", header: "700"} %}
+{% img "okta-mcp-server/image9.jpeg", " ", "700" %}
 
 **2\. Creating Users**
 
-{% img {src: "okta-mcp-server/image15.jpeg", alt: " ", header: "700"} %}
+{% img "okta-mcp-server/image15.jpeg", " ", "700" %}
 
 **3\. Group Assignment**
 
-{% img {src: "okta-mcp-server/image4.jpeg", alt: " ", header: "700"} %}
+{% img "okta-mcp-server/image4.jpeg", " ", "700" %}
 
 **4\. Creating an Audit Report**
 
-{% img {src: "okta-mcp-server/image5.jpeg", alt: " ", header: "700"} %}
+{% img "okta-mcp-server/image5.jpeg", " ", "700" %}
 
 We invite you to try out our MCP server and experience the future of identity and access management. Meet us at Oktane, and if you run into issues, please open an issue in our [GitHub](https://github.com/okta/okta-mcp-server/) repository.
 
 ## Read more about Cross App Access, OAuth 2.0, and securing your applications
 
-* [Integrate Your Enterprise AI Tools with Cross App Access](/blog/2025/06/23/enterprise-ai)
-* [Build Secure Agent-to-App Connections with Cross App Access (XAA)](/blog/2025/09/03/cross-app-access)  
-* [OAuth 2.0 and OpenID Connect overview](https://developer.okta.com/docs/concepts/oauth-openid)
-* [Why You Should Migrate to OAuth 2.0 From Static API Tokens](/blog/2023/09/25/oauth-api-tokens)
-* [How to Secure the SaaS Apps of the Future](https://sec.okta.com/articles/appsofthefuture/)
+- [Integrate Your Enterprise AI Tools with Cross App Access](/blog/2025/06/23/enterprise-ai)
+- [Build Secure Agent-to-App Connections with Cross App Access (XAA)](/blog/2025/09/03/cross-app-access)
+- [OAuth 2.0 and OpenID Connect overview](https://developer.okta.com/docs/concepts/oauth-openid)
+- [Why You Should Migrate to OAuth 2.0 From Static API Tokens](/blog/2023/09/25/oauth-api-tokens)
+- [How to Secure the SaaS Apps of the Future](https://sec.okta.com/articles/appsofthefuture/)
 
 Follow us on [LinkedIn](https://www.linkedin.com/company/oktadev), [Twitter](https://twitter.com/oktadev), and subscribe to our [YouTube](https://www.youtube.com/c/oktadev) channel for more developer content. If you have any questions, please leave a comment below!

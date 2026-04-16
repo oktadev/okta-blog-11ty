@@ -114,15 +114,15 @@ python3 -m flask run --port=3000
 
 And try walking through hosted authentication with Okta! If all goes well, you'll see this screen to start with: 
 
-{% img {src: "python-okta/1_login.png", alt: "Picture of log in page.", header: "600"} %}
+{% img "python-okta/1_login.png", "Picture of log in page.", "600" %}
 
 When you click the **Login** button, you're then taken to a form where you can enter your email and password: 
 
-{% img {src: "python-okta/2_sign_in.png", alt: "Picture of sign in page where you add account credentials.", header: "300"} %}
+{% img "python-okta/2_sign_in.png", "Picture of sign in page where you add account credentials.", "300" %}
 
 You will know you've successfully logged in when you see a screen displaying some information about your profile:
 
-{% img {src: "python-okta/3_success.png", alt: "Picture of success page displaying retrieved account info.", header: "600"} %}
+{% img "python-okta/3_success.png", "Picture of success page displaying retrieved account info.", "600" %}
 
 
 ## Troubleshooting - Help, it's not working!

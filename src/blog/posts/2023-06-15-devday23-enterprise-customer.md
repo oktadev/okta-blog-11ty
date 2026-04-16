@@ -28,7 +28,7 @@ We sought to answer this question during the [WIC Devday 23](https://developerda
 
 Okta Director for "Okta on Okta" products, Jon Lehtinen answers these questions in his presentation:
 
-{% youtube "i0n24USYkQM" %} 
+{% youtube i0n24USYkQM %} 
 
 ## Dive deeper into enterprise customer expectations
 

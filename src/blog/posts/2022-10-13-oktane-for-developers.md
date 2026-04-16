@@ -74,6 +74,6 @@ You'll find talks and sessions for developers across all tracks, covering a broa
 
 Serena Williams and Magic Johnson have joined the speaker lineup and the [Oktane 22 website](https://www.okta.com/oktane22/) has all the details for attending in person, along with how to attend [Oktane Online](https://www.okta.com/oktane22/online-register/).
 
-{% img {src: "oktane22/oktane-online.jpg", alt: "Developers admiring Oktane schedule", header: "600"} %}
+{% img "oktane22/oktane-online.jpg", "Developers admiring Oktane schedule", "600" %}
 
 [Ready to register?](https://www.okta.com/oktane22/attendance-options/)  Hope to see you there!

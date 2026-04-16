@@ -50,7 +50,7 @@ WIC supports `acr_values` (Authentication Context Class Reference values) parame
 * The following diagram describes how WIC processes `acr_values` during `/authorize` call:
 
 
-{% img {src: "step-up-okta/1-step-up-authentication-acr-flow.jpg", alt: "ACR flow diagram", header: "800"} %}
+{% img "step-up-okta/1-step-up-authentication-acr-flow.jpg", "ACR flow diagram", "800" %}
 
 * Currently WIC supports a pre-defined [list](https://developer.okta.com/docs/guides/step-up-authentication/main/#predefined-parameter-values) of `acr_values`. These values are mapped to assurance levels supported in WIC [authentication policies](https://help.okta.com/oie/en-us/Content/Topics/identity-engine/policies/about-app-sign-on-policies.htm).
 

@@ -6,14 +6,14 @@ community: [java]
 description: "Storing secrets in your code is a bad idea. Learn how to use Spring Cloud Config and HashiCorp Vault to make your app more secure."
 tags: [spring-vault, oidc, java, spring-boot, vault, hashicorp, spring-cloud-vault, auth0]
 tweets:
-- "Learn how to secure your secrets with @springcloud vault and @HashiCorp Vault!"
-- "Securing your secrets is a must if you want to be secure by design. This tutorial shows you how!"
-- "Please secure your secrets. Fight for your users!"
+  - "Learn how to secure your secrets with @springcloud vault and @HashiCorp Vault!"
+  - "Securing your secrets is a must if you want to be secure by design. This tutorial shows you how!"
+  - "Please secure your secrets. Fight for your users!"
 image: spring-vault/spring-vault.png
 github: https://github.com/oktadev/okta-spring-vault-example
 type: conversion
 changelog:
-- 2023-07-07: Updated to use Spring Boot 3.1 and HashiCorp Vault 1.14. You can see the changes in this post in [okta-blog#1400](https://github.com/oktadev/okta-blog/pull/1400) and the example app changes in [okta-spring-vault-example#4](https://github.com/oktadev/okta-spring-vault-example/pull/4).
+  - 2023-07-07: Updated to use Spring Boot 3.1 and HashiCorp Vault 1.14. You can see the changes in this post in [okta-blog#1400](https://github.com/oktadev/okta-blog/pull/1400) and the example app changes in [okta-spring-vault-example#4](https://github.com/oktadev/okta-spring-vault-example/pull/4).
 ---
 
 In 2013, GitHub released a search feature that allows users to scan code in all public repositories. A day after the release, however, they had to partially shut it down. It was speculated that the shutdown was because the feature allowed any user to search for all kinds of secrets stored in GitHub repositories. Later, in 2014, data on 50,000 Uber drivers was stolen. It seems someone got access to the company's database using login credentials found in a GitHub public repository. Hashicorp Vault, a tool for managing secrets and encrypting data in transit, was first announced in 2015 and Spring Vault, the integration of Spring with Vault, was first released in 2017.
@@ -28,6 +28,7 @@ Nowadays it is widely recommended to never store secret values in code. Therefor
 - Using Spring Cloud Vault
 
 > **This tutorial was created with the following frameworks and tools**:
+>
 > - [Java OpenJDK 17](https://jdk.java.net/java-se-ri/17)
 > - [Okta CLI 0.10.0](https://cli.okta.com)
 > - [Docker 20.10.12](https://docs.docker.com/engine/install/)
@@ -107,7 +108,7 @@ OKTA_OAUTH2_CLIENT_SECRET={yourOktaClientSecret} \
 
 In an incognito window, go to `http://localhost:8080`. Here, you should see the Okta login page:
 
-{% img {src: "spring-vault-update/okta-login.png", alt: "Okta login form", header: "400"} %}
+{% img "spring-vault-update/okta-login.png", "Okta login form", "400" %}
 
 In the application logs, you'll see the security filter chain initializes an OAuth 2.0 authentication flow on startup:
 
@@ -119,7 +120,7 @@ Using environment variables for passing secrets to containerized applications is
 
 ### Use Auth0 for OpenID Connect
 
-The Okta Spring Boot starter works with Auth0 too! To try it out, you need to create an Auth0 account and configure an application. 
+The Okta Spring Boot starter works with Auth0 too! To try it out, you need to create an Auth0 account and configure an application.
 
 Sign up at [Auth0](https://auth0.com/signup) and install the [Auth0 CLI](https://github.com/auth0/auth0-cli). Then run:
 
@@ -202,11 +203,11 @@ OKTA_OAUTH2_CLIENT_SECRET={yourAuth0ClientSecret}
 
 Navigate to `http://localhost:8080`, and you should be redirected to Auth0 to log in:
 
-{% img {src: "spring-vault-update/auth0-login.png", alt: "Auth0 login form", header: "450"} %}
+{% img "spring-vault-update/auth0-login.png", "Auth0 login form", "450" %}
 
 If you choose **Continue with Google** you will see the consent screen:
 
-{% img {src: "spring-vault-update/auth0-consent.png", alt: "Auth0 authorize form", header: "450"} %}
+{% img "spring-vault-update/auth0-consent.png", "Auth0 authorize form", "450" %}
 
 ## Spring Cloud Config with secrets encryption
 
@@ -283,9 +284,9 @@ In the `vault-config-server` project folder, create a `src/main/resources/config
 ```yml
 okta:
   oauth2:
-    issuer: {yourIssuerURI}
-    clientId: '{cipher}encryptedClientId'
-    clientSecret: '{cipher}encryptedClientSecret'
+    issuer: { yourIssuerURI }
+    clientId: "{cipher}encryptedClientId"
+    clientSecret: "{cipher}encryptedClientSecret"
 ```
 
 The `client-id` and `client-secret` encrypted values must be prefixed with `{cipher}`. Restart the config server.
@@ -317,7 +318,7 @@ In a real environment, the config server should be secured. Spring Cloud Config 
 
 ## Vault as a configuration backend with Spring Cloud Vault
 
-{% img {src: "spring-vault/vault-logo.png", alt: "Vault logo", header: "300"} %}{: .pull-right }
+{% img "spring-vault/vault-logo.png", "Vault logo", "300" %}{: .pull-right }
 
 In the cloud, secrets management has become much more difficult. Vault is a secrets management and data protection tool from HashiCorp that provides secure storage, dynamic secret generation, data encryption, and secret revocation.
 
@@ -339,7 +340,7 @@ docker run --cap-add=IPC_LOCK \
 --name my-vault hashicorp/vault
 ```
 
-**NOTE**:  The `docker run` command above will start a vault instance with the name `my-vault`. You can stop the container with `docker stop my-vault` and restart it with `docker start my-vault`. Note that all the secrets and data will be lost between restarts, as explained in the next paragraphs.
+**NOTE**: The `docker run` command above will start a vault instance with the name `my-vault`. You can stop the container with `docker stop my-vault` and restart it with `docker start my-vault`. Note that all the secrets and data will be lost between restarts, as explained in the next paragraphs.
 
 The `IPC_LOCK` capability is required for Vault to be able to lock memory and not be swapped to disk, as this behavior is enabled by default. As the instance is run for development, the ID of the initially generated root token is set to the given value. You are mounting `/vault/logs`, as you are going to enable the `file` audit device to inspect the interactions.
 
@@ -412,6 +413,7 @@ okta.oauth2.clientId="{yourClientId}" \
 okta.oauth2.clientSecret="{yourClientSecret}" \
 okta.oauth2.issuer="{yourIssuerURI}"
 ```
+
 ```shell
 vault kv get secret/vault-demo-app,dev
 ```
@@ -422,62 +424,56 @@ Check `vault_audit.log` in your specified `{hostPath}` directory. Operations are
 
 ```json
 {
-   "time":"2023-07-07T03:00:25.145796389Z",
-   "type":"request",
-   "auth":{
-      "client_token":"hmac-sha256:2d8d7aeded539495117218a14ef9ae9f0f525eb2f6078be25dfe8e329ceb3d3f",
-      "accessor":"hmac-sha256:e4c3319a57b735e10df4677193bd7a969ee757a97ebf890bbaebb0694f6a6cd5",
-      "display_name":"token",
-      "policies":[
-         "root"
-      ],
-      "token_policies":[
-         "root"
-      ],
-      "policy_results":{
-         "allowed":true,
-         "granting_policies":[
-            {
-               "name":"root",
-               "namespace_id":"root",
-               "type":"acl"
-            }
-         ]
+  "time": "2023-07-07T03:00:25.145796389Z",
+  "type": "request",
+  "auth": {
+    "client_token": "hmac-sha256:2d8d7aeded539495117218a14ef9ae9f0f525eb2f6078be25dfe8e329ceb3d3f",
+    "accessor": "hmac-sha256:e4c3319a57b735e10df4677193bd7a969ee757a97ebf890bbaebb0694f6a6cd5",
+    "display_name": "token",
+    "policies": ["root"],
+    "token_policies": ["root"],
+    "policy_results": {
+      "allowed": true,
+      "granting_policies": [
+        {
+          "name": "root",
+          "namespace_id": "root",
+          "type": "acl"
+        }
+      ]
+    },
+    "token_type": "service",
+    "token_issue_time": "2023-07-07T02:55:13Z"
+  },
+  "request": {
+    "id": "50f70b23-3f2a-4857-5a8b-0c45982be491",
+    "client_id": "0DHqvq2D77kL2/JTPSZkTMJbkFVmUu0TzMi0jiXcFy8=",
+    "operation": "create",
+    "mount_type": "kv",
+    "mount_accessor": "kv_bf4b26f3",
+    "client_token": "hmac-sha256:2d8d7aeded539495117218a14ef9ae9f0f525eb2f6078be25dfe8e329ceb3d3f",
+    "client_token_accessor": "hmac-sha256:e4c3319a57b735e10df4677193bd7a969ee757a97ebf890bbaebb0694f6a6cd5",
+    "namespace": {
+      "id": "root"
+    },
+    "path": "secret/data/vault-demo-app,dev",
+    "data": {
+      "data": {
+        "okta.oauth2.clientId": "hmac-sha256:6709ec7e5682f16893369660844392809842ee1d670697fb034c3db17cfdc3d4",
+        "okta.oauth2.clientSecret": "hmac-sha256:c3db998af7b44aeaabf3da71c396e8bf86119fd6c36e66a41de67e91f71b116f",
+        "okta.oauth2.issuer": "hmac-sha256:70502e5cd54d12004df6836d0ff8d045515e4207607d984da14c0aaca5400c0a"
       },
-      "token_type":"service",
-      "token_issue_time":"2023-07-07T02:55:13Z"
-   },
-   "request":{
-      "id":"50f70b23-3f2a-4857-5a8b-0c45982be491",
-      "client_id":"0DHqvq2D77kL2/JTPSZkTMJbkFVmUu0TzMi0jiXcFy8=",
-      "operation":"create",
-      "mount_type":"kv",
-      "mount_accessor":"kv_bf4b26f3",
-      "client_token":"hmac-sha256:2d8d7aeded539495117218a14ef9ae9f0f525eb2f6078be25dfe8e329ceb3d3f",
-      "client_token_accessor":"hmac-sha256:e4c3319a57b735e10df4677193bd7a969ee757a97ebf890bbaebb0694f6a6cd5",
-      "namespace":{
-         "id":"root"
-      },
-      "path":"secret/data/vault-demo-app,dev",
-      "data":{
-         "data":{
-            "okta.oauth2.clientId":"hmac-sha256:6709ec7e5682f16893369660844392809842ee1d670697fb034c3db17cfdc3d4",
-            "okta.oauth2.clientSecret":"hmac-sha256:c3db998af7b44aeaabf3da71c396e8bf86119fd6c36e66a41de67e91f71b116f",
-            "okta.oauth2.issuer":"hmac-sha256:70502e5cd54d12004df6836d0ff8d045515e4207607d984da14c0aaca5400c0a"
-         },
-         "options":{
-
-         }
-      },
-      "remote_address":"127.0.0.1",
-      "remote_port":58914
-   }
+      "options": {}
+    },
+    "remote_address": "127.0.0.1",
+    "remote_port": 58914
+  }
 }
 ```
 
 Let's assume you don't want to configure the root token in the `vault-demo-app`. You can instead create a policy granting read permissions on the path where the secrets were stored. Go to the Vault Web UI at `http://localhost:8200` and log in with the root token (`00000000-0000-0000-0000-000000000000`).
 
-{% img {src: "spring-vault-update/vault-web-ui.png", alt: "Vault web UI", header: "650"} %}
+{% img "spring-vault-update/vault-web-ui.png", "Vault web UI", "650" %}
 
 Next, go to **Policies** and **Create ACL policy**. Create a `vault-demo-app-policy` with the following capabilities:
 
@@ -501,7 +497,7 @@ path "secret/data/application,dev" {
 
 All the paths above will be requested by the config server to provide configuration for the `vault-demo-app` when it starts with the `dev` profile active.
 
-{% img {src: "spring-vault-update/vault-policy.png", alt: "Vault policy section", header: "900"} %}
+{% img "spring-vault-update/vault-policy.png", "Vault policy section", "900" %}
 
 Now, go back to the container command line, and create a token with the `vault-demo-app-policy`.
 
@@ -551,7 +547,7 @@ Note that the logging level is set to TRACE for the web client, to see the inter
 You should see the logs below if the server was configured correctly:
 
 ```
-2023-07-06T19:36:38.555-06:00  INFO 66168 --- [main] SpringBootConfigurationServerApplication : 
+2023-07-06T19:36:38.555-06:00  INFO 66168 --- [main] SpringBootConfigurationServerApplication :
  Started SpringBootConfigurationServerApplication in 1.011 seconds (process running for 1.184)
 ```
 
@@ -572,7 +568,7 @@ When the `vault-demo-app` starts, it will request the configuration to the confi
 
 Go to `http://localhost:8080` and verify that authentication with Okta works.
 
-Finally, let's seal Vault. Sealing allows you to lock Vault data to minimize damage when an intrusion is detected.  In the container command line, enter:
+Finally, let's seal Vault. Sealing allows you to lock Vault data to minimize damage when an intrusion is detected. In the container command line, enter:
 
 ```shell
 vault operator seal
@@ -594,16 +590,16 @@ vault operator unseal {unsealKey}
 
 Hopefully you see the benefits of using a secrets management tool like Vault as a configuration backend, as opposed to storing secrets in a file, on a file system, or in a code repository. To learn more about Vault and Spring Cloud, check out the following links:
 
-* [How Bad Can It Git?](https://www.ndss-symposium.org/ndss-paper/how-bad-can-it-git-characterizing-secret-leakage-in-public-github-repositories/)
-* [Spring Cloud Config - Vault Backend](https://cloud.spring.io/spring-cloud-config/reference/html/#vault-backend)
-* [Container Secrets with Vault](https://www.hashicorp.com/resources/securing-container-secrets-vault)
-* [Amazon Engineer Leaked Private Encryption Keys](https://gizmodo.com/amazon-engineer-leaked-private-encryption-keys-outside-1841160934)
+- [How Bad Can It Git?](https://www.ndss-symposium.org/ndss-paper/how-bad-can-it-git-characterizing-secret-leakage-in-public-github-repositories/)
+- [Spring Cloud Config - Vault Backend](https://cloud.spring.io/spring-cloud-config/reference/html/#vault-backend)
+- [Container Secrets with Vault](https://www.hashicorp.com/resources/securing-container-secrets-vault)
+- [Amazon Engineer Leaked Private Encryption Keys](https://gizmodo.com/amazon-engineer-leaked-private-encryption-keys-outside-1841160934)
 
 We have several related posts about encryption and storing secrets on this blog.
 
-* [Five Anti-Patterns with Secrets in Java](/blog/2021/12/14/antipatterns-secrets-java)
-* [Security Patterns for Microservice Architectures](/blog/2020/03/23/microservice-security-patterns)
-* [How to Secure Your Kubernetes Clusters With Best Practices](/blog/2021/12/02/k8s-security-best-practices)
+- [Five Anti-Patterns with Secrets in Java](/blog/2021/12/14/antipatterns-secrets-java)
+- [Security Patterns for Microservice Architectures](/blog/2020/03/23/microservice-security-patterns)
+- [How to Secure Your Kubernetes Clusters With Best Practices](/blog/2021/12/02/k8s-security-best-practices)
 
 You can find the code for this tutorial on GitHub in the [@oktadev/okta-spring-vault-example](https://github.com/oktadev/okta-spring-vault-example) repository.
 
