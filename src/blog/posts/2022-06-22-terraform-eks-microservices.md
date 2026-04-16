@@ -51,7 +51,7 @@ At this point, the first question that might pop up in your mind would be, "Why 
 
 You need a microservice stack to deploy to the cluster. I'm using a microservice stack scaffolded for demo purposes using [JHipster](https://www.jhipster.tech). You can use another microservice stack if you want. If you prefer using the same application as in this demo, then you can either scaffold it using JHipster [JDL](https://www.jhipster.tech/jdl/intro) or clone the sample repository from [GitHub](https://github.com/oktadev/okta-jhipster-k8s-eks-microservices-example).
 
-{% img "jhipster-k8s-eks-terraform/jh-microservice-eks.jpg", "JHipster microservice architecture", "900" %}
+{% img {src: "jhipster-k8s-eks-terraform/jh-microservice-eks.jpg", alt: "JHipster microservice architecture", header: "900"} %}
 
 **Option 1: Scaffold the microservice stack using JHipster**
 
@@ -81,7 +81,7 @@ Now let us move on to the important part of the tutorial. Creating an EKS cluste
 
 These are the AWS resources and VPC architecture you will create:
 
-{% img "jhipster-k8s-eks-terraform/tf-eks-arch.jpg", "AWS EKS and VPC architecture", "900" %}
+{% img {src: "jhipster-k8s-eks-terraform/tf-eks-arch.jpg", alt: "AWS EKS and VPC architecture", header: "900"} %}
 
 ### Build the Terraform configuration
 
@@ -496,7 +496,7 @@ vpc_public_subnet_cidr = [
 
 You should see the cluster details if you run `kdash` or `kubectl get nodes` commands.
 
-{% img "jhipster-k8s-eks-terraform/eks-cluster.png", "EKS cluster in KDash", "900" %}
+{% img {src: "jhipster-k8s-eks-terraform/eks-cluster.png", alt: "EKS cluster in KDash", header: "900"} %}
 
 > **Note**: The EKS cluster defined here will not come under AWS free tier; hence, running this will cost money, so delete the cluster as soon as you finish the tutorial to keep the cost within a few dollars.
 
@@ -565,7 +565,7 @@ cd kubernetes
 ./kubectl-apply.sh -f
 ```
 
-{% img "jhipster-k8s-eks-terraform/jhi-pods.png", "EKS cluster in KDash", "900" %}
+{% img {src: "jhipster-k8s-eks-terraform/jhi-pods.png", alt: "EKS cluster in KDash", header: "900"} %}
 
 You can also run the following command to see the status of the deployments:
 

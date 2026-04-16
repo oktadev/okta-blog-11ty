@@ -68,11 +68,11 @@ Remember that you can always switch to a self-hosted Elasticsearch instance with
 
 To get started, create a new Elastic Cloud account or log in to an existing one.
 
-{% img "ultimate-guide-elasticsearch-nodejs/creating-elastic-cloud-account.png", "Creating Elastic Cloud account", "800" %}
+{% img {src: "ultimate-guide-elasticsearch-nodejs/creating-elastic-cloud-account.png", alt: "Creating Elastic Cloud account", header: "800"} %}
 
 Inside the dashboard, click **Start your free trial** and configure a new deployment.
 
-{% img "ultimate-guide-elasticsearch-nodejs/configuring-elastic-cloud-deployment.png", "Configuring Elastic Cloud deployment", "800" %}
+{% img {src: "ultimate-guide-elasticsearch-nodejs/configuring-elastic-cloud-deployment.png", alt: "Configuring Elastic Cloud deployment", header: "800"} %}
 
 Copy the resulting deployment credentials and put them inside the **.elastic.env** file inside the **backend** folder:
 
@@ -83,7 +83,7 @@ ELASTIC_PASSWORD="your-password"
 
 The last detail you need is your deployment's Cloud ID. To get that, return to your dashboard and go to the deployment settings. You can access the settings by clicking on the cog next to the deployment name under the **Elasticsearch Service** section.
 
-{% img "ultimate-guide-elasticsearch-nodejs/elastic-cloud-dashboard.png", "Elastic Cloud dashboard", "800" %}
+{% img {src: "ultimate-guide-elasticsearch-nodejs/elastic-cloud-dashboard.png", alt: "Elastic Cloud dashboard", header: "800"} %}
 
 From there, copy the Cloud ID and paste it into the **.elastic.env** file as `ELASTIC_CLOUD_ID`:
 
@@ -408,7 +408,7 @@ const EditMenu = (props) => {
 
 With this setup, the app will look like this:
 
-{% img "ultimate-guide-elasticsearch-nodejs/initial-frontend.png", "The initial frontend", "800" %}
+{% img {src: "ultimate-guide-elasticsearch-nodejs/initial-frontend.png", alt: "The initial frontend", header: "800"} %}
 
 ### Integrating the frontend with the backend
 
@@ -500,7 +500,7 @@ useEffect(() => {
 
 Now, ensure both your backend and frontend servers are running, and check out all the features of your app!
 
-{% img "ultimate-guide-elasticsearch-nodejs/frontend-app-with-data.png", "Frontend app with populated data", "800" %}
+{% img {src: "ultimate-guide-elasticsearch-nodejs/frontend-app-with-data.png", alt: "Frontend app with populated data", header: "800"} %}
 
 ## Securing data access with Okta
 
@@ -708,7 +708,7 @@ const EditMenu = (props) => {
 
 With this done, the app is now fully secured with Okta, both on the frontend and the backend!
 
-{% img "ultimate-guide-elasticsearch-nodejs/final-result.png", "Final result", "800" %}
+{% img {src: "ultimate-guide-elasticsearch-nodejs/final-result.png", alt: "Final result", header: "800"} %}
 
 If you want to see the entire project, you can clone it from [GitHub here](https://github.com/oktadev/okta-elasticsearch-node-example).
 

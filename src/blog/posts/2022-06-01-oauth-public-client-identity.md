@@ -41,13 +41,13 @@ The authorization server is where all the decisions around issuing tokens are ma
 
 One example is the decision of whether or not to show a consent screen to inform the user of which application they are logging in to. For third-party apps, the consent screen is a critical part of the flow, communicating which app is requesting access to the user's account and what information will be shared with the app. For first-party apps, where the app is the same brand as the data being accessed, it doesn't necessarily make sense to ask the user for this permission. It would be awkward, for example, if the Twitter app asked you for permission to access your Twitter data. For this reason, many companies want to bypass the consent screen for first-party apps. With this policy in place, and with public clients, impersonating a first-party app means bypassing the consent screen and immediately issuing tokens to the impersonating application. 
 
-{% img "oauth-public-client-identity/authorization-screen.png", "An OAuth consent screen asking the user whether it is okay for the app to see their email address and files", "600" %}
+{% img {src: "oauth-public-client-identity/authorization-screen.png", alt: "An OAuth consent screen asking the user whether it is okay for the app to see their email address and files", header: "600"} %}
 
 This accomplishes basically nothing if you do this to your own account on your own device, but is potentially more interesting if you can accomplish this on someone else's device.
 
 A typical sequence when logging in to an application is to click the "log in" button, enter your credentials, be prompted with a consent screen, and be redirected back to the application.  
 
-{% img "oauth-public-client-identity/mobile-sequence.png", "Sequence of steps logging in to an application", "600" %}
+{% img {src: "oauth-public-client-identity/mobile-sequence.png", alt: "Sequence of steps logging in to an application", header: "600"} %}
 
 The authorization server may choose to skip the credential prompt if the user is already logged in. The authorization server may also choose to skip the consent screen if the user has already consented to this application before or for first-party apps. In that case, the redirect would be immediate, which is good for user experience, but bad if client impersonation is possible. Again, this isn't a concern for confidential clients since client impersonation isn't a concern if the client can authenticate. But for public clients, since the OAuth flow is done with only public information, client impersonation is definitely possible. That said, the original OAuth 2.0 specification actually calls this out explicitly in the [Security Considerations Section 10.2](https://datatracker.ietf.org/doc/html/rfc6749#section-10.2). The recommended mitigation from the original spec is to require redirect URL registration and to avoid skipping the consent screen. This gives the end user a chance to spot any attempts at tricking them into authorizing a malicious application.
 

@@ -767,11 +767,11 @@ HTTP/1.1 403 Forbidden
 
 To access the protected endpoints, you need to generate an access token JWT. {{ macro.oidcdebugger() }}
 
-{% img "java-jetty/oidc-debugger.png", "OIDC Debugger Configuration", "650" %}
+{% img {src: "java-jetty/oidc-debugger.png", alt: "OIDC Debugger Configuration", header: "650"} %}
 
 Scroll down and click **Send Request**.
 
-{% img "java-jetty/oidc-debugger-success.jpg", "OIDC Debugger Success", "800" %}
+{% img {src: "java-jetty/oidc-debugger-success.jpg", alt: "OIDC Debugger Success", header: "800"} %}
 
 Copy the access token to your clipboard and store it in a shell variable in the shell window you use to make requests.
 

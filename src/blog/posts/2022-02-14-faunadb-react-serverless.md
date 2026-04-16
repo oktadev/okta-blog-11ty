@@ -34,15 +34,15 @@ Once you have created the application you will need to set up a custom authoriza
 
 Run `okta login` and open the resulting URL in your favorite browser. Log in and navigate to **Security** > **API**. Select **Add Authorization Server** and give it a meaningful name and description. You can set your audience to anything (it cannot be left blank), but you will need to change this after setting up your FaunaDB database.
 
-{% img "fauna-react/add-authz-server.png", "Add Authorization Server", "800" %}
+{% img {src: "fauna-react/add-authz-server.png", alt: "Add Authorization Server", header: "800"} %}
 
 Next, click on **Access Policies** > **Add Policy**. Name it "Default" and give it a description.
 
-{% img "fauna-react/add-policy.png", "Add Policy", "648" %}
+{% img {src: "fauna-react/add-policy.png", alt: "Add Policy", header: "648"} %}
 
 Press **Create Policy** and then click **Add Rule**. Name the rule "Default Rule" and make sure **Authorization Code** is selected in the _Grant Type_ section. You can leave the rest of the rule as it is, but I encourage you to review these settings should you need to change them in the future.
 
-{% img "fauna-react/add-rule.png", "Add Rule", "669" %}
+{% img {src: "fauna-react/add-rule.png", alt: "Add Rule", header: "669"} %}
 
 Finally, return to the **Settings** tab and open the **Metadata URI** link. You will need the `jwks_uri` and `issuer` values from this page.
 
@@ -54,7 +54,7 @@ Next, head over to [Fauna](https://fauna.com/) and sign up for a new account. Af
 
 Now you will need to add a new role to the database. Fauna requires that you assign a custom role to your provider. Under the **Security** tab, navigate to **Roles**. Click **New Role**. Name your role "User" and add the `products` collection to it. Give this role **Read** access. Click **Save** to save the changes.
 
-{% img "fauna-react/new-role.png", "Add a new role to Fauna", "800" %}
+{% img {src: "fauna-react/new-role.png", alt: "Add a new role to Fauna", header: "800"} %}
 
 Now you will want to list Okta as a registered provider for this database. Select the **Providers** tab and select **New Access Provider**. Name the new provider "Okta" and add the details for your _Issuer_ and _JSON Web Key Secret URI_ that you retrieved from Okta earlier. Add the `User` role to the provider and click **Save**. Now Fauna will accept the token from Okta and treat the user as though they are part of the `User` role, giving that user access to read the product's collection.
 
@@ -360,7 +360,7 @@ This component handles the presentation of the products once they have returned 
 
 With your application ready you can execute the command `npm start` to see your application. Log in using your Okta credentials and wait a moment for the data to be returned from FaunaDB.
 
-{% img "fauna-react/run-app.png", "React + Fauna app!", "800" %}
+{% img {src: "fauna-react/run-app.png", alt: "React + Fauna app!", header: "800"} %}
 
 ## Learn more about FaunaDB and React
 

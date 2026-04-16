@@ -19,7 +19,7 @@ Briefly, _continuous integration_ is the practice of integrating code into the m
 
 _Continuous delivery_ is the practice of releasing to production often in a fast, safe, and automated way, allowing faster innovation and feedback loops. Its adoption requires the implementation of techniques and tools like Spinnaker, an open-source, multi-cloud, continuous delivery platform that provides application management and deployment features. The intersection between CI and CD is not always clear, but for this example, we assume CI produces and validates the artifacts and CD deploys them. The CI/CD workflow for the exploration of the proposed tools is illustrated below.
 
-{% img "jhipster-ci-cd/ci-cd-workflow.png", "CI/CD workflow", "900" %}
+{% img {src: "jhipster-ci-cd/ci-cd-workflow.png", alt: "CI/CD workflow", header: "900"} %}
 
 This tutorial was created with the following frameworks and tools:
 
@@ -269,7 +269,7 @@ To take advantage of the one-step GitHub integration of CircleCI, you need a [Gi
 
 [Sign up](https://circleci.com/integrations/github) at CircleCI with your GitHub account, and on the left menu choose **Projects**. Find the `store` project and click **Set Up Project**. Configure the project to use the **Fastest** option (Use the `.circleci/config.yml` in my repo) and type `main` for the branch. Click **Set Up Project** to continue.
 
-{% img "jhipster-ci-cd/circleci-project.png", "CircleCI project setup form", "450" %}
+{% img {src: "jhipster-ci-cd/circleci-project.png", alt: "CircleCI project setup form", header: "450"} %}
 
 Do the same for the `gateway` project. The configuration triggers an initial pipeline execution that will fail, because you still must set up Docker Hub credentials for both projects, allowing CircleCI to push the container images. At the `store` project page, on the top right, choose **Project Settings**. Then choose **Environment Variables**. Click **Add Environment Variable**. and set the following values:
 
@@ -280,7 +280,7 @@ Do the same for the `gateway` project. The configuration triggers an initial pip
 
 Once a project is set up in CircleCI, a pipeline is triggered each time a commit is pushed to the configured branch. The pipeline in execution appears on the **Dashboard** page. You can also manually trigger the pipeline from the **Dashboard** if you choose the project and branch from the pipeline filters, and then click **Trigger Pipeline**. Before moving on to the next section, manually execute the store pipeline and the gateway pipeline once, to push the first image of each to Docker Hub.
 
-{% img "jhipster-ci-cd/circleci-job-success.png", "CircleCI job success", "800" %}
+{% img {src: "jhipster-ci-cd/circleci-job-success.png", alt: "CircleCI job success", header: "800"} %}
 
 **NOTE**: If you modify the configuration, and encounter CircleCI cache errors, the only way I found to recreate the cache is to update the version prefix, for example:
 
@@ -529,7 +529,7 @@ k9s -n spinnaker
 
 A healthy Spinnaker deployment will look like this:
 
-{% img "jhipster-ci-cd/spinnaker-k9s.png", "Spinnaker k9s view", "800" %}
+{% img {src: "jhipster-ci-cd/spinnaker-k9s.png", alt: "Spinnaker k9s view", header: "800"} %}
 
 You can connect to the Spinnaker UI using the following command:
 
@@ -539,7 +539,7 @@ hal deploy connect
 
 Navigate to `http://localhost:9000` and the UI should load. The **Projects** tab should look like the screenshot below.
 
-{% img "jhipster-ci-cd/spinnaker-ui.png", "Spinnaker DeckUI", "800" %}
+{% img {src: "jhipster-ci-cd/spinnaker-ui.png", alt: "Spinnaker DeckUI", header: "800"} %}
 
 ## Set up CD for a JHipster microservices architecture
 
@@ -708,7 +708,7 @@ hal deploy connect
 
 Navigate to `https://localhost:9000` > **Applications**. Click **Create Application** and just set the application name and owner email. The repository type and additional fields are not mandatory and you can leave all blank for this test.
 
-{% img "jhipster-ci-cd/sp-store-app.png", "Spinnaker create application", "550" %}
+{% img {src: "jhipster-ci-cd/sp-store-app.png", alt: "Spinnaker create application", header: "550"} %}
 
 Then, on the left menu, choose **Pipelines** and click **Configure a new pipeline**. Set a name for the pipeline, for example, _store-cd_.
 
@@ -732,7 +732,7 @@ In the _Expected Artifact_ form, set the following values:
 
 Click **Save Artifact**.
 
-{% img "jhipster-ci-cd/sp-trigger-artifact.png", "Spinnaker pipeline trigger", "700" %}
+{% img {src: "jhipster-ci-cd/sp-trigger-artifact.png", alt: "Spinnaker pipeline trigger", header: "700"} %}
 
 **IMPORTANT NOTE**: Spinnaker provides a mechanism to [override](https://spinnaker.io/docs/guides/user/kubernetes-v2/deploy-manifest/#override-artifacts) the version of Docker images, Kubernetes ConfigMaps, and Secrets in manifests, injecting new versions when one of these objects exists in the pipeline context. However, Spinnaker documentation does not have a clear example of the trigger configuration for the Docker image to be available in the pipeline context. To make it happen, you must _set it as an artifact constraint in the trigger_. If the artifact constraint is not defined, the original image version in the manifests will be deployed, instead of the new image that triggered the pipeline. If no version is in the manifests, `latest` will be the default.
 
@@ -785,14 +785,14 @@ Repeat the process for adding stages to deploy `jhipster-registry.yml`, which mu
 
 Add a stage for the `store-deployment.yml` manifest, it must depend on the `store-mongodb` stage. For this manifest, you must bind the Docker image from the context. In the deploy manifest configuration, in **Required Artifacts to Bind**, choose **store-image**. The option must be available, as the image was set as an artifact constraint in the trigger configuration, making the artifact available in the pipeline context.
 
-{% img "jhipster-ci-cd/sp-bind-artifact.png", "Spinnaker deploy manifest configuration binding artifact", "700" %}
+{% img {src: "jhipster-ci-cd/sp-bind-artifact.png", alt: "Spinnaker deploy manifest configuration binding artifact", header: "700"} %}
 
 Also add a stage for the `gateway-deployment.yml`, binding the `gateway` Docker image. It must depend on the `gateway-postgresql` stage.
 
 Finally, add a stage for `store-service.yml`, which must depend on the `store-deployment` stage, and a stage for `gateway-service.yml`, which must depend on the `gateway-postgresql` stage. Notice that Docker images have to be bound only for the manifests that contain a reference to the image.
 The complete pipeline must look like this:
 
-{% img "jhipster-ci-cd/sp-jhipster-pipeline.png", "Spinnaker pipeline for jhipster microservices", "800" %}
+{% img {src: "jhipster-ci-cd/sp-jhipster-pipeline.png", alt: "Spinnaker pipeline for jhipster microservices", header: "800"} %}
 
 Test the pipeline manually once. Go to **Pipelines** and select **Start Manual Execution** for the _store-cd_ pipeline. Set the following options:
 
@@ -802,7 +802,7 @@ Test the pipeline manually once. Go to **Pipelines** and select **Start Manual E
 
 Successful execution will show all stages in a green state:
 
-{% img "jhipster-ci-cd/sp-pipeline-success.png", "Spinnaker pipeline successful execution", "800" %}
+{% img {src: "jhipster-ci-cd/sp-pipeline-success.png", alt: "Spinnaker pipeline successful execution", header: "800"} %}
 
 Get the external IP of the gateway:
 
@@ -817,7 +817,7 @@ Update the redirect URIs in Okta to allow the gateway address as a valid redirec
 
 Navigate to `http://<external-ip>:8080` and sign in to the application with your Okta credentials. Then try creating a `Product`:
 
-{% img "jhipster-ci-cd/app-create-product.png", "Create a product in the store application", "800" %}
+{% img {src: "jhipster-ci-cd/app-create-product.png", alt: "Create a product in the store application", header: "800"} %}
 
 ### Trigger the CI/CD pipeline with a GitHub push
 
@@ -835,7 +835,7 @@ IMAGE_NAME: indiepopart/gateway:v1
 
 Commit and push the change to the `main` branch, and watch the CircleCI CI pipeline triggers. After the new gateway image is pushed to Docker Hub, watch the Spinnaker CD pipeline trigger and deploy the updated gateway. On the left menu choose **Clusters**, and verify the active gateway deployment now has a _V002_. If you click over the **V002** box, you can also verify the image tag that was deployed.
 
-{% img "jhipster-ci-cd/sp-version-2.png", "Spinnaker deployment version 2", "800" %}
+{% img {src: "jhipster-ci-cd/sp-version-2.png", alt: "Spinnaker deployment version 2", header: "800"} %}
 
 You can delete clusters in between sessions to save costs with the following `gcloud` commands:
 

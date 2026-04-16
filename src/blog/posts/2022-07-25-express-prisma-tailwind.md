@@ -650,11 +650,11 @@ npm run start
 
 Once your application is started you should be able to navigate to _http://localhost:3000/_ and see your home page.
 
-{% img "express-prisma-and-tailwindcss/HomePage.PNG", "Home page", "800" %}
+{% img {src: "express-prisma-and-tailwindcss/HomePage.PNG", alt: "Home page", header: "800"} %}
 
 Use the login button at the top of the screen and navigate out to the Okta login page. Once you've logged in you will be redirected back to your website where you will be able to see your dashboard page.
 
-{% img "express-prisma-and-tailwindcss/DashboardPage.PNG", "Dashboard page", "800" %}
+{% img {src: "express-prisma-and-tailwindcss/DashboardPage.PNG", alt: "Dashboard page", header: "800"} %}
 
 ## What you learned in this article
 

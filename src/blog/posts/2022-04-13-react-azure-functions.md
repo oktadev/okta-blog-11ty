@@ -373,17 +373,17 @@ You will need to configure your Okta application for your newly deployed applica
 
 Edit your application and under the **Login** section, add your Azure domain with the `/login/callback` endpoint to the **Sign-in redirect URIs** section. Next, add the domain's home page to your **Sign-out redirect URIs** section.
 
-{% img "react-azure-functions/edit-okta-application.jpg", "Screenshot depicting Okta application after updates to include new Azure domain", "800" %}
+{% img {src: "react-azure-functions/edit-okta-application.jpg", alt: "Screenshot depicting Okta application after updates to include new Azure domain", header: "800"} %}
 
 Next, navigate to **Security** > **API** and click **Trusted Origins**. Add your Azure domain to this list.
 
-{% img "react-azure-functions/edit-okta-trusted-origins.jpg", "Screenshot depicting Okta trusted origins overview after updates to include new Azure domain", "800" %}
+{% img {src: "react-azure-functions/edit-okta-trusted-origins.jpg", alt: "Screenshot depicting Okta trusted origins overview after updates to include new Azure domain", header: "800"} %}
 
 ## Run your application
 
 Finally, navigate back to your Azure domain and log in using Okta. Select an image you want to use for your profile picture and click **Upload**. After a moment, your function should return your new badge.
 
-{% img "react-azure-functions/finished-app.jpg", "Screenshot depicting final application with an Intergalactic Mining Federation Agent badge that includes a profile image of your choosing along with your name", "800" %}
+{% img {src: "react-azure-functions/finished-app.jpg", alt: "Screenshot depicting final application with an Intergalactic Mining Federation Agent badge that includes a profile image of your choosing along with your name", header: "800"} %}
 
 ### Use the Azure emulator
 

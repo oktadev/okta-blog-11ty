@@ -90,7 +90,7 @@ You'll be prompted to select your favorite stylesheet format. The selection you 
 
 To add authentication with Auth0, you'll first need a [free Auth0 account](https://auth0.com/signup). Install the [Auth0 CLI](https://github.com/auth0/auth0-cli#installation) and run `auth0 login` to register your account. Then, run `auth0 apps create`. Use the name `auth0-demo` and specify a description of your choosing. Select **Single Page Web Application** and use `http://localhost:4200/home` for the Callback URL. Specify `http://localhost:4200` for the rest of the URLs. We're using 4200 as the port here because that's the default for local Angular development.
 
-{% img "angular-auth0/auth0-apps-create.png", "auth0 apps create", "800" %}
+{% img {src: "angular-auth0/auth0-apps-create.png", alt: "auth0 apps create", header: "800"} %}
 
 > You can also use the Auth0 Console to create an OIDC app:
 >
@@ -130,15 +130,15 @@ To see all the changes it makes to your files, see [this pull request on GitHub]
 
 Run `ng serve` in your app, and you should see a login button at `http://localhost:4200/home`.
 
-{% img "angular-auth0/auth0-login-button.png", "Auth0 Login button", "800" %}
+{% img {src: "angular-auth0/auth0-login-button.png", alt: "Auth0 Login button", header: "800"} %}
 
 Click the **Login** button and sign in with one of the configured users for your Auth0 application. Because this is just a demo, you probably haven't done that - more likely, you should sign up as a new user.
 
-{% img "angular-auth0/auth0-login-form.png", "Auth0 Login form", "800" %}
+{% img {src: "angular-auth0/auth0-login-form.png", alt: "Auth0 Login form", header: "800"} %}
 
 After login, you'll be redirected back to your app, and you'll see a **Logout** button displayed in the bottom left corner.
 
-{% img "angular-auth0/auth0-logout-button.png", "Auth0 Logout button", "800" %}
+{% img {src: "angular-auth0/auth0-logout-button.png", alt: "Auth0 Logout button", header: "800"} %}
 
 ### Display the authenticated user's name
 
@@ -160,7 +160,7 @@ Modify `src/app/home/home.component.html` to display a welcome message to the us
 
 Refresh your app, and you should see your name displayed.
 
-{% img "angular-auth0/display-user-name.png", "Display user's name", "800" %}
+{% img {src: "angular-auth0/display-user-name.png", alt: "Display user's name", header: "800"} %}
 
 If everything works—congrats!
 
@@ -176,7 +176,7 @@ To learn more about Angular and OIDC, check out the following blog posts:
 - [The Things to Keep in Mind about Auth](/blog/2021/10/29/things-to-keep-in-mind-about-auth)
 - [A Quick Guide to Angular and GraphQL](/blog/2021/10/22/angular-graphql)
 
-[{% img "angular-auth0/angular-mini-book.jpg", "The Angular Mini-Book", "100" %}{: .pull-right }](https://www.infoq.com/minibooks/angular-mini-book/)
+[{% img {src: "angular-auth0/angular-mini-book.jpg", alt: "The Angular Mini-Book", header: "100"} %}{: .pull-right }](https://www.infoq.com/minibooks/angular-mini-book/)
 I [just published a mini-book book on Angular](https://raibledesigns.com/rd/entry/the_angular_mini_book_1) that might interest you too. It's called [The Angular Mini-Book](https://www.infoq.com/minibooks/angular-mini-book/) and is available as a free download from InfoQ. The book is written tutorial-style and shows you how to develop a bare-bones application, test it, and deploy it. Then you'll move on to adding Bootstrap, Angular Material, continuous integration, and authentication. You'll also learn how to integrate Angular with Spring Boot (a popular REST API framework) and use security best practices like HTTPS and a content security policy.
 
 If you liked this tutorial, chances are you'll like others we publish. Please follow [Auth0](https://twitter.com/auth0) and [OktaDev](https://twitter.com/oktadev) on Twitter to get notified when we publish new developer tutorials.

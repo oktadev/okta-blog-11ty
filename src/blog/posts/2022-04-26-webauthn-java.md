@@ -27,7 +27,7 @@ WebAuthn authenticator generates a public-private key pair, using public-key cry
 
 There are two distinct steps for using WebAuthn: *credential registration* and *credential authentication*. Registration is the process of generating, scoping, and storing a public key for authentication. Both the authenticator and server will store some information about the other party. Authentication is the process of requesting a credential from an authenticator, then verifying its validity.
 
-{% img "webauthn-java/reg-flow-diagram.png", "WebAuthn registration flow", "800" %}
+{% img {src: "webauthn-java/reg-flow-diagram.png", alt: "WebAuthn registration flow", header: "800"} %}
 
 In this application, the user hits a **Register** button and the server responds with information about the origin of the registration (hostname and origin), a byte-based user handle for identification, a randomly generated challenge nonce, and other optional information about the type of registration the server will accept.
 
@@ -35,7 +35,7 @@ The browser receives this information. A JavaScript function on the client re-en
 
 The WebAuthn API passes the request to a connected authenticator, which normally requests some form of user verification (such as a PIN number or fingerprint), then generates a key pair for future verification and a credential ID to scope the relying party. The public key, credential ID, and challenge nonce, along with optional additional information, are passed back to the service provider; the provider checks the challenge nonce for tampering and then stores the public key and credential ID for future use.
 
-{% img "webauthn-java/auth-flow-diagram.png", "WebAuthn authentication flow", "800" %}
+{% img {src: "webauthn-java/auth-flow-diagram.png", alt: "WebAuthn authentication flow", header: "800"} %}
 
 Authentication functions similarly, though the content of the data passed around is slightly different. The user hits a **Sign-in** button and the service provider sends identifying information (credential ID and a challenge nonce). JavaScript on the client passes that request to the authenticator using the WebAuthn API, then the authenticator verifies the credential and returns a key, which is passed back to the service provider. The service provider verifies the key and performs any steps necessary to grant the user access to appropriate resources, like setting authentication cookies.
 
@@ -669,7 +669,7 @@ The browser checks with whatever source of authentication is available to it usi
 
 The server receives the `PublicKeyCredential` object and verifies the challenge field against the cached `PublicKeyCredentialCreationOptions` object. It checks the origin of the response, then creates a new credential data object by saving the `PublicKey` and `credentialId`. The server also saves some helpful information like a user-friendly name, the associated `user_id` for username and user handle lookup, and the AAGUID field associated with the authenticator. In addition, it creates a count field for tracking the number of times the credential has been used. A simple application would probably only need to store `publicKey` and `credentialId` for the credential.
 
-{% img "webauthn-java/reg-page.png", "Register authentication frontend", "800" %}
+{% img {src: "webauthn-java/reg-page.png", alt: "Register authentication frontend", header: "800"} %}
 
 ### Client JavaScript overview
 
@@ -700,7 +700,7 @@ The client provides a username, which is sent to the server using a `fetch` requ
 
 This `AssertionRequest` is passed to the client in a JSON response body. Any byte fields are again converted into Uint8Array objects, and the object is passed into `navigator.credentials.get()`. The resulting `AuthenticatorAssertionResponse` is Base64Url encoded and sent to the server as a JSON string. `clientDataJson`, like the server origin and challenge, are checked for tampering against the cached `AssertionRequest`; `authenticatorData` like `signatureCount` is updated and saved; and, most importantly, the `signature` field is checked against the stored `publicKey` generated during the creation ceremony. If all of these checks pass, the user is assigned a session, successfully signed in, and granted access to the application.
 
-{% img "webauthn-java/login-page.png", "Sign-in with authentication frontend", "800" %}
+{% img {src: "webauthn-java/login-page.png", alt: "Sign-in with authentication frontend", header: "800"} %}
 
 ### Testing the application
 
@@ -721,7 +721,7 @@ mvn spring-boot:run
 
 Then open your browser to `http://localhost:8080`.
 
-{% img "webauthn-java/app-welcome-page.png", "Successful authentication", "800" %}
+{% img {src: "webauthn-java/app-welcome-page.png", alt: "Successful authentication", header: "800"} %}
 
 ## An easier way to WebAuthn
 

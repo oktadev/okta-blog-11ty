@@ -88,13 +88,13 @@ Once the app is created, follow these steps:
 
 1.  Grant API scopes (for example: `okta.users.read`, `okta.groups.manage`).
 
-        {% img "okta-mcp-server/image10.jpeg", " ", "700" %}
+        {% img {src: "okta-mcp-server/image10.jpeg", alt: " ", header: "700"} %}
 
     <br>
 
 2.  Copy the Client ID for later use.
 
-    {% img "okta-mcp-server/image14.jpeg", " ", "700" %}
+    {% img {src: "okta-mcp-server/image14.jpeg", alt: " ", header: "700"} %}
 
 > **Note:** Why "Native App" and not "Service"?  
 > Device Auth is designed for user-driven flows, so it assumes someone is present to open the browser.
@@ -113,27 +113,27 @@ Use this if you're automating, scheduling jobs, or integrating into infrastructu
 
 1.  In your Okta org, create a new API Services App Integration.
 
-        {% img "okta-mcp-server/image11.jpeg", " ", "700" %}
+        {% img {src: "okta-mcp-server/image11.jpeg", alt: " ", header: "700"} %}
 
-        {% img "okta-mcp-server/image18.jpeg", " ", "700" %}
+        {% img {src: "okta-mcp-server/image18.jpeg", alt: " ", header: "700"} %}
 
     <br>
 
 2.  Under Client Authentication, select Public Key / Private Key.
 
-        {% img "okta-mcp-server/image19.jpeg", " ", "700" %}
+        {% img {src: "okta-mcp-server/image19.jpeg", alt: " ", header: "700"} %}
 
     <br>
 
 3.  Add a public key: either generate it in Okta (recommended) and copy it in PEM format, or upload your own keys.
 
-        {% img "okta-mcp-server/image13.jpeg", " ", "700" %}
+        {% img {src: "okta-mcp-server/image13.jpeg", alt: " ", header: "700"} %}
 
     <br>
 
 4.  Copy the Client ID and Key ID (KID).
 
-        {% img "okta-mcp-server/image12.jpeg", " ", "700" %}
+        {% img {src: "okta-mcp-server/image12.jpeg", alt: " ", header: "700"} %}
 
     <br>
 
@@ -141,9 +141,9 @@ Use this if you're automating, scheduling jobs, or integrating into infrastructu
 
 6.  Grant the necessary API scopes (e.g., `okta.users.read`, `okta.groups.manage`) and provide Super Administrator access.
 
-    {% img "okta-mcp-server/image10.jpeg", " ", "700" %}
+    {% img {src: "okta-mcp-server/image10.jpeg", alt: " ", header: "700"} %}
 
-    {% img "okta-mcp-server/image3.jpeg", " ", "700" %}
+    {% img {src: "okta-mcp-server/image3.jpeg", alt: " ", header: "700"} %}
 
 ### Configuring your client
 
@@ -240,12 +240,12 @@ When you open VS Code, you'll now see **okta-mcp-server** as an option to start.
 
 1. Click **Start** to launch the server in your `mcp.json` file.
 
-   {% img "okta-mcp-server/image2.jpeg", " ", "700" %}
+   {% img {src: "okta-mcp-server/image2.jpeg", alt: " ", header: "700"} %}
 
 2. The server will check your authentication method:
    - If using **Device Authorization**, it triggers a prompt to log in via your browser.
 
-     {% img "okta-mcp-server/image7.jpeg", " ", "700" %}
+     {% img {src: "okta-mcp-server/image7.jpeg", alt: " ", header: "700"} %}
 
    - If using **Private Key JWT**, it will authenticate silently using your key.
 
@@ -257,19 +257,19 @@ At this point, the MCP server has established a connection between VS Code and y
 
 **1\. Listing Users**
 
-{% img "okta-mcp-server/image9.jpeg", " ", "700" %}
+{% img {src: "okta-mcp-server/image9.jpeg", alt: " ", header: "700"} %}
 
 **2\. Creating Users**
 
-{% img "okta-mcp-server/image15.jpeg", " ", "700" %}
+{% img {src: "okta-mcp-server/image15.jpeg", alt: " ", header: "700"} %}
 
 **3\. Group Assignment**
 
-{% img "okta-mcp-server/image4.jpeg", " ", "700" %}
+{% img {src: "okta-mcp-server/image4.jpeg", alt: " ", header: "700"} %}
 
 **4\. Creating an Audit Report**
 
-{% img "okta-mcp-server/image5.jpeg", " ", "700" %}
+{% img {src: "okta-mcp-server/image5.jpeg", alt: " ", header: "700"} %}
 
 We invite you to try out our MCP server and experience the future of identity and access management. Meet us at Oktane, and if you run into issues, please open an issue in our [GitHub](https://github.com/okta/okta-mcp-server/) repository.
 

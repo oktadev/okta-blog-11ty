@@ -50,7 +50,7 @@ To begin, navigate to [start.spring.io](https://start.spring.io) and make the fo
 - **Artifact:** `jugtours`
 - **Dependencies**: `JPA`, `H2`, `Web`, `Lombok`
 
-{% img "spring-boot-react/spring-initializr.png", "Spring Initializr" %}
+{% img {src: "spring-boot-react/spring-initializr.png", alt: "Spring Initializr"} %}
 
 Click **Generate Project**, expand `jugtours.zip` after downloading, and open the project in your favorite IDE.
 
@@ -400,7 +400,7 @@ To learn more about proxying API requests, see Create React App's [documentation
 
 Make sure Spring Boot is running, then run `npm start` in your `app` directory. You should see the list of default groups.
 
-{% img "spring-boot-react/jug-list.png", "JUG List", "800" %}
+{% img {src: "spring-boot-react/jug-list.png", alt: "JUG List", header: "800"} %}
 
 ## Build a React `GroupList` component
 
@@ -611,11 +611,11 @@ nav + .container-fluid {
 
 Your React app should update itself as you make changes, and you should see a screen like the following at `http://localhost:3000`.
 
-{% img "spring-boot-react/home-with-link.png", "Home screen with Manage JUG Tour link", "800" %}
+{% img {src: "spring-boot-react/home-with-link.png", alt: "Home screen with Manage JUG Tour link", header: "800"} %}
 
 Click on **Manage JUG Tour** and you should see a list of the default groups.
 
-{% img "spring-boot-react/group-list.png", "Group List screen", "800" %}
+{% img {src: "spring-boot-react/group-list.png", alt: "Group List screen", header: "800"} %}
 
 It's great that you can see your Spring Boot API's data in your React app, but it's no fun if you can't edit it!
 
@@ -742,9 +742,9 @@ const App = () => {
 
 Now you should be able to add and edit groups!
 
-{% img "spring-boot-react/add-group.png", "Add Group screen", "800" %}
+{% img {src: "spring-boot-react/add-group.png", alt: "Add Group screen", header: "800"} %}
 
-{% img "spring-boot-react/edit-group.png", "Edit Group screen", "800" %}
+{% img {src: "spring-boot-react/edit-group.png", alt: "Edit Group screen", header: "800"} %}
 
 ## Add authentication with Okta
 
@@ -1317,9 +1317,9 @@ export default GroupEdit;
 
 After all these changes, you should be able to restart both Spring Boot and React and witness the glory of planning your very own JUG Tour!
 
-{% img "spring-boot-react/react-login.png", "React Login", "800" %}
+{% img {src: "spring-boot-react/react-login.png", alt: "React Login", header: "800"} %}
 
-{% img "spring-boot-react/my-jug-tour.png", "My JUG Tour", "800" %}
+{% img {src: "spring-boot-react/my-jug-tour.png", alt: "My JUG Tour", header: "800"} %}
 
 ## Configure Maven to build and package React with Spring Boot
 
@@ -1434,7 +1434,7 @@ spring.profiles.active=@spring.profiles.active@
 
 After adding this, you should be able to run `./mvnw spring-boot:run -Pprod` and see your app running on `http://localhost:8080`.
 
-{% img "spring-boot-react/localhost-8080.png", "App Running with Maven", "800" %}
+{% img {src: "spring-boot-react/localhost-8080.png", alt: "App Running with Maven", header: "800"} %}
 
 Everything will work just fine if you start at the root, since React will handle routing. However, if you refresh the page when you're at `http://localhost:8080/groups`, you'll get a 404 error since Spring Boot doesn't have a route for `/groups`. To fix this, add a `SpaWebFilter` that conditionally forwards to the React app.
 

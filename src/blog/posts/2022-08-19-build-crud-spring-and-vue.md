@@ -20,7 +20,7 @@ changelog:
 
 You will use Vue and Spring Boot to build a todo list web application. The application will include CRUD abilities, meaning that you can **c**reate, **r**ead, **u**pdate, and **d**elete the todo items on the Spring Boot API via the client. The Vue frontend client will use the Quasar framework for the presentation. OAuth 2.0 and OpenID Connect (OIDC) will secure the Spring Boot API and the Vue client, initially by using Okta as the security provider. Then, at the end of the tutorial, you will also see how to use Auth0 as the security provider.
 
-{% img "spring-boot-vue3/spring-and-vue.png", "Spring Boot, Vue, and Okta logos", "500" %}
+{% img {src: "spring-boot-vue3/spring-and-vue.png", alt: "Spring Boot, Vue, and Okta logos", header: "500"} %}
 
 This project has two major parts:
 
@@ -1058,15 +1058,15 @@ npm run serve
 
 Open a browser and navigate to `http://localhost:8080`. You'll see the "please log in" page.
 
-{% img "spring-boot-vue3/please-log-in.png", "Please log in", "800" %}
+{% img {src: "spring-boot-vue3/please-log-in.png", alt: "Please log in", header: "800"} %}
 
 Log into the app using Okta's sign-in interface.
 
-{% img "spring-boot-vue3/okta-login.png", "Okta SSO login", "500" %}
+{% img {src: "spring-boot-vue3/okta-login.png", alt: "Okta SSO login", header: "500"} %}
 
 That will redirect you to the Todo app's main screen.
 
-{% img "spring-boot-vue3/app-main-screen.png", "Todo app main screen", "800" %}
+{% img {src: "spring-boot-vue3/app-main-screen.png", alt: "Todo app main screen", header: "800"} %}
 
 You should be able to delete items, add new items, rename, and filter items. All data is stored on the Spring Boot resource server and is presented by the Vue + Quasar frontend.
 
@@ -1433,7 +1433,7 @@ npm run serve
 
 This time when you log in you will be directed to Auth0.
 
-{% img "spring-boot-vue3/auth0-login.png", "Auth0 Login", "500" %}
+{% img {src: "spring-boot-vue3/auth0-login.png", alt: "Auth0 Login", header: "500"} %}
 
 After that, you will be redirected back to the todo app.
 

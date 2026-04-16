@@ -21,7 +21,7 @@ In this second post, we're building on the site we created in part one, [How to 
 
 In the end, you'll have an app that looks like this publicly available through Vercel:
 
-{% img "angular-microfrontend-deploy/final-app.gif", "Animated gif showing the final project with micro frontends that handle the cupcake shopping basket, authentication, and profile information", "800" %}
+{% img {src: "angular-microfrontend-deploy/final-app.gif", alt: "Animated gif showing the final project with micro frontends that handle the cupcake shopping basket, authentication, and profile information", header: "800"} %}
 
 **Prerequisites**
 
@@ -111,7 +111,7 @@ Now that the cupcakes site is working locally let's deploy this beautiful websit
 
 First, [push your project up to a GitHub repo](https://docs.github.com/en/get-started/quickstart/create-a-repo). If you wish to obscure your Okta configuration, you can make the repo private. The Okta configuration code is not confidential information, as single-page applications are public clients. If you don't like committing the configuration values into code, you can load the configuration values at runtime or use environment variables as part of your build step. I won't get into the details of how to handle that here, but I will include some links at the end. Make sure to leave the checkbox for **Intialize this repository with a README** unchecked.
 
-{% img "angular-microfrontend-deploy/github-repo.jpg", "GitHub repo creation with private repo selected and 'Add a README file' checkbox unchecked", "600" %}
+{% img {src: "angular-microfrontend-deploy/github-repo.jpg", alt: "GitHub repo creation with private repo selected and 'Add a README file' checkbox unchecked", header: "600"} %}
 
 In the Vercel dashboard, press the **+ New Project** button to import a Git repository. Depending on what permissions you granted to Vercel, you might see your newly created GitHub repo immediately. If not, follow the instructions to adjust GitHub app permissions and allow Vercel access to the repo. Press the **Import** button for the repo to continue. You'll see a form to configure the project within Vercel.
 
@@ -119,7 +119,7 @@ The idea behind micro frontends is to be able to deploy each application indepen
 
 First, we'll configure the project for the micro-frontend host, the `shell` application. To keep the projects organized, incorporate the application name into the Vercel project name, such as `okta-angular-mfe-shell`. You'll also need to update the build command and output directory for the `shell` application. Update your configuration to look like the screenshot below.
 
-{% img "angular-microfrontend-deploy/vercel-configure-shell.jpg", "Vercel configuration for shell application. The build command is set to 'ng build shell' and the output directory is 'dist/shell/'", "800" %}
+{% img {src: "angular-microfrontend-deploy/vercel-configure-shell.jpg", alt: "Vercel configuration for shell application. The build command is set to 'ng build shell' and the output directory is 'dist/shell/'", header: "800"} %}
 
 Press the **Deploy** button to kick off a build and deploy the application.
 
@@ -127,13 +127,13 @@ You'll see a screenshot of the application and a button to return to the dashboa
 
 Return to the Vercel dashboard, create a new project, and select the same repo to import. This time we'll configure the remote application `mfe-basket`. Update your configuration to look like the screenshot below.
 
-{% img "angular-microfrontend-deploy/vercel-configure-mfe-basket.jpg", "Vercel configuration for mfe-basket application. The build command is set to 'ng build mfe-basket' and the output directory is 'dist/mfe-basket/'", "800" %}
+{% img {src: "angular-microfrontend-deploy/vercel-configure-mfe-basket.jpg", alt: "Vercel configuration for mfe-basket application. The build command is set to 'ng build mfe-basket' and the output directory is 'dist/mfe-basket/'", header: "800"} %}
 
 Take note of the deployed URI for the `mfe-basket` application.
 
 Return to the Vercel dashboard to repeat the process for the final remote application, `mfe-profile`. Update your configuration to look like the screenshot below.
 
-{% img "angular-microfrontend-deploy/vercel-configure-mfe-profile.jpg", "Vercel configuration for mfe-profile application. The build command is set to 'ng build mfe-profile' and the output directory is 'dist/mfe-profile/'", "800" %}
+{% img {src: "angular-microfrontend-deploy/vercel-configure-mfe-profile.jpg", alt: "Vercel configuration for mfe-profile application. The build command is set to 'ng build mfe-profile' and the output directory is 'dist/mfe-profile/'", header: "800"} %}
 
 Take note of the deployed URI for the `mfe-profile` application.
 
@@ -204,11 +204,11 @@ Angular automatically replaces the `environment.ts` file to match when you build
 
 You'll need to update the Okta application with the new deploy location so that you can sign in. Open the Okta dashboard. Navigate to **Applications** > **Applications** and select the Okta application you created for this project. On the **General** tab, press the **Edit** button on the **General Settings** section and add the new deploy URI for the `shell` application.
 
-{% img "angular-microfrontend-deploy/okta-configure-redirects.jpg", "Okta configuration for adding the Vercel deploy URI of shell application as 'Sign-in redirect URIs' and 'Sign-out redirect URIs'. The 'Sign-in redirect URI' should include the '/login/callback' route, while the 'Sign-out redirect URIs' is the deploy URI as is.", "800" %}
+{% img {src: "angular-microfrontend-deploy/okta-configure-redirects.jpg", alt: "Okta configuration for adding the Vercel deploy URI of shell application as 'Sign-in redirect URIs' and 'Sign-out redirect URIs'. The 'Sign-in redirect URI' should include the '/login/callback' route, while the 'Sign-out redirect URIs' is the deploy URI as is.", header: "800"} %}
 
 Next, add the deploy URI as a Trusted Origin in Okta. Navigate to **Security** > **API** and then navigate to the **Trusted Origins** tab. Press **+ Add Origin**. Add the deploy location and select **CORS** for the type.
 
-{% img "angular-microfrontend-deploy/okta-configure-trusted-origin.jpg", "Okta configuration for adding the Vercel deploy URI of shell application to trusted origin. Type 'CORS' is selected.", "800" %}
+{% img {src: "angular-microfrontend-deploy/okta-configure-trusted-origin.jpg", alt: "Okta configuration for adding the Vercel deploy URI of shell application to trusted origin. Type 'CORS' is selected.", header: "800"} %}
 
 Commit your changes and push to your main branch. After the build succeeds, you should be able to use the deployed site from end to end!
 

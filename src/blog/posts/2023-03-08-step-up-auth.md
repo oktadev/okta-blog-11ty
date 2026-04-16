@@ -107,7 +107,7 @@ With **OIDC**, this behavior is achievable using the `acr_values` and `max_a
 
 The following diagram steps through the sequence of access-
 
-{% img "step-up-auth/request-timing.jpg", "timing of authentication and re-authentication", "800" %}
+{% img {src: "step-up-auth/request-timing.jpg", alt: "timing of authentication and re-authentication", header: "800"} %}
 
 
 -   The acr_values parameter will have the assurance level requested for a session. 

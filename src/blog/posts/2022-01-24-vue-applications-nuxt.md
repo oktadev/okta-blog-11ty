@@ -16,7 +16,7 @@ github: https://github.com/oktadev/okta-vue-nuxt-example
 
 In this tutorial, you will build a small web application that retrieves some posts from an API and displays them for authenticated users. For authentication, you will integrate Okta into your Nuxt application. Okta's simple authentication system and the power of Nuxt means you can configure and set up your authentication in just a few moments.
 
-{% img "vue-applications-nuxt/vue-nuxt-social.jpg", "Cover image with a screenshot of the finished Nuxt app.", "800" %}
+{% img {src: "vue-applications-nuxt/vue-nuxt-social.jpg", alt: "Cover image with a screenshot of the finished Nuxt app.", header: "800"} %}
 
 **What you'll need**
 
@@ -62,7 +62,7 @@ npm run dev
 
 If you open http://localhost:3000/ in your browser, you will see the default Nuxt page.
 
-{% img "vue-applications-nuxt/nuxt-default-page.png", "The default Nuxt page.", "800" %}
+{% img {src: "vue-applications-nuxt/nuxt-default-page.png", alt: "The default Nuxt page.", header: "800"} %}
 
 The Nuxt project layout is pretty straightforward. First you have a `.nuxt` folder where your compiled server code will end up. Next there is a `components` folder. You won't use the folder in this tutorial, but breaking pages into components is common practice in larger projects. These components are then reusable in a number of pages. Next you will find a `pages` folder where your pages will go. Your routes will be inferred by Nuxt from these views. The `static` folder is where you can house css, images, or other static content to display. The store directory contains your [Vuex](https://vuex.vuejs.org/) store files.
 
@@ -313,11 +313,11 @@ Finally you will need to add the login page where Nuxt will route unauthenticate
 
 Now that your application is complete you can run `npm run dev` from your terminal and the application will build. You should see the home page first.
 
-{% img "vue-applications-nuxt/app-home-page.png", "The home page of the Nuxt application.", "800" %}
+{% img {src: "vue-applications-nuxt/app-home-page.png", alt: "The home page of the Nuxt application.", header: "800"} %}
 
 Click on **Dashboard** or **Login** and this should route you to the Okta login form. You can enter your Okta credentials here and you will be routed to the `Dashboard` page where you can view the posts.
 
-{% img "vue-applications-nuxt/dashboard-page.png", "The dashboard page of the Nuxt application.", "800" %}
+{% img {src: "vue-applications-nuxt/dashboard-page.png", alt: "The dashboard page of the Nuxt application.", header: "800"} %}
 
 ## Do more with Nuxt and Vue
 

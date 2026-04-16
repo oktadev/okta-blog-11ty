@@ -159,7 +159,7 @@ docker compose up
 
 Access the JHipster Registry at `http://localhost:8761` and sign in with your Okta credentials. When you see all services up and green, go to `http://localhost:8080` and sign in with your Okta account.
 
-{% img "spring-data-elasticsearch/okta-signin.png", "Okta Sign In Form", "400" %}
+{% img {src: "spring-data-elasticsearch/okta-signin.png", alt: "Okta Sign In Form", header: "400"} %}
 
 **IMPORTANT NOTE**: There is a potential issue observed for the blog service. As [Kubernetes probes](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.kubernetes-probes) are enabled by default, the blog application might change its state to `OUT_OF_SERVICE` during start up and Eureka might discard the following heartbeats with state `UP`. In this case, disable Kubernetes probes in the `docker-compose.yml` with the following environment variable:
 
@@ -179,7 +179,7 @@ During startup, Spring Data Elasticsearch will create the index for the entities
 
 As our Kibana interface was configured in Docker Compose, before creating any entities, let's inspect the index mappings that were automatically created for the `blog` microservice. Go to `http://localhost:5601`, the Kibana dashboard. On the top left menu, go to **Management** > **Stack Management** > **Index Management** > **Indices** tab. Besides the `user` index, an index per entity should be listed.
 
-{% img "spring-data-elasticsearch/kibana-indexes.png", "Kibana Indexes", "800" %}
+{% img {src: "spring-data-elasticsearch/kibana-indexes.png", alt: "Kibana Indexes", header: "800"} %}
 
 Choose for example the `tag` index. Before persisting any instance, the **Mappings** tab will look like the following:
 
@@ -203,7 +203,7 @@ As you can see, properties are not mapped yet.
 
 Go back to the application, and in the top-right menu go to **Entities** > **Tag** and create some `Tag` entities. Then create some `Blog` and `Post` entities as well. You'll see that a search box is present on the entity list page. Go ahead and test the search functionality. The results page will return the matches with pagination.
 
-{% img "spring-data-elasticsearch/entity-search-box.png", "Entity Search Box", "800" %}
+{% img {src: "spring-data-elasticsearch/entity-search-box.png", alt: "Entity Search Box", header: "800"} %}
 
 Go back to Kibana, and display the `Tag` mappings after persistence:
 
@@ -265,7 +265,7 @@ http :9200/tag/_mapping
 
 The output should look the same as the mapping visualized in Kibana:
 
-{% img "spring-data-elasticsearch/kibana-index-mapping.png", "Kibana Index Mapping", "800" %}
+{% img {src: "spring-data-elasticsearch/kibana-index-mapping.png", alt: "Kibana Index Mapping", header: "800"} %}
 
 ## Key components in reactive Spring Data Elasticsearch
 
@@ -273,7 +273,7 @@ As mentioned before, the `blog` application is reactive, and that's because the 
 
 This config also tells JHipster to include the Elasticsearch dependencies in the `blog` microservice. JHipster generates the web layer with the entity resource class, and it optionally generates the service class too. Two of the key components that enable the Elasticsearch reactive integration are the `ReactiveElasticsearchClient` and the `ReactiveElasticsearchOperations`. A client is required to connect to an Elasticsearch cluster or node, and `*Operations` is the interface for the execution of CRUD and query commands. The third component is the entity `ReactiveElasticsearchRepository`, which can provide domain-specific search methods.
 
-{% img "spring-data-elasticsearch/spring-data-collaboration.png", "Spring Data Collaboration", "600" %}
+{% img {src: "spring-data-elasticsearch/spring-data-collaboration.png", alt: "Spring Data Collaboration", header: "600"} %}
 
 When using the starter dependency, `ReactiveElasticsearchRestClientAutoConfiguration` configures the reactive Elasticsearch client from the Spring Elasticsearch properties. `ElasticsearchDataAutoConfiguration` is the root configuration class that triggers the reactive search template initialization. Let's briefly describe each of the mentioned components.
 

@@ -35,7 +35,7 @@ This tutorial was created with the following frameworks and tools:
 
 DigitalOcean is a cloud services company founded in 2011 by brothers Ben and Moisey Uretsky. Their headquarters are in New York City in the United States, and they also have offices in Massachusetts and Bangalore. Last March 2022, DigitalOcean reached its IPO (Initial Public Offering), and some press articles describe it as the cloud services provider for small businesses: "Cloud services for the Little Guy".
 
-{% img "jhipster-digital-ocean/do-logo.png", "DigitalOcean Logo", "200" %}
+{% img {src: "jhipster-digital-ocean/do-logo.png", alt: "DigitalOcean Logo", header: "200"} %}
 
 DigitalOcean Kubernetes (DOKS) is a managed Kubernetes service that lets you deploy Kubernetes clusters without the complexities of handling the control pane and containerized infrastructure. Clusters are compatible with standard Kubernetes toolchains and integrate natively with DigitalOcean load balancers and block storage volumes. DOKS offers fast provisioning and deployment, and provides a free high-availability control pane, for reliability management. It can also provide a Cluster Autoscaler that automatically adjusts the size of the cluster by adding or removing nodes based on the cluster's capacity to schedule pods. Pricing for Kubernetes workloads is based on resources required by the cluster, droplets, block storage, and load balancers.
 
@@ -190,7 +190,7 @@ Now is a good time to install [k9s](https://k9scli.io/topics/install/), a termin
 k9s -n demo
 ```
 
-{% img "jhipster-digital-ocean/k9s-pods.png", "k9s UI", "800" %}
+{% img {src: "jhipster-digital-ocean/k9s-pods.png", alt: "k9s UI", header: "800"} %}
 
 Check out the [commands list](https://k9scli.io/topics/commands/), some useful ones are:
 
@@ -237,7 +237,7 @@ doctl auth init
 
 You will be prompted to enter the DigitalOcean access token that you can generate in the DigitalOcean control panel. Sign in, and then in the left menu go to **API**, click **Generate New Token**. Enter a token name, and click **Generate Token**. Copy the new token from the **Tokens/Keys** table.
 
-{% img "jhipster-digital-ocean/do-control-panel-token.png", "DigitalOcean Control Panel for Token Create", "500" %}
+{% img {src: "jhipster-digital-ocean/do-control-panel-token.png", alt: "DigitalOcean Control Panel for Token Create", header: "500"} %}
 
 You can find a detailed list of pricing for cluster resources at [DigitalOcean](https://docs.digitalocean.com/products/kubernetes/), and with `doctl` you can quickly retrieve a list of node size options available for your account:
 
@@ -263,7 +263,7 @@ Monitor the deployment with k9s:
 k9s -n demo
 ```
 
-{% img "jhipster-digital-ocean/k9s-do-cluster.png", "k9s user interface monitoring DigitalOcean Kubernetes", "800" %}
+{% img {src: "jhipster-digital-ocean/k9s-do-cluster.png", alt: "k9s user interface monitoring DigitalOcean Kubernetes", header: "800"} %}
 
 Once you see the `jhipster-registry` pods are up, set up port forwarding again so you can also monitor the status of the services in the registry UI.
 
@@ -380,19 +380,19 @@ Taking advantage of the simplified certificate management, SSL termination will 
 
 Log in to your DigitalOcean account, and in the left menu choose **Kubernetes**. Then choose your cluster, and on the cluster page, choose **Resources**. In the _LOAD BALANCERS_ list, choose the single load balancer that must have been created. On the load balancer page, choose the **Settings** tab. Click **Edit** in the _Forwarding Rules_. Add a forwarding rule for HTTPS in port 443, and in the certificate drop-down, choose **New certificate**.
 
-{% img "jhipster-digital-ocean/do-new-certificate.png", "DigitalOcean new certificate form", "500" %}
+{% img {src: "jhipster-digital-ocean/do-new-certificate.png", alt: "DigitalOcean new certificate form", header: "500"} %}
 
 In the **New Certificate** form, choose the **Use Let's Encrypt** tab, and then in the domain box, choose **Add new domain**. Then enter your domain name, and list other subdomains to include. Add a name for the certificate and click **Generate Certificate**.
 
-{% img "jhipster-digital-ocean/do-new-domain.png", "DigitalOcean new domain form", "500" %}
+{% img {src: "jhipster-digital-ocean/do-new-domain.png", alt: "DigitalOcean new domain form", header: "500"} %}
 
 Back in the _Forwarding rules_ page, check that the generated certificate is selected, and forward the traffic to the droplet HTTP port where the gateway is running. Tick the checkbox **Create DNS records for all the new Let's Encrypt certificates** and then **Save** the forwarding settings.
 
-{% img "jhipster-digital-ocean/do-forwarding.png", "DigitalOcean load balancer forwarding settings", "800" %}
+{% img {src: "jhipster-digital-ocean/do-forwarding.png", alt: "DigitalOcean load balancer forwarding settings", header: "800"} %}
 
 Finally, in the SSL section of the settings, tick the checkbox **Redirect HTTP to HTTPS**.
 
-{% img "jhipster-digital-ocean/do-ssl-redirect.png", "DigitalOcean load balancer ssl redirect settings", "800" %}
+{% img {src: "jhipster-digital-ocean/do-ssl-redirect.png", alt: "DigitalOcean load balancer ssl redirect settings", header: "800"} %}
 
 Once again, update the redirect URIs in Okta to allow the newly configured domain. Add the following redirect URIs:
 

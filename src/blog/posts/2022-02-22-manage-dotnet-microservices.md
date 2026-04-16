@@ -21,7 +21,7 @@ However, the [API Federation](https://engineering.salesforce.com/api-federation-
 
 The gateway also short-circuits requests that otherwise might use unnecessary resources. Protecting internal APIs and microservices from [DDoS detection](https://www.kentik.com/kentipedia/ddos-detection/) can be added in one place, which safeguards backend services.
 
-{% img "dotnet-microservices-federation/apigateway.png", "API gateway", "800" %}
+{% img {src: "dotnet-microservices-federation/apigateway.png", alt: "API gateway", header: "800"} %}
 
 In this article, you'll learn how to build [.NET microservices](https://dotnet.microsoft.com/en-us/learn/aspnet/microservices-architecture) that are federated via another .NET API gateway. You'll see how using an API gateway can protect internal services from the outside world by allowing the gateway to handle authentication using [Okta's](https://www.okta.com/) authentication services. These are easily integrated into our .NET microservice.
 
@@ -234,17 +234,17 @@ Both of these files make the services listen to traffic on a custom port so that
 
 Now, it's time to try to run it. Open up three separate terminals (any terminal should work). Navigate to the root directory for each of the .NET projects you created and execute `dotnet run`.
 
-{% img "dotnet-microservices-federation/threeterminals.png", "Three terminals running .NET projects", "800" %}
+{% img {src: "dotnet-microservices-federation/threeterminals.png", alt: "Three terminals running .NET projects", header: "800"} %}
 
 To test the API gateway, run the following request in Postman:
 
-{% img "dotnet-microservices-federation/httprequest.png", "HTTP request in Postman", "600" %}
+{% img {src: "dotnet-microservices-federation/httprequest.png", alt: "HTTP request in Postman", header: "600"} %}
 
 You should see some HTTP headers and the HTTP body "You're looking at SKU 1234!"
 
 Here's what the current topology looks like:
 
-{% img "dotnet-microservices-federation/gateway.png", ".NET API gateway routing", "800" %}
+{% img {src: "dotnet-microservices-federation/gateway.png", alt: ".NET API gateway routing", header: "800"} %}
 
 ## Add Okta auth to your API gateway
 
@@ -252,7 +252,7 @@ In the next steps, you'll add authentication to your API gateway. By placing aut
 
 Here, you'll be using the API gateway to proxy requests for API access tokens to Okta behind the scenes.
 
-{% img "dotnet-microservices-federation/okta.png", "Okta as the identity provider", "800" %}
+{% img {src: "dotnet-microservices-federation/okta.png", alt: "Okta as the identity provider", header: "800"} %}
 
 In these next steps, you'll be utilizing your [Okta account](https://developer.okta.com/signup).
 
@@ -367,11 +367,11 @@ You'll have to provide a bearer token to the gateway service in order to access 
 
 To get an access token to access `/sales/sku/<sku>`, you'll need to execute the following request in Postman by using your own `client_id` and `client_secret` values:
 
-{% img "dotnet-microservices-federation/postman.png", "Request token in Postman", "600" %}
+{% img {src: "dotnet-microservices-federation/postman.png", alt: "Request token in Postman", header: "600"} %}
 
 You should have a response with the `access_token` displayed. Copy the token and then issue the following request using Postman to replace the bearer token with your access token:
 
-{% img "dotnet-microservices-federation/successresponse.png", "Successful response in Postman", "600" %}
+{% img {src: "dotnet-microservices-federation/successresponse.png", alt: "Successful response in Postman", header: "600"} %}
 
 If implemented correctly, you should see a successful response!
 
@@ -381,7 +381,7 @@ In Visual Studio, right-click each project and click on **Add** > **Docker Suppo
 
 Right-click the `ServiceGateway` project and choose **Add** > **Container orchestration support**. Choose **Docker Compose** and then **Linux** as the target OS. This step will add a `docker-compose.yml` file.
 
-{% img "dotnet-microservices-federation/vsdocker.png", "Visual Studio Docker tools", "600" %}
+{% img {src: "dotnet-microservices-federation/vsdocker.png", alt: "Visual Studio Docker tools", header: "600"} %}
 
 Replace the `docker-compose.yml` file with the following:
 
@@ -429,11 +429,11 @@ At the top of Visual Studio 2022, there will be a new launch profile available c
 
 Use the same Postman request as earlier to fetch your token:
 
-{% img "dotnet-microservices-federation/requesttoken.png", "Request token in Postman", "600" %}
+{% img {src: "dotnet-microservices-federation/requesttoken.png", alt: "Request token in Postman", header: "600"} %}
 
 Then, using that token, you can make requests to the `/sales/sku/<sku>` path:
 
-{% img "dotnet-microservices-federation/postmanresponse.png", "Successful response in Postman", "600" %}
+{% img {src: "dotnet-microservices-federation/postmanresponse.png", alt: "Successful response in Postman", header: "600"} %}
 
 Now you can run all your microservices and the API gateway and test them.
 

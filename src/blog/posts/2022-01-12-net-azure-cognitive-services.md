@@ -19,9 +19,9 @@ In this article, you will learn how to use the Vision [Face API](https://docs.mi
 
 At the end of this post, you'll be able to upload a profile picture in your app and get information about image error conditions, such as when zero or more than one face is detected or when your facial features don't match a new picture.
 
-{% img "net-azure-cognitive-services/final.jpg", "Final project with user profile info and a profile picture.", "800" %}
+{% img {src: "net-azure-cognitive-services/final.jpg", alt: "Final project with user profile info and a profile picture.", header: "800"} %}
 
-{% img "net-azure-cognitive-services/errors.jpg", "Two error screenclips. One showing three faces detected instead of one, and the other with an unrecognized facial features.", "800" %}
+{% img {src: "net-azure-cognitive-services/errors.jpg", alt: "Two error screenclips. One showing three faces detected instead of one, and the other with an unrecognized facial features.", header: "800"} %}
 
 [[toc]]
 
@@ -210,7 +210,7 @@ dotnet add OktaProfilePicture package Okta.Sdk --version 5.3.1
 
 The Okta management SDK requires an API token that we manually generate. Log in to the [Okta admin dashboard](https://developer.okta.com/login/). Then navigate to **Security** > **API** > **Tokens** tab and press the **Create Token** button. Enter a name for the token (I will use "OktaProfilePicture") and press the **Create Token** button to finish creating the token. Make sure you copy the token value because you won't be able to view it again:
 
-{% img "net-azure-cognitive-services/token.jpg", "Screenshot of Okta dashboard to create a token", "800" %}
+{% img {src: "net-azure-cognitive-services/token.jpg", alt: "Screenshot of Okta dashboard to create a token", header: "800"} %}
 
 Now we can add the token to the settings file. Open `appSettings.Development.json`, and add a new property named `ApiToken` inside the Okta section. Add your token value. Your settings file should look like this.
 
@@ -336,7 +336,7 @@ Now that we have a `Profile` method, we can update the main navbar. Open `Views/
 
 You can view your profile, but the edit button doesn't work yet.
 
-{% img "net-azure-cognitive-services/profile-no-image.jpg", "Profile view displaying name, email, city, and country. There is no picture.", "800" %}
+{% img {src: "net-azure-cognitive-services/profile-no-image.jpg", alt: "Profile view displaying name, email, city, and country. There is no picture.", header: "800"} %}
 
 ## Edit your Okta profile
 
@@ -493,7 +493,7 @@ Lastly, open `Views/Account/Profile.cshtml` to uncomment a line of code towards 
 
 Now you should be able to edit your profile information except for your profile picture. Next we'll make it so your app persists your profile picture.
 
-{% img "net-azure-cognitive-services/edit-profile.jpg", "Edit profile form field.", "800" %}
+{% img {src: "net-azure-cognitive-services/edit-profile.jpg", alt: "Edit profile form field.", header: "800"} %}
 
 ## Add Azure Storage
 
@@ -510,21 +510,21 @@ You'll add two string attributes, `profileImageKey` and `personId`:
 
 See the image below for the "Profile Image Key" attribute inputs.
 
-{% img "net-azure-cognitive-services/custom-attribute.jpg", "Custom attribute settings showing display and variable name for 'Profile Image Key'", "800" %}
+{% img {src: "net-azure-cognitive-services/custom-attribute.jpg", alt: "Custom attribute settings showing display and variable name for 'Profile Image Key'", header: "800"} %}
 
 Create another attribute named `personId`. If you look at the "User (default)" user type attribute list, you should see your two new attributes listed at the bottom.
 
-{% img "net-azure-cognitive-services/all-attributes.jpg", "User (default) user type list of attributes with the two new attributes for 'Profile Image Key' and 'Person ID'.", "800" %}
+{% img {src: "net-azure-cognitive-services/all-attributes.jpg", alt: "User (default) user type list of attributes with the two new attributes for 'Profile Image Key' and 'Person ID'.", header: "800"} %}
 
 Next, we'll create Azure Storage. If you don't already have an Azure subscription, [make a free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin. We'll walk through the steps using the Azure Portal, but if you are an Azure pro, feel free to use the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) or [Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/?view=azps-7.0.0).
 
 Once you have an Azure subscription, open the [Azure Portal](https://portal.azure.com). Open the menu by pressing the _hamburger menu_ on the left, and select **Storage accounts**. Press **+Create** to create a storage account. In the **Create a storage account** view, create a Resource Group if you don't already have one for test projects. I named my Resource Group "OktaDemo". Enter `oktaprofilepicture` as the storage name, select a region (Azure's default selection is fine here), then select **Standard** performance and **Locally-redundant storage (LRS)** for redundancy. Press the **Review + create** button at the bottom as the default options for the remaining selections are acceptable. Press **Create** to complete creating the storage account.
 
-{% img "net-azure-cognitive-services/azure-storage.jpg", "Settings to create an Azure storage account.", "800" %}
+{% img {src: "net-azure-cognitive-services/azure-storage.jpg", alt: "Settings to create an Azure storage account.", header: "800"} %}
 
 Next, we need to get the access keys for integrating the storage account SDK in the app. In the `oktaprofilepicture` storage account, open **Access keys** below the **Security + networking** section in the nav menu. Then press **Show keys** and copy the first **Connection string** field. Now we can move to the code!
 
-{% img "net-azure-cognitive-services/azure-storage-access-keys.jpg", "Visual representation of steps to get connection string.", "800" %}
+{% img {src: "net-azure-cognitive-services/azure-storage-access-keys.jpg", alt: "Visual representation of steps to get connection string.", header: "800"} %}
 
 We're going to add a new section for Azure resources to the `appsettings.Development.json` file in the solution to connect to the Azure resource. Open `appsettings.Development.json` and add a new key named "Azure" with a property called "BlobStorageConnectionString" like the following code snippet.
 
@@ -648,7 +648,7 @@ Finally, we get to check out Azure Cognitive Services for facial analysis. We'll
 
 First, we need to create the Azure resource and get the access keys. Open the [Cognitive Services Face](https://portal.azure.com/#create/Microsoft.CognitiveServicesFace) resource page in the Azure portal. Press **+ Create** to open the **Create Face** view. Select "OktaBlog" as the **Resource group** (or a Resource group of your choosing) and name the instance "OktaProfilePicture". Since this is for demo purposes, I used the "Free F0" pricing tier. Press **Review + create** to create the resource. Open "OktaProfilePicture" Face service instance and open **Keys and Endpoint**. You will need both the key and the **Endpoint**.
 
-{% img "net-azure-cognitive-services/azure-face-account.jpg", "Settings to create an Azure Cognitive Services Face account.", "800" %}
+{% img {src: "net-azure-cognitive-services/azure-face-account.jpg", alt: "Settings to create an Azure Cognitive Services Face account.", header: "800"} %}
 
 Open the `appsettings.Development.json` file and add two new fields in the `Azure` section named `SubscriptionKey` and `FaceClientEndpoint`. Copy and paste the key and endpoint values from the Azure **Keys and Endpoint** view. The `Azure` section of your `appsettings.Development.json` will now look like the following.
 

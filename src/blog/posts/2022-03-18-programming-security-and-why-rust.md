@@ -108,7 +108,7 @@ For those not familiar, Rust is a high-level multi-paradigm language. It's ideal
 
 The safety guarantee is one of the most important aspects of Rust; Rust is memory-safe, null-safe, type-safe, and thread-safe by design.
 
-{% img "programming-security-and-why-rust/safety-meme.jpg", "memory safety meme", "600" %}
+{% img {src: "programming-security-and-why-rust/safety-meme.jpg", alt: "memory safety meme", header: "600"} %}
 
 If the compiler detects unsafe code, it will refuse to compile that code by default. You would have to go out of your way to break those guarantees using the `unsafe` keyword. So even in cases where you would have to write unsafe code, you are making it explicit and hence issues can easily be traced down to specific code blocks.
 

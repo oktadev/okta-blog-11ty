@@ -268,7 +268,7 @@ wasm-to-oci push target/wasm32-wasi/release/rust-wasm.wasm ghcr.io/<your GitHub 
 
 You should see a successful message. Now check the GitHub Packages page on your profile, and you should see the artifact listed.
 
-{% img "webassembly-on-kubernetes-with-rust/gchr_repo.png", "GitHub Packages Registry", "800" %}
+{% img {src: "webassembly-on-kubernetes-with-rust/gchr_repo.png", alt: "GitHub Packages Registry", header: "800"} %}
 
 By default, the artifact would be private, but you need to make it public so that you can access it from the Krustlet cluster. Click the package name and click the **Package settings** button, scroll down, click **Change visibility**, and change to **public**.
 

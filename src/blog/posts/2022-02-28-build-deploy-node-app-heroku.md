@@ -275,7 +275,7 @@ block content
 
 As mentioned earlier, this is a static page. Your next step is deploying the application. But before you move on to that, run the command `npm run start` and navigate to `http://localhost:3000` to view your application and ensure it is working locally.
 
-{% img "build-deploy-node-app-heroku/HomePage.png", "Your Home Page", "100%" %}
+{% img {src: "build-deploy-node-app-heroku/HomePage.png", alt: "Your Home Page", header: "100%"} %}
 
 ## Deploy to Heroku
 
@@ -285,11 +285,11 @@ On the application page for your newly created app, find the _Deployment Method_
 
 Next, in the _Connect to GitHub_ section, find the repository you created for this tutorial and press **Connect**.
 
-{% img "build-deploy-node-app-heroku/ConnecttoGitHub.png", "Connect Heroku to GitHub", "100%" %}
+{% img {src: "build-deploy-node-app-heroku/ConnecttoGitHub.png", alt: "Connect Heroku to GitHub", header: "100%"} %}
 
 You can enable automatic deploys under _Automatic deploys_. In addition, you can configure it to wait for CI to pass before deploying the application. CI can be configured from your GitHub account. This step isn't strictly necessary for this tutorial, but it's nice to see how this fits into the CI pipeline.
 
-{% img "build-deploy-node-app-heroku/EnableAutomaticDeploys.png", "Enable Automatic Deploys", "100%" %}
+{% img {src: "build-deploy-node-app-heroku/EnableAutomaticDeploys.png", alt: "Enable Automatic Deploys", header: "100%"} %}
 
 Finally, under _Manual Deploy_ choose the branch you wish to deploy and click **Deploy Branch**. Wait a moment and you should receive a message from Heroku saying that your app was successfully deployed.
 
@@ -299,7 +299,7 @@ Click the view button to be taken to your application. At this point, your appli
 
 In your Heroku application click on **Settings**. Find the section named `Config Vars` and click on **Reveal Config Vars**. Here you will add the same key and value pairs from the `.okta.env` file you used locally. You can see mine below with the values blurred out.
 
-{% img "build-deploy-node-app-heroku/configureenvironmentvariables.png", "Configure your Environment Variables", "100%" %}
+{% img {src: "build-deploy-node-app-heroku/configureenvironmentvariables.png", alt: "Configure your Environment Variables", header: "100%"} %}
 
 ### Configure your Okta application
 

@@ -23,7 +23,7 @@ The project has a few different pieces:
 - Store: Spring Boot microservice using Azure's Cosmo DB API for MongoDB
 - Blog: Spring Boot microservice using a Neo4J database
 
-{% img "jhipster-k8s-azure/microservice-structure.png", "Microservice structure", "800" %}
+{% img {src: "jhipster-k8s-azure/microservice-structure.png", alt: "Microservice structure", header: "800"} %}
 
 This tutorial has a lot of different technologies in it. I've tried to make it as simple and as explicit as possible, but it's probably helpful to have some basic knowledge of Docker and Kubernetes before you start.
 
@@ -37,11 +37,11 @@ If you're already familiar with all the tech in this tutorial, you can skip ahea
 
 **[JHipster](https://www.jhipster.tech/)** is a development platform that streamlines the generation, development, and deployment of both monolithic and microservice applications. It supports a dizzying array of frontend (Angular, React, and Vue) and backend (Spring Boot, Micronaut, Quarkus, Node.js, and .NET) technologies. It's designed to be deployed using Docker and Kubernetes, and can easily deploy to all the major cloud platforms, such as AWS, Azure, Heroku, Cloud Foundry, Google Cloud Platform, and OpenShift.
 
-{% img "jhipster-k8s-azure/jhipster.png", "JHipster", "600" %}
+{% img {src: "jhipster-k8s-azure/jhipster.png", alt: "JHipster", header: "600"} %}
 
 The project in this tutorial uses **Spring Boot** with Java resource servers and a **Vue** frontend. It was built with the **JHipster generator** that quickly scaffolds a new application based on either an interactive shell or a DSL file. You can read more about generating microservices with JHipster [in their docs](https://www.jhipster.tech/creating-microservices/). One of the slick features of the JHipster generator is that you can generate data entities along with applications.
 
-{% img "jhipster-k8s-azure/spring-and-vue-logos.png", "Spring and Vue", "400" %}
+{% img {src: "jhipster-k8s-azure/spring-and-vue-logos.png", alt: "Spring and Vue", header: "400"} %}
 
 The **[JHipster Registry](https://www.jhipster.tech/jhipster-registry/)** that is generated with the microservice includes two important functions: a **Eureka server** and a **Spring Cloud Config** server. The Eureka server allows the microservices to dynamically find each other without having to use hard-coded URIs. This means that the microservice can scale and services can be replaced without causing problems. It's a bit like a phonebook or a DNS service for the microservice. The [Spring Cloud Config](https://cloud.spring.io/spring-cloud-config/reference/html/) server allows project configuration to be centralized and distributed to all of the different services. In this tutorial you'll use this feature to configure all of the services for Okta OAuth in one place.
 
@@ -49,7 +49,7 @@ The **[JHipster API Gateway](https://www.jhipster.tech/api-gateway/)** is the pu
 
 The store service and blog service are both examples of the microservice application type. This means that each service is a Spring Boot resources server with some type of SQL or NoSQL backend.
 
-{% img "jhipster-k8s-azure/kubernetes-logo.png", "Kubernetes", "600" %}
+{% img {src: "jhipster-k8s-azure/kubernetes-logo.png", alt: "Kubernetes", header: "600"} %}
 
 The generator creates four applications. They are designed to be built and run as **docker containers**, which makes it easy for them to be packaged in **[Kubernetes](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)** pods. Kubernetes is a container orchestrator specifically designed for managing microservice networks. It's something like **Docker Compose** but designed for microservices with a lot of great features like service discovery, load balancing, automatic rollouts and restarts, resource management, and storage mounting.
 
@@ -267,11 +267,11 @@ Open the gateway service at `http://localhost:8080`.
 
 Go to **Account** and **Sign in**. You should be directed to the Okta sign-in form.
 
-{% img "jhipster-k8s-azure/signing-in.png", "Okta Login", "500" %}
+{% img {src: "jhipster-k8s-azure/signing-in.png", alt: "Okta Login", header: "500"} %}
 
 You should be able to authenticate with your Okta credentials.
 
-{% img "jhipster-k8s-azure/authenticated.png", "Authenticated", "800" %}
+{% img {src: "jhipster-k8s-azure/authenticated.png", alt: "Authenticated", header: "800"} %}
 
 Make sure all parts of the application are working. First, test the store (which is using the Cosmos DB Mongo database) by going to **Entities** and **Product**. Make sure you can add a new product and see it in the list of products. Next, create a blog (**Entities** and **Blog**).
 
@@ -279,7 +279,7 @@ If that works, you can take a look at the **Administration** menu. There's a lot
 
 You can also check the JHipster Registry at `http://localhost:8761`.
 
-{% img "jhipster-k8s-azure/registry.png", "Authenticated", "800" %}
+{% img {src: "jhipster-k8s-azure/registry.png", alt: "Authenticated", header: "800"} %}
 
 ## Encrypt the client secret
 
@@ -287,7 +287,7 @@ Leaving secrets in plain text in repositories is a security risk. There are two 
 
 Open the registry (`http://localhost:8761`) and click on **Configuration** and **Encryption**.
 
-{% img "jhipster-k8s-azure/encryption.png", "Authenticated", "800" %}
+{% img {src: "jhipster-k8s-azure/encryption.png", alt: "Authenticated", header: "800"} %}
 
 Paste your client secret in the text box. Click **Encrypt**.
 
@@ -515,7 +515,7 @@ store-7889695569-k4wkv                1/1     Running   0          3m41s
 
 Here's an example of what this looks like with Kubernetes Lens (the containers were still booting).
 
-{% img "jhipster-k8s-azure/lens-booting.png", "K8s Lens screenshot", "1000" %}
+{% img {src: "jhipster-k8s-azure/lens-booting.png", alt: "K8s Lens screenshot", header: "1000"} %}
 
 Another useful command is `describe`. I won't replicate the output here, but if you want more detailed information for debugging, you can also run the following.
 
@@ -533,7 +533,7 @@ Although, like I said, k9s and Lens are really the way to go for more detailed i
 
 Here's a screenshot from k9s. You can dig down into the different pods to get more detailed information and inspect logs.
 
-{% img "jhipster-k8s-azure/k9s-screenshot.png", "Authenticated", "1000" %}
+{% img {src: "jhipster-k8s-azure/k9s-screenshot.png", alt: "Authenticated", header: "1000"} %}
 
 You can use port-forwarding to see the JHipster Registry.
 
@@ -698,7 +698,7 @@ Make sure you can log in and that all the services are green. You should either 
 
 This is the happy dance.
 
-{% img "jhipster-k8s-azure/happy-dance.png", "Happy Dance!", "600" %}
+{% img {src: "jhipster-k8s-azure/happy-dance.png", alt: "Happy Dance!", header: "600"} %}
 
 Forward the gateway and test the app.
 

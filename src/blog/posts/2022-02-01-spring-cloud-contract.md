@@ -30,7 +30,7 @@ What is needed is a way to ensure that the mocked (or stubbed) behavior of the t
 
 Spring Cloud Contract does exactly this. It provides a way of specifying specific behavior for a service -- the "contract" -- and testing for compliance with this contract **within that project itself** while allowing other projects to load these contracts as stubs that can be mocked for integration testing.
 
-{% img "spring-cloud-contract/spring-cloud-contract-diagram.png", "Spring Cloud Contract Diagram", "700" %}
+{% img {src: "spring-cloud-contract/spring-cloud-contract-diagram.png", alt: "Spring Cloud Contract Diagram", header: "700"} %}
 
 A brief aside on "mocks" and "stubs". "Mock" gets used in ways online that is somewhat generic, meaning any fake object used for testing, and this can get confusing when differentiating "mocks" from "stubs". However, specifically, a "mock" is an object that tests for behavior by registering expected method calls before a test run. In contrast, a "stub" is a testable version of the object with callable methods that return pre-set values. Thus, a mock checks to see if the object being tested makes an expected sequence of calls to the object being mocked, and throws an error if the behavior deviates (that is, makes any unexpected calls). A stub does not do any testing itself, per se, but instead will return canned responses to pre-determined methods to allow tests to run. (Of course, a stub can throw an error if unexpected calls are made as well, so stubs do constrain behavior in that sense as well.)
 
@@ -52,7 +52,7 @@ Before you get started, you'll need to make sure you have a few tools installed.
 
 You'll use the Spring Initializr project to bootstrap the Producer project. Open [this link](https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.6.3&packaging=jar&jvmVersion=11&groupId=com.example&artifactId=producer&name=producer&description=Producer%20project%20for%20Spring%20Boot%20Contract&packageName=com.example.contract&dependencies=web,cloud-contract-verifier,lombok) to access the pre-configured starter project.
 
-{% img "spring-cloud-contract/producer-starter-config.png", "Producer Starter Configuration", "1000" %}
+{% img {src: "spring-cloud-contract/producer-starter-config.png", alt: "Producer Starter Configuration", header: "1000"} %}
 
 You are creating a Java project -- Java 11 -- using Maven as the build system. The Spring Boot version was 2.6.3 when I wrote this tutorial. You are including three dependencies:
 
@@ -640,7 +640,7 @@ Use the Spring Initializr to create the starter project by following [this link]
 
 The project is very similar to the producer project except that the included dependencies are different. Here you are including **Spring Web** and **Contract Stub Runner** (in place of the **Contract Verifier**).
 
-{% img "spring-cloud-contract/consumer-dependencies.png", "Consumer Dependencies", "600" %}
+{% img {src: "spring-cloud-contract/consumer-dependencies.png", alt: "Consumer Dependencies", header: "600"} %}
 
 Unzip the project and open it in the IDE or editor of your choice.
 

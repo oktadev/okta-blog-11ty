@@ -22,7 +22,7 @@ This post walks you through how to customize your sign-in page using a custom do
 > **Note**
 > The process outlined in this post is not Angular-dependent, so feel free to substitute the web app with your favorite SPA application.
 
-{% img "signin-custom-domain/themed-sign-in.gif", "Animated gif of sign-in from a cupcake site", "800" %}
+{% img {src: "signin-custom-domain/themed-sign-in.gif", alt: "Animated gif of sign-in from a cupcake site", header: "800"} %}
 
 **Prerequisites**
 
@@ -56,13 +56,13 @@ Access the Admin Console by pressing the **Admin** button in the toolbar at the 
 
 Navigate to **Customizations** > **Branding** on the sidebar. Here you can theme your login page. Select your primary and secondary colors used within the sign-in widget. Add a logo, a favicon, and optionally add a background image. Press the **Edit** button for **Okta-hosted Sign-In Page**, select your background style and save your changes.
 
-{% img "signin-custom-domain/cupcake-theme.jpg", "Screenshot of customizations showing color selections, a logo, a favicon, and a background image", "800" %}
+{% img {src: "signin-custom-domain/cupcake-theme.jpg", alt: "Screenshot of customizations showing color selections, a logo, a favicon, and a background image", header: "800"} %}
 
 My selections are full of colorful, happy cupcakes — a theme that sparks joy for me and matches the personality of my cupcakes e-commerce site.
 
 Sign out of the Okta Dashboard and sign back in to see your new sign-in page in action! My sign-in page makes me smile. 😊
 
-{% img "signin-custom-domain/sign-in-page.jpg", "Screenshot of themed sign-in page featuring cupcakes", "800" %}
+{% img {src: "signin-custom-domain/sign-in-page.jpg", alt: "Screenshot of themed sign-in page featuring cupcakes", header: "800"} %}
 
 ## Customize the sign-in URL with a custom domain
 
@@ -70,7 +70,7 @@ Next, let's tackle the sign-in redirect URL to have a domain name that matches o
 
 In the Admin Console, navigate to **Customization** > **Domain** in the sidebar. Press the **Edit** button to start the customized URL process. Be sure to have access to your Domain Name Registrar so you can make the required modifications. You will also need to allow Okta to manage a TLS certificate or provide your own. In the following steps, we'll have Okta manage the certificate. Press the **Get started** button to continue.
 
-{% img "signin-custom-domain/custom-url-domain.jpg", "Screenshot of Admin console starting the custom domain configuration", "800" %}
+{% img {src: "signin-custom-domain/custom-url-domain.jpg", alt: "Screenshot of Admin console starting the custom domain configuration", header: "800"} %}
 
 In the next screen, add the domain name you want to use for the sign-in URL and select **Okta-managed** for your certificate. Staying true to my cupcake theme, I have a cupcake-based domain name and added a subdomain for the sign-in URL. Press **Next**.
 
@@ -78,7 +78,7 @@ The next screen has instructions for you to update the DNS records in your Domai
 
 The final step to customize the URL for your domain is configuring your Okta application. In the Admin Console, navigate to **Applications** > **Applications** and find the Okta application you're using in this tutorial. It might be the one you created earlier in the post or already had. Navigate to the **Sign On** tab. You'll see a section for **OpenID Connect ID Token** where you'll select the URL. Press **Edit** and choose your URL for the **Issuer**.
 
-{% img "signin-custom-domain/custom-domain-application.jpg", "Screenshot of configuring the Okta application to select the custom domain URL", "800" %}
+{% img {src: "signin-custom-domain/custom-domain-application.jpg", alt: "Screenshot of configuring the Okta application to select the custom domain URL", header: "800"} %}
 
 The DNS changes may take a few minutes to propagate, so prepare a soothing cup of tea to decompress from that DNS work while you wait. Let's see how the sign-in page looks in a web app with a matching theme!
 
@@ -114,7 +114,7 @@ npm run run:all
 
 This command opens three tabs in your browser. Find the one running at port 4200 with beautiful pictures of cupcakes and try signing in. The Okta-hosted sign-in page looks more themed, and better matches the application! If you set up a custom domain, you'll see the domain name matches your application too! 🧁
 
-{% img "signin-custom-domain/themed-sign-in.gif", "Animated gif of sign-in from a cupcake site", "800" %}
+{% img {src: "signin-custom-domain/themed-sign-in.gif", alt: "Animated gif of sign-in from a cupcake site", header: "800"} %}
 
 If you want to read about creating an Angular Micro frontend and sharing Okta authentication state across your micro frontend applications, check out the two post series starting with [How to Build Micro Frontends Using Module Federation in Angular](/blog/2022/05/17/angular-microfrontend-auth).
 

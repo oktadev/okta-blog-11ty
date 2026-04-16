@@ -59,7 +59,7 @@ Many of the original problems we faced with maintaining the OIDC SDKs stemmed fr
 
 As a result, we broke the new SDK into three libraries, each building upon one another: AuthFoundation, OktaOAuth2, and WebAuthenticationUI. 
 
-{% img "introducing-the-new-okta-mobile-sdks/mobile-sdk-components.png", "Diagram illustrating the relationships between the dependent SDKs.", "500" %}
+{% img {src: "introducing-the-new-okta-mobile-sdks/mobile-sdk-components.png", alt: "Diagram illustrating the relationships between the dependent SDKs.", header: "500"} %}
 
 This structure gives us several advantages:
 
@@ -155,7 +155,7 @@ Depending on your application's needs, there are many ways to configure your cli
 
 This is an OAuth 2.0 flow meant for use with headless devices, kiosks, or for clients that have limited text input. The prime example for this is a tvOS application running on the Apple TV. In this flow, a user is presented with a code they enter on a different device (a mobile phone, laptop computer, etc.) and finish logging in on the second device. 
 
-{% img "introducing-the-new-okta-mobile-sdks/device-authorization-tvos-screenshot.png", "Screenshot of a sample tvOS application showing a QR code to authenticate using the device authorization grant.", "500" %}
+{% img {src: "introducing-the-new-okta-mobile-sdks/device-authorization-tvos-screenshot.png", alt: "Screenshot of a sample tvOS application showing a QR code to authenticate using the device authorization grant.", header: "500"} %}
 
 The above screenshot comes directly from the [DeviceAuthSignIn sample](https://github.com/okta/okta-mobile-swift/tree/master/Samples/DeviceAuthSignIn) in the [okta-mobile-swift GitHub repository](https://github.com/okta/okta-mobile-swift). 
 

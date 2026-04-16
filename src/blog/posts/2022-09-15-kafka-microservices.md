@@ -691,7 +691,7 @@ docker compose up
 
 You will see a huge amount of logging while each service starts. Wait a minute or two, then open `http://localhost:8761` and log in with your Okta account. This is the JHipster Registry which you can use to monitor your apps' statuses. Wait for all the services to be up.
 
-{% img "kafka-microservices-update/jhipster-registry.png", "JHipster Registry", "800" %}
+{% img {src: "kafka-microservices-update/jhipster-registry.png", alt: "JHipster Registry", header: "800"} %}
 
 Open a new terminal window and tail the `alert` microservice logs to verify it's processing `StoreAlert` records:
 

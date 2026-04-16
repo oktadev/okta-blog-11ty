@@ -501,7 +501,7 @@ To start the app, run `npm start`.
 
 After your app starts and you've clicked `login` on the home screen, you'll be redirected to the Okta-hosted sign-in page. Here, enter your user credentials. Once your user is authenticated, the dashboard component we created will render.
 
-{% img "react-typescript-redux/dashboard.jpg", "Screenshot of dashboard.", "600" %}
+{% img {src: "react-typescript-redux/dashboard.jpg", alt: "Screenshot of dashboard.", header: "600"} %}
 
 If you recall, the value for the user's `given_name` is part of the Redux slice from our created selector `selectUserProfile`. Clicking `Show more` or `Show less` toggles our local state for `isExpanded` in the dashboard component. This allows us to show or hide additional user profile info, which is a mix of values from the `userProfileSlice` and additional values from the `UserContext` we created.
 

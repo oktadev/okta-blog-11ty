@@ -225,11 +225,11 @@ If you are used to React applications built with `create-react-app`, you might e
 
 You can now open your browser at `http://localhost:3000/` and test the application. When I click the **Converter** link in the navigation bar, I see something like this.
 
-{% img "react-vite-number-converter/react-vite-application.jpg", "The number conversion utility", "512" %}
+{% img {src: "react-vite-number-converter/react-vite-application.jpg", alt: "The number conversion utility", header: "512"} %}
 
 I opened up the Developer Tools in Chrome to understand how Vite achieves these fast starting-up times. When you open up the **Network** tab and filter by JS requests, you will see many requests to individual JavaScript sources. You will even see the `.tsx` sources you just edited.
 
-{% img "react-vite-number-converter/react-vite-modules.jpg", "Vite development server under the hood.", "800" %}
+{% img {src: "react-vite-number-converter/react-vite-modules.jpg", alt: "Vite development server under the hood.", header: "800"} %}
 
 I then looked closer at `App.tsx,` and saw what is shown in the above image. When the development server is asked to serve a `.tsx` file, it will compile it on the fly into browser-compatible code. But it keeps all the `import` statements in place and uses the support for ES modules in the newer browsers. This way, the bundling stage is eliminated, and the loading times are significantly reduced.
 

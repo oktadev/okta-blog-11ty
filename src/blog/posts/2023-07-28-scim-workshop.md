@@ -73,7 +73,7 @@ Before we build our SCIM server, let's have a plan of action.
 - Install the sample application and set up your development environment
 - Build the SCIM Interface in the Todo sample app and test it with Postman
 
-{% img "scim-workshop/scim-diagram.jpg", "Diagram of SCIM workflow showing the Identity Provider requests the SCIM server with GET, POST, PUT, and DEL user calls and the SCIM server responds with a standard SCIM interface", "800" %}
+{% img {src: "scim-workshop/scim-diagram.jpg", alt: "Diagram of SCIM workflow showing the Identity Provider requests the SCIM server with GET, POST, PUT, and DEL user calls and the SCIM server responds with a standard SCIM interface", header: "800"} %}
 
 SCIM is implemented as a RESTful API. It uses `Create`, `Read`, `Update`, and `Delete` endpoints. The endpoints required by the SCIM spec are: 
 

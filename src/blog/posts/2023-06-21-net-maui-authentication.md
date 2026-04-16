@@ -45,7 +45,7 @@ To create a new .NET MAUI project, follow these steps:
 5. Restore your project's dependencies and build your solution to ensure everything is in place.
 6. Select the desired target platform in the Debug Target drop-down and launch your application. You will see a screen like the following:
 
-{% img "net-maui-authentication/maui-start.jpg", "Starting application" %}
+{% img {src: "net-maui-authentication/maui-start.jpg", alt: "Starting application"} %}
 
 That's it! You have successfully created a .NET MAUI application using Visual Studio 2022. Now, it's time to improve the security of your application by integrating Okta to enable authentication.
 
@@ -565,7 +565,7 @@ Finally, open the `AndroidManifest.xml` file located in the same folder and add 
 
 Woohoo! It's time to test the Android version application. It should look like this:
 
-{% img "net-maui-authentication/demo.gif", "Completed application" %}
+{% img {src: "net-maui-authentication/demo.gif", alt: "Completed application"} %}
 
 ## Keep experimenting with MAUI, .NET, OAuth, and OIDC
 

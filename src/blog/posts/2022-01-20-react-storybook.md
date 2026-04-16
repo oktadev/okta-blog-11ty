@@ -325,7 +325,7 @@ npm run storybook
 
 The command runs the Storybook app and opens a browser tab (http://localhost:6006). You can browse the components in the left sidebar. The stories you just created can be found under the **Components** header, and when you select, for example, the **Input -> Number** story, you should see something like shown in the image below.
 
-{% img "react-storybook/react-storybook-components.jpg", "Browsing the React components with Storybook", "800" %}
+{% img {src: "react-storybook/react-storybook-components.jpg", alt: "Browsing the React components with Storybook", header: "800"} %}
 
 The component shows up in the main view, and the icons above let you change the background, the screen size, and even allow you to check the dimensions of the component's layout. Below the main view, you can manually adjust the options passed to the component. I invite you to play around with all the features Storybook provides.
 
@@ -543,7 +543,7 @@ LoggedOut.parameters = {
 
 Note how `mockUseAuth` uses [currying](https://javascript.info/currying-partials) to return a function that can be used as the `useAuth` hook in the `Page` component. You can now use Storybook again to test the `Converter` component and the full application page. If it's not still running, run `npm run storybook` again. You can navigate to **Pages -> Page** in the left sidebar, and you should see something like the image below.
 
-{% img "react-storybook/react-storybook-application-page.jpg", "Testing the application page with Storybook", "800" %}
+{% img {src: "react-storybook/react-storybook-application-page.jpg", alt: "Testing the application page with Storybook", header: "800"} %}
 
 ## Adding authentication with Okta to the application
 
@@ -661,7 +661,7 @@ npm start
 
 You should see the application's front page in your browser. When you click the **Go to the app!** link, you'll log in on the Okta page. After successfully signing in, you will redirect to the unit converter page, which looks like the image below.
 
-{% img "react-storybook/react-storybook-application.jpg", "The finished unit conversion application", "800" %}
+{% img {src: "react-storybook/react-storybook-application.jpg", alt: "The finished unit conversion application", header: "800"} %}
 
 ## Learn more about React, Storybook, and Single-Page Apps
 

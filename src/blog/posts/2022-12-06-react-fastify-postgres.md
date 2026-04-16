@@ -844,11 +844,11 @@ button.button-delete {
 
 You can start the demo app by running `npx lerna run start`.
 
-{% img "react-fastify-postgres/login-screen.jpg", "Screenshot of login window", "600" %}
+{% img {src: "react-fastify-postgres/login-screen.jpg", alt: "Screenshot of login window", header: "600"} %}
 
 If we're not authenticated, our app will land us at the login page. Here, we click login to go through the Okta login process. Once authenticated, we're redirected to `/facilities`. If we're already authenticated when we land on the root URL, our app will automatically navigate us to `/facilities`. Once our table loads, we'll see the following:
 
-{% img "react-fastify-postgres/nasa-facilities-table.jpg", "Screenshot of table with nasa facilities data", "600" %}
+{% img {src: "react-fastify-postgres/nasa-facilities-table.jpg", alt: "Screenshot of table with nasa facilities data", header: "600"} %}
 
 To render the facilities table, our app has made a call to our API which includes the access token to fetch the data from the backend `/facilities` API endpoint.
 

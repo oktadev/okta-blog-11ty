@@ -108,7 +108,7 @@ OKTA_OAUTH2_CLIENT_SECRET={yourOktaClientSecret} \
 
 In an incognito window, go to `http://localhost:8080`. Here, you should see the Okta login page:
 
-{% img "spring-vault-update/okta-login.png", "Okta login form", "400" %}
+{% img {src: "spring-vault-update/okta-login.png", alt: "Okta login form", header: "400"} %}
 
 In the application logs, you'll see the security filter chain initializes an OAuth 2.0 authentication flow on startup:
 
@@ -203,11 +203,11 @@ OKTA_OAUTH2_CLIENT_SECRET={yourAuth0ClientSecret}
 
 Navigate to `http://localhost:8080`, and you should be redirected to Auth0 to log in:
 
-{% img "spring-vault-update/auth0-login.png", "Auth0 login form", "450" %}
+{% img {src: "spring-vault-update/auth0-login.png", alt: "Auth0 login form", header: "450"} %}
 
 If you choose **Continue with Google** you will see the consent screen:
 
-{% img "spring-vault-update/auth0-consent.png", "Auth0 authorize form", "450" %}
+{% img {src: "spring-vault-update/auth0-consent.png", alt: "Auth0 authorize form", header: "450"} %}
 
 ## Spring Cloud Config with secrets encryption
 
@@ -318,7 +318,7 @@ In a real environment, the config server should be secured. Spring Cloud Config 
 
 ## Vault as a configuration backend with Spring Cloud Vault
 
-{% img "spring-vault/vault-logo.png", "Vault logo", "300" %}{: .pull-right }
+{% img {src: "spring-vault/vault-logo.png", alt: "Vault logo", header: "300"} %}{: .pull-right }
 
 In the cloud, secrets management has become much more difficult. Vault is a secrets management and data protection tool from HashiCorp that provides secure storage, dynamic secret generation, data encryption, and secret revocation.
 
@@ -473,7 +473,7 @@ Check `vault_audit.log` in your specified `{hostPath}` directory. Operations are
 
 Let's assume you don't want to configure the root token in the `vault-demo-app`. You can instead create a policy granting read permissions on the path where the secrets were stored. Go to the Vault Web UI at `http://localhost:8200` and log in with the root token (`00000000-0000-0000-0000-000000000000`).
 
-{% img "spring-vault-update/vault-web-ui.png", "Vault web UI", "650" %}
+{% img {src: "spring-vault-update/vault-web-ui.png", alt: "Vault web UI", header: "650"} %}
 
 Next, go to **Policies** and **Create ACL policy**. Create a `vault-demo-app-policy` with the following capabilities:
 
@@ -497,7 +497,7 @@ path "secret/data/application,dev" {
 
 All the paths above will be requested by the config server to provide configuration for the `vault-demo-app` when it starts with the `dev` profile active.
 
-{% img "spring-vault-update/vault-policy.png", "Vault policy section", "900" %}
+{% img {src: "spring-vault-update/vault-policy.png", alt: "Vault policy section", header: "900"} %}
 
 Now, go back to the container command line, and create a token with the `vault-demo-app-policy`.
 

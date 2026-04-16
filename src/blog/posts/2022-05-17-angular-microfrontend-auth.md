@@ -19,13 +19,13 @@ Enter micro-frontend architecture. Micro frontends are modeled after the same co
 
 So what does the micro-frontend architecture look like? Let's say you have an e-commerce site that looks as stunning as this one:
 
-{% img "angular-microfrontend-auth/example-site.jpg", "Image of an example e-commerce site selling balloons with a header, links to account & cart, and images of balloons to purchase", "800" %}
+{% img {src: "angular-microfrontend-auth/example-site.jpg", alt: "Image of an example e-commerce site selling balloons with a header, links to account & cart, and images of balloons to purchase", header: "800"} %}
 
 You might have a shopping cart, account information for registered users, past orders, payment options, etc. You might be able to further categorize these features into domains, each of which could be a separate micro frontend, also known as a `remote`. The collection of micro-frontend remotes is housed inside another website, the `host` of the web application.
 
 So, your e-commerce site using micro frontends to decompose different functionality might look like this diagram, where the shopping cart and account features are in their separate routes within your Single Page Application (SPA):
 
-{% img "angular-microfrontend-auth/example-site-diagram.jpg", "Image of the example balloon e-commerce site showing a breakdown of the views. The entire site is wrapped in a host named 'Shell', and micro-frontends for the 'Cart' and 'Account' links", "800" %}
+{% img {src: "angular-microfrontend-auth/example-site-diagram.jpg", alt: "Image of the example balloon e-commerce site showing a breakdown of the views. The entire site is wrapped in a host named 'Shell', and micro-frontends for the 'Cart' and 'Account' links", header: "800"} %}
 
 You might be saying, "Micro frontends sound cool, but managing the different frontends and orchestrating state across the micro frontends also sounds complicated." You're right. The concept of a micro frontend has been around for a few years and rolling your own micro-frontend implementation, shared state, and tools to support it _was_ quite an undertaking. However, micro frontends are now well supported with Webpack 5 and [Module Federation](https://webpack.js.org/concepts/module-federation/). Not all web apps require a micro-frontend architecture, but for those large, feature-rich web apps that have started to get unwieldy, the first-class support of micro frontends in our web tooling is definitely a plus.
 
@@ -33,7 +33,7 @@ This post is part one in a series where we'll build an e-commerce site using Ang
 
 In this first post, we'll explore a starter project and understand how the different apps connect, add authentication using Okta, and add the wiring for sharing authenticated state. In the end, you'll have an app that looks like this:
 
-{% img "angular-microfrontend-auth/final-app.gif", "Animated gif showing the final project with micro-frontends that handle the cupcake shopping basket, authentication, and profile information", "800" %}
+{% img {src: "angular-microfrontend-auth/final-app.gif", alt: "Animated gif showing the final project with micro-frontends that handle the cupcake shopping basket, authentication, and profile information", header: "800"} %}
 
 **Prerequisites**
 
@@ -61,7 +61,7 @@ Let's dive into the code! 🎉
 
 We have an Angular project with two applications and one library inside the `src/projects` directory. The two applications are named `shell` and `mfe-basket`, and the library is named `shared`. The `shell` application is the micro-frontend host, and the `mfe-basket` is a micro-frontend remote application. The `shared` library contains code and application state we want to share across the site. When you apply the same sort of diagram shown above for this app, it looks like this:
 
-{% img "angular-microfrontend-auth/sample-app-diagram.jpg", "Image of the sample cupcake e-commerce site showing a breakdown of the views. The entire site is wrapped in a host named 'shell' and a micro frontend for the 'basket' link", "800" %}
+{% img {src: "angular-microfrontend-auth/sample-app-diagram.jpg", alt: "Image of the sample cupcake e-commerce site showing a breakdown of the views. The entire site is wrapped in a host named 'shell' and a micro frontend for the 'basket' link", header: "800"} %}
 
 In this project, we use the `@angular-architects/module-federation` dependency to help encapsulate some of the intricacies of configuring Webpack and the Module Federation plugin. The `shell` and `mfe-basket` application have their own separate `webpack.config.js`. Open the `projects/shell/webpack.config.js` file for either the `shell` or `mfe-basket` application to see the overall structure. This file is where we add in the wiring for the hosts, remotes, shared code, and shared dependencies in the Module Federation plugin. The structure will be different if you aren't using the `@angular-architects/module-federation` dependency, but the basic idea for configuration remains the same.
 

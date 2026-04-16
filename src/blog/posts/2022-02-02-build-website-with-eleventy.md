@@ -311,15 +311,15 @@ npx @11ty/eleventy --serve
 
 The command will build your templates into static pages and then serve the site on `localhost:8080`. Navigate to `http://localhost:8080` to see the home page.
 
-{% img "build-website-with-eleventy/home-page.png", "Home Page", "800" %}
+{% img {src: "build-website-with-eleventy/home-page.png", alt: "Home Page", header: "800"} %}
 
 Next, click the login button to see the Okta Sign-In Widget in action. You can log in with your Okta credentials.
 
-{% img "build-website-with-eleventy/login-page.png", "Login Page", "800" %}
+{% img {src: "build-website-with-eleventy/login-page.png", alt: "Login Page", header: "800"} %}
 
 If everything goes well, you should see the protected page.
 
-{% img "build-website-with-eleventy/protected-page.png", "Protected Page", "800" %}
+{% img {src: "build-website-with-eleventy/protected-page.png", alt: "Protected Page", header: "800"} %}
 
 ## Learn more about working with 11ty
 

@@ -23,7 +23,7 @@ github: https://github.com/oktadev/okta-dotnet6-webapi-example
 
 The [client credentials flow](https://developer.okta.com/docs/guides/implement-grant-type/clientcreds/main/) is a server-to-server flow that allows applications to request resources on behalf of itself rather than a user. The client credentials flow requires the client id and the client secret, and exchanges those for an access token.
 
-{% img "dotnet-6-webapi/image1.png", "client credentials flow", "800" %}
+{% img {src: "dotnet-6-webapi/image1.png", alt: "client credentials flow", header: "800"} %}
 
 In this tutorial, you will use Okta to implement the client credentials flow in your .NET 6 API. To do this, you will set up your application in Okta's admin portal. You will then learn how to retrieve the token from your authorization server. I will use an Advanced Rest Client to obtain the token, but you can use Postman or even write your own client. You will then write a JWT verifier in your .NET 6 application to protect your resource server. Finally, you will call your API using the JWT you obtained from your authorization server to access the resource requested.
 
@@ -42,7 +42,7 @@ The first thing you'll need to do is set up your authorization server. Typically
 
 Note the *Audience* and *Issuer URI* of the `default` authorization server. You will need these in your application. Next, click on **default** and navigate to the *Scopes* tab. Add a new custom scope by clicking on **Add Scope** and give it the name `api`. Your `Display phrase` and `Description` can be anything you like.
 
-{% img "dotnet-6-webapi/image2.png", "add API scope", "600" %}
+{% img {src: "dotnet-6-webapi/image2.png", alt: "add API scope", header: "600"} %}
 
 Next, navigate to the *Applications* page under the *Applications* menu. Click **Create App Integration** and then select *API Services*. Give your application a meaningful name; I named mine ``. Make a note of your `Client ID` and your `Client secret`. You will need these to obtain the access code from your authorization server.
 
@@ -50,11 +50,11 @@ Next, navigate to the *Applications* page under the *Applications* menu. Click *
 
 Next, you can begin work on your resource API. Open Visual Studio 2022 and select *Create a new project*. Find the option for `ASP.NET Core Web API` and press **Next**.
 
-{% img "dotnet-6-webapi/image3.png", "create a new project", "800" %}
+{% img {src: "dotnet-6-webapi/image3.png", alt: "create a new project", header: "800"} %}
 
 Name your application `Okta_ClientFlowDotNetSix` and click **Next**. Finally, under *Additional Information* select `.NET 6.0 (Long-term support)` as your framework. Click on **Create** and give VS a moment to scaffold your application.
 
-{% img "dotnet-6-webapi/image4.png", "additional information", "800" %}
+{% img {src: "dotnet-6-webapi/image4.png", alt: "additional information", header: "800"} %}
 
 Once Visual Studio has completed this process you will be presented with some boilerplate code, along with a brief sample for `WeatherForecast`. This `WeatherForecastController` serves as a demonstration for setting up your .NET 6 Web API. You are going to borrow this demo application and expand on it to properly implement the client credentials flow.
 
@@ -331,7 +331,7 @@ Create a new request in your API test tool and use the following setup.
 
 Send your request and you should be greeted with a weather forecast for the upcoming few days.
 
-{% img "dotnet-6-webapi/image5.png", "swagger test", "800" %}
+{% img {src: "dotnet-6-webapi/image5.png", alt: "swagger test", header: "800"} %}
 
 You can test the authorization functionality fully by replacing {yourAccessToken} with any random string or an empty string. You should see the web API return a `401` error.
 
