@@ -5,7 +5,7 @@
   "scripts": {
     "css": "tailwindcss -i ./public/css/index.css -o ./style.out.css --minify",
     "css:watch": "tailwindcss -i ./public/css/index.css -o ./style.out.css --watch",
-    "setup": "mkdir -p _site/img && cat style.out.css > _site/style.css && (cp -rn public/fonts _site/ || true) && (cp -rn public/js _site/ || true) && (cp -rn public/img/avatar _site/img/ || true)",
+    "setup": "rm -rf _site/fonts _site/js _site/img/avatar && mkdir -p _site/img && cat style.out.css > _site/style.css && (cp -r public/fonts _site/ || true) && (cp -r public/js _site/ || true) && (cp -r public/img/avatar _site/img/ || true)",
     "start": "npm run css && npm run setup && eleventy --serve --incremental --quiet",
     "build": "npm run css && npm run setup && eleventy"
   },
