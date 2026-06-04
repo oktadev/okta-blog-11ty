@@ -2,7 +2,32 @@
   {%- for post in postslist | reverse %}
     {%- set authorsList = authors | authorFilter(post.data.author) %}
     {% if authorsList %}
-      {% postsListItem post, authorsList %}
+      <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
+        <div class="grid gap-1">
+          <a href="{{ post.url }}">
+            <h2>{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</h2>
+          </a>
+          <div class="flex gap-1 items-center">
+            {%- for author in authorsList %}
+              <a href="/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
+                {% avatar author.avatar %}
+                {{ author.display_name }}
+              </a>
+              {% if not loop.last %} | {% endif %}
+            {%- endfor %}
+            |
+            <time datetime="{{ post.date | htmlDateString }}">
+              {{ post.date | readableDate }}
+            </time>
+            |
+            {{ post.content | readingTime | safe }}
+          </div>
+        </div>
+        {% if post.data.description %}
+          <p>{{ post.data.description }}</p>
+        {% endif %}
+        <a href="{{ post.url }}">Read more</a>
+      </li>
     {% endif %}
   {%- endfor %}
 </ol>

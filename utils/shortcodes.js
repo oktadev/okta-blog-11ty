@@ -1,73 +1,5 @@
-import { DateTime } from "luxon";
-
-const READING_SPEED = 300;
-
-const readingTime = (content) => {
-  const sanitizeHtml = content.replace(/<\/?[^>]+(>|$)/g, "");
-  const numWords = sanitizeHtml.split(" ").length;
-  const minutes = Math.round(numWords / READING_SPEED);
-  const text = minutes < 1 ? 1 : minutes;
-
-  return `<div class="px-2 bg-okta-cloud rounded-xl content-center font-bold"><p class="text-xs leading-3 uppercase">${text} min read</p></div>`;
-};
-
-const avatar = (img, size = "small") => {
-  let width;
-
-  switch (size) {
-    case "small":
-      width = 5;
-      break;
-    case "medium":
-      width = 12;
-      break;
-    case "large":
-      width = 16;
-      break;
-  }
-
-  return `<img src="/img/avatar/${img}" class="w-${width} list-none rounded-full" alt="${img}" />`;
-};
-
-const postsListItem = (post, authorsList) => {
-  if (post && post.data && authorsList) {
-    const authorsHtml = Object.values(authorsList)
-      .map((author) => {
-        return `<a href="/authors/${
-          author.slug
-        }/" class="inline-flex items-center gap-1">${avatar(author.avatar)} ${
-          author.display_name
-        }</a>`;
-      })
-      .filter(Boolean)
-      .join("");
-
-    return `
-      <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
-      <div class="grid gap-1">
-        <a href="${post.url}">
-        <h2>
-          ${post.data.title ? post.data.title : `<code>${post.url}</code>`}
-        </h2>
-        </a>
-        <div class="flex gap-1 items-center">
-        ${authorsHtml}
-        |
-        <time datetime="${DateTime.fromJSDate(post.date, {
-          zone: "utc",
-        }).toFormat("yyyy-LL-dd")}">
-          ${DateTime.fromJSDate(post.date, { zone: "utc" }).toFormat(
-            "dd LLLL yyyy",
-          )}
-        </time> |
-        <p>${readingTime(post.content)}</p>
-        </div>
-      </div>
-      ${post.data.description ? `<p>${post.data.description}</p>` : ""}
-      <a href="${post.url}">Read more</a>
-      </li>`;
-  }
-};
+// Avatar moved to shortcodes-async.js for image processing
+// readingTime moved to filters.js since it's used as a filter
 
 const youtube = (id, t, w, h) => {
   const width = w || 560;
@@ -101,7 +33,8 @@ const excerpt = (stemPath, postsCollection) => {
   const authorsHtml = authors
     ? authors
         .map((author) => {
-          return `<a href="/authors/${author.slug}/" class="inline-flex items-center gap-1">${avatar(author.avatar)} ${author.display_name}</a>`;
+          // Use simple img tag since avatar shortcode is now async
+          return `<a href="/authors/${author.slug}/" class="inline-flex items-center gap-1"><img src="/img/avatar/${author.avatar}" class="w-5 list-none rounded-full" alt="${author.avatar}" loading="lazy" /> ${author.display_name}</a>`;
         })
         .join("")
     : "";
@@ -115,9 +48,6 @@ const excerpt = (stemPath, postsCollection) => {
 };
 
 export default {
-  readingTime: (content) => readingTime(content),
-  avatar: (img, size) => avatar(img, size),
-  postsListItem: (post, author) => postsListItem(post, author),
   youtube: (id, t, w, h) => youtube(id, t, w, h),
   speakerdeck: (id, w) => speakerdeck(id, w),
   excerpt: (stemPath, postsCollection) => excerpt(stemPath, postsCollection),

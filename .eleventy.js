@@ -93,9 +93,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addLayoutAlias("base", "base.njk");
   eleventyConfig.addLayoutAlias("post", "post.njk");
 
-  // // Copy/pass-through files
-  // eleventyConfig.addPassthroughCopy("src/assets/css");
-  // eleventyConfig.addPassthroughCopy("src/assets/js");
+  // Static files (style.css, fonts/, js/) are pre-copied by npm scripts using
+  // shell cp, which avoids EPERM unlink failures on macOS-mounted fs.
+
   // Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
   // Adds the {% css %} paired shortcode
   eleventyConfig.addBundle("css");
