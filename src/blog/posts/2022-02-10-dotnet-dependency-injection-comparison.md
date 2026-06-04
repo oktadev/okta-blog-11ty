@@ -227,7 +227,7 @@ Finally, you will want to update your `Views/Shared/_Layout.cshtml` view. This s
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a>OktaDependencyInjection</a>
+                <a class="navbar-brand" asp-area asp-controller="Home" asp-action="Index">OktaDependencyInjection</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -235,10 +235,10 @@ Finally, you will want to update your `Views/Shared/_Layout.cshtml` view. This s
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a>Home</a>
+                            <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a>Privacy</a>
+                            <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>

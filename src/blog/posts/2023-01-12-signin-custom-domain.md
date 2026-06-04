@@ -2,11 +2,11 @@
 title: "A Secure and Themed Sign-in Page"
 author: alisa-duncan
 by: advocate
-communities: [security, .net, java, javascript, go, php, python, ruby]
+communities: [security,.net,java,javascript,go,php,python,ruby]
 description: "Redirecting to the Okta-hosted sign-in page is the most secure way to authenticate users in your application. But the default configuration yield a very neutral sign-in page. This post walks you through customization options and setting up a custom domain so the personality of your site shines all through the user's experience."
 tags: [security, theming]
 tweets:
-  - "Add some flair to your sign-in process by following the quick steps in this post!"
+- "Add some flair to your sign-in process by following the quick steps in this post!"
 image: signin-custom-domain/social.jpg
 type: awareness
 ---
@@ -20,22 +20,20 @@ But the default sign-in page can look too different from the personality you hav
 This post walks you through how to customize your sign-in page using a custom domain and by selecting fun styles using Okta-hosted redirect model. We'll use a pre-existing e-commerce cupcake site built using an Angular Micro frontend application and customize the sign-in page to be full of mouth-watering cupcakes. 😋
 
 > **Note**
-> The process outlined in this post is not Angular-dependent, so feel free to substitute the web app with your favorite SPA application.
+The process outlined in this post is not Angular-dependent, so feel free to substitute the web app with your favorite SPA application.
 
 {% img {src: "signin-custom-domain/themed-sign-in.gif", alt: "Animated gif of sign-in from a cupcake site", header: "800"} %}
 
 **Prerequisites**
-
 - [Node](https://nodejs.org/)
 - [Okta CLI](https://cli.okta.com)
-- **\*Optional** Domain name you own and access to administrate DNS of the domain
+- ***Optional** Domain name you own and access to administrate DNS of the domain
 
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
 
 ## Prepare your Okta account and Okta application
-
 You'll need an Okta account. If you already have one and an Okta application you want to use for this tutorial, feel free to skip this section. Otherwise, let's continue!
 
 {{ macro.cli({type: "spa", framework: "Angular", loginRedirectUri: "http://localhost:4200/login/callback", logoutRedirectUri: "http://localhost:4200"}) }}
@@ -43,7 +41,6 @@ You'll need an Okta account. If you already have one and an Okta application you
 Note the `Issuer` and the `Client ID`. You'll need those values to configure Okta in the web app.
 
 ## Theme the Okta-hosted sign-in page
-
 Let's make the sign-in page more enticing by beautifying it with a cupcake or whatever theme sparks joy.
 
 You can make these customizations in the Admin Console through the Okta Dashboard or API calls. We'll use the Okta Dashboard in this post, but let me know in a comment below if you want to see the API calls' instructions.
@@ -54,7 +51,7 @@ Once you've authenticated, you'll see your Okta Dashboard.
 
 Access the Admin Console by pressing the **Admin** button in the toolbar at the top of the page. You'll encounter a sign-in challenge, and once you emerge victorious, you'll be in the Admin Console.
 
-Navigate to **Customizations** > **Branding** on the sidebar. Here you can theme your login page. Select your primary and secondary colors used within the sign-in widget. Add a logo, a favicon, and optionally add a background image. Press the **Edit** button for **Okta-hosted Sign-In Page**, select your background style and save your changes.
+Navigate to **Customizations** > **Branding** on the sidebar. Here you can theme your login page. Select your primary and secondary colors used within the sign-in widget. Add a logo, a favicon, and optionally add a background image. Press the **Edit** button for **Okta-hosted Sign-In Page**, select your background style and save your changes. 
 
 {% img {src: "signin-custom-domain/cupcake-theme.jpg", alt: "Screenshot of customizations showing color selections, a logo, a favicon, and a background image", header: "800"} %}
 
@@ -83,7 +80,6 @@ The final step to customize the URL for your domain is configuring your Okta app
 The DNS changes may take a few minutes to propagate, so prepare a soothing cup of tea to decompress from that DNS work while you wait. Let's see how the sign-in page looks in a web app with a matching theme!
 
 ## Set up the Angular Micro-frontend site and add Okta
-
 To reduce the overhead of creating a web app, we'll use an existing sample cupcake e-commerce app. Grab the pre-built [Angular application from the GitHub repo](https://github.com/oktadev/okta-angular-microfrontend-example/tree/deploy) by running the following commands in your terminal:
 
 ```shell
@@ -93,16 +89,16 @@ npm ci
 
 Open the project in your favorite IDE.
 
-The site already includes the libraries required to authenticate using Okta. You'll need to configure the app with the `Issuer` and `Client ID`.
+The site already includes the libraries required to authenticate using Okta. You'll need to configure the app with the `Issuer` and `Client ID`. 
 
 Open `projects/shell/src/app/app.module.ts`. Find the following code block and replace `{yourDomain}` and `{yourClientID}` with your Okta application values. If you used a custom domain, the `{yourDomain}` domain value is the issuer value from the previous step. If you didn't set up a custom domain, `{yourDomain}` is the issuer value generated in the output of the Okta CLI.
 
 ```ts
 const oktaAuth = new OktaAuth({
-  issuer: "https://{yourDomain}/oauth2/default",
-  clientId: "{yourClientID}",
-  redirectUri: window.location.origin + "/login/callback",
-  scopes: ["openid", "profile", "email"],
+  issuer: 'https://{yourDomain}/oauth2/default',
+  clientId: '{yourClientID}',
+  redirectUri: window.location.origin + '/login/callback',
+  scopes: ['openid', 'profile', 'email']
 });
 ```
 
@@ -121,11 +117,10 @@ If you want to read about creating an Angular Micro frontend and sharing Okta au
 ## Learn more about styling the sign-in page and creating web apps quickly
 
 If you liked this post, you might be interested in these links.
-
-- [Style the sign-in page guide](https://developer.okta.com/docs/guides/custom-widget/main/)
-- [Customize your Okta experience with the Brands API](https://developer.okta.com/docs/guides/customize-themes/)
-- [Customize domain and email address](https://developer.okta.com/docs/guides/custom-url-domain/main/)
-- [How to Build Micro Frontends Using Module Federation in Angular](/blog/2022/05/17/angular-microfrontend-auth)
-- [Quick JavaScript Authentication with OktaDev Schematics](/blog/2022/10/14/quick-javascript-authentication)
+* [Style the sign-in page guide](https://developer.okta.com/docs/guides/custom-widget/main/)
+* [Customize your Okta experience with the Brands API](https://developer.okta.com/docs/guides/customize-themes/)
+* [Customize domain and email address](https://developer.okta.com/docs/guides/custom-url-domain/main/)
+* [How to Build Micro Frontends Using Module Federation in Angular](/blog/2022/05/17/angular-microfrontend-auth)
+* [Quick JavaScript Authentication with OktaDev Schematics](/blog/2022/10/14/quick-javascript-authentication)
 
 Remember to follow us on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube channel](https://www.youtube.com/c/OktaDev/) for more great tutorials. We'd also love to hear from you! Please comment below if you have any questions or want to share what tutorial you'd like to see next.

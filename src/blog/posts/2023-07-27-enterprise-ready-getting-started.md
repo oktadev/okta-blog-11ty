@@ -45,7 +45,7 @@ Do you want to see your framework of choice in a workshop? Let us know your pref
 
 Each tech stack has the required tooling to install on your machine. While knowledge of JavaScript, REST concepts, and command line operations are helpful, we provided a [companion video](https://youtu.be/FCSNMtLtwRg) to walk you through the installation process and running the application.
 
-{% youtube FCSNMtLtwRg %}
+{% youtube "FCSNMtLtwRg" %}
 
 ### Install Node.js
 

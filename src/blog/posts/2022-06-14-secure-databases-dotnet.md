@@ -1,15 +1,15 @@
 ---
 title: "How to Secure User Data in Azure Cosmos DB"
 author: nickolas-fisher
-by: contractor
+by: contractor 
 communities: [.net]
 description: "Learn how Cosmos DB helps protect data at rest and how to remove sensitive personally identifiable information (PII) from data you intend to store in Cosmos DB."
 tags: [dotnet, aspnetcore, dotnetcore, cosmos-db, azure]
 tweets:
-  - "Learn how to build an ASP.NET Core web application that accepts a CSV file, then secure the data to protect your users' PII 😎 #cosmosDB #.NET6"
+- "Learn how to build an ASP.NET Core web application that accepts a CSV file, then secure the data to protect your users' PII 😎 #cosmosDB #.NET6"
 
-  - "Build an ASP.NET Core web application on .NET 6 with Azure Cosmos DB. Serverless. Scalable. Secure."
-  - ""
+- "Build an ASP.NET Core web application on .NET 6 with Azure Cosmos DB. Serverless. Scalable. Secure."
+- ""
 image: featured/okta-dotnet-sql-closeup.jpg
 type: conversion
 ---
@@ -21,17 +21,17 @@ type: conversion
 - Gremlin
 - Cassandra
 
-The shift to serverless database operations is one of the most obvious advantages of migrating. Cosmos DB can automatically scale your throughput based on load, rather than the traditional provisioning of throughput in advance.
+The shift to serverless database operations is one of the most obvious advantages of migrating. Cosmos DB can automatically scale your throughput based on load, rather than the traditional provisioning of throughput in advance.  
 
-As developers, we need to be mindful of how we can protect data at rest. In this article, you will learn how Cosmos DB helps to protect data at rest and what you can do to remove sensitive data like personally identifiable information (PII) from data that you intend to store in Cosmos DB.
+As developers, we need to be mindful of how we can protect data at rest. In this article, you will learn how Cosmos DB helps to protect data at rest and what you can do to remove sensitive data like personally identifiable information (PII) from data that you intend to store in Cosmos DB.  
 
 {% include "integrator-org-warning.njk" %}
 
 ### A secure application for PII
 
-One of my first jobs in development was writing applications that would perform a `scrubbing` process on personal data coming from clients. Effectively we would receive data that included the person's name, social security number, and address. This data would then be sent out for verification to a consumer reporting corporation, and that company would return a result letting us know if the address was current and if the information we'd received was correct. Once the data returned we could import the result into our software and if the scrub came back successful then the account was a valid contact.
+One of my first jobs in development was writing applications that would perform a `scrubbing` process on personal data coming from clients. Effectively we would receive data that included the person's name, social security number, and address. This data would then be sent out for verification to a consumer reporting corporation,  and that company would return a result letting us know if the address was current and if the information we'd received was correct. Once the data returned we could import the result into our software and if the scrub came back successful then the account was a valid contact.  
 
-In this tutorial, you will do the same process. You will build an ASP.NET Core web application on .NET 6 that accepts a CSV file with a person's name and social security number. You will send that to a dummy scrub service. Then you will record the results in a Cosmos DB account. But the word has come from your boss that you _cannot_ store the social security number. So you will learn how to remove that information from your data model before storing it in Cosmos DB.
+In this tutorial, you will do the same process. You will build an ASP.NET Core web application on .NET 6 that accepts a CSV file with a person's name and social security number. You will send that to a dummy scrub service. Then you will record the results in a Cosmos DB account. But the word has come from your boss that you *cannot* store the social security number. So you will learn how to remove that information from your data model before storing it in Cosmos DB.
 
 To continue you will need:
 
@@ -45,25 +45,22 @@ Of course, if you just want to see the code feel free [to view it on Github](htt
 
 ## Cosmos DB overview
 
-Like most Platform as a Service (PaaS) offerings, Cosmos DB provides many features for security and performance. There are too many to list here. Finding the documentation on Microsoft's endless labyrinth of docs is challenging enough. But I do want to touch on a few highlights.
+Like most Platform as a Service (PaaS) offerings, Cosmos DB provides many features for security and performance. There are too many to list here. Finding the documentation on Microsoft's endless labyrinth of docs is challenging enough. But I do want to touch on a few highlights.  
 
-First, as a PaaS, Microsoft takes responsibility for network controls, host infrastructure, and physical security. They share application-level controls and identity access with you as well as the data classification. Endpoint protection is your responsibility.
+First, as a PaaS, Microsoft takes responsibility for network controls, host infrastructure, and physical security. They share application-level controls and identity access with you as well as the data classification. Endpoint protection is your responsibility.  
 
 It is important to note though that [Azure is HIPPA compliant](https://docs.microsoft.com/en-us/azure/cosmos-db/faq#:~:text=Is%20Azure%20Cosmos%20DB%20HIPAA,of%20individually%20identifiable%20health%20information). Ultimately, the data that you choose to store is your responsibility and subject to laws and regulations that are out of scope for this article.
 
-You should also take a moment to familiarize yourself with the Cosmos DB resource model. I won't go into it too deeply here, but the short version is that a `database account` owns a `database`. The `database` contains `containers`. `Containers` can contain `items`, `stored procedures`, `triggers`, and other objects. In this tutorial, you will create the database account on the Azure portal, but you will create the database, container, and items from your web application.
+You should also take a moment to familiarize yourself with the Cosmos DB resource model. I won't go into it too deeply here, but the short version is that a `database account` owns a `database`. The `database` contains `containers`. `Containers` can contain `items`, `stored procedures`, `triggers`, and other objects. In this tutorial, you will create the database account on the Azure portal, but you will create the database, container, and items from your web application.  
 
-The last thing I want to mention is that different Cosmos DB APIs have different methods for removing or encrypting data. In this tutorial, you will work with the core Cosmos DB API, but I encourage you to explore the other APIs.
+The last thing I want to mention is that different Cosmos DB APIs have different methods for removing or encrypting data. In this tutorial, you will work with the core Cosmos DB API, but I encourage you to explore the other APIs.   
 
 ## Create your Okta application
 
 {% set note %}
-
 > Note that the TCP port 5001 must be the same used by the application. You can see it in the messages displayed in the terminal when you start the application with **`dotnet run`**.
-
 {% endset %}
-
-{{ macro.cli({type: "web", note: note, framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
+{{ macro.cli({type: "web", framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
 
 ## Create a Cosmos DB account
 
@@ -71,7 +68,7 @@ As I mentioned before, the logic for creating your database, container, and item
 
 Navigate to [the Azure portal](https://portal.azure.com) and select **Create a resource**. Search for `Azure Cosmos DB` and select the option. Follow the prompt and select **Create** on the Azure Cosmos DB marketing page.
 
-Next, you will see a page asking which API best suits your workload. Find _Core (SQL) - Recommended_ and press **Create**.
+Next, you will see a page asking which API best suits your workload. Find *Core (SQL) - Recommended* and press **Create**.  
 
 {% img {src: "secure-databases-dotnet/cosmos-api.PNG", alt: "Cosmos Select API ", header: "800"} %}
 
@@ -83,14 +80,14 @@ The **Create Azure Cosmos DB Account - Core (SQL)** page provides the details ab
 
 Now you can turn your attention toward creating your web application. Open Visual Studio and press **Create a new project**. Find the template for **ASP.NET Core Web App (Model-View-Controller)** and press **Next**. Name your application `Okta_CosmosDb` and press **Next**. Finally, select **.NET 6.0 (Long-term support)** from your framework and press **Create**. Allow Visual Studio a moment to scaffold the project.
 
-Next, you can install the two packages you will need in your project.
+Next, you can install the two packages you will need in your project.  
 
 ```console
 Install-Package Okta.AspNetCore -Version 4.1.0
 Install-Package Microsoft.Azure.Cosmos -Version 3.26.1
 ```
 
-`Okta.AspNetCore` will do all the heavy lifting of connecting your web application to Okta using middleware provided by Okta. This package will just require a quick configuration using the values output to `.okta.env` from your application set up earlier.
+`Okta.AspNetCore` will do all the heavy lifting of connecting your web application to Okta using middleware provided by Okta. This package will just require a quick configuration using the values output to `.okta.env` from your application set up earlier.  
 
 `Microsoft.Azure.Cosmos` provides the core libraries for accessing the Cosmos DB API. You will use this package to create your database, add a container to it, and insert items into the container.
 
@@ -188,16 +185,16 @@ First, you need to configure your authentication to use `AddOktaMvc` and provide
 
 Next, you are setting up the dependency injection for a couple of custom services that you will write soon. These are the `IScrubService`, which will handle your scrubbing process, and the `ICosmosService`, which will handle communication to your Cosmos DB account.
 
-Finally, you are calling `InitializeCosmosClientInstanceAsync`, which will set up your database and container if they do not exist. Then it will return the `CosmosService` as a singleton.
+Finally, you are calling `InitializeCosmosClientInstanceAsync`, which will set up your database and container if they do not exist. Then it will return the `CosmosService` as a singleton.  
 
 ### Create your application services
 
 Create a new folder in the project root and name it `Services`. You will add the following four files to this directory.
 
-- `ICosmosService.cs`
-- `CosmosService.cs`
-- `IScrubService.cs`
-- `ScrubService.cs`
+* `ICosmosService.cs`
+* `CosmosService.cs`
+* `IScrubService.cs`
+* `ScrubService.cs`
 
 Start by replacing the code in the two interfaces. First, replace the code in `ICosmosService.cs` with the following.
 
@@ -233,8 +230,8 @@ namespace Okta_CosmosDb.Services
 {
     public class CosmosService : ICosmosService
     {
-        private Container _container;
-
+        private Container _container; 
+        
         public CosmosService(
             CosmosClient dbClient,
             string databaseName,
@@ -244,7 +241,7 @@ namespace Okta_CosmosDb.Services
         }
 
         /// <summary>
-        /// Creates a Cosmos DB database and a container with the specified partition key.
+        /// Creates a Cosmos DB database and a container with the specified partition key. 
         /// </summary>
         /// <returns></returns>
         public static async Task<CosmosService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
@@ -272,7 +269,7 @@ namespace Okta_CosmosDb.Services
 
 This service does two tasks. First, it stores data in Cosmos DB using the `SaveResultAsync` method. This simply calls the container you are operating on and creates an item in that container.
 
-This class also contains the static `InitializeCosmosClientInstanceAsync` method, which your `Program.cs` called to return the service. Anytime you attempt to access an `ICosmosService` your application will return a singleton using this method. This method will ensure your database and your container are created before passing the instance of the `CosmosService` to the consumer to be used.
+This class also contains the static `InitializeCosmosClientInstanceAsync` method, which your `Program.cs` called to return the service. Anytime you attempt to access an `ICosmosService` your application will return a singleton using this method. This method will ensure your database and your container are created before passing the instance of the `CosmosService` to the consumer to be used.  
 
 Next open `ScrubService.cs` and replace the code there with this implementation.
 
@@ -341,11 +338,11 @@ namespace Okta_CosmosDb.Models
 }
 ```
 
-There are a couple of things going on here that you should understand. First, you are going to store the `ScrubResult` object in your Cosmos database. Each property is explicitly given a name using the `JsonProperty` attribute, however you do not need to do this. You do need a field called `id`. The `JsonProperty` attribute helps keep your C# code consistently [Pascal case](https://techterms.com/definition/pascalcase) while keeping your Cosmos DB property names camel case.
+There are a couple of things going on here that you should understand. First, you are going to store the `ScrubResult` object in your Cosmos database. Each property is explicitly given a name using the `JsonProperty` attribute, however you do not need to do this. You do need a field called `id`.  The `JsonProperty` attribute helps keep your C# code consistently [Pascal case](https://techterms.com/definition/pascalcase) while keeping your Cosmos DB property names camel case.  
 
 The real kicker here is that the API is using the `Newtonsoft.Json` package to serialize the objects into JSON strings. This means you can use any of the features that come with the Newtonsoft package to manipulate your data. This is what you did on the `Person` object where you use the `JsonIgnore` attribute to hide the SSN.
 
-While `JsonIgnore` is the simplest way to remove the SSN from this object, there are many other approaches. You could even create a custom attribute using the `Newtonsoft.Json.Serialization.DefaultContractResolver`, and hash, encrypt, or otherwise translate the field into something less sensitive.
+While `JsonIgnore` is the simplest way to remove the SSN from this object, there are many other approaches. You could even create a custom attribute using the `Newtonsoft.Json.Serialization.DefaultContractResolver`, and hash, encrypt, or otherwise translate the field into something less sensitive.  
 
 ### Add the controller logic
 
@@ -390,8 +387,8 @@ namespace Okta_CosmosDb.Controllers
             {
                 while (!sr.EndOfStream)
                 {
-                    string[] rows = sr.ReadToEnd().Split(Environment.NewLine);
-
+                    string[] rows = sr.ReadToEnd().Split(Environment.NewLine);          
+                    
                     for(int i =0; i < rows.Length; i++)
                     {
                        if(i == 0)
@@ -429,7 +426,7 @@ namespace Okta_CosmosDb.Controllers
 }
 ```
 
-This controller will serve as a view for the import page. It will also accept a CSV file, convert the file into a list of `Person` objects, and then run the scrub process against each person. Once the scrub process is complete it will save the results to your Cosmos DB account using the database you set up earlier.
+This controller will serve as a view for the import page. It will also accept a CSV file, convert the file into a list of `Person` objects, and then run the scrub process against each person. Once the scrub process is complete it will save the results to your Cosmos DB account using the database you set up earlier.  
 
 Next, you will want a controller for logging users in and out. Add a controller called `AccountController.cs` and replace the code with the following.
 
@@ -462,7 +459,7 @@ namespace Okta_CosmosDb.Controllers
 }
 ```
 
-This controller contains methods for `SignIn` and `SignOut` implemented per Okta's recommendation.
+This controller contains methods for `SignIn` and `SignOut` implemented per Okta's recommendation.  
 
 Finally, replace the code in `HomeController.cs` with the code below.
 
@@ -499,72 +496,83 @@ namespace Okta_CosmosDb.Controllers
 }
 ```
 
-Here you have the `Index` method but the logic is replaced to redirect authenticated users to the Import screen.
+Here you have the `Index` method but the logic is replaced to redirect authenticated users to the Import screen.  
 
 ### Add and edit your views
 
-The first view to edit is the `_Layout.cshtml` in your `Views/Shared` folder.
+The first view to edit is the `_Layout.cshtml` in your `Views/Shared` folder.  
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Okta With Cosmos DB</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-  </head>
-  <body>
+</head>
+<body>
     <header>
-      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-          <a>Okta - Cosmos DB</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
-              <li class="nav-item">
-                <a>Home</a>
-              </li>
-            </ul>
-            @if ((User?.Identity?.IsAuthenticated ?? false)) {
-            <form asp-action="SignOut" asp-controller="Account" method="post">
-              <button type="submit" href="Account/Logout" class="btn btn-primary my-2 my-sm-0">Logout</button>
-            </form>
-            } else {
-            <a href="Account/SignIn" class="btn btn-primary my-2 my-sm-0">Login</a>
-            }
-          </div>
-        </div>
-      </nav>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area asp-controller="Home" asp-action="Index">Okta - Cosmos DB</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                    </ul>
+                    @if ((User?.Identity?.IsAuthenticated ?? false))
+                    {
+                        <form asp-action="SignOut" asp-controller="Account" method="post">
+                            <button type="submit" href="Account/Logout" class="btn btn-primary my-2 my-sm-0">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a href="Account/SignIn" class="btn btn-primary my-2 my-sm-0">Login</a>
+                    }
+
+                </div>
+            </div>
+        </nav>
     </header>
     <div class="container">
-      <main role="main" class="pb-3">@RenderBody()</main>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
 
     <footer class="border-top footer text-muted">
-      <div class="container">&copy; 2022 - <a href="https://profile.fishbowlllc.com" target="_blank" rel="noreferrer">Nik Fisher</a></div>
+        <div class="container">
+            &copy; 2022 - <a href="https://profile.fishbowlllc.com" target="_blank" rel="noreferrer">Nik Fisher</a>
+        </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-  </body>
+</body>
 </html>
 ```
 
 Most of the boilerplate layout is fine but it doesn't include `Login` or `Logout` buttons. You added these to the navbar and displayed the appropriate one based on the user's authentication status.
 
 Next, replace the `Home\Index.cshtml` code with the following.
-
 ```html
-@{ ViewData["Title"] = "Home Page"; }
+@{
+    ViewData["Title"] = "Home Page";
+}
 
 <div class="text-center">
-  A small tutorial on protecting PII in Microsoft's <a href="https://azure.microsoft.com/en-us/services/cosmos-db/"> Azure Cosmos DB</a>. <br />Secured by <a href="https://www.okta.com/free-trial/">Okta.</a> <br />
-  Written by <a href="https://github.com/nickolasfisher"> Nik Fisher.</a>
+    A small tutorial on protecting PII in Microsoft's <a href="https://azure.microsoft.com/en-us/services/cosmos-db/"> Azure Cosmos DB</a>.
+    <br />Secured by <a href="https://www.okta.com/free-trial/">Okta.</a> <br />
+    Written by <a href="https://github.com/nickolasfisher"> Nik Fisher.</a>
 </div>
 ```
 
@@ -576,36 +584,36 @@ Finally, create a new folder (if one wasn't created already) for `Import` in you
 @(ViewData["Title"] = "Import Clients")
 
 <form method="POST" asp-controller="Import" asp-action="Upload" enctype="multipart/form-data">
-  <input type="file" name="csvFile" class="btn-outline-primary btn" />
-  <input type="submit" class="btn btn-primary" value="Import" />
+    <input type="file" name="csvFile" class="btn-outline-primary btn" />
+    <input type="submit" class="btn btn-primary" value="Import" />
 </form>
 ```
 
-This simple page provides an opportunity for the user to import a CSV file and submit it to the server.
+This simple page provides an opportunity for the user to import a CSV file and submit it to the server.  
 
 Next, add a file for `Upload.cshtml` that will display the results as they come back.
 
 ```html
 @model List<Okta_CosmosDb.Models.ScrubResult>
-  @(ViewData["Title"] = "Scrub Results")
+@(ViewData["Title"] = "Scrub Results")
 
-  <table class="table table-bordered">
+<table class="table table-bordered">
     <thead>
-      <tr>
-        <th>Name</th>
-        <th>Result</th>
-      </tr>
+        <tr>
+            <th>Name</th>
+            <th>Result</th>
+        </tr>
     </thead>
     <tbody>
-      @foreach (var result in Model) {
-      <tr>
-        <td>@result.Person.Name</td>
-        <td>@result.Success</td>
-      </tr>
-      }
+        @foreach (var result in Model)
+        {
+            <tr>
+                <td>@result.Person.Name</td>
+                <td>@result.Success</td>
+            </tr>
+        }
     </tbody>
-  </table></Okta_CosmosDb.Models.ScrubResult
->
+</table>
 ```
 
 ### Test your application locally
@@ -618,7 +626,7 @@ Click on **Login** and follow the login page to Okta and then back to your impor
 
 {% img {src: "secure-databases-dotnet/Import-Page.PNG", alt: "Import Page", header: "800"} %}
 
-Your application will then process this file and save the results to Cosmos DB. You can navigate to your Cosmos DB portal using the `Data Explorer`.
+Your application will then process this file and save the results to Cosmos DB. You can navigate to your Cosmos DB portal using the `Data Explorer`.  
 
 {% img {src: "secure-databases-dotnet/cosmos-data.PNG", alt: "the data in Cosmos", header: "800"} %}
 
@@ -626,7 +634,7 @@ You will note that the social security number does not appear in the data you se
 
 ## Conclusions
 
-As developers, we always need to be thinking about protecting users' data. The rise of PaaS and SaaS platforms has decreased risk when used properly. But along with these new platforms, we must make sure we use best practices and keep an attentive eye on the data we choose to retain.
+As developers, we always need to be thinking about protecting users' data. The rise of PaaS and SaaS platforms has decreased risk when used properly. But along with these new platforms, we must make sure we use best practices and keep an attentive eye on the data we choose to retain.  
 
 In this tutorial, you learned how to store data in Cosmos DB from an ASP.NET Core application. You learned how to set up your Cosmos DB account and how to set up your application to create databases and containers to store your items. Finally, you used the JSON functionality to remove sensitive data from your data model before storing it.
 

@@ -18,7 +18,7 @@ Java 18 was released last month (March 2022), and with it comes the second incub
 
 If you would prefer to follow along by watching a video, here's the recording of my FOSDEM'22 talk on this topic, from the [the OktaDev YouTube channel](https://youtu.be/lW69_AtAXzE).
 
-{% youtube lW69_AtAXzE %}
+{% youtube "lW69_AtAXzE" %}
 
 ## What is a Foreign Function Interface?
 

@@ -61,7 +61,7 @@ Key terms to note before diving into the Python code:
 ```py
 def continue_conversation(messages, temperature=0):
     response = openai.ChatCompletion.create(
-        model: "gpt-3.5-turbo",
+        model="gpt-3.5-turbo",
         messages=messages,
         temperature=temperature,
     )
@@ -95,8 +95,8 @@ pn.extension()
 
 panels = []
 
-client_prompt = pn.widgets.TextInput(value: "Hi", placeholder='Enter your questions here...')
-button_conversation = pn.widgets.Button(name: "Chat with Oktanaut!")
+client_prompt = pn.widgets.TextInput(value="Hi", placeholder='Enter your questions here...')
+button_conversation = pn.widgets.Button(name="Chat with Oktanaut!")
 
 interactive_conversation = pn.bind(add_prompts_conversation, button_conversation)
 

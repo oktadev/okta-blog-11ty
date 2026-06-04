@@ -6,9 +6,9 @@ communities: [java]
 description: "This tutorial provides a quick introduction to Elasticsearch integration options with Spring Boot and JHipster."
 tags: [java, elastic, elasticsearch, spring-data]
 tweets:
-  - "Give Elasticsearch a try with @jhipster!"
-  - "You've always wanted to try Elasticsearch, haven't you? Try this tutorial!"
-  - "Check out Elasticsearch! It's excellent for enterprise search, observability, and security."
+- "Give Elasticsearch a try with @jhipster!"
+- "You've always wanted to try Elasticsearch, haven't you? Try this tutorial!"
+- "Check out Elasticsearch! It's excellent for enterprise search, observability, and security."
 image: spring-data-elasticsearch/elasticsearch-spring-data.jpg
 type: conversion
 github: https://github.com/oktadev/okta-spring-data-elasticsearch-example
@@ -63,7 +63,6 @@ nvm install 14.18.3
 ```
 
 Install JHipster with the following line:
-
 ```shell
 npm install -g generator-jhipster@7.6.0
 ```
@@ -73,7 +72,6 @@ Verify the JHipster version with the following line:
 ```shell
 jhipster --version
 ```
-
 ```
 INFO! Using JHipster version installed globally
 7.6.0
@@ -114,7 +112,7 @@ Edit `docker-compose/docker-compose.yml` and add the Kibana service like this:
 
 ```yaml
 services:
-  ...
+  ...  
   blog-kibana:
      image: docker.elastic.co/kibana/kibana:7.15.2
      ports:
@@ -123,7 +121,6 @@ services:
        ELASTICSEARCH_URL: http://blog-elasticsearch:9200
        ELASTICSEARCH_HOSTS: '["http://blog-elasticsearch:9200"]'
 ```
-
 **NOTE**: The Kibana version must match the version of Elasticsearch that's used by the `blog-elasticsearch` image.
 
 Also add the following additional configuration to the `blog-elasticsearch` service, to expose the ports to the local host for sending APIs requests:
@@ -161,13 +158,14 @@ Access the JHipster Registry at `http://localhost:8761` and sign in with your Ok
 
 {% img {src: "spring-data-elasticsearch/okta-signin.png", alt: "Okta Sign In Form", header: "400"} %}
 
-**IMPORTANT NOTE**: There is a potential issue observed for the blog service. As [Kubernetes probes](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.kubernetes-probes) are enabled by default, the blog application might change its state to `OUT_OF_SERVICE` during start up and Eureka might discard the following heartbeats with state `UP`. In this case, disable Kubernetes probes in the `docker-compose.yml` with the following environment variable:
+ **IMPORTANT NOTE**: There is a potential issue observed for the blog service. As [Kubernetes probes](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.kubernetes-probes) are enabled by default, the blog application might change its state to `OUT_OF_SERVICE` during start up and Eureka might discard the following heartbeats with state `UP`. In this case, disable Kubernetes probes in the `docker-compose.yml` with the following environment variable:
 
 ```yaml
 services:
   blog:
     image: blog
-    environment: ...
+    environment:
+      ...
       - MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED=false
 ```
 
@@ -284,7 +282,8 @@ The `ReactiveElasticsearchClient` is based on Spring's WebClient and calls are d
 ```yml
 blog:
   image: blog
-  environment: ...
+  environment:
+    ...
     - SPRING_ELASTICSEARCH_URIS=http://blog-elasticsearch:9200
     ...
 ```

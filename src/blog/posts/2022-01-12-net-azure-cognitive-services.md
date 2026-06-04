@@ -6,8 +6,8 @@ communities: [.net]
 description: "This tutorial shows you how to call Azure Cognitive Services to verify faces and store profiles pics in Azure Storage in a .NET MVC app."
 tags: [dotnet, dotnetcore, csharp, aspnet, aspnetcore, dotnet5, azure]
 tweets:
-  - "Snap a selfie! 📸  Analyze and detect faces using #azure cognitive services in this #dotnet app!"
-  - "Are you who you say you are? Analyze and detect faces using #azure cognitive services in this #dotnet app! 💻"
+- "Snap a selfie! 📸  Analyze and detect faces using #azure cognitive services in this #dotnet app!" 
+- "Are you who you say you are? Analyze and detect faces using #azure cognitive services in this #dotnet app! 💻"
 image: net-azure-cognitive-services/azure-cognitive-services-social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-dotnet-azure-cognitive-services-example
@@ -26,12 +26,11 @@ At the end of this post, you'll be able to upload a profile picture in your app 
 [[toc]]
 
 **Prerequisites**
-
-- Basic knowledge of C#
-- [.NET 5.0 runtime and SDK](https://dotnet.microsoft.com/en-us/download/dotnet/5.0), which includes the .NET CLI
-- Your favorite IDE that supports .NET projects, such as [Visual Studio](https://visualstudio.microsoft.com/downloads/), [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/), [VS Code](https://code.visualstudio.com/), or [JetBrains Rider](https://www.jetbrains.com/rider/)
-- [Okta CLI](https://cli.okta.com/)
-- A [Microsoft Azure Account](https://azure.microsoft.com/en-us/free/) (Azure free account)
+* Basic knowledge of C#
+* [.NET 5.0 runtime and SDK](https://dotnet.microsoft.com/en-us/download/dotnet/5.0), which includes the .NET CLI
+* Your favorite IDE that supports .NET projects, such as [Visual Studio](https://visualstudio.microsoft.com/downloads/), [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/), [VS Code](https://code.visualstudio.com/), or [JetBrains Rider](https://www.jetbrains.com/rider/)
+* [Okta CLI](https://cli.okta.com/)
+* A [Microsoft Azure Account](https://azure.microsoft.com/en-us/free/) (Azure free account)
 
 {% include "integrator-org-warning.njk" %}
 
@@ -70,9 +69,9 @@ Open `appsettings.Development.json` to add a new section, `Okta`, with authentic
 {
   "Logging": {
     "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
+    "Default": "Information",
+    "Microsoft": "Warning",
+    "Microsoft.Hosting.Lifetime": "Information"
     }
   },
   "Okta": {
@@ -157,37 +156,36 @@ namespace OktaProfilePicture.Controllers
 We'll create an empty view for the `Account` controller as a placeholder. Create a new folder named `Account` in the `Views` directory. The `Account` folder is where the views to display and edit your profile will go. Add the file `Profile.cshtml` to the new `Account` folder, and paste in the following code.
 
 {% raw %}
-
 ```html
-@{ ViewData["Title"] = "User Profile"; }
+@{
+    ViewData["Title"] = "User Profile";
+}
 
 <h1>Your Profile</h1>
 ```
-
 {% endraw %}
 
 Next we can update the initial view to add login and logout. Open `Views/Shared/_Layout.cshtml` and add the following markup above the `<ul class="navbar-nav flex-grow-1">` tag:
 
 {% raw %}
-
 ```html
-@if (User.Identity.IsAuthenticated) {
-<ul class="nav navbar-nav navbar-right">
-  <li><p class="navbar-text">Hello, @User.Identity.Name</p></li>
-  @*
-  <li><a class="nav-link" asp-controller="Account" asp-action="Profile" id="profile-button">Profile</a></li>
-  *@
-  <li>
-    <form class="form-inline" asp-controller="Account" asp-action="LogOut" method="post">
-      <button type="submit" class="nav-link btn btn-link text-dark" id="logout-button">Sign Out</button>
-    </form>
-  </li>
-</ul>
-} else {
-<a>@Html.ActionLink("Sign In", "LogIn", "Account")</a>
+@if (User.Identity.IsAuthenticated)
+{
+  <ul class="nav navbar-nav navbar-right">
+    <li><p class="navbar-text">Hello, @User.Identity.Name</p></li>
+    @* <li><a class="nav-link" asp-controller="Account" asp-action="Profile" id="profile-button">Profile</a></li> *@
+    <li>
+      <form class="form-inline" asp-controller="Account" asp-action="LogOut" method="post">
+        <button type="submit" class="nav-link btn btn-link text-dark" id="logout-button">Sign Out</button>
+      </form>
+    </li>
+  </ul>
+}
+else
+{
+  <a>@Html.ActionLink("Sign In", "LogIn", "Account")</a>
 }
 ```
-
 {% endraw %}
 
 The parent `div` for the element we added needs some updates to the styles. Replace the
@@ -197,6 +195,7 @@ The parent `div` for the element we added needs some updates to the styles. Repl
 with
 
 `<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">`
+
 
 If you run the app now, you can log in and log out, but there's nothing to see yet.
 
@@ -218,9 +217,9 @@ Now we can add the token to the settings file. Open `appSettings.Development.jso
 {
   "Logging": {
     "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
+    "Default": "Information",
+    "Microsoft": "Warning",
+    "Microsoft.Hosting.Lifetime": "Information"
     }
   },
   "Okta": {
@@ -230,6 +229,7 @@ Now we can add the token to the settings file. Open `appSettings.Development.jso
     "ApiToken": "{token}"
   }
 }
+
 ```
 
 We want to add the Okta management SDK client to the Dependency Injection (DI) system to use it in the controller. Open `Startup.cs` and add the following code to `ConfigureServices` method before the method call `services.AddControllersWithViews();`.
@@ -293,7 +293,6 @@ We want to protect the `Profile` method against non-authenticated calls. With th
 Let's update the profile view with user information. Open `Views/Account/Profile.cshtml` and replace the existing code displaying your user info and a profile pic. You won't have a profile pic to show yet, but that's coming up soon!
 
 {% raw %}
-
 ```html
 @model Okta.Sdk.IUser
 
@@ -329,7 +328,6 @@ Let's update the profile view with user information. Open `Views/Account/Profile
   </div>
 </div>
 ```
-
 {% endraw %}
 
 Now that we have a `Profile` method, we can update the main navbar. Open `Views/Shared/_Layout.cshtml` and uncomment the line of code that links to the "Profile" view.
@@ -421,9 +419,12 @@ public async Task<IActionResult> EditProfile(UserProfileViewModel profile)
 Let's add the view for editing. Create a new view named `EditProfile.cshtml` in `Views/Account` folder. Copy the code below and replace the contents of `EditProfile.cshtml` with it.
 
 {% raw %}
-
 ```html
-@model UserProfileViewModel @{ ViewData["Title"] = "Edit Profile"; }
+@model UserProfileViewModel
+
+@{
+  ViewData["Title"] = "Edit Profile";
+}
 
 <h1>Edit Profile</h1>
 
@@ -459,7 +460,7 @@ Let's add the view for editing. Create a new view named `EditProfile.cshtml` in 
       <div class="form-group">
         <label asp-for="ProfileImage" class="control-label"></label>
         <div class="custom-file">
-          <input asp-for="ProfileImage" class="custom-file-input" id="customFile" />
+          <input asp-for="ProfileImage" class="custom-file-input" id="customFile">
           <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
         <span asp-validation-for="ProfileImage" class="text-danger"></span>
@@ -472,21 +473,21 @@ Let's add the view for editing. Create a new view named `EditProfile.cshtml` in 
 </div>
 
 <div>
-  <a asp-action="Profile">Back to Profile</a>
+    <a asp-action="Profile">Back to Profile</a>
 </div>
 
-@section Scripts { @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script type="text/javascript">
-  const fileInput = document.querySelector(".custom-file-input");
-  fileInput.addEventListener("change", (event) => {
-    const fileName = event.target.value.split("\\").pop();
-    document.querySelector(".custom-file-label").textContent = fileName;
-  });
-</script>
+  <script type="text/javascript">
+    const fileInput = document.querySelector('.custom-file-input');
+    fileInput.addEventListener('change', (event) => {
+      const fileName = event.target.value.split("\\").pop();
+      document.querySelector('.custom-file-label').textContent = fileName;
+    });
+  </script>
 }
 ```
-
 {% endraw %}
 
 Lastly, open `Views/Account/Profile.cshtml` to uncomment a line of code towards the bottom of the file. Uncomment the line that displays a button to edit profile - the line with `<a class="btn btn-primary" role="button" asp-action="EditProfile">EditProfile</a>`.
@@ -504,7 +505,6 @@ First, we'll create the custom attributes in Okta using the Okta admin dashboard
 Log in to the [Okta admin dashboard](https://developer.okta.com/login/). Then navigate to **Directory** > **Profile Editor**. You should see an item named **User (default)** in the list, which is Okta's default user profile template. Select **User (default)** to open the **Profile Editor**. Press the **+Add Attribute** button.
 
 You'll add two string attributes, `profileImageKey` and `personId`:
-
 1. Use "Profile Image Key" as the display name and `profileImageKey` as the variable name.
 2. Use "Person Id" as the display name for the second attribute and `personId` as the variable name.
 
@@ -531,7 +531,7 @@ We're going to add a new section for Azure resources to the `appsettings.Develop
 ```json
 {
   ... Logging and Okta sections here,
-
+  
   "Azure": {
     "BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=oktaprofilepicture;AccountKey=eWlJUj.....A==;EndpointSuffix=core.windows.net"
   }
@@ -568,7 +568,7 @@ public AccountController(OktaClient oktaClient, BlobServiceClient blobServiceCli
 }
 ```
 
-Update the `Profile()` and `EditProfile(UserProfileViewModel profile)` methods to upload and view the blob container image. First, let's update the `Profile()` method.
+Update the `Profile()` and `EditProfile(UserProfileViewModel profile)` methods to upload and view the blob container image. First, let's update the `Profile()` method. 
 
 The blob container's access level is private, so we need to generate a [shared access signature](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview) that creates a read-only, temporary URL that we can use in the view. We'll also use the custom attribute `profileImageKey` to retrieve an existing image if one exists.
 
@@ -655,7 +655,7 @@ Open the `appsettings.Development.json` file and add two new fields in the `Azur
 ```json
 {
   ... Logging and Okta sections here,
-
+  
   "Azure": {
     "BlobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=oktaprofilepicture;AccountKey=eWlJUj.....A==;EndpointSuffix=core.windows.net",
     "SubscriptionKey": "{FaceResourceKey}",
@@ -729,7 +729,6 @@ Now, if you try running the app and upload an image with you and your friends, y
 ## Perform facial analysis
 
 Next, let's add the facial analysis. We need to handle two scenarios.
-
 1. You're adding a profile picture for the first time — this sets the baseline for the facial features to use in future comparisons
 2. You're updating your profile picture — facial analysis runs against the face in this image and compares it to the baseline
 

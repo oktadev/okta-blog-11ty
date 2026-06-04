@@ -26,19 +26,19 @@ The audio version of the Workforce Identity Developer Podcast is available on [C
 
 In March, with product manager Megha Rastogi, we discussed what Workforce Identity means and reviewed some of the history of security that got us here. We dig into phishing-resistant MFA and compare the relative benefits and drawbacks of WebAuthN and Passkeys. To learn more about passkeys, visit our [passkeys playground!](https://a0.to/passkeys_oktablog)
 
-{% youtube PiY5HDp0ABI %} 
+{% youtube "PiY5HDp0ABI" %} 
 
 ## SSWS Auth Tokens vs OAuth
 
 In April, with Director of Technical Strategy Matt Egan, we explored the [Okta Integration Network](https://www.okta.com/integrations/) and compared OAuth integration between applications to its predecessor, SSWS tokens. Spoiler alert: Handing out a token that confers a lot of perms indefinitely to anyone who holds it isn't a great idea these days! 
 
-{% youtube oHvukPsaAko %}
+{% youtube "oHvukPsaAko" %}
 
 ## Building SaaS for enterprise customers
 
 In May, with Product Acceleration Principal Architect Dan Marma, we discussed his recent Devday 2023 talk about [The Enterprise-Ready MVP](https://youtu.be/zL2U7qpdRZY), expanding our definition of "Okta Developers" to include everyone who builds code for customers who use Okta as their identity provider. Dan also shared some stories from the field, and I learned about some extreme use cases that enterprises have demanded from their identity providers and the apps that they use those identity providers to access! 
 
-{% youtube enWM5ZHnEp4 %}
+{% youtube "enWM5ZHnEp4" %}
 
 ## What's next for identity education in the Okta developer podcasts?
 

@@ -6,8 +6,8 @@ communities: [javascript]
 description: "A tutorial that shows how to create a TypeScript-based React app using Vite."
 tags: [react, vite, javascript, typescript]
 tweets:
-  - "⚡ Build lightning fast TypeScript React apps using Vite ⚡"
-  - "Blast off into light speed! 🚀  Learn how to create a secure TypeScript-based React app powered by Vite!"
+- "⚡ Build lightning fast TypeScript React apps using Vite ⚡"
+- "Blast off into light speed! 🚀  Learn how to create a secure TypeScript-based React app powered by Vite!"
 image: react-vite-number-converter/react-vite-social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-react-vite-number-converter-example
@@ -26,6 +26,7 @@ Vite was originally developed for Vue, but you can also create React and Svelte 
 
 **Table of Contents**{: .hide }
 [[toc]]
+
 
 {% include "integrator-org-warning.njk" %}
 
@@ -61,11 +62,9 @@ Your React components are saved as `.tsx` files in the `src/` folder. To keep th
 
 ```tsx
 function Home() {
-  return (
-    <div>
-      <h1>Number Converter</h1>
+    return <div>
+        <h1>Number Converter</h1>
     </div>
-  );
 }
 
 export default Home;
@@ -74,55 +73,66 @@ export default Home;
 Next, create the component that contains the number conversion tool. Create another file `src/components/Converter.tsx` with the contents below.
 
 ```tsx
-import { useState } from "react";
+import { useState } from 'react';
 
 function Converter() {
-  const [value, setValue] = useState<number>();
-  const [origin, setOrigin] = useState<string>();
-  const isDisabled = (base: string) => origin !== undefined && origin !== base;
+    const [value, setValue] = useState<number>();
+    const [origin, setOrigin] = useState<string>();
+    const isDisabled = (base: string) => (origin !== undefined && origin !== base);
+    
+    const updateValue = (baseName: string, base: number) => 
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (e.target.value === "") {
+                setValue((oldValue) => undefined);
+                setOrigin((oldOrigin) => undefined);
+            } else {
+                setValue((oldValue) => {
+                    const newValue = parseInt(e.target.value, base);
+                    return isNaN(newValue) ? oldValue : newValue;
+                });
+                setOrigin((oldOrigin) => baseName);
+            }
+        }
 
-  const updateValue = (baseName: string, base: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "") {
-      setValue((oldValue) => undefined);
-      setOrigin((oldOrigin) => undefined);
-    } else {
-      setValue((oldValue) => {
-        const newValue = parseInt(e.target.value, base);
-        return isNaN(newValue) ? oldValue : newValue;
-      });
-      setOrigin((oldOrigin) => baseName);
-    }
-  };
-
-  return (
-    <div className="Converter">
-      <label>
-        Decimal:
-        <input type="string" value={value?.toString(10) || ""} name="decimal" onChange={updateValue("decimal", 10)} disabled={isDisabled("decimal")} />
-      </label>
-      <label>
-        Hexadecimal:
-        <input type="string" value={value?.toString(16) || ""} name="hex" onChange={updateValue("hex", 16)} disabled={isDisabled("hex")} />
-      </label>
-      <label>
-        Binary:
-        <input type="string" value={value?.toString(2) || ""} name="binary" onChange={updateValue("binary", 2)} disabled={isDisabled("binary")} />
-      </label>
+    return <div className="Converter">
+        <label>
+            Decimal:
+            <input type="string" 
+                value={value?.toString(10) || ""}
+                name="decimal" 
+                onChange={updateValue("decimal", 10)} 
+                disabled={isDisabled("decimal")}/>
+        </label>
+        <label>
+            Hexadecimal:
+            <input type="string" 
+                value={value?.toString(16) || ""}
+                name="hex" 
+                onChange={updateValue("hex", 16)} 
+                disabled={isDisabled("hex")}/>
+        </label>
+        <label>
+            Binary:
+            <input type="string" 
+                value={value?.toString(2) || ""}
+                name="binary" 
+                onChange={updateValue("binary", 2)} 
+                disabled={isDisabled("binary")}/>
+        </label>
     </div>
-  );
 }
 
 export default Converter;
 ```
 
-The `Converter` component contains three input fields, one for the decimal value, one for the hexadecimal value, and one for the binary value. It also uses two state variables. `value` contains the number that should be converted to the different formats, and `origin` includes the input field's name in which the user has entered a number. The idea is to disable the input elements filled automatically with the converted values—the `isDisabled()` callback controls which elements are disabled.
+The `Converter` component contains three input fields, one for the decimal value, one for the hexadecimal value, and one for the binary value. It also uses two state variables. `value` contains the number that should be converted to the different formats, and `origin` includes the input field's name in which the user has entered a number. The idea is to disable the input elements filled automatically with the converted values—the `isDisabled()` callback controls which elements are disabled. 
 
 The `updateValue()` function is a little bit more tricky. It is a function that returns a callback configured with the name and the number-base of the input field. The callback takes the `ChangeEvent` and updates the component state according to the value in the input field. In the functional programming style, higher-order functions like `updateValue()` can provide a mechanism to implement configurable code without creating code repetition.
 
 Next, open `src/main.tsx` and add the Router to the application. At the top of the file, add the following import.
 
 ```ts
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 ```
 
 Then, modify the render function to look like the code below.
@@ -134,17 +144,17 @@ ReactDOM.render(
       <App />
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById("root"),
-);
+  document.getElementById('root')
+)
 ```
 
 To add the routes to the application, open `src/App.tsx` and replace its contents with the following code.
 
 ```tsx
-import "./App.css";
-import { Link, Route, Switch } from "react-router-dom";
-import Home from "./components/Home";
-import Converter from "./components/Converter";
+import './App.css'
+import { Link, Route, Switch } from 'react-router-dom';
+import Home from './components/Home';
+import Converter from './components/Converter';
 
 function App() {
   return (
@@ -160,10 +170,10 @@ function App() {
         <Route path="/converter" component={Converter} />
       </Switch>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 The application is mostly complete, but it needs some styling. Open `src/App.css` and edit it to match the CSS below.
@@ -227,7 +237,7 @@ You can now open your browser at `http://localhost:3000/` and test the applicati
 
 {% img {src: "react-vite-number-converter/react-vite-application.jpg", alt: "The number conversion utility", header: "512"} %}
 
-I opened up the Developer Tools in Chrome to understand how Vite achieves these fast starting-up times. When you open up the **Network** tab and filter by JS requests, you will see many requests to individual JavaScript sources. You will even see the `.tsx` sources you just edited.
+I opened up the Developer Tools in Chrome to understand how Vite achieves these fast starting-up times. When you open up the **Network** tab and filter by JS requests, you will see many requests to individual JavaScript sources. You will even see the `.tsx` sources you just edited. 
 
 {% img {src: "react-vite-number-converter/react-vite-modules.jpg", alt: "Vite development server under the hood.", header: "800"} %}
 
@@ -235,7 +245,7 @@ I then looked closer at `App.tsx,` and saw what is shown in the above image. Whe
 
 ## Adding authentication with Okta to the application
 
-A secure application needs user authentication to keep unauthorized users out of restricted areas. With Okta, it is easy to add authentication to your Vite application in just a few steps.
+A secure application needs user authentication to keep unauthorized users out of restricted areas. With Okta, it is easy to add authentication to your Vite application in just a few steps. 
 
 {{ macro.cli({type: "spa", framework: "React", loginRedirectUri: "http://localhost:3000/callback", logoutRedirectUri: "http://localhost:3000"}) }}
 
@@ -267,17 +277,19 @@ npm i –save-dev @types/node
 Now, open `src/main.tsx` and add the following code immediately after the `import` statements.
 
 ```ts
-import { Security } from "@okta/okta-react";
-import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
+import { Security } from '@okta/okta-react';
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 
 const oktaAuth = new OktaAuth({
   issuer: `https://{yourOktaDomain}/oauth2/default`,
-  clientId: "{yourClientID}",
+  clientId: '{yourClientID}',
   redirectUri: `${window.location.origin}/callback`,
 });
 
 function restoreOriginalUri(oktaAuth: OktaAuth, originalUri: string) {
-  window.location.replace(toRelativeUrl(originalUri || "/", window.location.origin));
+  window.location.replace(
+    toRelativeUrl(originalUri || "/", window.location.origin)
+  );
 }
 ```
 
@@ -292,14 +304,14 @@ ReactDOM.render(
       </BrowserRouter>
     </Security>
   </React.StrictMode>,
-  document.getElementById("root"),
-);
+  document.getElementById('root')
+)
 ```
 
 Now that you have made the `OktaAuth` object available to your application, you are ready to create a secured route and configure the login process. Open `src/App.tsx` and add the following import.
 
 ```ts
-import { LoginCallback, SecureRoute } from "@okta/okta-react";
+import { LoginCallback, SecureRoute } from '@okta/okta-react';
 ```
 
 Finally, convert the route that serves the `Converter` component to a secured route and add another route that handles the login callback from Okta. The code inside the `Switch` component should resemble the code below.
@@ -320,19 +332,19 @@ npm run dev
 
 Now, whenever you navigate to the **Converter** route, the application checks if you are authenticated. If not, it will redirect you to the Okta sign-in page, where you can enter your user credentials. After successfully logging in, you are able to access the application page you requested.
 
-## Learn more about React, TypeScript, and Okta
+## Learn more about React, TypeScript, and Okta 
 
-In this tutorial, I guided you through creating a TypeScript React application using Vite. Vite is a lightning-fast development server and package bundler that leverages modern ES module browser support and Hot Module Replacement—speeding up refresh times after changes to the codebase can significantly improve development productivity.
+In this tutorial, I guided you through creating a TypeScript React application using Vite. Vite is a lightning-fast development server and package bundler that leverages modern ES module browser support and Hot Module Replacement—speeding up refresh times after changes to the codebase can significantly improve development productivity. 
 
 As an example, I showed you how to implement a number conversion utility that converts between decimal, hexadecimal, and binary formats. The application was secured using Okta authentication, and you have seen how this can be achieved in just a few lines of code.
 
 If you want to learn more about React, TypeScript, or Okta authentication in JavaScript, please follow the links below.
 
-- [Build a Secure SPA with React Routing](/blog/2021/11/01/react-routing)
-- [How to Create a React App with Storybook](/blog/2022/01/20/react-storybook)
-- [Build a Simple React Application Using Hooks](/blog/2020/08/26/react-hooks)
-- [Develop Secure Apps with WebSockets and Node.js](/blog/2020/10/28/secure-web-apps-websockets-nodejs)
+* [Build a Secure SPA with React Routing](/blog/2021/11/01/react-routing)
+* [How to Create a React App with Storybook](/blog/2022/01/20/react-storybook)
+* [Build a Simple React Application Using Hooks](/blog/2020/08/26/react-hooks)
+* [Develop Secure Apps with WebSockets and Node.js](/blog/2020/10/28/secure-web-apps-websockets-nodejs)
 
-You can find the code for this tutorial on GitHub at <https://github.com/oktadev/okta-react-vite-number-converter-example>.
+You can find the code for this tutorial on GitHub at <https://github.com/oktadev/okta-react-vite-number-converter-example>. 
 
 If you liked this tutorial, chances are you like others we publish. Please follow [@oktadev on Twitter](https://twitter.com/oktadev) and [subscribe to our YouTube channel](https://youtube.com/oktadev) to get notified when we publish new developer tutorials.

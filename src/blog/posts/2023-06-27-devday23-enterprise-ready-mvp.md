@@ -25,7 +25,7 @@ What do enterprise customers expect when it comes to identity management and aut
 
 Learn the what, whys, hows, and more from Dan Marma, Product Acceleration Principal Architect:
 
-{% youtube zL2U7qpdRZY %} 
+{% youtube "zL2U7qpdRZY" %} 
 
 ## Single Sign On (SSO) in your SaaS applications
 

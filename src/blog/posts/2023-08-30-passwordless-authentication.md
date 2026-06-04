@@ -2,13 +2,13 @@
 title: "We're Living in a Passwordless World"
 author: alisa-duncan
 by: advocate
-communities: [security, mobile, javascript]
+communities: [security,mobile,javascript]
 description: "From passwords to passwordless — learn about how to elevate your authentication security."
 tags: ["passkey", "authentication", "fido"]
 tweets:
-  - ""
-  - ""
-  - ""
+- ""
+- ""
+- ""
 image: passwordless-authentication/social.jpg
 type: awareness
 ---
@@ -79,17 +79,17 @@ What we want is a robust, phishing-resistant, easy-to-use authentication mechani
 
 ## Phishing-resistant authentication
 
-Phishing-resistant authentication factors include local biometric factors and secure possession-based factors. Using cryptographically unique credentials for each website and new browser capabilities that streamlines secure authentication is the winning combination!
+Phishing-resistant authentication factors include local biometric factors and secure possession-based factors. Using cryptographically unique credentials for each website and new browser capabilities that streamlines secure authentication is the winning combination!  
 
 Using FIDO and W3C's combined forces brings us to a new authentication standard called FIDO2. FIDO2 retained the cryptographically secure authentication key from the previous U2F method. They introduced a new protocol to an existing standard for devices to interoperate with web browsers called [Client to Authenticator Protocol (CTAP2)](https://fidoalliance.org/specs/fido-v2.0-ps-20190130/fido-client-to-authenticator-protocol-v2.0-ps-20190130.html). Devices supporting CTAP2 include those with built-in biometric readers such as phones, and external devices such as smart keys. An example of a device with built-in hardware authenticators includes laptops with fingerprint sensors or cameras for facial recognition. External devices include security keys, phones, and watches with Bluetooth, USB, or NFC communication capability.
 
 {% img {src: "passwordless-authentication/ctap.jpg", alt: "Graphic of device icons such as phone, laptop, smart card, and smart key along with forms of communication (Bluetooth, USB, and NFC)", header: "800"} %}
 
-The W3C then introduced a new web standard for web authentication on the web, called [WebAuthn](https://www.w3.org/TR/webauthn-2/). It added a new browser-based API, the Web Authentication API, which extends from the existing Credential Management API. Instead of using passwords, the Web Authentication API uses secure authentication credentials using asymmetric encryption (where you have a public and private key). All modern browsers now have full or partial support for WebAuthn. You can check which browsers and versions support WebAuthn on [caniuse.com](https://caniuse.com/?search=webauthn). The screen capture shows browser support at the time of publishing.
+The W3C then introduced a new web standard for web authentication on the web, called [WebAuthn](https://www.w3.org/TR/webauthn-2/). It added a new browser-based API, the Web Authentication API, which extends from the existing Credential Management API. Instead of using passwords, the Web Authentication API uses secure authentication credentials using asymmetric encryption (where you have a public and private key). All modern browsers now have full or partial support for WebAuthn. You can check which browsers and versions support WebAuthn on [caniuse.com](https://caniuse.com/?search=webauthn). The screen capture shows browser support at the time of publishing. 
 
 {% img {src: "passwordless-authentication/webauthn-caniuse.jpg", alt: "WebAuthn support across browsers showing Internet Explorer and Opera Mini having no support, Firefox desktop and mobile has partial support, and remaining browsers including Chrome, Edge, Safari on desktop and mobile having support.", header: "800"} %}
 
-FIDO's Client to Authenticator Protocol complements WebAuthn to create a seamless, easy-to-use, secure authentication experience.
+FIDO's Client to Authenticator Protocol complements WebAuthn to create a seamless, easy-to-use, secure authentication experience. 
 
 {% img {src: "passwordless-authentication/webauthn-ctap.jpg", alt: "Icons representing WebAuthn in the browser and CTAP devices with a heart in between", header: "800"} %}
 
@@ -100,9 +100,8 @@ A new term for this authentication mechanism without passwords is often called "
 Passwordless authentication with CTAP2 and WebAuthn aren't new secure authentication mechanism since both have been around for a few years now. While CTAP2 and WebAuthn are an awesome progression to elevating security, a cool thing happened. Tech giants Apple, Google, and Microsoft _joined forces_ to standardize on making secure passwordless authentication seamless within and across their ecosystems with passkeys. Passkeys is another evolution on top of WebAuthn. Secure, phishing-resistant authentication keeps getting better!
 
 ## FIDO2 authentication with WebAuthn and CTAP
-
+ 
 So how does this work? At a high level, your FIDO2 authentication flow utilizes each of the three factors:
-
 1. Something you know, a PIN to unlock the device
 2. Something you have, the authenticator device, which may be a security key or a capable phone
 3. Something you are, biometric data such as fingerprint or facial recognition
@@ -113,7 +112,7 @@ There are a couple of components at play. From the user's perspective, they inte
 
 ### Registering a user for passkeys
 
-The user opens their favorite site in the browser. In the FIDO2 world, the site that makes the WebAuthn calls is the _Relying Party_, and the browser is the _Client_. If your site uses a single-page application frontend, the relying party includes both the frontend and backend server.
+The user opens their favorite site in the browser. In the FIDO2 world, the site that makes the WebAuthn calls is the _Relying Party_, and the browser is the _Client_. If your site uses a single-page application frontend, the relying party includes both the frontend and backend server. 
 
 {% img {src: "passwordless-authentication/webauthnme.jpg", alt: "webauthn.me site showing a user name field and a register button", header: "800"} %}
 
@@ -124,6 +123,7 @@ The web app for the site displays a form to gather user information, an email ad
 Behinds the scenes the web app calls the server with credential request options, such as the username and registration-related data. The server responds with information about the relying party, a user ID, and a cryptographically random value for the registration process called a "challenge." The web app uses WebAuthn to generate a new credential, sending the response information from the server, including the challenge. The credential call from the browser to the authenticator is possible via CTAP2.
 
 {% img {src: "passwordless-authentication/webauthnme-register-consent.jpg", alt: "webauthn.me site showing OS prompt to create a passkey via TouchID", header: "800"} %}
+
 
 The authenticator takes over, prompting the user for consent and biometric information. The authenticator generates a public/private key pair for the website. The authenticator signs the public key with an attestation certificate for the device hardware. Signing the key with the attestation certificate proves the keyset is from a specific device. The authenticator returns the public key in the WebAuthn credential response.
 
@@ -137,7 +137,7 @@ The user is now registered to use FIDO2 authentication mechanisms in the future.
 
 We can see what user authentication looks like with an account for the site set up and the initial passkey created.
 
-The user opens their favorite website (the Relying Party) in their browser (the Client) and initiates signing in by entering their username. In the [webauthn.me](https://a0.to/webauthnme-okta-blog) site we're using, the user authenticates immediately after registering as the next step demonstrating the process.
+The user opens their favorite website (the Relying Party) in their browser (the Client) and initiates signing in by entering their username. In the [webauthn.me](https://a0.to/webauthnme-okta-blog) site we're using, the user authenticates immediately after registering as the next step demonstrating the process. 
 
 {% img {src: "passwordless-authentication/webauthnme-authn.jpg", alt: "webauthn.io site authenticate user prompt from the browser", header: "800"} %}
 
@@ -162,9 +162,9 @@ But let's be honest. There are a lot of steps documented in this post and many s
 From a developer perspective, you can use the [Web Authentication API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API) directly. There are two methods you use:
 
 ```js
-navigator.credentials.create({ options });
+navigator.credentials.create({options});
 
-navigator.credentials.get({ options });
+navigator.credentials.get({options});
 ```
 
 You'll need to pass in options for each call, including the Relying Party info, challenge, etc. If you want to use something other than Web Authentication APIs directly, you can find a library for your favorite tech stack on [awesome-webauthn](https://github.com/herrjemand/awesome-webauthn#server-libs) GitHub repo, or your tech stack's package manager.
@@ -179,11 +179,11 @@ Okta has passkey support, including in your Developer Edition org. The great new
 
 This post laid out the landscape of the new passwordless world, why there was a need for this new authentication mechanism, and how it works behind the scenes. If you found this post intriguing and want to learn more, you may find these links useful:
 
-- [Phishing-Resistant Authenticators with Megha Rastogi: Okta Workforce Identity Developer Podcast](https://youtu.be/PiY5HDp0ABI)
-- [Building a WebAuthn Application with Java](/blog/2022/04/26/webauthn-java)
-- [Passkeys Playground](https://a0.to/passkeys_oktablog)
-- [Our Take on Passkeys blogpost by Auth0](https://auth0.com/blog/our-take-on-passkeys/)
-- [Web Authentication information from Auth0](https://webauthn.me/introduction)
-- [Passkeys in Action video by the FIDO Alliance](https://youtu.be/SWocv4BhCNg)
+* [Phishing-Resistant Authenticators with Megha Rastogi: Okta Workforce Identity Developer Podcast](https://youtu.be/PiY5HDp0ABI)
+* [Building a WebAuthn Application with Java](/blog/2022/04/26/webauthn-java)
+* [Passkeys Playground](https://a0.to/passkeys_oktablog)
+* [Our Take on Passkeys blogpost by Auth0](https://auth0.com/blog/our-take-on-passkeys/)
+* [Web Authentication information from Auth0](https://webauthn.me/introduction)
+* [Passkeys in Action video by the FIDO Alliance](https://youtu.be/SWocv4BhCNg)
 
 Don't forget to follow us on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube channel](https://www.youtube.com/c/OktaDev/) for more great content. We'd also love to hear from you! Please comment below if you have questions or want to share your WebAuthn experience. Also, let us know what topics you'd like to see us cover next.

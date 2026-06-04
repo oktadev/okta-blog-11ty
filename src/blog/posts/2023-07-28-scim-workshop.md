@@ -37,7 +37,7 @@ But creating accounts when users log in is only one of your customers' many expe
 In this workshop, we'll solve those problems and more with SCIM, the System for Cross-domain Identity Management. SCIM is an open standard protocol that allows us to manage identities across systems as well as common user lifecycles. In this workshop, we will enhance a sample application by adding SCIM server functionality to it, and connect the sample application's SCIM server to an Okta client. 
 
 For an in-depth walkthrough of developing and troubleshooting the code in this workshop, follow along on with the video: 
-{% youtube 78CuvtW8KvI %}
+{% youtube "78CuvtW8KvI" %}
 
 
 In this workshop, we'll cover the following:

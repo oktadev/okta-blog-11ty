@@ -41,7 +41,7 @@ Let's get started!
 
 If you prefer to follow along by watching a video, see [How to Build Low-Code Microservices on the Cloud Using Istio, JHipster, and Kubernetes] on the [OktaDev YouTube channel](https://youtube.com/oktadev).
 
-{% youtube zGpnIhRgMaM %}
+{% youtube "zGpnIhRgMaM" %}
 
 ## Why build cloud-native microservices using a service mesh?
 

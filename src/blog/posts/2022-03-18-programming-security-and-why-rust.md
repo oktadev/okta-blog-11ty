@@ -20,7 +20,7 @@ What is safe programming, or to be more precise, what does being safe mean for a
 
 If you would rather follow along by watching a video, check out the video of the talk I made on the same topic, at FOSDEM'22, below from [the OktaDev YouTube channel](https://youtu.be/8jtPUOytWyU).
 
-{% youtube 8jtPUOytWyU %}
+{% youtube "8jtPUOytWyU" %}
 
 ## Programming safety
 
@@ -73,7 +73,7 @@ If we take a look at stats, we can see that:
 
 That's a huge chunk of CVEs, and of course, it's no surprise that most of it is from C/C++ systems 🤷
 
-https://x.com/deepu105/status/1501086412296228866
+https://twitter.com/i/status/1501086412296228866
 
 Imagine a world without memory safety issues. Imagine the amount of developer time saved, amount of money saved, amount of resources saved. Sometimes I wonder why we still use C/C++. Why do we trust humans, against all available evidence, to handle memory manually? And this is without considering other non-CVE memory issues like memory leaks, memory efficiency, and so on.
 

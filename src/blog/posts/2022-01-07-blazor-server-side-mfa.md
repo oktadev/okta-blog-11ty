@@ -6,9 +6,9 @@ communities: [.net]
 description: "Learn how to use MFA with Okta + .NET 5 Blazor Server together to secure your apps"
 tags: [csharp-8, csharp-9, dotnet, dotnetcore, csharp, aspnetcore, dotnet5, blazor, mfa]
 tweets:
-  - "Learn how to use MFA + #Okta + #dotnet #blazorserver together for the ultimate secure app ->"
-  - "Get up to speed on using #MFA and #Okta for #dotnet #blazorserver"
-  - "Wondering how to add #MFA to your #blazor #dotnet5 apps? We've got you covered with this post using Okta!"
+- "Learn how to use MFA + #Okta + #dotnet #blazorserver together for the ultimate secure app ->"
+- "Get up to speed on using #MFA and #Okta for #dotnet #blazorserver"
+- "Wondering how to add #MFA to your #blazor #dotnet5 apps? We've got you covered with this post using Okta!"
 image: featured/okta-dotnet-books-quarter.jpg
 type: conversion
 ---
@@ -19,7 +19,7 @@ type: conversion
 
 [Blazor](https://docs.microsoft.com/en-us/aspnet/core/blazor) is an exciting new technology from Microsoft that will allow developers to bring C# to clients. Server and client components are written in the same language and can be used and re-used interchangeably. Blazor comes in two flavors, server and client apps. In this tutorial you will be working with [Server Blazor](https://docs.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0) apps, where the C# code is run on the server, and messages are exchanged using `SignalR`.
 
-I'll show you how to integrate Okta with a server-side Blazor app. Then you will learn how to use Okta's multi-factor authentication system to provide an additional layer of security. Multi-factor authentication (MFA) is a technology in which a user must present two or more credentials before they can successfully gain access to complete a login or other transaction. There are a number of ways this can be accomplished. The most common is to email or text message a code to a user after the user is authenticated. The user can then verify the code thus establishing that the user knows the proper credentials but also has access to the phone number or email address of record.
+I'll show you how to integrate Okta with a server-side Blazor app. Then you will learn how to use Okta's multi-factor authentication system to provide an additional layer of security. Multi-factor authentication (MFA) is a technology in which a user must present two or more credentials before they can successfully gain access to complete a login or other transaction.   There are a number of ways this can be accomplished.  The most common is to email or text message a code to a user after the user is authenticated.  The user can then verify the code thus establishing that the user knows the proper credentials but also has access to the phone number or email address of record.
 
 ### What you'll need
 
@@ -33,11 +33,11 @@ I'll show you how to integrate Okta with a server-side Blazor app. Then you will
 
 Using the Okta CLI, [create a new Okta app](https://cli.okta.com/manual/apps/create/) for .NET Blazor. Or, use your Okta admin portal to accomplish this: Navigate to **Applications**, click on `Create App Integration`, select **OIDC** for `Sign in Type`, **Web** for `Application Type`, and fill out the specifics for your localhost environment.
 
-{{ macro.cli({type: "web", note: note, framework: "ASP.NET Core", loginRedirectUri: "https://localhost:44378/authorization-code/callback", logoutRedirectUri: "https://localhost:44378/signout/callback"}) }}
+{{ macro.cli({type: "web", framework: "ASP.NET Core", loginRedirectUri: "https://localhost:44378/authorization-code/callback", logoutRedirectUri: "https://localhost:44378/signout/callback"}) }}
 
-Once you have completed an Okta application setup you will need to enable multi-factor authentication and then enable it on your application. Now, navigate to the admin portal and under _Applications_ select the application you just created. Click on **Sign on** and under the _Sign on Policy_ section click on **Add Rule**.
+Once you have completed an Okta application setup you will need to enable multi-factor authentication and then enable it on your application. Now, navigate to the admin portal and under *Applications* select the application you just created. Click on **Sign on** and under the *Sign on Policy* section click on **Add Rule**.  
 
-Under the _Access_ section click on **Multifactor Settings**. For this application you will only be enabling **SMS Authentication** but you can see the **Factor Types** that Okta allows on this page. Under the **SMS Authentication** tab set the drop-down to **Active**.
+Under the *Access* section click on **Multifactor Settings**. For this application you will only be enabling **SMS Authentication** but you can see the **Factor Types** that Okta allows on this page. Under the **SMS Authentication** tab set the drop-down to **Active**.
 
 {% img {src: "blazor-server-side-mfa/image1.jpeg", alt: "SMS Multifactor page", header: "800"} %}
 
@@ -47,7 +47,7 @@ Return to the **Rule** page and click **Prompt for factor** and then click **Eve
 
 ## Create your Blazor application
 
-Open Visual Studio 2019 and select **Create a new project**. Find the **Blazor App** entry on the _Create a project_ page. Please note, if you are using a different version of Visual Studio your project create templates may look different.
+Open Visual Studio 2019 and select **Create a new project**. Find the **Blazor App** entry on the *Create a project* page.  Please note, if you are using a different version of Visual Studio your project create templates may look different.
 
 {% img {src: "blazor-server-side-mfa/image3.jpeg", alt: "Create new project", header: "800"} %}
 
@@ -55,7 +55,7 @@ Under the **Create a new Blazor app** section select **Blazor Server App** and g
 
 {% img {src: "blazor-server-side-mfa/image4.jpeg", alt: "Configure new project", header: "800"} %}
 
-Once it does you will see the _Configure your new project_ screen. Name your project **Okta_ServerDemo** and press **Create**.
+Once it does you will see the *Configure your new project* screen.  Name your project **Okta_ServerDemo** and press **Create**.
 
 {% img {src: "blazor-server-side-mfa/image5.jpeg", alt: "Create Blazor app", header: "800"} %}
 
@@ -204,7 +204,7 @@ Next, you can turn your attention to the pages. First, you will want to edit `Ap
 </CascadingAuthenticationState>
 ```
 
-Much of this page is boilerplate from the setup process. But you need to make a few important changes. First, wrap the entire code in the `CascadingAuthenticationState` element. This will cascade the authentication state to each of your routes. Next, you need to change `RouteView` to `AuthorizeView` and handle the `Authorizing` and `NotAuthorized` states.
+Much of this page is boilerplate from the setup process. But you need to make a few important changes. First, wrap the entire code in the `CascadingAuthenticationState` element. This will cascade the authentication state to each of your routes. Next, you need to change `RouteView` to `AuthorizeView` and handle the `Authorizing` and `NotAuthorized` states.  
 
 At this point, you may have noticed that `UserComponent.razor` doesn't exist, so create that now in the `Shared` folder. Add the following code to it.
 
@@ -229,7 +229,7 @@ The two routes here, `login` and `logout` need to be implemented next. Under **P
 
 
 @{
-
+   
 }
 ```
 
@@ -256,9 +256,9 @@ namespace Okta_ServerDemo.Pages
 }
 ```
 
-This code should look familiar if you've used Okta with any ASP.NET application. You're simply returning the `Challenge` provided by Okta. This will redirect the user to the Okta login page.
+This code should look familiar if you've used Okta with any ASP.NET application. You're simply returning the `Challenge` provided by Okta. This will redirect the user to the Okta login page.  
 
-After you authenticate, you'll either be asked for your phone number or prompted to send a code to your phone. This depends on whether you've set up your phone in Okta yet. If you haven't, add your phone number to your account and verify the code; otherwise, click **Send Code** and then verify the code on this page. And just like that, your application is now secure with MFA using Okta! You can select several MFA methods found on [Okta's site](https://help.okta.com/en/prod/Content/Topics/Security/mfa/mfa-home.htm), ranging from email and phone codes to physical authenticators.
+After you authenticate, you'll either be asked for your phone number or prompted to send a code to your phone. This depends on whether you've set up your phone in Okta yet. If you haven't, add your phone number to your account and verify the code; otherwise, click **Send Code** and then verify the code on this page. And just like that, your application is now secure with MFA using Okta! You can select several MFA methods found on [Okta's site](https://help.okta.com/en/prod/Content/Topics/Security/mfa/mfa-home.htm), ranging from email and phone codes to physical authenticators.  
 
 Now you can add the `Logout` page the same way you added the `Login` page. Again, since there is no presentation here your `.cshtml` file will declare the model page without any HTML.
 
@@ -384,7 +384,7 @@ Now start the application and navigate to the `Counter` page.
 
 {% img {src: "blazor-server-side-mfa/image6.jpeg", alt: "Application not authorized", header: "800"} %}
 
-You will see the message found on your `App.razor` page. Click on the **Login** button and walk through the authentication and MFA process. Once you're logged in, you should be presented with the `\*\* page.
+You will see the message found on your `App.razor` page. Click on the **Login** button and walk through the authentication and MFA process. Once you're logged in, you should be presented with the `** page.  
 
 {% img {src: "blazor-server-side-mfa/image7.jpeg", alt: "Application is authorized", header: "800"} %}
 
@@ -392,7 +392,7 @@ That's it! if you'd like to take a look at this solution in full, check out the 
 
 ## Learn more about working with Blazor
 
-With Okta securing your application with MFA is easier than ever. With a few configuration changes, Okta does the heavy lifting and adds an additional layer of security to your Blazor server-side app.
+With Okta securing your application with MFA is easier than ever. With a few configuration changes, Okta does the heavy lifting and adds an additional layer of security to your Blazor server-side app.  
 
 If you liked this tutorial, you might like these others:
 

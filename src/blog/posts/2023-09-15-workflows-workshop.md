@@ -17,7 +17,7 @@ This tutorial is part of the on-demand workshop series. In this workshop, you'll
 
 Watch this video to follow the workshop steps. 
 
-{% youtube 12Ldo6t3hmo %}
+{% youtube "12Ldo6t3hmo" %}
 
 You built a software as a service (SaaS) Todo application: 
 

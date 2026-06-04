@@ -218,13 +218,13 @@ dotnet new page -n Chat
 Edit **Pages/Shared/\_Layout.cshtml** and modify the second nav item from this:
 
 ```html
-<a>Privacy</a>
+<a class="nav-link text-dark" asp-area asp-page="/Privacy">Privacy</a>
 ```
 
 To this:
 
 ```html
-<a>Chat</a>
+<a class="nav-link text-dark" asp-area asp-page="/Chat">Chat</a>
 ```
 
 Now, if you run the `dotnet run` command or run the application from Visual Studio, you should be able to navigate to the chat page with the heading **"Chat"**. Make sure that it runs successfully before moving on to the next step.

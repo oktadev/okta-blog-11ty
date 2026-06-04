@@ -82,7 +82,7 @@ I also use SVC as shorthand for `SFSafariViewController` and WAS as shorthand fo
 
 In the following iOS cookie behavior demo video, you can see how the session cookie and the persistent cookie are shared. The session cookie sharing behavior is not intuitive. Even when App1 is closed (which should clear all session cookies), opening App2 would make it possible to see App1's session cookie. 
 
-{% youtube mDytgEU0bO8 %}
+{% youtube "mDytgEU0bO8" %}
 
 It is worth noting that in iOS 14 and later you can specify another browser, such as Chrome, as the default. This does not affect the sharing behavior. `SFSafariViewController` and `ASWebAuthenticationSession` always use Safari under the hood, so they will never share cookies with browsers other than Safari, even if they are set as the default. The term *system browser*, often used in online articles, is synonymous with Safari. 
 

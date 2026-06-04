@@ -6,16 +6,16 @@ communities: [javascript]
 description: "How to create an Angular web application with micro frontends using Webpack 5 and Module Federation. In this first post of the series, you'll set up the project and share authenticated state in the web application."
 tags: [angular, typescript]
 tweets:
-  - "Curious about micro frontends and how to share state? 👀  Here's walkthrough on creating micro frontends with #angular 🅰️"
-  - "Build an @angular app using micro frontends! This walkthrough uses #angular & Module Federation, shares state, and 🧁! 😋"
+- "Curious about micro frontends and how to share state? 👀  Here's walkthrough on creating micro frontends with #angular 🅰️"
+- "Build an @angular app using micro frontends! This walkthrough uses #angular & Module Federation, shares state, and 🧁! 😋"
 image: angular-microfrontend-auth/angular-microfrontend-auth-social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-angular-microfrontend-example
 ---
 
-The demands placed on front-end web applications continue to grow. As consumers, we expect our web applications to be feature-rich and highly performant. As developers, we worry about how to provide quality features and performance while keeping good development practices and architecture in mind.
+The demands placed on front-end web applications continue to grow.  As consumers, we expect our web applications to be feature-rich and highly performant. As developers, we worry about how to provide quality features and performance while keeping good development practices and architecture in mind.
 
-Enter micro-frontend architecture. Micro frontends are modeled after the same concept as microservices, as a way to decompose monolithic frontends. You can combine micro-sized frontends to form a fully-featured web app. Since each micro frontend can be developed and deployed independently, you have a powerful way of scaling out frontend applications.
+Enter micro-frontend architecture. Micro frontends are modeled after the same concept as microservices, as a way to decompose monolithic frontends. You can combine micro-sized frontends  to form a fully-featured web app. Since each micro frontend can be developed and deployed independently, you have a powerful way of scaling out frontend applications.
 
 So what does the micro-frontend architecture look like? Let's say you have an e-commerce site that looks as stunning as this one:
 
@@ -29,7 +29,7 @@ So, your e-commerce site using micro frontends to decompose different functional
 
 You might be saying, "Micro frontends sound cool, but managing the different frontends and orchestrating state across the micro frontends also sounds complicated." You're right. The concept of a micro frontend has been around for a few years and rolling your own micro-frontend implementation, shared state, and tools to support it _was_ quite an undertaking. However, micro frontends are now well supported with Webpack 5 and [Module Federation](https://webpack.js.org/concepts/module-federation/). Not all web apps require a micro-frontend architecture, but for those large, feature-rich web apps that have started to get unwieldy, the first-class support of micro frontends in our web tooling is definitely a plus.
 
-This post is part one in a series where we'll build an e-commerce site using Angular and micro frontends. We'll use Webpack 5 with Module Federation to support wiring the micro frontends together. Then we'll demonstrate sharing authenticated state between the different frontends, and deploy it all to a free cloud hosting provider.
+This post is part one in a series where we'll build an e-commerce site using Angular and micro frontends. We'll use Webpack 5 with Module Federation to support wiring the micro frontends together. Then we'll demonstrate sharing authenticated state between the different frontends, and deploy it all to a free cloud hosting provider. 
 
 In this first post, we'll explore a starter project and understand how the different apps connect, add authentication using Okta, and add the wiring for sharing authenticated state. In the end, you'll have an app that looks like this:
 
@@ -37,7 +37,7 @@ In this first post, we'll explore a starter project and understand how the diffe
 
 **Prerequisites**
 
-- [Node](https://nodejs.org/) This project was developed using Node v16.14 with npm v8.5
+- [Node](https://nodejs.org/) This project was developed using Node v16.14 with npm v8.5 
 - [Angular CLI](https://angular.io/cli)
 - [Okta CLI](https://cli.okta.com)
 
@@ -71,7 +71,11 @@ Let's explore the sections of this config file.
 // ...imports here
 
 const sharedMappings = new mf.SharedMappings();
-sharedMappings.register(path.join(__dirname, "../../tsconfig.json"), ["@shared"]);
+sharedMappings.register(
+  path.join(__dirname, '../../tsconfig.json'),
+  [
+    '@shared'
+  ]);
 
 module.exports = {
   // ...other very important config properties
@@ -84,20 +88,20 @@ module.exports = {
       // filename: "remoteEntry.js",
       // exposes: {
       //     './Component': './projects/shell/src/app/app.component.ts',
-      // },
-
+      // },        
+        
       // For hosts (please adjust)
       remotes: {
-        mfeBasket: "http://localhost:4201/remoteEntry.js",
+        "mfeBasket": "http://localhost:4201/remoteEntry.js",
       },
 
       shared: share({
         // ...important external libraries to share
 
-        ...sharedMappings.getDescriptors(),
-      }),
+        ...sharedMappings.getDescriptors()
+      })
     }),
-    sharedMappings.getPlugin(),
+    sharedMappings.getPlugin()
   ],
 };
 ```
@@ -105,10 +109,10 @@ module.exports = {
 In the `webpack.config.js` for `mfe-basket`, you'll see the path for `@shared` at the top of the file and the configuration to identify what to expose in the remote application.
 
 The `shell` application serves on port 4200, and the `mfe-basket` application serves on port 4201. We can open up two terminals to run each application, or we can use the following npm script created for us by the schematic to add `@angular-architects/module-federation`:
-
+ 
 ```shell
 npm run run:all
-```
+``` 
 
 When you do so, you'll see both applications open in your browser and how they fit together in the `shell` application running on port 4200. Click the **Basket** button to navigate to a new route that displays the `BasketModule` in the `mfe-basket` application. The sign-in button doesn't work quite yet, but we'll get it going here next.
 
@@ -120,7 +124,7 @@ Because the host application doesn't know about the remote applications except i
 
 ## Add authentication using OpenID Connect
 
-One of the most useful features of Module Federation is managing shared code and state. Let's see how this all works by adding authentication to the project. We'll use the authenticated state in the existing application and with a new micro frontend.
+One of the most useful features of Module Federation is managing shared code and state. Let's see how this all works by adding authentication to the project. We'll use the authenticated state in the existing application and with a new micro frontend. 
 
 {{ macro.cli({type: "spa", framework: "Angular", loginRedirectUri: "http://localhost:4200/login/callback", logoutRedirectUri: "http://localhost:4200"}) }}
 
@@ -161,44 +165,43 @@ const oktaAuth = new OktaAuth({
 After authenticating with Okta, we need to set up the login callback to finalize the sign-in process. Open `app-routing.module.ts` in the `shell` project and update the routes array as shown below.
 
 ```ts
-import { OktaCallbackComponent } from "@okta/okta-angular";
+import { OktaCallbackComponent } from '@okta/okta-angular';
 
 const routes: Routes = [
-  { path: "", component: ProductsComponent },
-  { path: "basket", loadChildren: () => import("mfeBasket/Module").then((m) => m.BasketModule) },
-  { path: "login/callback", component: OktaCallbackComponent },
+  { path: '', component: ProductsComponent },
+  { path: 'basket', loadChildren: () => import('mfeBasket/Module').then(m => m.BasketModule) },
+  { path: 'login/callback', component: OktaCallbackComponent }
 ];
 ```
 
 Now that we've configured Okta in the application, we can add the code to sign in and sign out. Open `app.component.ts` in the `shell` project. We will add the methods to sign in and sign out using the Okta libraries. We'll also update the two public variables to use the actual authenticated state. Update your code to match the code below.
 
 ```ts
-import { Component, Inject } from "@angular/core";
-import { filter, map, Observable, shareReplay } from "rxjs";
-import { OKTA_AUTH, OktaAuthStateService } from "@okta/okta-angular";
-import { OktaAuth } from "@okta/okta-auth-js";
+import { Component, Inject } from '@angular/core';
+import { filter, map, Observable, shareReplay } from 'rxjs';
+import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styles: [],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styles: []
 })
 export class AppComponent {
-  public isAuthenticated$: Observable<boolean> = this.oktaStateService.authState$.pipe(
-    filter((authState) => !!authState),
-    map((authState) => authState.isAuthenticated ?? false),
-    shareReplay(),
-  );
+  public isAuthenticated$: Observable<boolean> = this.oktaStateService.authState$
+      .pipe(
+          filter(authState => !!authState),
+          map(authState => authState.isAuthenticated ?? false),
+          shareReplay()
+      );
+  
+  public name$: Observable<string> = this.oktaStateService.authState$
+      .pipe(
+          filter(authState => !!authState && !!authState.isAuthenticated),
+          map(authState => authState.idToken?.claims.name ?? '')
+      );
 
-  public name$: Observable<string> = this.oktaStateService.authState$.pipe(
-    filter((authState) => !!authState && !!authState.isAuthenticated),
-    map((authState) => authState.idToken?.claims.name ?? ""),
-  );
-
-  constructor(
-    private oktaStateService: OktaAuthStateService,
-    @Inject(OKTA_AUTH) private oktaAuth: OktaAuth,
-  ) {}
+  constructor(private oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
 
   public async signIn(): Promise<void> {
     await this.oktaAuth.signInWithRedirect();
@@ -214,16 +217,22 @@ We need to add the click handlers for the sign-in and sign-out buttons. Open `ap
 
 ```html
 <li>
-  <button *ngIf="(isAuthenticated$ | async) === false; else logout" class="flex items-center transition ease-in delay-150 duration-300 h-10 px-4 rounded-lg hover:border hover:border-sky-400" (click)="signIn()">
+  <button *ngIf="(isAuthenticated$ | async) === false; else logout"
+    class="flex items-center transition ease-in delay-150 duration-300 h-10 px-4 rounded-lg hover:border hover:border-sky-400"
+    (click)="signIn()"
+  >
     <span class="material-icons-outlined text-gray-500">login</span>
     <span>&nbsp;Sign In</span>
   </button>
 
-  <ng-template #logout>
-    <button class="flex items-center transition ease-in delay-150 duration-300 h-10 px-4 rounded-lg hover:border hover:border-sky-400" (click)="signOut()">
-      <span class="material-icons-outlined text-gray-500">logout</span>
-      <span>&nbsp;Sign Out</span>
-    </button>
+    <ng-template #logout>
+      <button 
+        class="flex items-center transition ease-in delay-150 duration-300 h-10 px-4 rounded-lg hover:border hover:border-sky-400"
+        (click)="signOut()"
+      >
+        <span class="material-icons-outlined text-gray-500">logout</span>
+        <span>&nbsp;Sign Out</span>
+      </button>
   </ng-template>
 </li>
 ```
@@ -239,7 +248,6 @@ ng generate application mfe-profile --routing --style css --inline-style --skip-
 ```
 
 With this Angular CLI command you
-
 1. Generated a new application named `mfe-profile`, which includes a module and a component
 2. Added a separate routing module to the application
 3. Defined the CSS styles to be inline in the components
@@ -253,7 +261,6 @@ ng generate module profile --project mfe-profile --module app --routing --route 
 ```
 
 With these two Angular CLI commands you:
-
 1. Created a new component, `HomeComponent`, in the `mfe-profile` application
 2. Created a new module, `ProfileModule`, with routing and a default component, `ProfileComponent`. You also added the `ProfileModule` as a lazy-loaded route using the '/profile' path to the `AppModule`.
 
@@ -261,8 +268,8 @@ Let's update the code. First, we'll add the default route. Open `projects/mfe-pr
 
 ```ts
 const routes: Routes = [
-  { path: "", component: HomeComponent },
-  { path: "profile", loadChildren: () => import("./profile/profile.module").then((m) => m.ProfileModule) },
+  { path: '', component: HomeComponent },
+  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) }
 ];
 ```
 
@@ -278,7 +285,7 @@ Open `projects/mfe-profile/src/app/home/home.component.html` and replace all the
 
 ```html
 <p>
-  There's nothing to see here. 👀 <br />
+  There's nothing to see here. 👀 <br/>
   The MFE is this way ➡️ <a routerLink="/profile">Profile</a>
 </p>
 ```
@@ -288,35 +295,34 @@ Finally, we can update the code for the profile. Luckily, Angular CLI took care 
 Open `projects/mfe-profile/src/app/profile/profile.component.ts` and edit the component to add the two public properties and include the `OktaAuthStateService` in the constructor:
 
 ```ts
-import { Component, OnInit } from "@angular/core";
-import { OktaAuthStateService } from "@okta/okta-angular";
-import { filter, map } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { filter, map } from 'rxjs';
 
 @Component({
-  selector: "app-profile",
-  templateUrl: "./profile.component.html",
-  styles: [],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styles: []
 })
 export class ProfileComponent {
   public profile$ = this.oktaStateService.authState$.pipe(
-    filter((state) => !!state && !!state.isAuthenticated),
-    map((state) => state.idToken?.claims),
+    filter(state => !!state && !!state.isAuthenticated),
+    map(state => state.idToken?.claims)
   );
 
   public date$ = this.oktaStateService.authState$.pipe(
-    filter((state) => !!state && !!state.isAuthenticated),
-    map((state) => (state.idToken?.claims.auth_time as number) * 1000),
-    map((epochTime) => new Date(epochTime)),
+    filter(state => !!state && !!state.isAuthenticated),
+    map(state => (state.idToken?.claims.auth_time as number) * 1000),
+    map(epochTime => new Date(epochTime)),
   );
 
-  constructor(private oktaStateService: OktaAuthStateService) {}
+  constructor(private oktaStateService: OktaAuthStateService) { }
 }
 ```
 
 Next, open the corresponding template file and replace the existing code with the following:
 
 {% raw %}
-
 ```html
 <h3 class="text-xl mb-6">Your Profile</h3>
 
@@ -326,7 +332,6 @@ Next, open the corresponding template file and replace the existing code with th
   <p>Last signed in at <span class="font-semibold">{{date$ | async | date:'full'}}</span></p>
 </div>
 ```
-
 {% endraw %}
 
 Try running the `mfe-profile` app by itself by running `ng serve mfe-profile --open` in the terminal. Notice when we navigate to the `/profile` route, we see a console error. We added Okta into the `shell` application, but now we need to turn the `mfe-profile` application into a micro frontend and share the authenticated state. Stop serving the application so we're ready for the next step.
@@ -340,7 +345,6 @@ ng add @angular-architects/module-federation --project mfe-profile --port 4202
 ```
 
 This schematic does the following:
-
 1. Updates the project's `angular.json` config file to add the port for the application and updates the builder to use a custom Webpack builder
 2. Creates the `webpack.config.js` files and scaffolds out default configuration for Module Federation
 
@@ -375,17 +379,17 @@ We can update the code to incorporate the profile's micro frontend. Open `projec
 
 ```ts
 const routes: Routes = [
-  { path: "", component: ProductsComponent },
-  { path: "basket", loadChildren: () => import("mfeBasket/Module").then((m) => m.BasketModule) },
-  { path: "profile", loadChildren: () => import("mfeProfile/Module").then((m) => m.ProfileModule) },
-  { path: "login/callback", component: OktaCallbackComponent },
+  { path: '', component: ProductsComponent },
+  { path: 'basket', loadChildren: () => import('mfeBasket/Module').then(m => m.BasketModule) },
+  { path: 'profile', loadChildren: () => import('mfeProfile/Module').then(m => m.ProfileModule)},
+  { path: 'login/callback', component: OktaCallbackComponent }
 ];
 ```
 
 What's this!? The IDE flags the import path as an error! The `shell` application code doesn't know about the Profile module, and TypeScript needs a little help. Open `projects/shell/src/decl.d.ts` and add the following line of code.
 
 ```ts
-declare module "mfeProfile/Module";
+declare module 'mfeProfile/Module';
 ```
 
 The IDE should be happier now. 😀
@@ -393,7 +397,7 @@ The IDE should be happier now. 😀
 Next, update the navigation button for **Profile** in the `shell` application to route to the correct path. Open `projects/shell/src/app/app.component.html` and find the `routerLink` for the **Profile** button. It should be approximately on line 38. Currently the `routerLink` configuration is `routerLink="/"`, but it should now be
 
 ```html
-<a routerLink="/profile"></a>
+<a routerLink="/profile">
 ```
 
 This is everything we need to do to connect the micro-frontend remote to the host application, but we also want to share authenticated state. Module Federation makes sharing state a piece of (cup)cake.
@@ -409,12 +413,12 @@ First, we'll add the Okta libraries. Scroll down towards the bottom of the file 
 ```js
 shared: share({
   // other Angular libraries remain in the config. This is just a snippet
-  "@angular/router": { singleton: true, strictVersion: true, requiredVersion: "auto" },
-  "@okta/okta-angular": { singleton: true, strictVersion: true, requiredVersion: "auto" },
-  "@okta/okta-auth-js": { singleton: true, strictVersion: true, requiredVersion: "auto" },
+  "@angular/router": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+  "@okta/okta-angular": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+  "@okta/okta-auth-js": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
 
-  ...sharedMappings.getDescriptors(),
-});
+  ...sharedMappings.getDescriptors()
+})
 ```
 
 When you create a library within this project, like the basket service and project service in the starter code, you add the library to the `sharedMappings` array at the top of the `webpack.config.js` file. If you create a new library to wrap Okta's libraries, this is where you'd add it.
@@ -425,11 +429,12 @@ Now, you should be able to run the project using `npm run run:all`, and the cupc
 
 ## Next steps
 
-I hope you enjoyed this first post on creating an Angular micro-frontend site. We explored the capabilities of micro frontends and shared state between micro frontends using Webpack's Module Federation in Angular. You can check out the completed code for this post in the [`local` branch in the @oktadev/okta-angular-microfrontend-example GitHub repo](https://github.com/oktadev/okta-angular-microfrontend-example/tree/local) by using the following command:
+I hope you enjoyed this first post on creating an Angular micro-frontend site. We explored the capabilities of micro frontends and shared state between micro frontends using Webpack's Module Federation in Angular.  You can check out the completed code for this post in the [`local` branch in the @oktadev/okta-angular-microfrontend-example GitHub repo](https://github.com/oktadev/okta-angular-microfrontend-example/tree/local) by using the following command:
 
 ```shell
 git clone --branch local https://github.com/oktadev/okta-angular-microfrontend-example.git
 ```
+
 
 In the next post I'll show how to prepare for deployment by transitioning to dynamic module loading and deploying the site to a free cloud provider. Let's continue building the site by reading "[Secure and Deploy Micro Frontends with Angular](/blog/2022/05/19/angular-microfrontend-deploy)"!
 
@@ -437,10 +442,10 @@ In the next post I'll show how to prepare for deployment by transitioning to dyn
 
 Can't wait to learn more? If you liked this post, check out the following.
 
-- [Three Ways to Configure Modules in Your Angular App](/blog/2022/02/24/angular-async-config)
-- [Add OpenID Connect to Angular Apps Quickly](/blog/2022/02/11/angular-auth0-quickly)
-- [Loading Components Dynamically in an Angular App](/blog/2021/12/08/angular-dynamic-loading)
-- [How to Win at UI Development in the World of Microservices](/blog/2019/08/08/micro-frontends-for-microservices)
-- [Micro Frontends with Angular, Module Federation, and Auth0](https://auth0.com/blog/micro-frontends-with-angular-module-federation-and-auth0/)
+* [Three Ways to Configure Modules in Your Angular App](/blog/2022/02/24/angular-async-config)
+* [Add OpenID Connect to Angular Apps Quickly](/blog/2022/02/11/angular-auth0-quickly)
+* [Loading Components Dynamically in an Angular App](/blog/2021/12/08/angular-dynamic-loading)
+* [How to Win at UI Development in the World of Microservices](/blog/2019/08/08/micro-frontends-for-microservices)
+* [Micro Frontends with Angular, Module Federation, and Auth0](https://auth0.com/blog/micro-frontends-with-angular-module-federation-and-auth0/)
 
 Don't forget to follow us on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube channel](https://www.youtube.com/c/OktaDev/) for more exciting content. We also want to hear from you about what tutorials you want to see. Leave us a comment below.

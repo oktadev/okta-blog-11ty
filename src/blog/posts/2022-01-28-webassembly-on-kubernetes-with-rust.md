@@ -21,7 +21,7 @@ You can learn more about WebAssembly at [WebAssembly.org](https://webassembly.or
 
 Though initially designed for [the web](https://www.w3.org/wasm/), WebAssembly proved to be an ideal format for writing platform and language-agnostic applications. You may be aware of something similar in the container world—Docker containers. People, including Docker co-founder Solomon Hykes, recognized the similarity and acknowledged that WebAssembly is even more efficient since it's fast, portable, and secure, running at native speeds. This means that you can use WebAssembly alongside containers as workloads on Kubernetes. Another WebAssembly initiative known as [WebAssembly System Interface (WASI)](https://wasi.dev/) along with the [Wasmtime](https://github.com/bytecodealliance/wasmtime) project make this possible.
 
-https://x.com/linclark/status/1110920999061594113
+https://twitter.com/i/status/1111004913222324225
 
 WebAssembly on Kubernetes is relatively new and has some rough edges at the moment, but it's already proving to be revolutionary. Wasm workloads can be extremely fast as they can execute faster than a container takes to start. The workloads are sandboxed and hence much more secure than containers; they are way smaller in size due to the binary format than containers.
 

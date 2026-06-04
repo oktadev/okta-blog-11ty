@@ -23,7 +23,7 @@ Why do we publish SDKs? How can you pick up languages on the fly to develop high
 
 ## Find the Okta Workforce Identity Podcast on SDK Development
 
-{% youtube DQKwq0rn7Lk %}
+{% youtube "DQKwq0rn7Lk" %}
 
 Listen to the audio version on Casted [here](https://listen.casted.us/public/49/Workforce-Identity-Developer-Podcast-4ce90a5f/ddd303a0).
 
