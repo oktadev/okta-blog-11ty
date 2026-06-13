@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "css": "tailwindcss -i ./public/css/index.css -o ./style.out.css",
-    "css:watch": "tailwindcss -i ./public/css/index.css -o ./style.out.css --watch",
-    "setup": "mkdir -p _site/img && cat style.out.css > _site/style.css && (cp -rn public/fonts _site/ || true) && (cp -rn public/js _site/ || true) && (cp -rn public/img/avatar _site/img/ || true)",
-    "start": "npm run css && npm run setup && eleventy --serve --incremental --quiet",
-    "build": "npm run css && npm run setup && eleventy"
+    "css": "tailwindcss -i ./public/css/index.css -o ./_site/style.css --minify",
+    "css:watch": "tailwindcss -i ./public/css/index.css -o ./_site/style.css --watch",
+    "setup": "mkdir -p _site/img && ([ -d _site/fonts ] || cp -r public/fonts _site/) && ([ -d _site/js ] || cp -r public/js _site/) && ([ -d _site/img/avatar ] || cp -r public/img/avatar _site/img/)",
+    "start": "ELEVENTY_ENV=development npm run css && npm run setup && ELEVENTY_ENV=development eleventy --serve --incremental",
+    "build": "ELEVENTY_ENV=production npm run css && npm run setup && ELEVENTY_ENV=production eleventy"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "@tailwindcss/cli": "^4.2.2",
     "@tailwindcss/vite": "^4.1.3",
     "eleventy-plugin-asciidoc": "^4.0.3",
+    "html-minifier-terser": "^7.2.0",
     "js-yaml": "^4.1.0",
     "luxon": "^3.6.1",
     "markdown-it": "^14.1.0",
