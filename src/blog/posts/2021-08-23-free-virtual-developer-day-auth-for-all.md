@@ -4,7 +4,7 @@ discourse_topic_id: 17410
 discourse_comment_url: https://devforum.okta.com/t/17410
 title: "Developer Day 2021: Celebrating the Future of Identity"
 author: ali-spivak
-by: advocate 
+by: advocate
 communities: [devops,security,mobile,.net,java,javascript,go,php,python,ruby]
 description: "Announcing Developer Day 2021: Auth for All with Okta and Auth0. Check out our speaker lineup, and register now. "
 tags: [identity, authorization, authentication, developer-community, conference]

@@ -1,6 +1,11 @@
 [build]
 publish = "_site"
-command = "npm run build"
+command = "npm run build && npm run smoke"
+
+# Vite bundles/optimizes assets. It's opt-in (see .eleventy.js) because it
+# breaks on mounted/synced local dev filesystems; Netlify's builders are fine.
+[build.environment]
+USE_VITE = "1"
 
 [context.deploy-preview.environment]
-command = "BASE_URL=\"$DEPLOY_PRIME_URL\"; npm run build"
+command = "BASE_URL=\"$DEPLOY_PRIME_URL\"; npm run build && npm run smoke"

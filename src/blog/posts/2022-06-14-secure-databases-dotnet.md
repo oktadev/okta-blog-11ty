@@ -1,7 +1,7 @@
 ---
 title: "How to Secure User Data in Azure Cosmos DB"
 author: nickolas-fisher
-by: contractor 
+by: contractor
 communities: [.net]
 description: "Learn how Cosmos DB helps protect data at rest and how to remove sensitive personally identifiable information (PII) from data you intend to store in Cosmos DB."
 tags: [dotnet, aspnetcore, dotnetcore, cosmos-db, azure]

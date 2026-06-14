@@ -10,7 +10,7 @@
           <div class="flex gap-1 items-center">
             {%- for author in authorsList %}
               <a href="/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
-                {% avatar author.avatar %}
+                {% avatar author.avatar, "small", author.display_name %}
                 {{ author.display_name }}
               </a>
               {% if not loop.last %} | {% endif %}

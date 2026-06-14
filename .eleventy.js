@@ -6,7 +6,7 @@ import yaml from "js-yaml";
 
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
-// import EleventyVitePlugin from "@11ty/eleventy-plugin-vite"; // disabled: incompatible with macOS-mounted output dir (EPERM on rm, ENOTEMPTY on rename)
+import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import eleventyAsciidoc from "eleventy-plugin-asciidoc";
 import embedTwitter from "eleventy-plugin-embed-twitter";
 
@@ -37,7 +37,12 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
 
-  // EleventyVitePlugin disabled: see comment on import above.
+  // Vite bundles & optimizes the build output, but it breaks on mounted/synced
+  // filesystems (EPERM on rm, ENOTEMPTY on rename) like the local dev setup.
+  // Opt in only where it's known to work — set USE_VITE=1 in netlify.toml.
+  if (process.env.USE_VITE === "1") {
+    eleventyConfig.addPlugin(EleventyVitePlugin);
+  }
 
   // Data extensions
   eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));

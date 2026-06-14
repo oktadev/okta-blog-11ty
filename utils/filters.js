@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-import slugify from "slugify";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -17,11 +16,14 @@ export default function (eleventyConfig) {
     );
   });
 
-  eleventyConfig.addFilter("postsAuthorFilter", function (posts, author) {
-    const filtered = posts.filter(
-      (post) => post.data.author == slugify(author).toLowerCase(),
-    );
-    return filtered;
+  eleventyConfig.addFilter("postsAuthorFilter", function (posts, authorKey) {
+    // Match posts whose `author` (a key or list of keys) includes this author.
+    return posts.filter((post) => {
+      const postAuthor = post.data.author;
+      return Array.isArray(postAuthor)
+        ? postAuthor.includes(authorKey)
+        : postAuthor === authorKey;
+    });
   });
 
   eleventyConfig.addFilter("authorFilter", function (authorsList, authors) {
@@ -49,19 +51,6 @@ export default function (eleventyConfig) {
 
     return filtered;
   });
-
-  // eleventyConfig.addFilter("toAbsoluteBlogImageUrl", async () => {
-  //   const imageOptions = {
-  //     widths: [width],
-  //     formats: [null],
-  //     outputDir: "_site/img/blog",
-  //     urlPath: "public/img/blog",
-  //   };
-  //   const stats = await Image(src, imageOptions);
-  //   const imageUrl = Object.values(stats)[0][0].url;
-
-  //   return toAbsoluteUrl(imageUrl);
-  // });
 
   eleventyConfig.addFilter("hashFile", function (url) {
     const filePath = path.join("_site", url);
