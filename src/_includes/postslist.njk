@@ -1,5 +1,5 @@
 <ol reversed class="flex flex-col justify-center m-auto max-w-128">
-  {%- for post in postslist | reverse %}
+  {%- for post in postslist %}
     {%- set authorsList = authors | authorFilter(post.data.author) %}
     {% if authorsList %}
       <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">

@@ -1,0 +1,14 @@
+{% if pagination.pages.length > 1 %}
+  <nav
+    class="flex gap-4 justify-center items-center my-8"
+    aria-label="Blog pagination"
+  >
+    {% if pagination.href.previous %}
+      <a href="{{ pagination.href.previous }}" rel="prev">&laquo; Prev</a>
+    {% endif %}
+    <span>Page: {{ pagination.pageNumber + 1 }} of {{ pagination.pages.length }}</span>
+    {% if pagination.href.next %}
+      <a href="{{ pagination.href.next }}" rel="next">Next &raquo;</a>
+    {% endif %}
+  </nav>
+{% endif %}

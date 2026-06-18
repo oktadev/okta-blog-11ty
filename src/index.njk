@@ -1,13 +1,18 @@
 ---
 layout: base
-permalink: blog/index.html
+pagination:
+  data: collections.posts
+  size: 10
+  alias: postslist
+  reverse: true
+permalink: "{% if pagination.pageNumber == 0 %}blog/index.html{% else %}blog/page/{{ pagination.pageNumber + 1 }}/index.html{% endif %}"
 ---
 
 <div class="container">
   <h1>OktaDev Blog</h1>
 
   <div class="container m-auto m-w-128">
-    {% set postslist = collections.posts %}
     {% include "postslist.njk" %}
+    {% include "pagination.njk" %}
   </div>
 </div>
