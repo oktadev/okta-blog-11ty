@@ -64,12 +64,8 @@ export default function (eleventyConfig) {
     }
   });
 
-  eleventyConfig.addFilter("readingTime", (content) => {
-    const READING_SPEED = 300;
-    const sanitizeHtml = content.replace(/<\/?[^>]+(>|$)/g, "");
-    const numWords = sanitizeHtml.split(" ").length;
-    const minutes = Math.round(numWords / READING_SPEED);
-    const text = minutes < 1 ? 1 : minutes;
+  eleventyConfig.addFilter("readingTimeBadge", (minutes) => {
+    const text = !minutes || minutes < 1 ? 1 : minutes;
 
     return `<div class="px-2 bg-okta-cloud rounded-xl content-center font-bold"><p class="text-xs uppercase">${text} min read</p></div>`;
   });

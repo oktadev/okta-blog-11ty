@@ -20,7 +20,7 @@
               {{ post.date | readableDate }}
             </time>
             |
-            {{ post.content | readingTime | safe }}
+            {{ post.data.readingTime | readingTimeBadge | safe }}
           </div>
         </div>
         {% if post.data.description %}
