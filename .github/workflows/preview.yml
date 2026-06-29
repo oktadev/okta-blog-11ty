@@ -1,8 +1,9 @@
-name: Vercel Preview Deployment
+name: Deploy Preview
 
 permissions:
   contents: read
   actions: read
+  statuses: write
   issues: write
   pull-requests: write
 
@@ -15,12 +16,31 @@ on:
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.event == 'pull_request'
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v5
+
+      - name: Set pending commit status
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.payload.workflow_run.head_sha,
+              state: 'pending',
+              context: 'deploy-preview',
+              description: 'Deploying preview...',
+            });
+
+      - name: Fail if build did not succeed
+        if: github.event.workflow_run.conclusion != 'success'
+        run: |
+          echo "Build conclusion: ${{ github.event.workflow_run.conclusion }} - skipping preview deploy."
+          exit 1
 
       - uses: actions/download-artifact@v8
         with:
@@ -77,21 +97,38 @@ jobs:
           url="$(vercel deploy --prebuilt --yes --token=${{ secrets.VERCEL_TOKEN }})"
           echo "url=${url}" >> "$GITHUB_OUTPUT"
 
-      - name: Comment on PR
+      - name: Update commit status and comment on PR
+        if: always()
         uses: actions/github-script@v8
         env:
           PREVIEW_URL: ${{ steps.deploy.outputs.url }}
           COMMIT_SHA: ${{ steps.pr.outputs.sha }}
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           RUN_ID: ${{ github.run_id }}
+          DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = Number(process.env.PR_NUMBER);
-            const sha = process.env.COMMIT_SHA.slice(0, 7);
+            const prHeadSha = context.payload.workflow_run.head_sha;
+            const success = process.env.DEPLOY_OUTCOME === 'success';
             const previewUrl = process.env.PREVIEW_URL;
             const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${process.env.RUN_ID}`;
 
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: prHeadSha,
+              state: success ? 'success' : 'failure',
+              context: 'deploy-preview',
+              description: success ? 'Preview deployed' : 'Preview deployment failed',
+              target_url: success ? previewUrl : runUrl,
+            });
+
+            if (!success) return;
+
+            const prNumber = Number(process.env.PR_NUMBER);
+            if (!prNumber) return;
+
+            const sha = process.env.COMMIT_SHA.slice(0, 7);
             const body = [
               `## Deploy Preview for **${context.repo.repo}** ready!`,
               '',
