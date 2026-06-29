@@ -1,0 +1,78 @@
+name: Vercel Preview Deployment
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel
+        id: deploy
+        run: |
+          url="$(vercel deploy --yes --token=${{ secrets.VERCEL_TOKEN }})"
+          echo "url=${url}" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR
+        uses: actions/github-script@v8
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.url }}
+          RUN_ID: ${{ github.run_id }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const sha = context.payload.pull_request.head.sha.slice(0, 7);
+            const previewUrl = process.env.PREVIEW_URL;
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${process.env.RUN_ID}`;
+
+            const body = [
+              `## Deploy Preview for **${context.repo.repo}** ready!`,
+              '',
+              '| | |',
+              '|---|---|',
+              `| Latest commit | \`${sha}\` |`,
+              `| Deploy log | [GitHub Actions](${runUrl}) |`,
+              `| Preview URL | ${previewUrl} |`,
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const existing = comments.findLast(
+              (c) => c.user.login === 'github-actions[bot]' &&
+                     c.body.includes(`Deploy Preview for **${context.repo.repo}**`)
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
