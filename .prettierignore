@@ -1,0 +1,15 @@
+# Build output and dependencies
+_site/
+node_modules/
+package-lock.json
+
+# Vendored / minified third-party JS — never reformat.
+public/js/
+
+# Content is authored prose — never reformat the blog posts.
+src/blog/posts/
+
+# Nunjucks templates: prettier-plugin-jinja-template was trialed and rejected —
+# it line-wraps macro prose, which (with markdown breaks:true) injected <br>s and
+# dropped spaces in rendered output. Leave templates alone.
+*.njk

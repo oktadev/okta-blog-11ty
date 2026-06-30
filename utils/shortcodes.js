@@ -34,7 +34,7 @@ const excerpt = (stemPath, postsCollection) => {
     ? authors
         .map((author) => {
           // Use simple img tag since avatar shortcode is now async
-          return `<a href="/authors/${author.slug}/" class="inline-flex items-center gap-1"><img src="/img/avatar/${author.avatar}" class="w-5 list-none rounded-full" alt="${author.avatar}" loading="lazy" /> ${author.display_name}</a>`;
+          return `<a href="/authors/${author.slug}/" class="inline-flex items-center gap-1"><img src="/img/avatar/${author.avatar}" class="w-5 list-none rounded-full" alt="${author.display_name}" loading="lazy" /> ${author.display_name}</a>`;
         })
         .join("")
     : "";

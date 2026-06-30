@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Hello Developers, Time to Get Your Oktane On"
 author: havi-hoffman
 by: advocate
