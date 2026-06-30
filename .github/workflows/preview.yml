@@ -17,7 +17,7 @@ on:
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.event == 'pull_request'
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -44,6 +44,26 @@ jobs:
         run: |
           echo "number=$(cat pr-metadata/pr_number.txt)" >> "$GITHUB_OUTPUT"
           echo "sha=$(cat pr-metadata/pr_sha.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Set pending deploy-preview status
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: '${{ steps.pr.outputs.sha }}',
+              state: 'pending',
+              context: 'deploy-preview',
+              description: 'Deploying preview...',
+            });
+
+      - name: Fail if build did not succeed
+        if: github.event.workflow_run.conclusion != 'success'
+        run: |
+          echo "Build conclusion: ${{ github.event.workflow_run.conclusion }} - skipping preview deploy."
+          exit 1
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -201,7 +221,7 @@ jobs:
               repo: context.repo.repo,
               sha: process.env.COMMIT_SHA,
               state,
-              context: 'Deploy Preview to Vercel',
+              context: 'deploy-preview',
               description,
               target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
