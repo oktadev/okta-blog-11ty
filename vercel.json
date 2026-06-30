@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/",
+      "permanent": true
+    }
+  ],
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "_site"
