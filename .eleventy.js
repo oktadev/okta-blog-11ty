@@ -7,7 +7,6 @@ import * as yaml from "js-yaml";
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
-import eleventyAsciidoc from "eleventy-plugin-asciidoc";
 import embedTwitter from "eleventy-plugin-embed-twitter";
 
 import filters from "./utils/filters.js";
@@ -33,7 +32,6 @@ export default function (eleventyConfig) {
   // Plugins
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
-  eleventyConfig.addPlugin(eleventyAsciidoc);
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
 
