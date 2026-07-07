@@ -4,7 +4,7 @@
 // Usage: node scripts/validate-frontmatter.js
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 
 const POSTS_DIR = "src/blog/posts";
 const AUTHORS_FILE = "src/_data/authors.yaml";
