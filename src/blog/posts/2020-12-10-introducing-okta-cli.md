@@ -5,18 +5,7 @@ discourse_comment_url: https://devforum.okta.com/t/17299
 title: "Introducing the Okta CLI"
 author: micah-silverman
 by: advocate
-communities: [
-    ".net",
-    "go",
-    "java",
-    "javascript",
-    "mobile",
-    "php",
-    "python",
-    "ruby",
-    "security",
-    "devops"
-]
+communities: [".net", "go", "java", "javascript", "mobile", "php", "python", "ruby", "security", "devops"]
 description: "Use the Okta CLI to get started with OAuth and Okta in under five minutes!"
 tags: [security, dotnet, oauth2, oidc, cli]
 tweets:
