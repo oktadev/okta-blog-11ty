@@ -47,19 +47,19 @@ const img = async function ({
   sizes = "",
 }) {
   const dir = avatar ? "img/avatar" : "img/blog";
-  
+
   // For header/social images, don't process - keep original format for social platform compatibility
   if (header) {
     return `<img src="/${dir}/${src}" alt="${alt}" class="social-img" loading="lazy" decoding="async">`;
   }
-  
+
   // For avatars, use passed-in widths or default to small size
   if (avatar && widths.length === 4 && widths[0] === 100) {
     // Default widths weren't overridden, use avatar defaults
     widths = [40, 80];
     sizes = sizes || "40px";
   }
-  
+
   const subdir = src.includes("/")
     ? src.substring(0, src.lastIndexOf("/"))
     : "";
@@ -85,7 +85,7 @@ const img = async function ({
   });
 };
 
-const avatar = async function (filename, size = "small") {
+const avatar = async function (filename, size = "small", alt = "") {
   let widthClass;
   let avatarSize;
 
@@ -107,18 +107,21 @@ const avatar = async function (filename, size = "small") {
   // Use the img shortcode with avatar-specific parameters
   const result = await img({
     src: filename,
-    alt: filename,
+    alt,
     avatar: true,
     widths: [avatarSize, avatarSize * 2], // Standard and retina
     sizes: `${avatarSize}px`,
   });
 
   // Add rounded-full class for avatar styling
-  return result.replace('<img', `<img class="${widthClass} list-none rounded-full"`);
+  return result.replace(
+    "<img",
+    `<img class="${widthClass} list-none rounded-full"`,
+  );
 };
 
 export default {
   svg: (args) => svg(args),
   img: (args) => img(args),
-  avatar: (filename, size) => avatar(filename, size),
+  avatar: (filename, size, alt) => avatar(filename, size, alt),
 };

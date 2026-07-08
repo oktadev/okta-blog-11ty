@@ -3,14 +3,16 @@ layout: base
 pagination:
   data: authors
   size: 1
-  alias: author
-  resolve: values
-permalink: blog/authors/{{ author.full_name | slugify }}/
+  alias: authorKey
+permalink: blog/authors/{{ authorKey }}/
 ---
 
+{# Paginate over author keys so the URL uses the key (matches live, e.g.
+   /blog/authors/akanksha-bhasin/); resolve the value object for the body. #}
+{% set author = authors[authorKey] %}
 <div class="container m-w-128">
   {% if author.avatar%}
-    {% avatar author.avatar, "large" %}
+    {% avatar author.avatar, "large", author.full_name %}
   {% endif %}
   <h2>{{ author.full_name }}</h2>
   {% if author.bio %}
@@ -37,7 +39,7 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
     <p>All posts by {{ author.full_name }}</p>
     <hr>
     <ol reversed class="flex flex-col justify-center m-auto max-w-128">
-      {% for post in collections.posts | postsAuthorFilter(author.full_name) %}
+      {% for post in collections.posts | postsAuthorFilter(authorKey) %}
         {%- set authorsList = [author] %}
         <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
           <div class="grid gap-1">
@@ -47,7 +49,7 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
             <div class="flex gap-1 items-center">
               {%- for authorItem in authorsList %}
                 <a href="/authors/{{ authorItem.slug }}/" class="inline-flex items-center gap-1">
-                  {% avatar authorItem.avatar %}
+                  {% avatar authorItem.avatar, "small", authorItem.display_name %}
                   {{ authorItem.display_name }}
                 </a>
                 {% if not loop.last %} | {% endif %}
@@ -57,7 +59,7 @@ permalink: blog/authors/{{ author.full_name | slugify }}/
                 {{ post.date | readableDate }}
               </time>
               |
-              {{ post.content | readingTime | safe }}
+              {{ post.data.readingTime | readingTimeBadge | safe }}
             </div>
           </div>
           {% if post.data.description %}

@@ -3,7 +3,7 @@
 		<li>
 			<a href="{{ key }}/" class="inline-flex items-center gap-2">
 				{% if author.avatar %}
-          {% avatar author.avatar %}
+          {% avatar author.avatar, "small", author.full_name %}
         {% endif %}
 				<p>{{ author.full_name }}</p>
 			</a>

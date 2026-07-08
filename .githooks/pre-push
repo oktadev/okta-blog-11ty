@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+# Project pre-push hook: run a full build to catch render/template regressions
+# that front-matter validation can't see (e.g. a broken filter or layout).
+#
+# Skip when the local macOS-mounted filesystem misbehaves:
+#   SKIP_BUILD=1 git push
+set -e
+
+if [ "${SKIP_BUILD:-0}" = "1" ]; then
+  echo "› SKIP_BUILD=1 set; skipping pre-push build"
+  exit 0
+fi
+
+echo "› Running build before push (set SKIP_BUILD=1 to skip)…"
+npm run build

@@ -1,7 +1,7 @@
 ---
 title: "Create a Secure Serverless Application with FaunaDB"
 author: nickolas-fisher 
-by: contractor 
+by: contractor
 communities: [javascript]
 description: "Use Fauna and Okta together so you never have to worry about database provisioning, scaling, sharding, or identity."
 tags: [javascript]
