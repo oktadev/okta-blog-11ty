@@ -30,7 +30,7 @@ export default function (eleventyConfig) {
     const authorsArray = Array.isArray(authors) ? authors : [authors];
 
     return authorsArray.map((authorKey) => {
-      return authorsList[authorKey];
+      return { ...authorsList[authorKey], slug: authorKey };
     });
   });
 

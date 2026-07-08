@@ -26,18 +26,16 @@ const excerpt = (stemPath, postsCollection) => {
   const authorKeys = Array.isArray(post.data.author)
     ? post.data.author
     : [post.data.author];
-  const authors = authorKeys
-    .map((key) => post.data.authors[key])
-    .filter(Boolean);
 
-  const authorsHtml = authors
-    ? authors
-        .map((author) => {
-          // Use simple img tag since avatar shortcode is now async
-          return `<a href="/authors/${author.slug}/" class="inline-flex items-center gap-1"><img src="/img/avatar/${author.avatar}" class="w-5 list-none rounded-full" alt="${author.display_name}" loading="lazy" /> ${author.display_name}</a>`;
-        })
-        .join("")
-    : "";
+  const authorsHtml = authorKeys
+    .map((key) => {
+      const author = post.data.authors[key];
+      if (!author) return "";
+      // Link uses the author key (matches author.njk's /blog/authors/<key>/).
+      // Simple img tag since the avatar shortcode is now async.
+      return `<a href="/blog/authors/${key}/" class="inline-flex items-center gap-1"><img src="/img/avatar/${author.avatar}" class="w-5 list-none rounded-full" alt="${author.display_name}" loading="lazy" /> ${author.display_name}</a>`;
+    })
+    .join("");
 
   return `
     <div class="flex-col border-1 border-solid px-2">

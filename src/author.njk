@@ -11,49 +11,33 @@ permalink: blog/authors/{{ authorKey }}/
    /blog/authors/akanksha-bhasin/); resolve the value object for the body. #}
 {% set author = authors[authorKey] %}
 <div class="container m-w-128">
-  {% if author.avatar%}
-    {% avatar author.avatar, "large", author.full_name %}
-  {% endif %}
-  <h2>{{ author.full_name }}</h2>
-  {% if author.bio %}
-    {{ author.bio }}
-  {% endif %}
-  <div>
-    {% if author.github %}
-      {{ author.github }}
+  <div class="flex items-center gap-2.5">
+    {% if author.avatar %}
+      {% avatar author.avatar, "xlarge", author.full_name %}
     {% endif %}
-    {% if author.web %}
-      {{ author.web }}
-    {% endif %}
-    {% if author.linkedin %}
-      {{ author.linkedin }}
-    {% endif %}
-    {% if author.email %}
-      {{ author.email }}
-    {% endif %}
-    {% if author.twitter %}
-      {{ author.twitter }}
-    {% endif %}
+    <h1 class="text-okta-cobalt text-4xl font-bold">{{ author.full_name }}</h1>
   </div>
+
+  {% include "author-socials.njk" %}
+
+  {% if author.bio %}
+    <div class="mt-8">{{ author.bio | safe }}</div>
+  {% endif %}
   <div>
     <p>All posts by {{ author.full_name }}</p>
     <hr>
     <ol reversed class="flex flex-col justify-center m-auto max-w-128">
-      {% for post in collections.posts | postsAuthorFilter(authorKey) %}
-        {%- set authorsList = [author] %}
+      {% for post in collections.posts | postsAuthorFilter(authorKey) | reverse %}
         <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
           <div class="grid gap-1">
             <a href="{{ post.url }}">
               <h2>{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</h2>
             </a>
             <div class="flex gap-1 items-center">
-              {%- for authorItem in authorsList %}
-                <a href="/authors/{{ authorItem.slug }}/" class="inline-flex items-center gap-1">
-                  {% avatar authorItem.avatar, "small", authorItem.display_name %}
-                  {{ authorItem.display_name }}
-                </a>
-                {% if not loop.last %} | {% endif %}
-              {%- endfor %}
+              <a href="/blog/authors/{{ authorKey }}/" class="inline-flex items-center gap-1">
+                {% avatar author.avatar, "small", author.display_name %}
+                {{ author.display_name }}
+              </a>
               |
               <time datetime="{{ post.date | htmlDateString }}">
                 {{ post.date | readableDate }}

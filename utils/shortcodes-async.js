@@ -102,6 +102,10 @@ const avatar = async function (filename, size = "small", alt = "") {
       widthClass = "w-16";
       avatarSize = 128;
       break;
+    case "xlarge":
+      widthClass = "w-24";
+      avatarSize = 192;
+      break;
   }
 
   // Use the img shortcode with avatar-specific parameters
