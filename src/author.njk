@@ -24,7 +24,7 @@ permalink: blog/authors/{{ authorKey }}/
     <div class="mt-8">{{ author.bio | safe }}</div>
   {% endif %}
   <div>
-    <p>All posts by {{ author.full_name }}</p>
+    <p>All Posts by {{ author.full_name }}</p>
     <hr>
     <ol reversed class="flex flex-col justify-center m-auto max-w-128">
       {% for post in collections.posts | postsAuthorFilter(authorKey) | reverse %}
@@ -34,11 +34,6 @@ permalink: blog/authors/{{ authorKey }}/
               <h2>{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</h2>
             </a>
             <div class="flex gap-1 items-center">
-              <a href="/blog/authors/{{ authorKey }}/" class="inline-flex items-center gap-1">
-                {% avatar author.avatar, "small", author.display_name %}
-                {{ author.display_name }}
-              </a>
-              |
               <time datetime="{{ post.date | htmlDateString }}">
                 {{ post.date | readableDate }}
               </time>
