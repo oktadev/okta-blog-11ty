@@ -2,27 +2,6 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/preflight.css" layer(base);
 
-/* Load Aeonik (files already in public/fonts/aeonik) so the site uses the
-   brand font instead of falling back to Helvetica — matches the live site. */
-@font-face {
-  font-family: "Aeonik";
-  src:
-    url("/fonts/aeonik/Aeonik-Regular.woff2") format("woff2"),
-    url("/fonts/aeonik/Aeonik-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Aeonik";
-  src:
-    url("/fonts/aeonik/Aeonik-Medium.woff2") format("woff2"),
-    url("/fonts/aeonik/Aeonik-Medium.woff") format("woff");
-  font-weight: 500 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   h1 {
     font-size: var(--text-3xl);
