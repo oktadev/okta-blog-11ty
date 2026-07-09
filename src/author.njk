@@ -11,11 +11,11 @@ permalink: blog/authors/{{ authorKey }}/
    /blog/authors/akanksha-bhasin/); resolve the value object for the body. #}
 {% set author = authors[authorKey] %}
 <div class="container m-w-128">
-  <div class="flex items-center gap-2.5">
+  <div class="flex items-center flex-wrap gap-4 mt-10 mb-4">
     {% if author.avatar %}
       {% avatar author.avatar, "xlarge", author.full_name %}
     {% endif %}
-    <h1 class="text-okta-cobalt text-4xl font-bold">{{ author.full_name }}</h1>
+    <h1 class="text-okta-cobalt text-[2rem] leading-[42px] font-bold">{{ author.full_name }}</h1>
   </div>
 
   {% include "author-socials.njk" %}
