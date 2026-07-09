@@ -1,6 +1,6 @@
 {# Social links as circular icon buttons. `author` is inherited from the
-   including template. Glyphs mirror the live page's Font Awesome icons
-   (fa-github, fa-linkedin, fa-external-link-square, fa-twitter);
+   including template. Order: GitHub, LinkedIn, Twitter, then the website /
+   external-link icon ALWAYS LAST. Glyphs mirror the live Font Awesome icons;
    github/external-link paths are the genuine Okta SVG assets from public/img.
    Icons use currentColor so they render white on the circle. #}
 {# Circle color (#C7C7CF) and layout mirror the live page's .AuthorPage-social a #}
@@ -16,14 +16,15 @@
       <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.2.8 24 1.77 24h20.45c.98 0 1.78-.8 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z"/></svg>
     </a>
   {% endif %}
-  {% if author.web %}
-    <a href="{{ author.web }}" class="{{ iconBtn }}" aria-label="{{ author.full_name }}'s website" title="Website" rel="me noopener" target="_blank">
-      <svg viewBox="0 0 10 11" width="11" height="12" fill="currentColor" aria-hidden="true"><path d="m9.38307.75h-3.3122c-.33988 0-.71428.37444-.71428.71429 0 .33984.3744.71428.71428.71428h1.78572l-3.21507 3.05766c-.11648.11641-.18058.27117-.18058.43586 0 .1647.06406.31942.18051.43572.11644.11655.27116.18069.43585.18069.16463 0 .31942-.06411.4359-.18058l3.05767-3.21506v1.78571c0 .33985.37444.71429.71429.71429s.71428-.37444.71428-.71429v-3.3122c0-.33985-.27652-.61637-.61637-.61637z"/><path d="m7.14289 9.32144h-5.71432v-5.71428h2.14286l1.42857-1.42857h-4.285714c-.29177 0-.714286.42251-.714286.71429v7.14282c0 .3572.357143.7143.714286.7143h7.142894c.35714 0 .71429-.3571.71429-.7143l-.00004-4.28568-1.42854 1.42857z"/></svg>
-    </a>
-  {% endif %}
   {% if author.twitter %}
     <a href="{{ author.twitter }}" class="{{ iconBtn }}" aria-label="{{ author.full_name }} on Twitter" title="Twitter Profile" rel="me noopener" target="_blank">
       <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M23.64 4.57c-.85.38-1.76.63-2.72.75a4.75 4.75 0 0 0 2.08-2.62c-.92.54-1.93.94-3.01 1.15a4.74 4.74 0 0 0-8.08 4.32A13.45 13.45 0 0 1 2.14 3.4a4.74 4.74 0 0 0 1.47 6.32 4.7 4.7 0 0 1-2.15-.59v.06a4.74 4.74 0 0 0 3.8 4.64 4.74 4.74 0 0 1-2.14.08 4.74 4.74 0 0 0 4.42 3.29A9.5 9.5 0 0 1 0 19.54a13.4 13.4 0 0 0 7.26 2.13c8.71 0 13.47-7.22 13.47-13.48l-.01-.61a9.6 9.6 0 0 0 2.36-2.45z"/></svg>
+    </a>
+  {% endif %}
+  {# Website / external-link icon is always last #}
+  {% if author.web %}
+    <a href="{{ author.web }}" class="{{ iconBtn }}" aria-label="{{ author.full_name }}'s website" title="Website" rel="me noopener" target="_blank">
+      <svg viewBox="0 0 10 11" width="11" height="12" fill="currentColor" aria-hidden="true"><path d="m9.38307.75h-3.3122c-.33988 0-.71428.37444-.71428.71429 0 .33984.3744.71428.71428.71428h1.78572l-3.21507 3.05766c-.11648.11641-.18058.27117-.18058.43586 0 .1647.06406.31942.18051.43572.11644.11655.27116.18069.43585.18069.16463 0 .31942-.06411.4359-.18058l3.05767-3.21506v1.78571c0 .33985.37444.71429.71429.71429s.71428-.37444.71428-.71429v-3.3122c0-.33985-.27652-.61637-.61637-.61637z"/><path d="m7.14289 9.32144h-5.71432v-5.71428h2.14286l1.42857-1.42857h-4.285714c-.29177 0-.714286.42251-.714286.71429v7.14282c0 .3572.357143.7143.714286.7143h7.142894c.35714 0 .71429-.3571.71429-.7143l-.00004-4.28568-1.42854 1.42857z"/></svg>
     </a>
   {% endif %}
 </div>
