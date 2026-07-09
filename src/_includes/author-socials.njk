@@ -1,6 +1,6 @@
 {# Social links as circular icon buttons. `author` is inherited from the
    including template. Glyphs mirror the live page's Font Awesome icons
-   (fa-github, fa-linkedin, fa-external-link-square, fa-twitter, fa-envelope);
+   (fa-github, fa-linkedin, fa-external-link-square, fa-twitter);
    github/external-link paths are the genuine Okta SVG assets from public/img.
    Icons use currentColor so they render white on the circle. #}
 {# Circle color (#C7C7CF) and layout mirror the live page's .AuthorPage-social a #}
@@ -24,11 +24,6 @@
   {% if author.twitter %}
     <a href="{{ author.twitter }}" class="{{ iconBtn }}" aria-label="{{ author.full_name }} on Twitter" title="Twitter Profile" rel="me noopener" target="_blank">
       <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M23.64 4.57c-.85.38-1.76.63-2.72.75a4.75 4.75 0 0 0 2.08-2.62c-.92.54-1.93.94-3.01 1.15a4.74 4.74 0 0 0-8.08 4.32A13.45 13.45 0 0 1 2.14 3.4a4.74 4.74 0 0 0 1.47 6.32 4.7 4.7 0 0 1-2.15-.59v.06a4.74 4.74 0 0 0 3.8 4.64 4.74 4.74 0 0 1-2.14.08 4.74 4.74 0 0 0 4.42 3.29A9.5 9.5 0 0 1 0 19.54a13.4 13.4 0 0 0 7.26 2.13c8.71 0 13.47-7.22 13.47-13.48l-.01-.61a9.6 9.6 0 0 0 2.36-2.45z"/></svg>
-    </a>
-  {% endif %}
-  {% if author.email %}
-    <a href="mailto:{{ author.email }}" class="{{ iconBtn }}" aria-label="Email {{ author.full_name }}" title="Email">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M22 4H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm-1.6 2L12 12.06 3.6 6h16.8zM3 18V7.24l8.4 6.06a1 1 0 0 0 1.2 0L21 7.24V18H3z"/></svg>
     </a>
   {% endif %}
 </div>
