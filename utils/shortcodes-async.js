@@ -124,8 +124,43 @@ const avatar = async function (filename, size = "small", alt = "") {
   );
 };
 
+// Async so it can reuse the (async) avatar shortcode for optimized, resized
+// WebP avatars instead of a raw full-size <img>. Receives postsCollection from
+// the async shortcode registration in .eleventy.js.
+const excerpt = async function (stemPath, postsCollection) {
+  const post = postsCollection.find((p) => p.page.fileSlug === stemPath);
+  if (!post) return "";
+
+  const authorKeys = Array.isArray(post.data.author)
+    ? post.data.author
+    : [post.data.author];
+
+  const authorsHtml = (
+    await Promise.all(
+      authorKeys.map(async (key) => {
+        const author = post.data.authors[key];
+        if (!author) return "";
+        const avatarImg = await avatar(
+          author.avatar,
+          "small",
+          author.display_name,
+        );
+        return `<a href="/blog/authors/${key}/" class="inline-flex items-center gap-1">${avatarImg} ${author.display_name}</a>`;
+      }),
+    )
+  ).join("");
+
+  return `
+    <div class="flex-col border-1 border-solid px-2">
+      <a href="${post.url}">${post.data.title}</a>
+      <p>${post.data.description}</p>
+      <div class="flex-col">${authorsHtml}</div>
+    </div>`;
+};
+
 export default {
   svg: (args) => svg(args),
   img: (args) => img(args),
   avatar: (filename, size, alt) => avatar(filename, size, alt),
+  excerpt: (stemPath, postsCollection) => excerpt(stemPath, postsCollection),
 };
