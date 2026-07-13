@@ -1,7 +1,7 @@
 <ul class="grid justify-center gap-1">
 	{% for key, author in authorslist|dictsort|sort(attribute='author.full_name') %}
 		<li>
-			<a href="{{ key }}/" class="inline-flex items-center gap-2">
+			<a href="/blog/authors/{{ key }}/" class="inline-flex items-center gap-2">
 				{% if author.avatar %}
           {% avatar author.avatar, "small", author.full_name %}
         {% endif %}
