@@ -8,7 +8,9 @@ permalink: blog/tags/{{ tag | slugify }}/
 ---
 
 <div>
-	<h1>Articles tagged {{ tag }}</h1>
+	<h1 class="text-[2rem] leading-[42px] font-medium mb-4">
+		Articles tagged <span>{{ tag }}</span>
+	</h1>
 	<ol class="flex flex-col justify-center m-auto max-w-128">
 		{% for post in collections.posts | reverse %}
       {%- set authorsList = authors | authorFilter(post.data.author) %}
