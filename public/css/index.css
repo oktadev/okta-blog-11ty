@@ -2,6 +2,13 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/preflight.css" layer(base);
 
+/* Hide the native (WebKit) search clear button — we render an accessible,
+   keyboard-focusable custom clear button instead (see tags.njk). */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 @layer base {
   h1 {
     font-size: var(--text-3xl);

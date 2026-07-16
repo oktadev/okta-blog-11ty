@@ -6,16 +6,27 @@ permalink: /blog/tags/
 <div class="grid gap-4 max-w-128 m-auto">
   <h1>Tags</h1>
 
-  <input
-    type="search"
-    id="tag-search"
-    placeholder="Filter tags…"
-    aria-label="Filter tags"
-    autocomplete="off"
-    class="border-1 border-okta-gravel rounded px-3 py-2 w-full max-w-md"
-  />
+  <div class="relative w-full max-w-md">
+    <input
+      type="search"
+      id="tag-search"
+      placeholder="Filter tags…"
+      aria-label="Filter tags"
+      autocomplete="off"
+      class="border-1 border-okta-gravel rounded px-3 py-2 pr-9 w-full"
+    />
+    <button
+      type="button"
+      id="tag-clear"
+      aria-label="Clear search"
+      style="display: none"
+      class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center cursor-pointer text-okta-slate hover:text-okta-carbon"
+    >
+      <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 0 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"/></svg>
+    </button>
+  </div>
 
-  <p id="tag-no-results" class="hidden text-okta-slate">No tags match your search.</p>
+  <p id="tag-status" role="status" aria-live="polite" aria-atomic="true" class="text-okta-slate min-h-[1.5rem]"></p>
 
   <div id="tag-groups" class="grid gap-4">
     {% for group in collections | tagsByLetter %}
@@ -38,26 +49,49 @@ permalink: /blog/tags/
   (function () {
     var input = document.getElementById("tag-search");
     if (!input) return;
-    var groups = Array.prototype.slice.call(document.querySelectorAll(".tag-group"));
-    var noResults = document.getElementById("tag-no-results");
+    var groups = Array.prototype.slice.call(
+      document.querySelectorAll(".tag-group"),
+    );
+    var status = document.getElementById("tag-status");
+    var clearBtn = document.getElementById("tag-clear");
 
     function filter() {
       var q = input.value.trim().toLowerCase();
-      var anyGroupVisible = false;
+      var matchCount = 0;
       groups.forEach(function (group) {
         var anyTagVisible = false;
         group.querySelectorAll(".tag-link").forEach(function (link) {
           var match = link.textContent.toLowerCase().indexOf(q) !== -1;
           // Inline style beats the inline-flex/grid display utility classes.
           link.style.display = match ? "" : "none";
-          if (match) anyTagVisible = true;
+          if (match) {
+            anyTagVisible = true;
+            matchCount++;
+          }
         });
         group.style.display = anyTagVisible ? "" : "none";
-        if (anyTagVisible) anyGroupVisible = true;
       });
-      if (noResults) noResults.style.display = anyGroupVisible ? "none" : "block";
+
+      // Toggle the clear button via style (the hidden attr would lose to inline-flex).
+      if (clearBtn) clearBtn.style.display = q === "" ? "none" : "inline-flex";
+
+      if (status) {
+        if (q === "") status.textContent = "";
+        else if (matchCount === 0) status.textContent = "No tags match your search.";
+        else
+          status.textContent =
+            matchCount + (matchCount === 1 ? " tag" : " tags") + " match.";
+      }
     }
 
     input.addEventListener("input", filter);
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", function () {
+        input.value = "";
+        filter();
+        input.focus();
+      });
+    }
   })();
 </script>
