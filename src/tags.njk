@@ -3,11 +3,61 @@ layout: base
 permalink: /blog/tags/
 ---
 
-<div class="grid gap-4 max-w-128">
+<div class="grid gap-4 max-w-128 m-auto">
   <h1>Tags</h1>
-	<div class="grid justify-center gap-1">
-		{% for tag in collections | allTagsFilter() %}
-			<a href="{{ tag }}/">{{ tag }}</a>
-		{% endfor %}
-	</div>
+
+  <input
+    type="search"
+    id="tag-search"
+    placeholder="Filter tags…"
+    aria-label="Filter tags"
+    autocomplete="off"
+    class="border-1 border-okta-gravel rounded px-3 py-2 w-full max-w-md"
+  />
+
+  <p id="tag-no-results" class="hidden text-okta-slate">No tags match your search.</p>
+
+  <div id="tag-groups" class="grid gap-4">
+    {% for group in collections | tagsByLetter %}
+      <section class="tag-group grid gap-2" data-letter="{{ group.letter }}">
+        <h2 class="text-okta-cobalt text-xl font-bold border-b-1 border-okta-gravel pb-1">{{ group.letter }}</h2>
+        <div class="flex flex-wrap gap-2">
+          {% for tag in group.tags %}
+            <a
+              href="/blog/tags/{{ tag | slugify }}/"
+              class="tag-link inline-flex items-center h-6 px-2 rounded bg-[#f2f5ff] text-[#1662dd] no-underline whitespace-nowrap"
+            >{{ tag }}</a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  </div>
 </div>
+
+<script>
+  (function () {
+    var input = document.getElementById("tag-search");
+    if (!input) return;
+    var groups = Array.prototype.slice.call(document.querySelectorAll(".tag-group"));
+    var noResults = document.getElementById("tag-no-results");
+
+    function filter() {
+      var q = input.value.trim().toLowerCase();
+      var anyGroupVisible = false;
+      groups.forEach(function (group) {
+        var anyTagVisible = false;
+        group.querySelectorAll(".tag-link").forEach(function (link) {
+          var match = link.textContent.toLowerCase().indexOf(q) !== -1;
+          // Inline style beats the inline-flex/grid display utility classes.
+          link.style.display = match ? "" : "none";
+          if (match) anyTagVisible = true;
+        });
+        group.style.display = anyTagVisible ? "" : "none";
+        if (anyTagVisible) anyGroupVisible = true;
+      });
+      if (noResults) noResults.style.display = anyGroupVisible ? "none" : "block";
+    }
+
+    input.addEventListener("input", filter);
+  })();
+</script>
