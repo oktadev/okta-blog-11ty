@@ -1,50 +1,64 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @layer theme, base, components, utilities;
 @import "tailwindcss/preflight.css" layer(base);
 
 @layer base {
-  h1 {
-    font-size: var(--text-3xl);
-  }
-  h2 {
-    font-size: var(--text-2xl);
-  }
   a {
-    color: #1662dd;
+    color: var(--color-okta-sky);
     transition: 0.4s color;
     text-decoration: none;
 
     &:hover {
-      color: #3b7eeb;
+      color: var(--color-okta-sky);
       text-decoration: underline;
     }
   }
-  p {
-    padding: var(--spacing);
+  strong, b {
+    font-weight: 700;
   }
-  ol {
-    padding-left: 20px;
-    list-style-type: decimal;
-  }
-  blockquote {
-    border-left: 4px solid var(--color-okta-sand);
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: var(--spacing);
-    color: var(--color-okta-carbon);
+  em, i {
     font-style: italic;
-    background-color: var(--color-okta-cream);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
 @layer components {
-  code,
   pre {
     font-family: var(--default-mono-font-family);
-    background-color: var(--color-okta-snow);
-    padding: var(--spacing);
-    margin: var(--spacing) 0;
-    white-space: pre-wrap;
+  }
+
+  .prose {
+    --tw-prose-body: var(--color-okta-carbon);
+    --tw-prose-headings: var(--color-okta-carbon);
+    --tw-prose-lead: var(--color-okta-slate);
+    --tw-prose-links: var(--color-okta-sky);
+    --tw-prose-bold: var(--color-okta-carbon);
+    --tw-prose-counters: var(--color-okta-slate);
+    --tw-prose-bullets: var(--color-okta-gravel);
+    --tw-prose-hr: var(--color-okta-sand);
+    --tw-prose-quotes: var(--color-okta-carbon);
+    --tw-prose-quote-borders: var(--color-okta-sand);
+    --tw-prose-captions: var(--color-okta-slate);
+    --tw-prose-code: var(--color-okta-carbon);
+    --tw-prose-pre-code: inherit;
+    --tw-prose-pre-bg: transparent;
+    --tw-prose-th-borders: var(--color-okta-gravel);
+    --tw-prose-td-borders: var(--color-okta-sand);
+  }
+
+  .prose blockquote {
+    background-color: var(--color-okta-cream);
+    font-style: italic;
+    quotes: none;
+  }
+
+  .prose blockquote p:first-of-type::before,
+  .prose blockquote p:last-of-type::after {
+    content: none;
   }
 
   .center-image {
@@ -60,11 +74,11 @@
   --color-okta-sand: #e8dcc7;
   --color-okta-cream: #f6f1e7;
   --color-okta-snow: #fffefa;
+  --color-okta-blue: #1662dd;
   --color-okta-cobalt: #1a31a9;
   --color-okta-dark-blue: #00297a;
   --color-okta-sky: #3f59e4;
   --color-okta-cloud: #b6c9ff;
-  --color-ocean: #096256;
   --color-okta-seafoam: #4cb7a3;
   --color-okta-turquoise: #b1e4de;
   --color-okta-white: #fff;
