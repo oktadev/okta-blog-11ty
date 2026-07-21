@@ -6,12 +6,9 @@
     Heads up... this blog post is old!
   </p>
   {% set post = collections.posts | postBySlug(updated.slug) %}
-  <p class="text-green-800">For an updated version of this blog post, {% if post.data.title %}see {% endif -%}
-    <a class="font-bold" href="{{ post.url | toAbsoluteUrl}}">
-      {% if post.data.title %}{{ post.data.title }}</a>.
-        {% else %}click here</a>.
-      {% endif %}
-  </p>
+  {% if post %}
+    <p class="text-green-800">For an updated version of this blog post, {% if post.data.title %}see <a class="font-bold" href="{{ post.url | toAbsoluteUrl }}">{{ post.data.title }}</a>.{% else %}<a class="font-bold" href="{{ post.url | toAbsoluteUrl }}">click here</a>.{% endif %}</p>
+  {% endif %}
     {% if updated.extra %}
       <p class="text-green-800">{{ updated.extra }}</p>
     {% endif %}
