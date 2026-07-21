@@ -1,3 +1,100 @@
-<footer>
-	FOOTER
+{#- Reconciled footer matching developer.okta.com (#41). Dark-blue band with
+    Need Support, Social, Contact & Legal, More Info, external cards, and a
+    copyright line. Social icons are inlined SVGs so `text-white` colors them. -#}
+{%- set fLink = "text-white/80 hover:text-white hover:underline transition-colors" -%}
+{%- set fHead = "text-xs font-bold uppercase tracking-wider text-white/50 mb-3" -%}
+{%- set fIcon = "inline-flex text-white/70 hover:text-white transition-colors" -%}
+
+<footer class="bg-okta-dark-blue text-white">
+  <div class="max-w-6xl mx-auto px-6 py-14">
+    <div class="flex flex-col gap-10 md:flex-row md:flex-wrap md:justify-between">
+
+      {# Need Support? #}
+      <div class="md:max-w-xs">
+        <h3 class="text-lg font-bold mb-2">Need Support?</h3>
+        <p class="text-sm leading-relaxed text-white/80">
+          You can reach us directly at
+          <a href="mailto:developers@okta.com" class="{{ fLink }} underline">developers@okta.com</a>
+          or you can also ask us on the
+          <a href="https://devforum.okta.com/" target="_blank" rel="noopener noreferrer" class="{{ fLink }} underline">forum</a>.
+        </p>
+      </div>
+
+      {# Social #}
+      <nav aria-label="Social">
+        <h4 class="{{ fHead }}">Social</h4>
+        <ul class="flex gap-4 list-none p-0 m-0">
+          <li>
+            <a href="http://github.com/oktadev" target="_blank" rel="noopener noreferrer" class="{{ fIcon }}" aria-label="Okta on GitHub">
+              <svg viewBox="0 0 23 23" width="21" height="21" fill="currentColor" aria-hidden="true"><path d="M20.9406 6.21364C19.937 4.45098 18.5757 3.05547 16.8563 2.02682C15.1367 0.99811 13.2593 0.483887 11.2229 0.483887C9.18683 0.483887 7.30888 0.998267 5.58959 2.02682C3.87005 3.05542 2.50879 4.45098 1.50519 6.21364C0.501747 7.97625 0 9.90103 0 11.9879C0 14.4948 0.713491 16.749 2.14083 18.7512C3.56802 20.7535 5.41173 22.139 7.67182 22.9079C7.9349 22.958 8.12965 22.9228 8.25628 22.8032C8.38295 22.6835 8.44622 22.5335 8.44622 22.354C8.44622 22.324 8.44371 22.0545 8.43885 21.5451C8.43383 21.0357 8.43148 20.5913 8.43148 20.2121L8.09536 20.2717C7.88105 20.312 7.61071 20.329 7.28431 20.3242C6.95807 20.3195 6.61939 20.2845 6.26874 20.2193C5.91793 20.1547 5.59164 20.005 5.28961 19.7703C4.98773 19.5356 4.77343 19.2284 4.64675 18.8492L4.50062 18.5045C4.40322 18.275 4.24988 18.02 4.04039 17.7406C3.83089 17.4609 3.61905 17.2713 3.40474 17.1715L3.30243 17.0964C3.23425 17.0465 3.17099 16.9863 3.11249 16.9165C3.05404 16.8466 3.01028 16.7767 2.98105 16.7068C2.95177 16.6367 2.97603 16.5793 3.05409 16.5342C3.13214 16.4891 3.2732 16.4673 3.47788 16.4673L3.77004 16.512C3.96489 16.552 4.20591 16.6716 4.49341 16.8715C4.78075 17.0711 5.01696 17.3307 5.20209 17.6502C5.42627 18.0597 5.69636 18.3718 6.01313 18.5865C6.32965 18.8013 6.64877 18.9085 6.9702 18.9085C7.29163 18.9085 7.56925 18.8835 7.80315 18.8338C8.0368 18.7839 8.25602 18.7088 8.4607 18.609C8.54838 17.9396 8.7871 17.4254 9.17665 17.0659C8.62142 17.0061 8.12223 16.916 7.67883 16.7963C7.23569 16.6763 6.77775 16.4817 6.30533 16.2118C5.83266 15.9423 5.44055 15.6076 5.12889 15.2083C4.81719 14.8088 4.56138 14.2844 4.36181 13.6354C4.16215 12.9862 4.06229 12.2373 4.06229 11.3885C4.06229 10.1799 4.44719 9.15149 5.21683 8.30259C4.85629 7.39397 4.89033 6.37539 5.31904 5.24694C5.60157 5.15696 6.02055 5.22449 6.57579 5.4491C7.13112 5.67381 7.53772 5.86631 7.79599 6.02591C8.05426 6.18546 8.26119 6.32067 8.41709 6.43032C9.32329 6.17077 10.2585 6.04097 11.2228 6.04097C12.1872 6.04097 13.1226 6.17077 14.0288 6.43032L14.5841 6.07098C14.9639 5.83121 15.4123 5.61148 15.9283 5.41174C16.4446 5.21211 16.8395 5.15712 17.1124 5.2471C17.5506 6.3756 17.5896 7.39413 17.229 8.30274C17.9986 9.15165 18.3836 10.1804 18.3836 11.3887C18.3836 12.2375 18.2834 12.9887 18.0841 13.6429C17.8845 14.2972 17.6264 14.8212 17.3099 15.2158C16.9931 15.6104 16.5984 15.9425 16.126 16.2119C15.6535 16.4816 15.1954 16.6763 14.7523 16.7962C14.3089 16.9162 13.8097 17.0063 13.2545 17.0662C13.7609 17.5154 14.0142 18.2245 14.0142 19.1931V22.3536C14.0142 22.5331 14.0751 22.683 14.197 22.8028C14.3187 22.9223 14.511 22.9576 14.7741 22.9074C17.0345 22.1387 18.8782 20.7531 20.3054 18.7507C21.7323 16.7486 22.4461 14.4944 22.4461 11.9875C22.4456 9.90087 21.9436 7.97625 20.9406 6.21364Z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="http://twitter.com/OktaDev" target="_blank" rel="noopener noreferrer" class="{{ fIcon }}" aria-label="Okta on X">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23.64 4.57c-.85.38-1.76.63-2.72.75a4.75 4.75 0 0 0 2.08-2.62c-.92.54-1.93.94-3.01 1.15a4.74 4.74 0 0 0-8.08 4.32A13.45 13.45 0 0 1 2.14 3.4a4.74 4.74 0 0 0 1.47 6.32 4.7 4.7 0 0 1-2.15-.59v.06a4.74 4.74 0 0 0 3.8 4.64 4.74 4.74 0 0 1-2.14.08 4.74 4.74 0 0 0 4.42 3.29A9.5 9.5 0 0 1 0 19.54a13.4 13.4 0 0 0 7.26 2.13c8.71 0 13.47-7.22 13.47-13.48l-.01-.61a9.6 9.6 0 0 0 2.36-2.45z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/oktadev" target="_blank" rel="noopener noreferrer" class="{{ fIcon }}" aria-label="Okta on YouTube">
+              <svg viewBox="0 0 23 23" width="21" height="21" fill="currentColor" aria-hidden="true"><path d="M9.35156 13.8143L13.0376 11.6913L9.35156 9.56836V13.8143Z"/><path d="M11.223 0.484375C5.02568 0.484375 0 5.51005 0 11.7074C0 17.9048 5.02568 22.9305 11.223 22.9305C17.4204 22.9305 22.4461 17.9048 22.4461 11.7074C22.4461 5.51005 17.4204 0.484375 11.223 0.484375ZM18.2357 11.7189C18.2357 11.7189 18.2357 13.995 17.947 15.0925C17.7852 15.6933 17.3115 16.1669 16.7108 16.3286C15.6132 16.6175 11.223 16.6175 11.223 16.6175C11.223 16.6175 6.84435 16.6175 5.73534 16.3171C5.13459 16.1555 4.66091 15.6816 4.49908 15.0809C4.21018 13.995 4.21018 11.7074 4.21018 11.7074C4.21018 11.7074 4.21018 9.43151 4.49908 8.33397C4.66074 7.73322 5.14607 7.2479 5.73534 7.08624C6.83288 6.79734 11.223 6.79734 11.223 6.79734C11.223 6.79734 15.6132 6.79734 16.7108 7.09771C17.3115 7.25937 17.7852 7.73322 17.947 8.33397C18.2474 9.43151 18.2357 11.7189 18.2357 11.7189Z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://devforum.okta.com/" target="_blank" rel="noopener noreferrer" class="{{ fIcon }}" aria-label="Okta developer forum">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-3 10H7v-2h10v2zm0-3H7V7h10v2z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://developer.okta.com/feed.xml" target="_blank" rel="noopener noreferrer" class="{{ fIcon }}" aria-label="Blog RSS feed">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M6.18 15.64a2.18 2.18 0 1 1 0 4.36 2.18 2.18 0 0 1 0-4.36zM4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44zM4 10.1A9.9 9.9 0 0 1 13.9 20h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      {# Contact & Legal #}
+      <nav aria-label="Contact and legal">
+        <h4 class="{{ fHead }}">Contact &amp; Legal</h4>
+        <ul class="grid gap-2.5 list-none p-0 m-0 text-sm">
+          <li><a class="{{ fLink }}" href="https://www.okta.com/contact/" target="_blank" rel="noopener noreferrer">Contact our team</a></li>
+          <li><a class="{{ fLink }}" href="https://www.okta.com/contact-sales/" target="_blank" rel="noopener noreferrer">Contact sales</a></li>
+          <li><a class="{{ fLink }}" href="https://developer.okta.com/terms/" target="_blank" rel="noopener noreferrer">Terms &amp; conditions</a></li>
+          <li><a class="{{ fLink }}" href="https://www.okta.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy policy</a></li>
+        </ul>
+      </nav>
+
+      {# More Info #}
+      <nav aria-label="More info">
+        <h4 class="{{ fHead }}">More Info</h4>
+        <ul class="grid gap-2.5 list-none p-0 m-0 text-sm">
+          <li><a class="{{ fLink }}" href="https://developer.okta.com/pricing/">Pricing</a></li>
+          <li><a class="{{ fLink }}" href="https://developer.okta.com/okta-integration-network/" target="_blank" rel="noopener noreferrer">Integrate with Okta</a></li>
+          <li><a class="{{ fLink }}" href="https://developer.okta.com/docs/change-log/">Change Log</a></li>
+          <li><a class="{{ fLink }}" href="https://developer.okta.com/3rd_party_notices/">3rd-party notes</a></li>
+          <li><a class="{{ fLink }}" href="https://auth0.com/developers/" target="_blank" rel="noopener noreferrer">Auth0 platform</a></li>
+        </ul>
+      </nav>
+
+      {# External destinations #}
+      <div class="grid gap-4 content-start">
+        <a href="http://www.okta.com/" target="_blank" rel="noopener noreferrer" class="group block text-white no-underline">
+          <span class="block font-bold tracking-wide group-hover:underline">OKTA.COM</span>
+          <span class="block text-xs text-white/50">Products, case studies, resources</span>
+        </a>
+        <a href="http://help.okta.com/" target="_blank" rel="noopener noreferrer" class="group block text-white no-underline">
+          <span class="block font-bold tracking-wide group-hover:underline">HELP CENTER</span>
+          <span class="block text-xs text-white/50">Knowledgebase, roadmaps, and more</span>
+        </a>
+        <a href="http://trust.okta.com/" target="_blank" rel="noopener noreferrer" class="group block text-white no-underline">
+          <span class="block font-bold tracking-wide group-hover:underline">TRUST</span>
+          <span class="block text-xs text-white/50">System status, security, compliance</span>
+        </a>
+      </div>
+    </div>
+
+    {# Copyright #}
+    <div class="mt-10 pt-6 border-t border-white/20 text-xs text-white/50">
+      Copyright &copy; {{ site.year }} Okta.
+    </div>
+  </div>
 </footer>
