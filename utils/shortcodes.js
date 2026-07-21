@@ -1,6 +1,3 @@
-// Avatar moved to shortcodes-async.js for image processing
-// readingTime moved to filters.js since it's used as a filter
-
 const youtube = (id, t, w, h) => {
   const width = w || 560;
   const height = h || 315;
@@ -31,8 +28,7 @@ const excerpt = (stemPath, postsCollection) => {
     .map((key) => {
       const author = post.data.authors[key];
       if (!author) return "";
-      // Link uses the author key (matches author.njk's /blog/authors/<key>/).
-      // Simple img tag since the avatar shortcode is now async.
+
       return `<a href="/blog/authors/${key}/" class="inline-flex items-center gap-1"><img src="/img/avatar/${author.avatar}" class="w-5 list-none rounded-full" alt="${author.display_name}" loading="lazy" /> ${author.display_name}</a>`;
     })
     .join("");

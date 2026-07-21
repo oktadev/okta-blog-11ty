@@ -7,8 +7,6 @@ pagination:
 permalink: blog/authors/{{ authorKey }}/
 ---
 
-{# Paginate over author keys so the URL uses the key (matches live, e.g.
-   /blog/authors/akanksha-bhasin/); resolve the value object for the body. #}
 {% set author = authors[authorKey] %}
 <div class="container m-w-128">
   <div class="flex items-center flex-wrap gap-4 mt-10 mb-4">

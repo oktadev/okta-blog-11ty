@@ -4,16 +4,13 @@ layout: base
 {% css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %}
 
 <article class="flex flex-col max-w-[1000] m-auto">
-    {# Post tags at the top of the article (matches the live blog).
-       Sorted, and the internal "posts" collection tag is filtered out. #}
-    {% if tags %}
+    {% set postTags = tags | visibleTags %}
+    {% if postTags | length %}
       <ul class="tags flex flex-wrap list-none p-0 m-0 gap-x-2.5 gap-y-2 mt-4 mb-2">
-        {%- for tag in tags | sort -%}
-          {%- if tag != "posts" %}
-            <li class="flex items-center h-6 px-1.5 rounded bg-[#f2f5ff] whitespace-nowrap">
-              <a href="/blog/tags/{{ tag | slugify }}/" class="text-[#1662dd] no-underline">{{ tag }}</a>
-            </li>
-          {% endif -%}
+        {%- for tag in postTags | sort -%}
+          <li class="flex items-center h-6 px-1.5 rounded bg-[#f2f5ff] whitespace-nowrap">
+            <a href="/blog/tags/{{ tag | slugify }}/" class="text-[#1662dd] no-underline">{{ tag }}</a>
+          </li>
         {%- endfor -%}
       </ul>
     {% endif %}

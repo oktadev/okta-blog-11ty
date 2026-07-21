@@ -48,14 +48,11 @@ const img = async function ({
 }) {
   const dir = avatar ? "img/avatar" : "img/blog";
 
-  // For header/social images, don't process - keep original format for social platform compatibility
   if (header) {
     return `<img src="/${dir}/${src}" alt="${alt}" class="social-img" loading="lazy" decoding="async">`;
   }
 
-  // For avatars, use passed-in widths or default to small size
   if (avatar && widths.length === 4 && widths[0] === 100) {
-    // Default widths weren't overridden, use avatar defaults
     widths = [40, 80];
     sizes = sizes || "40px";
   }
@@ -108,16 +105,14 @@ const avatar = async function (filename, size = "small", alt = "") {
       break;
   }
 
-  // Use the img shortcode with avatar-specific parameters
   const result = await img({
     src: filename,
     alt,
     avatar: true,
-    widths: [avatarSize, avatarSize * 2], // Standard and retina
+    widths: [avatarSize, avatarSize * 2],
     sizes: `${avatarSize}px`,
   });
 
-  // Add rounded-full class for avatar styling
   return result.replace(
     "<img",
     `<img class="${widthClass} list-none rounded-full"`,
