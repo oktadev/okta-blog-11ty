@@ -44,5 +44,4 @@ const excerpt = (stemPath, postsCollection) => {
 export default {
   youtube: (id, t, w, h) => youtube(id, t, w, h),
   speakerdeck: (id, w) => speakerdeck(id, w),
-  excerpt: (stemPath, postsCollection) => excerpt(stemPath, postsCollection),
 };
