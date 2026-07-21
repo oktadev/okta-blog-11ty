@@ -1,9 +1,9 @@
 <meta name="description" content="{{ description | default(page.description | default('')) }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="https://developer.okta.com/feed.xml">
 
-<link rel="canonical" href="{{ absolutePageUrl | toAbsoluteUrl }}" />
+<link rel="canonical" href="{{ page.url | toAbsoluteUrl }}" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="{{ absolutePageUrl | toAbsoluteUrl }}" />
+<meta property="og:url" content="{{ page.url | toAbsoluteUrl }}" />
 <meta property="og:title" content="{{ title }}" />
 {% if description %}
   <meta property="og:description" content="{{ description }}" />
