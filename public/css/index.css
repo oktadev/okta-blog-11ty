@@ -58,7 +58,6 @@
   color: #fff;
   background: var(--color-okta-dark-blue);
   padding: 94px 64px;
-  /* Live renders the footer antialiased, which reads noticeably thinner. */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -105,7 +104,7 @@
   width: 18px;
   height: 18px;
   margin-right: 16px;
-  color: #fff; /* icons render white; the label text stays #d7d7dc */
+  color: #fff;
   flex-shrink: 0;
 }
 
@@ -156,7 +155,6 @@
   line-height: 1.3em;
   letter-spacing: 1px;
 }
-/* Right-pointing chevron after the external destination links (OKTA.COM, etc.). */
 .footer .columns .column.external-links .external-url a::after {
   content: "";
   display: inline-block;
