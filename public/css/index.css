@@ -53,18 +53,12 @@
   }
 }
 
-/* ── Site footer ──────────────────────────────────────────────────────────
-   Ported from developer.okta.com's footer component (see src/_includes/footer.njk).
-   Bespoke responsive layout: fixed-width flex columns on wide screens, reflowing
-   to a stacked/centered layout below 1399px via `order` and separator lines.
-   Breakpoints mirror the source: 1399 (x-large), 1023 (medium), 767 (small),
-   374 (x-smaller). */
+/* ── Site footer ── */
 .footer {
-  position: relative;
   color: #fff;
   background: var(--color-okta-dark-blue);
   padding: 94px 64px;
-  /* Live renders the footer with antialiasing, which reads noticeably thinner. */
+  /* Live renders the footer antialiased, which reads noticeably thinner. */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -117,7 +111,7 @@
 
 .footer .columns {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 .footer .columns .column {
@@ -125,7 +119,6 @@
 }
 .footer .columns .column.need-support {
   flex: 0 0 245px;
-  position: relative;
 }
 .footer .columns .column.need-support .column-header {
   margin-bottom: 17px;
@@ -163,8 +156,7 @@
   line-height: 1.3em;
   letter-spacing: 1px;
 }
-/* Right-pointing chevron after the external destination links (OKTA.COM, etc.),
-   matching live's fontawesome angle-right without pulling in an icon font. */
+/* Right-pointing chevron after the external destination links (OKTA.COM, etc.). */
 .footer .columns .column.external-links .external-url a::after {
   content: "";
   display: inline-block;
@@ -187,19 +179,15 @@
   letter-spacing: 0.01em;
   color: #d7d7dc;
 }
+
 .footer .columns .column.copyright {
-  position: absolute;
-  bottom: 94px;
-  left: auto;
-  clear: both;
-  margin: 38px 0 0;
-  padding: 38px 0 0;
+  flex: 0 0 100%;
+  margin-top: 40px;
+  text-align: center;
   font-size: 1em;
   font-weight: 500;
   color: #fff;
 }
-/* No section dividers in the wide row layout — the columns separate themselves.
-   Dividers appear only in the stacked layout below, all at the same breakpoint. */
 
 @media (max-width: 1399px) {
   .footer {
@@ -214,7 +202,6 @@
   .footer .columns {
     width: 83%;
     margin: 0 auto;
-    flex-wrap: wrap;
   }
   .footer .columns .column.need-support .column-header {
     margin-bottom: 16px;
@@ -222,41 +209,53 @@
   .footer .columns .column.need-support p {
     line-height: 1.6rem;
   }
-  .footer .columns .column.need-support,
-  .footer .columns .column.external-links {
-    flex: 1 0 100% !important;
-    justify-content: center;
-    padding-bottom: 68px;
-    position: relative;
+  .footer .columns .column.need-support {
+    flex: 1 0 100%;
+    order: 1;
   }
-  .footer .columns .column.need-support::after,
-  .footer .columns .column.external-links::after {
-    content: "";
-    position: absolute;
-    bottom: 37px;
-    left: 0;
-    width: 34px;
-    height: 1px;
-    background: #fff;
-    opacity: 0.3;
+  .footer .columns .column.external-links {
+    flex: 1 0 100%;
+    order: 2;
+  }
+  .footer .columns .column.contact-links {
+    flex: 1 0 50%;
+    margin-bottom: 29px;
+    order: 3;
+  }
+  .footer .columns .column.info-links {
+    flex: 1 0 50%;
+    margin-bottom: 29px;
+    padding-left: 18px;
+    order: 4;
   }
   .footer .columns .column.social-links {
     flex: 1 0 100%;
-    margin-bottom: 0;
-    padding-top: 19px;
     order: 5;
-    position: relative;
   }
-  .footer .columns .column.social-links::before {
+  .footer .columns .column.copyright {
+    order: 6;
+    margin-top: 28px;
+  }
+  .footer .columns .column.external-links .external-url + .external-url {
+    margin-top: 25px;
+  }
+
+  .footer .columns .column.need-support::after,
+  .footer .columns .column.external-links::after {
     content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    display: block;
+    width: 34px;
     height: 1px;
-    background: #fff;
-    opacity: 0.3;
+    margin: 37px 0;
+    background: rgba(255, 255, 255, 0.3);
   }
+
+  .footer .columns .column.social-links,
+  .footer .columns .column.copyright {
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
   .footer .columns .column.social-links .column-header {
     display: none;
   }
@@ -275,64 +274,12 @@
   .footer .columns .column.social-links .footer-link svg {
     margin-right: 0;
   }
-  .footer .columns .column.contact-links {
-    flex: 1 0 50%;
-    margin-bottom: 29px;
-    order: 3;
-  }
-  .footer .columns .column.info-links {
-    flex: 1 0 50%;
-    margin-bottom: 29px;
-    padding-left: 18px;
-    order: 4;
-  }
-  .footer .columns .column.external-links {
-    flex: 1 0 40%;
-    order: 2;
-    padding-bottom: 73px;
-    margin-bottom: 8px;
-  }
-  .footer .columns .column.external-links .external-url + .external-url {
-    margin-top: 25px;
-  }
-  .footer .columns .column.copyright {
-    position: relative;
-    bottom: auto;
-    order: 6;
-    width: 100%;
-    min-width: 100%;
-    text-align: center;
-    margin-top: 28px;
-    padding-top: 28px;
-  }
-  .footer .columns .column.copyright::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: #fff;
-    opacity: 0.3;
-  }
-}
-@media (max-width: 1023px) {
-  .footer .columns .column {
-    flex: 1 0 50%;
-  }
-  .footer .columns .column.external-links {
-    flex: 1 0 100%;
-  }
 }
 @media (max-width: 767px) {
+  .footer .columns .column.contact-links,
   .footer .columns .column.info-links {
     flex: 1 0 100%;
     padding-left: 0;
-  }
-}
-@media (max-width: 374px) {
-  .footer .columns .column.contact-links {
-    flex: 1 0 100%;
   }
 }
 
