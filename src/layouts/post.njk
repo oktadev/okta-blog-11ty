@@ -5,6 +5,12 @@ layout: base
 
 <article class="flex flex-col max-w-[1000] m-auto gap-3">
     <h1 class="text-4xl text-okta-cobalt">{{ title }}</h1>
+    {% if changelog %}
+      {% set changelogList = changelog | changelogEntries %}
+      <div class="last-updated text-[#3d3d3d] mt-1 mb-3">
+        Last Updated:&nbsp;<a href="#changelog">{{ changelogList[0].date | readableDate("LLLL d, yyyy") }}</a>
+      </div>
+    {% endif %}
     {% if image %}
       {% img {src: image, alt: "", header: true} %}
     {% endif %}
@@ -13,5 +19,14 @@ layout: base
         <p class="description">{{ description }}</p>
       {% endif %}
       {{ content | safe }}
+
+      {% if changelog %}
+        <p id="changelog"><strong>Changelog</strong>:</p>
+        <ul class="changelog list-disc pl-5">
+          {%- for entry in changelog | changelogEntries %}
+            <li>{{ entry.date | readableDate("LLL d, yyyy") }}: {{ entry.text | inlineMarkdown | safe }}</li>
+          {%- endfor %}
+        </ul>
+      {% endif %}
     </div>
 </article>

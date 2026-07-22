@@ -2,6 +2,11 @@ import { DateTime } from "luxon";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import markdownIt from "markdown-it";
+
+// Lightweight Markdown renderer for inline snippets (changelog descriptions),
+// which contain links and inline code but no block-level markup.
+const inlineMd = markdownIt({ html: true, linkify: true });
 
 export default function (eleventyConfig) {
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
@@ -15,6 +20,24 @@ export default function (eleventyConfig) {
       format || "LLLL d, yyyy",
     );
   });
+
+  // Normalize a post's `changelog` front-matter into [{ date, text }]. YAML
+  // parses each `YYYY-MM-DD: ...` entry as a single-key object whose key js-yaml
+  // turned into a Date; parse it back (readableDate formats it in UTC so the day
+  // doesn't shift) and keep the Markdown description as `text`. Order is
+  // preserved as authored (newest first).
+  eleventyConfig.addFilter("changelogEntries", function (changelog) {
+    if (!Array.isArray(changelog)) return [];
+    return changelog.map((entry) => {
+      const key = Object.keys(entry)[0];
+      return { date: new Date(key), text: entry[key] };
+    });
+  });
+
+  // Render a Markdown string inline (no wrapping <p>), for changelog descriptions.
+  eleventyConfig.addFilter("inlineMarkdown", (str) =>
+    inlineMd.renderInline(str || ""),
+  );
 
   eleventyConfig.addFilter("postsAuthorFilter", function (posts, authorKey) {
     // Match posts whose `author` (a key or list of keys) includes this author.
