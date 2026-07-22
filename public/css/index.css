@@ -181,6 +181,8 @@
 .footer .columns .column.copyright {
   flex: 0 0 100%;
   margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
   text-align: center;
   font-size: 1em;
   font-weight: 500;
@@ -210,10 +212,12 @@
   .footer .columns .column.need-support {
     flex: 1 0 100%;
     order: 1;
+    margin-bottom: 40px;
   }
   .footer .columns .column.external-links {
     flex: 1 0 100%;
     order: 2;
+    margin-bottom: 40px;
   }
   .footer .columns .column.contact-links {
     flex: 1 0 50%;
@@ -232,26 +236,9 @@
   }
   .footer .columns .column.copyright {
     order: 6;
-    margin-top: 28px;
   }
   .footer .columns .column.external-links .external-url + .external-url {
     margin-top: 25px;
-  }
-
-  .footer .columns .column.need-support::after,
-  .footer .columns .column.external-links::after {
-    content: "";
-    display: block;
-    width: 34px;
-    height: 1px;
-    margin: 37px 0;
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  .footer .columns .column.social-links,
-  .footer .columns .column.copyright {
-    padding-top: 28px;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   .footer .columns .column.social-links .column-header {
