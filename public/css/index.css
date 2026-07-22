@@ -64,6 +64,9 @@
   color: #fff;
   background: var(--color-okta-dark-blue);
   padding: 94px 64px;
+  /* Live renders the footer with antialiasing, which reads noticeably thinner. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .footer a {
   color: #fff;
@@ -160,6 +163,20 @@
   line-height: 1.3em;
   letter-spacing: 1px;
 }
+/* Right-pointing chevron after the external destination links (OKTA.COM, etc.),
+   matching live's fontawesome angle-right without pulling in an icon font. */
+.footer .columns .column.external-links .external-url a::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 12px;
+  border-top: 1.5px solid #fff;
+  border-right: 1.5px solid #fff;
+  transform: rotate(45deg);
+  opacity: 0.5;
+  vertical-align: middle;
+}
 .footer .columns .column.external-links .external-url a:hover {
   text-decoration: underline;
 }
@@ -181,16 +198,8 @@
   font-weight: 500;
   color: #fff;
 }
-.footer .columns .column.copyright::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 34px;
-  height: 1px;
-  background: #fff;
-  opacity: 0.3;
-}
+/* No section dividers in the wide row layout — the columns separate themselves.
+   Dividers appear only in the stacked layout below, all at the same breakpoint. */
 
 @media (max-width: 1399px) {
   .footer {
@@ -297,8 +306,14 @@
     padding-top: 28px;
   }
   .footer .columns .column.copyright::before {
-    width: 100%;
+    content: "";
+    position: absolute;
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    opacity: 0.3;
   }
 }
 @media (max-width: 1023px) {
