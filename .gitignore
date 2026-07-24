@@ -1,6 +1,11 @@
 # Compiled output
 /_site
 
+# Downloaded brand assets not to be committed
+/public/fonts/**
+!/public/fonts/fontawesome-webfont.*
+
+
 # Node
 /node_modules
 npm-debug.log
