@@ -1,6 +1,202 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @layer theme, base, components, utilities;
 @import "tailwindcss/preflight.css" layer(base);
+@import "./fontawesome.css";
+
+@font-face {
+  font-weight: 100;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Air.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 100;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-AirItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 200;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Thin.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 200;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-ThinItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 300;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Light.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 300;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-LightItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Regular.eot");
+  src: url("/fonts/aeonik/Aeonik-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/aeonik/Aeonik-Regular.woff2") format("woff2"),
+    url("/fonts/aeonik/Aeonik-Regular.woff") format("woff"),
+    url("/fonts/aeonik/Aeonik-Regular.otf") format("opentype"),
+    url("/fonts/aeonik/Aeonik-Regular.ttf") format("truetype"),
+    url("/fonts/aeonik/Aeonik-Regular.svg#Aeonik-Regular") format("svg");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 400;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-RegularItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 500;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Medium.eot");
+  src: url("/fonts/aeonik/Aeonik-Medium.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/aeonik/Aeonik-Medium.woff2") format("woff2"),
+    url("/fonts/aeonik/Aeonik-Medium.woff") format("woff"),
+    url("/fonts/aeonik/Aeonik-Medium.otf") format("opentype"),
+    url("/fonts/aeonik/Aeonik-Medium.ttf") format("truetype"),
+    url("/fonts/aeonik/Aeonik-Medium.svg#Aeonik-Medium") format("svg");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 500;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-MediumItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Bold.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 700;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-BoldItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 900;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Black.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 900;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-BlackItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 100;
+  font-style: normal;
+  font-family: "AeonikMono";
+  src: url("/fonts/aeonik-mono/AeonikMono-Air.woff2") format("woff2"),
+    url("/fonts/aeonik-mono/AeonikMono-Air.woff") format("woff"),
+    url("/fonts/aeonik-mono/AeonikMono-Air.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 200;
+  font-style: normal;
+  font-family: "AeonikMono";
+  src: url("/fonts/aeonik-mono/AeonikMono-Thin.woff2") format("woff2"),
+    url("/fonts/aeonik-mono/AeonikMono-Thin.woff") format("woff"),
+    url("/fonts/aeonik-mono/AeonikMono-Thin.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 300;
+  font-style: normal;
+  font-family: "AeonikMono";
+  src: url("/fonts/aeonik-mono/AeonikMono-Light.woff2") format("woff2"),
+    url("/fonts/aeonik-mono/AeonikMono-Light.woff") format("woff"),
+    url("/fonts/aeonik-mono/AeonikMono-Light.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-family: "AeonikMono";
+  src: url("/fonts/aeonik-mono/AeonikMono-Regular.woff2") format("woff2"),
+    url("/fonts/aeonik-mono/AeonikMono-Regular.woff") format("woff"),
+    url("/fonts/aeonik-mono/AeonikMono-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 500;
+  font-style: normal;
+  font-family: "AeonikMono";
+  src: url("/fonts/aeonik-mono/AeonikMono-Medium.woff2") format("woff2"),
+    url("/fonts/aeonik-mono/AeonikMono-Medium.woff") format("woff"),
+    url("/fonts/aeonik-mono/AeonikMono-Medium.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 700;
+  font-style: normal;
+  font-family: "AeonikMono";
+  src: url("/fonts/aeonik-mono/AeonikMono-Bold.woff2") format("woff2"),
+    url("/fonts/aeonik-mono/AeonikMono-Bold.woff") format("woff"),
+    url("/fonts/aeonik-mono/AeonikMono-Bold.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 900;
+  font-style: normal;
+  font-family: "AeonikMono";
+  src: url("/fonts/aeonik-mono/AeonikMono-Black.woff2") format("woff2"),
+    url("/fonts/aeonik-mono/AeonikMono-Black.woff") format("woff"),
+    url("/fonts/aeonik-mono/AeonikMono-Black.otf") format("opentype");
+  font-display: swap;
+}
 
 /* Hide the native (WebKit) search clear button — we render an accessible,
    keyboard-focusable custom clear button instead (see tags.njk). */
@@ -10,53 +206,87 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @layer base {
-  h1 {
-    font-size: var(--text-3xl);
-  }
-  h2 {
-    font-size: var(--text-2xl);
-  }
   a {
-    color: #1662dd;
+    color: var(--color-okta-sky);
     transition: 0.4s color;
     text-decoration: none;
 
     &:hover {
-      color: #3b7eeb;
+      color: var(--color-okta-sky);
       text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 2px;
     }
   }
-  p {
-    padding: var(--spacing);
+  h1, h2, h3, h4, h5, h6 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  ol {
-    padding-left: 20px;
-    list-style-type: decimal;
+
+  strong, b {
+    font-weight: 700;
   }
-  blockquote {
-    border-left: 4px solid var(--color-okta-sand);
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: var(--spacing);
-    color: var(--color-okta-carbon);
+  em, i {
     font-style: italic;
-    background-color: var(--color-okta-cream);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
 @layer components {
-  code,
   pre {
     font-family: var(--default-mono-font-family);
-    background-color: var(--color-okta-snow);
-    padding: var(--spacing);
-    margin: var(--spacing) 0;
-    white-space: pre-wrap;
   }
 
   .center-image {
     display: flex;
     justify-content: center;
+  }
+}
+
+.blog-prose {
+  @apply prose max-w-none;
+  @apply prose-headings:font-normal prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-2xl prose-h6:text-xl;
+  @apply prose-headings:mt-0 prose-headings:mb-1.5 prose-p:mt-2.5;
+
+  --tw-prose-body: var(--color-okta-carbon);
+  --tw-prose-headings: var(--color-okta-carbon);
+  --tw-prose-lead: var(--color-okta-slate);
+  --tw-prose-links: var(--color-okta-sky);
+  --tw-prose-bold: var(--color-okta-carbon);
+  --tw-prose-counters: var(--color-okta-slate);
+  --tw-prose-bullets: var(--color-okta-slate);
+  --tw-prose-hr: var(--color-okta-gravel);
+  --tw-prose-quotes: var(--color-okta-carbon);
+  --tw-prose-quote-borders: var(--color-okta-sky);
+  --tw-prose-captions: var(--color-okta-slate);
+  --tw-prose-code: var(--color-okta-carbon);
+  --tw-prose-pre-code: inherit;
+  --tw-prose-pre-bg: var(--color-okta-cream);
+  --tw-prose-th-borders: var(--color-okta-gravel);
+  --tw-prose-td-borders: var(--color-okta-sand);
+
+  & blockquote {
+    @apply p-1.5 m-3;
+    font-style: normal; /* apply rule for not-italic didn't work, so falling back to CSS */
+    background-color: color-mix(in oklch, var(--color-okta-sky) 10%, white);
+    quotes: none;
+  }
+
+  & blockquote p:first-of-type::before,
+  & blockquote p:last-of-type::after {
+    @apply content-none;
+  }
+
+  & :not(pre) > code {
+    background-color: var(--color-okta-cream);
+  }
+
+  & :not(pre) > code::before,
+  & :not(pre) > code::after {
+    content: none;
   }
 }
 
@@ -67,11 +297,11 @@ input[type="search"]::-webkit-search-cancel-button {
   --color-okta-sand: #e8dcc7;
   --color-okta-cream: #f6f1e7;
   --color-okta-snow: #fffefa;
+  --color-okta-blue: #1662dd;
   --color-okta-cobalt: #1a31a9;
   --color-okta-dark-blue: #00297a;
   --color-okta-sky: #3f59e4;
-  --color-okta-cloud: #b6c9ff;
-  --color-ocean: #096256;
+  --color-okta-cloud: #b6caff;
   --color-okta-seafoam: #4cb7a3;
   --color-okta-turquoise: #b1e4de;
   --color-okta-white: #fff;
