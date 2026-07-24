@@ -216,6 +216,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+
   strong, b {
     font-weight: 700;
   }
@@ -239,13 +240,28 @@
   }
 }
 
+a.direct-link {
+  @apply no-underline font-normal;
+  color: inherit;
+
+  &:hover::after {
+    content: "";
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    margin-left: 20px;
+    vertical-align: middle;
+    background: url(/img/icon-link.svg) center center / contain no-repeat;
+  }
+}
+
 .blog-prose {
   @apply prose max-w-none;
   @apply prose-headings:font-normal prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-2xl prose-h6:text-xl;
   @apply prose-headings:mt-0 prose-headings:mb-1.5 prose-p:mt-2.5;
 
   --tw-prose-body: var(--color-okta-carbon);
-  --tw-prose-headings: var(--color-okta-carbon);
+  --tw-prose-headings: color-mix(in oklch, var(--color-okta-carbon) 75%, white);
   --tw-prose-lead: var(--color-okta-slate);
   --tw-prose-links: var(--color-okta-sky);
   --tw-prose-bold: var(--color-okta-carbon);
@@ -264,6 +280,7 @@
   & blockquote {
     @apply p-1.5 m-3;
     font-style: normal; /* apply rule for not-italic didn't work, so falling back to CSS */
+    font-weight: normal;
     background-color: color-mix(in oklch, var(--color-okta-sky) 10%, white);
     quotes: none;
   }
