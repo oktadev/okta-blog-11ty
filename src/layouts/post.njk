@@ -29,4 +29,41 @@ layout: base
         </ul>
       {% endif %}
     </div>
+
+    {# Author bio(s) (#44) — matches live: avatar, name, social icons, bio text. #}
+    {% set postAuthors = authors | authorFilter(author) %}
+    {% for author in postAuthors %}
+      {% if author.full_name %}
+        <div class="author-bio border-t border-[#ccc] pt-5 {{ 'mt-5' if loop.first }}">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            {% if author.avatar %}
+              <a href="/blog/authors/{{ author.slug }}/" class="shrink-0 [&_img]:w-4 [&_img]:h-4">{% avatar author.avatar, "small", author.full_name %}</a>
+            {% endif %}
+            <span class="author-name"><a href="/blog/authors/{{ author.slug }}/" class="text-[#1662dd] text-base no-underline">{{ author.full_name }}</a></span>
+            <span class="[&>div]:mt-0 [&_a]:w-4 [&_a]:h-4">{% include "author-socials.njk" %}</span>
+          </div>
+          {% if author.bio %}
+            <p class="text-[#5d5d5d] text-base leading-[26px] mt-3">{{ author.bio }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {# Previous / next post navigation — matches live. #}
+    {% set prevPost = collections.posts | getPreviousCollectionItem %}
+    {% set nextPost = collections.posts | getNextCollectionItem %}
+    <nav class="prev-next flex justify-between border-b border-[#ccc] pb-4 text-base">
+      {% if prevPost %}
+        <a href="{{ prevPost.url }}" class="text-[#1662dd] no-underline" title="{{ prevPost.data.title }}">&larr;&nbsp;Previous post</a>
+      {% else %}<span></span>{% endif %}
+      {% if nextPost %}
+        <a href="{{ nextPost.url }}" class="text-[#1662dd] no-underline" title="{{ nextPost.data.title }}">Next post&nbsp;&rarr;</a>
+      {% endif %}
+    </nav>
+
+    {# Comment policy — matches live. #}
+    <div id="comment-policy" class="comment-policy bg-[#ebeef2] text-[#2a2e2e] rounded p-[15px]">
+      <p class="font-bold">Okta Developer Blog Comment Policy</p>
+      <p>We welcome relevant and respectful comments. Off-topic comments may be removed.</p>
+    </div>
 </article>
