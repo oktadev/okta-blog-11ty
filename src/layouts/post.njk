@@ -54,10 +54,10 @@ layout: base
     {% set nextPost = collections.posts | getNextCollectionItem %}
     <nav class="prev-next flex justify-between border-b border-[#ccc] pb-4 text-base">
       {% if prevPost %}
-        <a href="{{ prevPost.url }}" class="text-[#1662dd] no-underline" title="{{ prevPost.data.title }}">&larr;&nbsp;Previous post</a>
+        <a href="{{ prevPost.url }}" class="text-[#1662dd] no-underline" title="{{ prevPost.data.title }}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous post</a>
       {% else %}<span></span>{% endif %}
       {% if nextPost %}
-        <a href="{{ nextPost.url }}" class="text-[#1662dd] no-underline" title="{{ nextPost.data.title }}">Next post&nbsp;&rarr;</a>
+        <a href="{{ nextPost.url }}" class="text-[#1662dd] no-underline" title="{{ nextPost.data.title }}">Next post&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
       {% endif %}
     </nav>
 
