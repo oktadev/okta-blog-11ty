@@ -21,17 +21,20 @@ export default function (eleventyConfig) {
     );
   });
 
-  // Normalize a post's `changelog` front-matter into [{ date, text }]. YAML
-  // parses each `YYYY-MM-DD: ...` entry as a single-key object whose key js-yaml
-  // turned into a Date; parse it back (readableDate formats it in UTC so the day
-  // doesn't shift) and keep the Markdown description as `text`. Order is
-  // preserved as authored (newest first).
+  // Normalize a post's `changelog` front-matter into [{ date, text }], sorted
+  // newest-first. YAML parses each `YYYY-MM-DD: ...` entry as a single-key
+  // object whose key js-yaml turned into a Date; parse it back (readableDate
+  // formats it in UTC so the day doesn't shift) and keep the Markdown
+  // description as `text`. Sorting descending here means [0] is always the most
+  // recent entry (for "Last Updated") even when the front-matter isn't ordered.
   eleventyConfig.addFilter("changelogEntries", function (changelog) {
     if (!Array.isArray(changelog)) return [];
-    return changelog.map((entry) => {
-      const key = Object.keys(entry)[0];
-      return { date: new Date(key), text: entry[key] };
-    });
+    return changelog
+      .map((entry) => {
+        const key = Object.keys(entry)[0];
+        return { date: new Date(key), text: entry[key] };
+      })
+      .sort((a, b) => b.date - a.date);
   });
 
   // Render a Markdown string inline (no wrapping <p>), for changelog descriptions.
