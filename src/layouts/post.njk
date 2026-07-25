@@ -30,7 +30,6 @@ layout: base
       {% endif %}
     </div>
 
-    {# Author bio(s) (#44) — matches live: avatar, name, social icons, bio text. #}
     {% set postAuthors = authors | authorFilter(author) %}
     {% for author in postAuthors %}
       {% if author.full_name %}
@@ -49,7 +48,6 @@ layout: base
       {% endif %}
     {% endfor %}
 
-    {# Previous / next post navigation — matches live. #}
     {% set prevPost = collections.posts | getPreviousCollectionItem %}
     {% set nextPost = collections.posts | getNextCollectionItem %}
     <nav class="prev-next flex justify-between border-b border-[#ccc] pb-4 text-base">
@@ -61,7 +59,6 @@ layout: base
       {% endif %}
     </nav>
 
-    {# Comment policy — matches live. #}
     <div id="comment-policy" class="comment-policy bg-[#ebeef2] text-[#2a2e2e] rounded p-[15px]">
       <p class="font-bold">Okta Developer Blog Comment Policy</p>
       <p>We welcome relevant and respectful comments. Off-topic comments may be removed.</p>

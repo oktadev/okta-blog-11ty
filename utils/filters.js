@@ -4,8 +4,6 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import markdownIt from "markdown-it";
 
-// Lightweight Markdown renderer for inline snippets (changelog descriptions),
-// which contain links and inline code but no block-level markup.
 const inlineMd = markdownIt({ html: true, linkify: true });
 
 export default function (eleventyConfig) {
@@ -21,12 +19,7 @@ export default function (eleventyConfig) {
     );
   });
 
-  // Normalize a post's `changelog` front-matter into [{ date, text }], sorted
-  // newest-first. YAML parses each `YYYY-MM-DD: ...` entry as a single-key
-  // object whose key js-yaml turned into a Date; parse it back (readableDate
-  // formats it in UTC so the day doesn't shift) and keep the Markdown
-  // description as `text`. Sorting descending here means [0] is always the most
-  // recent entry (for "Last Updated") even when the front-matter isn't ordered.
+  // Entries are single-key { <date>: <text> } objects; sort newest-first.
   eleventyConfig.addFilter("changelogEntries", function (changelog) {
     if (!Array.isArray(changelog)) return [];
     return changelog
@@ -37,7 +30,6 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
-  // Render a Markdown string inline (no wrapping <p>), for changelog descriptions.
   eleventyConfig.addFilter("inlineMarkdown", (str) =>
     inlineMd.renderInline(str || ""),
   );
