@@ -15,7 +15,7 @@ eleventyExcludeFromCollections: true
     <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
   {% endif %}
   {% for post in collections.posts | reverse %}
-    {% set absolutePostUrl %}{{ (post.url | url ) | toAbsoluteUrl }}{% endset %}
+    {% set absolutePostUrl %}{{ site.baseUrl }}{{ post.url | url }}{% endset %}
     <entry>
           <title>{{ post.data.title }}</title>
           <link href="{{ absolutePostUrl }}"/>
