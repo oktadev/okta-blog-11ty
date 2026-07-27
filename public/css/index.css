@@ -244,7 +244,8 @@ a.direct-link {
   @apply no-underline font-normal;
   color: inherit;
 
-  &:hover::after {
+  &:hover::after,
+  &:focus-visible::after {
     content: "";
     display: inline-block;
     height: 18px;
