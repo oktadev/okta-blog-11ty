@@ -3,6 +3,7 @@ import markdownItAttrs from "markdown-it-attrs";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
 import * as yaml from "js-yaml";
+import { execSync } from "child_process";
 
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
@@ -15,6 +16,14 @@ import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
 
 export default function (eleventyConfig) {
+  eleventyConfig.on("eleventy.before", () => {
+    if (process.env.ELEVENTY_ENV !== "production") {
+      execSync("npm run css", { stdio: "inherit" });
+    }
+  });
+
+  eleventyConfig.addWatchTarget("public/css/");
+
   // Static files (style.css, fonts/, js/) are pre-copied by npm scripts using
   // shell redirection / cp -rn, which avoids EPERM unlink failures on macOS-mounted fs.
 
@@ -70,24 +79,30 @@ export default function (eleventyConfig) {
   });
 
   // Customize Markdown library and settings:
+  const slugify = (s) =>
+    s
+      .trim()
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
+
   let markdownLibrary = markdownIt({
     html: true,
     breaks: true,
     linkify: true,
   })
     .use(markdownItAnchor, {
-      permalink: markdownItAnchor.permalink.ariaHidden({
-        placement: "after",
+      permalink: markdownItAnchor.permalink.headerLink({
+        safariReaderFix: true,
         class: "direct-link",
-        symbol: "#",
-        level: [1, 2, 3],
       }),
-      slugify: eleventyConfig.getFilter("slug"),
+      slugify,
     })
     .use(markdownItAttrs)
     .use(markdownItToc, {
-      includeLevel: [1, 2],
+      includeLevel: [2, 3],
       listType: "ul",
+      slugify,
     });
   eleventyConfig.setLibrary("md", markdownLibrary);
 
