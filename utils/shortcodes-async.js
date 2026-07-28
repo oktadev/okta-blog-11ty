@@ -48,14 +48,13 @@ const img = async function ({
 }) {
   const dir = avatar ? "img/avatar" : "img/blog";
 
-  // For header/social images, don't process - keep original format for social platform compatibility
-  if (header) {
-    return `<img src="/${dir}/${src}" alt="${alt}" class="social-img" loading="lazy" decoding="async">`;
-  }
-
-  // For avatars, use passed-in widths or default to small size
-  if (avatar && widths.length === 4 && widths[0] === 100) {
-    // Default widths weren't overridden, use avatar defaults
+  // A numeric `header` is a width hint migrated from Jekyll's `width:`; render one
+  // image at that size. `header: true` (the hero) uses the responsive defaults.
+  const headerWidth = header && header !== true ? parseInt(header, 10) : null;
+  if (headerWidth) {
+    widths = [headerWidth];
+    sizes = sizes || `${headerWidth}px`;
+  } else if (avatar && widths.length === 4 && widths[0] === 100) {
     widths = [40, 80];
     sizes = sizes || "40px";
   }
@@ -73,16 +72,21 @@ const img = async function ({
     decoding: "async",
   };
 
-  return await Image(`./public/${dir}/${src}`, {
-    widths,
-    formats: ["webp"],
-    returnType: "html",
-    outputDir,
-    urlPath,
-    htmlOptions: {
-      imgAttributes,
-    },
-  });
+  try {
+    return await Image(`./public/${dir}/${src}`, {
+      widths,
+      formats: ["webp"],
+      returnType: "html",
+      outputDir,
+      urlPath,
+      htmlOptions: {
+        imgAttributes,
+      },
+    });
+  } catch (err) {
+    console.warn(`[img] could not process ${dir}/${src}: ${err.message}`);
+    return `<img src="/${dir}/${src}" alt="${alt}" loading="lazy" decoding="async">`;
+  }
 };
 
 const avatar = async function (filename, size = "small", alt = "") {
