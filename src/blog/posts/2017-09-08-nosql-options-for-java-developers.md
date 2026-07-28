@@ -8,8 +8,6 @@ by: advocate
 communities: [java]
 description: "In this article, I'll show you several options for NoSQL databases. After exploring all the options, I'll narrow the choices down to the top five based on Indeed Jobs, GitHub stars, and Stack Overflow tags. Then I'll let you know if they're supported by Spring Data and Spring Boot."
 tags: [nosql, java, redis, mongodb, cassandra, neo4j, postgresql, spring-boot, spring-data]
-redirect_from:
-  - "/blog/2017/10/10/nosql-options-for-java-developers-part-i"
 type: awareness
 changelog:
   - 2017-10-10: Updated to link to [Part II blog post](/blog/2017/10/10/nosql-options-for-java-developers-part-ii) with answers from experts.

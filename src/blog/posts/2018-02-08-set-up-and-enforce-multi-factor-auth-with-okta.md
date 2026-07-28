@@ -11,8 +11,6 @@ tags: [security, mfa, multi-factor-authentication, authentication, api]
 tweets:
   - "Love APIs & MFA? Watch as @afitnerd walks you through MFA setup with the @Okta API."
   - "@OktaDev <3 APIs. Watch as @afitnerd walks you through MFA setup with the @Okta API."
-redirect_from:
-  - "/blog/2018/02/07/use-okta-api-for-mfa"
 type: conversion
 ---
 

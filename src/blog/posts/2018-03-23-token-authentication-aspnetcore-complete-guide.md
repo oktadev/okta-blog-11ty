@@ -11,8 +11,6 @@ tags: [asp-dot-net, aspnetcore, dotnet, webapi, security, oauth, oidc]
 tweets:
  - "Confused about token authentication in #aspnetcore? @nbarbettini breaks it down step by step →"
  - "A comprehensive guide to understanding token authentication in #aspnetcore →"
-redirect_from:
- - "/blog/2018/03/27/token-authentication-aspnetcore-complete-guide"
 type: awareness
 image: featured/okta-dotnet-bottle-headphones.jpg
 ---

@@ -8,9 +8,6 @@ by: advocate
 communities: [devops]
 description: "In this tutorial you'll learn how to create a `Dockerfile` that you can use to create an image for a basic web application."
 tags: [docker, devops, developer]
-redirect_from:
-  - "/blog/2017/05/10/developers-guide-to-docker-part-2"
-  - "/blog/2017/10/11/developers-guide-to-docker-part-2"
 type: awareness
 ---
 
