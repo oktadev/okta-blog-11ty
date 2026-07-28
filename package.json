@@ -4,15 +4,14 @@
   "main": "index.js",
   "scripts": {
     "css": "tailwindcss -i ./public/css/index.css -o ./_site/style.css --minify",
-    "css:watch": "tailwindcss -i ./public/css/index.css -o ./_site/style.css --watch",
     "validate": "node scripts/validate-frontmatter.js",
     "smoke": "node scripts/smoke-test.js",
     "test": "npm run build && npm run smoke",
     "format": "prettier --write \"**/*.{js,mjs,cjs,json}\"",
     "prepare": "git config core.hooksPath .githooks || true",
-    "setup": "mkdir -p _site/img && ([ -d _site/fonts ] || cp -r public/fonts _site/) && ([ -d _site/js ] || cp -r public/js _site/) && ([ -d _site/img/avatar ] || cp -r public/img/avatar _site/img/)",
-    "start": "ELEVENTY_ENV=development npm run css && npm run setup && ELEVENTY_ENV=development eleventy --serve --incremental",
-    "build": "ELEVENTY_ENV=production npm run css && npm run setup && ELEVENTY_ENV=production eleventy"
+    "setup": "npm run css && mkdir -p _site/img && ([ -d _site/fonts ] || cp -r public/fonts _site/) && ([ -d _site/js ] || cp -r public/js _site/) && ([ -d _site/img/avatar ] || cp -r public/img/avatar _site/img/) && cp public/img/*.svg _site/img/",
+    "start": "ELEVENTY_ENV=development npm run setup && ELEVENTY_ENV=development eleventy --serve --incremental",
+    "build": "ELEVENTY_ENV=production npm run setup && ELEVENTY_ENV=production eleventy"
   },
   "keywords": [],
   "author": "",
