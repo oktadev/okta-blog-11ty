@@ -9,7 +9,7 @@ layout: base
       <ul class="tags flex flex-wrap list-none p-0 m-0 gap-x-2.5 gap-y-2 mt-4 mb-2">
         {%- for tag in postTags | sort -%}
           <li class="flex items-center h-6 px-1.5 rounded bg-[#f2f5ff] whitespace-nowrap">
-            <a href="/blog/tags/{{ tag | slugify }}/" class="text-[#1662dd] no-underline">{{ tag }}</a>
+            <a href="/blog/tags/{{ tag | slugify }}/" class="text-okta-blue no-underline">{{ tag }}</a>
           </li>
         {%- endfor -%}
       </ul>
