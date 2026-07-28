@@ -85,7 +85,8 @@ const img = async function ({
     });
   } catch (err) {
     console.warn(`[img] could not process ${dir}/${src}: ${err.message}`);
-    return `<img src="/${dir}/${src}" alt="${alt}" loading="lazy" decoding="async">`;
+    const sizesAttr = sizes ? ` sizes="${sizes}"` : "";
+    return `<img src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
   }
 };
 
