@@ -4,6 +4,8 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "./fontawesome.css";
 
+@custom-variant prose-inline-code (& :where(:not(pre)>code):not(:where([class~="not-prose"] *)));
+
 @font-face {
   font-weight: 100;
   font-style: normal;
@@ -236,10 +238,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @layer components {
-  pre {
-    font-family: var(--default-mono-font-family);
-  }
-
   .center-image {
     display: flex;
     justify-content: center;
@@ -481,6 +479,18 @@ a.direct-link {
   @apply prose max-w-none;
   @apply prose-headings:font-normal prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-2xl prose-h6:text-xl;
   @apply prose-headings:mt-0 prose-headings:mb-1.5 prose-p:mt-2.5;
+  @apply prose-blockquote:p-1.5 prose-blockquote:m-3 prose-blockquote:font-normal prose-blockquote:not-italic;
+
+  /* Code blocks */
+  /* Base styles for code blocks and inline code */
+  @apply prose-code:text-base prose-code:font-normal prose-code:font-code prose-code:text-code-base;
+  @apply prose-inline-code:bg-code-bg;
+
+  /* Overrides for pre > code blocks */
+  @apply prose-pre:rounded-sm;
+
+  /* Overrides for inline code */
+  @apply prose-inline-code:p-0.5 prose-inline-code:before:content-none prose-inline-code:after:content-none;
 
   --tw-prose-body: var(--color-okta-carbon);
   --tw-prose-headings: color-mix(in oklch, var(--color-okta-carbon) 75%, white);
@@ -494,35 +504,25 @@ a.direct-link {
   --tw-prose-quote-borders: var(--color-okta-sky);
   --tw-prose-captions: var(--color-okta-slate);
   --tw-prose-code: var(--color-okta-carbon);
-  --tw-prose-pre-code: inherit;
-  --tw-prose-pre-bg: var(--color-okta-cream);
+
+  --tw-prose-pre-bg: var(--color-code-bg);
   --tw-prose-th-borders: var(--color-okta-gravel);
   --tw-prose-td-borders: var(--color-okta-sand);
 
   & blockquote {
-    @apply p-1.5 m-3;
-    font-style: normal; /* apply rule for not-italic didn't work, so falling back to CSS */
-    font-weight: normal;
     background-color: color-mix(in oklch, var(--color-okta-sky) 10%, white);
-    quotes: none;
-  }
-
-  & blockquote p:first-of-type::before,
-  & blockquote p:last-of-type::after {
-    @apply content-none;
-  }
-
-  & :not(pre) > code {
-    background-color: var(--color-okta-cream);
-  }
-
-  & :not(pre) > code::before,
-  & :not(pre) > code::after {
-    content: none;
   }
 }
 
 @theme {
+  --font-code: Menlo, Monaco, Consolas, "Courier New", monospace;
+  --color-code-bg: #f0f0f0;
+  --color-code-base: #333333;
+  --color-code-comment: #aaaaaa;
+  --color-code-keyword: #4cbf9c;
+  --color-code-string: #e22866;
+  --color-code-number: #990f69;
+  --color-code-identifier: #006399;
   --color-okta-carbon: #191919;
   --color-okta-slate: #6b665f;
   --color-okta-gravel: #afaba1;

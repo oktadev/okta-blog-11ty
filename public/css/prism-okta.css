@@ -1,0 +1,94 @@
+/*
+ * Prism syntax token colors — okta-blog Rouge/Pygments palette
+ * Layout (font, size, padding, background) handled by Tailwind Typography.
+ * Colors defined as --color-code-* tokens in @theme (index.css).
+ */
+
+/* Comments */
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--color-code-comment);
+  font-style: italic;
+}
+
+/* Punctuation */
+.token.punctuation {
+  color: var(--color-code-base);
+}
+
+/* Keywords */
+.token.keyword,
+.token.atrule,
+.token.builtin,
+.token.rule {
+  color: var(--color-code-keyword);
+}
+
+/* Strings */
+.token.string,
+.token.char,
+.token.attr-value,
+.token.template-string {
+  color: var(--color-code-string);
+}
+
+/* Numbers, booleans, symbols */
+.token.number,
+.token.boolean,
+.token.symbol,
+.token.unit,
+.token.hexcode {
+  color: var(--color-code-number);
+}
+
+/* Regex and escape sequences */
+.token.regex,
+.token.escape {
+  color: var(--color-code-number);
+}
+
+/* Operators */
+.token.operator,
+.token.entity,
+.token.url {
+  color: var(--color-code-base);
+}
+
+/* Identifiers: properties, tags, selectors, attr names, variables, constants */
+.token.property,
+.token.tag,
+.token.selector,
+.token.attr-name,
+.token.variable,
+.token.constant,
+.token.inserted {
+  color: var(--color-code-identifier);
+}
+
+/* Functions and class names */
+.token.function,
+.token.class-name {
+  color: var(--color-code-identifier);
+}
+
+/* Namespaces */
+.token.namespace {
+  color: var(--color-code-keyword);
+}
+
+/* Non-color styles */
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
