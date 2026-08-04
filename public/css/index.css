@@ -4,6 +4,8 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "./fontawesome.css";
 
+@custom-variant prose-inline-code (& :where(:not(pre)>code):not(:where([class~="not-prose"] *)));
+
 @font-face {
   font-weight: 100;
   font-style: normal;
@@ -216,7 +218,6 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-
   strong, b {
     font-weight: 700;
   }
@@ -230,13 +231,224 @@
 }
 
 @layer components {
-  pre {
-    font-family: var(--default-mono-font-family);
-  }
-
   .center-image {
     display: flex;
     justify-content: center;
+  }
+}
+
+/* ── Site footer ── */
+.footer {
+  color: #fff;
+  background: var(--color-okta-dark-blue);
+  padding: 94px 64px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  transition: none;
+}
+.footer a:hover {
+  color: #fff;
+}
+.footer ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.footer p {
+  padding: 0;
+}
+.footer .column-header {
+  margin: 0 0 35px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3em;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+}
+.footer .footer-links li {
+  margin-top: 20px;
+}
+.footer .footer-link {
+  display: flex;
+  align-items: center;
+  font-size: inherit;
+  line-height: 1.3em;
+  color: #d7d7dc;
+}
+.footer .footer-link:hover {
+  color: #d7d7dc;
+  text-decoration: underline;
+}
+.footer .footer-link svg {
+  width: 18px;
+  height: 18px;
+  margin-right: 16px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.footer .columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.footer .columns .column {
+  flex: 0 0 170px;
+}
+.footer .columns .column.need-support {
+  flex: 0 0 245px;
+}
+.footer .columns .column.need-support .column-header {
+  margin-bottom: 17px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: none;
+}
+.footer .columns .column.need-support p {
+  line-height: 1.8em;
+  color: #fff;
+}
+.footer .columns .column.need-support p a {
+  color: #fff;
+  text-decoration: underline;
+}
+.footer .columns .column.social-links {
+  flex: 0 0 120px;
+}
+.footer .columns .column.contact-links {
+  flex: 0 0 170px;
+}
+.footer .columns .column.external-links {
+  flex: 0 0 300px;
+}
+.footer .columns .column.external-links .external-url {
+  display: flex;
+  flex-direction: column;
+}
+.footer .columns .column.external-links .external-url + .external-url {
+  margin-top: 37px;
+}
+.footer .columns .column.external-links .external-url a {
+  font-weight: 500;
+  line-height: 1.3em;
+  letter-spacing: 1px;
+}
+.footer .columns .column.external-links .external-url a::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 12px;
+  border-top: 1.5px solid #fff;
+  border-right: 1.5px solid #fff;
+  transform: rotate(45deg);
+  opacity: 0.5;
+  vertical-align: middle;
+}
+.footer .columns .column.external-links .external-url a:hover {
+  text-decoration: underline;
+}
+.footer .columns .column.external-links .external-url p {
+  margin-top: 6px;
+  font-size: 16px;
+  line-height: 1.7em;
+  letter-spacing: 0.01em;
+  color: #d7d7dc;
+}
+
+.footer .columns .column.copyright {
+  flex: 0 0 100%;
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+  font-size: 1em;
+  font-weight: 500;
+  color: #fff;
+}
+
+@media (max-width: 1399px) {
+  .footer {
+    padding: 60px 0;
+  }
+  .footer .column-header {
+    margin-bottom: 20px;
+  }
+  .footer .footer-links li {
+    margin-top: 8px;
+  }
+  .footer .columns {
+    width: 83%;
+    margin: 0 auto;
+  }
+  .footer .columns .column.need-support .column-header {
+    margin-bottom: 16px;
+  }
+  .footer .columns .column.need-support p {
+    line-height: 1.6rem;
+  }
+  .footer .columns .column.need-support {
+    flex: 1 0 100%;
+    order: 1;
+    margin-bottom: 40px;
+  }
+  .footer .columns .column.external-links {
+    flex: 1 0 100%;
+    order: 2;
+    margin-bottom: 40px;
+  }
+  .footer .columns .column.contact-links {
+    flex: 1 0 50%;
+    margin-bottom: 29px;
+    order: 3;
+  }
+  .footer .columns .column.info-links {
+    flex: 1 0 50%;
+    margin-bottom: 29px;
+    padding-left: 18px;
+    order: 4;
+  }
+  .footer .columns .column.social-links {
+    flex: 1 0 100%;
+    order: 5;
+  }
+  .footer .columns .column.copyright {
+    order: 6;
+  }
+  .footer .columns .column.external-links .external-url + .external-url {
+    margin-top: 25px;
+  }
+
+  .footer .columns .column.social-links .column-header {
+    display: none;
+  }
+  .footer .columns .column.social-links ul.footer-links {
+    display: flex;
+    justify-content: space-between;
+    max-width: 256px;
+    margin: 0 auto;
+  }
+  .footer .columns .column.social-links ul.footer-links li {
+    margin-top: 0;
+  }
+  .footer .columns .column.social-links .footer-link .link-text {
+    display: none;
+  }
+  .footer .columns .column.social-links .footer-link svg {
+    margin-right: 0;
+  }
+}
+@media (max-width: 767px) {
+  .footer .columns .column.contact-links,
+  .footer .columns .column.info-links {
+    flex: 1 0 100%;
+    padding-left: 0;
   }
 }
 
@@ -260,6 +472,18 @@ a.direct-link {
   @apply prose max-w-none;
   @apply prose-headings:font-normal prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-2xl prose-h6:text-xl;
   @apply prose-headings:mt-0 prose-headings:mb-1.5 prose-p:mt-2.5;
+  @apply prose-blockquote:p-1.5 prose-blockquote:m-3 prose-blockquote:font-normal prose-blockquote:not-italic;
+
+  /* Code blocks */
+  /* Base styles for code blocks and inline code */
+  @apply prose-code:text-base prose-code:font-normal prose-code:font-code prose-code:text-code-base;
+  @apply prose-inline-code:bg-code-bg;
+
+  /* Overrides for pre > code blocks */
+  @apply prose-pre:rounded-sm;
+
+  /* Overrides for inline code */
+  @apply prose-inline-code:p-0.5 prose-inline-code:before:content-none prose-inline-code:after:content-none;
 
   --tw-prose-body: var(--color-okta-carbon);
   --tw-prose-headings: color-mix(in oklch, var(--color-okta-carbon) 75%, white);
@@ -273,35 +497,25 @@ a.direct-link {
   --tw-prose-quote-borders: var(--color-okta-sky);
   --tw-prose-captions: var(--color-okta-slate);
   --tw-prose-code: var(--color-okta-carbon);
-  --tw-prose-pre-code: inherit;
-  --tw-prose-pre-bg: var(--color-okta-cream);
+
+  --tw-prose-pre-bg: var(--color-code-bg);
   --tw-prose-th-borders: var(--color-okta-gravel);
   --tw-prose-td-borders: var(--color-okta-sand);
 
   & blockquote {
-    @apply p-1.5 m-3;
-    font-style: normal; /* apply rule for not-italic didn't work, so falling back to CSS */
-    font-weight: normal;
     background-color: color-mix(in oklch, var(--color-okta-sky) 10%, white);
-    quotes: none;
-  }
-
-  & blockquote p:first-of-type::before,
-  & blockquote p:last-of-type::after {
-    @apply content-none;
-  }
-
-  & :not(pre) > code {
-    background-color: var(--color-okta-cream);
-  }
-
-  & :not(pre) > code::before,
-  & :not(pre) > code::after {
-    content: none;
   }
 }
 
 @theme {
+  --font-code: Menlo, Monaco, Consolas, "Courier New", monospace;
+  --color-code-bg: #f0f0f0;
+  --color-code-base: #333333;
+  --color-code-comment: #aaaaaa;
+  --color-code-keyword: #4cbf9c;
+  --color-code-string: #e22866;
+  --color-code-number: #990f69;
+  --color-code-identifier: #006399;
   --color-okta-carbon: #191919;
   --color-okta-slate: #6b665f;
   --color-okta-gravel: #afaba1;
