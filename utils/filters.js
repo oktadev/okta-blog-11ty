@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { baseUrl } from "./base-url.js";
 
 export default function (eleventyConfig) {
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
@@ -43,7 +44,7 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("toAbsoluteUrl", (url) => {
-    return new URL(url, "https://developer.okta.com").href;
+    return new URL(url, baseUrl).href;
   });
 
   eleventyConfig.addFilter("postBySlug", function (posts, slug) {
