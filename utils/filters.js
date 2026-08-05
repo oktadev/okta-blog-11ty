@@ -47,6 +47,12 @@ export default function (eleventyConfig) {
     return new URL(url, baseUrl).href;
   });
 
+  // Wrap content in a CDATA section, splitting any literal `]]>` so a post's code
+  // sample can't close the section early (used for the feed's <content:encoded>).
+  eleventyConfig.addFilter("cdata", (content) => {
+    return `<![CDATA[${String(content || "").replace(/]]>/g, "]]]]><![CDATA[>")}]]>`;
+  });
+
   eleventyConfig.addFilter("postBySlug", function (posts, slug) {
     const filtered = posts.find((post) => post.fileSlug === slug);
 
