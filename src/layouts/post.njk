@@ -3,8 +3,18 @@ layout: base
 ---
 {% css %}{% include "public/css/prism-okta.css" %}{% endcss %}
 
-<article class="flex flex-col max-w-[1000] m-auto gap-3">
-    <h1 class="text-4xl text-okta-cobalt">{{ title }}</h1>
+<article class="flex flex-col max-w-[1000] m-auto">
+    {% set postTags = tags | visibleTags %}
+    {% if postTags | length %}
+      <ul class="tags flex flex-wrap list-none p-0 m-0 gap-x-2.5 gap-y-2 mt-4 mb-2">
+        {%- for tag in postTags | sort -%}
+          <li class="flex items-center h-6 px-1.5 rounded bg-[#f2f5ff] whitespace-nowrap">
+            <a href="/blog/tags/{{ tag | slugify }}/" class="text-okta-blue no-underline">{{ tag }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {% endif %}
+    <h1>{{ title }}</h1>
     {% if image %}
       {% img {src: image, alt: "", header: true} %}
     {% endif %}

@@ -113,16 +113,14 @@ const avatar = async function (filename, size = "small", alt = "") {
       break;
   }
 
-  // Use the img shortcode with avatar-specific parameters
   const result = await img({
     src: filename,
     alt,
     avatar: true,
-    widths: [avatarSize, avatarSize * 2], // Standard and retina
+    widths: [avatarSize, avatarSize * 2],
     sizes: `${avatarSize}px`,
   });
 
-  // Add rounded-full class for avatar styling
   return result.replace(
     "<img",
     `<img class="${widthClass} list-none rounded-full"`,
