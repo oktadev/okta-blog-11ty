@@ -43,6 +43,33 @@ export default function (eleventyConfig) {
     return filteredTags.sort();
   });
 
+  // A post's reader-facing tags: strips the internal collection tags
+  // ("posts"/"all") so templates can gate on real tags and never render an
+  // empty tag list. Returns [] for posts that have no tags of their own.
+  eleventyConfig.addFilter("visibleTags", function (tags) {
+    return (tags || []).filter((tag) => tag !== "posts" && tag !== "all");
+  });
+
+  // Group tags alphabetically by first letter for the tags index page.
+  // Returns [{ letter, tags: [...] }] sorted A–Z, with non-letter tags (e.g.
+  // ".net", numbers) grouped under "#" and placed last.
+  eleventyConfig.addFilter("tagsByLetter", function (collections) {
+    const tags = Object.keys(collections)
+      .filter((key) => key !== "all" && key !== "posts")
+      .sort((a, b) => a.localeCompare(b));
+
+    const groups = {};
+    for (const tag of tags) {
+      const first = tag.charAt(0).toUpperCase();
+      const letter = /[A-Z]/.test(first) ? first : "#";
+      (groups[letter] ||= []).push(tag);
+    }
+
+    return Object.keys(groups)
+      .sort((a, b) => (a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b)))
+      .map((letter) => ({ letter, tags: groups[letter] }));
+  });
+
   eleventyConfig.addFilter("toAbsoluteUrl", (url) => {
     return new URL(url, baseUrl).href;
   });
