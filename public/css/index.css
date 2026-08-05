@@ -239,19 +239,19 @@
 
 /* ── Site footer ── */
 .footer {
-  color: #fff;
+  color: var(--color-okta-white);
   background: var(--color-okta-dark-blue);
   padding: 94px 64px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .footer a {
-  color: #fff;
+  color: var(--color-okta-white);
   text-decoration: none;
   transition: none;
 }
 .footer a:hover {
-  color: #fff;
+  color: var(--color-okta-white);
 }
 .footer ul {
   margin: 0;
@@ -268,7 +268,7 @@
   line-height: 1.3em;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--color-okta-white);
 }
 .footer .footer-links li {
   margin-top: 20px;
@@ -288,7 +288,7 @@
   width: 18px;
   height: 18px;
   margin-right: 16px;
-  color: #fff;
+  color: var(--color-okta-white);
   flex-shrink: 0;
 }
 
@@ -312,10 +312,10 @@
 }
 .footer .columns .column.need-support p {
   line-height: 1.8em;
-  color: #fff;
+  color: var(--color-okta-white);
 }
 .footer .columns .column.need-support p a {
-  color: #fff;
+  color: var(--color-okta-white);
   text-decoration: underline;
 }
 .footer .columns .column.social-links {
@@ -345,8 +345,8 @@
   width: 6px;
   height: 6px;
   margin-left: 12px;
-  border-top: 1.5px solid #fff;
-  border-right: 1.5px solid #fff;
+  border-top: 1.5px solid var(--color-okta-white);
+  border-right: 1.5px solid var(--color-okta-white);
   transform: rotate(45deg);
   opacity: 0.5;
   vertical-align: middle;
@@ -370,7 +370,7 @@
   text-align: center;
   font-size: 1em;
   font-weight: 500;
-  color: #fff;
+  color: var(--color-okta-white);
 }
 
 @media (max-width: 1399px) {
