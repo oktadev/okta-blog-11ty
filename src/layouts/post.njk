@@ -29,7 +29,7 @@ layout: base
       <span aria-hidden="true" class="text-okta-gravel">|</span>
       {{ readingTime | readingTimeBadge | safe }}
       <span aria-hidden="true" class="text-okta-gravel">|</span>
-      <span class="flex items-center gap-2 [&_svg]:w-4 [&_svg]:h-4">
+      <span class="flex items-center gap-2 [&_svg]:w-[18px] [&_svg]:h-[18px]">
         <a href="https://twitter.com/intent/tweet?url={{ (page.url | toAbsoluteUrl) | urlencode }}&amp;text={{ title | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">{% include "icons/twitter.svg" %}</a>
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (page.url | toAbsoluteUrl) | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">{% include "icons/linkedin.svg" %}</a>
       </span>
