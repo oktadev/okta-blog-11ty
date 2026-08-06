@@ -9,6 +9,6 @@
   <meta property="og:description" content="{{ description }}" />
 {% endif %}
 {% if image %}
-  <meta property="og:image" content="{{ image | toAbsoluteUrl }}" />
+  <meta property="og:image" content="{{ image | socialImage | toAbsoluteUrl }}" />
 {% endif %}
 <meta property="og:site_name" content="{{ site.title }}" />
