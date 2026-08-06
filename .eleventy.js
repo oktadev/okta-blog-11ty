@@ -1,7 +1,4 @@
-import markdownIt from "markdown-it";
-import markdownItAttrs from "markdown-it-attrs";
-import markdownItAnchor from "markdown-it-anchor";
-import markdownItToc from "markdown-it-table-of-contents";
+import { markdownLibrary } from "./utils/markdown.js";
 import * as yaml from "js-yaml";
 import { execSync } from "child_process";
 
@@ -78,32 +75,7 @@ export default function (eleventyConfig) {
     );
   });
 
-  // Customize Markdown library and settings:
-  const slugify = (s) =>
-    s
-      .trim()
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-");
-
-  let markdownLibrary = markdownIt({
-    html: true,
-    breaks: true,
-    linkify: true,
-  })
-    .use(markdownItAnchor, {
-      permalink: markdownItAnchor.permalink.headerLink({
-        safariReaderFix: true,
-        class: "direct-link",
-      }),
-      slugify,
-    })
-    .use(markdownItAttrs)
-    .use(markdownItToc, {
-      includeLevel: [2, 3],
-      listType: "ul",
-      slugify,
-    });
+  // Use the shared Markdown library (see utils/markdown.js).
   eleventyConfig.setLibrary("md", markdownLibrary);
 
   // // Layouts

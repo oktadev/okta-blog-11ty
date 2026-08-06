@@ -1,14 +1,13 @@
 import { minify } from "html-minifier-terser";
-import markdownIt from "markdown-it";
+import { markdownLibrary as md } from "./markdown.js";
 
 const isDev = process.env.ELEVENTY_ENV === "development";
 
 // Kramdown's `markdown="span"|"1"|"div"` attribute (carried over from the Jekyll
 // source, mostly on table cells) told the parser to render markdown inside that
 // element. markdown-it ignores it, so tables end up showing raw `**bold**` and
-// `` `code` ``. Render those elements' content here: "span" is inline, any other
-// value is block.
-const md = markdownIt({ html: true, breaks: true, linkify: true });
+// `` `code` ``. Render those elements' content with the site's Markdown library:
+// "span" is inline, any other value is block.
 const MARKDOWN_ATTR =
   /<(td|th|div)\b([^>]*?)\smarkdown="([^"]*)"([^>]*?)>([\s\S]*?)<\/\1>/gi;
 
@@ -24,6 +23,7 @@ function dedent(text) {
 }
 
 function renderMarkdownAttrs(content) {
+  if (!content.includes('markdown="')) return content;
   return content.replace(
     MARKDOWN_ATTR,
     (_match, tag, pre, mode, post, inner) => {
