@@ -2,9 +2,7 @@
 /_site
 
 # Downloaded brand assets not to be committed
-/public/fonts/**
-!/public/fonts/fontawesome-webfont.*
-
+/public/fonts/brand-assets/**
 
 # Node
 /node_modules
