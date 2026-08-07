@@ -10,8 +10,7 @@ tags: [javascript, okta, forwardjs, team]
 tweets:
 - "Welcome @drnugent to the @oktadev team"
 type: awareness
-redirect_to:
-- "/blog/"
+eleventyExcludeFromCollections: true
 ---
 
 I'm excited to announce that I have joined Okta's developer relations team as a full-time Senior Developer Advocate. I will focus on the JavaScript community, including Node.js, Vue, and React.

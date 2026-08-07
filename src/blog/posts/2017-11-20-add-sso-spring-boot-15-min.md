@@ -8,8 +8,6 @@ by: contractor
 communities: [java]
 description: "This tutorial will walk you through building a Spring Boot application and show you how to harden your APIs with a variety of OAuth flows."
 tags: [authentication, oauth, sso, spring, java]
-redirect_from:
-    - "/blog/2017/11/17/add-sso-spring-boot-15-min"
 type: conversion
 update-url: /blog/2019/10/30/java-oauth2
 update-title: "OAuth 2.0 Java Guide: Secure Your App in 5 Minutes"
