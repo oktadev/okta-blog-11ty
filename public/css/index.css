@@ -102,7 +102,7 @@ input[type="search"]::-webkit-search-cancel-button {
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
   }
-  
+
   a {
     color: var(--color-okta-sky);
     transition: 0.4s color;
@@ -441,6 +441,6 @@ a.direct-link {
   --color-content-text: color-mix(in oklch, var(--color-okta-carbon) 70%, white);
   --color-content-text-strong: color-mix(in oklch, var(--color-okta-carbon) 80%, white);
   --font-okta: "Aeonik", "Helvetica Neue", sans-serif;
-  --font-heading: "SeasonMix", cursive;
+  --font-heading: "SeasonMix", serif;
   --spacing: 8px;
 }
