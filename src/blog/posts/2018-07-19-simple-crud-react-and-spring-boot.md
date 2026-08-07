@@ -15,8 +15,6 @@ image: featured/okta-react-bottle-headphones.jpg
 type: conversion
 update-url: /blog/2020/01/13/kotlin-react-crud
 update-title: "Build a CRUD Application with Kotlin and React"
-redirect_to:
-  - "/blog/2022/06/17/simple-crud-react-and-spring-boot"
 changelog:
   - 2020-03-24: Streamlined OIDC setup with the Okta CLI. You can see the example app changes in [okta-spring-boot-react-crud-example#28](https://github.com/oktadeveloper/okta-spring-boot-react-crud-example/pull/28); changes to this post can be viewed in [okta-blog#623](https://github.com/oktadeveloper/okta-blog/pull/623).
   - 2020-11-14: Fixed `app/src/GroupEdit.js` PUT request in [Add a React GroupEdit Component](/blog/2018/07/19/simple-crud-react-and-spring-boot#add-a-react-groupedit-component) section. Thanks to [@alansegar](https://github.com/alansegar)! Changes to this post can be viewed in [okta-blog#471](https://github.com/oktadeveloper/okta-blog/pull/471).
@@ -26,6 +24,7 @@ changelog:
   - 2019-01-07: Fixed `yarn test` to add `CI=true` environment variable. Thanks to [Cameron Moreau for the fix](https://github.com/oktadeveloper/okta-spring-boot-react-crud-example/pull/10).
   - 2018-10-31: Updated to use Create React App 2.1.0, Spring Boot 2.1.0, and Spring Security 5.1.1. You can see the example app changes in [okta-spring-boot-react-crud-example#8](https://github.com/oktadeveloper/okta-spring-boot-react-crud-example/pull/8); changes to this post can be viewed in [okta.github.io#2450](https://github.com/oktadeveloper/okta.github.io/pull/2450).
   - 2018-07-31: Updated to use Spring Boot 2.1.0 M1 and Spring Security 5.1.0 M2. You can see the example app changes in [okta-spring-boot-react-crud-example#6](https://github.com/oktadeveloper/okta-spring-boot-react-crud-example/pull/6); changes to this post can be viewed in [okta.github.io#2222](https://github.com/oktadeveloper/okta.github.io/pull/2222).
+eleventyExcludeFromCollections: true
 ---
 
 React was designed to make it painless to create interactive UIs. Its state management is efficient and only updates components when your data changes. Component logic is written in JavaScript, which means you can keep state out of the DOM and create components that are encapsulated.

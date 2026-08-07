@@ -9,6 +9,161 @@
       "source": "/blog",
       "destination": "/blog/",
       "permanent": true
+    },
+    {
+      "source": "/blog/2015-04-14-android-unit-testing-part-2",
+      "destination": "/blog/2015/04/07/android-unit-testing-part-2/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2015-04-07-android-unit-testing-part-3",
+      "destination": "/blog/2015/04/14/android-unit-testing-part-3/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2015-04-23-android-unit-testing-part-3",
+      "destination": "/blog/2015/04/14/android-unit-testing-part-3/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2015-04-14-android-unit-testing-part-4",
+      "destination": "/blog/2015/04/23/android-unit-testing-part-4/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2015/10/29/tls-client-authentication-for-services/",
+      "destination": "/blog/2015/12/02/tls-client-authentication-for-services/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/03/16/spring-boot-saml/",
+      "destination": "/blog/2020/10/14/spring-security-saml-database-authentication/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/08/28/developers-guide-to-docker-part-1",
+      "destination": "/blog/2017/05/10/developers-guide-to-docker-part-1/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/08/01/oidc-primer-part-1",
+      "destination": "/blog/2017/07/25/oidc-primer-part-1/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017-08-01-oidc-primer-part-2",
+      "destination": "/blog/2017/07/25/oidc-primer-part-2/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017-07-25-oidc-primer-part-3",
+      "destination": "/blog/2017/08/01/oidc-primer-part-3/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/07/25/oidc-primer-part-3",
+      "destination": "/blog/2017/08/01/oidc-primer-part-3/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/05/10/developers-guide-to-docker-part-2",
+      "destination": "/blog/2017/08/28/developers-guide-to-docker-part-2/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/10/11/developers-guide-to-docker-part-2",
+      "destination": "/blog/2017/08/28/developers-guide-to-docker-part-2/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/10/10/nosql-options-for-java-developers-part-i",
+      "destination": "/blog/2017/09/08/nosql-options-for-java-developers/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/09/08/nosql-options-for-java-developers-part-ii",
+      "destination": "/blog/2017/10/10/nosql-options-for-java-developers-part-ii/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/10/11/nosql-options-for-java-developers-part-ii",
+      "destination": "/blog/2017/10/10/nosql-options-for-java-developers-part-ii/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/10/10/developers-guide-to-docker-part-3",
+      "destination": "/blog/2017/10/11/developers-guide-to-docker-part-3/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/08/28/developers-guide-to-docker-part-3",
+      "destination": "/blog/2017/10/11/developers-guide-to-docker-part-3/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2018/02/07/developers-guide-to-docker-part-3",
+      "destination": "/blog/2017/10/11/developers-guide-to-docker-part-3/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2017/11/17/add-sso-spring-boot-15-min",
+      "destination": "/blog/2017/11/20/add-sso-spring-boot-15-min/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2018/02/07/use-okta-api-for-mfa",
+      "destination": "/blog/2018/02/08/set-up-and-enforce-multi-factor-auth-with-okta/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2018/03/16/build-react-native-authentication-oauth-2.0",
+      "destination": "/blog/2018/03/16/build-react-native-authentication-oauth-2/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2018/03/27/token-authentication-aspnetcore-complete-guide",
+      "destination": "/blog/2018/03/23/token-authentication-aspnetcore-complete-guide/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2018/04/20/hello-okta-dave/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2018/07/19/simple-crud-react-and-spring-boot/",
+      "destination": "/blog/2022/06/17/simple-crud-react-and-spring-boot/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2018/11/20/build-crud-spring-and-vue/",
+      "destination": "/blog/2022/08/19/build-crud-spring-and-vue/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2019/05/28/jvm-performance",
+      "destination": "/blog/2019/05/28/debugging-jvm-performance-problems-java/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2019/11/07/java-jetty-oauth/",
+      "destination": "/blog/2023/04/26/java-jetty-oauth/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2020/01/22/kafka-microservices/",
+      "destination": "/blog/2022/09/15/kafka-microservices/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2020/05/04/spring-vault/",
+      "destination": "/blog/2022/10/20/spring-vault/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2021/09/18/apache-apisix-gateway",
+      "destination": "/blog/2021/08/18/apache-apisix-gateway/",
+      "permanent": true
     }
   ],
   "installCommand": "npm ci",

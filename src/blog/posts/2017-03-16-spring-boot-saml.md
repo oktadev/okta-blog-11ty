@@ -12,8 +12,6 @@ tweets:
   - "Spring Boot + SAML + Okta = 💙! Learn more → "
 tags: [spring-boot, saml, okta]
 type: conversion
-redirect_to:
-  - "/blog/2022/08/09/spring-boot-saml"
 update-url: /blog/2020/10/14/spring-security-saml-database-authentication
 update-title: "Spring Security SAML and Database Authentication"
 changelog:
@@ -21,6 +19,7 @@ changelog:
   - 2018-02-14: Updated to use Spring Boot 1.5.10 and `classpath:saml/keystore.jks` for the keystore path. See the code changes in [oktadeveloper/okta-spring-boot-saml-example#6](https://github.com/oktadeveloper/okta-spring-boot-saml-example/pull/6). Changes to this article can be viewed in [oktadeveloper/okta.github.io#1760](https://github.com/oktadeveloper/okta.github.io/pull/1760).
   - 2017-10-10: Updated instructions for the [Okta Developer Console](/blog/2017/09/25/all-new-developer-console).
   - 2017-04-20: Thanks to [Alexey Soshin](https://github.com/AlexeySoshin) for contributing a [pull request](https://github.com/oktadeveloper/okta-spring-boot-saml-example/pull/2) to make the code in this blog post more bootiful!
+eleventyExcludeFromCollections: true
 ---
 
 Today I'd like to show you how build a Spring Boot application that leverages Okta's Platform API for authentication via SAML. SAML (Security Assertion Markup Language) is an XML-based standard for securely exchanging authentication and authorization information between entities—specifically between identity providers, service providers, and users. Well-known IdPs include Salesforce, Okta, OneLogin, and Shibboleth.

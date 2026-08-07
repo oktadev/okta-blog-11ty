@@ -7,8 +7,6 @@ by: internal-contributor
 communities: [security]
 description: "Learn how we configured Transport Layer Security (TLS) client authentication between two internal services here at Okta."
 title: TLS Client Authentication for Internal Services
-redirect_from:
-  - /blog/2015/10/29/tls-client-authentication-for-services/
 tags: [networking, security, architecture]
 type: awareness
 ---

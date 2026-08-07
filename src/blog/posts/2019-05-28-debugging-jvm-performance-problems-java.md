@@ -12,8 +12,6 @@ tweets:
 - "Using NGINX and Tomcat? If you've experienced performance issues with this combination, our experience @okta might help."
 - "NGINX and Tomcat giving you performance issues? See how we fixed our problems in this writeup."
 image: featured/okta-java-headphones.jpg
-redirect_from:
-    - "/blog/2019/05/28/jvm-performance"
 type: awareness
 ---
 
