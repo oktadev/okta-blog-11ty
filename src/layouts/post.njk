@@ -3,15 +3,71 @@ layout: base
 ---
 {% css %}{% include "public/css/prism-okta.css" %}{% endcss %}
 
-<article class="flex flex-col max-w-[1000] m-auto gap-3">
-    <h1 class="text-4xl text-okta-cobalt">{{ title }}</h1>
+{% set changelogList = changelog | changelogEntries %}
+<article class="flex flex-col max-w-[1000] m-auto space-y-6">
+    {% set postTags = tags | visibleTags %}
+    {% if postTags | length %}
+      <ul class="tags flex flex-wrap list-none p-0 m-0 gap-x-2.5 gap-y-2 mt-4 mb-2">
+        {%- for tag in postTags | sort -%}
+          <li class="flex items-center h-6 px-1.5 rounded bg-[okta-cloud] whitespace-nowrap">
+            <a href="/blog/tags/{{ tag | slugify }}/" class="text-okta-blue no-underline">{{ tag }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {% endif %}
+    <h1 class="text-5xl/[1.25] text-okta-dark-blue font-light font-heading">{{ title }}</h1>
+    {% if changelogList | length %}
+      <div class="last-updated text-okta-slate mt-1 mb-3">
+        Last Updated:&nbsp;<a href="#changelog">{{ changelogList[0].date | readableDate("LLLL d, yyyy") }}</a>
+      </div>
+    {% endif %}
     {% if image %}
       {% img {src: image, alt: "", header: true} %}
     {% endif %}
     <div class="blog-prose">
-      {% if description %}
-        <p class="description">{{ description }}</p>
-      {% endif %}
       {{ content | safe }}
+
+      {% if changelogList | length %}
+        <p id="changelog"><strong>Changelog</strong>:</p>
+        <ul class="changelog list-disc pl-5">
+          {%- for entry in changelogList %}
+            <li>{{ entry.date | readableDate("LLL d, yyyy") }}: {{ entry.text | inlineMarkdown | safe }}</li>
+          {%- endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    {% set postAuthors = authors | authorFilter(author) %}
+    {% for author in postAuthors %}
+      {% if author.full_name %}
+        <div class="author-bio border-t border-okta-gravel pt-5 {{ 'mt-5' if loop.first }}">
+          <div class="flex items-center gap-2.5 flex-wrap">
+            {% if author.avatar %}
+              <a href="/blog/authors/{{ author.slug }}/" class="shrink-0 [&_img]:w-4 [&_img]:h-4">{% avatar author.avatar, "small", author.full_name %}</a>
+            {% endif %}
+            <span class="author-name"><a href="/blog/authors/{{ author.slug }}/" class="text-okta-blue text-base no-underline">{{ author.full_name }}</a></span>
+            <span class="[&>div]:mt-0 [&_a]:w-4 [&_a]:h-4">{% include "author-socials.njk" %}</span>
+          </div>
+          {% if author.bio %}
+            <p class="text-okta-slate text-base leading-[26px] mt-3">{{ author.bio }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% set prevPost = collections.posts | getPreviousCollectionItem %}
+    {% set nextPost = collections.posts | getNextCollectionItem %}
+    <nav class="prev-next flex justify-between border-b border-okta-gravel pb-4 text-base">
+      {% if prevPost %}
+        <a href="{{ prevPost.url }}" class="text-okta-blue no-underline" title="{{ prevPost.data.title }}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Previous post</a>
+      {% else %}<span></span>{% endif %}
+      {% if nextPost %}
+        <a href="{{ nextPost.url }}" class="text-okta-blue no-underline" title="{{ nextPost.data.title }}">Next post&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+      {% endif %}
+    </nav>
+
+    <div id="comment-policy" class="comment-policy bg-okta-cream text-okta-carbon rounded p-[15px]">
+      <p class="font-bold">Okta Developer Blog Comment Policy</p>
+      <p>We welcome relevant and respectful comments. Off-topic comments may be removed.</p>
     </div>
 </article>
