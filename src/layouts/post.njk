@@ -16,6 +16,25 @@ layout: base
       </ul>
     {% endif %}
     <h1 class="text-5xl/[1.25] text-okta-dark-blue font-light font-heading">{{ title }}</h1>
+    {% set postAuthors = authors | authorFilter(author) %}
+    <div class="post-byline flex flex-wrap items-center gap-x-2.5 gap-y-1 text-base text-okta-slate">
+      {% if postAuthors | length %}
+        <span class="authors">
+          {%- for a in postAuthors -%}
+            <a href="/blog/authors/{{ a.slug }}/" class="text-okta-blue no-underline">{{ a.display_name }}</a>{% if not loop.last %}, {% endif %}
+          {%- endfor -%}
+        </span>
+        <span aria-hidden="true" class="text-okta-gravel">|</span>
+      {% endif %}
+      <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
+      <span aria-hidden="true" class="text-okta-gravel">|</span>
+      {{ readingTime | readingTimeBadge | safe }}
+      <span aria-hidden="true" class="text-okta-gravel">|</span>
+      <span class="flex items-center gap-2 [&_svg]:w-[18px] [&_svg]:h-[18px]">
+        <a href="https://twitter.com/intent/tweet?url={{ (page.url | toAbsoluteUrl) | urlencode }}&amp;text={{ title | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">{% include "icons/twitter.svg" %}</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (page.url | toAbsoluteUrl) | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">{% include "icons/linkedin.svg" %}</a>
+      </span>
+    </div>
     {% if changelogList | length %}
       <div class="last-updated text-okta-slate mt-1 mb-3">
         Last Updated:&nbsp;<a href="#changelog">{{ changelogList[0].date | readableDate("LLLL d, yyyy") }}</a>

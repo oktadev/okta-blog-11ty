@@ -47,9 +47,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("authorFilter", function (authorsList, authors) {
     const authorsArray = Array.isArray(authors) ? authors : [authors];
 
-    return authorsArray.map((authorKey) => {
-      return { ...authorsList[authorKey], slug: authorKey };
-    });
+    // Skip missing/unknown author keys so callers never get an empty entry
+    // (which would render a broken author link).
+    return authorsArray
+      .filter((authorKey) => authorKey && authorsList[authorKey])
+      .map((authorKey) => {
+        return { ...authorsList[authorKey], slug: authorKey };
+      });
   });
 
   eleventyConfig.addFilter("allTagsFilter", function (collections) {
