@@ -9,8 +9,6 @@ communities: [java, mobile]
 description: "This is the last post of a four part series on Android Unit Testing. In these posts, you'll learn the key steps to make Android tests run faster."
 tags: [android, testing]
 type: conversion
-redirect_from:
-  - "/blog/2015-04-14-android-unit-testing-part-4"
 ---
 *This is the third of a four part series on Android Unit Testing. In
 the last two articles I discussed the [general principles of having

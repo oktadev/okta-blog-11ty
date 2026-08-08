@@ -3,6 +3,9 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { baseUrl } from "./base-url.js";
+import markdownIt from "markdown-it";
+
+const inlineMd = markdownIt({ html: true, linkify: true });
 
 export default function (eleventyConfig) {
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
@@ -17,6 +20,21 @@ export default function (eleventyConfig) {
     );
   });
 
+  // Entries are single-key { <date>: <text> } objects; sort newest-first.
+  eleventyConfig.addFilter("changelogEntries", function (changelog) {
+    if (!Array.isArray(changelog)) return [];
+    return changelog
+      .map((entry) => {
+        const key = Object.keys(entry)[0];
+        return { date: new Date(key), text: entry[key] };
+      })
+      .sort((a, b) => b.date - a.date);
+  });
+
+  eleventyConfig.addFilter("inlineMarkdown", (str) =>
+    inlineMd.renderInline(str || ""),
+  );
+
   eleventyConfig.addFilter("postsAuthorFilter", function (posts, authorKey) {
     // Match posts whose `author` (a key or list of keys) includes this author.
     return posts.filter((post) => {
@@ -30,9 +48,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("authorFilter", function (authorsList, authors) {
     const authorsArray = Array.isArray(authors) ? authors : [authors];
 
-    return authorsArray.map((authorKey) => {
-      return { ...authorsList[authorKey], slug: authorKey };
-    });
+    // Skip missing/unknown author keys so callers never get an empty entry
+    // (which would render a broken author link).
+    return authorsArray
+      .filter((authorKey) => authorKey && authorsList[authorKey])
+      .map((authorKey) => {
+        return { ...authorsList[authorKey], slug: authorKey };
+      });
   });
 
   eleventyConfig.addFilter("allTagsFilter", function (collections) {
