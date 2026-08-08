@@ -14,10 +14,9 @@ tweets:
 - "Client/Server application tutorial with #SpringBoot and #VueJS"
 image: featured/okta-java-short-headphones.jpg
 type: conversion
-redirect_to:
-  - "/blog/2022/08/19/build-crud-spring-and-vue"
 update-url: /blog/2020/06/26/spring-boot-vue-kotlin
 update-title: "Build a CRUD App with Vue.js, Spring Boot, and Kotlin"
+eleventyExcludeFromCollections: true
 ---
 
 In this tutorial, you're going to build a complete CRUD web application using Vue.js for the client and Spring Boot as the resource server. You'll also secure the application using OAuth 2.0 and Okta. 

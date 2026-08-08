@@ -8,8 +8,6 @@ by: advocate
 description: "Not only can adding Docker to your development environment solve that issue, but it can make it drop-dead simple to onboard new developers."
 communities: [devops]
 tags: [docker, devops, developer]
-redirect_from:
-  - "/blog/2017/08/28/developers-guide-to-docker-part-1"
 type: awareness
 ---
 

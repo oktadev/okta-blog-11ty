@@ -4,27 +4,28 @@ layout: base
 {% css %}{% include "public/css/prism-okta.css" %}{% endcss %}
 
 {% set changelogList = changelog | changelogEntries %}
-<article class="flex flex-col max-w-[1000] m-auto gap-3">
+<article class="flex flex-col max-w-[1000] m-auto space-y-6">
     {% set postTags = tags | visibleTags %}
     {% if postTags | length %}
       <ul class="tags flex flex-wrap list-none p-0 m-0 gap-x-2.5 gap-y-2 mt-4 mb-2">
         {%- for tag in postTags | sort -%}
-          <li class="flex items-center h-6 px-1.5 rounded bg-[#f2f5ff] whitespace-nowrap">
+          <li class="flex items-center h-6 px-1.5 rounded bg-[okta-cloud] whitespace-nowrap">
             <a href="/blog/tags/{{ tag | slugify }}/" class="text-okta-blue no-underline">{{ tag }}</a>
           </li>
         {%- endfor -%}
       </ul>
     {% endif %}
-    <h1 class="text-4xl text-okta-cobalt">{{ title }}</h1>
+    <h1 class="text-5xl/[1.25] text-okta-dark-blue font-light font-heading">{{ title }}</h1>
     {% set postAuthors = authors | authorFilter(author) %}
     <div class="post-byline flex flex-wrap items-center gap-x-2.5 gap-y-1 text-base text-okta-slate">
-      <span class="flex flex-wrap items-center gap-x-1">
-        {%- for a in postAuthors %}
-          <a href="/blog/authors/{{ a.slug }}/" class="text-okta-blue no-underline">{{ a.display_name }}</a>
-          {%- if not loop.last %}<span>,</span>{% endif %}
-        {%- endfor %}
-      </span>
-      <span aria-hidden="true" class="text-okta-gravel">|</span>
+      {% if postAuthors | length %}
+        <span class="authors">
+          {%- for a in postAuthors -%}
+            <a href="/blog/authors/{{ a.slug }}/" class="text-okta-blue no-underline">{{ a.display_name }}</a>{% if not loop.last %}, {% endif %}
+          {%- endfor -%}
+        </span>
+        <span aria-hidden="true" class="text-okta-gravel">|</span>
+      {% endif %}
       <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
       <span aria-hidden="true" class="text-okta-gravel">|</span>
       {{ readingTime | readingTimeBadge | safe }}
@@ -43,9 +44,6 @@ layout: base
       {% img {src: image, alt: "", header: true} %}
     {% endif %}
     <div class="blog-prose">
-      {% if description %}
-        <p class="description">{{ description }}</p>
-      {% endif %}
       {{ content | safe }}
 
       {% if changelogList | length %}

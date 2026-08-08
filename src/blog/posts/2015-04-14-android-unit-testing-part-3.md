@@ -9,9 +9,6 @@ description: "This is the third of a four part series on Android Unit Testing. I
 communities: [java, mobile]
 tags: [android, testing]
 type: conversion
-redirect_from:
-  - "/blog/2015-04-07-android-unit-testing-part-3"
-  - "/blog/2015-04-23-android-unit-testing-part-3"
 ---
 *This is the third of a four part series on Android Unit Testing. In
 the last two articles I discussed the [general principles of having
