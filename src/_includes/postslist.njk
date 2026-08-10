@@ -23,8 +23,9 @@
             {{ post.data.readingTime | readingTimeBadge | safe }}
           </div>
         </div>
-        {% if post.data.description %}
-          <p class="text-content-text">{{ post.data.description }}</p>
+        {% set excerpt = post | postExcerpt %}
+        {% if excerpt %}
+          <p class="text-content-text">{{ excerpt }}</p>
         {% endif %}
         <a href="{{ post.url }}">Read more</a>
       </li>
