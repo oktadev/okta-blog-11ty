@@ -9,11 +9,15 @@ const inlineMd = markdownIt({ html: true, linkify: true });
 // Decode the HTML entities left in rendered content (e.g. `&#39;`, `&amp;`) so a
 // stripped-to-text excerpt reads naturally before it's re-escaped on output.
 function decodeEntities(str) {
+  // Handle the full Unicode range (astral code points like emoji), leaving an
+  // out-of-range entity as-is rather than throwing.
+  const fromCodePoint = (match, codePoint) =>
+    codePoint >= 0 && codePoint <= 0x10ffff
+      ? String.fromCodePoint(codePoint)
+      : match;
   return str
-    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, n) =>
-      String.fromCharCode(parseInt(n, 16)),
-    )
+    .replace(/&#(\d+);/g, (m, n) => fromCodePoint(m, Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (m, n) => fromCodePoint(m, parseInt(n, 16)))
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
