@@ -5,7 +5,7 @@
       <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
         <div class="grid gap-1">
           <a href="{{ post.url }}">
-            <h2 class="text-4xl text-okta-cobalt mt-0 mb-1.5">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</h2>
+            <h2 class="text-4xl font-light text-okta-dark-blue mt-0 mb-2">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</h2>
           </a>
           <div class="flex gap-1 items-center">
             {%- for author in authorsList %}
@@ -24,7 +24,7 @@
           </div>
         </div>
         {% if post.data.description %}
-          <p>{{ post.data.description }}</p>
+          <p class="text-content-text">{{ post.data.description }}</p>
         {% endif %}
         <a href="{{ post.url }}">Read more</a>
       </li>

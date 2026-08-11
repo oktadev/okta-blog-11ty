@@ -8,10 +8,6 @@ by: advocate
 communities: [devops]
 description: "In this tutorial, you'll take an application from our previous tutorial on Docker and learn how to use Docker Compose with it."
 tags: [docker, devops, developer]
-redirect_from:
-    - "/blog/2017/10/10/developers-guide-to-docker-part-3"
-    - "/blog/2017/08/28/developers-guide-to-docker-part-3"
-    - "/blog/2018/02/07/developers-guide-to-docker-part-3"
 type: awareness
 ---
 
