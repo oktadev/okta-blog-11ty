@@ -36,8 +36,9 @@ permalink: blog/tags/{{ tag | slugify }}/
               {{ post.data.readingTime | readingTimeBadge | safe }}
             </div>
           </div>
-          {% if post.data.description %}
-            <p>{{ post.data.description }}</p>
+          {% set excerpt = post | postExcerpt %}
+          {% if excerpt %}
+            <p>{{ excerpt }}</p>
           {% endif %}
           <a href="{{ post.url }}">Read more</a>
         </li>
