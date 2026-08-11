@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { baseUrl } from "./base-url.js";
 import markdownIt from "markdown-it";
 import Image from "@11ty/eleventy-img";
 
@@ -93,7 +94,13 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("toAbsoluteUrl", (url) => {
-    return new URL(url, "https://developer.okta.com").href;
+    return new URL(url, baseUrl).href;
+  });
+
+  // Wrap content in a CDATA section, splitting any literal `]]>` so a post's code
+  // sample can't close the section early (used for the feed's <content:encoded>).
+  eleventyConfig.addFilter("cdata", (content) => {
+    return `<![CDATA[${String(content || "").replace(/]]>/g, "]]]]><![CDATA[>")}]]>`;
   });
 
   // Process the front-matter social `image` through eleventy-img (so it's actually
