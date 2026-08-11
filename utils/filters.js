@@ -8,6 +8,26 @@ import Image from "@11ty/eleventy-img";
 
 const inlineMd = markdownIt({ html: true, linkify: true });
 
+// Decode the HTML entities left in rendered content (e.g. `&#39;`, `&amp;`) so a
+// stripped-to-text excerpt reads naturally before it's re-escaped on output.
+function decodeEntities(str) {
+  // Handle the full Unicode range (astral code points like emoji), leaving an
+  // out-of-range entity as-is rather than throwing.
+  const fromCodePoint = (match, codePoint) =>
+    codePoint >= 0 && codePoint <= 0x10ffff
+      ? String.fromCodePoint(codePoint)
+      : match;
+  return str
+    .replace(/&#(\d+);/g, (m, n) => fromCodePoint(m, Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (m, n) => fromCodePoint(m, parseInt(n, 16)))
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&");
+}
+
 export default function (eleventyConfig) {
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
     // dateObj input: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
@@ -35,6 +55,25 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("inlineMarkdown", (str) =>
     inlineMd.renderInline(str || ""),
   );
+
+  // A listing excerpt drawn from the post's first content paragraph (not the SEO
+  // `description`), capped to a word count. Skips headings/images/callouts by
+  // matching the first <p>, and falls back to `description` if there's none.
+  eleventyConfig.addFilter("postExcerpt", function (post, wordLimit = 50) {
+    const paragraph = (post.templateContent || "").match(
+      /<p\b[^>]*>([\s\S]*?)<\/p>/i,
+    );
+    const text = decodeEntities(
+      (paragraph ? paragraph[1] : "").replace(/<[^>]+>/g, " "),
+    )
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!text) return post.data.description || "";
+    const words = text.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "…"
+      : text;
+  });
 
   eleventyConfig.addFilter("postsAuthorFilter", function (posts, authorKey) {
     // Match posts whose `author` (a key or list of keys) includes this author.
