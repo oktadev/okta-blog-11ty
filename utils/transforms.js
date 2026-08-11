@@ -36,6 +36,15 @@ function renderMarkdownAttrs(content) {
 }
 
 export default function (eleventyConfig) {
+  // The macro preprocessor prepends a newline; HTML minification hides it, but the
+  // unminified feed needs its <?xml> declaration on the first line to parse.
+  eleventyConfig.addTransform("xmlLeadingTrim", function (content) {
+    if ((this.page.outputPath || "").endsWith(".xml")) {
+      return content.replace(/^\s+/, "");
+    }
+    return content;
+  });
+
   eleventyConfig.addTransform("markdownInHtml", function (content) {
     if (!(this.page.outputPath || "").endsWith(".html")) return content;
     return renderMarkdownAttrs(content);
