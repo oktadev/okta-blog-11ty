@@ -65,6 +65,10 @@ const img = async function ({
   const outputDir = subdir ? `_site/${dir}/${subdir}` : `_site/${dir}`;
   const urlPath = subdir ? `/${dir}/${subdir}` : `/${dir}`;
 
+  // Keep vector sources as SVG; rasterizing a diagram to WebP blurs its lines
+  // and text. Only raster sources go through WebP conversion.
+  const isSvg = /\.svg$/i.test(src);
+
   const imgAttributes = {
     alt,
     sizes,
@@ -73,6 +77,24 @@ const img = async function ({
   };
 
   try {
+    if (isSvg) {
+      // A vector doesn't rasterize, so copy the SVG through and size the <img>
+      // to the requested display width (this matches the pre-migration sizing);
+      // height stays proportional. The global `img { max-width: 100% }` rule
+      // keeps it responsive.
+      const metadata = await Image(`./public/${dir}/${src}`, {
+        widths: [null],
+        formats: ["svg"],
+        outputDir,
+        urlPath,
+      });
+      const { url, width, height } = metadata.svg[0];
+      const displayWidth = headerWidth || width;
+      const displayHeight = Math.round(displayWidth * (height / width));
+      const altAttr = (alt || "").replace(/"/g, "&quot;");
+      return `<img src="${url}" alt="${altAttr}" width="${displayWidth}" height="${displayHeight}" loading="lazy" decoding="async">`;
+    }
+
     return await Image(`./public/${dir}/${src}`, {
       widths,
       formats: ["webp"],
