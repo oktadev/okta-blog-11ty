@@ -1,4 +1,4 @@
-<nav class="bg-okta-dark-blue h-11 px-3.5 flex items-center justify-between text-okta-white">
+<nav class="bg-okta-dark-blue min-h-11 px-3.5 flex flex-wrap items-center justify-between gap-y-2 text-okta-white">
   <div>
     {% set isHome = page.url === "/blog/" %}
     <a {% if isHome %}disabled aria-disabled="true"{% endif %} href="/blog/" class="{{ 'pointer-events-none' if isHome else '' }}">{% svg {src:"logotype", alt:"Okta Logo", type:"logo"} %}</a>

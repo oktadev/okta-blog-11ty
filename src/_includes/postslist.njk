@@ -1,4 +1,4 @@
-<ol reversed class="flex flex-col justify-center m-auto max-w-128">
+<ol reversed class="flex flex-col justify-center m-auto">
   {%- for post in postslist %}
     {%- set authorsList = authors | authorFilter(post.data.author) %}
     {% if authorsList %}

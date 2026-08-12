@@ -10,11 +10,11 @@
   <link rel="stylesheet" href="{{ '/style.css' | hashFile }}">
   <style>{% getBundle "css" %}</style>
 </head>
-<body>
+<body class="w-full min-w-3xs">
   <!-- Follow existing for this entire file -->
   {% include "header.njk" %}
   {% include "promo_banner.njk" %}
-  <main class="mt-12 mb-28 mx-4 m-auto">
+  <main class="mt-12 mb-28 mx-4 m-auto max-w-8xl px-6 lg:px-12 2xl:px-0 mx-auto">
       {{ content | safe }}
   </main>
   {% include "footer.njk" %}
