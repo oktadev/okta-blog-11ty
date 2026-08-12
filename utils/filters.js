@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { baseUrl } from "./base-url.js";
 import markdownIt from "markdown-it";
+import Image from "@11ty/eleventy-img";
 
 const inlineMd = markdownIt({ html: true, linkify: true });
 
@@ -139,6 +140,33 @@ export default function (eleventyConfig) {
   // sample can't close the section early (used for the feed's <content:encoded>).
   eleventyConfig.addFilter("cdata", (content) => {
     return `<![CDATA[${String(content || "").replace(/]]>/g, "]]]]><![CDATA[>")}]]>`;
+  });
+
+  // Process the front-matter social `image` through eleventy-img (so it's actually
+  // served, unlike the raw original) and return its root-relative URL. Pair with
+  // `toAbsoluteUrl` for og:image. External (http) values pass through unchanged.
+  eleventyConfig.addAsyncFilter("socialImage", async (src) => {
+    if (!src) return "";
+    if (/^https?:\/\//.test(src)) return src;
+    const subdir = src.includes("/")
+      ? src.substring(0, src.lastIndexOf("/"))
+      : "";
+    const outputDir = subdir ? `_site/img/blog/${subdir}` : "_site/img/blog";
+    const urlPath = subdir ? `/img/blog/${subdir}` : "/img/blog";
+    try {
+      const metadata = await Image(`./public/img/blog/${src}`, {
+        widths: [1200],
+        formats: [null], // keep the original format for social scrapers
+        outputDir,
+        urlPath,
+      });
+      return Object.values(metadata)[0].at(-1).url;
+    } catch (err) {
+      console.warn(
+        `[socialImage] could not process img/blog/${src}: ${err.message}`,
+      );
+      return "";
+    }
   });
 
   eleventyConfig.addFilter("postBySlug", function (posts, slug) {
