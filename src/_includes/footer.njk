@@ -1,15 +1,18 @@
-<footer class="footer">
-  <div class="columns">
+<footer class="bg-okta-dark-blue text-okta-white antialiased py-12">
+  <div class="w-full max-w-8xl px-6 space-y-12 mx-auto">
 
-    <div class="column need-support">
-      <h4 class="column-header">Need Support?</h4>
-      <p>
-        You can reach us directly at
-        <a href="mailto:developers@okta.com">developers@okta.com</a>
-        or you can also ask us on the
-        <a href="https://devforum.okta.com/" target="_blank" rel="noopener noreferrer">forum</a>.
-      </p>
-    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-12 [&_a]:text-okta-white [&_h4]:font-okta">
+      <div class="space-y-6 sm:col-span-2 md:col-span-3 lg:col-span-1">
+        <a class="footer-logotype" href="/">
+          {% svg {src:"logotype", alt:"Okta developer logotype", type:"logo", widths:[180]} %}
+        </a>
+        <div class="mt-3">
+          <h4 class="text-xl font-medium font-okta">Questions?</h4>
+          <p>
+            Ask us on the
+            <a href="https://devforum.okta.com/" target="_blank" rel="noopener noreferrer" class="underline">forum</a>.
+          </p>
+        </div>
 
     <div class="column social-links">
       <h4 class="column-header">Social</h4>
@@ -22,42 +25,48 @@
       </ul>
     </div>
 
-    <div class="column contact-links">
-      <h4 class="column-header">Contact &amp; Legal</h4>
-      <ul class="footer-links">
-        <li><a class="footer-link" href="https://www.okta.com/contact/" target="_blank" rel="noopener noreferrer">Contact our team</a></li>
-        <li><a class="footer-link" href="https://www.okta.com/contact-sales/" target="_blank" rel="noopener noreferrer">Contact sales</a></li>
-        <li><a class="footer-link" href="https://developer.okta.com/terms/" target="_blank" rel="noopener noreferrer">Terms &amp; conditions</a></li>
-        <li><a class="footer-link" href="https://www.okta.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy policy</a></li>
-      </ul>
+      <div class="">
+        <h4 class="text-okta-cream text-lg font-medium mb-1">Contact &amp; Legal</h4>
+        <ul class="list-none">
+          <li><a href="https://www.okta.com/contact/" target="_blank" rel="noopener noreferrer">Contact our team</a></li>
+          <li><a href="https://www.okta.com/contact-sales/" target="_blank" rel="noopener noreferrer">Contact sales</a></li>
+          <li><a href="https://developer.okta.com/terms/" target="_blank" rel="noopener noreferrer">Integrator Free Plan terms</a></li>
+          <li><a href="https://www.okta.com/terms-of-service/" target="_blank" rel="noopener noreferrer">Site terms</a></li>
+          <li><a href="https://www.okta.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy policy</a></li>
+          <li><a href="https://developer.okta.com/copyright/" target="_blank" rel="noopener noreferrer">Copyright &amp; trademarks</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-okta-cream text-lg font-medium mb-1">More info</h4>
+        <ul class="list-none">
+          <li><a href="https://developer.okta.com/pricing/">Pricing</a></li>
+          <li><a href="https://developer.okta.com/okta-integration-network/" target="_blank" rel="noopener noreferrer">Integrate with Okta</a></li>
+          <li><a href="https://developer.okta.com/docs/change-log/">Change Log</a></li>
+          <li><a href="https://developer.okta.com/3rd_party_notices/">3rd-party notes</a></li>
+          <li><a href="https://developer.auth0.com/" target="_blank" rel="noopener noreferrer">Auth0</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <a class="external-link" href="https://www.okta.com/" target="_blank" rel="noopener noreferrer">Okta.com</a>
+          <p>Products, case studies, resources</p>
+        </div>
+        <div>
+          <a class="external-link" href="https://help.okta.com/" target="_blank" rel="noopener noreferrer">Support center</a>
+          <p>Knowledgebase, roadmaps, and more</p>
+        </div>
+        <div>
+          <a class="external-link" href="https://trust.okta.com/" target="_blank" rel="noopener noreferrer">Trust</a>
+          <p>System status, security, compliance</p>
+        </div>
+      </div>
     </div>
 
-    <div class="column info-links">
-      <h4 class="column-header">More Info</h4>
-      <ul class="footer-links">
-        <li><a class="footer-link" href="https://developer.okta.com/pricing/">Pricing</a></li>
-        <li><a class="footer-link" href="https://developer.okta.com/okta-integration-network/" target="_blank" rel="noopener noreferrer">Integrate with Okta</a></li>
-        <li><a class="footer-link" href="https://developer.okta.com/docs/change-log/">Change Log</a></li>
-        <li><a class="footer-link" href="https://developer.okta.com/3rd_party_notices/">3rd-party notes</a></li>
-        <li><a class="footer-link" href="https://auth0.com/developers/" target="_blank" rel="noopener noreferrer">Auth0 platform</a></li>
-      </ul>
+    <div class="space-y-2">
+      <hr class="opacity-50 border-okta-white">
+      <span>Copyright &copy; {{ site.year }} Okta. All rights reserved.</span>
     </div>
-
-    <div class="column external-links">
-      <div class="external-url">
-        <a href="https://www.okta.com/" target="_blank" rel="noopener noreferrer">OKTA.COM</a>
-        <p>Products, case studies, resources</p>
-      </div>
-      <div class="external-url">
-        <a href="https://help.okta.com/" target="_blank" rel="noopener noreferrer">HELP CENTER</a>
-        <p>Knowledgebase, roadmaps, and more</p>
-      </div>
-      <div class="external-url">
-        <a href="https://trust.okta.com/" target="_blank" rel="noopener noreferrer">TRUST</a>
-        <p>System status, security, compliance</p>
-      </div>
-    </div>
-
-    <div class="column copyright"><span>Copyright &copy; {{ site.year }} Okta.</span></div>
   </div>
 </footer>
