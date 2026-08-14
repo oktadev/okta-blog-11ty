@@ -82,7 +82,7 @@
         {% for resource in externalSites %}
           <li>
             <a class="external-link" href="{{ resource.url }}" target="_blank" rel="noopener noreferrer" aria-describedby="footer-desc-{{ loop.index }}">{{ resource.title }}</a>
-            <p id="footer-desc-{{ loop.index }}">{{ resource.description }}<span class="sr-only"> (opens in a new window)</span></p>
+            <p id="footer-desc-{{ loop.index }}">{{ resource.description }}<span class="sr-only"> (opens in a new tab)</span></p>
           </li>
         {% endfor %}
       </ul>
