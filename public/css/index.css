@@ -136,7 +136,7 @@ input[type="search"]::-webkit-search-cancel-button {
   @apply font-medium hover:underline;
 
   &::after {
-    @apply ml-1 opacity-50 align-top font-normal;
+    @apply ml-2 opacity-60 align-top font-normal;
     content: "\f105"; /* fa-angle-right (thin ">" in FA 4.3.0) */
     font-family: "FontAwesome";
   }
