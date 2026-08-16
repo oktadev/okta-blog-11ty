@@ -19,6 +19,17 @@ const svg = async function ({
       break;
   }
 
+  const imgAttributes = {
+    alt, // required, though "" works fine
+    sizes, // required with more than one width, optional if single width output
+    loading: "lazy", // optional
+    decoding: "async", // optional
+  };
+  // eleventy-img writes imgAttributes keys verbatim, so the attribute has to be
+  // `class` (not the DOM property `className`). Omit it when empty so class-less
+  // images don't carry an inert class="".
+  if (className) imgAttributes.class = className;
+
   return await Image(`./public/${dir}${src}.svg`, {
     widths,
     formats: ["svg"],
@@ -26,13 +37,7 @@ const svg = async function ({
     urlPath: `/${dir}`,
     returnType: "html", // new in v6.0
     htmlOptions: {
-      imgAttributes: {
-        alt, // required, though "" works fine
-        sizes, // required with more than one width, optional if single width output
-        loading: "lazy", // optional
-        decoding: "async", // optional
-        className,
-      },
+      imgAttributes,
     },
   });
 };
