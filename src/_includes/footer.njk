@@ -1,72 +1,95 @@
 <footer class="bg-okta-dark-blue text-okta-white antialiased py-12">
-  <div class="w-full max-w-8xl px-6 lg:px-12 2xl:px-0 space-y-12 mx-auto">
+  <div class="max-w-8xl px-6 lg:px-12 2xl:px-0 space-y-12 mx-auto">
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-12 [&_a]:text-okta-white [&_h4]:font-okta">
       <div class="space-y-6 sm:col-span-2 md:col-span-3 lg:col-span-1">
-        <a class="footer-logotype" href="/">
-          {% svg {src:"logotype", alt:"Okta developer logotype", type:"logo", widths:[180]} %}
+        <a href="/" aria-label="Okta Developer">
+          {% include "icons/logotype.svg" %}
         </a>
         <div class="mt-3">
-          <h4 class="text-xl font-medium font-okta">Questions?</h4>
+          <h4 class="text-xl font-medium">Questions?</h4>
           <p>
             Ask us on the
-            <a href="https://devforum.okta.com/" target="_blank" rel="noopener noreferrer" class="underline">forum</a>.
+            <a href="https://devforum.okta.com/" class="underline">forum</a>.
           </p>
         </div>
 
         <div class="space-y-1">
-          <h4 class="text-lg font-medium font-okta">Connect with us</h4>
-          <ul class="flex flex-row list-none gap-3 [&_a]:text-okta-white">
-            <li><a href="https://github.com/oktadev" target="_blank" rel="noopener noreferrer" aria-label="Okta on GitHub">{% include "icons/github.svg" %}</a></li>
-            <li><a href="https://twitter.com/OktaDev" target="_blank" rel="noopener noreferrer" aria-label="Okta on X">{% include "icons/x.svg" %}</a></li>
-            <li><a href="https://www.youtube.com/oktadev" target="_blank" rel="noopener noreferrer" aria-label="Okta on YouTube">{% include "icons/youtube.svg" %}</a></li>
-            <li><a href="https://devforum.okta.com/" target="_blank" rel="noopener noreferrer" aria-label="Okta developer forum">{% include "icons/forum.svg" %}</a></li>
-            <li><a href="{{ site.baseUrl }}/feed.xml" target="_blank" rel="noopener noreferrer" aria-label="Blog RSS feed">{% include "icons/rss.svg" %}</a></li>
+          <h4 class="text-lg font-medium">Connect with us</h4>
+
+          {% set socialChannels = [
+            { url: "https://github.com/oktadev", label: "Okta Developers on GitHub", icon: "github.svg" },
+            { url: "https://x.com/OktaDev", label: "Okta Developers on X", icon: "x.svg" },
+            { url: "https://www.youtube.com/oktadev", label: "Okta Developers on YouTube", icon: "youtube.svg" },
+            { url: "https://devforum.okta.com/", label: "Okta Developer Forum", icon: "forum.svg" },
+            { url: site.baseUrl + "/feed.xml", label: "Okta Developer blog RSS feed", icon: "rss.svg" }
+          ] %}
+          <ul class="flex gap-3">
+            {% for channel in socialChannels %}
+            <li>
+              <a href="{{ channel.url }}" aria-label="{{ channel.label }}">
+                {% include "icons/" + channel.icon %}
+              </a>
+            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
 
-      <div class="">
+      <div>
         <h4 class="text-okta-cream text-lg font-medium mb-1">Contact &amp; Legal</h4>
-        <ul class="list-none">
-          <li><a href="https://www.okta.com/contact/" target="_blank" rel="noopener noreferrer">Contact our team</a></li>
-          <li><a href="https://www.okta.com/contact-sales/" target="_blank" rel="noopener noreferrer">Contact sales</a></li>
-          <li><a href="https://developer.okta.com/terms/" target="_blank" rel="noopener noreferrer">Integrator Free Plan terms</a></li>
-          <li><a href="https://www.okta.com/terms-of-service/" target="_blank" rel="noopener noreferrer">Site terms</a></li>
-          <li><a href="https://www.okta.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy policy</a></li>
-          <li><a href="https://developer.okta.com/copyright/" target="_blank" rel="noopener noreferrer">Copyright &amp; trademarks</a></li>
+        {% set contactAndLegal = [
+            { url: "https://www.okta.com/contact/", title: "Contact our team" },
+            { url: "https://www.okta.com/contact-sales/", title: "Contact sales" },
+            { url: "https://developer.okta.com/terms/", title: "Integrator Free Plan terms" },
+            { url: "https://www.okta.com/terms-of-service/", title: "Site terms" },
+            { url: "https://www.okta.com/privacy-policy/", title: "Privacy policy" },
+            { url: "https://developer.okta.com/copyright/", title: "Copyright & trademarks" }
+          ] %}
+        <ul>
+          {% for contact in contactAndLegal %}
+            <li>
+              <a href="{{ contact.url }}">{{ contact.title }}</a>
+            </li>
+          {% endfor %}
         </ul>
       </div>
 
       <div>
         <h4 class="text-okta-cream text-lg font-medium mb-1">More info</h4>
-        <ul class="list-none">
-          <li><a href="https://developer.okta.com/pricing/">Pricing</a></li>
-          <li><a href="https://developer.okta.com/okta-integration-network/" target="_blank" rel="noopener noreferrer">Integrate with Okta</a></li>
-          <li><a href="https://developer.okta.com/docs/change-log/">Change Log</a></li>
-          <li><a href="https://developer.okta.com/3rd_party_notices/">3rd-party notes</a></li>
-          <li><a href="https://developer.auth0.com/" target="_blank" rel="noopener noreferrer">Auth0</a></li>
+        {% set infoList = [
+            { url: "https://developer.okta.com/pricing/", title: "Pricing" },
+            { url: "https://developer.okta.com/okta-integration-network/", title: "Integrate with Okta" },
+            { url: "https://developer.okta.com/docs/change-log/", title: "Change Log" },
+            { url: "https://developer.okta.com/3rd_party_notices/", title: "3rd-party notes" },
+            { url: "https://developer.auth0.com/", title: "Auth0", external: true }
+          ] %}
+        <ul>
+          {% for info in infoList %}
+            <li>
+              <a href="{{ info.url }}"{% if info.external %} target="_blank" rel="noopener"{% endif %}>{{ info.title }}{% if info.external %}<span class="ml-1 inline-flex items-center opacity-70 relative top-0.5">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
+            </li>
+          {% endfor %}
         </ul>
       </div>
 
-      <div class="space-y-3">
-        <div>
-          <a class="external-link" href="https://www.okta.com/" target="_blank" rel="noopener noreferrer">Okta.com</a>
-          <p>Products, case studies, resources</p>
-        </div>
-        <div>
-          <a class="external-link" href="https://help.okta.com/" target="_blank" rel="noopener noreferrer">Support center</a>
-          <p>Knowledgebase, roadmaps, and more</p>
-        </div>
-        <div>
-          <a class="external-link" href="https://trust.okta.com/" target="_blank" rel="noopener noreferrer">Trust</a>
-          <p>System status, security, compliance</p>
-        </div>
-      </div>
+        {% set externalSites = [
+            { url: "https://www.okta.com/", title: "Okta.com", description: "Products, case studies, resources" },
+            { url: "https://help.okta.com/", title: "Support center", description: "Knowledgebase, roadmaps, and more" },
+            { url: "https://trust.okta.com/", title: "Trust", description: "System status, security, compliance" }
+          ] %}
+      <ul class="space-y-3">
+        {% for resource in externalSites %}
+          <li>
+            <a class="external-link" href="{{ resource.url }}" target="_blank" rel="noopener noreferrer" aria-describedby="footer-desc-{{ loop.index }}">{{ resource.title }}</a>
+            <p id="footer-desc-{{ loop.index }}">{{ resource.description }}<span class="sr-only"> (opens in a new tab)</span></p>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
 
     <div class="space-y-2">
-      <hr class="opacity-50 border-okta-white">
+      <hr class="border-t border-okta-white/50">
       <span>Copyright &copy; {{ site.year }} Okta. All rights reserved.</span>
     </div>
   </div>
