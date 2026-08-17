@@ -25,9 +25,6 @@ const svg = async function ({
     loading: "lazy", // optional
     decoding: "async", // optional
   };
-  // eleventy-img writes imgAttributes keys verbatim, so the attribute has to be
-  // `class` (not the DOM property `className`). Omit it when empty so class-less
-  // images don't carry an inert class="".
   if (className) imgAttributes.class = className;
 
   return await Image(`./public/${dir}${src}.svg`, {
