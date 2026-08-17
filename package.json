@@ -13,8 +13,7 @@
     "start": "ELEVENTY_ENV=development npm run setup && ELEVENTY_ENV=development eleventy --serve --incremental",
     "build": "ELEVENTY_ENV=production npm run setup && ELEVENTY_ENV=production eleventy",
     "post": "node scripts/post.js",
-    "dev": "node scripts/dev-clean.js && npm start",
-    "dev-restore": "node scripts/dev-restore.js"
+    "dev": "DEV_POSTS=25 npm start"
   },
   "keywords": [],
   "author": "",

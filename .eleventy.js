@@ -1,5 +1,6 @@
 import { markdownLibrary } from "./utils/markdown.js";
 import * as yaml from "js-yaml";
+import { readdirSync } from "node:fs";
 import { execSync } from "child_process";
 
 import EleventyPluginRss from "@11ty/eleventy-plugin-rss";
@@ -53,6 +54,20 @@ export default function (eleventyConfig) {
 
   // Filters
   eleventyConfig.addPlugin(filters);
+
+  // DEV_POSTS=<n> builds only the newest n posts, so the dev server boots in
+  // seconds instead of processing every post.
+  if (process.env.DEV_POSTS) {
+    const POSTS_DIR = "src/blog/posts";
+    const keep = Number(process.env.DEV_POSTS);
+    // Date-prefixed filenames sort chronologically, so the tail is the newest.
+    const posts = readdirSync(POSTS_DIR)
+      .filter((file) => file.endsWith(".md"))
+      .sort();
+    for (const file of posts.slice(0, Math.max(0, posts.length - keep))) {
+      eleventyConfig.ignores.add(`${POSTS_DIR}/${file}`);
+    }
+  }
 
   let postsCollection = [];
   eleventyConfig.addCollection("posts", (collectionApi) => {

@@ -8,7 +8,7 @@ Start the server by running `npm start`.
 
 ### Faster local builds
 
-A full build processes ~700 posts, so `npm start` can be slow to boot. For quicker iteration, `npm run dev` trims the blog to the newest 25 posts and then serves. Run `npm run dev-restore` to bring the removed posts back (it's a git checkout of `src/blog/posts`), and always restore before committing.
+A full build processes ~700 posts, so `npm start` can be slow to boot. For quicker iteration, `npm run dev` serves only the newest 25 posts. Nothing is deleted, the rest are just skipped for that run, so there's nothing to undo before committing. Set `DEV_POSTS` to change the count: `DEV_POSTS=50 npm start`.
 
 ### Creating a post
 
