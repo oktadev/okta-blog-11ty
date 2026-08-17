@@ -67,7 +67,7 @@
         <ul>
           {% for info in infoList %}
             <li>
-              <a href="{{ info.url }}"{% if info.external %} target="_blank" rel="noopener"{% endif %}>{{ info.title }}{% if info.external %}<span class="ml-1 inline-flex items-center opacity-70">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
+              <a href="{{ info.url }}"{% if info.external %} target="_blank" rel="noopener"{% endif %}>{{ info.title }}{% if info.external %}<span class="ml-1 inline-flex items-center opacity-70 relative top-0.5">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
             </li>
           {% endfor %}
         </ul>

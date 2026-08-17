@@ -12,7 +12,7 @@
       <div class="relative group">
         <button type="button" class="inline-flex items-center gap-1">
         Community
-          <span class="inline-flex items-center transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180">{% include "icons/chevron-down.svg" %}</span>
+          <span class="inline-flex items-center relative top-0.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180">{% include "icons/chevron-down.svg" %}</span>
         </button>
         <div class="absolute right-0 top-8 hidden w-max rounded-sm bg-okta-white p-4 shadow-md group-hover:block group-focus-within:block z-51 before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-['']">
           <div class="absolute -top-2 right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-okta-white"></div>
@@ -41,7 +41,7 @@
         {% for item in primaryNav %}
         <li>
           <a class="inline-flex items-center gap-1 text-okta-white" href="{{ item.url | url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}{% if item.url == page.url %} aria-current="page"{% endif %}>
-            {{ item.title }}{% if item.external %}<span class="inline-flex items-center opacity-70">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}
+            {{ item.title }}{% if item.external %}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}
           </a>
         </li>
         {% endfor %}
@@ -59,7 +59,7 @@
         {% for item in utilityNav %}
         <li>
           <a class="inline-flex items-center gap-1 text-okta-white" href="{{ item.url }}" target="_blank" rel="noopener">
-            {{ item.title }}<span class="inline-flex items-center opacity-70">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>
+            {{ item.title }}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>
           </a>
         </li>
         {% endfor %}
