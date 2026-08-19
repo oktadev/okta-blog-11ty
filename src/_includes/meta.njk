@@ -1,5 +1,5 @@
-{% if site.isPreview %}<meta name="robots" content="noindex" />
-{% endif %}<meta name="description" content="{{ description | default(page.description | default('')) }}">
+{% if site.isPreview %}<meta name="robots" content="noindex" />{% endif %}
+<meta name="description" content="{{ description | default(page.description | default('')) }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseUrl }}/feed.xml">
 
 <link rel="canonical" href="{{ page.url | toAbsoluteUrl }}" />

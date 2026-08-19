@@ -7,7 +7,7 @@ export function resolveBaseUrl() {
   // Vercel, so VERCEL_URL isn't set at build time. CI passes the preview host
   // in explicitly instead.
   if (process.env.SITE_BASE_URL) {
-    return process.env.SITE_BASE_URL.replace(/\/+$/, "");
+    return process.env.SITE_BASE_URL.trim().replace(/\/+$/, "");
   }
   if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
