@@ -11,7 +11,9 @@
     "prepare": "git config core.hooksPath .githooks || true",
     "setup": "npm run css && mkdir -p _site/img && ([ -d _site/fonts ] || cp -r public/fonts _site/) && ([ -d _site/js ] || cp -r public/js _site/) && ([ -d _site/img/avatar ] || cp -r public/img/avatar _site/img/) && cp public/img/*.svg _site/img/",
     "start": "ELEVENTY_ENV=development npm run setup && ELEVENTY_ENV=development eleventy --serve --incremental",
-    "build": "ELEVENTY_ENV=production npm run setup && ELEVENTY_ENV=production eleventy"
+    "build": "ELEVENTY_ENV=production npm run setup && ELEVENTY_ENV=production eleventy",
+    "post": "node scripts/post.js",
+    "dev": "DEV_POSTS=25 npm start"
   },
   "keywords": [],
   "author": "",
