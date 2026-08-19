@@ -16,7 +16,9 @@ eleventyExcludeFromCollections: true
     {% if collections.posts %}
     <lastBuildDate>{{ collections.posts | getNewestCollectionItemDate | dateToRfc822 }}</lastBuildDate>
     {% endif %}
-    {%- for post in collections.posts | reverse %}
+    {#- Only the most recent posts: every item carries its full content, so the
+        whole archive would make the feed tens of megabytes. -#}
+    {%- for post in collections.posts | reverse | limit(20) %}
     {% set absolutePostUrl %}{{ site.baseUrl }}{{ post.url | url }}{% endset %}
     <item>
       <title>{{ post.data.title }}</title>
