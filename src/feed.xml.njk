@@ -29,7 +29,12 @@ eleventyExcludeFromCollections: true
       <description>{{ post.data.description }}</description>
       {%- endif %}
       {%- if post.data.image %}
-      <media:thumbnail url="{{ site.baseUrl }}/img/blog/{{ post.data.image }}" />
+      {#- Run the image through eleventy-img: the raw original isn't written to
+          _site, so linking it directly would 404. -#}
+      {%- set thumbnail = post.data.image | socialImage %}
+      {%- if thumbnail %}
+      <media:thumbnail url="{{ thumbnail | toAbsoluteUrl }}" />
+      {%- endif %}
       {%- endif %}
       <content:encoded>{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | cdata | safe }}</content:encoded>
     </item>
