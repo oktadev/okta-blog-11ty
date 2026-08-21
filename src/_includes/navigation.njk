@@ -1,54 +1,80 @@
-<nav class="bg-okta-dark-blue min-h-11 px-3.5 flex flex-wrap items-center justify-between gap-y-2 text-okta-white">
-  <div>
-    {% set isHome = page.url === "/blog/" %}
-    <a {% if isHome %}disabled aria-disabled="true"{% endif %} href="/blog/" class="{{ 'pointer-events-none' if isHome else '' }}">{% svg {src:"logotype", alt:"Okta Logo", type:"logo"} %}</a>
+<nav class="bg-okta-dark-blue">
+  <div class="px-6 lg:px-16 min-h-16 xl:min-h-20 flex items-center gap-6 text-okta-white">
 
-  </div>
+    <a class="shrink-0 mr-3 text-okta-white [&_svg]:w-40 [&_svg]:h-auto" href="https://developer.okta.com" aria-label="Okta Developer home">{% include "icons/logotype.svg" %}</a>
 
-  <div>
-    <label>
-      <input type="search" placeholder="Search..." class="pl-2 pr-1 py-2 rounded-s bg-white/10 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30" />
-    </label>
-  </div>
+    {# Primary navigation — hidden below xl, moves into the mobile menu once it exists #}
+    <div class="hidden xl:flex items-center gap-6">
+      <label>
+        <input type="search" placeholder="Search..." class="px-3 py-2 rounded-sm bg-okta-white/10 placeholder-okta-white/60 focus:outline-none focus:ring-2 focus:ring-okta-white/30" />
+      </label>
 
-  <div class="relative group">
-    <button type="button" aria-haspopup="true" aria-expanded="false" class="text-white inline-flex items-center gap-1">
-    Community
-      <svg class="w-2 h-2 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-      </svg>
-    </button>
-    <div class="absolute right-0 pt-2 bg-okta-white border border-white/20 rounded-md shadow-lg group-hover:block group-focus-within:block z-51 py-1 px-1.5 w-15 hidden before:content-[''] before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 top-4" role="menu">
-      <div class="absolute -top-[9px] right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-okta-white"></div>
-      <ul role="menu" aria-label="Community options" class="py-1 flex gap-1.5 flex-col text-sm">
-        <li role="menuitem"><a href="https://devforum.okta.com/" class="block text-okta-carbon hover:bg-white/10 text-sm">Forum</a></li>
-        <li role="menuitem"><a href="https://toolkit.okta.com/" class="block text-okta-carbon hover:bg-white/10 text-sm">Toolkit</a></li>
-      </ul>
-      <hr class="text-okta-carbon border-y-1"/>
-      <ul class="inline-flex gap-2 py-1">
-        <li role="menuitem"><a href="https://github.com/oktadev" class="block text-okta-carbon hover:bg-white/10">{% svg {src:"github", alt:"Github", type: "icon"} %}</a></li>
-        <li role="menuitem"><a href="https://twitter.com/OktaDev" class="block text-okta-carbon hover:bg-white/10">{% svg {src:"twitter", alt:"X", type: "icon"} %}</a></li>
-        <li role="menuitem"><a href="https://www.youtube.com/channel/UC5AMiWqFVFxF1q9Ya1FuZ_Q/featured" class="block text-okta-carbon hover:bg-white/10">{% svg {src:"youtube", alt:"Youtube", type: "icon"} %}</a></li>
+      <div class="relative group">
+        <button type="button" class="inline-flex items-center gap-1">
+        Community
+          <span class="inline-flex items-center relative top-0.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180">{% include "icons/chevron-down.svg" %}</span>
+        </button>
+        <div class="absolute right-0 top-8 hidden w-max rounded-sm bg-okta-white p-4 shadow-md group-hover:block group-focus-within:block z-51 before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-['']">
+          <div class="absolute -top-2 right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-okta-white"></div>
+          <a href="https://devforum.okta.com/" class="block text-okta-carbon">Forum</a>
+          <hr class="my-2 border-t border-okta-carbon/50"/>
+          {% set socialChannels = [
+            { url: "https://github.com/oktadev", label: "Okta Developers on GitHub", icon: "github.svg" },
+            { url: "https://x.com/OktaDev", label: "Okta Developers on X", icon: "x.svg" },
+            { url: "https://www.youtube.com/oktadev", label: "Okta Developers on YouTube", icon: "youtube.svg" }
+          ] %}
+          <ul class="flex gap-3" aria-label="Okta Developer social channels">
+            {% for channel in socialChannels %}
+            <li>
+              <a href="{{ channel.url }}" class="block text-okta-carbon transition-transform hover:scale-110 focus-visible:scale-110" aria-label="{{ channel.label }}">{% include "icons/" + channel.icon %}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      {% set primaryNav = [
+        { url: "/blog/", title: "Blog" },
+        { url: "https://developer.okta.com/pricing/", title: "Pricing", external: true }
+      ] %}
+      <ul class="flex items-center gap-4">
+        {% for item in primaryNav %}
+        <li>
+          <a class="inline-flex items-center gap-1 text-okta-white" href="{{ item.url | url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}{% if item.url == page.url %} aria-current="page"{% endif %}>
+            {{ item.title }}{% if item.external %}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}
+          </a>
+        </li>
+        {% endfor %}
       </ul>
     </div>
-  </div>
 
+    {# Utility links — collapse into the mobile menu; the Sign Up CTA stays visible #}
+    <div class="ml-auto flex shrink-0 items-center gap-4">
+      {% set utilityNav = [
+        { url: "https://help.okta.com/", title: "Okta Docs" },
+        { url: "https://okta.com/", title: "Okta" },
+        { url: "https://login.okta.com/", title: "Sign in to Okta" }
+      ] %}
+      <ul class="hidden items-center gap-4 xl:flex">
+        {% for item in utilityNav %}
+        <li>
+          <a class="inline-flex items-center gap-1 text-okta-white" href="{{ item.url }}" target="_blank" rel="noopener">
+            {{ item.title }}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
 
-  {% set items = [
-    { url: "https://developer.okta.com/pricing/", title: "Pricing", external: true },
-    { url: "https://www.okta.com/", title: "Okta", external: true },
-    { url: "https://login.okta.com/", title: "Admin", external: true },
-    { url: "https://developer.okta.com/signup/", title: "Sign Up", external: true }
-  ] %}
-  <ul class="flex gap-2.25">
-    {% for item in items %}
-    {% set isCurrent = (item.url == page.url) %}
-    {% set isParent = item.url != '/' and item.url in page.url %}
-    <li class="nav__item{% if isCurrent %} nav__item--active{% endif %}">
-      <a class="nav__link {% if isCurrent %}pointer-events-none{% endif %} inline-flex gap-0.5 text-white" href="{{ item.url | url }}"{% if isCurrent %} aria-current="page"{% endif %}>
-        {{ item.title }} {% if item.external %}{% svg {src:"external-link", alt:"(opens in a new tab)", type:"icon"} %}{% endif %}
+      {# Below xl this is a text link with an arrow; at xl it becomes the outlined button #}
+      <a class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap font-medium text-okta-white xl:rounded xl:border xl:border-okta-white xl:px-6 xl:py-2" href="https://developer.okta.com/signup/">
+        Sign Up
+        <span class="inline-flex items-center xl:hidden">{% include "icons/arrow-right.svg" %}</span>
       </a>
-    </li>
-    {% endfor %}
-  </ul>
+
+      {# TODO: not wired up yet — needs a toggle and a panel holding the primary nav #}
+      <button type="button" class="xl:hidden inline-flex items-center" aria-expanded="false" aria-label="Open menu">
+        {% include "icons/menu.svg" %}
+      </button>
+    </div>
+  </div>
 </nav>
