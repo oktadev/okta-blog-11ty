@@ -7,6 +7,7 @@ export default {
   baseUrl,
   isPreview,
   author: "Okta Developer",
+  twitter: "@oktadev",
   lang: "en",
   // Current year, resolved at build time (used in the footer copyright line).
   year: new Date().getFullYear(),

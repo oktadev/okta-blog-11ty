@@ -14,3 +14,11 @@
   {% if ogImage %}<meta property="og:image" content="{{ ogImage | toAbsoluteUrl }}" />{% endif %}
 {% endif %}
 <meta property="og:site_name" content="{{ site.title }}" />
+
+{# Twitter falls back to the og:* tags for title/description/image, so only the
+   card type and attribution are needed here. #}
+{% set postAuthors = authors | authorFilter(author) %}
+{% set twitterCreator = postAuthors[0].twitter | twitterHandle if postAuthors | length else "" %}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="{{ site.twitter }}" />
+<meta name="twitter:creator" content="{{ twitterCreator or site.twitter }}" />
