@@ -20,7 +20,12 @@ jobs:
 
       - run: npm ci
 
+      # Deploy previews are built here, not on Vercel, so VERCEL_URL isn't
+      # available. Pass the preview alias (set in preview.yml) explicitly so
+      # absolute URLs (canonical, og:url, og:image, feed) point at the preview.
       - run: npm run build
+        env:
+          SITE_BASE_URL: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--{1}.vercel.app', github.event.pull_request.number, github.event.repository.name) || '' }}
 
       - uses: actions/upload-artifact@v7
         with:
