@@ -4,13 +4,19 @@
 // files and so rewrote code samples as well as prose (stripping HTML
 // attributes, rewriting Liquid whitespace markers). Everything inside a fenced
 // code block or an inline code span is left byte-for-byte identical here; the
-// transforms below only touch prose.
+// transforms below only touch prose. (Line endings are normalized to LF, which
+// is what the posts directory already uses.)
 //
 // Usage: node scripts/migrate-posts.js <source-posts-dir> [dest-dir]
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import path from "node:path";
 
 const DEFAULT_DEST = "src/blog/posts";
+
+// Fences may sit inside a blockquote, so allow any number of `>` markers before
+// the backticks or tildes.
+const FENCE_OPEN = /^[ \t]*(?:>[ \t]*)*(`{3,}|~{3,})/;
+const FENCE_CLOSE = /^[ \t]*(?:>[ \t]*)*(`{3,}|~{3,})[ \t]*$/;
 
 // Split into prose and code segments. Code = fenced blocks (``` or ~~~, closing
 // fence at least as long as the opener), which are passed through untouched.
@@ -27,7 +33,7 @@ function splitSegments(text) {
   };
 
   for (const line of lines) {
-    const open = line.match(/^[ \t]*(`{3,}|~{3,})/);
+    const open = line.match(FENCE_OPEN);
     if (!fence && open) {
       flushProse();
       fence = { char: open[1][0], len: open[1].length };
@@ -36,7 +42,7 @@ function splitSegments(text) {
     }
     if (fence) {
       code.push(line);
-      const close = line.match(/^[ \t]*(`{3,}|~{3,})[ \t]*$/);
+      const close = line.match(FENCE_CLOSE);
       if (close && close[1][0] === fence.char && close[1].length >= fence.len) {
         segments.push({ code: true, text: code.join("\n") });
         fence = null;
@@ -151,8 +157,10 @@ function convertProse(text) {
 }
 
 export function convert(content) {
-  // Some source posts use CRLF, which would break fence detection and the
-  // front-matter match. Normalize before doing anything else.
+  // One source post uses CRLF, which would break fence detection and the
+  // front-matter match. Normalize to LF: `src/blog/posts` is LF throughout, so
+  // re-emitting CRLF would introduce the repo's only such file. Code block
+  // content is preserved exactly; only the line endings change.
   return (
     splitSegments(content.replace(/\r\n/g, "\n"))
       .map((segment) =>
