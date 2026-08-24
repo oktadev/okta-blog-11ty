@@ -2,7 +2,9 @@
 <meta name="description" content="{{ description | default(page.description | default('')) }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseUrl }}/feed.xml">
 
-<link rel="canonical" href="{{ page.url | toAbsoluteUrl }}" />
+{# Syndicated posts set `canonical` in front matter pointing at the original
+   publication, so search engines credit that copy rather than this one. #}
+<link rel="canonical" href="{{ canonical if canonical else (page.url | toAbsoluteUrl) }}" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="{{ page.url | toAbsoluteUrl }}" />
 <meta property="og:title" content="{{ title }}" />

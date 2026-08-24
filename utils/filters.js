@@ -142,6 +142,16 @@ export default function (eleventyConfig) {
     return match ? `@${match[1]}` : "";
   });
 
+  // Display host for an external URL (e.g. the "Originally published at"
+  // note on syndicated posts). Returns the input unchanged if it will not parse.
+  eleventyConfig.addFilter("hostname", (url) => {
+    try {
+      return new URL(url).hostname.replace(/^www\./, "");
+    } catch {
+      return url;
+    }
+  });
+
   // Wrap content in a CDATA section, splitting any literal `]]>` so a post's code
   // sample can't close the section early (used for the feed's <content:encoded>).
   eleventyConfig.addFilter("cdata", (content) => {

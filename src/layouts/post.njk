@@ -35,6 +35,11 @@ layout: base
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (page.url | toAbsoluteUrl) | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">{% include "icons/linkedin.svg" %}</a>
       </span>
     </div>
+    {% if canonical %}
+      <div class="canonical-note text-okta-slate mt-1 mb-3">
+        Originally published at <a href="{{ canonical }}" class="text-okta-blue" target="_blank" rel="noopener noreferrer">{{ canonical | hostname }}</a>.
+      </div>
+    {% endif %}
     {% if changelogList | length %}
       <div class="last-updated text-okta-slate mt-1 mb-3">
         Last Updated:&nbsp;<a href="#changelog">{{ changelogList[0].date | readableDate("LLLL d, yyyy") }}</a>
