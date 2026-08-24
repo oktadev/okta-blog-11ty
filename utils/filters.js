@@ -136,6 +136,12 @@ export default function (eleventyConfig) {
     return new URL(url, baseUrl).href;
   });
 
+  // Turn an author's X/Twitter profile URL into an @handle (for twitter:creator).
+  eleventyConfig.addFilter("twitterHandle", (url) => {
+    const match = (url || "").match(/(?:twitter\.com|x\.com)\/@?([^/?#]+)/i);
+    return match ? `@${match[1]}` : "";
+  });
+
   // Wrap content in a CDATA section, splitting any literal `]]>` so a post's code
   // sample can't close the section early (used for the feed's <content:encoded>).
   eleventyConfig.addFilter("cdata", (content) => {
@@ -168,6 +174,9 @@ export default function (eleventyConfig) {
       return "";
     }
   });
+
+  // Cap a collection to the first n items (the feed only carries recent posts).
+  eleventyConfig.addFilter("limit", (array, n) => (array || []).slice(0, n));
 
   eleventyConfig.addFilter("postBySlug", function (posts, slug) {
     const filtered = posts.find((post) => post.fileSlug === slug);
