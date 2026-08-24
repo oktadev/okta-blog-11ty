@@ -16,7 +16,9 @@ eleventyExcludeFromCollections: true
     {% if collections.posts %}
     <lastBuildDate>{{ collections.posts | getNewestCollectionItemDate | dateToRfc822 }}</lastBuildDate>
     {% endif %}
-    {%- for post in collections.posts | reverse %}
+    {#- Only the most recent posts: every item carries its full content, so the
+        whole archive would make the feed tens of megabytes. -#}
+    {%- for post in collections.posts | reverse | limit(20) %}
     {% set absolutePostUrl %}{{ site.baseUrl }}{{ post.url | url }}{% endset %}
     <item>
       <title>{{ post.data.title }}</title>
@@ -27,7 +29,12 @@ eleventyExcludeFromCollections: true
       <description>{{ post.data.description }}</description>
       {%- endif %}
       {%- if post.data.image %}
-      <media:thumbnail url="{{ site.baseUrl }}/img/blog/{{ post.data.image }}" />
+      {#- Run the image through eleventy-img: the raw original isn't written to
+          _site, so linking it directly would 404. -#}
+      {%- set thumbnail = post.data.image | socialImage %}
+      {%- if thumbnail %}
+      <media:thumbnail url="{{ thumbnail | toAbsoluteUrl }}" />
+      {%- endif %}
       {%- endif %}
       <content:encoded>{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | cdata | safe }}</content:encoded>
     </item>
