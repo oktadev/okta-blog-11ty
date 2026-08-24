@@ -68,7 +68,7 @@ layout: base
             <span class="[&>div]:mt-0 [&_a]:w-4 [&_a]:h-4">{% include "author-socials.njk" %}</span>
           </div>
           {% if author.bio %}
-            <p class="text-okta-slate text-base leading-[26px] mt-3">{{ author.bio }}</p>
+            <div class="text-okta-slate text-base leading-[26px] mt-3">{{ author.bio | safe }}</div>
           {% endif %}
         </div>
       {% endif %}
