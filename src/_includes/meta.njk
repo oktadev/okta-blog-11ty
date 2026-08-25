@@ -3,8 +3,10 @@
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseUrl }}/feed.xml">
 
 {# Syndicated posts set `canonical` in front matter pointing at the original
-   publication, so search engines credit that copy rather than this one. #}
-<link rel="canonical" href="{{ canonical if canonical else (page.url | toAbsoluteUrl) }}" />
+   publication, so search engines credit that copy rather than this one. Anything
+   that isn't an absolute http(s) URL falls back to this page. #}
+{% set canonicalUrl = canonical | httpUrl %}
+<link rel="canonical" href="{{ canonicalUrl if canonicalUrl else (page.url | toAbsoluteUrl) }}" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="{{ page.url | toAbsoluteUrl }}" />
 <meta property="og:title" content="{{ title }}" />

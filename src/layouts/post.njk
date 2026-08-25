@@ -35,9 +35,10 @@ layout: base
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (page.url | toAbsoluteUrl) | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">{% include "icons/linkedin.svg" %}</a>
       </span>
     </div>
-    {% if canonical %}
+    {% set canonicalUrl = canonical | httpUrl %}
+    {% if canonicalUrl %}
       <div class="canonical-note text-okta-slate mt-1 mb-3">
-        Originally published at <a href="{{ canonical }}" class="text-okta-blue" target="_blank" rel="noopener noreferrer">{{ canonical | hostname }}</a>.
+        Originally published at <a href="{{ canonicalUrl }}" class="text-okta-blue" target="_blank" rel="noopener noreferrer">{{ canonicalUrl | hostname }}</a>.
       </div>
     {% endif %}
     {% if changelogList | length %}
