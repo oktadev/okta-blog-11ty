@@ -142,6 +142,29 @@ export default function (eleventyConfig) {
     return match ? `@${match[1]}` : "";
   });
 
+  // An http(s) URL, or "" for anything else (relative paths, other schemes).
+  // Front matter is hand-authored, so templates validate before emitting a URL
+  // into an href.
+  eleventyConfig.addFilter("httpUrl", (url) => {
+    try {
+      const { protocol } = new URL(String(url));
+      return protocol === "http:" || protocol === "https:" ? String(url) : "";
+    } catch {
+      return "";
+    }
+  });
+
+  // Display host for an external URL (e.g. the "Originally published at"
+  // note on syndicated posts). Returns the input unchanged if it will not parse.
+  eleventyConfig.addFilter("hostname", (url) => {
+    const value = String(url ?? "");
+    try {
+      return new URL(value).hostname.replace(/^www\./i, "");
+    } catch {
+      return value;
+    }
+  });
+
   // Wrap content in a CDATA section, splitting any literal `]]>` so a post's code
   // sample can't close the section early (used for the feed's <content:encoded>).
   eleventyConfig.addFilter("cdata", (content) => {
