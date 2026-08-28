@@ -27,6 +27,8 @@ jobs:
         env:
           SITE_BASE_URL: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--{1}.vercel.app', github.event.pull_request.number, github.event.repository.name) || '' }}
 
+      - run: npm run smoke
+
       - uses: actions/upload-artifact@v7
         with:
           name: site

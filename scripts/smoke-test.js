@@ -65,9 +65,17 @@ const postUrl = (file) => {
 
 // Newest first, and within a date the filename descending, mirroring how the
 // listings render `collections.posts | reverse`.
+//
+// The comparison is raw `>`/`<` on the string, matching Eleventy's
+// `sortFunctionAscending`. `localeCompare` would disagree with it wherever
+// filenames differ by case or by hyphen-vs-underscore (`oidc_workshop` vs
+// `oidc-cli`, `Spring-boot` vs `react-native`), which would fail this check on
+// a build whose ordering is in fact correct.
+const byFilenameDescending = (a, b) => (a > b ? -1 : a < b ? 1 : 0);
+
 const expectedOrder = posts
   .filter((f) => /^\d{4}-\d{2}-\d{2}-.+\.md$/.test(f))
-  .sort((a, b) => b.localeCompare(a))
+  .sort(byFilenameDescending)
   .map(postUrl);
 
 const sameDayDates = new Set(
@@ -151,23 +159,45 @@ function checkGroupOrder(label, order) {
 
 checkGroupOrder("blog index", indexOrder);
 
+// Absent output is a failure, not a pass: if the feed or the tag pages stop
+// being generated there is nothing left to check, and staying quiet would let
+// the run report success for a surface it never looked at.
 const feedPath = path.join(SITE, "feed.xml");
-if (existsSync(feedPath)) {
+if (!existsSync(feedPath)) {
+  orderingErrors.push(
+    `${feedPath} is missing, so feed ordering was not checked`,
+  );
+} else {
   const feed = readFileSync(feedPath, "utf8");
   const feedOrder = [
     ...feed.matchAll(
       /<link>[^<]*?(\/blog\/\d{4}\/\d{2}\/\d{2}\/[^<]+)<\/link>/g,
     ),
   ].map(([, url]) => url);
-  checkGroupOrder("feed.xml", feedOrder);
+  if (feedOrder.length === 0) {
+    orderingErrors.push(
+      `${feedPath} contains no post links, so feed ordering was not checked`,
+    );
+  } else {
+    checkGroupOrder("feed.xml", feedOrder);
+  }
 }
 
-for (const tagDir of existsSync(path.join(SITE, "blog", "tags"))
-  ? readdirSync(path.join(SITE, "blog", "tags"))
-  : []) {
-  const file = path.join(SITE, "blog", "tags", tagDir, "index.html");
-  if (!existsSync(file)) continue;
-  const order = listOrder(readFileSync(file, "utf8"));
+const tagsDir = path.join(SITE, "blog", "tags");
+const tagPages = existsSync(tagsDir)
+  ? readdirSync(tagsDir).filter((dir) =>
+      existsSync(path.join(tagsDir, dir, "index.html")),
+    )
+  : [];
+if (tagPages.length === 0) {
+  orderingErrors.push(
+    `no tag pages found under ${tagsDir}, so tag ordering was not checked`,
+  );
+}
+for (const tagDir of tagPages) {
+  const order = listOrder(
+    readFileSync(path.join(tagsDir, tagDir, "index.html"), "utf8"),
+  );
   checkGroupOrder(`tag page /blog/tags/${tagDir}/`, order);
 }
 
@@ -182,5 +212,6 @@ if (orderingErrors.length > 0) {
 
 console.log(
   `✓ ordering check passed: ${sameDayDates.size} dates carry multiple posts and ` +
-    `all sort by filename within the date, on the index, tag pages and feed`,
+    `all sort by filename within the date, across ${indexOrder.length} index ` +
+    `entries, ${tagPages.length} tag pages and the feed`,
 );
