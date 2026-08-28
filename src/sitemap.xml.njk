@@ -9,28 +9,28 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>{{ "/blog/" | toAbsoluteUrl }}</loc>
+    <loc>{{ "/blog/" | url | toAbsoluteUrl }}</loc>
   </url>
   <url>
-    <loc>{{ "/blog/tags/" | toAbsoluteUrl }}</loc>
+    <loc>{{ "/blog/tags/" | url | toAbsoluteUrl }}</loc>
   </url>
   <url>
-    <loc>{{ "/blog/authors/" | toAbsoluteUrl }}</loc>
+    <loc>{{ "/blog/authors/" | url | toAbsoluteUrl }}</loc>
   </url>
 {%- for post in collections.posts %}
   <url>
-    <loc>{{ post.url | toAbsoluteUrl }}</loc>
+    <loc>{{ post.url | url | toAbsoluteUrl }}</loc>
     <lastmod>{{ post.date | htmlDateString }}</lastmod>
   </url>
 {%- endfor %}
 {%- for tag in collections | allTagsFilter %}
   <url>
-    <loc>{{ ("/blog/tags/" + (tag | slugify) + "/") | toAbsoluteUrl }}</loc>
+    <loc>{{ ("/blog/tags/" + (tag | slugify) + "/") | url | toAbsoluteUrl }}</loc>
   </url>
 {%- endfor %}
 {%- for authorKey, author in authors %}
   <url>
-    <loc>{{ ("/blog/authors/" + authorKey + "/") | toAbsoluteUrl }}</loc>
+    <loc>{{ ("/blog/authors/" + authorKey + "/") | url | toAbsoluteUrl }}</loc>
   </url>
 {%- endfor %}
 </urlset>
