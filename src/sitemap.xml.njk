@@ -1,0 +1,36 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+{#- Built from the same data that generates the pages rather than from
+    `collections.all`, which only carries the first page of a paginated template
+    and so misses almost every tag and author page. Paginated listings
+    (/blog/page/N/) are left out: every post they link to is already listed. -#}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ "/blog/" | url | toAbsoluteUrl }}</loc>
+  </url>
+  <url>
+    <loc>{{ "/blog/tags/" | url | toAbsoluteUrl }}</loc>
+  </url>
+  <url>
+    <loc>{{ "/blog/authors/" | url | toAbsoluteUrl }}</loc>
+  </url>
+{%- for post in collections.posts %}
+  <url>
+    <loc>{{ post.url | url | toAbsoluteUrl }}</loc>
+    <lastmod>{{ post.date | htmlDateString }}</lastmod>
+  </url>
+{%- endfor %}
+{%- for tag in collections | allTagsFilter %}
+  <url>
+    <loc>{{ ("/blog/tags/" + (tag | slugify) + "/") | url | toAbsoluteUrl }}</loc>
+  </url>
+{%- endfor %}
+{%- for authorKey, author in authors %}
+  <url>
+    <loc>{{ ("/blog/authors/" + authorKey + "/") | url | toAbsoluteUrl }}</loc>
+  </url>
+{%- endfor %}
+</urlset>
