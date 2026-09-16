@@ -49,7 +49,7 @@
       </ul>
     </div>
 
-    {# Utility links — collapse into the mobile menu; the Sign Up CTA stays visible #}
+    {# Utility links and the Sign Up CTA collapse into the mobile menu #}
     <div class="ml-auto flex shrink-0 items-center gap-4">
       {% set utilityNav = [
         { url: "https://help.okta.com/", title: "Okta Docs" },
@@ -66,11 +66,8 @@
         {% endfor %}
       </ul>
 
-      {# Below xl this is a text link with an arrow; at xl it becomes the outlined button #}
-      <a class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap font-medium text-okta-white xl:rounded xl:border xl:border-okta-white xl:px-6 xl:py-2" href="https://developer.okta.com/signup/">
-        Sign Up
-        <span class="inline-flex items-center xl:hidden">{% include "icons/arrow-right.svg" %}</span>
-      </a>
+      {% set signUpUrl = "https://developer.okta.com/signup/" %}
+      <a class="hidden xl:inline-flex shrink-0 items-center whitespace-nowrap font-medium text-okta-white rounded border border-okta-white px-6 py-2" href="{{ signUpUrl }}">Sign Up</a>
 
       <button type="button" id="mobile-menu-button" class="xl:hidden inline-flex items-center" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <span data-menu-icon="open">{% include "icons/menu.svg" %}</span>
@@ -99,6 +96,11 @@
       </li>
       {% endfor %}
       <li><a class="text-okta-white" href="{{ forumUrl }}">Forum</a></li>
+      <li>
+        <a class="inline-flex items-center gap-1 font-medium text-okta-white" href="{{ signUpUrl }}">
+          Sign Up<span class="inline-flex items-center">{% include "icons/arrow-right.svg" %}</span>
+        </a>
+      </li>
     </ul>
     <ul class="flex gap-3" aria-label="Okta Developer social channels">
       {% for channel in socialChannels %}
