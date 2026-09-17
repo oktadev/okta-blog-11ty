@@ -1,5 +1,7 @@
 # OktaDev Blog
 
+The Okta Developer Blog, built with [Eleventy](https://www.11ty.dev/). Posts are Markdown files under `src/blog/posts/`, rendered with Nunjucks.
+
 ## Contributions
 
 While we are an open project, we're not open to contributions without prior conversation. If you want to contribute to OktaDev blog content, please reach out to us at <dev-advocacy@okta.com>.
@@ -8,17 +10,150 @@ PRs are the final step in our editorial process for contributors. PRs created wi
 
 ## Getting going
 
-Fork and clone your forked repo. Run `npm ci` to install dependencies.
+You need Node 24, the version the site is built with in GitHub Actions.
 
-Start the server by running `npm start`.
+Fork and clone your forked repo, then run `npm ci` to install dependencies. That also enables the repo's git hooks (see [Git hooks and CI](#git-hooks-and-ci)).
 
-### Faster local builds
+Start the server by running `npm start` and open `http://localhost:8080/blog/`.
 
-A full build processes ~700 posts, so `npm start` can be slow to boot. For quicker iteration, `npm run dev` serves only the newest 25 posts. Nothing is deleted, the rest are just skipped for that run, so there's nothing to undo before committing. Set `DEV_POSTS` to change the count: `DEV_POSTS=50 npm start`.
+### Serving the site
+
+| Command         | What it does                                                                                                                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm start`     | Dev server with live reload and incremental rebuilds. Builds every post, so the first boot takes a couple of minutes.                                  |
+| `npm run dev`   | Same server, but only the newest 25 posts. Nothing is deleted; the rest are skipped for that run. Set `DEV_POSTS` to change the count: `DEV_POSTS=50 npm start`. |
+| `npm run build` | Production build into `_site/`. This is what the Build workflow runs and deploys.                                                                       |
+
+### Other npm scripts
+
+| Command            | What it does                                                                                                                                     | When to run it                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| `npm run validate` | Checks every post's front matter: YAML parses, `title` and `author` are present, author keys exist in `src/_data/authors.yaml`, `by` is a known role. | Before pushing. The pre-commit hook runs it for you.              |
+| `npm run smoke`    | Asserts that every post in `src/blog/posts/` was emitted at its `/blog/YYYY/MM/DD/slug/` URL and that same-day posts order deterministically.    | After `npm run build`. The Build workflow runs it on every push and PR. |
+| `npm test`         | `npm run build` followed by `npm run smoke`.                                                                                                     | When you've changed templates, filters, or the Eleventy config.   |
+| `npm run css`      | Compiles Tailwind from `public/css/index.css` into `_site/style.css`. `npm start` and `npm run build` call it for you.                            | Rarely by hand.                                                   |
+| `npm run format`   | Runs Prettier over JS and JSON. Posts (`src/blog/posts/`) and Nunjucks templates are excluded on purpose, so it never touches code samples.       | The pre-commit hook formats staged files; run this for a sweep.   |
+| `npm run post`     | Scaffolds a new post, see below.                                                                                                                 |                                                                   |
+
+## Writing a post
 
 ### Creating a post
 
-`npm run post create <post-name>` scaffolds `src/blog/posts/<today>-<post-name>.md` from a front-matter template and creates its image directory under `public/img/blog/`. Pass an ISO date as a third argument to override today's date.
+`npm run post create <post-name>` scaffolds `src/blog/posts/<today>-<post-name>.md` from a front-matter template and creates its image directory at `public/img/blog/<post-name>/`. Pass an ISO date as a third argument to override today's date.
+
+The scaffolded front matter:
+
+```yaml
+---
+title: ""
+author: # key(s) from src/_data/authors.yaml
+by: advocate # advocate | contractor | internal-contributor | external-contributor
+communities: [] # e.g. java, javascript, .net, go, php, python, security, devops, mobile
+description: ""
+tags: []
+tweets:
+image: ""
+type: awareness # awareness | conversion
+---
+```
+
+`title` and `author` are required. `author` is one key or a list of keys from `src/_data/authors.yaml`. `image` is the post's social and hero image, relative to `public/img/blog/`. The post's URL comes from the file name: `2026-01-21-user-entitlements-workshop.md` publishes at `/blog/2026/01/21/user-entitlements-workshop/`.
+
+Two optional keys worth knowing:
+
+- `changelog` renders a "Last Updated" date at the top and a changelog at the bottom. Entries are `{ date: text }` and can be in any order; newest is shown first. Link the PR that updated the post and the PR that updated its example app.
+
+  ```yaml
+  changelog:
+    - 2020-08-31: Updated the GitHub repo to have proper starter files. Changes to this article can be viewed in [oktadev/okta-blog#392](https://github.com/oktadev/okta-blog/pull/392).
+  ```
+
+- `canonical` marks a syndicated post. It must be an absolute `http(s)` URL; it becomes the page's canonical link and adds an "Originally published at" note.
+
+  ```yaml
+  canonical: https://auth0.com/blog/full-stack-java-with-react-spring-boot-and-jhipster/
+  ```
+
+### Markdown conventions
+
+- Surround directories and file names with backticks: `filename.txt`, `/src/component/dummy.file`.
+- Use inline backticks for short commands: run `npm install` from the command line.
+- Bold button and link names: then click **Done**.
+- Write function names with parentheses inside backticks: this calls the `render()` method.
+- Wrap `http://localhost` URLs in backticks.
+- Links into developer.okta.com should be relative: `/docs/whatever/` rather than the full URL.
+- Posts are rendered by Nunjucks before Markdown, so code that contains `{{ }}` or `{% %}` must sit inside a raw block or the template engine will try to evaluate it:
+
+  ````
+  {% raw %}
+  ```html
+  <span>{{ title }} app is running!</span>
+  ```
+  {% endraw %}
+  ````
+
+- Add a table of contents with `[[toc]]` on its own line. It lists the post's `##` and `###` headings.
+
+### Shortcodes
+
+Shortcodes are `{% name … %}` tags available in every post. Images are the one you'll use most.
+
+**Images.** Put the file in `public/img/blog/<post-name>/` and reference it relative to `public/img/blog/`. Raster images are converted to responsive WebP; SVGs are kept as SVG and sized to the given width.
+
+```njk
+{% img {src: "my-post/screenshot.png", alt: "Text for screen readers"} %}
+{% img {src: "my-post/diagram.png", alt: "…", header: "600"} %}
+```
+
+`header` takes a display width in pixels, or `true` to render at the responsive hero sizes. The post's social `image` from front matter is rendered as the hero automatically, so you don't need to add it to the body.
+
+**Other shortcodes:**
+
+| Shortcode                                                        | Renders                                                                                                                |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `{% youtube "VIDEO-ID" %}`                                       | An embedded YouTube player. Optional title, width and height follow the ID: `{% youtube "8vY-9tXlCW4", "Demo", 900, 506 %}`. |
+| `{% speakerdeck "DATA-ID", 600 %}`                               | An embedded Speaker Deck. The ID is the `data-id` from the deck's embed code; the width in pixels is optional.          |
+| `{% excerpt "post-slug" %}`                                      | A card linking to another post on this blog, with its title, description and authors. The slug is the file name without the date prefix and `.md`. |
+| `{% svg {src: "name", alt: "…", widths: [30]} %}`                | An SVG from `public/img/blog/name.svg`. Add `type: "logo"` or `type: "icon"` to read from `public/img/` instead.       |
+| `{% avatar "file.jpg", "small", "Alt text" %}`                   | A round author avatar from `public/img/avatar/`. Sizes: `small`, `medium`, `large`, `xlarge`. Mostly used by templates.  |
+
+**Tweets.** Put the tweet's URL on a line by itself and it's embedded:
+
+```
+https://twitter.com/oktadev/status/1460993714227236868
+```
+
+### Macros
+
+Macros generate standard blocks of prose. They're available in every post as `macro.<name>()` with no import. The templates live in `src/_macros/`.
+
+| Macro                        | Generates                                                                                                                                                                                      |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `macro.integrator({ … })`    | Step-by-step Admin Console instructions for creating an OIDC app, plus a link to the matching guide. Takes `type` (`spa`, `web`, `native`, `service`) and optional `framework`, `loginRedirectUri`, `logoutRedirectUri`, `signup`, `install`, `note`, `customAuthServer`. |
+| `macro.oidcdebugger()`       | A short paragraph on getting an access token with the OpenID Connect Debugger. Optional `{ responseType: "…" }`, default `code`.                                                                |
+| `macro.cli({ … })`           | Okta CLI instructions. Legacy: the Okta CLI was deprecated in May 2025. Don't use it in new posts.                                                                                             |
+| `macro.maven()`              | A deprecated Maven-based setup. Legacy, same as above; see #142.                                                                                                                              |
+
+For example:
+
+```njk
+{{ macro.integrator({type: "spa", framework: "React", loginRedirectUri: "http://localhost:3000/callback"}) }}
+```
+
+Every parameter, with rendered examples for each framework, is documented on the site at [/blog/integrator-setup/](https://developer.okta.com/blog/integrator-setup/). Screenshots of the Admin Console are discouraged because they're hard to keep up to date.
+
+## Git hooks and CI
+
+`npm ci` (through the `prepare` script) points git at the hooks in `.githooks/`, so they run without any setup:
+
+- **pre-commit** refuses `.DS_Store` files and anything over 5MB, syntax-checks staged JavaScript, formats staged JS and JSON with Prettier, and runs `npm run validate`. Bypass with `git commit --no-verify` only if you know why it failed.
+- **pre-push** runs a full `npm run build` so a broken template or filter is caught before CI. Skip it with `SKIP_BUILD=1 git push` when you've just built.
+
+On GitHub, three workflows in `.github/workflows/` cover every push to `main` and every pull request:
+
+- **CI** (`ci.yml`) runs `npm run validate`.
+- **Build** (`build.yml`) runs `npm run build` and `npm run smoke`, and uploads the built site. On a push to `main` it deploys that build to production.
+- **Deploy Preview** (`preview.yml`) runs after Build finishes for a pull request. It deploys the uploaded site to `https://deploy-preview-<PR number>--okta-blog-11ty.vercel.app` and links it in a comment on the PR.
 
 ## License
 
