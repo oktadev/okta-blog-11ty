@@ -136,6 +136,12 @@ export default function (eleventyConfig) {
     return new URL(url, baseUrl).href;
   });
 
+  // Discourse matches embedded comment threads on the exact URL it recorded, and
+  // those have no trailing slash. Ours do, hence the strip.
+  eleventyConfig.addFilter("discourseEmbedUrl", (url) => {
+    return new URL(url, baseUrl).href.replace(/\/$/, "");
+  });
+
   // Turn an author's X/Twitter profile URL into an @handle (for twitter:creator).
   eleventyConfig.addFilter("twitterHandle", (url) => {
     const match = (url || "").match(/(?:twitter\.com|x\.com)\/@?([^/?#]+)/i);
