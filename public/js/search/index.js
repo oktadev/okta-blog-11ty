@@ -28,20 +28,28 @@ const waitForCoveo = () =>
 // Hides the dropdown until there's input and something to suggest. The
 // has-suggestions-hidden class is styled in public/css/coveo.css; without that
 // rule this does nothing.
+const SUGGESTION_DELAY_MS = 500;
+
 const registerOmniboxListener = () => {
   const omnibox = document.querySelector(".CoveoOmnibox");
   if (!omnibox) return;
+
+  // Cancelled on every event: without this, clearing the input inside the delay
+  // window lets a pending callback reopen an empty dropdown.
+  let showTimer = null;
 
   Coveo.$$(omnibox).on("populateOmniboxSuggestions", (event, args) => {
     const { magicBox } = args.omnibox;
     const { input } = magicBox.displayedResult;
 
+    clearTimeout(showTimer);
+
     if (input.length === 0) {
       magicBox.element.classList.add("has-suggestions-hidden");
     } else if (magicBox.suggestionsManager.hasSuggestions) {
-      setTimeout(
+      showTimer = setTimeout(
         () => magicBox.element.classList.remove("has-suggestions-hidden"),
-        500,
+        SUGGESTION_DELAY_MS,
       );
     }
   });

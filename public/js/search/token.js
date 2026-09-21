@@ -15,8 +15,9 @@ import {
 // Renew early so an in-flight search can't be rejected mid-request.
 const EXPIRY_BUFFER_MS = 5 * 60 * 1000;
 
-// Reading localStorage throws outright when storage is blocked (Safari private
-// browsing, sandboxed iframes), so every access goes through these.
+// Storage can be blocked in two different ways: reading the property throws at
+// all (sandboxed iframes), or reading works and only writes throw (Safari
+// private browsing, full quota). Both are guarded below.
 const storageAvailable = () => {
   try {
     return typeof window !== "undefined" && window.localStorage !== null;
@@ -28,8 +29,15 @@ const storageAvailable = () => {
 const readStored = () =>
   storageAvailable() ? window.localStorage.getItem(TOKEN_STORAGE_KEY) : null;
 
+// Caching is best-effort — a failed write must not take search down when we
+// already hold a valid token.
 const writeStored = (value) => {
-  if (storageAvailable()) window.localStorage.setItem(TOKEN_STORAGE_KEY, value);
+  if (!storageAvailable()) return;
+  try {
+    window.localStorage.setItem(TOKEN_STORAGE_KEY, value);
+  } catch (err) {
+    console.warn(`[search] could not cache token: ${err.message}`);
+  }
 };
 
 const clearStored = () => {
