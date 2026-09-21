@@ -5,9 +5,18 @@
 
     {# Primary navigation — hidden below xl, moves into the mobile menu once it exists #}
     <div class="hidden xl:flex items-center gap-6">
-      <label>
-        <input type="search" placeholder="Search..." class="px-3 py-2 rounded-sm bg-okta-white/10 placeholder-okta-white/60 focus:outline-none focus:ring-2 focus:ring-okta-white/30" />
-      </label>
+      {# Coveo searchbox, wired by /js/search/index.js. Keep the .CoveoOmnibox and
+         .CoveoAnalytics class names — Coveo finds them by class. Styles: public/css/coveo.css #}
+      <div class="relative w-56 min-w-0 shrink 2xl:w-72" role="search" aria-label="Search Okta Developer content">
+        {# Outside [data-search-bar], so Coveo can't overwrite it on init #}
+        <span class="pointer-events-none absolute left-3 top-1/2 z-1 -translate-y-1/2 text-okta-white opacity-60">{% include "icons/search.svg" %}</span>
+        <div data-search-bar data-pipeline="developer-okta-com">
+          <div class="flex h-10 items-center rounded-sm bg-okta-white/10 focus-within:ring-2 focus-within:ring-okta-white/30 xl:h-11">
+            <div class="CoveoOmnibox"></div>
+          </div>
+          <div class="CoveoAnalytics"></div>
+        </div>
+      </div>
 
       <div class="relative group">
         <button type="button" class="inline-flex items-center gap-1">
