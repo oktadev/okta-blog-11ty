@@ -1,0 +1,314 @@
+---
+title: "OAuth for Java Developers"
+author: matt-raible
+by: advocate
+communities: [java]
+description: "Java has rich support for OAuth 2.0, even though it's not part of any Java standards. Learn more in this OAuth guide for developers."
+tags: [java, oauth2, security]
+tweets:
+- "Want to see how Java supports OAuth standards? This post is for you!"
+- "Learn about the state of the OAuth ecosystem in Java and which frameworks have support for it."
+- "OAuth makes your Java web apps more secure. Learn how and why in this post."
+image: java-oauth2-2022/oauth-for-java-developers.png
+type: awareness
+---
+You can use OAuth to secure apps, APIs, and devices. OAuth has become increasingly popular, especially as developers are asked to knit together hundreds of apps and thousands of users in enterprise environments.
+
+The Java ecosystem is vast, with over 10 million developers worldwide and an abundance of IDEs, build tools, libraries, and frameworks to make them more productive. The infographic below is recommended as a starting point for Java developers. It's designed to help guide your learning as you go and add your own software components while your experience grows.
+
+Click the image to zoom in.
+
+[{% img {src: "java-oauth2-2022/java-roadmap-preview.jpg", alt: "2022 Java Developers Roadmap"} %}](/img/blog/java-oauth2-2022/java-roadmap.jpg)
+
+Image v1 by [@javinpaul](https://twitter.com/javinpaul) - [The 2022 Java Developer RoadMap article](https://javarevisited.blogspot.com/2019/10/the-java-developer-roadmap.html) · v2+ [maintained on GitHub](https://github.com/devoxx/JavaRoadmap2022) by [@stephan007](https://twitter.com/stephan007) {.text-right .small}
+
+Today, I'll provide you with a state of the OAuth ecosystem in Java. You'll learn which frameworks support OAuth and which ones don't. I'll also offer some practical examples you can run in just a few minutes.
+
+[[toc]]
+
+## What the heck is OAuth?
+
+OAuth is an abbreviation for **O**pen **Auth**orization. It's an open standard that anyone can implement. More specifically, OAuth is a standard that apps can use to provide client applications with "secure delegated access." OAuth works over HTTPS and authorizes devices, APIs, servers, and applications with access tokens rather than credentials.
+
+In the old days (2006), websites used to prompt users for their Gmail credentials, so they could invite their contacts to use the website. Users often provided credentials, but there was no proof that the website didn't store them for later use. OAuth was developed so users don't have to provide credentials. Instead, users provide an access token from a trusted identity provider.
+
+You can think of OAuth like hotel key cards, but for apps. If you have a hotel key card, you can get access to your room.
+
+How do you get a hotel key card? You have to do an authentication process at the front desk to get it. After authenticating and obtaining the key card, you can access other resources across the hotel.
+
+{% img {src: "java-oauth2-2022/hotel-key-cards.jpg", alt: "OAuth is Hotel key cards for apps", header: "720"} %}
+
+**OAuth 2.0 is not an authentication protocol.**
+
+OpenID Connect (aka OIDC) _is_ an authentication protocol. I'll cover that in another post.
+
+OAuth 2.0 has many flows and [OAuth 2.1](https://oauth.net/2.1/) is an in-progress effort to consolidate and simplify the best flows for developers. In a nutshell, OAuth 2.1 requires Proof Key for Code Exchange (PKCE) for authorization code flows and implicit and password credential flows are removed.
+
+> **TIP:** You can learn more about PKCE by reading [Use PKCE with OAuth 2.0 and Spring Boot for Better Security](/blog/2020/01/23/pkce-oauth2-spring-boot).
+
+If you'd like to play with OAuth 2.0's flows, you can try the [OAuth 2.0 Playground](https://www.oauth.com/playground/) (built by [Aaron Parecki](https://twitter.com/aaronpk)).
+
+[{% img {src: "java-oauth2-2022/oauth2-playground.png", alt: "OAuth 2.0 Playground"} %}](https://www.oauth.com/playground/)
+
+## Can you do OAuth without a browser?
+
+Developers often wonder, is it possible to do an OAuth flow _without_ a browser in the mix? The short answer is **No**.
+
+[A browser is required](https://twitter.com/briandemers/status/1520104453155835905). The browser doesn't need to be on the same device. There are basically three options if a user is involved:
+
+- Web app: handle a redirect
+- CLI, TV, etc: use the Device Grant (browser on another device), app uses REST
+- Native app: use a custom URL handler
+
+## Java's OAuth 2.0 support
+
+Java, the language, does not have built-in OAuth support. In fact, the JDK doesn't even contain APIs to write a web app. The basic building blocks for constructing web apps are provided by the [Servlet API and Jakarta EE](https://jakarta.ee/specifications/servlet/5.0/).
+
+The Servlet specification has a [security section](https://jakarta.ee/specifications/servlet/5.0/jakarta-servlet-spec-5.0.html#security), but there's no OAuth in it. The [Jakarta Security 3.0](https://jakarta.ee/specifications/security/3.0/) (still under development at the time of this writing) does mention that OpenID Connect and OAuth did _not_ make it into the specification. To me, it seems strange that the "enterprise edition" of Java doesn't have support for delegated authorization or federated identity. Hopefully, we can work as a community to fix this in the future.
+
+On the upside, Java 18 does contain a `jwebserver` you can use to [serve up static files](https://inside.java/2021/12/06/working-with-the-simple-web-server/). That's about all the "web" you'll find in the JDK.
+
+### OAuth in Java frameworks
+
+When SAML was first invented in 2005, Java web frameworks were experiencing their peak popularity. There were _hundreds_ of Java web frameworks, and developers would make fun of this embarrassment of riches like they did with JavaScript frameworks in the late 2000s.
+
+[{% img {src: "java-oauth2-2022/history-of-web-frameworks-timeline.png", alt: "History of web frameworks timeline"} %}](/img/blog/java-oauth2-2022/history-of-web-frameworks-timeline.png)
+
+This History of Web Frameworks Timeline image is [maintained on GitHub](https://github.com/mraible/history-of-web-frameworks-timeline) by [@mraible](https://twitter.com/mraible) {.text-right .small}
+
+Most Java web frameworks supported a form of MVC and others were component-based. All of them rendered their UIs on the server-side.
+
+Fast-forward to 2022, and Java is mainly used for APIs, while JavaScript is often used for UIs.
+
+"I do find it ironic that there are now several JavaScript frameworks that provide developers joy with server-side rendering. It's like the Java MVC frameworks of old but relatively new to JavaScript. History repeats itself, eh?" -- Matt Raible
+
+One of OAuth's key patterns is a **resource server**. A resource server accepts an access token. If the token is valid, it gives a client access to the resource owner's data. In this example, a client is an app, the resource owner is a user, and the resource server is the Java API you develop.
+
+In the section below, I'll show you how you can use OAuth and set up a resource server with the most popular Java frameworks. You might think that Spring Boot is the de facto standard, and you should just use it. However, there's a lot of innovation happening elsewhere, and I think it's good to be aware of other options.
+
+### MicroProfile JWT authentication
+
+When Java EE stagnated in the early 2010s, the Java EE community did too and eventually created MicroProfile in 2015. MicroProfile is a standards-based effort to group the parts of Java EE that can be used to create a microservice architecture.
+
+As part of MicroProfile, there is a JWT Auth specification. Even though it doesn't mention OAuth, it's very much a viable way to implement an OAuth 2.0 resource server.
+
+Suppose you're using a Java framework that supports MicroProfile. In that case, you can likely add the framework's JWT authentication dependency, plus a couple of properties to define the issuer and JWKS (JSON Web Token Key Signatures) location. The key names are standardized and can be used in frameworks like Helidon and Quarkus.
+
+```properties
+mp.jwt.verify.issuer=https://dev-13337.okta.com/oauth2/default
+mp.jwt.verify.publickey.location=https://dev-13337.okta.com/oauth2/default/v1/keys
+```
+
+What annoys me about this configuration is that `issuer` is an OpenID Connect concept that allows you to find all the endpoints for an identity provider, including the location of the JWKS keys. If you go to `${issuer}/.well-known/openid-configuration`, it has the location of the public keys in the `jwks_uri` value!
+
+{% img {src: "java-oauth2-2022/jwks-uri.png", alt: "The publickey.location can be calculated!", header: "800"} %}
+
+I really wish MicroProfile made things easier on the developer so you only have to specify the issuer.
+
+The good news is you should be able to refer to one property from another.
+
+```properties
+mp.jwt.verify.issuer=https://dev-13337.okta.com/oauth2/default
+mp.jwt.verify.publickey.location=${mp.jwt.verify.issuer}/v1/keys
+```
+
+**&lt;rant/&gt;**
+
+#### Quarkus
+
+If you want to use MicroProfile JWT authentication with Quarkus, you need to add the properties above and a single dependency.
+
+```xml
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-smallrye-jwt</artifactId>
+</dependency>
+```
+
+#### Helidon
+
+Helidon is very similar to Quarkus. The only difference is its dependency's coordinates.
+
+```xml
+<dependency>
+    <groupId>io.helidon.microprofile.jwt</groupId>
+    <artifactId>helidon-microprofile-jwt-auth</artifactId>
+</dependency>
+```
+
+I've already mentioned Helidon and Quarkus. What about the other popular Java API frameworks?
+
+### Micronaut
+
+Micronaut has support for OAuth and good documentation on how to configure it with IdPs like [Okta](https://guides.micronaut.io/latest/micronaut-oauth2-okta.html), [Google](https://guides.micronaut.io/latest/micronaut-oauth2-oidc-google.html), and [GitHub](https://guides.micronaut.io/latest/micronaut-oauth2-github.html).
+
+Micronaut requires many more lines of configuration than MicroProfile, but it's mostly YAML's fault. It takes you 11 lines to configure an OAuth 2.0 resource server.
+
+```yaml
+micronaut:
+  security:
+    enabled: true
+    token:
+      jwt:
+        enabled: true
+        claims-validators:
+          issuer: https://dev-13337.okta.com/oauth2/default
+        signatures:
+          jwks:
+            okta:
+              url: https://dev-13337.okta.com/oauth2/default/v1/keys
+```
+
+As you can see, Micronaut also requires you to specify the JWKS location, even though it can be looked up from the issuer. `:shakes-fist:`
+
+### Spring Boot
+
+Spring Boot uses Spring Security by default, and it's the only framework that allows you to configure a resource server with one line of code.
+
+```properties
+spring.security.oauth2.resourceserver.jwt.issuer-uri=https://dev-13337.okta.com/oauth2/default
+```
+
+Of course, you could use YAML instead. That would be a bad life choice. Then it would require six lines of code. Don't be that person. 😉 Spring Security is smart enough to look up the JWKS location from the issuer.
+
+Spring Boot will [auto-configure Spring Security's filter chain for a resource server](https://github.com/spring-projects/spring-boot/blob/252cf9433252b08d8af6dc2457dea57b99658d6b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/resource/servlet/OAuth2ResourceServerJwtConfiguration.java#L100-L112), so that's all the code you need!
+
+> **TIP:** If you use the [Okta Spring Boot Starter](https://github.com/okta/okta-spring-boot), you'll also have `oauthClient()` and `oauth2Login()` [auto-configured](https://github.com/okta/okta-spring-boot/blob/ba1f203bdfc9ae7e969b7b5bc1cba211b38d9cc7/oauth2/src/main/java/com/okta/spring/boot/oauth/OktaOAuth2AutoConfig.java#L76-L90).
+
+From this information, I hope you have a decent overview of where Java is regarding OAuth. If you like to learn by watching, reading, or doing&mdash;keep reading!
+
+## Watch OAuth 2.0 in action with Java frameworks
+
+I've created a few screencasts to show how to build a REST API with Quarkus, Spring Boot, Micronaut, and Helidon. These videos also show how to secure each API with OAuth 2.0.
+
+<div class="video-grid">
+  <div class="video">
+    <iframe width="267" height="150" src="https://www.youtube.com/embed/3J9uFVd3BoY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div class="video">
+    <iframe width="267" height="150" src="https://www.youtube.com/embed/w-qKailh3WQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div class="video">
+    <iframe width="267" height="150" src="https://www.youtube.com/embed/IG2uo4IP1QI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div class="video">
+    <iframe width="267" height="150" src="https://www.youtube.com/embed/Bj69rOIwQwY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+At the end of each video, I show how the [Okta CLI](https://cli.okta.com) allows you to create working examples for each framework with the `okta start` command.
+
+If you prefer reading and _copy pasta_ over video, check out these quick tutorials:
+
+- [Kickstart a Java REST API with Quarkus](/blog/2022/05/23/java-rest-api-quarkus)
+- [Start a Java REST API with Spring Boot](/blog/2022/05/25/java-rest-api-spring-boot)
+- [Launch a Java REST API with Micronaut](/blog/2022/05/31/java-rest-api-micronaut)
+- [Create a Java REST API with Helidon](/blog/2022/06/02/java-rest-api-helidon)
+
+## Java web frameworks without OAuth support
+
+You might get away with saying that JSF and Wicket don't have OAuth support. However, they both build on the Servlet API, so it is possible to use them with some of Java's independent-minded security frameworks.
+
+It's possible your favorite framework doesn't have a dedicated security plugin for OAuth, but that's not important if you can get _something_ to work, IMHO.
+
+## Java security frameworks
+
+A few Java security frameworks aren't tied to a specific web framework. I like to call them independent-minded, but honestly, they seem to struggle as volunteer-driven versus funded open source projects.
+
+### Apache Shiro
+
+Apache Shiro expects to operate in a servlet environment and can work with any framework based on servlets and filters. It has many [integrations](https://shiro.apache.org/integration.html)&mdash;such as Play, Wicket, and Lift&mdash;but most are dated and unmaintained.
+
+Shiro can be adapted to work with OAuth 2.0, as demonstrated by Brian Demers in [Build a Secure Java Application with Apache Shiro and OAuth 2.0](/blog/2020/05/11/java-shiro-oauth).
+
+### Pac4j
+
+Pac4j is a security framework with many sub-projects implementing OAuth 2.0, OIDC, and many others, like SAML.
+
+A gentle reminder:
+
+https://twitter.com/i/status/1379871695163510795
+
+When a framework doesn't have OAuth support, I've been able to use Pac4J successfully. For example, with [Play framework](/blog/2017/10/31/add-authentication-to-play-framework-with-oidc) and [plain ol' Java EE](/blog/2018/09/12/secure-java-ee-rest-api#use-pac4j-to-lock-down-your-java-rest-api).
+
+You don't hear much about Pac4J in the Java ecosystem. I'm not sure why that is. I've heard its quality isn't that great, and I also believe it suffers because it's not tied to a popular framework.
+
+It's kinda like the every-language-needs-a-framework concept. Maybe every security framework needs a web framework to help it succeed?
+
+### Spring Security
+
+Spring Security has excellent integration with Spring Boot and it depends on the Spring Framework. However, you can use it to secure a [Java EE app that uses filters](/blog/2018/09/12/secure-java-ee-rest-api#secure-your-java-rest-api-with-spring-security).
+
+It has [OAuth 2.0](https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html), [OpenID Connect](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/index.html), and even [SAML](https://docs.spring.io/spring-security/reference/servlet/saml2/index.html) support.
+
+It's a shame Spring Security has to support SAML. 😞
+
+Apparently, there's a demand for SAML from Spring Security customers and users. Or maybe it's just misinformed decision-makers? Are developers still implementing SOAP APIs? I hope not! If not, why are developers still using SAML?!
+
+OIDC does it better. Just use it!
+
+## OAuth 2.0 authorization servers
+
+Up to this point, all the things I've talked about are OAuth clients. They require an identity provider to do OAuth flows. An identity provider has OAuth 2.0 authorization servers. Most of the prominent providers have their own proprietary implementation.
+
+However, there are a couple of open source Java-based authorization servers you can use:
+
+- [Keycloak](https://www.keycloak.org/)
+- [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
+- [WSO2 Identity Server](https://github.com/wso2/product-is)
+
+Since I work for a company that is an OAuth 2.0 identity provider, it's my duty to inform you that using one of these is called "building your own." We recommend buying instead. From us, of course. 😉
+
+In reality, if you're a developer, you're always going to _build your own_ somewhat. Even if you use a library like Spring Security, you can't just add it to your project and expect everything to work without writing any code. Granted, it might only require ten lines of code, but you're still building _something_.
+
+You can't just buy Okta and secure a Java API with it without writing code.
+
+## What about JavaFX?
+
+JavaFX is often touted as an excellent way to build desktop apps. The folks that recommend it are typically JavaFX experts and Java enthusiasts that hate JavaScript.
+
+JavaFX's OAuth support is virtually non-existent, and there don't seem to be many folks interested in fixing that.
+
+As one of the few Java Champions that likes JavaScript, I poked the bear several weeks ago.
+
+https://twitter.com/i/status/1520048029641986048
+
+My guess is this won't be solved anytime soon. I'd love to be wrong.
+
+## Do Scala and Kotlin support OAuth?
+
+Scala was all the rage in the mid-2010s. When the Play framework team announced they were writing Play 2 in Scala, the JVM world rejoiced. I was interested in it too. I took a course from Martin Odersky, learned a ton, and reached the top of Hacker News when I [live-blogged about it](https://raibledesigns.com/rd/entry/play_2_0_a_web) at Devoxx Belgium in 2011.
+
+Since then, Play's popularity has waned, Spring Boot has taken over, and Kotlin is a JVM language that many developers admire.
+
+The good news for these languages is they have excellent Java interop. In theory, you should be able to use any Java security library for your Scala or Kotlin app. However, each language has its own web frameworks, so it might not be that easy.
+
+The most popular Scala web framework is still Play and it does have [OAuth support](https://www.playframework.com/modules/oauth-1.0/home). Kotlin has Ktor, and it has easy-to-use [OAuth support](https://ktor.io/docs/oauth.html) too.
+
+We published a tutorial about [Ktor and Okta](/blog/2020/10/19/ktor-kotlin) in late 2020.
+
+## Learn more about Java and OAuth
+
+I hope you've enjoyed this overview of Java and its OAuth support. Please hit me up on Twitter [@mraible](https://twitter.com/mraible) or use the comment feature below if you have any questions!
+
+If you're a Java developer, you might like these posts:
+
+- [A Quick Guide to Regular Expressions in Java](/blog/2022/04/19/java-regex)
+- [Authenticate from the Command Line with Java](/blog/2022/04/11/java-cli-device-grant)
+- [A Quick Guide to Elasticsearch with Spring Data and Spring Boot](/blog/2022/02/16/spring-data-elasticsearch)
+
+I recommend these in-depth posts about OAuth:
+
+- [What the Heck is OAuth?](/blog/2017/06/21/what-the-heck-is-oauth)
+- [An Illustrated Guide to OAuth and OpenID Connect](/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
+- [It's Time for OAuth 2.1](https://aaronparecki.com/2019/12/12/21/its-time-for-oauth-2-dot-1)
+
+These videos are fantastic too:
+
+- 📺 [An Illustrated Guide to OAuth and OpenID Connect](https://www.youtube.com/watch?v=t18YB3xDfXI)
+- 📺 [What is OAuth and why does it matter?](https://www.youtube.com/watch?v=KT8ybowdyr0)
+- 📺 [What's going on with the OAuth 2.0 Implicit flow?](https://www.youtube.com/watch?v=CHzERullHe8)
+
+And check out [the Okta CLI](/blog/2020/12/10/introducing-okta-cli). It's the easiest way to get started with Okta!
+
+If you're on social media, follow us: { [Twitter](https://twitter.com/oktadev), [LinkedIn](https://www.linkedin.com/company/oktadev), [Facebook](https://www.facebook.com/oktadevelopers) }. If you like learning via video, subscribe to [our YouTube channel](https://youtube.com/oktadev)! It's pretty awesome. 😊
