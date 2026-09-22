@@ -1,0 +1,70 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import {
+  balancedElement,
+  compareCode,
+  compareInline,
+  compareProse,
+  elementByClass,
+  extract,
+  normalizeText,
+} from "../scripts/verify-migration.js";
+
+test("balancedElement and elementByClass find the whole article", () => {
+  const html =
+    '<body><div class="x"><div class="BlogPost-content"><p>a</p><div><p>b</p></div></div><p>after</p></div></body>';
+  assert.equal(
+    elementByClass(html, "BlogPost-content"),
+    '<div class="BlogPost-content"><p>a</p><div><p>b</p></div></div>',
+  );
+  assert.equal(balancedElement("<p>x</p><p>y</p>", 0), "<p>x</p>");
+});
+
+test("normalizeText folds typography, entities and callout markers", () => {
+  assert.equal(
+    normalizeText("It’s &ldquo;fine” — really… &amp; done ①"),
+    'It\'s "fine" - really... & done',
+  );
+  assert.equal(normalizeText("foo(); // (1)\nbar <2>"), "foo(); // bar");
+});
+
+test("extract separates prose, code and inline code and drops the TOC", () => {
+  const html =
+    '<div class="table-of-contents"><ul><li><a href="#a">A</a></li></ul></div>' +
+    "<h2>A heading</h2><p>Para with <code>x</code>.</p>" +
+    '<pre class="highlight"><code><span class="k">let</span> a = 1; <i class="conum" data-value="1"></i><b>(1)</b>\n</code></pre>' +
+    "<ul><li>item one</li><li>item &amp; two</li></ul>" +
+    '<p id="changelog"><strong>Changelog</strong></p><ul><li>gone</li></ul>';
+  const r = extract(html);
+  assert.deepEqual(r.prose, [
+    "A heading",
+    "Para with x.",
+    "item one",
+    "item & two",
+  ]);
+  assert.deepEqual(r.code, ["let a = 1;"]);
+  assert.deepEqual(r.inline, ["x"]);
+});
+
+test("compareProse reports live blocks that have no counterpart", () => {
+  const live = [
+    "One two three four",
+    "Five six seven eight",
+    "Nine ten eleven",
+  ];
+  const mine = ["One two three four", "Five six seven eight nine"];
+  const r = compareProse(live, mine);
+  assert.deepEqual(r.missing, ["Nine ten eleven"]);
+  assert.deepEqual(r.extra, []);
+});
+
+test("compareCode matches blocks out of order and reports the first differing line", () => {
+  const r = compareCode(["a\nb", "c"], ["c", "a\nB"]);
+  assert.equal(r.liveCount, 2);
+  assert.equal(r.mismatches.length, 1);
+  assert.deepEqual([r.mismatches[0].live, r.mismatches[0].mine], ["b", "B"]);
+});
+
+test("compareInline treats spans as a multiset", () => {
+  assert.deepEqual(compareInline(["ab", "ab", "cd"], ["ab", "cd"]), ["ab"]);
+});
