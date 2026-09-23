@@ -21,6 +21,9 @@
   "license": "ISC",
   "description": "",
   "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
     "@11ty/eleventy-img": "^6.0.4",
