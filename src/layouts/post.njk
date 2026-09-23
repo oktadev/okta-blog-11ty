@@ -100,7 +100,7 @@ layout: base
         <div id="comment-policy" class="comment-policy bg-okta-cream text-okta-carbon rounded p-4">
           <p class="font-bold">Okta Developer Blog Comment Policy</p>
           <p>We welcome relevant and respectful comments. Off-topic comments may be removed.</p>
-          {% if site.baseUrl != "https://developer.okta.com" %}
+          {% if not site.isProduction %}
             <p class="mt-1 italic">Comments are disabled outside production.</p>
           {% endif %}
         </div>
@@ -113,7 +113,7 @@ layout: base
 </article>
 
 {# devforum only accepts embeds served from developer.okta.com. #}
-{% if comments != false and site.baseUrl == "https://developer.okta.com" %}
+{% if comments != false and site.isProduction %}
 {% js %}
 (function () {
   var el = document.getElementById("discourse-comments");
