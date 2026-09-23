@@ -16,3 +16,4 @@ Files:
 - `public/img/megaphone.svg`
 - `public/img/chevron-right.svg`
 - `src/_includes/icons/rss.svg`
+- `src/_includes/icons/search.svg`
