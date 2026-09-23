@@ -10,7 +10,7 @@ PRs are the final step in our editorial process for contributors. PRs created wi
 
 ## Getting going
 
-You need Node 24, the version the site is built with in GitHub Actions.
+You need Node 24. `.nvmrc` pins it, so `nvm use` (or `fnm use`) selects it, and `package.json` declares it under `engines`, so `npm install` on an older Node prints a warning.
 
 Fork and clone your forked repo, then run `npm ci` to install dependencies. That also enables the repo's git hooks (see [Git hooks and CI](#git-hooks-and-ci)).
 
@@ -73,6 +73,8 @@ Two optional keys worth knowing:
   ```yaml
   canonical: https://auth0.com/blog/full-stack-java-with-react-spring-boot-and-jhipster/
   ```
+
+- `comments: false` leaves the Discourse comment thread off a post. Posts migrated from the old site carry `discourse_topic_id`, which points at their existing forum topic; a post without one gets a topic created from its URL the first time it's viewed in production.
 
 ### Markdown conventions
 
@@ -142,6 +144,15 @@ For example:
 
 Every parameter, with rendered examples for each framework, is documented on the site at [/blog/integrator-setup/](https://developer.okta.com/blog/integrator-setup/). Screenshots of the Admin Console are discouraged because they're hard to keep up to date.
 
+## Site integrations
+
+Two third-party services are wired into every page, and both behave differently outside production:
+
+- **Search** is Coveo, shared with the rest of developer.okta.com. It loads on every page, including `npm start`, and every ID, endpoint and option it uses lives in `public/js/search/config.js`. Read the warnings in that file and in `public/js/search/token.js` before changing anything: the token storage key is shared with the docs site on the same origin.
+- **Comments** are Discourse threads on devforum.okta.com, rendered below each post by `src/_includes/comments.njk`. The forum only accepts embeds served from developer.okta.com, so locally and on deploy previews you see the comment policy with a "Comments are disabled outside production" note instead of the thread.
+
+Redirects and the site's security headers live in `vercel.json`.
+
 ## Git hooks and CI
 
 `npm ci` (through the `prepare` script) points git at the hooks in `.githooks/`, so they run without any setup:
@@ -153,7 +164,7 @@ On GitHub, three workflows in `.github/workflows/` cover every push to `main` an
 
 - **CI** (`ci.yml`) runs `npm run validate`.
 - **Build** (`build.yml`) runs `npm run build` and `npm run smoke`, and uploads the built site. On a push to `main` it deploys that build to production.
-- **Deploy Preview** (`preview.yml`) runs after Build finishes for a pull request. It deploys the uploaded site to `https://deploy-preview-<PR number>--okta-blog-11ty.vercel.app` and links it in a comment on the PR.
+- **Deploy Preview** (`preview.yml`) runs after Build finishes for a pull request. It deploys the uploaded site to `https://deploy-preview-<PR number>--okta-blog-11ty.vercel.app`, generating the Vercel routing from the PR's own `vercel.json` so redirect and header changes show on the preview, and links it in a comment on the PR.
 
 ## License
 
