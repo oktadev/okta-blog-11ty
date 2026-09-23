@@ -5,9 +5,18 @@
 
     {# Primary navigation — hidden below xl, moves into the mobile menu once it exists #}
     <div class="hidden xl:flex items-center gap-6">
-      <label>
-        <input type="search" placeholder="Search..." class="px-3 py-2 rounded-sm bg-okta-white/10 placeholder-okta-white/60 focus:outline-none focus:ring-2 focus:ring-okta-white/30" />
-      </label>
+      {# Coveo searchbox, wired by /js/search/index.js. Keep the .CoveoOmnibox and
+         .CoveoAnalytics class names — Coveo finds them by class. Styles: public/css/coveo.css #}
+      <div class="relative w-56 min-w-0 shrink 2xl:w-72" role="search" aria-label="Search Okta Developer content">
+        {# Outside [data-search-bar], so Coveo can't overwrite it on init #}
+        <span class="pointer-events-none absolute left-3 top-1/2 z-1 -translate-y-1/2 text-okta-white opacity-60">{% include "icons/search.svg" %}</span>
+        <div data-search-bar data-pipeline="developer-okta-com">
+          <div class="flex h-10 items-center rounded-sm bg-okta-white/10 focus-within:ring-2 focus-within:ring-okta-white/30 xl:h-11">
+            <div class="CoveoOmnibox"></div>
+          </div>
+          <div class="CoveoAnalytics"></div>
+        </div>
+      </div>
 
       <div class="relative group">
         <button type="button" class="inline-flex items-center gap-1">
@@ -16,7 +25,8 @@
         </button>
         <div class="absolute right-0 top-8 hidden w-max rounded-sm bg-okta-white p-4 shadow-md group-hover:block group-focus-within:block z-51 before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-['']">
           <div class="absolute -top-2 right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-okta-white"></div>
-          <a href="https://devforum.okta.com/" class="block text-okta-carbon">Forum</a>
+          {% set forumUrl = "https://devforum.okta.com/" %}
+          <a href="{{ forumUrl }}" class="block text-okta-carbon">Forum</a>
           <hr class="my-2 border-t border-okta-carbon/50"/>
           {% set socialChannels = [
             { url: "https://github.com/oktadev", label: "Okta Developers on GitHub", icon: "github.svg" },
@@ -48,7 +58,7 @@
       </ul>
     </div>
 
-    {# Utility links — collapse into the mobile menu; the Sign Up CTA stays visible #}
+    {# Utility links and the Sign Up CTA collapse into the mobile menu #}
     <div class="ml-auto flex shrink-0 items-center gap-4">
       {% set utilityNav = [
         { url: "https://help.okta.com/", title: "Okta Docs" },
@@ -65,16 +75,108 @@
         {% endfor %}
       </ul>
 
-      {# Below xl this is a text link with an arrow; at xl it becomes the outlined button #}
-      <a class="inline-flex shrink-0 items-center gap-1 whitespace-nowrap font-medium text-okta-white xl:rounded xl:border xl:border-okta-white xl:px-6 xl:py-2" href="https://developer.okta.com/signup/">
-        Sign Up
-        <span class="inline-flex items-center xl:hidden">{% include "icons/arrow-right.svg" %}</span>
-      </a>
+      {% set signUpUrl = "https://developer.okta.com/signup/" %}
+      <a class="hidden xl:inline-flex shrink-0 items-center whitespace-nowrap font-medium text-okta-white rounded border border-okta-white px-6 py-2" href="{{ signUpUrl }}">Sign Up</a>
 
-      {# TODO: not wired up yet — needs a toggle and a panel holding the primary nav #}
-      <button type="button" class="xl:hidden inline-flex items-center" aria-expanded="false" aria-label="Open menu">
-        {% include "icons/menu.svg" %}
+      <button type="button" id="mobile-menu-button" class="xl:hidden inline-flex items-center" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span data-menu-icon="open">{% include "icons/menu.svg" %}</span>
+        <span data-menu-icon="close" class="hidden">{% include "icons/close.svg" %}</span>
       </button>
     </div>
   </div>
+
+  {# Mobile menu: the links that are hidden below xl. `relative z-52` puts it above
+     the promo banner (z-50) and the desktop Community popup (z-51). Styling is
+     deliberately minimal here; see #103. #}
+  <div id="mobile-menu" class="hidden xl:hidden relative z-52 bg-okta-dark-blue px-6 pb-6 text-okta-white">
+    <ul class="flex flex-col gap-4 py-4">
+      {% for item in primaryNav %}
+      <li>
+        <a class="inline-flex items-center gap-1 text-okta-white" href="{{ item.url | url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}{% if item.url == page.url %} aria-current="page"{% endif %}>
+          {{ item.title }}{% if item.external %}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+      {% for item in utilityNav %}
+      <li>
+        <a class="inline-flex items-center gap-1 text-okta-white" href="{{ item.url }}" target="_blank" rel="noopener">
+          {{ item.title }}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </li>
+      {% endfor %}
+      <li><a class="text-okta-white" href="{{ forumUrl }}">Forum</a></li>
+      <li>
+        <a class="inline-flex items-center gap-1 font-medium text-okta-white" href="{{ signUpUrl }}">
+          Sign Up<span class="inline-flex items-center">{% include "icons/arrow-right.svg" %}</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="flex gap-3" aria-label="Okta Developer social channels">
+      {% for channel in socialChannels %}
+      <li>
+        <a href="{{ channel.url }}" class="block text-okta-white" aria-label="{{ channel.label }}">{% include "icons/" + channel.icon %}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 </nav>
+
+{% js %}
+(function () {
+  var button = document.getElementById("mobile-menu-button");
+  var panel = document.getElementById("mobile-menu");
+  if (!button || !panel) return;
+
+  var openIcon = button.querySelector('[data-menu-icon="open"]');
+  var closeIcon = button.querySelector('[data-menu-icon="close"]');
+  // Matches Tailwind's `xl`, the width at which the desktop nav takes over.
+  var desktop = window.matchMedia("(min-width: 80rem)");
+
+  function isOpen() {
+    return button.getAttribute("aria-expanded") === "true";
+  }
+
+  function setOpen(open) {
+    panel.classList.toggle("hidden", !open);
+    button.setAttribute("aria-expanded", String(open));
+    button.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    if (openIcon) openIcon.classList.toggle("hidden", open);
+    if (closeIcon) closeIcon.classList.toggle("hidden", !open);
+  }
+
+  function close(returnFocus) {
+    if (!isOpen()) return;
+    setOpen(false);
+    if (returnFocus) button.focus();
+  }
+
+  function isOutside(target) {
+    return !panel.contains(target) && !button.contains(target);
+  }
+
+  button.addEventListener("click", function () {
+    setOpen(!isOpen());
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") close(true);
+  });
+
+  // Pointer and keyboard both dismiss when attention moves out of the menu.
+  document.addEventListener("click", function (event) {
+    if (isOpen() && isOutside(event.target)) close(false);
+  });
+  document.addEventListener("focusin", function (event) {
+    if (isOpen() && isOutside(event.target)) close(false);
+  });
+
+  // The desktop nav and an open panel must never both be on screen. Listen for
+  // the breakpoint crossing and also check on resize, since a `change` event
+  // isn't always delivered when the viewport is resized programmatically.
+  function closeIfDesktop() {
+    if (isOpen() && desktop.matches) close(false);
+  }
+  desktop.addEventListener("change", closeIfDesktop);
+  window.addEventListener("resize", closeIfDesktop);
+})();
+{% endjs %}

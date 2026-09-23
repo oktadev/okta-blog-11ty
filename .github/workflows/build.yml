@@ -40,6 +40,8 @@ jobs:
           echo "${{ github.event.pull_request.number }}" > pr_number.txt
           echo "${{ github.event.pull_request.head.sha }}" > pr_sha.txt
 
+      # vercel.json rides along so the preview is generated from the PR's copy;
+      # preview.yml runs from main and would otherwise read main's.
       - uses: actions/upload-artifact@v7
         if: github.event_name == 'pull_request'
         with:
@@ -47,6 +49,7 @@ jobs:
           path: |
             pr_number.txt
             pr_sha.txt
+            vercel.json
 
   deploy-production:
     runs-on: ubuntu-latest
