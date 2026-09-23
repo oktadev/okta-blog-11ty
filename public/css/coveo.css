@@ -1,0 +1,66 @@
+/* Coveo searchbox overrides. @import-ed by index.css — not a standalone sheet.
+   These can't be Tailwind utilities: Coveo's CDN stylesheet is unlayered, and
+   unlayered CSS beats @layer utilities regardless of specificity. The selector
+   chains match Coveo's own specificity, so load order breaks the tie. */
+
+/* .CoveoSearchInterface, added on init, sets min-width: 300px (overflows the
+   nav) and overflow: hidden (clips the suggestions dropdown). */
+[data-search-bar] {
+  @apply w-full min-w-0 max-w-none overflow-visible;
+}
+
+.magic-box,
+.magic-box .magic-box-input {
+  @apply h-full w-full border-none bg-transparent;
+}
+
+/* The underlay is Coveo's ghost-text layer, sitting under the real input. Both
+   need identical padding or typed text drifts out of alignment. */
+.magic-box .magic-box-input .magic-box-underlay,
+.magic-box .magic-box-input > input {
+  @apply h-full pl-10 pr-12 font-okta text-base;
+}
+
+.magic-box .magic-box-input > input {
+  @apply bg-transparent text-okta-white focus:outline-none;
+
+  &::placeholder {
+    @apply text-okta-white/60;
+  }
+}
+
+.magic-box .magic-box-clear {
+  @apply bg-transparent;
+
+  &::before {
+    @apply border-none;
+  }
+}
+
+.magic-box .magic-box-clear .magic-box-icon {
+  @apply ml-0 justify-center;
+}
+
+.magic-box .magic-box-clear .magic-box-icon::before {
+  @apply text-okta-white/70;
+}
+
+/* z-52 clears the promo banner (z-50) and the Community popup (z-51). */
+.CoveoOmnibox.magic-box .magic-box-suggestions {
+  @apply z-52 mt-1 overflow-hidden rounded-sm border border-okta-gravel/40 bg-okta-white shadow-lg;
+}
+
+.CoveoOmnibox.magic-box .magic-box-suggestion {
+  @apply px-3 py-2 font-okta text-sm font-normal text-okta-carbon;
+
+  &.magic-box-selected,
+  &:hover {
+    @apply bg-okta-cream;
+  }
+}
+
+/* Toggled by search/index.js. !important because Coveo's
+   .magic-box-hasSuggestion sets display as an inline style. */
+.CoveoOmnibox.magic-box.has-suggestions-hidden .magic-box-suggestions {
+  display: none !important;
+}

@@ -3,6 +3,10 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/preflight.css" layer(base);
 
+/* Coveo searchbox overrides. No layer() — those rules must stay unlayered to
+   beat Coveo's own unlayered CDN stylesheet. See the file for the full why. */
+@import "./coveo.css";
+
 @font-face {
   font-weight: 400;
   font-style: normal;
