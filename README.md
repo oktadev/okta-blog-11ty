@@ -1,4 +1,10 @@
-# OktaDev Blog 
+# OktaDev Blog
+
+## Contributions
+
+While we are an open project, we're not open to contributions without prior conversation. If you want to contribute to OktaDev blog content, please reach out to us at <dev-advocacy@okta.com>.
+
+PRs are the final step in our editorial process for contributors. PRs created without communication, approval, or outside the editorial process will be closed.
 
 ## Getting going
 
