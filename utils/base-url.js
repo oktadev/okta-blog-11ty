@@ -1,5 +1,7 @@
 const isDev = process.env.ELEVENTY_ENV === "development";
 
+export const PRODUCTION_ORIGIN = "https://developer.okta.com";
+
 // No trailing slash so it composes cleanly with paths; preview deploys use the Vercel URL.
 export function resolveBaseUrl() {
   if (isDev) return "http://localhost:8080";
@@ -12,11 +14,11 @@ export function resolveBaseUrl() {
   if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
-  return "https://developer.okta.com";
+  return PRODUCTION_ORIGIN;
 }
 
 export const baseUrl = resolveBaseUrl();
 
 // A preview deploy is any non-dev build not serving the production host. Used to
 // keep previews out of search results.
-export const isPreview = !isDev && baseUrl !== "https://developer.okta.com";
+export const isPreview = !isDev && baseUrl !== PRODUCTION_ORIGIN;
