@@ -29,6 +29,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import * as yaml from "js-yaml";
+// The site's slug rules, so xrefs land on the anchors markdown-it-anchor generates.
+import { slugify } from "../utils/markdown.js";
 
 const DEST_DIR = "src/blog/posts";
 const IMG_DIR = "public/img/blog";
@@ -79,15 +81,6 @@ export function repairFrontMatter(frontMatter) {
   yaml.load(text); // still invalid: let the caller see the parser's message
   return text;
 }
-
-// Same slug rules as utils/markdown.js, so xrefs land on the anchors that
-// markdown-it-anchor generates.
-export const slugify = (s) =>
-  s
-    .trim()
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-");
 
 // Jekyll `key="value" other=var` include arguments -> a Nunjucks object literal.
 export function liquidArgsToObject(args) {
