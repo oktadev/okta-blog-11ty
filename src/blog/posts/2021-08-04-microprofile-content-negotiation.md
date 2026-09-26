@@ -33,7 +33,7 @@ Around 2016, the Java EE specifications had started to stagnate and suffered fro
 
 Fast forward to today, Java EE has moved to [Jakarta EE](https://jakarta.ee/) under the [Eclipse Foundation](https://www.eclipse.org/org/foundation/) and many MicroProfile projects have matured into Jakarta EE projects.
 
-> **TIP:** Some projects change root packages as they move between projects. Anything starting with `javax.\*` may have moved to `jakarta.*` or `org.eclipse.*`.
+> **TIP:** Some projects change root packages as they move between projects. Anything starting with `javax.*` may have moved to `jakarta.*` or `org.eclipse.*`.
 
 ## What is Content Negotiation?
 

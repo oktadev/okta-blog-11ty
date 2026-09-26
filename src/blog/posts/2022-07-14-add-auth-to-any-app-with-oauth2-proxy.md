@@ -250,11 +250,11 @@ Once again, open your browser to `http://localhost:4180/echo` and open up your n
 
 You _could_ stop here, but you shouldn't. We still have a few issues: API clients are not supported, and we haven't talked about logging out.
 
-> **IMPORTANT:** For the next section, you will need an access token. You can use the access token from your last request's `x-access-token` header. Open your terminal and set an environment variable: `export TOKEN=\{your-token-value}`.
+> **IMPORTANT:** For the next section, you will need an access token. You can use the access token from your last request's `x-access-token` header. Open your terminal and set an environment variable: `export TOKEN={your-token-value}`.
 
 ## REST API clients
 
-For the sake of this post, I will consider any client that sets an `Authorization` HTTP header to be an API client. For example: `Authorization: Bearer \{access_token_here}`.
+For the sake of this post, I will consider any client that sets an `Authorization` HTTP header to be an API client. For example: `Authorization: Bearer {access_token_here}`.
 
 The API client probably cannot handle a redirect response but expects a `40x` status code to be returned.
 

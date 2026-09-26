@@ -198,7 +198,7 @@ Map<String, String> authArgs = Map.of(
     "scope", scopes); // the arg name IS the singular form of scope
 ```
 
-Using the fluent API, create a post request to `$\{issuer}/v1/device/authorize`, including the client ID and scopes.
+Using the fluent API, create a post request to `${issuer}/v1/device/authorize`, including the client ID and scopes.
 
 ```java
 HttpRequest request = HttpRequest.newBuilder()
