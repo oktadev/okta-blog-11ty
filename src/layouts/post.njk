@@ -65,7 +65,7 @@ layout: base
     {% set postAuthors = authors | authorFilter(author) %}
     {% for author in postAuthors %}
       {% if author.full_name %}
-        <div class="author-bio border-t border-okta-gravel pt-5 {{ 'mt-5' if loop.first }}">
+        <div class="author-bio border-b border-okta-gravel pb-5 {{ 'mt-5' if loop.first }}">
           <div class="flex items-center gap-2.5 flex-wrap">
             {% if author.avatar %}
               <a href="/blog/authors/{{ author.slug }}/" class="shrink-0 [&_img]:w-4 [&_img]:h-4">{% avatar author.avatar, "small", author.full_name %}</a>
@@ -82,7 +82,7 @@ layout: base
 
     {% set prevPost = collections.posts | getPreviousCollectionItem %}
     {% set nextPost = collections.posts | getNextCollectionItem %}
-    <nav class="prev-next flex justify-between border-b border-okta-gravel pb-4 text-base">
+    <nav class="prev-next flex justify-between text-base">
       {% if prevPost %}
         <a href="{{ prevPost.url }}" class="text-okta-blue no-underline" title="{{ prevPost.data.title }}"><span class="inline-flex items-center align-middle rotate-180">{% include "icons/arrow-right.svg" %}</span>&nbsp;Previous post</a>
       {% else %}<span></span>{% endif %}
