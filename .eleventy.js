@@ -11,6 +11,7 @@ import embedTwitter from "eleventy-plugin-embed-twitter";
 import Prism from "prismjs";
 import loadLanguages from "prismjs/components/index.js";
 import { register as registerLanguages } from "./utils/prism-languages.js";
+import { renderCallouts } from "./utils/callouts.js";
 
 import filters from "./utils/filters.js";
 import transforms from "./utils/transforms.js";
@@ -65,9 +66,9 @@ export default function (eleventyConfig) {
       highlight: (str, lang) => {
         const name = (lang || "").split("/")[0];
         if (name && name !== "text" && prismKnows(name))
-          return highlight(str, lang);
+          return renderCallouts(highlight(str, lang));
         const cls = ` class="language-${name || "text"}"`;
-        return `<pre${cls}><code${cls}>${md.utils.escapeHtml(str)}</code></pre>`;
+        return `<pre${cls}><code${cls}>${renderCallouts(md.utils.escapeHtml(str))}</code></pre>`;
       },
     });
   });
