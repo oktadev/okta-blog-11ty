@@ -419,6 +419,18 @@ test("asciidoc: blank lines inside code are kept, runs between blocks collapse",
   assert.equal(out, "A\n\n```\nx\n\n\n\ny\n```\n\nB\n");
 });
 
+test("asciidoc: substitution-stopping backslashes are dropped inside inline code", () => {
+  const out = bodyOf(
+    adoc(
+      "Run `export TOKEN=\\{your-token}` and match `javax.\\*`; keep `C:\\Users\\me` and `\\d+`.",
+    ).markdown,
+  );
+  assert.equal(
+    out,
+    "Run `export TOKEN={your-token}` and match `javax.*`; keep `C:\\Users\\me` and `\\d+`.\n",
+  );
+});
+
 test("asciidoc: unsupported macros are kept and reported", () => {
   const { markdown, notes } = adoc("Click btn:[OK] then footnote:[a note].");
   assert.ok(markdown.includes("btn:[OK]"));

@@ -481,7 +481,9 @@ class AsciidocConverter {
       .replace(/(`+)\+([^`\n]*?)\+\1/g, (_, ticks, code) =>
         mask(`${ticks}${code}${ticks}`),
       )
-      .replace(/(`+)([^`\n]*?)\1/g, (m) => mask(m))
+      // Backslashes that only stop AsciiDoc substitutions ("\\{attr}", "\\*")
+      // are not part of the code; Asciidoctor drops them in monospace too.
+      .replace(/(`+)([^`\n]*?)\1/g, (m) => mask(m.replace(/\\([{*_#])/g, "$1")))
       .replace(/pass:[a-z,]*\[([^\]]*)\]/g, (_, s) => mask(s))
       // +literal+: no space just inside the plus signs, none inside words.
       .replace(
