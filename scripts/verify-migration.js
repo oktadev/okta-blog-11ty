@@ -78,19 +78,32 @@ export function elementByClass(html, className) {
 // Typographic variation that differs between Asciidoctor/kramdown and
 // markdown-it, and callout markers, are normalized away before comparing.
 export function normalizeText(s) {
-  return decodeEntities(s)
-    .replace(/[‘’‚′]/g, "'")
-    .replace(/[“”„″]/g, '"')
-    .replace(/[–—−]/g, "-")
-    .replace(/…/g, "...")
-    .replace(/[ ​‌⁠﻿]/g, " ")
-    .replace(/[①-⑳]/g, "")
-    .replace(/\s*(?:<\d+>|\(\d+\))\s*$/gm, "")
-    .replace(/\(c\)|©/gi, "(c)")
-    .replace(/[®™]/g, "")
-    .replace(/\s+/g, " ")
-    .replace(/\s+([.,;:!?)])/g, "$1")
-    .trim();
+  return (
+    decodeEntities(s)
+      .replace(/[‘’‚′]/g, "'")
+      .replace(/[“”„″]/g, '"')
+      // Asciidoctor renders " -- " as thin-space, em dash, thin-space.
+      .replace(/\u2009[\u2013\u2014]\u2009/g, " -- ")
+      .replace(/[\u2013\u2014\u2212]/g, "-")
+      .replace(/\u2026/g, "...")
+      .replace(
+        /[\u21d0\u21d2\u2192\u2190]/g,
+        (c) =>
+          ({ "\u21d0": "<=", "\u21d2": "=>", "\u2192": "->", "\u2190": "<-" })[
+            c
+          ],
+      )
+      // Non-breaking and thin spaces are spaces; zero-width characters are nothing.
+      .replace(/[\u00a0\u2009]/g, " ")
+      .replace(/[\u200b\u200c\u2060\ufeff]/g, "")
+      .replace(/[①-⑳]/g, "")
+      .replace(/\s*(?:<\d+>|\(\d+\))\s*$/gm, "")
+      .replace(/\(c\)|©/gi, "(c)")
+      .replace(/[®™]/g, "")
+      .replace(/\s+/g, " ")
+      .replace(/\s+([.,;:!?)])/g, "$1")
+      .trim()
+  );
 }
 
 function stripTags(s) {
@@ -337,6 +350,17 @@ function localHtml(site, slug) {
   return readFileSync(file, "utf8");
 }
 
+// A post needs a look when anything the live site has is absent here: prose
+// blocks, whole code blocks, a differing code line, or inline code spans.
+export function needsAttention(result) {
+  return Boolean(
+    result.prose.missing.length ||
+    result.code.mismatches.length ||
+    result.code.liveCount !== result.code.mineCount ||
+    result.inline.length,
+  );
+}
+
 export async function verify(slug, site) {
   const live = extract(
     elementByClass(await fetchLive(slug), "BlogPost-content") ?? "",
@@ -378,10 +402,7 @@ async function main() {
   for (const slug of slugs) {
     try {
       const r = await verify(slug, site);
-      const bad =
-        r.prose.missing.length ||
-        r.code.mismatches.length ||
-        r.code.liveCount !== r.code.mineCount;
+      const bad = needsAttention(r);
       if (bad) failed++;
       rows.push(
         `${bad ? "✖" : "✓"} ${slug}: prose ${r.live.prose.length}/${r.mine.prose.length} blocks, ${r.prose.missing.length} missing, ${r.prose.extra.length} extra | code ${r.code.liveCount}/${r.code.mineCount}, ${r.code.mismatches.length} differ | inline code missing ${r.inline.length}`,
