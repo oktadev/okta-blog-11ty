@@ -7,6 +7,7 @@ import {
   compareProse,
   elementByClass,
   extract,
+  needsAttention,
   normalizeText,
 } from "../scripts/verify-migration.js";
 
@@ -63,6 +64,45 @@ test("compareCode matches blocks out of order and reports the first differing li
   assert.equal(r.liveCount, 2);
   assert.equal(r.mismatches.length, 1);
   assert.deepEqual([r.mismatches[0].live, r.mismatches[0].mine], ["b", "B"]);
+});
+
+test("needsAttention fails a post for any kind of loss, including inline code", () => {
+  const clean = {
+    prose: { missing: [], extra: [] },
+    code: { liveCount: 2, mineCount: 2, mismatches: [] },
+    inline: [],
+  };
+  assert.equal(needsAttention(clean), false);
+  assert.equal(needsAttention({ ...clean, inline: ["okta login"] }), true);
+  assert.equal(
+    needsAttention({ ...clean, prose: { missing: ["gone"], extra: [] } }),
+    true,
+  );
+  assert.equal(
+    needsAttention({ ...clean, code: { ...clean.code, mineCount: 1 } }),
+    true,
+  );
+  assert.equal(
+    needsAttention({
+      ...clean,
+      code: { ...clean.code, mismatches: [{ index: 0 }] },
+    }),
+    true,
+  );
+  // Extra prose on our side is reported but is not a loss.
+  assert.equal(
+    needsAttention({ ...clean, prose: { missing: [], extra: ["added"] } }),
+    false,
+  );
+});
+
+test("normalizeText folds Asciidoctor's arrows, dashes and zero-width characters", () => {
+  assert.equal(normalizeText(">=1.2.3 ⇐2.3.4"), ">=1.2.3 <=2.3.4");
+  assert.equal(normalizeText("tr — '+/'"), "tr -- '+/'");
+  assert.equal(
+    normalizeText("src/main/java/…​/demo/App.java"),
+    "src/main/java/.../demo/App.java",
+  );
 });
 
 test("compareInline treats spans as a multiset", () => {

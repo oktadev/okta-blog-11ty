@@ -10,11 +10,14 @@ import embedTwitter from "eleventy-plugin-embed-twitter";
 
 import Prism from "prismjs";
 import loadLanguages from "prismjs/components/index.js";
+import { register as registerLanguages } from "./utils/prism-languages.js";
 
 import filters from "./utils/filters.js";
 import transforms from "./utils/transforms.js";
 import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
+
+registerLanguages(Prism);
 
 function prismKnows(lang) {
   if (Prism.languages[lang]) return true;
