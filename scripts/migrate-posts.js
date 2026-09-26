@@ -425,6 +425,7 @@ class AsciidocConverter {
     this.attrs = {};
     this.notes = [];
     this.toc = null;
+    this.examples = 0;
   }
 
   note(message) {
@@ -511,13 +512,34 @@ class AsciidocConverter {
         /image:(\{%[^%]*%\}|[^\s[]+)\[([^\]]*)\]/g,
         (_, target, attrText) => {
           const a = parseMacroAttrs(attrText);
-          if (a.role) {
+          // Roles carry the float and width the old stylesheet applied:
+          // "pull-right img-100px" and the like.
+          const roles = a.role ? a.role.split(/\s+/) : [];
+          const width =
+            a.width ??
+            roles
+              .map((r) => r.match(/^(?:img-|w-)(\d+)(?:px)?$/)?.[1])
+              .find(Boolean);
+          const float = roles.includes("pull-right")
+            ? "float-right ml-4 mb-2"
+            : roles.includes("pull-left")
+              ? "float-left mr-4 mb-2"
+              : "";
+          const unmapped = roles.filter(
+            (r) =>
+              !/^(pull-right|pull-left|img-\d+px|w-\d+(px)?|BlogPost-avatar)$/.test(
+                r,
+              ),
+          );
+          if (unmapped.length) {
             this.note(
-              `inline image role "${a.role}" dropped (no equivalent class here)`,
+              `inline image role "${unmapped.join(" ")}" dropped (no equivalent here)`,
             );
           }
-          const img = imgShortcode(imageSrc(target), a.alt, a.width);
-          return a.link ? `[${img}](${this.linkTarget(a.link)})` : img;
+          let img = imgShortcode(imageSrc(target), a.alt, width);
+          if (a.link) img = `[${img}](${this.linkTarget(a.link)})`;
+          // Masked so the later "<" escaping leaves the wrapper alone.
+          return float ? mask(`<span class="${float}">${img}</span>`) : img;
         },
       )
       // Links: https://x[text], link:x[text] (any target), mailto:x[text]
@@ -960,7 +982,7 @@ class AsciidocConverter {
     }
 
     if (attrs?.options.includes("collapsible")) {
-      return `<details>\n<summary>${title || "Details"}</summary>\n\n${this.blocks(inner)}\n\n</details>`;
+      return `<details>\n<summary>${inlineHtml(title || "Details")}</summary>\n\n${this.blocks(inner)}\n\n</details>`;
     }
 
     if (kind === "sidebar") {
@@ -974,8 +996,12 @@ class AsciidocConverter {
       const head = title ? `**${style}: ${title}**` : `**${style}:**`;
       return this.quote(`${head}\n\n${body}`);
     }
-    this.note("example block unwrapped (its border is not reproduced)");
-    return withTitle(body);
+    // One grouped unit, as on the old site: an optional numbered caption,
+    // then the content (often a listing and its callout list).
+    const caption = title
+      ? `Example ${++this.examples}. ${title} {.example-title}\n\n`
+      : "";
+    return `<div class="example">\n\n${caption}${body}\n\n</div>`;
   }
 
   quote(text, attribution = []) {
@@ -1189,6 +1215,7 @@ class AsciidocConverter {
         );
       }
     }
+    if (items.length && items[0].callout) out.push("{.colist}");
     return out.join("\n");
   }
 
@@ -1269,6 +1296,15 @@ function splitCells(line) {
     else cells[cells.length - 1] += ch;
   }
   return cells;
+}
+
+// Markdown inside a <summary> tag isn't rendered, so convert the little
+// inline markup a block title can carry to HTML.
+function inlineHtml(text) {
+  return text
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^\w])_([^_]+)_(?!\w)/g, "$1<em>$2</em>");
 }
 
 export function convertAsciidoc(content) {
