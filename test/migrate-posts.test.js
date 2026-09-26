@@ -222,7 +222,7 @@ test("asciidoc: source blocks keep code verbatim, including callouts and prose-l
   const out = bodyOf(adoc(src).markdown);
   assert.equal(
     out,
-    "```java\npublic class A { // <1>\n  *not bold* _not italic_ NOTE: not an admonition\n  == not a heading\n}\n```\n\n1. the class\n2. more\n",
+    "```java\npublic class A { // <1>\n  *not bold* _not italic_ NOTE: not an admonition\n  == not a heading\n}\n```\n\n1. the class\n2. more\n{.colist}\n",
   );
 });
 
@@ -245,14 +245,13 @@ test("asciidoc: example, collapsible, sidebar, quote and open blocks", () => {
   assert.equal(
     bodyOf(markdown),
     [
-      "**Read a file**\n\nInside.",
+      '<div class="example">\n\nExample 1. Read a file {.example-title}\n\nInside.\n\n</div>',
       "<details>\n<summary>Click to see</summary>\n\nHidden.\n\n</details>",
       "> **OWASP**\n>\n> Side.",
       "> Orgs design systems.\n>\n> — Melvin Conway, [Conway\\'s Law](https://x.com/law)",
       '<div class="scrollable">\n\nOpen.\n\n</div>\n',
     ].join("\n\n"),
   );
-  assert.ok(notes.some((n) => n.startsWith("example block")));
   assert.ok(notes.some((n) => n.startsWith("sidebar block")));
 });
 
@@ -378,9 +377,9 @@ test("asciidoc: inline images, xrefs, anchors and roles", () => {
   );
   assert.equal(
     bodyOf(markdown),
-    '<a id="cfg"></a>\n## Config\n\n{% img {src: "d/j.jpg", alt: "Josh"} %} Text [here](#cfg) and [Other Section](#other-section).\n\n<a id="ack"></a>\n_Thanks._\n\nRight. {.text-right}\n',
+    '<a id="cfg"></a>\n## Config\n\n<span class="float-right ml-4 mb-2">{% img {src: "d/j.jpg", alt: "Josh"} %}</span> Text [here](#cfg) and [Other Section](#other-section).\n\n<a id="ack"></a>\n_Thanks._\n\nRight. {.text-right}\n',
   );
-  assert.ok(notes.some((n) => n.includes('inline image role "pull-right"')));
+  assert.ok(!notes.some((n) => n.includes("inline image role")));
   assert.ok(notes.some((n) => n.includes("xref by section title")));
 });
 
@@ -394,9 +393,9 @@ test("asciidoc: auto-numbered callouts, escaped URLs and indented commands in li
     out,
     [
       "```java\nint a; // <1>\nint b; // <2>\n```",
-      "1. first\n2. second",
+      "1. first\n2. second\n{.colist}",
       "```xml\n<a/> <!--1-->\n```",
-      "1. only",
+      "1. only\n{.colist}",
       "See `http://localhost:8080` and https://x.io.",
       "1. Run it:\n\n   ```\n   ./mvnw quarkus:dev\n   ```\n2. Test it:\n\n   ```\n   http :8080/hello\n   ```\n",
     ].join("\n\n"),
@@ -429,6 +428,17 @@ test("asciidoc: substitution-stopping backslashes are dropped inside inline code
     out,
     "Run `export TOKEN={your-token}` and match `javax.*`; keep `C:\\Users\\me` and `\\d+`.\n",
   );
+});
+
+test("asciidoc: avatar roles float the image at the role's width; summaries carry inline HTML", () => {
+  const { markdown, notes } = adoc(
+    "image:{% asset_path 'blog/d/josh.jpg' %}[alt=Josh Long,role=\"BlogPost-avatar pull-right img-100px\"] I collaborated with Josh.\n\n.`gateway/webpack.js`\n[%collapsible]\n====\nHidden.\n====",
+  );
+  assert.equal(
+    bodyOf(markdown),
+    '<span class="float-right ml-4 mb-2">{% img {src: "d/josh.jpg", alt: "Josh Long", header: "100"} %}</span> I collaborated with Josh.\n\n<details>\n<summary><code>gateway/webpack.js</code></summary>\n\nHidden.\n\n</details>\n',
+  );
+  assert.deepEqual(notes, []);
 });
 
 test("asciidoc: unsupported macros are kept and reported", () => {
