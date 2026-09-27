@@ -162,7 +162,8 @@ export function extract(html) {
             "",
           )
           .replace(/\s*<!--(?:\d+|\.)-->\s*$/, "")
-          .replace(/\s*(?:\(\d+\)|[①-⑳])\s*$/, ""),
+          .replace(/\s*(?:\(\d+\)|[①-⑳])\s*$/, "")
+          .replace(/\s+$/, ""),
       );
     // Asciidoctor's indent= attribute and list nesting shift whole blocks;
     // compare them without their common indentation.
