@@ -31,7 +31,7 @@ Without further ado, here's round two of developer relations pro tips from [Ashl
 
 ## Ashley McNamara, Developer Advocate at Microsoft
 
-[{% img {src: "devrel-protips-v2/ashleymcnamara.png", alt: "Ashley McNamara"} %}](https://twitter.com/ashleymcnamara)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/ashleymcnamara.png", alt: "Ashley McNamara", header: "100"} %}</span>](https://twitter.com/ashleymcnamara)
 
 1) Being a developer advocate requires you to be constantly learning but leading a life on the road only allows you to focus on what's in front of you. That OSCON talk isn't going to build itself, right?
 
@@ -43,7 +43,7 @@ Staying relevant is critical to the job. Focusing only on the technologies your 
 
 ## Bernd Rücker, Co-founder & Technologist of Camunda
 
-[{% img {src: "devrel-protips-v2/berndruecker.png", alt: "Bernd Rücker"} %}](https://twitter.com/berndruecker)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/berndruecker.png", alt: "Bernd Rücker", header: "100"} %}</span>](https://twitter.com/berndruecker)
 
 For me a proper DevRel person has to love programming as much as they love the product/topic they're advocating for. This is key, as it is really hard to fake true enthusiasm. And this enthusiasm is the top reason people get excited about your stuff as well.
 
@@ -63,7 +63,7 @@ My last comment is that probably the most hard DevRel work gets the least recogn
 
 ## Sebastian Daschner, Lead Java Developer Advocate at IBM
 
-[{% img {src: "devrel-protips-v2/DaschnerS.png", alt: "Sebastian Daschner"} %}](https://twitter.com/DaschnerS)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/DaschnerS.png", alt: "Sebastian Daschner", header: "100"} %}</span>](https://twitter.com/DaschnerS)
 
 **You're not the hero, they are the hero.**
 
@@ -85,7 +85,7 @@ I'm a command line guy, so the first and most helpful one for me is my zsh CLI, 
 
 ## Mario Gray, OSS/Developer Advocate at Pivotal
 
-[{% img {src: "devrel-protips-v2/mariogray.png", alt: "Mario Gray"} %}](https://twitter.com/mariogray)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/mariogray.png", alt: "Mario Gray", header: "100"} %}</span>](https://twitter.com/mariogray)
 
 **Ask yourself this: "What am I afraid of?"**
 
@@ -113,7 +113,7 @@ Find something trivial to contrast your work with - say things that make them th
 
 ## Mary Thengvall, Founder, Persea Consulting
 
-[{% img {src: "devrel-protips-v2/mary_grace.png", alt: "Mary Thengvall"} %}](https://twitter.com/mary_grace)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/mary_grace.png", alt: "Mary Thengvall", header: "100"} %}</span>](https://twitter.com/mary_grace)
 
 Before making any plans or goals, take the time to listen.
 
@@ -145,7 +145,7 @@ Lastly, [Zapier](https://zapier.com/) keeps everything in sync and automated as 
 
 ## Simon Maple, Director of Developer Relations, Snyk
 
-[{% img {src: "devrel-protips-v2/sjmaple.png", alt: "Simon Maple"} %}](https://twitter.com/sjmaple)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/sjmaple.png", alt: "Simon Maple", header: "100"} %}</span>](https://twitter.com/sjmaple)
 
 When promoting content there are two main goals when thinking about the number of page views you get from the post. Firstly create the biggest splash you can by encouraging people from many platforms and communities to visit your content, and secondly to ensure that once your initial content blast has occurred, you continue to get solid hits after the release hype, through natural organic searches. We're going to focus on the activities you can take to promote your content, when you publish it, to help create the biggest splash you can. As a wise man once told me, "If a blog post is published in the woods and nobody was there to watch it fall, did it make a noise?". I'm not sure I totally got it, and a lot may have been lost in translation. Ultimately, there's no point spending days/weeks writing a blog post, only to publish it without promotion and risk it failing because so few people read it and shared it, it didn't reach the masses. Once you've written a high-quality article, consider the following promotion activities:
 
@@ -183,7 +183,7 @@ Additionally, there are paid programs that can be used to promote content, but t
 
 ## Ted Neward, Computational Philosopher
 
-[{% img {src: "devrel-protips-v2/tedneward.png", alt: "Ted Neward"} %}](https://twitter.com/tedneward)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/tedneward.png", alt: "Ted Neward", header: "100"} %}</span>](https://twitter.com/tedneward)
 
 **Consider your "reach" carefully.**
 

@@ -39,9 +39,13 @@ Docker is the most popular way to build and share containers. _Dockerizing_ invo
 
 [[toc]]
 
+<div class="example">
+
 I'd like to thank many folks for their help with this post. **Benoit Sautel** for help with Gradle + Kotlin, **Ray Tsang** for help with Jib, **James Ward** for help with Knative, **Josh Long** for his assistance with Docker + Cloud Foundry, and **Joe Kutner** for his buildpacks support. Y'all rock! 🤘
 
-[{% img {src: "angular-docker/bsautel.jpg", alt: "Benoit Sautel"} %}](https://twitter.com/bsautel) [{% img {src: "angular-docker/saturnism.jpg", alt: "Ray Tsang"} %}](https://twitter.com/saturnism) [{% img {src: "angular-docker/_JamesWard.jpg", alt: "James Ward"} %}](https://twitter.com/_JamesWard) [{% img {src: "angular-docker/starbuxman.jpg", alt: "Josh Long"} %}](https://twitter.com/starbuxman) [{% img {src: "angular-docker/codefinger.jpg", alt: "Joe Kutner"} %}](https://twitter.com/codefinger) {.avatar-row}
+[{% img {src: "angular-docker/bsautel.jpg", alt: "Benoit Sautel", header: "100"} %}](https://twitter.com/bsautel) [{% img {src: "angular-docker/saturnism.jpg", alt: "Ray Tsang", header: "100"} %}](https://twitter.com/saturnism) [{% img {src: "angular-docker/_JamesWard.jpg", alt: "James Ward", header: "100"} %}](https://twitter.com/_JamesWard) [{% img {src: "angular-docker/starbuxman.jpg", alt: "Josh Long", header: "100"} %}](https://twitter.com/starbuxman) [{% img {src: "angular-docker/codefinger.jpg", alt: "Joe Kutner", header: "100"} %}](https://twitter.com/codefinger) {.avatar-row}
+
+</div>
 
 > **NOTE:** You can also [watch this tutorial as a screencast](https://youtu.be/BKepFaIwCvo)!
 
@@ -496,6 +500,8 @@ In the previous sections, you learned how to deploy your Angular and Spring Boot
 
 Create a new `AuthService` service that will communicate with your Spring Boot API for authentication logic.
 
+<div class="example">
+
 **notes/src/app/shared/auth.service.ts**
 
 ```typescript
@@ -556,6 +562,9 @@ export class AuthService {
 1. Talk to the `/users` endpoint to determine authenticated status. A username will be returned if the user is logged in.
 2. When the user clicks a login button, redirect them to a Spring Security endpoint to do the OAuth dance.
 3. Logout using the `/api/logout` endpoint, which returns the Okta Logout API URL and a valid ID token.
+{.colist}
+
+</div>
 
 Create a `user.ts` file in the same directory, to hold your `User` model.
 

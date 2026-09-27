@@ -60,6 +60,8 @@ First, you need to generate a GPG key. You could do this directly on a YubiKey. 
 
 Start by generating a new key using `gpg`. If you already have a key, you can skip this first step:
 
+<div class="example">
+
 ```bash
 gpg --full-generate-key
 ```
@@ -106,8 +108,13 @@ Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o <8>
 6. Enter an optional comment.
 7. You will be prompted for a secret passphrase.
 8. Press `o' to save and exit.
+{.colist}
+
+</div>
 
 Now you have a key! You can view your secret keys at any time by running:
+
+<div class="example">
 
 ```bash
 gpg --list-secret-keys
@@ -122,6 +129,9 @@ ssb   rsa4096 2021-06-03 [E] [expires: 2023-06-03]
 ```
 
 1. make a note of the Key ID; you will need this for a few different steps below.
+{.colist}
+
+</div>
 
 Add an authentication sub-key for use with SSH for authentication—more on that below.
 
@@ -130,6 +140,8 @@ gpg --quick-add-key {your-key-id} rsa4096 auth 2y
 ```
 
 If you list the secret keys again, you can see the new key and capability:
+
+<div class="example">
 
 ```bash
 gpg --list-secret-keys
@@ -147,6 +159,9 @@ ssb   rsa4096 2021-06-03 [A] [expires: 2023-06-03] <3>
 1. The primary key, has the capabilities of signing `[S]` and certification `[C]`.
 2. The encryption `[E]` subkey.
 3. The new authentication `[A]` subkey.
+{.colist}
+
+</div>
 
 Now that you have your newly minted key, back them up!
 
@@ -157,6 +172,8 @@ Backups of your GPG keys should be stored offline. You are going through the pro
 > **TIP:** Pick a backup strategy that works for you, anything from storing the keys on a USB stick in a lock box, to a [printed paper key](https://wiki.archlinux.org/title/Paperkey), or you could [go all out](https://www.cloudflare.com/dns/dnssec/root-signing-ceremony/).
 
 Run the following commands to export the keys and trust store.
+
+<div class="example">
 
 ```bash
 gpg --armor --export > public-keys.asc <1>
@@ -172,6 +189,9 @@ gpg --armor --gen-revoke {your-key-id} > revocation.asc <4>
 2. Export all private keys.
 3. Export the trust store.
 4. Create a revocation certificate as well. Take a look at the [GnuPG docs](https://www.gnupg.org/faq/gnupg-faq.html#define_rev_cert) to learn more about key revocation.
+{.colist}
+
+</div>
 
 > **TIP:** The `--armor` argument outputs the key in a PEM format.
 
@@ -206,6 +226,8 @@ echo "use-standard-socket" >> ~/.gnupg/gpg-agent.conf
 
 Next, you will need to find the "keygrip" for the authentication key; this is different from the key id, run:
 
+<div class="example">
+
 ```bash
 gpg --list-secret-keys --with-keygrip
 ```
@@ -224,6 +246,9 @@ ssb   rsa4096 2021-06-03 [A] [expires: 2023-06-03]
 
 1. Don't confuse the Key ID with the "keygrip"
 2. The "keygrip" for the authentication `[A]` key.
+{.colist}
+
+</div>
 
 Update `~/.gnupg/sshcontrol` with the authentication "keygrip"; this allows the gpg-agent to use this key with SSH.
 
@@ -371,6 +396,8 @@ This command will open an interactive session; type `admin` to enable setting pr
 
 Run the following commands to update the card.
 
+<div class="example">
+
 ```txt
 gpg/card> admin <1>
 Admin commands are allowed
@@ -429,6 +456,9 @@ gpg/card> quit <9>
 7. Your preferred login name.
 8. The URL of where your public key is stored, GitHub serves them at `https://github.com/<username>.gpg`.
 9. Exit the program.
+{.colist}
+
+</div>
 
 If you run `gpg --card-status` again you will updated information stored on your card:
 
@@ -444,6 +474,8 @@ Login data .......: bdemers
 > **IMPORTANT:** Make sure you back up your keys before moving them; this is your last chance!
 
 Each key will need to be individual, the signature, encryption, and authentication keys. Edit the key by running:
+
+<div class="example">
 
 ```bash
 gpg --edit-key {your-key-id}
@@ -504,6 +536,9 @@ Save changes? (y/N) y
 6. Repeat the process for `key 2` the authentication key.
 7. You know the drill `keytocard`
 8. All done! Exit and save changes.
+{.colist}
+
+</div>
 
 > **TIP:** After moving your keys to smartcard like a YubiKey, running the `gpg --list-secret-keys` command will show a greater-than symbol `>` next to the `sec` and `ssb` listings:
 
@@ -565,6 +600,8 @@ ssb>  rsa4096 2021-06-03 [A] [expires: 2023-06-03]
 
 The last thing to do is update the trust store on the new computer:
 
+<div class="example">
+
 ```bash
 gpg --edit-key
 ```
@@ -592,6 +629,9 @@ gpg> q <3>
 1. Run the `trust` subcommand.
 2. Select `5` ultimately trust; ONLY do this for your key.
 3. Finished! Press `q` to exit.
+{.colist}
+
+</div>
 
 Your smartcard is now set up on multiple computers!
 

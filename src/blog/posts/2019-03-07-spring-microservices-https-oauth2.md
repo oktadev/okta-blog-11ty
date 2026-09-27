@@ -470,7 +470,9 @@ The last step you'll need to do is modify `SchoolController` (in the `school-ui`
 
 {% raw %}
 
-**Add an AccessToken to RestTemplate**
+<div class="example">
+
+Example 1. Add an AccessToken to RestTemplate {.example-title}
 
 ```java
 package com.okta.developer.docker_microservices.ui.controller;
@@ -541,6 +543,9 @@ public class SchoolController {
 3. Create an `OAuth2AuthorizedClient` from the `authentication`
 4. Get the access token from the authorized client
 5. Add the access token to the `Authorization` header
+{.colist}
+
+</div>
 
 {% endraw %}
 

@@ -124,6 +124,8 @@ This command generates a private key and certificate in the new `devcerts` direc
 
 Create an `nginx-default.conf.template` configuration file:
 
+<div class="example">
+
 ```conf
 server {
     listen 80;
@@ -156,12 +158,17 @@ server {
 1. Redirect all http requests to https.
 2. Windows and Mac hosts run Docker in a VM, the hostname `host.docker.internal` is used to point back to the "host" OS and the port.
 3. Set the proxy headers, so the downstream app will know what URL the client is using.
+{.colist}
+
+</div>
 
 ### Tie it all together with Docker
 
 Now that you have your Java application, the certificates, and the Nginx configuration ready to go, the only thing left is to start it up!
 
 Use `docker run` to start Nginx with the above files as volumes that configure the service.
+
+<div class="example">
 
 ```bash
 docker run \
@@ -176,6 +183,9 @@ docker run \
 1. The Nginx configuration file template.
 2. The path to the certificates.
 3. The port where your application is running on `localhost`.
+{.colist}
+
+</div>
 
 > **NOTE:** You can codify this solution using a [docker-compose.yml file](https://github.com/oktadev/mkcert-nginx-example/blob/main/docker-compose.yml) if you prefer!
 

@@ -41,15 +41,25 @@ In server-driven content negotiation, the client makes a request to a server wit
 
 At a high level, the conversation looks like this:
 
+<div class="example">
+
 **Client:**
 Hey Server!
 I'd like to look at `https://api.example.com/user/123`.
 I need your response in JSON.
 
+</div>
+
+<div class="example">
+
 **Server:**
 No Problem Client!  Here is that response... {.text-right}
 
+</div>
+
 Another more verbose example might be:
+
+<div class="example">
 
 **Client:**
 Hey Server!  I need `https://api.example.com/user/123`, preferably in JSON!
@@ -66,6 +76,10 @@ Host: api.example.com
 User-Agent: Client/2.0
 ```
 
+</div>
+
+<div class="example">
+
 **Server:**
 Hey Client!
 All I have is XML (sorry about that), the response is in English,
@@ -81,6 +95,8 @@ Content-Language: en
   ...
 </user>
 ```
+
+</div>
 
 I'd like to take this opportunity to apologize for using XML in this example 🤪
 
@@ -221,6 +237,8 @@ quarkus.http.enable-compression=true
 
 Make another HTTP request and include the `Accept-Encoding` header, and this time we will roll `2d6`:
 
+<div class="example">
+
 ```sh
 http :8080/roll dice==2d6 "Accept-Encoding: gzip"
 ```
@@ -242,6 +260,9 @@ Content-Length: 106
 ```
 
 1. The response `Content-Encoding` header was set (HTTPie automatically unzipped the request)
+{.colist}
+
+</div>
 
 > **NOTE:**
 >
@@ -256,6 +277,8 @@ Content-Length: 106
 It's 2021, and implementing internationalization (i18n) is still hard. In the Java world, i18n usually means creating a `Locale` object containing the user's language. It's a little clunky to use, but the JAX-RS API defines a way to resolve the user's `Locale`. Let's look at a couple of different ways to manage this.
 
 Add a new endpoint method in `DiceResource`:
+
+<div class="example">
 
 ```java
 @Path("/lang")
@@ -284,10 +307,15 @@ public Response getLang(@Context Request request) {
 3. Use the request to select the correct variant.
 4. If the selected variant is `null` return a `406`.
 5. Build and return a `200` response.
+{.colist}
+
+</div>
 
 > **TIP:** The `VariantBuilder` also supports different encodings and `MediaType` too.
 
 Try it out! Make a request to `/roll/lang`:
+
+<div class="example">
 
 ```sh
 http :8080/roll/lang "Accept-Language: de"
@@ -305,10 +333,15 @@ de
 ```
 
 1. Note the `Content-Language` header.
+{.colist}
+
+</div>
 
 The above approach works well for showing off the API, but it's a little limited in real-world usages as every endpoint method returns a `Response` and manages the headers directly. It would be nicer to extract this cross-cutting concern.
 
 Another option is to use request and response filters. The next example implements both `ContainerRequestFilter` and `ContainerResponseFilter` interfaces. Create a new class `LanguageFilter`:
+
+<div class="example">
 
 ```java
 package com.example;
@@ -354,10 +387,15 @@ public class LanguageFilter implements ContainerRequestFilter, ContainerResponse
 3. If a compatible `Variant` is not found, return a `406`.
 4. Add the resolved language string to the request context.
 5. Set the `Content-Language` response header.
+{.colist}
+
+</div>
 
 > **NOTE:** Having spent years dealing with the Servlet API, I often make incorrect assumptions about how the JAX-RS API is structured. With JAX-RS, the request and response filtering are different interfaces.
 
 This solution works with any endpoint; test out the original `/roll` endpoint again. Dice notation allows for basic math, too; try to roll `2d8+1` (two eight-sided dice plus one).
+
+<div class="example">
 
 ```sh
 http :8080/roll dice==2d8+1 "Accept-Language: en"
@@ -389,6 +427,8 @@ content-length: 154
 }
 ```
 
+</div>
+
 So far, so good!
 
 ## Different Responses for Different Clients
@@ -407,6 +447,8 @@ public class DiceResource  {
 If you make a request to the `/roll` endpoint now, you will get an ugly response due to a call to the `toString()` method on `ResultTree`. 🤢
 
 To fix this, create a new class `TextDiceTreeMessageBodyWriter.java` that implements `MessageBodyWriter<ResultTree>`, which renders something a little easier on the eyes:
+
+<div class="example">
 
 ```java
 package com.example;
@@ -453,8 +495,13 @@ public class TextDiceTreeMessageBodyWriter implements MessageBodyWriter<ResultTr
 2. This example keeps things simple and only supports the `ResultTree` class.
 3. Calling `Dice.debug` will turn the result into text.
 4. Write the string to the response stream.
+{.colist}
+
+</div>
 
 Time to test it out! Call `/roll` again roll `3d10k2+1` (roll three eight-sided dice and keep the highest two, then add one to the result):
+
+<div class="example">
 
 ```sh
 http :8080/roll dice==3d10k2 "Accept: text/plain"
@@ -476,6 +523,8 @@ content-length: 69
 --1 = 1
 ```
 
+</div>
+
 Much better! Change the `Accept` header value to `application/json` to see for yourself.
 
 ## Bonus: User Agent for Content Negotiation
@@ -487,6 +536,8 @@ Using the User-Agent header for content negotiation might not be your first choi
 One of my favorite examples of using the User-Agent for content negotiation is adding descriptive help to a REST server. I learned this trick from the [Spring Initializer project](https://github.com/spring-io/start.spring.io), which returns different results if you use HTTPie or curl: `https://start.spring.io`.
 
 To detect the user agent, add an enum that contains basic user-agent parsing logic.
+
+<div class="example">
 
 ```java
 package com.example;
@@ -520,10 +571,15 @@ public enum Agents {
 
 1. This regex looks for `{name}/{version}`
 2. Calling `Agents.parse(userAgent)` will return an enum associated with Curl, HTTPie, or `null`.
+{.colist}
+
+</div>
 
 > **WARNING:** User-Agent parsing is a much more complex topic; the above code works well because we are looking for a few specific clients.  This is not a general-purpose solution.
 
 Now that I have logic to figure out the user-agent, I'll create a helper class to wrap the logic of returning localized help text. Create a new class `Help.java`:
+
+<div class="example">
 
 ```java
 package com.example;
@@ -562,6 +618,9 @@ public class Help {
 2. Parse the user-agent header and return an `Agents` enum.
 3. Look up the help text key, or default to `help.generic`.
 4. Get and format a string from a `ResourceBundle`.
+{.colist}
+
+</div>
 
 Create the corresponding `ResourceBundle` in `src/main/resources/messages.properties` :
 
@@ -621,6 +680,8 @@ help.curl = \
 
 Lastly, create a new `HelpResource` class to tie everything together:
 
+<div class="example">
+
 ```java
 package com.example;
 
@@ -646,6 +707,9 @@ public class HelpResource {
 2. The `Request` object (needed to select the correct language `Variant`).
 3. The URI of the request.
 4. Pass everything into `Help.getHelp()` to return the localized help message.
+{.colist}
+
+</div>
 
 The default Quarkus application adds a static `index.html` file to use as the **root** resource; delete this file so the new `HelpResource` can take its place:
 
@@ -654,6 +718,8 @@ rm src/main/resources/META-INF/resources/index.html
 ```
 
 Put everything you learned together and make a request to `localhost:8080/`:
+
+<div class="example">
 
 ```sh
 http :8080/ "Accept-Language: en" "Accept: text/plain" "Accept-encoding: gzip"
@@ -675,6 +741,8 @@ Roll dice by making a request:
 Or get the result in JSON:
     http http://localhost:8080/roll?dice=2d6 "Accept: application/json"
 ```
+
+</div>
 
 ## Learn More About Java Web Services
 

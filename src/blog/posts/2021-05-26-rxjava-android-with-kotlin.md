@@ -120,6 +120,8 @@ Now it's time to modify the existing Android app, set up the networking, and add
 
 To add the needed library dependencies, paste the following lines into the `dependencies` block of the `app/build.gradle` file:
 
+<div class="example">
+
 ```groovy
 dependencies {
     ...
@@ -139,12 +141,17 @@ dependencies {
 3. The main [Retrofit](https://github.com/square/retrofit) dependency that includes the HTTP client you'll use
 4. The converter for [Gson](https://github.com/google/gson), used to deserialize data from the API automatically
 5. The [RxJava version of CallAdapter.Factory](https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2) from Retrofit, used to make the API calls reactive functions
+{.colist}
+
+</div>
 
 > **NOTE:** Please don't paste the `...` into Android Studio; it's just an indicator that some other code exists either above or below the code to paste.
 
 ### Set Up Networking
 
 This part consists of a few parts, the most important being the Retrofit client. Once you instantiate it, you'll use it for making all the API calls. Create a new package called `network` (just for the sake of code organization), and create the `RetrofitClientInstance` Kotlin file:
+
+<div class="example">
 
 ```kotlin
 package dev.dbikic.oktaloginexample.network
@@ -202,6 +209,9 @@ object RetrofitClientInstance {
 8. This line adds RxJava support to Retrofit, allowing you to define the API calls as reactive functions.
 9. Sets the `okHttpClient` as the HTTP client.
 10. Setter to the JWT token field. Once you log in to the app, you'll receive the JWT token from the Okta OIDC SDK and use it for every API call.
+{.colist}
+
+</div>
 
 In order for you to connect to the Spring Boot app, which is running at the localhost of your machine, from the Android emulator, you need to add the following line in the `application` tag of your `app/src/main/AndroidManifest.xml` file:
 
@@ -220,6 +230,8 @@ In order for you to connect to the Spring Boot app, which is running at the loca
 
 Let's talk a bit about the API you'll connect to. The idea of connecting the API from the Spring Boot app is to provide you with endpoints to create, read, update and delete user profiles. A user profile is a relatively simple model, consisting only of a unique id and an email. Create a new package `model` (just for organizational purposes, the same as the `network` package), and create two Kotlin files, `Profile`:
 
+<div class="example">
+
 ```kotlin
 package dev.dbikic.oktaloginexample.model
 
@@ -234,6 +246,9 @@ data class Profile(
 ```
 
 1. The `SerializedName` annotation from Gson allows you to define the name of a field when it's serialized/deserialized into/from JSON.
+{.colist}
+
+</div>
 
 And `ProfileRequest`:
 
@@ -249,6 +264,8 @@ data class ProfileRequest(
 ```
 
 The next step is defining the API of the Spring Boot app. It's pretty simple to do it with the help of Retrofit; you define endpoints as a function of an interface and configure them using annotations. Create the `ProfileService` interface in your `network` package:
+
+<div class="example">
 
 ```kotlin
 package dev.dbikic.oktaloginexample.network
@@ -290,6 +307,9 @@ interface ProfileService {
 6. `DELETE` annotation defines that this is a DELETE HTTP request.
 7. `Path` annotation defines the path to a specific profile via its `profileId`.
 8. `PUT` annotation defines that this is a PUT HTTP request.
+{.colist}
+
+</div>
 
 That's it! You're now ready to start using reactive networking in your app!
 
@@ -325,6 +345,8 @@ fun getJwtToken(): String {
 ```
 
 Modify the `HomeActivity` class (in `app/src/main/java/dev/dbikic/oktaloginexample/ui`):
+
+<div class="example">
 
 ```kotlin
 import dev.dbikic.oktaloginexample.network.ProfileService
@@ -374,8 +396,13 @@ class HomeActivity : AppCompatActivity() {
 3. You want to stop listening for the data stream updates once this activity is destroyed.
 4. Here, you're setting the JWT token from the logged-in user in your `RetrofitClientInstance`, with the help of the Okta OIDC SDK and the `OktaManager` class.
 5. Once the user is logged in, you want to fetch all the profiles from the API. You'll implement this method in the next step.
+{.colist}
+
+</div>
 
 Fetching profiles is done by creating a new `Observer`, which will observe all the changes from the `getProfiles()` data stream. Add the `fetchProfiles()` method to the end of `HomeActivity`:
+
+<div class="example">
 
 ```kotlin
 ...
@@ -404,12 +431,17 @@ private fun fetchProfiles() {
 6. The `onNext` consumers.  Here you'll receive the list of profiles in the UI thread, ready to be displayed to the user.
 7. Update the UI with the received profiles. This will be implemented in the next section.
 8. The `onError` consumer. This will be invoked when you receive an error from the API, or you mess things up with the deserialization.
+{.colist}
+
+</div>
 
 > **TIP:** You will have to add imports manually by clicking the red text and pressing the key combination `Option + Enter` on MacOS or `Alt + Enter` on Windows. This step may be required when pasting the code. You can also enable the "Add unambiguous imports on the fly" option (`Preferences | Editor | Auto Import`) to add imports automatically in Android Studio.
 
 ### Create Profiles
 
 Let's move on to creating a profile. The idea here is to create a new profile with a button click. For simplicity, you won't implement email validation; you'll just send the current timestamp as the profile's email. Add the `createProfile()` method to the bottom of `HomeActivity`:
+
+<div class="example">
 
 ```kotlin
 ...
@@ -436,6 +468,9 @@ private fun createProfile() {
 2. Send the new profile to the API. This method doesn't return an `Observable`, but it returns a `Completable`. The difference between the two is explained below this code snippet.
 3. Once the profile is created on the API, request all the profiles from the API.
 4. Display the new list of profiles, including the one you just created. You will implement this method in the next section of this blog post.
+{.colist}
+
+</div>
 
 In the example above, you used `Completable`. It's a type of observable that has only two consumers, `onComplete` and `onError`, as opposed to `Observable` which has three consumers (`onNext`, `onError` and `onComplete`).
 
@@ -446,6 +481,8 @@ With `Completable`, you simply want to know when an operation is done. Here is a
 ### Delete a Profile
 
 Code for deleting is practically the same as the one for creating the profile. The only difference is the API call that is being made. The rest of the logic is the same, once the `deleteProfile()` completes, fetch the profiles and display them on the UI. Add the `deleteProfiles()` method:
+
+<div class="example">
 
 ```kotlin
 ...
@@ -468,10 +505,15 @@ private fun deleteProfile(profile: Profile) {
 ```
 
 1. Send the id of the profile you want to delete to the method that does the delete API call.
+{.colist}
+
+</div>
 
 ### Update a Profile
 
 Updating profiles is similar to creating a profile; you'll create a new profile and do the update API call with the id of the profile you want to update. Add the `updateProfile()` method like this:
+
+<div class="example">
 
 ```kotlin
 ...
@@ -495,12 +537,17 @@ private fun updateProfile(oldProfile: Profile) {
 
 1. Sends the newly created profile to the method that updates the profile on the API, along with the old profile's id.
 2. Don't worry about this method, you'll implement it in the next section.
+{.colist}
+
+</div>
 
 And that's it! You've implemented all the logic and now it's time to add a simple UI.
 
 ## Set Up the Android UI
 
 In order for you to display the list of profiles, the UI of the `HomeActivity` will be changed a bit. Please replace the contents of the `activity_home` file (found in `app/src/main/res/layout`) with the following code:
+
+<div class="example">
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -566,8 +613,13 @@ In order for you to display the list of profiles, the UI of the `HomeActivity` w
 1. This is the recycler view, which will display the profiles.
 2. This is the create profile button.
 3. This is the sign-out button that ends the user's session.
+{.colist}
+
+</div>
 
 Next, create a new layout file that represents a single profile in the list. Call it `item_profile.xml`:
+
+<div class="example">
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -611,6 +663,9 @@ Next, create a new layout file that represents a single profile in the list. Cal
 
 1. Button that updates the email of the profile.
 2. Button that deletes the profile.
+{.colist}
+
+</div>
 
 Now you need to create an adapter that will display the list of profiles on the UI. Call it `ProfilesAdapter`:
 

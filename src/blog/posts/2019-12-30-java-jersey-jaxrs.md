@@ -68,6 +68,8 @@ Before you can start programming your REST application, you need to specify in w
 
 Inside your project, create a `src/main/java/com/okta/jerseyrest/configuration/` directory and the following `JerseyConfiguration` class:
 
+<div class="example">
+
 ```java
 package com.okta.jerseyrest.configuration;
 
@@ -86,6 +88,9 @@ public class JerseyConfiguration extends ResourceConfig { // <2>
 1. The class above is annotated with `Configuration`. This annotation will make sure Spring executes this class when the project starts.
 2. `JerseyConfiguration` extends from `ResourceConfig`, a class from Jersey that defines the resource configuration from your web application.
 3. Inform Jersey that it should scan all classes inside the `com.okta.jerseyrest.resource` package, and look for REST endpoits.
+{.colist}
+
+</div>
 
 When using Jersey, a class that contains the REST endpoints is called a resource, hence why the name `resource` in the package. A resource fulfills a role similar to the `Controller` in Spring.
 
@@ -163,6 +168,8 @@ Now that you have both the model and the payload classes, you can start working 
 
 Create the `src/main/java/com/okta/jerseyrest/resources` directory and create the following `TaskResource` class:
 
+<div class="example">
+
 ```java
 package com.okta.jerseyrest.resource;
 
@@ -195,6 +202,9 @@ public class TaskResource {
 2. The `@Singleton` annotation makes sure the same instance of `TaskResource` is used for every request. If you don't declare this annotation, your application will create a new instance every time your service receives a new request.
 3. To create the endpoint you need to define which HTTP method is going to be handled by your method. In the case of `createTask` the HTTP method is POST, which is represented by the annotation `@POST`.
 4. There is also the annotation `@Consumes`, which specifies what kind of data will come in the request. Since you're expecting a payload in JSON, you use `MediaType.APPLICATION_JSON` as the value of the annotation.
+{.colist}
+
+</div>
 
 You implemented all the code for your POST endpoint! Let's call it and see if it works. Start your application by executing the following command inside your project folder:
 
@@ -261,6 +271,8 @@ To update the task you are going to create a PUT request to the `tasks/<task_id>
 
 Inside the `TaskResource`, add the following method:
 
+<div class="example">
+
 ```java
 @PUT // <1>
 @Path("/{taskId}") // <2>
@@ -282,6 +294,9 @@ public Response updateTask(@PathParam("taskId") UUID taskId, TaskRequest request
 2. You're also defining the `@Path` annotation, which will contain the ID of the task you want to update. Since this is a dynamic value, you want to get it inside a variable.
 3. Jersey allows you to do that by defining an argument in the method and use the annotation `@PathParam` on it, informing the name of the param you want to retrieve.
 4. The `updateTask` method will search for a task with the given id inside the current tasks. If it finds, it proceeds to update it with the new description, otherwise, it will return a `404 - Not Found` response to the user.
+{.colist}
+
+</div>
 
 It's time to test if the endpoint is working. Start your application again and execute the following code:
 
@@ -317,6 +332,8 @@ To delete a task you're going to make a DELETE request to the URI `tasks/<task_i
 
 Add the following method to the `TaskResource` class:
 
+<div class="example">
+
 ```java
 @DELETE // <1>
 @Path("/{taskId}")
@@ -328,6 +345,9 @@ public Response deleteTask(@PathParam("taskId") UUID taskId) { // <2>
 
 1. As happened in the other endpoints, the `@DELETE` annotation specifies the HTTP method supported here.
 2. You're also specifying a `@PathParam` that will store the ID of the task you want to delete, similar to what you did in the `updateTask` method.
+{.colist}
+
+</div>
 
 To delete the task you're just removing it from the map, by passing the task ID.
 

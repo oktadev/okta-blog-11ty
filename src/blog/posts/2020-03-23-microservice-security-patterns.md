@@ -79,7 +79,7 @@ This is why security precautions need to be baked into your architecture.
 > - Community and Networking
 > - Education & Training
 
-[{% img {src: "microservice-security-patterns/secure-by-design.png", alt: "Secure by Design Book", header: "150"} %}](https://www.manning.com/books/secure-by-design)
+[<span class="float-right ml-4 mb-2">{% img {src: "microservice-security-patterns/secure-by-design.png", alt: "Secure by Design Book", header: "150"} %}</span>](https://www.manning.com/books/secure-by-design)
 
 I like the example from the [Secure by Design](https://www.manning.com/books/secure-by-design) book, by Dan Bergh Johnsson, Daniel Deogun, and Daniel Sawano. They show how you can develop a basic `User` object that displays a username on a page.
 
@@ -209,7 +209,7 @@ Let's Encrypt offers free certificates, and you can use its API to automate rene
 
 Let's Encrypt recommends you use **Certbot** to obtain and renew your certificates. Certbot is a free, open-source software tool for automatically using Let's Encrypt certificates on manually-administrated websites to enable HTTPS. The Electronic Frontier Foundation (EFF) created and maintains Certbot.
 
-[{% img {src: "microservice-security-patterns/certbot-logo.svg", alt: "Certbots", header: "200"} %}](https://certbot.eff.org/) The [Certbot](https://certbot.eff.org/) website lets you choose your web server and system, then provides the instructions for automating certificate generation and renewal. For example, [here's instructions for Ubuntu with Nginx](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx).
+[<span class="float-right ml-4 mb-2">{% img {src: "microservice-security-patterns/certbot-logo.svg", alt: "Certbots", header: "200"} %}</span>](https://certbot.eff.org/) The [Certbot](https://certbot.eff.org/) website lets you choose your web server and system, then provides the instructions for automating certificate generation and renewal. For example, [here's instructions for Ubuntu with Nginx](https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx).
 
 To use a certificate with Spring Boot, you just need some configuration.
 
@@ -494,7 +494,7 @@ Looking for more? We have a few microservice and security-focused blogs I think 
 - [The Hardest Thing About Data Encryption](/blog/2019/07/25/the-hardest-thing-about-data-encryption)
 - [The Dangers of Self-Signed Certificates](/blog/2019/10/23/dangers-of-self-signed-certs)
 
-[{% img {src: "microservice-security-patterns/api-security-book.png", alt: "API Security Book", header: "100"} %}](https://developer.okta.com/books/api-security) We also wrote a book! [API Security](https://developer.okta.com/books/api-security/) is a guide to building and securing APIs from the developer team at Okta.
+[<span class="float-right ml-4 mb-2">{% img {src: "microservice-security-patterns/api-security-book.png", alt: "API Security Book", header: "100"} %}</span>](https://developer.okta.com/books/api-security) We also wrote a book! [API Security](https://developer.okta.com/books/api-security/) is a guide to building and securing APIs from the developer team at Okta.
 
 If you liked this post and want notifications when we post others, please [follow @oktadev on Twitter](https://twitter.com/oktadev). We also have a [YouTube channel](https://youtube.com/c/oktadev) you might enjoy. As always, please leave a comment below if you have any questions.
 

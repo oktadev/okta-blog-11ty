@@ -71,6 +71,8 @@ Next, you'll configure Spring Cloud Gateway to forward routes to your legacy app
 
 Once again in your `application.yml` file, add the following block:
 
+<div class="example">
+
 ```yaml
 spring:
   cloud:
@@ -87,6 +89,9 @@ spring:
 1. The Base URL for the "legacy" application.
 2. Define the two paths to forward: `/profile` and `/`
 3. Includ OAuth access tokens to the downstream request
+{.colist}
+
+</div>
 
 If this is too much YAML for you, replace the above block with the following Java code in `DemoApplication`:
 
@@ -161,6 +166,8 @@ Start this application with `./mvnw jetty:run` and browse to `http://localhost:8
 You can now access the servlet application through Spring Cloud Gateway! Now it's time to secure it. To do that, add a servlet `Filter` to validate the access token added by Spring Cloud Gateway.
 
 Add a new class: `src/main/java/com/okta/example/BearerTokenFilter.java`
+
+<div class="example">
 
 ```java
 package com.okta.example;
@@ -241,10 +248,15 @@ public class BearerTokenFilter implements Filter {
 5. Add the `Jwt` object to the request
 6. Continue with the request
 7. Any failures respond with a 401 status code
+{.colist}
+
+</div>
 
 ## Update the Servlet with Access Token Data
 
 The last step is to update the `UserProfileServlet` with data from the JWT access token. To do so, replace the `doGet()` method with the one below:
+
+<div class="example">
 
 ```java
 @Override
@@ -261,6 +273,9 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 1. Pull the access token out of the request
 2. The "email" is in the "sub" claim
 3. Add the other token claims as attributes in order to render them in the `user-profile.jsp`
+{.colist}
+
+</div>
 
 ## Test Out Your Secure Application!
 

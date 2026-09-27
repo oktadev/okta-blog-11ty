@@ -66,6 +66,8 @@ application {
 
 Create a new directory called `spacefan`. Add an `app.jdl` file to it and populate it with the following code.
 
+<div class="example">
+
 ```
 application { // <1>
   config {
@@ -112,6 +114,8 @@ paginate Mission with pagination
 2. Entity definitions with validation rules.
 3. Relationships between entities.
 4. Pagination rules can be defined for each entity.
+
+</div>
 
 > **TIP:** You can find additional JDL samples on GitHub in the [jdl-samples repository](https://github.com/jhipster/jdl-samples).
 

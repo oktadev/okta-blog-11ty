@@ -363,6 +363,8 @@ npm i -D @schematics/angular@11
 
 Then modify `src/index_spec.ts` to have workspace options, app-generation options, and schema options.
 
+<div class="example">
+
 ```ts
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
@@ -409,6 +411,9 @@ describe('my-component', () => {
 3. Setup your schema options
 4. Run external schematics to setup your tree with a new application
 5. Verify the template was copied and contains expected values
+{.colist}
+
+</div>
 
 Run `npm test` and rejoice in your victory!
 

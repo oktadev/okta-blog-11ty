@@ -111,6 +111,8 @@ Now the fun part. Click the **Logout** button. The app has logged you out and se
 
 If you open `src/main/java/com/okta/example/LogoutExampleApplication.java`, you will see the following WebSecurityConfigurerAdapter class:
 
+<div class="example">
+
 ```java
 @Configuration
 static class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -135,7 +137,11 @@ static class SecurityConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
+</div>
+
 Change this class to:
+
+<div class="example">
 
 ```java
 @Configuration
@@ -172,6 +178,9 @@ static class SecurityConfig extends WebSecurityConfigurerAdapter {
 1. Inject the `ClientRegistrationRepository`
 2. Create a `OidcClientInitiatedLogoutSuccessHandler`
 3. Replace `logoutSuccessUrl("/")` with `logoutSuccessHandler(oidcLogoutSuccessHandler())`
+{.colist}
+
+</div>
 
 Restart the application and log in and out a few times. You will be prompted to log in every time you press the **Login** button.
 

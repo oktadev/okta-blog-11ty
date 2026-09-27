@@ -99,6 +99,8 @@ mp.jwt.verify.issuer=https://dev-13337.okta.com/oauth2/default
 mp.jwt.verify.publickey.location=https://dev-13337.okta.com/oauth2/default/v1/keys
 ```
 
+<div class="example">
+
 What annoys me about this configuration is that `issuer` is an OpenID Connect concept that allows you to find all the endpoints for an identity provider, including the location of the JWKS keys. If you go to `${issuer}/.well-known/openid-configuration`, it has the location of the public keys in the `jwks_uri` value!
 
 {% img {src: "java-oauth2-2022/jwks-uri.png", alt: "The publickey.location can be calculated!", header: "800"} %}
@@ -113,6 +115,8 @@ mp.jwt.verify.publickey.location=${mp.jwt.verify.issuer}/v1/keys
 ```
 
 **&lt;rant/&gt;**
+
+</div>
 
 #### Quarkus
 
@@ -241,11 +245,15 @@ Spring Security has excellent integration with Spring Boot and it depends on the
 
 It has [OAuth 2.0](https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html), [OpenID Connect](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/index.html), and even [SAML](https://docs.spring.io/spring-security/reference/servlet/saml2/index.html) support.
 
+<div class="example">
+
 It's a shame Spring Security has to support SAML. 😞
 
 Apparently, there's a demand for SAML from Spring Security customers and users. Or maybe it's just misinformed decision-makers? Are developers still implementing SOAP APIs? I hope not! If not, why are developers still using SAML?!
 
 OIDC does it better. Just use it!
+
+</div>
 
 ## OAuth 2.0 authorization servers
 

@@ -34,7 +34,7 @@ Because of the positive feedback from that tweet, I figured it'd be fun to talk 
 
 ## Aaron Parecki, Developer Advocate at Okta
 
-[{% img {src: "devrel-protips/aaronpk.png", alt: "Aaron Parecki"} %}](https://twitter.com/aaronpk)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/aaronpk.png", alt: "Aaron Parecki", header: "100"} %}</span>](https://twitter.com/aaronpk)
 
 Live demos - practice practice practice! Nobody wants to see you muddling through a live demo on stage, forgetting commands or making mistakes.
 
@@ -42,7 +42,7 @@ Never rely on the venue's internet for your demo! If you can, run a local copy o
 
 ## Bruno Borges, Developer Advocate at Microsoft
 
-[{% img {src: "devrel-protips/brunoborges.png", alt: "Bruno Borges"} %}](https://twitter.com/brunoborges)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/brunoborges.png", alt: "Bruno Borges", header: "100"} %}</span>](https://twitter.com/brunoborges)
 
 One thing I like to do from time to time is what I call a Mashup Presentation. It requires zero content creation but requires demo creation. When I do something like this, it involves simply curating existing content from other presentations (from within the company or 3rd-party authors that allowed you to reuse their material), and then work on a demo that uses most if not all pieces described in the material. It is a good way to compact and connect interesting topics and present to developers, so they don't need to figure out the intrinsic connections between the ideas. Plus, consumes less time.
 
@@ -52,7 +52,7 @@ Finally, I like to reuse as much material as possible, whether from myself or fr
 
 ## Chloe Condon, Developer Advocate at Microsoft
 
-[{% img {src: "devrel-protips/ChloeCondon.jpg", alt: "Chloe Condon"} %}](https://twitter.com/ChloeCondon)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/ChloeCondon.jpg", alt: "Chloe Condon", header: "100"} %}</span>](https://twitter.com/ChloeCondon)
 
 I've always described my role as an "extroverted engineer" (which is a little hilarious, as I myself am an ambivert). Being a Developer Advocate means having a lot of balls in the air at once- from creating content, working with "influencers", organizing meetups, speaking at conferences, communicating to engineering teams, working on demos, remembering to eat and breathe... it definitely requires an agile brain to keep all the plates spinning at once.
 
@@ -62,7 +62,7 @@ When it comes to creating content (especially at start-ups), it's easy enough to
 
 ## David Blevins, CEO Tomitribe
 
-[{% img {src: "devrel-protips/dblevins.png", alt: "David Blevins"} %}](https://twitter.com/dblevins)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/dblevins.png", alt: "David Blevins", header: "100"} %}</span>](https://twitter.com/dblevins)
 
 My number one, career-long tip would be to prepare and maintain an extra 20 minutes of material for any talk.
 
@@ -74,7 +74,7 @@ I have a couple of speaker-hacks I always use, but over time have needed less. F
 
 ## Heather Downing, Developer Advocate at Okta
 
-[{% img {src: "devrel-protips/quorralyne.jpg", alt: "Heather Downing"} %}](https://twitter.com/quorralyne.png)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/quorralyne.jpg", alt: "Heather Downing", header: "100"} %}</span>](https://twitter.com/quorralyne.png)
 
 One of the best tips I ever got, is to structure your presentation with the WHY - or the end result - first. Think about the way television shows have changed their approaches over the years. They used to begin with the credits for the program and then start after that. Nowadays it is much more compelling to drop a viewer right into the action of a story - BEFORE the title sequence. You have less than two minutes to capture an audience's interest in a way that will sustain them through an hour long presentation (or longer for a workshop). Tell them up front why you would use the code you are doing, but also communicate the end result once you do.
 
@@ -84,7 +84,7 @@ Effective speakers use social media tools to broadcast what you are talking abou
 
 ## James Governor, Redmonk co-founder
 
-[{% img {src: "devrel-protips/monkchips.png", alt: "James Governor"} %}](https://twitter.com/monkchips)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/monkchips.png", alt: "James Governor", header: "100"} %}</span>](https://twitter.com/monkchips)
 
 Say no to people &dash; a lot. No is your friend. Your good, decent, faithful friend. It is always there for you. By nature, DevRel folks tend to be eager to please, and love to be helpful. Being rigorous about what opportunities you take on, and those you pass up, is super important, for effectiveness and all round self-care. Say no to conference organizers, so no to your employers, say no to that extra trip that will mean you're on the road three weeks out of four. Say yes to family, say yes to friends, say yes to quiet evenings. Always be saying no.
 
@@ -94,7 +94,7 @@ _Editors note: Check out James' [Sympathy for the DevRel](https://redmonk.com/jg
 
 ## James Ward, Developer Advocate at Google
 
-[{% img {src: "devrel-protips/_JamesWard.png", alt: "James Ward"} %}](https://twitter.com/_JamesWard)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/_JamesWard.png", alt: "James Ward", header: "100"} %}</span>](https://twitter.com/_JamesWard)
 
 Live code in presentations is more engaging than code on slides. But it takes tons of practice to do well. I often rehearse my live coding segments dozens of times. So much that I could do them in my sleep, or while nervous on stage, and talking to the audience.
 
@@ -108,7 +108,7 @@ Leave your bubble. To get a different perspective, seek out opportunities to int
 
 ## Josh Long, Spring Advocate at Pivotal
 
-[{% img {src: "devrel-protips/starbuxman.jpg", alt: "Josh Long"} %}](https://twitter.com/starbuxman)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/starbuxman.jpg", alt: "Josh Long", header: "100"} %}</span>](https://twitter.com/starbuxman)
 
 "Je n'ai fait celle-ci plus longue que parce que je n'ai pas eu le loisir de la faire plus courte."
 "I have made this longer than usual because I didn't have the time to make it shorter." -Blaise Pascal
@@ -133,7 +133,7 @@ Use your platform responsibly. Don't be an ass.
 
 ## Lee Brandt, Developer Advocate at Okta
 
-[{% img {src: "devrel-protips/leebrandt.png", alt: "Lee Brandt"} %}](https://twitter.com/leebrandt)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/leebrandt.png", alt: "Lee Brandt", header: "100"} %}</span>](https://twitter.com/leebrandt)
 
 I recommend giving new talks at user groups first. This helps the user group leaders (who ALWAYS need speakers). It also helps you gauge interest in the topic and get questions/feedback to improve your talk.
 
@@ -143,7 +143,7 @@ For travel, buy a second set of everything you MUST have on a trip (shampoo, con
 
 ## Markus Eisele, DevRel Lead Lightbend, Inc.
 
-[{% img {src: "devrel-protips/myfear.jpg", alt: "Markus Eisele"} %}](https://twitter.com/myfear)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/myfear.jpg", alt: "Markus Eisele", header: "100"} %}</span>](https://twitter.com/myfear)
 
 **Social Media and Developer Relations:**
 
@@ -166,7 +166,7 @@ If you want to learn more, I can only suggest looking at [this complete presenta
 
 ## Mike Hartington, Developer Advocate for Ionic
 
-[{% img {src: "devrel-protips/mhartington.png", alt: "Mike Hartington"} %}](https://twitter.com/mhartington)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/mhartington.png", alt: "Mike Hartington", header: "100"} %}</span>](https://twitter.com/mhartington)
 
 Prepare to fail. Demos will fail, it's bound to happen. Always have a backup plan like a video.
 
@@ -176,7 +176,7 @@ Giving a talk can be nerve-wracking if you don't have a process. Best piece of a
 
 ## Randall Degges, Head of Developer Advocacy at Okta
 
-[{% img {src: "devrel-protips/rdegges.png", alt: "Randall Degges"} %}](https://twitter.com/rdegges)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/rdegges.png", alt: "Randall Degges", header: "100"} %}</span>](https://twitter.com/rdegges)
 
 One of the pro-tips that has served me well over the years: be authentic. Don't be afraid to swear, or just generally be yourself when giving presentations, writing, etc. Write like you speak, speak like you're talking to friends, and just be yourself. =)
 
@@ -184,7 +184,7 @@ Secondly, think about whatever it is you can do to have the biggest impact on de
 
 ## Ray Tsang, Developer Advocate at Google Cloud Platform
 
-[{% img {src: "devrel-protips/saturnism.png", alt: "Ray Tsang"} %}](https://twitter.com/saturnism)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/saturnism.png", alt: "Ray Tsang", header: "100"} %}</span>](https://twitter.com/saturnism)
 
 Rehearse! English is my second language. I rehearse out loud a lot for my presentations to get used to what I say and how I say it. During my rehearsals, I record myself to identify words that I can pronounce more clearly, catch any "uh" or "um" that can cause a distraction, watch for tone, pace, volume, and pauses. When I mess up, I restart from the beginning.
 
@@ -202,7 +202,7 @@ Always make slides, demo, and source accessible online so that others can try it
 
 ## Trisha Gee, Developer Advocate at JetBrains
 
-[{% img {src: "devrel-protips/trisha_gee.png", alt: "Trisha Gee"} %}](https://twitter.com/trisha_gee)
+[<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips/trisha_gee.png", alt: "Trisha Gee", header: "100"} %}</span>](https://twitter.com/trisha_gee)
 
 **Screencasts:**
 

@@ -27,6 +27,8 @@ My original `.travis.yml` configures a simple matrix build.  Matrix builds conta
 
 My project expands into just two builds, one for each Java (8 and 11):
 
+<div class="example">
+
 ```yaml
 language: java
 
@@ -58,6 +60,9 @@ after_success:
 3. Runs a script to setup environment variables
 4. Runs a build script
 5. Uploads code coverage to codecov.io
+{.colist}
+
+</div>
 
 > **TIP:** I intentionally keep as much logic out of `travis.yml` as possible because  this makes it easier to both troubleshoot build problems locally and migrate to a different service if/when needed.
 
@@ -76,6 +81,8 @@ GitHub will look at all of the YAML files in the `.github/workflows` directory i
 > **NOTE:** Why do all of these services still use the `yml` extension? The [yaml.org FAQ](https://yaml.org/faq.html) even recommends `yaml`! Is anyone out there still supporting DOS 8.3 file names? 😜
 
 To keep this simple, I'm going to use a template for an Apache Maven projects on the first pass to make sure everything is working and then circle back and set up a matrix build with my custom build scripts.
+
+<div class="example">
 
 ```yaml
 name: Java CI
@@ -104,6 +111,9 @@ jobs:
 2. Target OS
 3. Use Java 8
 4. Run a command
+{.colist}
+
+</div>
 
 > **CAUTION:** Scheduled jobs are ONLY run against the "default" branch. I lost hours of my life trying to figure this out.
 
@@ -136,6 +146,8 @@ Woot! Another successful build! 🟢
 ## Matrix Builds with GitHub Actions
 
 Matrix builds are configured a little differently in Actions than Travis CI, and it took some head-scratching before I understood the differences between the two. With Travis CI the configuration is declarative, unlike  GitHub Actions which uses an [expression syntax](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions) for everything. Variables are defined in a `matrix` element which are then used in "expressions" throughout your configuration. To build against multiple versions of Java I needed to define `strategy.matrix.java = [8, 11]` and then use the expression {% raw %}`${{ matrix.java }}`{% endraw %} where I previously had hard coded "1.8":
+
+<div class="example">
 
 ```yaml
 {% raw %}
@@ -171,6 +183,9 @@ jobs:
 3. Adds a user-friendly name; otherwise the default name will be "build (8)" and "build (11)"
 4. Updates the display name to be user-friendly
 5. Uses the `matrix.java` expression to set the version of java installed by the `setup-java` action
+{.colist}
+
+</div>
 
 Once again, commit and push to your branch. Then, head over to the "Actions" tab on your GitHub project to see the matrix build result.
 
@@ -239,6 +254,8 @@ The GitHub Actions context variables and Travis CI environment variables don't a
 
 Here is my final GitHub Actions `build.yml`:
 
+<div class="example">
+
 ```yaml
 {% raw %}
 name: Java CI
@@ -298,6 +315,9 @@ jobs:
 5. There is no generic way to detect if secrets are present so pick a name of a secret you have defined and wrap it in an if/else
 6. The `push` and `pull_request` event types from Travis CI line up with GitHub Actions, but the "cron" needs to be worked around with another bash if/else
 7. Tried and true print line debugging
+{.colist}
+
+</div>
 
 > **TIP:** If you are trying to figure out what properties are available in the build context, you can add a `run: echo {% raw %}"${{ toJson(github) }}"{% endraw %}` line to print them all.
 

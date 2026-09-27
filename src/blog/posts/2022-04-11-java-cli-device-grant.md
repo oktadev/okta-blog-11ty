@@ -99,6 +99,8 @@ To keep things all contained in a single `java` file, I'll use [JBang](https://w
 
 Create a new `DeviceGrant.java` and add `jackson-databind` as a dependency:
 
+<div class="example">
+
 ```java
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.13.2 // <1>
 
@@ -129,6 +131,9 @@ public class DeviceGrant {
 1. Make sure there is no space between the `//` and `DEPS`.
 2. Add the following imports, they will be used below.
 3. AWT? Yes, keep reading I'll get to that 😉
+{.colist}
+
+</div>
 
 Execute the application from the command line using:
 
@@ -232,6 +237,8 @@ Duration expiresIn = Duration.ofSeconds((int) authorizationResponse.get("expires
 
 Assuming all went well, the response returned from the IdP will be a JSON block (parsed into the above values) that looks like this:
 
+<div class="example">
+
 ```json
 {
   "device_code": "a-random-device-code", # <1>
@@ -249,6 +256,9 @@ Assuming all went well, the response returned from the IdP will be a JSON block 
 4. `verification_uri_complete` - A URL combining the `verification_uri` and `user_code` which can be shown directly to the user (if they can copy and paste) or rendered as a QR code (on a TV).
 5. `expires_in` - Number of seconds the user has to finish the flow before the codes expire.
 6. `interval` - Minimum frequency in seconds the application should wait while polling the server to see if the user has been authorized.
+{.colist}
+
+</div>
 
 ### User login via a browser
 
@@ -278,6 +288,8 @@ Whichever method you choose, the user will need to confirm the activation code b
 While the user is logging in, the application will continue making requests to the IdP, checking if the user has authorized the application.
 
 Using the `device_code` from the initial request, continue to poll the IdP for the authorization status until the code expires.
+
+<div class="example">
 
 ```java
 long pollUntilMillis = System.currentTimeMillis() + expiresIn.toMillis();
@@ -318,6 +330,9 @@ while (System.currentTimeMillis() < pollUntilMillis) {
 2. Set the `grant_type` to the URN for the device grant.
 3. Make a request to `/v1/token` to check the authorization status.
 4. If the response is a `200` inspect the body for an access token, otherwise continue the polling loop.
+{.colist}
+
+</div>
 
 If the user has not yet logged in, an error is returned with the `authorization_pending` message:
 

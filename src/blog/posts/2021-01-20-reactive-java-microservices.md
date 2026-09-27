@@ -156,6 +156,8 @@ git init # initialize git, so apps aren't created with their own .git
 
 Copy the JDL below and put it into a `reactive-ms.jdl` file.
 
+<div class="example">
+
 ```
 application {
   config {
@@ -260,6 +262,9 @@ deployment { // <8>
 6. JHipster 7 supports Cypress! It seems to be more reliable than Protractor.
 7. Make sure and specify `microservice` as the application type for the blog and store apps.
 8. JDL allows you to create Docker Compose and Kubernetes deployments too!
+{.colist}
+
+</div>
 
 > **TIP:** See [application configuration options](https://www.jhipster.tech/jdl/applications#available-application-configuration-options) to see the possible values for the above configuration options.
 

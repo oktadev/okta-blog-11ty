@@ -117,6 +117,8 @@ Let's have some fun with this API example and use the electric VWs for our data 
 
 Add Eureka registration, sample data initialization, and a reactive REST API to `src/main/java/.../CarServiceApplication.java`:
 
+<div class="example">
+
 ```java
 package com.example.carservice;
 
@@ -231,6 +233,9 @@ class CarController { // <8>
 8. `CarController` class that uses `CarRepository` to perform CRUD actions
 9. Spring WebFlux returns a `Mono` publisher for single objects
 10. Return a `Flex` publisher for multiple objects
+{.colist}
+
+</div>
 
 > **NOTE:** If you're using an IDE to build your projects, you'll need to [setup Lombok for your IDE](https://www.baeldung.com/lombok-ide).
 
@@ -669,6 +674,8 @@ public Flux<car> faveCars(@RegisteredOAuth2AuthorizedClient("okta") OAuth2Author
 
 If you configured CORS in your gateway, you can test it works with WebTestClient. Replace the code in `ApiGatewayApplicationTests` with the following.
 
+<div class="example">
+
 ```java
 package com.example.apigateway;
 
@@ -726,6 +733,9 @@ public class ApiGatewayApplicationTests {
 2. Create a new JWT
 3. Return the same JWT when it's decoded
 4. Add the JWT to the `Authorization` header with a `Bearer` prefix
+{.colist}
+
+</div>
 
 I like how `WebTestClient` allows you to set the security headers so easily!
 

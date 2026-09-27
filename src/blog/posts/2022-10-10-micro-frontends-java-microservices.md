@@ -215,7 +215,7 @@ When you're learning concepts like micro frontends, it's often helpful to look a
 The gateway's `webpack.microfrontend.js` handles specifying the shared dependencies and components between apps. The `src/main/webapp/app/shared/layout/menus/entities.tsx` file contains the menu items for each micro frontend.
 
 <details>
-<summary>`gateway/webpack/webpack.microfrontend.js`</summary>
+<summary><code>gateway/webpack/webpack.microfrontend.js</code></summary>
 
 ```js
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
@@ -274,7 +274,7 @@ module.exports = ({ serve }) => {
 The blog's `webpack.microfrontend.js` looks similar, except that it exposes its `remoteEntry.js`, menu items, and routes.
 
 <details>
-<summary>`blog/webpack/webpack.microfrontend.js`</summary>
+<summary><code>blog/webpack/webpack.microfrontend.js</code></summary>
 
 ```js
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');

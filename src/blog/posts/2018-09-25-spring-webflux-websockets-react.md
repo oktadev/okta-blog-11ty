@@ -22,7 +22,7 @@ Spring WebFlux can be used to create a REST API with streaming data. Spring WebF
 
 React is a UI toolkit (similar to GWT) that lets you build components with JavaScript (or TypeScript) and JSX. JSX is how you define elements in React and it looks very similar to XML. React's API and JSX are the core of the framework; everything else is an add-on. I won't go into nitty-gritty details about React, we'll assume you've heard of it and are eager to learn how to make it even _more_ reactive!
 
-{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long"} %} I teamed up with [Josh Long](https://twitter.com/starbuxman) to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around excellent guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like this series!
+<span class="float-right ml-4 mb-2">{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long", header: "100"} %}</span> I teamed up with [Josh Long](https://twitter.com/starbuxman) to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around excellent guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like this series!
 
 Today, we'll show you how to build a _full-stack_ application using Spring WebFlux for the API, WebSockets for notifications, and React for the UI. This article is the third in a three-part series about reactive programming and Spring WebFlux. The first two are listed below.
 
@@ -254,7 +254,9 @@ Displaying data from your reactive API is cool, but wouldn't it be cooler if you
 
 The easiest, and most costly, technique you can implement is to poll the server for new data every few seconds. The code below explains how this works.
 
-**Polling With Interval**
+<div class="example">
+
+Example 1. Polling With Interval {.example-title}
 
 ```tsx
 import React, { Component } from 'react';
@@ -328,6 +330,9 @@ export default ProfileList;
 1. Define a local `interval` variable so fetching will stop when the component is unmounted.
 2. Call `fetchData()` to get the initial set of data when component is mounted.
 3. Call `fetchData()` every 1000 milliseconds, or 1 second.
+{.colist}
+
+</div>
 
 To test that this works, replace the code in `ProfileList.tsx` with the code above. Then add a `create-stream.sh` file to your `react-app` directory and populate it with the following:
 
@@ -364,7 +369,9 @@ npm i rxjs@6.5.2
 
 You can replace the `fetchData()`, `componentDidMount()`, and `componentWillUnmount()` with a single `componentDidMount()` method.
 
-**Polling with RxJS**
+<div class="example">
+
+Example 2. Polling with RxJS {.example-title}
 
 ```typescript
 import { interval } from 'rxjs';
@@ -399,6 +406,9 @@ export default ProfileList;
 1. Start an `interval` Observable, running every one second.
 2. `startWith` indicates that it should fetch right away, which makes it so you don't need an initial data fetch.
 3. `switchMap` has a canceling effect, which is different from other flattening operators. On each emission, the previous inner observable (the result of `fetch()`) is canceled and the new observable is subscribed. Use `mergeMap` if you need every request to complete.
+{.colist}
+
+</div>
 
 Restart your server to start with default data again, run `create-stream.sh`, and open your browser to `http://localhost:3000`. You'll notice the profiles are updating, and there's no flicker in the page.
 
@@ -412,7 +422,9 @@ You don't need to install anything to use WebSockets. They're supported by most 
 
 With WebSockets, you just need a single `componentDidMount()` and no additional imports.
 
-**WebSockets**
+<div class="example">
+
+Example 3. WebSockets {.example-title}
 
 ```typescript
 // imports
@@ -445,6 +457,9 @@ export default ProfileList;
 1. Create a new `WebSocket`.
 2. Listen for new profiles.
 3. Update the profiles using `setState()`. Without this line, the UI won't be updated.
+{.colist}
+
+</div>
 
 You will also need to create `src/setupProxy.js` so it proxies WebSocket requests.
 
@@ -464,7 +479,9 @@ WebSockets make it easy to get notifications from a WebFlux API, don't they?!
 
 One last technique I'd like to show you is server-sent events (SSE). With SSE, it's possible for a send new data to a web client at any time, by pushing messages. Create a `ServerSentEventController.java` class and fill it with the following Java code.
 
-**`reactive-web/src/main/java/com/example/demo/ServerSentEventController.java`**
+<div class="example">
+
+Example 4. `reactive-web/src/main/java/com/example/demo/ServerSentEventController.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -505,10 +522,15 @@ public class ServerSentEventController {
 2. You must use `MediaType.TEXT_EVENT_STREAM_VALUE` to indicate you'll be sending streaming text.
 3. You have to allow access from the React app's origin because [Create React App's proxy doesn't support SSE](https://github.com/facebook/create-react-app/issues/3391).
 4. Return the `ProfileCreatedEvent` as a JSON string. I added the two carriage returns because a reader commented that they needed them.
+{.colist}
+
+</div>
 
 On the React side of things, you can use [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) to listen for new profiles. Change your `ProfileList` component to use `EventSource` as follows.
 
-**Server-Sent Events and EventSource**
+<div class="example">
+
+Example 5. Server-Sent Events and EventSource {.example-title}
 
 ```typescript
 // imports
@@ -543,6 +565,9 @@ export default ProfileList;
 2. Log when the channel is open. This was helpful to discover the issue with proxies because it was called, but `onmessage()` was not.
 3. Parse `event.data`, then grab the `source` from that.
 4. Remember to use `setState()` to update your UI!
+{.colist}
+
+</div>
 
 If you restart your server, add some streaming data with `create-stream.sh`, you should see the screen constantly updating.
 
@@ -659,7 +684,9 @@ export default App;
 
 A `Home` component will be created in `react-app/src/Home.tsx` to serve as your landing page. Search for `{/* Replace me with your root component. */}` and replace it with `<ProfileList auth={this.props.auth}/>`.
 
-**`react-app/src/Home.tsx`**
+<div class="example">
+
+Example 6. `react-app/src/Home.tsx` {.example-title}
 
 ```tsx
 import React, { Component } from 'react';
@@ -742,6 +769,9 @@ export default withAuth(class Home extends Component<HomeProps, HomeState> {
 ```
 
 1. The `ProfileList` component will need to access `props.auth` to get an access token, so pass it in.
+{.colist}
+
+</div>
 
 You'll need to update `ProfileList.tsx` to add `auth` to its required props (a.k.a., inputs) and to add an `authorization` header to server requests. While you're at it, change from using port 3000 to using port 8080.
 
@@ -811,7 +841,9 @@ export default ProfileList;
 
 If you try to make requests to the backend with its current configuration, it'll fail because CORS hasn't been enabled. Modify `SecurityConfiguration.java` class to enable CSRF (for improved security) and CORS.
 
-**Spring Security Configuration for OIDC Login, a Resource Server, and CORS**
+<div class="example">
+
+Example 7. Spring Security Configuration for OIDC Login, a Resource Server, and CORS {.example-title}
 
 ```java
 package com.example.demo;
@@ -870,6 +902,9 @@ public class SecurityConfiguration {
 4. CSRF is enabled in this app, but we don't enable sending the CSRF header back because we're not manipulating data. If you want to POST, PUT, or DELETE, you will need to grab the `XSRF-TOKEN` cookie's value and send it back as a `X-XSRF-TOKEN` header.
 5. WebSockets can't be secured. There are WebSocket libraries (e.g., Socket.IO) that allow sending an authorization header, but Spring WebFlux doesn't support them.
 6. Define a `CorsConfigurationSource` bean and CORS will be enabled for your API.
+{.colist}
+
+</div>
 
 Restart and you should be able to log in and view data from your React app!
 
@@ -898,7 +933,9 @@ I [tried rsocket-js](https://github.com/rsocket/rsocket-js/issues/21), but quick
 
 Josh and I put our heads together and decided the best workaround would be to modify the WebSocket endpoint so it only sends IDs. That way, no sensitive data is propagated. To do this, you'll need to modify `WebSocketConfiguration.java` to just send the ID, not the whole `Profile`.
 
-**WebSocket with ID only**
+<div class="example">
+
+Example 8. WebSocket with ID only {.example-title}
 
 ```java
 Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
@@ -921,12 +958,17 @@ return session.send(messageFlux);
 1. Get the profile from the event.
 2. Create a map and stuff the id into it.
 3. Return the map as JSON.
+{.colist}
+
+</div>
 
 > **NOTE:** You could use a similar technique with server-sent events in the `ServerSentEventController`. The advantage of using WebSocket over EventSource is EventSource is read-only. WebSocket connections can both send data to the browser and receive data from the browser.
 
 Then you can modify the code in `ProfileList.tsx` to fetch the profile securely.
 
-**WebSockets in React**
+<div class="example">
+
+Example 9. WebSockets in React {.example-title}
 
 ```typescript
 async componentDidMount() {
@@ -953,6 +995,9 @@ async componentDidMount() {
 1. Get the access token from Okta's React SDK.
 2. Make a secure request to get the initial profiles.
 3. When an event is received from the WebSocket connection, fetch the profile with the ID.
+{.colist}
+
+</div>
 
 After making these changes, you should have an app that gets real-time updates from Spring WebFlux when new profiles are added.
 

@@ -17,7 +17,11 @@ type: awareness
 ---
 We all know that all software has bugs and that security is hard, but somehow we are still surprised when we see new vulnerabilities.
 
+<div class="example">
+
 Vulnerability:: A bug, flaw, weakness, or exposure of an application, system, device, or service that could lead to a failure of confidentiality, integrity, or availability.
+
+</div>
 
 In 2020, there were 18,395 vulnerabilities reported, which means about 50 new vulnerabilities are reported every day. These numbers only include what has been reported to MITRE's Common Vulnerability and Exposures (CVE) database, which means the actual value is likely much higher. Every year we add more software to the world, so these numbers will only increase. I didn't list this number here to scare you; more so, they are a fact of life, and we all need to be aware of how to deal with them.
 
@@ -50,6 +54,7 @@ Hiring: https://www.okta.com/company/careers/ # <5>
 3. List of languages the security team prefers.
 4. Link back to a reporting policy page with more details.
 5. Even a link back to relevant job postings.
+{.colist}
 
 The contents of the `security.txt`, a quick summary of who to contact and where to go to find more information, is not a replacement for existing security policy pages. Still, it can contain additional information such as a company's PGP keys, acknowledgments, and canonical URL information.
 

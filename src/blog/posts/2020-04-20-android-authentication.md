@@ -100,6 +100,8 @@ You'll also need to add a `manifestPlaceholder` for `appAuthRedirectScheme` in `
 
 Then, add [Okta OIDC for Android](https://github.com/okta/okta-oidc-android).
 
+<div class="example">
+
 ```groovy
 plugins {
     id 'com.android.application'
@@ -162,10 +164,15 @@ dependencies {
 3. The redirect URI for the application you created in your Okta Developer Console.
 4. Okta OIDC libraries require Java 1.8 compatibility.
 5. Add the dependency required for the Okta OIDC library.
+{.colist}
+
+</div>
 
 ## Configure Okta OIDC in Your Android App
 
 In your `MainActivity` class, add a couple of class properties and a couple of new methods, calling them from `onCreate()`:
+
+<div class="example">
 
 ```kotlin
 package com.akaita.myapplication
@@ -250,6 +257,9 @@ class MainActivity : AppCompatActivity() {
 2. `private lateinit var sessionClient: SessionClient` is a reference to the session you can use to conduct multiple operations after logging in, such as getting the user's profile, revoking the authentication token, refreshing the authentication token, etc...
 3. `setRequireHardwareBackedKeyStore(true)` forces the app to require a device with encryption capabilities. This is the default configuration for Okta OIDC and it's considered the best practice. Since you might to run this code in a emulator, you can temporarily set it to `false`.
 4. `private fun setupWebAuthCallback()` is the place where you can define the action to take when authentication succeeds, fails or is canceled...
+{.colist}
+
+</div>
 
 > **TIP:** You can create a [utility method](https://github.com/oktadeveloper/okta-oidc-android-example/blob/e34375dccd9a6898ecf62ecc4c63d08e63957a57/app/src/main/java/com/okta/oidc/example/Extensions.kt#L24) to automatically detect if your application is running in an emulator.
 

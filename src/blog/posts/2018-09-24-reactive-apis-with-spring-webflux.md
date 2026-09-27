@@ -27,7 +27,7 @@ If you're not familiar with reactive programming, or just want to see how you ca
 
 Spring Boot 2.1 is just around the corner, and with it comes Spring Security 5.1 (released this week!). There's excellent OpenID Connect (OIDC) support in Spring Security 5.1, so we'll highlight how to use it near the end of this article.
 
-{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long"} %} I joined forced with Josh Long to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around fun guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like what we've put together for you!
+<span class="float-right ml-4 mb-2">{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long", header: "100"} %}</span> I joined forced with Josh Long to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around fun guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like what we've put together for you!
 
 Josh (a.k.a. [@starbuxman](https://twitter.com/starbuxman)) authored the Java code in this post, I added the part about securing your API with OIDC. Even though I show how to do it with Okta, it should work with any OIDC provider.
 
@@ -43,7 +43,9 @@ _Selections on the Spring Initializr for a new, reactive application._
 
 This will give you a new project with the following layout.
 
-**The generated project structure.**
+<div class="example">
+
+Example 1. The generated project structure. {.example-title}
 
 ```java
 .
@@ -70,11 +72,15 @@ This will give you a new project with the following layout.
 12 directories, 7 files
 ```
 
+</div>
+
 The Maven build file, `pom.xml`, is pretty plain, but it assumes we're going to use JUnit 4. Let's upgrade JUnit to use JUnit 5, which is a more modern testing framework that's well supported by Spring Framework 5 and beyond. This owes in no small part to the fact that the most prolific committer of JUnit 5, Sam Brannen, is also the lead of the Spring Test framework.
 
 Add the following dependencies to your new application's build file, `pom.xml`: `org.junit.jupiter:junit-jupiter-engine` and give it a `scope` of `test`. Then, exclude the `junit:junit` dependency from the `spring-boot-starter-test` dependency. While you're in there, add a dependency on embedded MongoDB. This is the resulting `pom.xml`:
 
-**`pom.xml`**
+<div class="example">
+
+Example 2. `pom.xml` {.example-title}
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -157,9 +163,13 @@ Add the following dependencies to your new application's build file, `pom.xml`: 
 </project>
 ```
 
+</div>
+
 This is a stock-standard Spring Boot application with a `public static void main(String [] args)` entry-point class, `DemoApplication.java`:
 
-**`src/main/java/com/example/demo/DemoApplication.java`**
+<div class="example">
+
+Example 3. `src/main/java/com/example/demo/DemoApplication.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -176,9 +186,13 @@ public class DemoApplication {
 }
 ```
 
+</div>
+
 This class has a test at `src/test/java/com/example/demo/DemoApplicationTests.java` that you'll need to update for JUnit 5.
 
-**`src/test/java/com/example/demo/DemoApplication.java`**
+<div class="example">
+
+Example 4. `src/test/java/com/example/demo/DemoApplication.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -194,6 +208,8 @@ public class DemoApplicationTests {
     }
 }
 ```
+
+</div>
 
 There's also an empty configuration file, `src/main/resources/application.properties`.
 
@@ -228,7 +244,9 @@ The code in this tutorial is in the `reactive-web` directory.
 
 To follow along, create a `Profile` entity class in the `com.example.demo` package. Give it a single field, `email`, and another field that will act as the document ID. This entity will be persisted in MongoDB.
 
-**`src/main/java/com/example/demo/Profile.java`**
+<div class="example">
+
+Example 5. `src/main/java/com/example/demo/Profile.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -257,6 +275,9 @@ class Profile {
 2. `@Data`, `@AllArgsConstructor`, and `@NoArgsConstructor` are all from Lombok. They're compile-time annotations that tell Lombok to generate getters/setters, constructors, a `toString()` method and an `equals` method.
 3. `@Id` is a Spring Data annotation that identifies the document ID for this document
 4. ...and finally, this field `email` is the thing that we want to store and retrieve later
+{.colist}
+
+</div>
 
 In order to persist documents of type `Profile`, we declaratively define a repository. A repository, a design pattern from Eric Evans' seminal tome, _Domain Driven Design_, is a way of encapsulating object persistence.
 
@@ -264,7 +285,9 @@ Repositories are responsible for persisting entities and value types. They prese
 
 Create a Spring Data repository, `src/main/java/com/example/demo/ProfileRepository.java`.
 
-**`src/main/java/com/example/demo/ProfileRepository.java`**
+<div class="example">
+
+Example 6. `src/main/java/com/example/demo/ProfileRepository.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -275,9 +298,13 @@ interface ProfileRepository extends ReactiveMongoRepository<Profile, String> {
 }
 ```
 
+</div>
+
 This repository extends the Spring Data-provided `ReactiveMongoRepository` interface which in turn provides a number of data access methods supporting reads, writes, deletes and searches, almost all in terms of method signatures accepting or returning `Publisher<T>` types.
 
-**`org.springframework.data.mongodb.repository.ReactiveMongoRepository`**
+<div class="example">
+
+Example 7. `org.springframework.data.mongodb.repository.ReactiveMongoRepository` {.example-title}
 
 ```java
 package org.springframework.data.mongodb.repository;
@@ -308,6 +335,8 @@ public interface ReactiveMongoRepository<T, ID> extends ReactiveSortingRepositor
 }
 ```
 
+</div>
+
 Spring Data will create an object that implements all these methods. It will provide an object for us that we can inject into into other objects to handle persistence. If you define an empty repository, as we have, then there's little reason to test the repository implementation. It'll "just work."
 
 Spring Data repositories also supports custom queries. We could, for example, define a custom finder method, of the form `Flux<Profile> findByEmail(String email)`, in our `ProfileRepository`. This would result in a method being defined that looks for all documents in MongoDB with a predicate that matches the `email` attribute in the document to the parameter, `email`, in the method name. If you define custom queries, then this might be an appropriate thing to test.
@@ -316,7 +345,9 @@ This is a sample application, of course, so we need some sample data with which 
 
 Create a `SampleDataInitializer.java` class to popular the database on startup.
 
-**`src/main/java/com/example/demo/SampleDataInitializer.java`**
+<div class="example">
+
+Example 8. `src/main/java/com/example/demo/SampleDataInitializer.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -366,6 +397,9 @@ class SampleDataInitializer
 7. ...that we then persist to the database using our repository
 8. after all the data has been written to the database, we want to fetch all the records from the database to confirm what we have there
 9. if we'd stopped at the previous line, the `save` operation, and run this program then we would see... nothing! `Publisher<T>`  instances are _lazy_ -- you need to `subscribe()` to them to trigger their execution. This last line is where the rubber meets the road. In this case, we're using the `subscribe(Consumer<T>)` variant that lets us visit every record returned from the `repository.findAll()` operation and print out the record.
+{.colist}
+
+</div>
 
 > **TIP:** You can activate a Spring profile with a command line switch, `-Dspring.profiles.active=foo` where `foo` is the name of the profile you'd like to activate. You can also set an environment variable, `export SPRING_PROFILES_ACTIVE=foo` before running the `java` process for your Spring Boot application.
 
@@ -377,7 +411,9 @@ In the next line we then call `flatMap`. `flatMap` is just like `map`, except th
 
 We're going to use the repository to implement a service that will contain any course grained business logic. In the beginning a lot of the business logic will be pass through logic delegating to the repository, but we can add things like validation and integration with other systems at this layer. Create a `ProfileService.java` class.
 
-**`src/main/java/com/example/demo/ProfileService.java`**
+<div class="example">
+
+Example 9. `src/main/java/com/example/demo/ProfileService.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -436,10 +472,15 @@ class ProfileService {
 5. ...update a `Profile` and give it a new `email`...
 6. ...delete a record by its `id`...
 7. ...or create a new `Profile` in the database and publish an `ApplicationContextEvent`, one of our own creation called `ProfileCreatedEvent`, on successful write to the database. The `doOnSuccess` callback takes a `Consumer<T>` that gets invoked after the data in the reactive pipeline has been written to the database. We'll see later why this event is so useful.
+{.colist}
+
+</div>
 
 The `ProfileCreatedEvent` is just like any other Spring `ApplicationEvent`.
 
-**`src/main/java/com/example/demo/ProfileCreatedEvent.java`**
+<div class="example">
+
+Example 10. `src/main/java/com/example/demo/ProfileCreatedEvent.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -453,6 +494,8 @@ public class ProfileCreatedEvent extends ApplicationEvent {
     }
 }
 ```
+
+</div>
 
 That wasn't so bad, was it? Our service was pretty straightforward. The only novelty was the publishing of an event. Everything should be working just fine now. But, of course, we can't possibly know that unless we test it.
 
@@ -478,7 +521,9 @@ Test slices can also contribute _new_ auto-configuration supporting tests, speci
 
 Create `ProfileServiceTest` to test the logic in your `ProfileService`.
 
-**`src/test/java/com/example/demo/ProfileServiceTest.java`**
+<div class="example">
+
+Example 11. `src/test/java/com/example/demo/ProfileServiceTest.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -579,6 +624,9 @@ public class ProfileServiceTest {
 5. In this unit test we setup state in one publisher (`saved`).
 6. ...and then assert things about that state in the various `expectNextMatches` calls
 7. Make sure to call `verifyComplete`! Otherwise, nothing will happen... and that makes me sad.
+{.colist}
+
+</div>
 
 We only walked through one test because the rest are unremarkable and similar. You can run `mvn test` to confirm that the tests work as expected.
 
@@ -594,7 +642,9 @@ In the Spring MVC architecture, requests come in to the web container, they're r
 
 Below is the code for a classic Spring MVC style controller that supports manipulating our `Profile` entities.
 
-**`src/main/java/com/example/demo/ProfileRestController.java`**
+<div class="example">
+
+Example 12. `src/main/java/com/example/demo/ProfileRestController.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -664,6 +714,9 @@ class ProfileRestController {
 3. There are specializations of `@RequestMapping`, one for each HTTP verb, that you can use. This annotation says, "this endpoint is identical to that specified in the root. `@RequestMapping` except that it is limited to HTTP `GET` endpoints"
 4. This endpoint uses a _path variable_ -- a part of the URI that is matched against the incoming request and used to extract a parameter. In this case, it extracts the `id` parameter and makes it available as a method parameter in the handler method.
 5. This method supports creating a new `Profile` with an HTTP `POST` action. In this handler method we expect incoming requests to have a JSON body that the framework then marshals into a Java object, `Profile`.  This happens automatically based on the content-type of the incoming request and the configured, acceptable, convertible payloads supported by Spring WebFlux.
+{.colist}
+
+</div>
 
 This approach is great if you have a lot of related endpoints that share common dependencies. You can collocate, for example, the `GET`, `PUT`, `POST`, etc., handler logic for a particular resource in one controller class so they can all use the same injected service or validation logic.
 
@@ -675,7 +728,9 @@ Spring Framework 5 changes things, though. Spring Framework 5 assumes a Java 8 b
 
 A lot of what we're doing in a reactive web application lends itself to the functional programming style. Spring Framework 5 debuts a new functional reactive programming model that mirrors the controller-style programming model in Spring WebFlux. This new programming model is available exclusively in Spring WebFlux. Let's see an example.
 
-**`src/main/java/com/example/demo/ProfileEndpointConfiguration.java`**
+<div class="example">
+
+Example 13. `src/main/java/com/example/demo/ProfileEndpointConfiguration.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -711,12 +766,17 @@ class ProfileEndpointConfiguration {
 1. This is a Spring bean that describes routes and their handlers to the framework. The handler methods themselves are Java 8 references to methods on another injected bean. They could just as easily have been inline lambdas.
 2. Each route has a `RequestPredicate` (the object produced by `GET(..)` in this line) and a `HandlerFunction<ServerResponse>`.
 3. This route uses a path variable, `{id}`, which the framework will use to capture a parameter in the URI string.
+{.colist}
+
+</div>
 
 We make judicious use of static imports in this example to make things as concise as possible. `RouterFunction<ServerResponse>` is a builder API. You can store the result of each call to `route` or `andRoute` in an intermediate variable if you like. You could loop through records in a for-loop from records in a database and contribute new endpoints dynamically, if you wanted.
 
 Spring WebFlux provides a DSL for describing how to match incoming requests.  `GET("/profiles")` results in a `RequestPredicate` that matches incoming HTTP `GET`-method requests that are routed to the URI `/profiles`. You can compose `RequestPredicate` instances using `.and(RequestPredicate)`, `.not(RequestPredicate)`, or `.or(RequestPredicate)`. In this example, I also provide a fairly trivial adapter -  `CaseInsensitiveRequestPredicate` - that lower-cases all incoming URLs and matches it against the configured (and lower-cased) URI in the `RequestPredicate`. The result is that if you type `http://localhost:8080/profiles` or `http://localhost:8080/PROfiLEs` they'll both work.
 
-**`src/main/java/com/example/demo/CaseInsensitiveRequestPredicate.java`**
+<div class="example">
+
+Example 14. `src/main/java/com/example/demo/CaseInsensitiveRequestPredicate.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -773,10 +833,15 @@ class LowerCaseUriServerRequestWrapper extends ServerRequestWrapper {
 
 1. The meat of a  `RequestPredicate` implementation is in the `test(ServerRequest)` method.
 2. My implementation wraps the incoming `ServerRequest`, a common enough task that Spring WebFlux even provides a `ServerRequestWrapper`
+{.colist}
+
+</div>
 
 Once a request is matched, the `HandlerFunction<ServerResponse>` is invoked to produce a response. Let's examine our handler object.
 
-**`src/main/java/com/example/demo/ProfileHandler.java`**
+<div class="example">
+
+Example 15. `src/main/java/com/example/demo/ProfileHandler.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -856,6 +921,9 @@ class ProfileHandler {
 2. Each handler method has an identical signature: `ServerRequest` is the request parameter and `Mono<ServerResponse>` is the return value.
 3. We can centralize common logic in, yep! - you guessed it! -- functions. This function creates a `Mono<ServerResponse>` from a `Publisher<Profile>` for any incoming request. Each request uses the `ServerResponse` builder object to create a response that has a `Location` header, a `Content-Type` header, and no payload. (You don't need to send a payload in the response for `PUT` or `POST`, for example).
 4. this method centralizes all configuration for replies to read requests (for instance, those coming from `GET` verbs)
+{.colist}
+
+</div>
 
 Straightforward, right? I like this approach - the handler object centralizes processing for related resources into a single class, just like with the controller-style arrangement. We're also able to centralize routing logic in the `@Configuration` class.
 
@@ -873,7 +941,9 @@ We should test both, even if they're just for demonstration purposes. I've extra
 
 The `abstract` base class contains the most important aspects for testing our HTTP endpoints.
 
-**`src/test/java/com/example/demo/AbstractBaseProfileEndpoints.java`**
+<div class="example">
+
+Example 16. `src/test/java/com/example/demo/AbstractBaseProfileEndpoints.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1013,6 +1083,9 @@ public abstract class AbstractBaseProfileEndpoints {
 3. As this is a test slice, focused only on the HTTP components in Spring, we're going to run into a problem. Our HTTP controllers depend on our service, and our service in turn depends on the reactive Spring Data MongoDB repository. The repository is part of the data tier. We use the Spring Boot annotation, `@MockBean`, to tell Spring Boot to create a Mockito-backed mock of the same type and - most importantly - to either contribute the mock to the Spring `ApplicationContext` if a bean of the same type doesn't already exist or to replace any bean of the same type with the mock in the Spring `ApplicationContext`.
 4. Since it's just a Mockito-backed mock, we use Mockito to preprogram the stub so that it'll return the pre-programmed responses.
 5. Finally, we can use the `WebTestClient`. The `WebTestClient` lets us issue requests to our HTTP endpoints and then assert certain things about the response.
+{.colist}
+
+</div>
 
 The `WebTestClient` is quite powerful. It's a test-centric alternative to the reactive `WebClient` in Spring WebFlux which is an honest-to-goodness reactive HTTP client. In this  example, we make an HTTP request to an endpoint, confirm that the returned status code and headers line up with expectations, and then use JSON Path to poke at the structure of the returned result.
 
@@ -1046,7 +1119,9 @@ We need to wire up a few objects to get Spring to work well with websockets. Thi
 
 Let's look at the skeletal configuration in a configuration class, `WebSocketConfiguration`.
 
-**`src/main/java/com/example/demo/WebSocketConfiguration.java`**
+<div class="example">
+
+Example 17. `src/main/java/com/example/demo/WebSocketConfiguration.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1138,6 +1213,9 @@ class WebSocketConfiguration {
 7. The `.share()` method is another operator in Reactor. Keep in mind, we're going to have a potentially large number of clients listening to our websocket stream. Each one will need updates when there's new data. We don't want one client consuming the data in one publisher to deprive the other clients of seeing the same data. So, we want to _broadcast_ all the events to multiple subscribers. There's no reason multiple `Subscriber<T>` instances can't subscribe to the same `Publisher<T>`, but without this operator they'd end up exclusively consuming records.
 8. We're almost there! The interesting code is in our `eventPublisher`. The resulting `Publisher<ProfileCreatedEvent>` will be shared and from there each subscriber needs to transform the data into a `Publisher<WebSocketMessage>` that Spring WebFlux will in turn transform into messages over the websocket protocol.
 9. Don't forget to call `session.send(Publisher<WebSocketMessage)`! Otherwise none of this will work. :-) Or at least, that's what I'm told. :cough: Not saying it happened to me, or anything.. 'course not...
+{.colist}
+
+</div>
 
 All that was fairly straightforward, one hopes. Let's look at the most important bit - the `ProfileCreatedEventPublisher`. This code was harder for me to write than it is for you to read.
 
@@ -1147,7 +1225,9 @@ If a consumer tries to drain an item from the queue, but the queue is empty, the
 
 The `Consumer<T>.accept(FluxSink<ProfileCreatedEvent> sink)` method, in this case, is only called once when the application starts up and we try to create the `Flux` for the first time. In that callback we begin the while loop that will constantly try to drain the `BlockingQueue<T>`. This infinite, and un-ending while-loop _blocks_! Naturally. That's the whole point. So, we manage that ourselves using the previously configured `java.util.concurrent.Executor` instance.
 
-**`src/main/java/com/example/demo/ProfileCreatedEventPublisher.java`**
+<div class="example">
+
+Example 18. `src/main/java/com/example/demo/ProfileCreatedEventPublisher.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1203,12 +1283,17 @@ class ProfileCreatedEventPublisher implements
 4. when an event is published in our service, it is disseminated to any and all interested listeners, including this component which then offers the item into the `Queue<T>`
 5. The event loop couldn't be simpler. We wait for new entries to appear in the `BlockingQueue<T>`...
 6. ...and as soon as they are, we tell our reactive stream about them by calling `FluxSink<T>.next(T)`
+{.colist}
+
+</div>
 
 Whew! There are a few moving pieces here, but ultimately all we're trying to do is get the `Publisher<T>` lined up in such a way that Spring WebFlux can connect it to the websocket protocol and to our clients. Speaking of...
 
 You don't really need much JavaScript to connect an HTML 5 client to a browser. As a stopgap, just to prove that things are working, create the simplest of possible clients, a static `ws.html` page with some barebones JavaScript code.
 
-**`src/main/resources/static/ws.html`**
+<div class="example">
+
+Example 19. `src/main/resources/static/ws.html` {.example-title}
 
 ```html
 <!DOCTYPE html>
@@ -1233,10 +1318,15 @@ You don't really need much JavaScript to connect an HTML 5 client to a browser. 
 
 1. we use an `WebSocket` object in JavaScript, connecting to the `/ws/profiles`  endpoint in our Spring Boot application
 2. ...and whenever a new message arrives we show the JSON in an alert dialog
+{.colist}
+
+</div>
 
 Couldn't be simpler! You can drive new results into the system using the following `curl` incantation:
 
-**`create.sh`**
+<div class="example">
+
+Example 20. `create.sh` {.example-title}
 
 ```shell
 #!/bin/bash
@@ -1246,6 +1336,9 @@ curl -H "content-type: application/json" -d '{"email":"random"}' http://localhos
 ```
 
 1. this will `POST` a new record into the API which will then trigger a websocket notification if you have the browser client open.
+{.colist}
+
+</div>
 
 Start your app, open `http://localhost:8080/ws.html` in your browser and then run that `create.sh` in your shell. I'm assuming you have `curl`. This is a trivial end-to-end and it's satisfying to see it all come together. That said, we should definitely test this. You know. Just in case.
 
@@ -1253,7 +1346,9 @@ Start your app, open `http://localhost:8080/ws.html` in your browser and then ru
 
 We just did an end-to-end test. And that's satisfying! But, it's not substitute for automation. Let's write a test. This time, we want to exercise all the moving parts - the database, the HTTP endpoints, and the websocket support. We're going to write more of an integration test than a unit test.
 
-**`src/test/java/com/example/demo/WebSocketConfigurationTest.java`**
+<div class="example">
+
+Example 21. `src/test/java/com/example/demo/WebSocketConfigurationTest.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1356,6 +1451,9 @@ class WebSocketConfigurationTest {
 11. We use the `WebSocketSession` to write and receive data. For each item that's returned we increment our `AtomicLong`.
 12. Now that the websocket subscriber is up and running, we create a pipeline of elements that gets limited to `count` elements (`10`) and then issue `count` HTTP `POST` writes to the API using the reactive `WebClient`. We use `blockLast()` to force the writes to happen before we proceed to the next line where we compare consumed records.
 13. Finally, after all the writes have occured and another second of padding to spare has elapsed, we confirm that we've seen `count` notifications for our `count` writes.
+{.colist}
+
+</div>
 
 All green! Nothing better than a green test suite, I always say. It looks like things are on the up and up.
 
@@ -1465,7 +1563,9 @@ spring:
 
 Then create a `SecurityConfiguration.java` class to configure the resource server.
 
-**`src/main/java/com/example/demo/SecurityConfiguration.java`**
+<div class="example">
+
+Example 22. `src/main/java/com/example/demo/SecurityConfiguration.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1492,6 +1592,8 @@ public class SecurityConfiguration {
 }
 ```
 
+</div>
+
 Now you should be able to call your application from the command line. You can use [OpenID Connect &lt;debugger/>](https://oidcdebugger.com/) to get an access token. This website was written by Okta's own [Nate Barbettini](https://twitter.com/nbarbettini).
 
 To use it, I had to tweak my application to allow Implicit flow with an access token, add `https://oidcdebugger.com/debug` as a login redirect URI, and manually enter a state variable, but otherwise, it was pretty easy! The screenshot below shows my success. Your authorization URI should look as follows:
@@ -1510,7 +1612,9 @@ https://{yourOktaDomain}/oauth2/default/.well-known/openid-configuration
 
 Once you have an access token, you can modify `create.sh` to use it.
 
-**`create.sh`**
+<div class="example">
+
+Example 23. `create.sh` {.example-title}
 
 ```shell
 #!/bin/bash
@@ -1519,6 +1623,8 @@ accessToken=<your access token>
 
 curl -H "content-type: application/json" -H "authorization: Bearer ${accessToken}" -d '{"email":"random"}' http://localhost:${port}/profiles
 ```
+
+</div>
 
 ## Learn More About Reactive Programming, Spring WebFlux, and OIDC
 

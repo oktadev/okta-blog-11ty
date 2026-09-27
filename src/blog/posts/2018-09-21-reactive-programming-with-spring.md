@@ -17,7 +17,7 @@ type: conversion
 ---
 Reactive programming allows you to build systems that are resilient to high load. Handling lots of traffic isn't a problem because the server is non-blocking and doesn't block client processes to wait for responses. The client cannot directly observe, or synchronize with, the execution that occurs on the server. When an API is struggling to handle requests, it should respond in a sensible way. It shouldn't fail to work or drop messages in an uncontrolled fashion. It should communicate that it is under stress to upstream components and get them to reduce load. This is known as "back-pressure" and is an important aspect of reactive programming.
 
-{% img {src: "spring-reactive-programming/starbuxman.jpg", alt: "Josh Long"} %} I collaborated on this post with [Josh Long](https://twitter.com/starbuxman), fellow Java Champion, Spring Developer Advocate, and all around great guy at Pivotal. I've been a longtime user of Spring, and Josh was the one who first showed me Spring Boot, at a Devoxx Belgium many moons ago. We've been good friends for a while now, sharing the same passion for Java, developers, and building awesome applications.
+<span class="float-right ml-4 mb-2">{% img {src: "spring-reactive-programming/starbuxman.jpg", alt: "Josh Long", header: "100"} %}</span> I collaborated on this post with [Josh Long](https://twitter.com/starbuxman), fellow Java Champion, Spring Developer Advocate, and all around great guy at Pivotal. I've been a longtime user of Spring, and Josh was the one who first showed me Spring Boot, at a Devoxx Belgium many moons ago. We've been good friends for a while now, sharing the same passion for Java, developers, and building awesome applications.
 
 ## Reactive Programming, or, I/O, I/O, It's Off to Work We Go...
 
@@ -25,7 +25,9 @@ Reactive programming is an approach to writing software that embraces asynchrono
 
 Let's build a simple program that reads data from a source (a `java.io.File` reference, specifically). First up, an implementation that uses a trusty 'ol `java.io.InputStream` implementation:
 
-**Read data from a file _synchronously_**
+<div class="example">
+
+Example 1. Read data from a file _synchronously_ {.example-title}
 
 ```java
 package com.example.io;
@@ -57,6 +59,9 @@ class Synchronous implements Reader {
 1. source the file using a regular `java.io.File`
 2. _pull_ the results out of the source one line at a time...
 3. I've written this code to accept a `Consumer<BytesPayload>` that gets called when there's new data
+{.colist}
+
+</div>
 
 Pretty straightforward, eh? Run this and you'll see in the log output, on the left-hand side of each line, that all activity is happening on a single thread.
 
@@ -68,7 +73,9 @@ What happens if the network is slow, or down? In this case, it'd mean that the t
 
 In that example, the bulk of the work is in the reading - there's not much else going on anywhere. We are __I/O bound_. Let's see how an asynchronous solution can help us alleviate the monopolization of our threads.
 
-**Read data from a file _asynchronously_**
+<div class="example">
+
+Example 2. Read data from a file _asynchronously_ {.example-title}
 
 ```java
 package com.example.io;
@@ -144,6 +151,9 @@ class Asynchronous implements Reader, CompletionHandler<Integer, ByteBuffer> {
 3. start reading, passing in a reference to a `CompletionHandler<Integer, ByteBuffer>` (`this`)
 4. in the callback, we read the bytes out of  a `ByteBuffer` into a `byte[]` holder
 5. just as in the `Synchronous` example, the `byte[]` data is passed to a consumer
+{.colist}
+
+</div>
 
 First thing's first: this code's _waaaay_ more complicated! There's a ton of things going on here and it can seem overwhelming, but indulge me, for a moment... This code reads data from a Java NIO `Channel` and processes that data, asynchronously, on a separate thread in a callback handler. The thread on which the read was started isn't monopolized. We return virtually instantly after we call `.read(..)`, and when there is finally data available, our callback is invoked, and on a different thread. If there is latency between `.read()` calls, then we can move on and do other things with our thread. The duration of the asynchronous read, from the first byte to the last, is at best as short as the duration of the synchronous read. It's likely a tiny bit longer. But, for that complexity, we can be more efficient with our threads. We can handle more work, multiplexing I/O across a finite thread pool.
 
@@ -167,7 +177,9 @@ There are a good deal many projects -  Vert.x, Akka Streams, and RxJava - that s
 
 The `Publisher<T>` is a producer of values that may eventually arrive. A `Publisher<T>` produces values of type `T` to a `Subscriber<T>`.
 
-**Reactive Streams `Publisher<T>`.**
+<div class="example">
+
+Example 3. Reactive Streams `Publisher<T>`. {.example-title}
 
 ```java
 package org.reactivestreams;
@@ -178,9 +190,13 @@ public interface Publisher<T> {
 }
 ```
 
+</div>
+
 The `Subscriber` subscribes to a `Publisher<T>`, receiving notifications on any new values of type `T` through its `onNext(T)` method. If there are any errors, its `onError(Throwable)` method is called. When processing has completed normally, the subscriber's `onComplete` method is called.
 
-**Reactive Streams `Subscriber<T>`.**
+<div class="example">
+
+Example 4. Reactive Streams `Subscriber<T>`. {.example-title}
 
 ```java
 package org.reactivestreams;
@@ -197,9 +213,13 @@ public interface Subscriber<T> {
 }
 ```
 
+</div>
+
 When a `Subscriber` first connects to a `Publisher`, it is given a `Subscription` in the `Subscriber#onSubscribe` method. The `Subscription` is arguably the most important part of the whole specification: it enables backpressure. The `Subscriber` uses the `Subscription#request` method to request more data or the `Subscription#cancel` method to halt processing.
 
-**Reactive Streams `Subscription<T>`.**
+<div class="example">
+
+Example 5. Reactive Streams `Subscription<T>`. {.example-title}
 
 ```java
 package org.reactivestreams;
@@ -212,9 +232,13 @@ public interface Subscription {
 }
 ```
 
+</div>
+
 The Reactive Streams specification provides _one_ more useful, albeit obvious, type:  A `Processor<A,B>`  is a simple interface that extends both `Subscriber<A>` and a `Publisher<B>`.
 
-**Reactive Streams `Processor<T>`.**
+<div class="example">
+
+Example 6. Reactive Streams `Processor<T>`. {.example-title}
 
 ```java
 package org.reactivestreams;
@@ -222,6 +246,8 @@ package org.reactivestreams;
 public interface Processor<T, R> extends Subscriber<T>, Publisher<R> {
 }
 ```
+
+</div>
 
 The specification is not meant to be a prescription for the implementations, instead defining types for interoperability. The Reactive Streams types are so obviously useful that they _eventually_ found their way into the recent Java 9 release as one-to-one semantically equivalent interfaces in the `java.util.concurrent.Flow` class, e.g.: `java.util.concurrent.Flow.Publisher`.
 

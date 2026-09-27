@@ -130,7 +130,7 @@ I asked them how they manage semantic versioning for their projects and if it's 
 
 ### Phil Webb, Spring Boot
 
-{% img {src: "semantic-versioning/phillip_webb.png", alt: "Phil Webb"} %}
+<span class="float-right ml-4 mb-2">{% img {src: "semantic-versioning/phillip_webb.png", alt: "Phil Webb", header: "100"} %}</span>
 
 With Spring Boot we actually decided to intentionally not use semantic versioning. We found it too rigid for our needs because we'd need to bump the major version too frequently. Instead, we try to take a more pragmatic approach where we'll try to ensure back-compatibility, but will occasionally choose to break things if we feel like that's ultimately the best option.
 
@@ -156,7 +156,7 @@ We don't make strong guarantees. We mainly rely on our own experience to ensure 
 
 ### Juergen Hoeller, Spring Framework
 
-{% img {src: "semantic-versioning/springjuergen.jpg", alt: "Juergen Hoeller"} %}
+<span class="float-right ml-4 mb-2">{% img {src: "semantic-versioning/springjuergen.jpg", alt: "Juergen Hoeller", header: "100"} %}</span>
 
 Our semantic versioning in Spring is not strictly about backward compatibility, it's rather a form of pragmatic impact guidance along the lines of generation / feature release / maintenance release (e.g. 5.2.3). This is an entirely manual part of our design process where "generation" means a fundamental revision of the codebase (mostly JDK baselining but also e.g. nullable annotations and Kotlin extensions in 5.0) including some pruning and module rearrangements, "feature release" means a rich set of new features (including refactorings and re-implementations of existing features) but all within the existing framework architecture and its structural arrangements, and "maintenance release" means bug fixes and minor enhancements.
 
@@ -166,7 +166,7 @@ All in all, our versioning is pragmatically semantic with a focus on developer i
 
 ### Minko Gechev, Angular
 
-{% img {src: "semantic-versioning/mgechev.jpg", alt: "Minko Gechev"} %}
+<span class="float-right ml-4 mb-2">{% img {src: "semantic-versioning/mgechev.jpg", alt: "Minko Gechev", header: "100"} %}</span>
 
 We have semantic commit messages prefixed with "fix", "refactor", "test", "ci", "feat", etc. If we're about to release a patch version, we cannot include a feature (feat) PR. Based on these semantic commit messages we can automatically generate the changelog.
 
@@ -181,7 +181,7 @@ In general, I agree semantic versioning is not ideal. I don't see a way it could
 
 ### Brian Demers, Okta Java Tools
 
-{% img {src: "semantic-versioning/briandemers.jpg", alt: "Brian Demers"} %}
+<span class="float-right ml-4 mb-2">{% img {src: "semantic-versioning/briandemers.jpg", alt: "Brian Demers", header: "100"} %}</span>
 
 The Okta Spring Boot Starter has VERY few public classes to avoid this exact problem. It mostly proves implementations of existing Spring Security interfaces.
 
@@ -201,7 +201,7 @@ The Okta Spring Boot Starter public methods (I think there are three total) are 
 
 ### Deepu K Sasidharan, JHipster
 
-{% img {src: "semantic-versioning/deepu105.jpg", alt: "Deepu K Sasidharan"} %}
+<span class="float-right ml-4 mb-2">{% img {src: "semantic-versioning/deepu105.jpg", alt: "Deepu K Sasidharan", header: "100"} %}</span>
 
 IMO semantic versioning itself doesn't suck, I mean the idea of having major.minor.patch releases do work when done correctly.
 
@@ -213,7 +213,7 @@ For your question 2 and 3, I don't see how it is a server-specific problem, it c
 
 ### Julien Dubois, JHipster
 
-{% img {src: "semantic-versioning/juliendubois.jpg", alt: "Julien Dubois"} %}
+<span class="float-right ml-4 mb-2">{% img {src: "semantic-versioning/juliendubois.jpg", alt: "Julien Dubois", header: "100"} %}</span>
 
 Concerning the automatic Semver, there is just no way to do this for JHipster... so we do it manually.
 

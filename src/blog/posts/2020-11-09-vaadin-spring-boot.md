@@ -23,7 +23,7 @@ In this blog post, you'll learn how to use Vaadin Fusion, Spring Boot, and Okta 
 - Secure server endpoints with Okta
 - Use Okta Auth JS for logging in and securing Vaadin routes
 
-{% img {src: "vaadin-spring-boot/marcus-hellberg.jpg", alt: "Marcus Hellberg"} %}
+<span class="float-right ml-4 mb-2">{% img {src: "vaadin-spring-boot/marcus-hellberg.jpg", alt: "Marcus Hellberg", header: "100"} %}</span>
 
 I collaborated on this post with [Marcus Hellberg](https://twitter.com/marcushellberg), Head of Community at Vaadin. Marcus and I met years ago on the conference circuit, and we're both from Finland. My great grandparents were Finnish and built the sauna and cabin I grew up in in Montana's remote woods. Marcus and I share a passion for using Java and web technologies to build fast, efficient applications.
 
@@ -446,6 +446,8 @@ Next, create a login view so users can enter their credentials and get authentic
 
 Create a new folder `frontend/views/login`. In that folder, create a new file `login-view.ts` with the following content:
 
+<div class="example">
+
 ```typescript
 import { customElement, html, internalProperty, LitElement } from 'lit-element';
 import { signIn } from '../../auth';
@@ -494,6 +496,9 @@ export class LoginView extends LitElement {
 2. Use the `<vaadin-login-form>` element for capturing login information.
 3. The `login-event` is bound to the login method with `@login=${this.login}`.
 4. The `login()` method calls the `signIn()` function in the `auth` service, which in turn will redirect the user to the callback URL.
+{.colist}
+
+</div>
 
 ### Restrict View Access to Authenticated Users
 

@@ -49,6 +49,8 @@ Android apps use [Gradle](https://gradle.org/) as their build tool. To add the O
 
 You need to add the right auth redirect scheme for your Okta app and add the Okta library as a dependency. Make sure the `applicationId` matches what you used when creating your app.
 
+<div class="example">
+
 ```groovy
 plugins {
     id 'com.android.application'
@@ -108,6 +110,9 @@ dependencies {
 2. We are using a view binding feature to interact with our views. More information can be found [here](https://developer.android.com/topic/libraries/view-binding).
 3. Okta OIDC libraries require Java 1.8 compatibility.
 4. Add the dependency required for the Okta OIDC library.
+{.colist}
+
+</div>
 
 Sync the project with Gradle files by clicking the **File** → **Sync Project with Gradle Files**, so the Okta dependency gets downloaded.
 
@@ -123,6 +128,8 @@ In the root folder of your app's package (in the provided example, that's the fo
 
 For now, just create the class and make it extend the `Application` class from the Android framework.
 
+<div class="example">
+
 ```kotlin
 package dev.dbikic.oktaloginexample // <1>
 
@@ -132,8 +139,13 @@ class OktaLoginApplication : Application()
 ```
 
 1. Update the package to match the one you set when creating the project.
+{.colist}
+
+</div>
 
 After creating the application class, you need to reference it in your `app/src/main/AndroidManifest.xml` file:
+
+<div class="example">
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -156,6 +168,9 @@ After creating the application class, you need to reference it in your `app/src/
 
 1. `Okta OIDC SDK` needs internet permission to communicate with the back-end.
 2. Reference the application class you created in the previous step.
+{.colist}
+
+</div>
 
 > **TIP:** `AndroidManifest.xml` is an essential file for an app that contains basic info about the app's name, the package name, permissions, activities, and many other things. More information about it can be found in the [official documentation](https://developer.android.com/guide/topics/manifest/manifest-intro).
 
@@ -168,6 +183,8 @@ When adding third-party libraries to your codebase, it's usually a good idea to 
 - Everything related to that library is in one place. Replacing the library with a different one is easy as you only need to change the wrapper class.
 
 Because the above, create a class called `OktaManager` in the root package. This class will be used in all the screens you create:
+
+<div class="example">
 
 ```kotlin
 package dev.dbikic.oktaloginexample
@@ -244,6 +261,9 @@ class OktaManager(applicationContext: Context) {
 5. Replace with your redirect URL.
 6. Replace with your end session redirect URL.
 7. `setRequireHardwareBackedKeyStore(true)` forces the app to require a device with encryption capabilities. This is the default configuration for Okta OIDC, and it's considered the best practice. **If you want to run this code in an emulator**, though, you can temporarily set it to `false`.
+{.colist}
+
+</div>
 
 > **IMPORTANT:** Make sure to use the values you received when completing the [Create an Okta OIDC App](#create-an-okta-app) step.
 
@@ -272,6 +292,8 @@ That's it! Now, let's create the screens.
 The purpose of a splash screen is to initialize all the applications' dependencies and prepare the app for usage. You'll use it to figure out if the user is authenticated and decide which screen to show next: the login screen or the home screen.
 
 Create a `SplashActivity` class in the root package.
+
+<div class="example">
 
 ```kotlin
 package dev.dbikic.oktaloginexample
@@ -308,8 +330,13 @@ class SplashActivity : AppCompatActivity() {
 
 1. For simplicity, the instance of the `OktaManager` class is in the application class so that it can be easily accessed from all the activities. The real-world solution here would be to use dependency injection and inject the instance class.
 2. Ignore the unresolved reference error for now because we will add the missing class in the next step.
+{.colist}
+
+</div>
 
 Register the activity in the `AndroidManifest.xml` file:
+
+<div class="example">
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -340,6 +367,9 @@ Register the activity in the `AndroidManifest.xml` file:
 ```
 
 1. This intent filter specifies that the `SplashActivity` is the first activity that will be shown when the app is launched
+{.colist}
+
+</div>
 
 This class won't compile just yet. You'll need to create `HomeActivity` and `LoginActivity` classes before it does.
 
@@ -372,6 +402,8 @@ Now, let's do the `LoginActivity`! First, create a simple layout with a button i
 ```
 
 Then, create the `LoginActivity` class in a new `ui` package:
+
+<div class="example">
 
 ```kotlin
 package dev.dbikic.oktaloginexample.ui
@@ -443,6 +475,9 @@ class LoginActivity : AppCompatActivity() {
 1. Register the auth callback with the `OktaManager`.
 2. Call the sign-in method when the button is clicked.
 3. The result is an `AuthorizationStatus` object. With a simple `when` expression we can quickly figure out the status type and access its members if needed.
+{.colist}
+
+</div>
 
 And register it in the `AndroidManifest.xml`:
 
@@ -499,6 +534,8 @@ This is enough for the SDK to open a custom Chrome tab with the login screen of 
 ```
 
 Then, create the `HomeActivity`:
+
+<div class="example">
 
 ```kotlin
 package dev.dbikic.oktaloginexample.ui
@@ -566,6 +603,9 @@ class HomeActivity : AppCompatActivity() {
 4. Navigate the user back to the `LoginActivity` after they sign out.
 5. This flag makes sure that all the back stack activities are cleared and that the `LoginActivity` will be the only activity in the memory.
 6. You have fetched the user info successfully! You can check which fields you received [here](https://developer.okta.com/docs/reference/api/oidc/#response-example-success-5).
+{.colist}
+
+</div>
 
 And register it in the `AndroidManifest.xml`:
 

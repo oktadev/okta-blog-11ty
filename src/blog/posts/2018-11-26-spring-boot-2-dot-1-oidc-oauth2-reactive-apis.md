@@ -175,7 +175,9 @@ class Application {
 
 Spring Security ships with a number of nifty annotations that allow you to control access to methods. You can use `@Secured`, `@RoleAllowed`, and `@PreAuthorize` to name a few. To enable method-level security, you just need to add the following annotation to a configuration class.
 
-**Spring Security Method-Level Security**
+<div class="example">
+
+Example 1. Spring Security Method-Level Security {.example-title}
 
 ```java
 @Configuration
@@ -190,6 +192,9 @@ public class SecurityConfig {
 1. `prePostEnabled` enables Spring Security's `@PreAuthorize` and `@PostAuthorize` annotations
 2. `secureEnabled` controls the `@Secured` annotation
 3. `jsr250Enabled` toggles the `@RoleAllowed` annotation
+{.colist}
+
+</div>
 
 To use these annotations in your app, you'll need to add a "groups" claim to your ID token.  Log in to your Okta account, navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the default one. Click the **Claims** tab and **Add Claim**. Name it "groups", and include it in the ID Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`.
 

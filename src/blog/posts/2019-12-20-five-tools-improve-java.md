@@ -111,6 +111,8 @@ PMD's Maven plugin one of the officially supported plugins in the Apache Maven p
 
 Now run `mvn verify` or just `mvn pmd:check` on a project with the following Java class:
 
+<div class="example">
+
 ```java
 package com.okta.examples;
 
@@ -131,6 +133,9 @@ public class FileUtility {
 1. Empty statement `;;` - delete the trailing `;`.
 2. Unused import - remove line.
 3. Unused private method - dead code, consider deleting.
+{.colist}
+
+</div>
 
 These are just a few common issues usually caused by removing code, or cut/paste errors. Check out the PMD docs for [full list of rules](https://pmd.github.io/latest/pmd_rules_java.html) it supports.
 
@@ -145,6 +150,8 @@ SpotBugs checks bytecode, whereas PMD scans source files, this means anything th
 SpotBugs also has a few plugins, my favorite being "Find Security Bugs", and as you might guess, it helps you detect security issues like weak hash functions, file/path traversals, untrusted inputs, [and many more](https://find-sec-bugs.github.io/bugs.htm).
 
 To add SpotBugs (and Find Security Bugs) to a Maven project, add the following to your `pom.xml`:
+
+<div class="example">
 
 ```xml
 <plugin>
@@ -176,10 +183,15 @@ To add SpotBugs (and Find Security Bugs) to a Maven project, add the following t
 ```
 
 1. Find Security Bugs is a plugin to a plugin 🤯
+{.colist}
+
+</div>
 
 When we scan the same code as above using `mvn compile spotbugs:check`, typically you would just run `mvn verify`, however, we haven't fixed the PMD issues above yet.
 
 > **TIP:** You can skip PMD using the command line arg `-Dpmd.skip`, similarly with SpotBugs, `-Dspotbugs.skip`. For example: `mvn verify -Dpmd.skip -Dspotbugs.skip` would skip both.
+
+<div class="example">
 
 ```java
 package com.okta.examples;
@@ -201,6 +213,9 @@ public class FileUtility {
 1. Default encoding used, use `UTF8` or other Charset.
 2. Failed to close FileWriter, consider using a try-with-resources block.
 3. Unused private method - dead code, consider deleting.
+{.colist}
+
+</div>
 
 You can see from the results there is some overlap between PMD and SpotBugs, but the latter was able to detect that `FileWriter` wasn't closed.
 
@@ -242,6 +257,8 @@ Usually, this is safe to ignore, but I point this out to help explain the comple
 
 Showing a full-blown example of is a outside the scope of this post, but here is a snippet from a Maven `pom.xml` configuration:
 
+<div class="example">
+
 ```xml
 <plugin>
     <groupId>com.github.siom79.japicmp</groupId>
@@ -281,6 +298,7 @@ Showing a full-blown example of is a outside the scope of this post, but here is
 2. `breakBuildOnBinaryIncompatibleModifications` - fail the build on any backward-incompatible changes.
 3. `breakBuildBasedOnSemanticVersioning` - fail based on semver rules. For example, if your public API changes in a way that would require a "minor" version change.
 4. `postAnalysisScript` - Optional, allows use of a custom Groovy script to modify the results based on your own needs. If you want to allow new default methods in interfaces, you would need a script similar to this:
+{.colist}
 
 **src/japicmp/postAnalysisScript.groovy**
 
@@ -303,6 +321,8 @@ while (it.hasNext()) {
 }
 return jApiClasses
 ```
+
+</div>
 
 Take a look at the [japicmp project documentation](https://siom79.github.io/japicmp/) for more examples.
 

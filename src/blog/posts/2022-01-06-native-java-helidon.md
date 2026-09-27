@@ -19,7 +19,11 @@ changelog:
 ---
 Project Helidon is a set of Java libraries for writing microservices. It's an open source, Apache 2.0-licensed, Oracle-sponsored project and contains support for MicroProfile as well as a reactive, functional API. Helidon's two different styles are known as Helidon MP and SE, respectively. The [helidon.io](https://helidon.io) website says:
 
+<div class="example">
+
 Since Helidon is simply a collection of Java libraries running on a fast Netty core, there is no extra overhead or bloat.
+
+</div>
 
 {% img {src: "native-java-helidon/helidon-mp.png", alt: "Helidon supports MicroProfile", header: "400"} %}
 
@@ -375,7 +379,11 @@ This data shows that Helidon has _almost_ caught up to its competition!
 
 I asked [Dmitry Alexandrov](https://twitter.com/bercut2000) about these numbers and he's what he had to say:
 
+<div class="example">
+
 The numbers may look higher than expected, but, in Helidon MP you've got a fully functional CDI container and full MicroProfile support, unlike other competitors. If you still require ultimate performance, you should try Helidon SE, which is a fully reactive "magic free" flavour of Helidon, designed for environments working under maximal pressure.
+
+</div>
 
 ## Learn more about Java and GraalVM
 

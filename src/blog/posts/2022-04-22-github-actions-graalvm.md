@@ -38,7 +38,11 @@ https://twitter.com/i/status/1496278460293324801
 
 I'm going to speed things up for you and just show you how to configure GitHub Actions for an existing JHipster app. In this case, it's a full-stack React + Spring Boot app.
 
+<div class="example">
+
 If you'd like a bit more background, please read [Full Stack Java with React, Spring Boot, and JHipster](https://auth0.com/blog/full-stack-java-with-react-spring-boot-and-jhipster/) followed by [Introducing Spring Native for JHipster](/blog/2022/03/03/spring-native-jhipster).
+
+</div>
 
 Clone the result of these two blog posts, right after I integrated the JHipster Native blueprint. Install its dependencies using npm.
 

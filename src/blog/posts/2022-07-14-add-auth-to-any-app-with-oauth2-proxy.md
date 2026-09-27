@@ -153,6 +153,8 @@ This example is going to outgrow manually using `docker run` commands; switch to
 
 Let's start simple and increase the complexity as we go along. Create a `docker-compose.yml` with oauth2-proxy and the web app from above:
 
+<div class="example">
+
 ```yaml
 version: "3.7"
 services:
@@ -190,6 +192,9 @@ services:
 7. Set the redirect URL to an `http` URL, this defaults to `https`.
 8. Open up the `.env` file and set this variable to a random 32-byte base64 string `openssl rand -base64 32 | tr -- '+/' '-_'`.
 9. Expose port `4180`.
+{.colist}
+
+</div>
 
 Start everything up by running:
 
@@ -210,6 +215,8 @@ Great, the application is now secured, but we still have a few things to clean u
 - We haven't talked about API access yet.
 
 These first two problems can be fixed with a few updates to the OAuth2 Proxy configuration. Edit the `docker-compose.yml` file:
+
+<div class="example">
 
 ```diff
        OAUTH2_PROXY_COOKIE_SECRET: ${OAUTH2_PROXY_COOKIE_SECRET}
@@ -239,6 +246,9 @@ These first two problems can be fixed with a few updates to the OAuth2 Proxy con
 4. Use Redis to store session information.
 5. Start up a Redis container.
 6. Persist the Redis data between restarts.
+{.colist}
+
+</div>
 
 Stop the docker-compose process (<kbd>Ctrl</kbd>+<kbd>C</kbd>) and start it up again:
 
@@ -266,6 +276,8 @@ Let's take a step back and configure OAuth2 Proxy as an [OAuth resource server](
 
 In the `docker-compose.yml`, trim down the environment variables to the bare minimum needed for a REST API:
 
+<div class="example">
+
 ```yaml
 ...
     environment:
@@ -289,6 +301,9 @@ In the `docker-compose.yml`, trim down the environment variables to the bare min
 5. The "client-id" is actually the audience `aud` claim and not the ID of a specific client (multiple API "clients" could be accessing the same REST API).
 6. There is no "client-secret," but it's a required field...
 7. Same with the cookie secret, these flows do not use cookies, but the field is required.
+{.colist}
+
+</div>
 
 Restart the services. (Stop and then run `docker compose up` again.)
 
@@ -332,6 +347,8 @@ Jump back into the `docker-compose.yml` and add a new `service` for Nginx:
 ```
 
 Next, create a `nginx-default.conf.template` file.  This code block is a little involved, be sure to read the annotations:
+
+<div class="example">
 
 ```conf
 server {
@@ -380,6 +397,9 @@ server {
 3. Add headers returned from the auth request.
 4. HTTP 1.0 is the default if not set.
 5. Send authenticated requests to the web app.
+{.colist}
+
+</div>
 
 Restart the docker containers and verify everything is working with HTTPie (make sure you are using port `80` now).
 
@@ -396,6 +416,8 @@ Almost done! We still need to make everything work for both API clients and brow
 Sending all the traffic through Nginx has the added benefit of giving you control of how the OAuth2 Proxy endpoints are exposed. For example, the previous section marked the `/oauth2/auth` route as "internal," so only the `auth_requst` directive can use it.
 
 In the `nginx-default.conf.template`, add a couple of new `location` sections to expose the other `/oauth2` endpoints. The first `location` will handle the OAuth 2.0-related requests like the redirect callback. The second will configure the sign-out endpoint to accept only POST requests. (This prevents a rogue GET request from ending the user's session.)
+
+<div class="example">
 
 ```conf
     location /oauth2/ {
@@ -421,6 +443,9 @@ In the `nginx-default.conf.template`, add a couple of new `location` sections to
 
 1. Send the OAuth callback and logout requests to oauth2-proxy.
 2. Only allow POST requests to the sign-out endpoint.
+{.colist}
+
+</div>
 
 > **NOTE:** This sign-out endpoint does not use a CSRF token. You can read more about why CSRF is important in this post: [Protect Your Angular App From Cross-Site Request Forgery](/blog/2022/07/19/angular-security-csrf).
 
@@ -441,6 +466,8 @@ location / {
 ## Configure OAuth2 Proxy to support API and browser clients
 
 Sometimes, an application needs to handle requests from browsers and other API clients.  In this case, the application acts both as an OAuth client and resource server. OAuth2 Proxy can be configured to support both types of applications. However, you may have noticed that a few OAuth2 Proxy configuration values are overloaded; for example, the "client ID" is used both as the ID of the OAuth client, and the JWT value for the audience. Luckily, there is a workaround! Here is the final annotated `docker-compose.yml`:
+
+<div class="example">
 
 ```yml
 version: "3.7"
@@ -515,6 +542,9 @@ volumes:
 11. Refresh cookies every 30 minutes.
 12. Set the session cookie name to `SESSION`.
 13. Configure the encryption key (loaded from the `.env` file).
+{.colist}
+
+</div>
 
 Restart the services and access the application through your browser: `http://localhost/echo`. Try again using HTTPie:
 

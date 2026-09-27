@@ -201,7 +201,11 @@ function drawChart() {
 }
 </script>
 
+<div class="example">
+
 **Versions used**: Quarkus 2.9.0, Micronaut 3.4.3, Helidon 2.5.0, and Spring Boot 2.6.7 with Spring Native 0.11.5.
+
+</div>
 
 ## Memory usage comparison
 

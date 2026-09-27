@@ -125,6 +125,8 @@ After installing, it's time to build your container. For that, Docker uses a fil
 
 For your Spring Boot app, you'll use a simple `Dockerfile` file:
 
+<div class="example">
+
 ```dockerfile
 FROM openjdk:11 // <1>
 
@@ -139,6 +141,9 @@ ENTRYPOINT ["java", "-jar", "/app.jar"] // <4>
 2. The second instruction is `COPY`. Here you are telling Docker to copy a local file into the container, in this case, your built application will be available in the container as `/app.jar`.
 3. The `EXPOSE` part shows you that the app will listen on port 8080. Although it is not required to make the Docker container work properly, it acts as documentation for future readers.
 4. The last command, `ENTRYPOINT`, tells Docker what it should execute when you run that container. As you are building a Spring Boot application, this is a simple `java -jar` of your app.
+{.colist}
+
+</div>
 
 > **TIP:** You can browse through a lot of community containers to use as a base at [DockerHub](https://hub.docker.com/).
 

@@ -77,6 +77,8 @@ To keep things simple, I'm going to use `v1` tokens in this post. Creating and p
 
 Take a look at the `createToken()` method in `src/main/java/com/okta.example/JPasetoExample.java`
 
+<div class="example">
+
 ```java
 Instant now = Instant.now(); // <1>
 
@@ -99,10 +101,15 @@ String token = Pasetos.V1.LOCAL.builder() // <2>
 7. Set the Issuer (`iss`) reserved claim value
 8. Set a custom claim `1d20` to a random number between 1 and 20
 9. Serialize the token into a string
+{.colist}
+
+</div>
 
 ## Parsing a PASETO Token
 
 Parsing tokens is just as easy. Let's dig into the `parseToken()` method:
+
+<div class="example">
 
 ```java
 PasetoParser parser = Pasetos.parserBuilder() // <1>
@@ -116,10 +123,15 @@ Paseto result = parser.parse(token); // <4>
 2. Use the same `SHARED_SECRET` that was used to create the token
 3. Build the `PasetoParser`
 4. Finally, call the `parse` method
+{.colist}
+
+</div>
 
 > **TIP:** You should reuse the instance of `PasetoParser` for most use cases.
 
 To access the claims values inside the token, call the `getClaims()` method (or `getFooter()` to retrieve values stored in the optional token footer).
+
+<div class="example">
 
 ```java
 String audience = result.getClaims().getAudience(); // <1>
@@ -131,6 +143,9 @@ log("1d20 rolled: " + rolledValue);
 
 1. Get the value for the Audience reserved claim
 2. Get the value for the custom claim `1d20` as an `Integer`
+{.colist}
+
+</div>
 
 ## Require Claims in the PASETO Token
 

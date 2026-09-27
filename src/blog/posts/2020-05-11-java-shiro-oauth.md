@@ -142,6 +142,8 @@ A JAX-RS application contains at least two parts: the REST resources/endpoints, 
 
 Create a simple resource that displays the current user's email address in `src/main/java/com/okta/example/shiro/SecureEndpoint.java`
 
+<div class="example">
+
 ```java
 package com.okta.example.shiro;
 
@@ -171,6 +173,9 @@ public class SecureResource {
 4. Require Authentication!
 5. Inject the current user's security context
 6. Get the name from the Java Principal
+{.colist}
+
+</div>
 
 If you need to get other information out of the access token, cast the user principal to an `OktaJwtPrincipal` and use the `getClaim()` method:
 
@@ -184,6 +189,8 @@ jwtPrincipal.getClaim("your-claim-key");
 A JAX-RS `Application` class defines the metadata and components associated with an application. Most JAX-RS implementations provide helper classes that scan your resources automatically but, because this example works with any implementation, you'll configure them directly.
 
 Create a class that extends from `Application` in `src/main/java/com/okta/example/shiro/RestApplication.java`:
+
+<div class="example">
 
 ```java
 package com.okta.example.shiro;
@@ -210,6 +217,9 @@ public class RestApplication extends Application {
 1. This application is mounted to `/`, all resource paths are relative to this one
 2. Register Apache Shiro's JAX-RS feature
 3. Add the `SecureResource` we created in the previous step
+{.colist}
+
+</div>
 
 ## Configure Apache Shiro to use OAuth 2.0
 

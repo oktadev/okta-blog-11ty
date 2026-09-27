@@ -839,6 +839,8 @@ CSRF protection and a CSP can be configured with Spring Security.
 
 Modify your `SecurityConfiguration` class with these security enhancements.
 
+<div class="example">
+
 ```kotlin
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
@@ -868,6 +870,9 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 1. Force HTTPS in production
 2. Configure the CSRF Cookie so it can be read by JavaScript
 3. Configure a CSP that only allows local scripts
+{.colist}
+
+</div>
 
 Angular's `HttpClient` has built-in support for the client-side half of the CSRF protection. It'll read the cookie sent by Spring Boot and return it in an `X-XSRF-TOKEN` header. You can read more about this in [Angular's Security docs](https://angular.io/guide/security).
 

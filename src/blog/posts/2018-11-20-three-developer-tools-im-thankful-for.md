@@ -53,7 +53,9 @@ I enjoyed the process so much, I created a [template project for InfoQ mini-book
 
 When I started writing on this blog (which uses Jekyll, soon to be Hugo), I reluctantly used Markdown to author posts. Fast forward to today, and we've integrated [AsiiDoc support](https://github.com/oktadeveloper/okta.github.io/pull/2321)! I have to thank [Josh Long](https://twitter.com/starbuxman) for motivating this integration. He started writing our [Reactive Programming series](/blog/2018/09/21/reactive-programming-with-spring) with it. The code callouts were so cool, I had to make them work. Below is an example.
 
-**Read data from a file _synchronously_**
+<div class="example">
+
+Example 1. Read data from a file _synchronously_ {.example-title}
 
 ```java
 package com.example.io;
@@ -85,6 +87,9 @@ class Synchronous implements Reader {
 1. source the file using a regular `java.io.File`
 2. _pull_ the results out of the source one line at a time...
 3. I've written this code to accept a `Consumer<BytesPayload>` that gets called when there's new data
+{.colist}
+
+</div>
 
 One downside to AsciiDoc is GitHub doesn't support it as well as Markdown. You can fix that by viewing your `*.adoc` files through DocGist, as I've done with my [Angular 7 Tutorial](http://gist.asciidoctor.org/?github-mraible/ng-demo//README.adoc).
 
