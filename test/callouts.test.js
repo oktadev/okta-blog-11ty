@@ -27,6 +27,15 @@ test("callouts: bare markers in unhighlighted text and newline-separated lines",
   );
 });
 
+test("callouts: several markers on one line each get a badge", () => {
+  assert.equal(
+    renderCallouts(
+      'FileWriter w = new FileWriter(file);  <span class="token comment">// &lt;1&gt; &lt;2&gt;</span>',
+    ),
+    `FileWriter w = new FileWriter(file);  ${badge(1)} ${badge(2)}`,
+  );
+});
+
 test("callouts: markers elsewhere on a line, and real code, are untouched", () => {
   for (const html of [
     "List&lt;1&gt; x = null;",
