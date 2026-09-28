@@ -22,6 +22,9 @@
 {% if comments != false and site.isProduction %}
 {% js %}
 (function () {
+  // The production build is also reachable on the raw Vercel domain.
+  if (window.location.origin !== "{{ site.productionOrigin }}") return;
+
   var el = document.getElementById("discourse-comments");
   if (!el) return;
 
