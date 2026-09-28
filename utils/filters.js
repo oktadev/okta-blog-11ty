@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { baseUrl, PRODUCTION_ORIGIN } from "./base-url.js";
+import { baseUrl, DISCOURSE_EMBED_ORIGIN } from "./base-url.js";
 import markdownIt from "markdown-it";
 import Image from "@11ty/eleventy-img";
 
@@ -137,10 +137,10 @@ export default function (eleventyConfig) {
   });
 
   // Discourse matches embedded comment threads on the exact URL it recorded: no
-  // trailing slash, and always the production origin. A localhost or preview
+  // trailing slash, and always the canonical origin. A localhost or preview
   // origin makes it create a new empty thread instead of finding the real one.
   eleventyConfig.addFilter("discourseEmbedUrl", (url) => {
-    return new URL(url, PRODUCTION_ORIGIN).href.replace(/\/$/, "");
+    return new URL(url, DISCOURSE_EMBED_ORIGIN).href.replace(/\/$/, "");
   });
 
   // Turn an author's X/Twitter profile URL into an @handle (for twitter:creator).
