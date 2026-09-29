@@ -2,32 +2,33 @@
   {%- for post in postslist %}
     {%- set authorsList = authors | authorFilter(post.data.author) %}
     {% if authorsList %}
-      <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
-        <div class="grid gap-1">
-          <a href="{{ post.url }}">
-            <h2 class="text-4xl font-light text-okta-dark-blue mt-0 mb-2">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</h2>
-          </a>
-          <div class="flex gap-1 items-center">
-            {%- for author in authorsList %}
-              <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
-                {% avatar author.avatar, "small", author.display_name %}
-                {{ author.display_name }}
-              </a>
-              {% if not loop.last %} | {% endif %}
-            {%- endfor %}
-            |
-            <time datetime="{{ post.date | htmlDateString }}">
-              {{ post.date | readableDate }}
-            </time>
-            |
-            {{ post.data.readingTime | readingTimeBadge | safe }}
+      <li class="mb-5 pb-5 border-b-1 border-okta-gravel">
+        <article class="grid gap-3">
+          <div class="grid gap-1">
+            {# Colour goes on the <a>: the base `a` rule would override it on the heading. #}
+            <h2 class="text-4xl font-light mt-0 mb-2"><a class="text-okta-dark-blue" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
+            <div class="flex gap-1 items-center">
+              {%- for author in authorsList %}
+                <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
+                  {% avatar author.avatar, "small", author.display_name %}
+                  {{ author.display_name }}
+                </a>
+                {% if not loop.last %} | {% endif %}
+              {%- endfor %}
+              |
+              <time datetime="{{ post.date | htmlDateString }}">
+                {{ post.date | readableDate }}
+              </time>
+              |
+              {{ post.data.readingTime | readingTimeBadge | safe }}
+            </div>
           </div>
-        </div>
-        {% set excerpt = post | postExcerpt %}
-        {% if excerpt %}
-          <p class="text-content-text">{{ excerpt }}</p>
-        {% endif %}
-        <a href="{{ post.url }}">Read more</a>
+          {% set excerpt = post | postExcerpt %}
+          {% if excerpt %}
+            <p class="text-content-text">{{ excerpt }}</p>
+          {% endif %}
+          <a href="{{ post.url }}">Read more</a>
+        </article>
       </li>
     {% endif %}
   {%- endfor %}

@@ -1,12 +1,14 @@
-<ul class="grid justify-center gap-1">
-	{% for key, author in authorslist|dictsort|sort(attribute='author.full_name') %}
-		<li>
-			<a href="/blog/authors/{{ key }}/" class="inline-flex items-center gap-2">
-				{% if author.avatar %}
-          {% avatar author.avatar, "small", author.full_name %}
+{# dictsort yields [key, value] pairs, so the sort attribute must reach into the
+   value at index 1 — 'author.full_name' silently resolves to undefined. #}
+<ul class="grid gap-2">
+  {% for key, author in authorslist | dictsort | sort(attribute='1.full_name') %}
+    <li>
+      <a href="/blog/authors/{{ key }}/" class="inline-flex items-center gap-2">
+        {% if author.avatar %}
+          {% avatar author.avatar, "medium", author.full_name %}
         {% endif %}
-				<p>{{ author.full_name }}</p>
-			</a>
-		</li>
-	{% endfor %}
+        <span class="text-lg">{{ author.full_name }}</span>
+      </a>
+    </li>
+  {% endfor %}
 </ul>

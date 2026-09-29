@@ -4,45 +4,49 @@ pagination:
   data: collections
   size: 1
   alias: tag
+  # `all` and `posts` are internal collections, not reader-facing tags.
+  filter:
+    - all
+    - posts
 permalink: blog/tags/{{ tag | slugify }}/
 ---
 
 <div>
-	<h1 class="text-[2rem] leading-[42px] font-medium mb-4">
-		Articles tagged <span>{{ tag }}</span>
-	</h1>
-	<ol class="flex flex-col justify-center m-auto max-w-128">
-		{% for post in collections.posts | reverse %}
+  <h1 class="text-okta-cobalt text-4xl my-6">Articles tagged {{ tag }}</h1>
+  <hr class="my-8 border-okta-gravel">
+
+  <ol reversed class="flex flex-col">
+    {% for post in collections[tag] | reverse %}
       {%- set authorsList = authors | authorFilter(post.data.author) %}
-      {% if (post.data.tags) and (post.data.tags.includes(tag)) %}
-        <li class="grid gap-3 mb-5 pb-5 border-b-1 border-okta-gravel">
-          <div class="grid gap-1">
-            <a href="{{ post.url }}">
-              <h2 class="text-xl font-medium">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</h2>
-            </a>
-            <div class="flex gap-1 items-center">
+      <li class="mb-5 pb-6 border-b border-okta-gravel">
+        <article class="grid gap-6">
+          <div class="grid gap-3">
+            {# Colour goes on the <a>: the base `a` rule would override it on the heading. #}
+            <h2 class="font-okta text-2xl"><a class="text-okta-dark-blue" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
+            {# Stacks one datapoint per row until sm, where it inlines and the separators appear. #}
+            <div class="flex flex-col items-start gap-3 text-content-text sm:flex-row sm:flex-wrap sm:items-center">
               {%- for author in authorsList %}
-                <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
+                <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-2">
                   {% avatar author.avatar, "small", author.display_name %}
                   {{ author.display_name }}
                 </a>
-                {% if not loop.last %} | {% endif %}
+                {% if not loop.last %}<span class="hidden text-okta-slate sm:inline">|</span>{% endif %}
               {%- endfor %}
-              |
+              <span class="hidden text-okta-slate sm:inline">|</span>
               <time datetime="{{ post.date | htmlDateString }}">
                 {{ post.date | readableDate }}
               </time>
-              |
+              <span class="hidden text-okta-slate sm:inline">|</span>
               {{ post.data.readingTime | readingTimeBadge | safe }}
             </div>
           </div>
           {% set excerpt = post | postExcerpt %}
           {% if excerpt %}
-            <p>{{ excerpt }}</p>
+            <p class="text-content-text">{{ excerpt }}</p>
           {% endif %}
-          <a href="{{ post.url }}">Read more</a>
-        </li>
-      {% endif %}
-		{% endfor %}
-	</ol>
+          <a class="text-lg" href="{{ post.url }}">Read more</a>
+        </article>
+      </li>
+    {% endfor %}
+  </ol>
 </div>
