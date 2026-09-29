@@ -1,0 +1,47 @@
+{# Discourse comments: topic id when the post has one, embed URL otherwise. #}
+{% if comments != false %}
+  <a id="comments"></a>
+  <div id="discourse-comments"
+       class="my-6 [&>#discourse-embed-frame]:mt-6"
+       {% if discourse_topic_id %}data-discourse-topic-id="{{ discourse_topic_id }}"{% else %}data-discourse-embed-url="{{ page.url | discourseEmbedUrl }}"{% endif %}>
+    <div id="comment-policy" class="comment-policy bg-okta-cream text-okta-carbon rounded p-4">
+      <p class="font-bold">Okta Developer Blog Comment Policy</p>
+      <p>We welcome relevant and respectful comments. Off-topic comments may be removed.</p>
+      {% if not site.isProduction %}
+        <p class="mt-1 italic">Comments are disabled outside production.</p>
+      {% endif %}
+    </div>
+    <noscript>
+      <p class="mt-3">Please enable JavaScript to view the comments inline.
+        <a href="https://devforum.okta.com/c/dev-blog-comments/17">Visit the forum to comment</a>.</p>
+    </noscript>
+  </div>
+{% endif %}
+
+{# devforum only accepts embeds served from developer.okta.com. #}
+{% if comments != false and site.isProduction %}
+{% js %}
+(function () {
+  // The production build is also reachable on the raw Vercel domain.
+  if (window.location.origin !== "{{ site.productionOrigin }}") return;
+
+  var el = document.getElementById("discourse-comments");
+  if (!el) return;
+
+  var topicId = el.getAttribute("data-discourse-topic-id");
+  var embedUrl = el.getAttribute("data-discourse-embed-url");
+  if (!topicId && !embedUrl) return;
+
+  var discourseUrl = "https://devforum.okta.com/";
+  window.DiscourseEmbed = topicId
+    ? { discourseUrl: discourseUrl, topicId: parseInt(topicId, 10) }
+    : { discourseUrl: discourseUrl, discourseEmbedUrl: embedUrl };
+
+  var d = document.createElement("script");
+  d.type = "text/javascript";
+  d.async = true;
+  d.src = discourseUrl + "javascripts/embed.js";
+  (document.head || document.body).appendChild(d);
+})();
+{% endjs %}
+{% endif %}

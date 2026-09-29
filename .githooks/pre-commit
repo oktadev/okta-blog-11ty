@@ -4,29 +4,18 @@
 # package.json "prepare" script on `npm install`).
 set -e
 
-staged=$(git diff --cached --name-only --diff-filter=ACM)
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
 [ -z "$staged" ] && exit 0
 fail=0
 
-# 1. Block accidental junk: .DS_Store and files larger than 5MB.
-for f in $staged; do
-  case "$f" in
-    *.DS_Store | .DS_Store)
-      echo "✖ refusing to commit $f"
-      fail=1
-      ;;
-  esac
-done
-for f in $staged; do
-  [ -f "$f" ] || continue
-  size=$(wc -c < "$f" | tr -d ' ')
-  if [ "$size" -gt 5242880 ]; then
-    echo "✖ $f is over 5MB ($((size / 1048576))MB) — reconsider or use git-lfs"
-    fail=1
-  fi
-done
+# 1. Junk, size and image-width checks. CI runs the same script on the files a
+#    push or PR changes, so the hook is a convenience, not the enforcement.
+node scripts/validate-images.js --staged || fail=1
 
-# 2. Syntax-check staged JS (no dependencies required).
+# 2. Syntax-check staged JS (no dependencies required). Split on newlines only,
+#    so a path with spaces stays one item.
+IFS='
+'
 for f in $staged; do
   case "$f" in
     *.js | *.mjs | *.cjs)
@@ -35,6 +24,7 @@ for f in $staged; do
       ;;
   esac
 done
+unset IFS
 
 if [ "$fail" -ne 0 ]; then
   echo "pre-commit: aborting commit (use 'git commit --no-verify' to bypass)"
