@@ -8,9 +8,7 @@ pagination:
 permalink: "{% if pagination.pageNumber == 0 %}blog/index.html{% else %}blog/page/{{ pagination.pageNumber + 1 }}/index.html{% endif %}"
 ---
 
-<div class="container">
-  <div class="container m-auto m-w-128">
-    {% include "postslist.njk" %}
-    {% include "pagination.njk" %}
-  </div>
+<div>
+  {% include "postslist.njk" %}
+  {% include "pagination.njk" %}
 </div>
