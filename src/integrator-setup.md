@@ -60,7 +60,7 @@ Other keys you can pass:
 Examples for different app types and frameworks:
 
 - [Angular](#angular), [React](#react), [Vue](#vue)
-- [Node + Express](#node--express)
+- [Node + Express](#node-express)
 - [Ionic](#ionic)
 - [React Native](#react-native)
 - [Okta Spring Boot Starter](#okta-spring-boot-starter)
