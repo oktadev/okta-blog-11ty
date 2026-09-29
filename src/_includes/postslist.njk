@@ -5,7 +5,8 @@
       <li class="mb-5 pb-5 border-b-1 border-okta-gravel">
         <article class="grid gap-3">
           <div class="grid gap-1">
-            <h2 class="text-4xl font-light text-okta-dark-blue mt-0 mb-2"><a href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
+            {# Colour goes on the <a>: the base `a` rule would override it on the heading. #}
+            <h2 class="text-4xl font-light mt-0 mb-2"><a class="text-okta-dark-blue" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
             <div class="flex gap-1 items-center">
               {%- for author in authorsList %}
                 <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
