@@ -40,6 +40,20 @@ const ENTITIES = {
   copy: "(c)",
   reg: "(r)",
   trade: "(tm)",
+  dash: "-",
+  hyphen: "-",
+  rarr: "->",
+  larr: "<-",
+  harr: "<->",
+  laquo: "<<",
+  raquo: ">>",
+  times: "x",
+  middot: ".",
+  bull: "*",
+  zwsp: "",
+  thinsp: " ",
+  ensp: " ",
+  emsp: " ",
 };
 
 export function decodeEntities(s) {
@@ -82,9 +96,15 @@ export function normalizeText(s) {
     decodeEntities(s)
       .replace(/[‘’‚′]/g, "'")
       .replace(/[“”„″]/g, '"')
-      // Asciidoctor renders " -- " as thin-space, em dash, thin-space.
-      .replace(/\u2009[\u2013\u2014]\u2009/g, " -- ")
-      .replace(/[\u2013\u2014\u2212]/g, "-")
+      // Non-breaking, thin and en/em spaces are spaces.
+      .replace(/[\u00a0\u2002\u2003\u2009]/g, " ")
+      // Every dash is a hyphen; "--" and an em dash compare equal.
+      .replace(/[\u2010\u2011\u2013\u2014\u2212]/g, "-")
+      .replace(/-{2,}/g, "-")
+      // A backslash that only stops an AsciiDoc substitution is not text, and
+      // a stray backtick left by an unparsed code span is not either.
+      .replace(/\\(?=\*|https?:)/g, "")
+      .replace(/`/g, " ")
       .replace(/\u2026/g, "...")
       .replace(
         /[\u21d0\u21d2\u2192\u2190]/g,
@@ -93,8 +113,7 @@ export function normalizeText(s) {
             c
           ],
       )
-      // Non-breaking and thin spaces are spaces; zero-width characters are nothing.
-      .replace(/[\u00a0\u2009]/g, " ")
+      // Zero-width characters are nothing.
       .replace(/[\u200b\u200c\u2060\ufeff]/g, "")
       .replace(/[①-⑳]/g, "")
       .replace(/\s*(?:<\d+>|\(\d+\))\s*$/gm, "")
@@ -162,7 +181,7 @@ export function extract(html) {
             "",
           )
           .replace(/\s*<!--(?:\d+|\.)-->\s*$/, "")
-          .replace(/\s*(?:\(\d+\)|[①-⑳])\s*$/, "")
+          .replace(/(?:\s*(?:\(\d+\)|[①-⑳]))+\s*$/, "")
           .replace(/\s+$/, ""),
       );
     // Asciidoctor's indent= attribute and list nesting shift whole blocks;
@@ -178,6 +197,21 @@ export function extract(html) {
     code.push(text);
     return "\n";
   });
+
+  // Callout lists: the old site renders each number in its own table cell.
+  body = body.replace(
+    /<td>\s*<i class="conum"[^>]*>\s*<\/i>\s*<b>\d+<\/b>\s*<\/td>/gi,
+    "",
+  );
+  // The deprecated-CLI warning's wording differs between the old include and
+  // this site's include by design; it is compared on its own, not per post.
+  let warning;
+  while (
+    (warning = body.match(/<div[^>]*class="integrator-org-warning"[^>]*>/i))
+  ) {
+    const el = balancedElement(body, warning.index);
+    body = body.slice(0, warning.index) + body.slice(warning.index + el.length);
+  }
 
   const inline = [];
   body = body.replace(/<code\b[^>]*>([\s\S]*?)<\/code>/gi, (_, c) => {
@@ -251,32 +285,57 @@ export function compareProse(live, mine) {
   const available = mine.map(() => true);
   const touched = mine.map(() => false);
   const missing = [];
+  const near = [];
+  const take = (i, keepAvailable = false) => {
+    touched[i] = true;
+    if (!keepAvailable) available[i] = false;
+  };
   for (const block of live) {
-    let idx = mine.findIndex((b, i) => available[i] && b === block);
-    let partial = false;
-    if (idx < 0) {
-      // A live block may have been merged or split; accept containment or a
-      // close fuzzy match. A longer block that contains this one stays
-      // available for the live blocks that were merged into it.
-      idx = mine.findIndex(
-        (b, i) =>
-          available[i] &&
-          (b.includes(block) ||
-            block.includes(b) ||
-            similarity(block, b) >= 0.85),
-      );
-      partial =
-        idx >= 0 &&
-        mine[idx].includes(block) &&
-        mine[idx].length > block.length;
+    const exact = mine.findIndex((b, i) => available[i] && b === block);
+    if (exact >= 0) {
+      take(exact);
+      continue;
     }
-    if (idx >= 0) {
-      touched[idx] = true;
-      if (!partial) available[idx] = false;
-    } else if (words(block).length >= 3) missing.push(block);
+    // Live blocks merged into one local block: the longer block stays
+    // available for the other live blocks merged into it.
+    const merged = mine.findIndex((b, i) => available[i] && b.includes(block));
+    if (merged >= 0) {
+      take(merged, true);
+      continue;
+    }
+    // A live block split locally: the available local pieces it contains must
+    // cover all of it. Whatever they leave over is the missing text, so a
+    // truncated paragraph is reported rather than accepted as a piece.
+    let rest = block;
+    const pieces = [];
+    mine.forEach((b, i) => {
+      if (available[i] && words(b).length && rest.includes(b)) {
+        rest = rest.replace(b, " ");
+        pieces.push(i);
+      }
+    });
+    if (pieces.length) {
+      pieces.forEach((i) => take(i));
+      const left = rest.replace(/\s+/g, " ").trim();
+      if (words(left).length) {
+        missing.push(left);
+        near.push(null);
+      }
+      continue;
+    }
+    missing.push(block);
+    // The closest local block, so the report shows what changed.
+    let best = null;
+    let score = 0.5;
+    mine.forEach((b, i) => {
+      const s = similarity(block, b);
+      if (available[i] && s > score) [best, score] = [b, s];
+    });
+    near.push(best);
   }
   return {
     missing,
+    near,
     extra: mine.filter((b, i) => !touched[i] && words(b).length >= 3),
   };
 }
@@ -322,7 +381,7 @@ export function compareInline(live, mine) {
   for (const c of live) {
     const n = count.get(c) || 0;
     if (n > 0) count.set(c, n - 1);
-    else if (c.length > 1) missing.push(c);
+    else missing.push(c);
   }
   return missing;
 }
@@ -409,8 +468,17 @@ async function main() {
         `${bad ? "✖" : "✓"} ${slug}: prose ${r.live.prose.length}/${r.mine.prose.length} blocks, ${r.prose.missing.length} missing, ${r.prose.extra.length} extra | code ${r.code.liveCount}/${r.code.mineCount}, ${r.code.mismatches.length} differ | inline code missing ${r.inline.length}`,
       );
       if (details || bad) {
-        for (const m of r.prose.missing)
+        r.prose.missing.forEach((m, i) => {
           rows.push(`    missing prose: ${m.slice(0, 160)}`);
+          const n = r.prose.near[i];
+          if (n) {
+            let k = 0;
+            while (k < m.length && m[k] === n[k]) k++;
+            rows.push(
+              `      closest here: ${n.slice(Math.max(0, k - 30), k + 130)}`,
+            );
+          }
+        });
         if (details)
           for (const m of r.prose.extra)
             rows.push(`    extra prose:   ${m.slice(0, 160)}`);

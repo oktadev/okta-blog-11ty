@@ -293,7 +293,7 @@ test("asciidoc: block images with title, width, link and asset paths", () => {
   );
   assert.equal(
     bodyOf(markdown),
-    '{% img {src: "d/init.png", alt: "the Initializr", header: "800"} %}\n\n_The Initializr_\n\n[{% img {src: "d/full.png", alt: "Alt", header: "600"} %}](/img/blog/d/full.png)\n',
+    '{% img {src: "d/init.png", alt: "the Initializr", header: "800"} %}\n\n_Figure 1. The Initializr_\n\n[{% img {src: "d/full.png", alt: "Alt", header: "600"} %}](/img/blog/d/full.png)\n',
   );
   assert.ok(notes.some((n) => n.startsWith("raw asset path")));
 });
@@ -311,6 +311,35 @@ test("asciidoc: nested bullet and numbered lists, lazy continuation, blank lines
   assert.equal(
     out,
     "- One continued\n  - Nested\n- Two\n- Three\n\n1. First\n  1. Sub\n2. Second\n\n1. Explicit\n2. Numbers\n",
+  );
+});
+
+test("asciidoc: a markdown fence with a language closes on a plain fence", () => {
+  const out = bodyOf(adoc("```java\nint a;\n```\n\nAfter.").markdown);
+  assert.equal(out, "```java\nint a;\n```\n\nAfter.\n");
+});
+
+test("asciidoc: list continuation takes block metadata in either order", () => {
+  const src = (meta) =>
+    `. Add a controller:\n+\n${meta}\n----\nclass A {}\n----\n. Next step`;
+  const expected = [
+    "1. Add a controller:",
+    "",
+    "   **Controller**",
+    "",
+    "   ```java",
+    "   class A {}",
+    "   ```",
+    "2. Next step",
+    "",
+  ].join("\n");
+  assert.equal(
+    bodyOf(adoc(src("[source,java]\n.Controller")).markdown),
+    expected,
+  );
+  assert.equal(
+    bodyOf(adoc(src(".Controller\n[source,java]")).markdown),
+    expected,
   );
 });
 
