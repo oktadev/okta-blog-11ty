@@ -59,7 +59,7 @@ This brings us to today, where it's commonplace to mix and match your MVC framew
 
 The term "microservices" was first coined in 2007. Many call it Service Oriented Architecture (SOA) reincarnated, and it kinda is.
 
-> **NOTE:** If you're not familiar with SOA, I suggest you read [Microservices vs. SOA -- What's the Difference?](https://www.okta.com/security-blog/2019/07/microservices-vs-soa—whats-the-difference) from the Okta Security blog.
+> **NOTE:** If you're not familiar with SOA, I suggest you read [Microservices vs. SOA — What's the Difference?](https://www.okta.com/security-blog/2019/07/microservices-vs-soa—whats-the-difference) from the Okta Security blog.
 
 Microservices blew up in popularity when James Lewis and Martin Fowler published the article "[Microservices](https://martinfowler.com/articles/microservices.html)". Adrian Cockcroft at Netflix was a big part of this movement as well. He described the architecture as "fine-grained SOA" and helped pioneer microservices at web scale. Adrian is now VP of Cloud Architecture Strategy at AWS (Amazon Web Services).
 

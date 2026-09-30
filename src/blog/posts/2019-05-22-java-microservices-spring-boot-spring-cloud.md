@@ -582,7 +582,7 @@ Spring has excellent support for Kotlin, and you can choose it as a language on 
 
 ## Known Issues with Refresh Tokens
 
-By default, Okta's access tokens expire after one hour. This is expected, and short-lived access tokens are recommended when using OAuth 2.0. Refresh tokens typically live a lot longer -- think days or months -- and can be used to get new access tokens. This should happen automatically when using Okta's Spring Boot starter, but it does not.
+By default, Okta's access tokens expire after one hour. This is expected, and short-lived access tokens are recommended when using OAuth 2.0. Refresh tokens typically live a lot longer — think days or months — and can be used to get new access tokens. This should happen automatically when using Okta's Spring Boot starter, but it does not.
 
 I configured my Okta org so its access tokens expire in five minutes. You can do this by going to **Security** > **API** > **Authorization Servers** > `default` > **Access Policies**, click on the **Default Policy**, and edit its rule. Then change the access token lifetime from 1 hour to 5 minutes.
 

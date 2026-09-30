@@ -33,13 +33,13 @@ Without further ado, here's round two of developer relations pro tips from [Ashl
 
 [<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/ashleymcnamara.png", alt: "Ashley McNamara", header: "100"} %}</span>](https://twitter.com/ashleymcnamara)
 
-1) Being a developer advocate requires you to be constantly learning but leading a life on the road only allows you to focus on what's in front of you. That OSCON talk isn't going to build itself, right?
+1\) Being a developer advocate requires you to be constantly learning but leading a life on the road only allows you to focus on what's in front of you. That OSCON talk isn't going to build itself, right?
 
 In order to keep acquainted with emerging tech, I recommend spending 1-2 hours a day studying current trends in the industry. That can mean spending 2 hours reading articles about serverless, or it could mean building an application that makes use of interesting technology.
 
 Staying relevant is critical to the job. Focusing only on the technologies your company offers can give us a singular point of view which will show in your presentations. While staying current is important, it's also impossible for us to be experts in everything – so, I suggest spending a fair amount of time building your network and leaning on people for help when you're stumped. I find that a lot of developer advocates feel embarrassed when they don't know something and I want you to know, it's okay, but having a list of experts you can refer people to is invaluable.
 
-2) Developer advocacy is a lot of fun, and we're often the first people conference organizers reach out to when they're looking for presenters. I noticed a sort of redundancy across speakers, so to balance the scales I'll often pass some of my invitations to underrepresented people. This way, I avoid burnout while also giving someone a well-deserved platform.
+2\) Developer advocacy is a lot of fun, and we're often the first people conference organizers reach out to when they're looking for presenters. I noticed a sort of redundancy across speakers, so to balance the scales I'll often pass some of my invitations to underrepresented people. This way, I avoid burnout while also giving someone a well-deserved platform.
 
 ## Bernd Rücker, Co-founder & Technologist of Camunda
 
@@ -151,7 +151,7 @@ When promoting content there are two main goals when thinking about the number o
 
 **Extract some of the key messages from your post, as single-sentence, compelling takeaways.**
 
-To promote your content, you want to tell people quickly why they should read your article, rather than continue watching whatever funny cat-video they ended up on. Once you have a list--usually two or three--you can use these messages to entice people into your article! When you look at the final list, you should even consider using the most interesting and intriguing one as your title!
+To promote your content, you want to tell people quickly why they should read your article, rather than continue watching whatever funny cat-video they ended up on. Once you have a list—usually two or three—you can use these messages to entice people into your article! When you look at the final list, you should even consider using the most interesting and intriguing one as your title!
 
 **Put together a social cadence to share your post.**
 
@@ -203,7 +203,7 @@ Some presenters have chosen to eschew the live demo entirely, arguing that it's 
 
 Is the demo one that consists of simple moving parts? Complex demos involving multiple servers all running simultaneously are much more fragile, and much more prone to collapse on-stage. Demos about a programming language or pattern, however, can usually be contained in one file and so long as the installation of the language/platform is stable, resist everything (up to simple syntax errors, which can be mitigated by backups or in-slide examples) that might break the demo.
 
-Presenters must also keep the demo ridiculously simple--resist the urge to jump around to different files to show calls from A to B to C to D then back to B then over to E then.... If the demo code can't be fully displayed on one screen, then the presenter needs to keep the number of "demo shots" (the editor window containing the code) to no more than three or four. Remember, the audience has never seen this code before, and does not have it in their head the way you (the presenter) do. If the code must be spread across six files, consider adding a slide that shows a call-flow diagram through each object/method pair as an overview.
+Presenters must also keep the demo ridiculously simple—resist the urge to jump around to different files to show calls from A to B to C to D then back to B then over to E then.... If the demo code can't be fully displayed on one screen, then the presenter needs to keep the number of "demo shots" (the editor window containing the code) to no more than three or four. Remember, the audience has never seen this code before, and does not have it in their head the way you (the presenter) do. If the code must be spread across six files, consider adding a slide that shows a call-flow diagram through each object/method pair as an overview.
 
 **Be ready to walk away from your Live Demo.**
 
@@ -215,13 +215,13 @@ When a demo fails, fiddle with it for no more than two to three minutes, and if 
 
 It never fails: you sit down to create a list of talks, and your brain decides that now, right now, is the perfect time to think about nothing more than empty fields. Nothing but miles and miles and miles of deserted, empty, entirely idea-free fields. Relax; brainstorming is not impossible, and sometimes it just takes a little "seeding" to open the floodgates.
 
-Consider a technical topic--for this example, I'll use Angular. I tend to think of talks along a variety of axes. "What" talks are explanations of what the technology is; "Angular is an open-source Javascript/Typescript single-page application framework that builds on MVC and dependency injection principles."
+Consider a technical topic—for this example, I'll use Angular. I tend to think of talks along a variety of axes. "What" talks are explanations of what the technology is; "Angular is an open-source Javascript/Typescript single-page application framework that builds on MVC and dependency injection principles."
 
 "Why" talks are more persuasive talks, such as why one answers a problem better than another or why certain decisions were made in the technology; "Angular is a 'strongly-opinionated' framework, because Google felt that it yields a better developer experience if developers can either opt-in or opt-out without trying to muddle along making Angular work in areas it was never intended to do so", or "Angular builds around dependency injection because its founders and maintainers felt that any application must be unit- and end-to-end tested using automated testing tools to be high-quality, and DI makes it much easier to unit- and e2e-test an application."
 
 "When" talks speak of experience, such as what your experience was when using said technology, either in a particular situation or even just getting started; "When our team started using Angular, we ran into a series of potholes that threatened to derail our use of the framework altogether, and in this talk I will go over what we found and how we were able to avoid them." And so on. By pivoting a particular topic around the classic interrogatory words (who, what, where, when, why), a particular topic can yield up a surplus of talk ideas.
 
-In truth, talks will often be a combination of several--most introductions to a technology will be a mix of "what" and "why" with a little "when" thrown in. But for "deeper" talks that aren't as introductory, choosing to focus almost entirely on just one of the interrogatories can yield surprisingly solid results.
+In truth, talks will often be a combination of several—most introductions to a technology will be a mix of "what" and "why" with a little "when" thrown in. But for "deeper" talks that aren't as introductory, choosing to focus almost entirely on just one of the interrogatories can yield surprisingly solid results.
 
 ## Go Forth and Educate!
 

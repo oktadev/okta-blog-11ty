@@ -265,7 +265,7 @@ Push the `Jenkinsfile` to the public repository.
 In the **Advanced Project Options**, for the Pipeline Definition, select **Pipeline script from SCM** and complete the repository information:
 
 - SCM: GitHub
-- Repository URL: https://github.com/&lt;your-username>/simple-app.git
+- Repository URL: [https://github.com/&lt;your-username&gt;/simple-app.git](https://github.com/%3Cyour-username%3E/simple-app.git)
 - Credentials: none
 - Branch Specifier: */master
 - Script Path: Jenkinsfile

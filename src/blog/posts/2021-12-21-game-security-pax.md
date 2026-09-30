@@ -68,7 +68,7 @@ In the end, our findings from PAX West this year suggest that everyone is feelin
 
 [{% img {src: "game-security-pax/info-graphic-thumbnail.jpg", alt: "Thumbnail of PDF info graphic"} %}](/img/game-security-pax/info-graphic.pdf)
 
-_Info Graphic - Click to open full PDF_
+_Figure 1. Info Graphic - Click to open full PDF_
 
 If game security is on your mind, we'd love to hear from you in the comments below. Let's continue the exploration, and collaborate to increase security for all players in the gaming ecosystem.
 

@@ -27,7 +27,7 @@ Enough of the "I have cool co-workers" talk, you're here to find out about my fa
 
 The first languages I learned to program in were HTML, CSS, and JavaScript, way back in the mid-90s. I started learning Java in the late 90s. At that time, my favorite IDE was HomeSite. Back then, I used to write Java code and search/copy/paste the imports into my code. _Such a pain!_
 
-It wasn't until the early 2000s that I found an IDE that wasn't painful to use. I fell in love with Eclipse for a few years, back in the Struts 1.0/Spring 1.0 days. In the mid-2000s, I migrated my AppFuse project from Ant to Maven and ended up moving to IDEA because its Maven support was so much better. Then I moved back to the area I adore -- UI development -- and found that IDEA had excellent support for HTML, CSS, and JavaScript. I haven't looked back since.
+It wasn't until the early 2000s that I found an IDE that wasn't painful to use. I fell in love with Eclipse for a few years, back in the Struts 1.0/Spring 1.0 days. In the mid-2000s, I migrated my AppFuse project from Ant to Maven and ended up moving to IDEA because its Maven support was so much better. Then I moved back to the area I adore — UI development — and found that IDEA had excellent support for HTML, CSS, and JavaScript. I haven't looked back since.
 
 In addition to plugins that support virtually every language, IDEA has a killer feature that I use in my demos: [Live Templates](https://www.jetbrains.com/help/idea/using-live-templates.html). Live templates allow you to record code snippets and recall them with a quick shortcut that you define. You can see them in action in my recent [Full Stack Reactive screencast](https://youtu.be/1xpwYe154Ys).
 

@@ -420,7 +420,7 @@ The cool kids use `kubectx` and `kubens` to set the default context and namespac
 
 Before the JHipster 7.0.0 release, I tested this microservice example with Kubernetes and Google Cloud. I found many solutions in Ray Tsang's [Spring Boot on GCP Guides](https://spring-gcp.saturnism.me/). [Thanks, Ray](https://twitter.com/mraible/status/1372964263237718026)!
 
-To start with Google Cloud, you'll need an account and a project. [Sign up for Google Cloud Platform (GCP)](https://spring-gcp.saturnism.me/getting-started/google-cloud-platform), log in, and create a project. Open a [console](https://console.cloud.google.com/) in your browser. A GCP project contains all cloud services and resources--such as virtual machines, network, load balancers--that you might use.
+To start with Google Cloud, you'll need an account and a project. [Sign up for Google Cloud Platform (GCP)](https://spring-gcp.saturnism.me/getting-started/google-cloud-platform), log in, and create a project. Open a [console](https://console.cloud.google.com/) in your browser. A GCP project contains all cloud services and resources—such as virtual machines, network, load balancers—that you might use.
 
 > **TIP:** You can also download and install the [`gcloud` CLI](https://cloud.google.com/sdk/) if you want to run things locally.
 

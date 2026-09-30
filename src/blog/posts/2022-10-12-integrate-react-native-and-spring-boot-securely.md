@@ -279,7 +279,7 @@ To see your React Native app running on iOS, press **i** in the window you ran `
 | --- | --- |
 | {% img {src: "react-native-jhipster/react-native-ios.png", alt: "React Native app on iOS", header: "350"} %} | {% img {src: "react-native-jhipster/react-native-ios-photo.jpg", alt: "React Native photo on iOS", header: "350"} %} |
 
-> **TIP:** You can reload your app in Simulator using <kbd>{commandKey}</kbd>+<kbd>R</kbd>.
+> **TIP:** You can reload your app in Simulator using <kbd>&#8984;</kbd>+<kbd>R</kbd>.
 
 ### Test on Android
 

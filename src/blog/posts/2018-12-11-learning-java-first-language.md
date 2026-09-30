@@ -77,7 +77,7 @@ _Credit: [Martijn Verburg](https://twitter.com/karianna) and [Michael Kölling](
 
 There is also extensive teaching material for how to use this for teaching and learning, based on actual pedagogical research. You can combine things. No need for one or the other.
 
-Yes, JShell is cool. Java 11 is pretty cool too -- did you know you can run `.java` files [using the `java` command](https://dzone.com/articles/launch-single-file-source-code-programs-in-jdk-11)?
+Yes, JShell is cool. Java 11 is pretty cool too — did you know you can run `.java` files [using the `java` command](https://dzone.com/articles/launch-single-file-source-code-programs-in-jdk-11)?
 
 ## 4. Use the power of networking
 

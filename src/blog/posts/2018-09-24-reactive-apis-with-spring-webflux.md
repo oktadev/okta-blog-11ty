@@ -39,7 +39,7 @@ Let's build something! We'll begin our journey, as usual, at my second [favorite
 
 {% img {src: "spring-webflux-apis/the-spring-initializr.png", alt: "the Spring Initializr", header: "800"} %}
 
-_Selections on the Spring Initializr for a new, reactive application._
+_Figure 1. Selections on the Spring Initializr for a new, reactive application._
 
 This will give you a new project with the following layout.
 
@@ -396,7 +396,7 @@ class SampleDataInitializer
 6. ...and we transform each record in turn into a `Profile` object...
 7. ...that we then persist to the database using our repository
 8. after all the data has been written to the database, we want to fetch all the records from the database to confirm what we have there
-9. if we'd stopped at the previous line, the `save` operation, and run this program then we would see... nothing! `Publisher<T>`  instances are _lazy_ -- you need to `subscribe()` to them to trigger their execution. This last line is where the rubber meets the road. In this case, we're using the `subscribe(Consumer<T>)` variant that lets us visit every record returned from the `repository.findAll()` operation and print out the record.
+9. if we'd stopped at the previous line, the `save` operation, and run this program then we would see... nothing! `Publisher<T>`  instances are _lazy_ — you need to `subscribe()` to them to trigger their execution. This last line is where the rubber meets the road. In this case, we're using the `subscribe(Consumer<T>)` variant that lets us visit every record returned from the `repository.findAll()` operation and print out the record.
 {.colist}
 
 </div>
@@ -712,7 +712,7 @@ class ProfileRestController {
 1. this is yet another stereotype annotation that tells Spring WebFlux that this class provides HTTP handler methods
 2. There are some attributes that are common to all the HTTP endpoints, like the root URI, and the default `content-type` of all responses produced. You can use `@RequestMapping` to spell this out at the class level and the configuration is inherited for each subordinate handler method
 3. There are specializations of `@RequestMapping`, one for each HTTP verb, that you can use. This annotation says, "this endpoint is identical to that specified in the root. `@RequestMapping` except that it is limited to HTTP `GET` endpoints"
-4. This endpoint uses a _path variable_ -- a part of the URI that is matched against the incoming request and used to extract a parameter. In this case, it extracts the `id` parameter and makes it available as a method parameter in the handler method.
+4. This endpoint uses a _path variable_ — a part of the URI that is matched against the incoming request and used to extract a parameter. In this case, it extracts the `id` parameter and makes it available as a method parameter in the handler method.
 5. This method supports creating a new `Profile` with an HTTP `POST` action. In this handler method we expect incoming requests to have a JSON body that the framework then marshals into a Java object, `Profile`.  This happens automatically based on the content-type of the incoming request and the configured, acceptable, convertible payloads supported by Spring WebFlux.
 {.colist}
 
@@ -919,7 +919,7 @@ class ProfileHandler {
 
 1. as before, we're going to make use of our `ProfileService` to do the heavy lifting
 2. Each handler method has an identical signature: `ServerRequest` is the request parameter and `Mono<ServerResponse>` is the return value.
-3. We can centralize common logic in, yep! - you guessed it! -- functions. This function creates a `Mono<ServerResponse>` from a `Publisher<Profile>` for any incoming request. Each request uses the `ServerResponse` builder object to create a response that has a `Location` header, a `Content-Type` header, and no payload. (You don't need to send a payload in the response for `PUT` or `POST`, for example).
+3. We can centralize common logic in, yep! - you guessed it! — functions. This function creates a `Mono<ServerResponse>` from a `Publisher<Profile>` for any incoming request. Each request uses the `ServerResponse` builder object to create a response that has a `Location` header, a `Content-Type` header, and no payload. (You don't need to send a payload in the response for `PUT` or `POST`, for example).
 4. this method centralizes all configuration for replies to read requests (for instance, those coming from `GET` verbs)
 {.colist}
 

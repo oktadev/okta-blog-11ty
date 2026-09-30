@@ -80,7 +80,7 @@ Most Java web frameworks supported a form of MVC and others were component-based
 
 Fast-forward to 2022, and Java is mainly used for APIs, while JavaScript is often used for UIs.
 
-"I do find it ironic that there are now several JavaScript frameworks that provide developers joy with server-side rendering. It's like the Java MVC frameworks of old but relatively new to JavaScript. History repeats itself, eh?" -- Matt Raible
+"I do find it ironic that there are now several JavaScript frameworks that provide developers joy with server-side rendering. It's like the Java MVC frameworks of old but relatively new to JavaScript. History repeats itself, eh?" — Matt Raible
 
 One of OAuth's key patterns is a **resource server**. A resource server accepts an access token. If the token is valid, it gives a client access to the resource owner's data. In this example, a client is an app, the resource owner is a user, and the resource server is the Java API you develop.
 

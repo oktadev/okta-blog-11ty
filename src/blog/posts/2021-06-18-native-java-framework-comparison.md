@@ -548,7 +548,7 @@ _These numbers are from a 2019 MacBook Pro with a 2.4 GHz 8-Core Intel Core i9 p
 
 <div class="scrollable">
 
-**Native Java Startup times in milliseconds**
+**Table 1. Native Java Startup times in milliseconds**
 
 | Framework | Command executed | Milliseconds to start |
 | --- | --- | --- |
@@ -616,7 +616,7 @@ I substituted `<executable>` as follows:
 
 <div class="scrollable">
 
-**Native Java memory used in megabytes**
+**Table 2. Native Java memory used in megabytes**
 
 | Framework | Executable | Megabytes before request | Megabytes after 1 request | Megabytes after 5 requests |
 | --- | --- | --- | --- | --- |

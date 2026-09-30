@@ -61,7 +61,7 @@ In 2014++, along came React, Angular (with TypeScript), and Vue. They continue t
 
 To be truthful, Java 1.0 was released on [January 23, 1996](https://web.archive.org/web/20070310235103/http://www.sun.com/smi/Press/sunflash/1996-01/sunflash.960123.10561.xml), so _technically_, JavaScript is older!
 
-The birthdate that many assign to Java -- May 23rd, 2020 -- was when the Java programming language and platform's first public alpha release happened.
+The birthdate that many assign to Java — May 23rd, 2020 — was when the Java programming language and platform's first public alpha release happened.
 
 Ben Evans published an excellent InfoQ article about [Java at 25](https://www.infoq.com/news/2020/05/java-at-25/). In it, he speaks the truth:
 
