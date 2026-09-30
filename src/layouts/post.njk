@@ -92,7 +92,7 @@ layout: base
 
     {% set prevPost = collections.posts | getPreviousCollectionItem %}
     {% set nextPost = collections.posts | getNextCollectionItem %}
-    <nav class="prev-next flex justify-between border-t border-okta-gravel pt-6 text-base">
+    <nav class="prev-next flex justify-between border-t border-okta-gravel pt-6 text-base" aria-label="Post navigation">
       {% if prevPost %}
         <a href="{{ prevPost.url }}" class="text-okta-blue" title="{{ prevPost.data.title }}"><span class="inline-flex items-center align-middle rotate-180">{% include "icons/arrow-right.svg" %}</span>&nbsp;Previous post</a>
       {% else %}<span></span>{% endif %}

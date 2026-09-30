@@ -29,4 +29,9 @@ export const markdownLibrary = markdownIt({
     includeLevel: [2, 3],
     listType: "ul",
     slugify,
+    containerClass: "table-of-contents not-prose",
+    containerHeaderHtml: '<p class="toc-header">Table of Contents</p>',
+    transformContainerOpen: (containerClass, containerHeaderHtml) =>
+      `<nav class="${containerClass}" aria-label="Table of contents">${containerHeaderHtml}`,
+    transformContainerClose: () => "</nav>",
   });

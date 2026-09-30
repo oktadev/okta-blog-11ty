@@ -154,6 +154,39 @@ a.direct-link {
   }
 }
 
+/* Transitional: 120 posts still carry `**Table of Contents**{: .hide }`, which the
+   TOC's own header replaces once those lines come out of the markdown. */
+.hide {
+  @apply hidden;
+}
+
+.table-of-contents {
+  @apply rounded-sm border border-okta-gravel px-6 pt-6 pb-3;
+
+  .toc-header {
+    @apply m-0 text-2xl text-okta-slate;
+  }
+
+  ul {
+    @apply list-none m-0 px-6 py-3;
+  }
+
+  /* Indent only nested levels, so h3 entries sit under their h2. */
+  ul ul {
+    @apply pl-6 py-0;
+  }
+
+  a {
+    @apply text-okta-blue no-underline hover:underline;
+  }
+}
+
+/* widgets.js swaps the blockquote for a cross-origin iframe, so this wrapper is the
+   only styleable part. Centring here works on both the blockquote and the iframe. */
+.eleventy-plugin-embed-twitter {
+  @apply my-8 flex justify-center;
+}
+
 @custom-variant prose-inline-code (& :where(:not(pre)>code):not(:where([class~="not-prose"] *)));
 
 
