@@ -73,11 +73,6 @@ const img = async function ({
   // and text. Only raster sources go through WebP conversion.
   const isSvg = /\.svg$/i.test(src);
 
-  // Centred by default, and a caller's class is appended rather than replacing
-  // it, so passing e.g. `rounded-lg` can't silently un-centre the image. To opt
-  // out of centring use `ml-0` (sits left) or `mr-0` (right) — those win because
-  // Tailwind emits ml-*/mr-* after mx-*. Avatars are excluded: they sit in flex
-  // rows, where an auto inline margin shoves the name away from the image.
   const imgClass = [avatar ? "" : "mx-auto", className]
     .filter(Boolean)
     .join(" ");
