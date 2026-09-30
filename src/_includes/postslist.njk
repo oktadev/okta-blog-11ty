@@ -1,33 +1,45 @@
-<ol reversed class="flex flex-col justify-center m-auto">
+<ol reversed class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
   {%- for post in postslist %}
     {%- set authorsList = authors | authorFilter(post.data.author) %}
     {% if authorsList %}
-      <li class="mb-5 pb-5 border-b-1 border-okta-gravel">
-        <article class="grid gap-3">
-          <div class="grid gap-1">
-            {# Colour goes on the <a>: the base `a` rule would override it on the heading. #}
-            <h2 class="text-4xl font-light mt-0 mb-2"><a class="text-okta-dark-blue" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
-            <div class="flex gap-1 items-center">
-              {%- for author in authorsList %}
-                <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
-                  {% avatar author.avatar, "small", author.display_name %}
-                  {{ author.display_name }}
-                </a>
-                {% if not loop.last %} | {% endif %}
-              {%- endfor %}
-              |
+      <li>
+        {# h-full + flex-col lets the "Read more" link pin to the bottom so cards in a row align. #}
+        <article class="flex h-full flex-col overflow-hidden rounded-lg border border-okta-gravel transition-shadow hover:shadow-md">
+          {# ~140 posts have no `image`, so the card has to read well without one. #}
+          {% if post.data.image %}
+            <div class="aspect-video overflow-hidden">
+              {% img {src: post.data.image, alt: "", widths: [400, 800], sizes: "(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw", class: "h-full w-full object-cover"} %}
+            </div>
+          {% endif %}
+          <div class="flex flex-1 flex-col gap-4 p-6">
+            <h2 class="text-2xl font-light"><a class="text-okta-dark-blue" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
+            <div class="flex flex-wrap items-center gap-3 text-content-text">
               <time datetime="{{ post.date | htmlDateString }}">
                 {{ post.date | readableDate }}
               </time>
-              |
+              <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
               {{ post.data.readingTime | readingTimeBadge | safe }}
             </div>
+            {% set excerpt = post | postExcerpt %}
+            {% if excerpt %}
+              <p class="text-content-text mt-3">{{ excerpt }}</p>
+            {% endif %}
+            {# mt-auto pins the author row and the CTA below it to the card bottom so cards in a row line up. #}
+            <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 text-content-text">
+              {# No separator between authors: at card width they wrap, and a pipe strands at the line end. #}
+              {%- for author in authorsList %}
+                <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-2">
+                  {% avatar author.avatar, "small", author.display_name %}
+                  {{ author.display_name }}
+                </a>
+              {%- endfor %}
+            </div>
+            {# self-end keeps the hit area on the text; text-right would stretch it the full card width. #}
+            <a class="inline-flex items-center gap-1 self-end text-md" href="{{ post.url }}">
+              Read more<span class="sr-only"> about {{ post.data.title }}</span>
+              {% include "icons/arrow-right.svg" %}
+            </a>
           </div>
-          {% set excerpt = post | postExcerpt %}
-          {% if excerpt %}
-            <p class="text-content-text">{{ excerpt }}</p>
-          {% endif %}
-          <a href="{{ post.url }}">Read more</a>
         </article>
       </li>
     {% endif %}

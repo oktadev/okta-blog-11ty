@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @layer theme, base, components, utilities;
@@ -76,15 +77,6 @@
   font-family: "SeasonMix";
   src: url("/fonts/season-mix/SeasonMix-Regular.woff2") format("woff2"),
     url("/fonts/season-mix/SeasonMix-Regular.woff") format("woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-weight: 400;
-  font-style: normal;
-  font-family: "AeonikMono";
-  src: url("/fonts/aeonik-mono/AeonikMono-Regular.woff2") format("woff2"),
-    url("/fonts/aeonik-mono/AeonikMono-Regular.woff") format("woff");
   font-display: swap;
 }
 
@@ -215,7 +207,7 @@ a.direct-link {
 }
 
 @theme {
-  --font-code: "AeonikMono", ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, monospace;
+  --font-code: "Geist Mono", ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, monospace;
   --color-code-bg: #f0f0f0;
   --color-code-base: #333333;
   --color-code-comment: #aaaaaa;

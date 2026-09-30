@@ -36,7 +36,7 @@ permalink: blog/authors/{{ authorKey }}/
                 <time datetime="{{ post.date | htmlDateString }}">
                   {{ post.date | readableDate }}
                 </time>
-                <span class="hidden text-okta-slate sm:inline">|</span>
+                <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
                 {{ post.data.readingTime | readingTimeBadge | safe }}
               </div>
             </div>
