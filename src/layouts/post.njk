@@ -55,7 +55,8 @@ layout: base
     {% endif %}
 
     {% if image %}
-      {% img {src: image, alt: title, header: true} %}
+      {# Decorative: the <h1> above repeats the title, so alt="" keeps it out of the a11y tree. #}
+      {% img {src: image, alt: "", header: true} %}
     {% endif %}
     <div class="blog-prose">
       {{ content | safe }}

@@ -2,7 +2,7 @@
 layout: base
 pagination:
   data: collections.posts
-  size: 10
+  size: 15
   alias: postslist
   reverse: true
 permalink: "{% if pagination.pageNumber == 0 %}blog/index.html{% else %}blog/page/{{ pagination.pageNumber + 1 }}/index.html{% endif %}"
