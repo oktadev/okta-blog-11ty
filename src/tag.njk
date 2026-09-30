@@ -30,13 +30,13 @@ permalink: blog/tags/{{ tag | slugify }}/
                   {% avatar author.avatar, "small", author.display_name %}
                   {{ author.display_name }}
                 </a>
-                {% if not loop.last %}<span class="hidden text-okta-slate sm:inline">|</span>{% endif %}
+                {% if not loop.last %}<span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>{% endif %}
               {%- endfor %}
-              <span class="hidden text-okta-slate sm:inline">|</span>
+              <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
               <time datetime="{{ post.date | htmlDateString }}">
                 {{ post.date | readableDate }}
               </time>
-              <span class="hidden text-okta-slate sm:inline">|</span>
+              <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
               {{ post.data.readingTime | readingTimeBadge | safe }}
             </div>
           </div>

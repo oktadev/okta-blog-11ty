@@ -1,25 +1,26 @@
-<ol reversed class="flex flex-col justify-center m-auto">
+<ol reversed class="flex flex-col">
   {%- for post in postslist %}
     {%- set authorsList = authors | authorFilter(post.data.author) %}
     {% if authorsList %}
-      <li class="mb-5 pb-5 border-b-1 border-okta-gravel">
-        <article class="grid gap-3">
-          <div class="grid gap-1">
+      <li class="mb-6 py-6 border-b border-okta-gravel">
+        <article class="grid gap-6 mb-6">
+          <div class="grid gap-6">
             {# Colour goes on the <a>: the base `a` rule would override it on the heading. #}
-            <h2 class="text-4xl font-light mt-0 mb-2"><a class="text-okta-dark-blue" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
-            <div class="flex gap-1 items-center">
+            <h2 class="text-4xl font-light"><a class="text-okta-dark-blue" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
+            {# Stacks one datapoint per row until sm, where it inlines and the separators appear. #}
+            <div class="flex flex-col items-start gap-3 text-content-text sm:flex-row sm:flex-wrap sm:items-center">
               {%- for author in authorsList %}
-                <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-1">
+                <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-2">
                   {% avatar author.avatar, "small", author.display_name %}
                   {{ author.display_name }}
                 </a>
-                {% if not loop.last %} | {% endif %}
+                {% if not loop.last %}<span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>{% endif %}
               {%- endfor %}
-              |
+              <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
               <time datetime="{{ post.date | htmlDateString }}">
                 {{ post.date | readableDate }}
               </time>
-              |
+              <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
               {{ post.data.readingTime | readingTimeBadge | safe }}
             </div>
           </div>
@@ -27,7 +28,7 @@
           {% if excerpt %}
             <p class="text-content-text">{{ excerpt }}</p>
           {% endif %}
-          <a href="{{ post.url }}">Read more</a>
+          <a class="text-lg" href="{{ post.url }}">Read more</a>
         </article>
       </li>
     {% endif %}

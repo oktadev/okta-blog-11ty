@@ -47,6 +47,8 @@ const img = async function ({
   header = false,
   widths = [100, 300, 600, 1000],
   sizes = "",
+  // `class` is reserved, so it can't be destructured under its own name.
+  class: className = "",
 }) {
   const dir = avatar ? "img/avatar" : "img/blog";
 
@@ -71,12 +73,26 @@ const img = async function ({
   // and text. Only raster sources go through WebP conversion.
   const isSvg = /\.svg$/i.test(src);
 
+  // Centred by default, and a caller's class is appended rather than replacing
+  // it, so passing e.g. `rounded-lg` can't silently un-centre the image. To opt
+  // out of centring use `ml-0` (sits left) or `mr-0` (right) — those win because
+  // Tailwind emits ml-*/mr-* after mx-*. Avatars are excluded: they sit in flex
+  // rows, where an auto inline margin shoves the name away from the image.
+  const imgClass = [avatar ? "" : "mx-auto", className]
+    .filter(Boolean)
+    .join(" ");
+
   const imgAttributes = {
     alt,
     sizes,
     loading: "lazy",
     decoding: "async",
+    ...(imgClass && { class: imgClass }),
   };
+
+  const classAttr = imgClass
+    ? ` class="${imgClass.replace(/"/g, "&quot;")}"`
+    : "";
 
   try {
     if (isSvg) {
@@ -94,7 +110,7 @@ const img = async function ({
       const displayWidth = headerWidth || width;
       const displayHeight = Math.round(displayWidth * (height / width));
       const altAttr = (alt || "").replace(/"/g, "&quot;");
-      return `<img src="${url}" alt="${altAttr}" width="${displayWidth}" height="${displayHeight}" loading="lazy" decoding="async">`;
+      return `<img${classAttr} src="${url}" alt="${altAttr}" width="${displayWidth}" height="${displayHeight}" loading="lazy" decoding="async">`;
     }
 
     return await Image(`./public/${dir}/${src}`, {
@@ -110,7 +126,7 @@ const img = async function ({
   } catch (err) {
     console.warn(`[img] could not process ${dir}/${src}: ${err.message}`);
     const sizesAttr = sizes ? ` sizes="${sizes}"` : "";
-    return `<img src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
+    return `<img${classAttr} src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
   }
 };
 
