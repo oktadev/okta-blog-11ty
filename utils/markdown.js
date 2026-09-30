@@ -29,4 +29,8 @@ export const markdownLibrary = markdownIt({
     includeLevel: [2, 3],
     listType: "ul",
     slugify,
+    // not-prose: the TOC renders inside .blog-prose, whose link and list rules
+    // tie on specificity and land later, so they'd win over any TOC styling.
+    containerClass: "table-of-contents not-prose",
+    containerHeaderHtml: '<p class="toc-header">Table of Contents</p>',
   });
