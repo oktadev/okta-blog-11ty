@@ -120,8 +120,8 @@ const avatar = async function (filename, size = "small", alt = "") {
 
   switch (size) {
     case "small":
-      widthClass = "w-5";
-      avatarSize = 40;
+      widthClass = "w-10";
+      avatarSize = 48;
       break;
     case "medium":
       widthClass = "w-12";
@@ -145,9 +145,11 @@ const avatar = async function (filename, size = "small", alt = "") {
     sizes: `${avatarSize}px`,
   });
 
+  // eleventy-img only scales by width, so a non-square source stays non-square and
+  // `rounded-full` would render an ellipse. Force the box square and crop to fill.
   return result.replace(
     "<img",
-    `<img class="${widthClass} list-none rounded-full"`,
+    `<img class="${widthClass} aspect-square object-cover list-none rounded-full"`,
   );
 };
 

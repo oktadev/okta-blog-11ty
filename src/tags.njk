@@ -3,23 +3,23 @@ layout: base
 permalink: /blog/tags/
 ---
 
-<div class="grid gap-4 max-w-128 m-auto">
-  <h1>Tags</h1>
+<div class="grid gap-4">
+  <h1 class="text-okta-cobalt text-4xl my-6">Tags</h1>
 
-  <div class="grid gap-1 w-full max-w-md">
-    <label for="tag-search" class="font-bold">Filter tags</label>
+  <div class="grid gap-1 max-w-md">
+    <label for="tag-search" class="text-xl">Filter tags</label>
     <div class="relative">
       <input
         type="search"
         id="tag-search"
-        placeholder="Filter tags…"
+        placeholder="Try oidc, python, or express"
         autocomplete="off"
-        class="border-1 border-okta-gravel rounded px-3 py-2 pr-9 w-full"
+        class="border border-okta-gravel rounded pl-3 pr-9 py-2 w-full"
       />
       <button
         type="button"
         id="tag-clear"
-        aria-label="Clear search"
+        aria-label="Clear filter"
         style="display: none"
         class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center cursor-pointer text-okta-slate hover:text-okta-carbon"
       >
@@ -28,17 +28,17 @@ permalink: /blog/tags/
     </div>
   </div>
 
-  <p id="tag-status" role="status" aria-live="polite" aria-atomic="true" class="text-okta-slate min-h-[1.5rem]"></p>
+  <p id="tag-status" role="status" aria-live="polite" aria-atomic="true" class="text-okta-slate min-h-6"></p>
 
-  <div id="tag-groups" class="grid gap-4">
+  <div id="tag-groups" class="grid gap-9">
     {% for group in collections | tagsByLetter %}
-      <section class="tag-group grid gap-2" data-letter="{{ group.letter }}">
-        <h2 class="text-okta-cobalt text-xl font-bold border-b-1 border-okta-gravel pb-1">{{ group.letter }}</h2>
-        <div class="flex flex-wrap gap-2">
+      <section class="tag-group grid gap-6" data-letter="{{ group.letter }}">
+        <h2 class="text-okta-cobalt font-okta text-2xl border-b border-okta-gravel pb-1">{{ group.letter }}</h2>
+        <div class="flex flex-wrap gap-3">
           {% for tag in group.tags %}
             <a
               href="/blog/tags/{{ tag | slugify }}/"
-              class="tag-link inline-flex items-center h-6 px-2 rounded bg-[#f2f5ff] text-okta-blue no-underline whitespace-nowrap"
+              class="tag-link inline-flex items-center h-6 px-2 rounded bg-okta-cloud-tint text-okta-blue whitespace-nowrap"
             >{{ tag }}</a>
           {% endfor %}
         </div>

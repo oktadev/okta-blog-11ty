@@ -2,6 +2,11 @@ const isDev = process.env.ELEVENTY_ENV === "development";
 
 export const PRODUCTION_ORIGIN = "https://developer.okta.com";
 
+// Where Discourse recorded its embedded threads. Not the same concept as the
+// origin the site is served from, and must never follow it: the recorded
+// embed_url is the thread's key, and a miss creates a new topic.
+export const DISCOURSE_EMBED_ORIGIN = "https://developer.okta.com";
+
 // No trailing slash so it composes cleanly with paths; preview deploys use the Vercel URL.
 export function resolveBaseUrl() {
   if (isDev) return "http://localhost:8080";

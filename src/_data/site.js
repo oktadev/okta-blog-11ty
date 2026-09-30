@@ -9,6 +9,7 @@ export default {
   // Not the inverse of isPreview: that's false in dev too, which would switch
   // production-only third-party embeds on at localhost.
   isProduction: baseUrl === PRODUCTION_ORIGIN,
+  productionOrigin: PRODUCTION_ORIGIN,
   author: "Okta Developer",
   twitter: "@oktadev",
   lang: "en",
