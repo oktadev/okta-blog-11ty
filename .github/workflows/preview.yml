@@ -99,6 +99,14 @@ jobs:
             for (const h of rule.headers) headers[h.key] = h.value;
             routes.push({ src: rule.source, headers, continue: true });
           }
+          // Anything the filesystem can't serve answers 404 with the shared
+          // developer.okta.com error page, as the live blog does.
+          routes.push({ handle: "error" });
+          routes.push({
+            src: "/.*",
+            dest: "https://developer.okta.com/errors/404.html",
+            status: 404,
+          });
 
           fs.writeFileSync(
             '.vercel/output/config.json',
