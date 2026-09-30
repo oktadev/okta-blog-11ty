@@ -98,7 +98,7 @@ test("needsAttention fails a post for any kind of loss, including inline code", 
 
 test("normalizeText folds Asciidoctor's arrows, dashes and zero-width characters", () => {
   assert.equal(normalizeText(">=1.2.3 ⇐2.3.4"), ">=1.2.3 <=2.3.4");
-  assert.equal(normalizeText("tr — '+/'"), "tr -- '+/'");
+  assert.equal(normalizeText("tr — '+/'"), "tr - '+/'");
   assert.equal(
     normalizeText("src/main/java/…​/demo/App.java"),
     "src/main/java/.../demo/App.java",
@@ -107,4 +107,33 @@ test("normalizeText folds Asciidoctor's arrows, dashes and zero-width characters
 
 test("compareInline treats spans as a multiset", () => {
   assert.deepEqual(compareInline(["ab", "ab", "cd"], ["ab", "cd"]), ["ab"]);
+});
+
+test("compareProse accepts merged and split blocks but reports the leftover of a truncated one", () => {
+  // Two live paragraphs merged into one local block.
+  assert.deepEqual(
+    compareProse(["One two", "Three four"], ["One two Three four"]).missing,
+    [],
+  );
+  // One live paragraph split into two local blocks that cover it.
+  assert.deepEqual(
+    compareProse(
+      ["Install the SDK and configure the client"],
+      ["Install the SDK", "and configure the client"],
+    ).missing,
+    [],
+  );
+  // A local block that is only a piece of the live one is a loss.
+  assert.deepEqual(
+    compareProse(
+      ["Install the SDK and configure the client"],
+      ["Install the SDK"],
+    ).missing,
+    ["and configure the client"],
+  );
+});
+
+test("compareProse and compareInline report short losses too", () => {
+  assert.deepEqual(compareProse(["Run it"], []).missing, ["Run it"]);
+  assert.deepEqual(compareInline(["x", "y"], ["y"]), ["x"]);
 });

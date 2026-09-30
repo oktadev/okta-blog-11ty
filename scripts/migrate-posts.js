@@ -10,10 +10,11 @@
 //     Anything else is reported rather than silently dropped.
 //
 // Usage:
-//   node scripts/migrate-posts.js [--src ../okta-blog] [--only slug,slug] [--all]
-//                                 [--force] [--dry-run] [--no-assets] [--report file]
+//   node scripts/migrate-posts.js [--src ../okta-blog] [--only slug,slug] [--force]
+//                                 [--dry-run] [--no-assets] [--report file]
 //
-// By default only posts missing from src/blog/posts are written. Images the
+// By default only posts missing from src/blog/posts are written; --force
+// re-converts the existing ones too. Images the
 // posts reference and avatars for new authors are copied when absent; existing
 // files are never overwritten. A report of per-post notes is printed at the end.
 import {
@@ -348,6 +349,20 @@ const isDelimiter = (t) =>
   EXAMPLE_RE.test(t) ||
   CODE_FENCE_RE.test(t) ||
   t === "|===";
+// A block title line: ".Title"
+const BLOCK_TITLE_RE = /^\.[^\s.]/;
+// Block metadata precedes a block in either order: [source,java] then .Title,
+// or .Title then [source,java].
+const isBlockMeta = (t) => BLOCK_ATTR_RE.test(t) || BLOCK_TITLE_RE.test(t);
+// A Markdown fence closes on any backtick run at least as long as its opener,
+// whatever info string the opener carried; other delimiters close on themselves.
+const closesBlock = (line, opener) => {
+  const t = line.trim();
+  const fence = opener.match(/^(`{3,})/);
+  if (!fence) return t === opener;
+  const m = t.match(/^(`{3,})$/);
+  return Boolean(m && m[1].length >= fence[1].length);
+};
 
 // Parse "[source,java,indent=0]" / "[NOTE]" / "[%collapsible]" / "[.role]" /
 // "[#id]" / "[quote, Author, cite]" into a small descriptor.
@@ -426,6 +441,8 @@ class AsciidocConverter {
     this.notes = [];
     this.toc = null;
     this.examples = 0;
+    this.figures = 0;
+    this.tables = 0;
   }
 
   note(message) {
@@ -462,7 +479,9 @@ class AsciidocConverter {
       // Attribute references defined in the document header. Undefined ones
       // (placeholders like {port} in prose) stay as written.
       .replace(/\{([a-zA-Z][\w-]*)\}/g, (m, name) =>
-        Object.hasOwn(this.attrs, name) ? this.attrs[name] : m,
+        Object.hasOwn(this.attrs, name.toLowerCase())
+          ? this.attrs[name.toLowerCase()]
+          : m,
       )
       // "\http://…" only suppresses AsciiDoc's auto-link; the backslash is not text.
       .replace(/\\(?=https?:\/\/)/g, "")
@@ -570,11 +589,30 @@ class AsciidocConverter {
         }
         return `[${label ? label.trim() : plain}](#${id})`;
       })
+      // A bare URL with a "<placeholder>" in it: the auto-linker would stop at
+      // the placeholder and double-escape it, so link it explicitly.
+      .replace(/(?<![\w"'(\[])(https?:\/\/[^\s[\]]*<[^\s[\]]*)(?!\[)/g, (m) => {
+        const url = m.replace(/[.,;:!?)]+$/, "");
+        const text = url.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const href = url.replace(/</g, "%3C").replace(/>/g, "%3E");
+        return `[${text}](${href})${m.slice(url.length)}`;
+      })
       // AsciiDoc prose never contains raw HTML (that needs a passthrough), so
       // a "<placeholder>" is text; Markdown would read it as a tag.
       .replace(/<(?!(?:https?|mailto):)(?=[A-Za-z/!?])/g, "&lt;")
-      // Formatting. Unconstrained forms first, then constrained.
-      .replace(/\*\*(.+?)\*\*/g, `${BOLD}${BOLD}$1${BOLD}${BOLD}`)
+      // "--" between words or between spaces is an em dash.
+      .replace(/(?<=\w)--(?=\w)/g, "\u2014")
+      .replace(/(?<= )--(?= )/g, "\u2014")
+      // Formatting. Unconstrained forms first, then constrained. Unconstrained
+      // bold may start or end with a space ("** text**"); Markdown's may not.
+      .replace(/\*\*(.+?)\*\*/g, (m, inner, at, all) => {
+        const core = inner.trim();
+        if (!core) return m;
+        const afterSpace = at === 0 || /\s/.test(all[at - 1]);
+        const lead = afterSpace ? "" : inner.slice(0, inner.indexOf(core));
+        const trail = inner.slice(inner.indexOf(core) + core.length);
+        return `${lead}${BOLD}${BOLD}${core}${BOLD}${BOLD}${trail}`;
+      })
       .replace(
         /(^|[^\w*\\])\*(\S(?:[^*\n]*?\S)?)\*(?![\w*])/g,
         `$1${BOLD}${BOLD}$2${BOLD}${BOLD}`,
@@ -620,7 +658,10 @@ class AsciidocConverter {
       }
     }
     if (current) out.push(current);
-    return out.map((l) => this.inline(l)).join("\n");
+    // "1) text" opens a paragraph in AsciiDoc but a list in Markdown.
+    return out
+      .map((l) => this.inline(l).replace(/^(\d+)([.)]) /, "$1\\$2 "))
+      .join("\n");
   }
 
   // ---- document ----------------------------------------------------------
@@ -673,7 +714,8 @@ class AsciidocConverter {
         m[1],
       )
     ) {
-      this.attrs[m[1]] = m[2] ? "" : m[3];
+      // Asciidoctor lowercases attribute names, so {commandKey} reads :commandkey:.
+      this.attrs[m[1].toLowerCase()] = m[2] ? "" : m[3];
     }
     return true;
   }
@@ -816,7 +858,7 @@ class AsciidocConverter {
         takeAttrs();
         let img = imgShortcode(imageSrc(blockImage[1]), a.alt, a.width);
         if (a.link) img = `[${img}](${this.linkTarget(a.link)})`;
-        push(title ? `${img}\n\n_${title}_` : img);
+        push(title ? `${img}\n\n_Figure ${++this.figures}. ${title}_` : img);
         i++;
         continue;
       }
@@ -893,7 +935,7 @@ class AsciidocConverter {
 
   findClose(lines, from, delimiter) {
     for (let j = from; j < lines.length; j++) {
-      if (lines[j].trim() === delimiter) return j;
+      if (closesBlock(lines[j], delimiter)) return j;
     }
     this.note(
       `unterminated ${delimiter} block; rest of the post treated as its content`,
@@ -1065,7 +1107,7 @@ class AsciidocConverter {
       const t = lines[j].trim();
       const prev = lines[j - 1]?.trim() ?? "";
       if (attached) {
-        if (t === attached) attached = null;
+        if (closesBlock(t, attached)) attached = null;
         j++;
         continue;
       }
@@ -1091,18 +1133,13 @@ class AsciidocConverter {
         j++;
         continue;
       }
-      const afterContinuation =
-        prev === "+" ||
-        (BLOCK_ATTR_RE.test(prev) && lines[j - 2]?.trim() === "+") ||
-        (/^\.[^\s.]/.test(prev) &&
-          (lines[j - 2]?.trim() === "+" ||
-            (BLOCK_ATTR_RE.test(lines[j - 2]?.trim() ?? "") &&
-              lines[j - 3]?.trim() === "+")));
-      if (BLOCK_ATTR_RE.test(lines[j]) || /^\.[^\s.]/.test(lines[j])) {
-        if (
-          prev === "+" ||
-          (BLOCK_ATTR_RE.test(prev) && lines[j - 2]?.trim() === "+")
-        ) {
+      // "+" and any block metadata behind it attach the next block to the item.
+      // Metadata starts at column 0; an indented ".x" line is literal text.
+      let k = j - 1;
+      while (k > from && isBlockMeta(lines[k])) k--;
+      const afterContinuation = lines[k].trim() === "+";
+      if (isBlockMeta(lines[j])) {
+        if (afterContinuation) {
           j++;
           continue;
         }
@@ -1155,9 +1192,7 @@ class AsciidocConverter {
         i++;
         const block = [];
         while (i < lines.length && lines[i].trim() === "") i++;
-        if (i < lines.length && BLOCK_ATTR_RE.test(lines[i].trim()))
-          block.push(lines[i++]);
-        if (i < lines.length && /^\.[^\s.]/.test(lines[i].trim()))
+        while (i < lines.length && isBlockMeta(lines[i].trim()))
           block.push(lines[i++]);
         const start = lines[i]?.trim();
         if (start && isDelimiter(start)) {
@@ -1280,7 +1315,9 @@ class AsciidocConverter {
       while (row.length < columnCount) row.push("");
       md.push(`| ${row.map(render).join(" | ")} |`);
     }
-    return title ? `**${title}**\n\n${md.join("\n")}` : md.join("\n");
+    return title
+      ? `**Table ${++this.tables}. ${title}**\n\n${md.join("\n")}`
+      : md.join("\n");
   }
 }
 
@@ -1319,7 +1356,6 @@ function parseArgs(argv) {
   const args = {
     src: "../okta-blog",
     only: null,
-    all: false,
     force: false,
     dryRun: false,
     assets: true,
@@ -1336,7 +1372,6 @@ function parseArgs(argv) {
       args.overrides[slug] = file;
     } else if (a === "--only")
       args.only = argv[++i].split(",").map((s) => s.trim());
-    else if (a === "--all") args.all = true;
     else if (a === "--force") args.force = true;
     else if (a === "--dry-run") args.dryRun = true;
     else if (a === "--no-assets") args.assets = false;
@@ -1448,7 +1483,7 @@ function main() {
     .filter((p) =>
       args.only
         ? args.only.includes(p.slug)
-        : args.all || args.force || !existing.has(p.slug),
+        : args.force || !existing.has(p.slug),
     );
 
   const report = [];
