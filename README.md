@@ -29,6 +29,8 @@ Start the server by running `npm start` and open `http://localhost:8080/blog/`.
 | Command            | What it does                                                                                                                                     | When to run it                                                    |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
 | `npm run validate` | Checks every post's front matter: YAML parses, `title` and `author` are present, author keys exist in `src/_data/authors.yaml`, `by` is a known role. | Before pushing. The pre-commit hook runs it for you.              |
+| `npm run validate-images` | Fails on any file over 5MB, any `.DS_Store`, and any raster image over 4000px wide; warns on images over 500KB or 1800px and on large PNGs that would be smaller as JPEG or WebP. Formats are read from the file, not the extension. | The pre-commit hook runs it on staged files; CI on the files a push or PR changes. |
+| `npm run lint-content` | Checks posts for placeholder Okta domains that should be `{yourOktaDomain}`, `index#` links, curly quotes and Unicode ellipses, and absolute links to other posts on this blog. With no arguments it checks every post. A post can opt out of one rule with `lint-ignore: [rule name]` in its front matter. | Same as above. |
 | `npm run smoke`    | Asserts that every post in `src/blog/posts/` was emitted at its `/blog/YYYY/MM/DD/slug/` URL and that same-day posts order deterministically.    | After `npm run build`. The Build workflow runs it on every push and PR. |
 | `npm test`         | `npm run build` followed by `npm run smoke`.                                                                                                     | When you've changed templates, filters, or the Eleventy config.   |
 | `npm run css`      | Compiles Tailwind from `public/css/index.css` into `_site/style.css`. `npm start` and `npm run build` call it for you.                            | Rarely by hand.                                                   |
@@ -157,12 +159,12 @@ Redirects and the site's security headers live in `vercel.json`.
 
 `npm ci` (through the `prepare` script) points git at the hooks in `.githooks/`, so they run without any setup:
 
-- **pre-commit** refuses `.DS_Store` files and anything over 5MB, syntax-checks staged JavaScript, formats staged JS and JSON with Prettier, and runs `npm run validate`. Bypass with `git commit --no-verify` only if you know why it failed.
+- **pre-commit** runs `validate-images` and `lint-content` on the staged files, syntax-checks staged JavaScript, formats staged JS and JSON with Prettier, and runs `npm run validate`. Bypass with `git commit --no-verify` only if you know why it failed.
 - **pre-push** runs a full `npm run build` so a broken template or filter is caught before CI. Skip it with `SKIP_BUILD=1 git push` when you've just built.
 
 On GitHub, three workflows in `.github/workflows/` cover every push to `main` and every pull request:
 
-- **CI** (`ci.yml`) runs `npm run validate`.
+- **CI** (`ci.yml`) runs `npm run validate`, then `validate-images` and `lint-content` on the files the push or PR changes.
 - **Build** (`build.yml`) runs `npm run build` and `npm run smoke`, and uploads the built site. On a push to `main` it deploys that build to production.
 - **Deploy Preview** (`preview.yml`) runs after Build finishes for a pull request. It deploys the uploaded site to `https://deploy-preview-<PR number>--okta-blog-11ty.vercel.app`, generating the Vercel routing from the PR's own `vercel.json` so redirect and header changes show on the preview, and links it in a comment on the PR.
 
