@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { baseUrl } from "./base-url.js";
+import { baseUrl, DISCOURSE_EMBED_ORIGIN } from "./base-url.js";
 import markdownIt from "markdown-it";
 import Image from "@11ty/eleventy-img";
 
@@ -56,23 +56,41 @@ export default function (eleventyConfig) {
     inlineMd.renderInline(str || ""),
   );
 
-  // A listing excerpt drawn from the post's first content paragraph (not the SEO
-  // `description`), capped to a word count. Skips headings/images/callouts by
-  // matching the first <p>, and falls back to `description` if there's none.
-  eleventyConfig.addFilter("postExcerpt", function (post, wordLimit = 50) {
-    const paragraph = (post.templateContent || "").match(
-      /<p\b[^>]*>([\s\S]*?)<\/p>/i,
-    );
-    const text = decodeEntities(
-      (paragraph ? paragraph[1] : "").replace(/<[^>]+>/g, " "),
-    )
+  // Dropped with their content: stripping only the tags would surface CSS text,
+  // script bodies and iframe fallback copy as excerpt prose.
+  const NON_PROSE =
+    /<(script|style|iframe|noscript|template|svg)\b[\s\S]*?<\/\1>/gi;
+  // Some posts open with a callout, whose <p> would otherwise win as "first".
+  const CALLOUT =
+    /<div\b[^>]*class="[^"]*\balert\b[^"]*"[^>]*>[\s\S]*?<\/div>/gi;
+  // Media and breaks mark a word boundary; every other tag is inline formatting
+  // and must collapse to nothing, or a tag before punctuation leaves "foo ."
+  const BOUNDARY = /<(?:br|hr|img|source|embed|track|wbr)\b[^>]*\/?>/gi;
+
+  function excerptText(html) {
+    return decodeEntities(html.replace(BOUNDARY, " ").replace(/<[^>]+>/g, ""))
       .replace(/\s+/g, " ")
       .trim();
-    if (!text) return post.data.description || "";
-    const words = text.split(" ");
-    return words.length > wordLimit
-      ? words.slice(0, wordLimit).join(" ") + "…"
-      : text;
+  }
+
+  // A listing excerpt drawn from the post's first prose paragraph (not the SEO
+  // `description`), capped to a word count. Paragraphs that clean to nothing —
+  // an image or embed on its own line — are skipped rather than ending the
+  // search, so only a post with no prose at all falls back to `description`.
+  eleventyConfig.addFilter("postExcerpt", function (post, wordLimit = 50) {
+    const body = (post.templateContent || "")
+      .replace(NON_PROSE, "")
+      .replace(CALLOUT, "");
+
+    for (const match of body.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)) {
+      const text = excerptText(match[1]);
+      if (!text) continue;
+      const words = text.split(" ");
+      return words.length > wordLimit
+        ? words.slice(0, wordLimit).join(" ") + "…"
+        : text;
+    }
+    return post.data.description || "";
   });
 
   eleventyConfig.addFilter("postsAuthorFilter", function (posts, authorKey) {
@@ -134,6 +152,13 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("toAbsoluteUrl", (url) => {
     return new URL(url, baseUrl).href;
+  });
+
+  // Discourse matches embedded comment threads on the exact URL it recorded: no
+  // trailing slash, and always the canonical origin. A localhost or preview
+  // origin makes it create a new empty thread instead of finding the real one.
+  eleventyConfig.addFilter("discourseEmbedUrl", (url) => {
+    return new URL(url, DISCOURSE_EMBED_ORIGIN).href.replace(/\/$/, "");
   });
 
   // Turn an author's X/Twitter profile URL into an @handle (for twitter:creator).
@@ -222,6 +247,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("readingTimeBadge", (minutes) => {
     const text = !minutes || minutes < 1 ? 1 : minutes;
 
-    return `<div class="px-2 bg-okta-cloud rounded-xl content-center font-bold"><p class="text-xs uppercase">${text} min read</p></div>`;
+    return `<div class="py-0.5 px-3 bg-okta-cloud-tint rounded-xl content-center text-okta-carbon font-semibold"><p class="text-xs uppercase">${text} min read</p></div>`;
   });
 }

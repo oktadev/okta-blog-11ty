@@ -75,7 +75,13 @@ jobs:
           cp -r _site/. .vercel/output/static/
           node - << 'EOF'
           const fs = require('fs');
-          const vercelConfig = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
+          // workflow_run jobs check out the default branch, so the vercel.json
+          // in this checkout is main's. Use the PR's copy from the build
+          // artifact; fall back for artifacts produced before it was included.
+          const configPath = fs.existsSync('pr-metadata/vercel.json')
+            ? 'pr-metadata/vercel.json'
+            : 'vercel.json';
+          const vercelConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
           const routes = [];
 
           // Redirects first
@@ -98,7 +104,7 @@ jobs:
             '.vercel/output/config.json',
             JSON.stringify({ version: 3, routes }, null, 2)
           );
-          console.log(`Generated config.json with ${routes.length} routes`);
+          console.log(`Generated config.json with ${routes.length} routes from ${configPath}`);
           EOF
 
       - name: Deploy to Vercel
