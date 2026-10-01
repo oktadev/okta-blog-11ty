@@ -62,6 +62,7 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --
 npm start
 ```
 
+<a id="learn-more-about-node-js-and-javascript"></a>
 ## Learn More About Node.js and JavaScript
 
 I hope you enjoyed this quick tour of how to add a login feature to a Node.js application. If you're looking to do more with Okta and Node.js, check out our [Node.js SDK](https://github.com/okta/okta-sdk-nodejs). It allows you to communicate with Okta APIs to manage your users and their identity.

@@ -411,6 +411,7 @@ If you remove or change the `Authorization` header, a `401` will be returned. Br
 
 Almost done! We still need to make everything work for both API clients and browsers, and handle sign-out requests.
 
+<a id="route-all-traffic-through-nginx"></a>
 ## Route  all traffic through Nginx
 
 Sending all the traffic through Nginx has the added benefit of giving you control of how the OAuth2 Proxy endpoints are exposed. For example, the previous section marked the `/oauth2/auth` route as "internal," so only the `auth_requst` directive can use it.

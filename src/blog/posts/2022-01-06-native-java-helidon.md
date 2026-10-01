@@ -109,6 +109,7 @@ mvn package
 java -jar target/helidon.jar
 ```
 
+<a id="generate-an-oauth-2-0-access-token"></a>
 ### Generate an OAuth 2.0 access token
 
 {{ macro.oidcdebugger({}) }}

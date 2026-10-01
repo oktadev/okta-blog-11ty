@@ -37,6 +37,7 @@ You can also [watch this tutorial as a screencast](https://youtu.be/Hx9SbQ1ANLk)
 <iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/Hx9SbQ1ANLk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
+<a id="create-an-angular-spring-boot-app"></a>
 ## Create an Angular + Spring Boot App
 
 Since this tutorial is more about deployment than app creation, you can start with an existing Angular + Spring Boot app that I created previously. It's a note-taking app that uses Kotlin and Spring Boot 2.2 on the backend and Angular 9 on the frontend. It's secured with OpenID Connect (OIDC). If you'd like to see how I built it, you can read the following tutorials:
@@ -62,6 +63,7 @@ git clone https://github.com/oktadeveloper/okta-angular-bootstrap-example.git \
 - [Docker](https://docs.docker.com/get-docker/)
 - An [Okta Developer Account](https://developer.okta.com/signup/)
 
+<a id="secure-your-angular-spring-boot-app-with-oidc"></a>
 ### Secure Your Angular + Spring Boot App with OIDC
 
 To begin, you'll need to [create a Heroku account](https://signup.heroku.com/login). If you already have a Heroku account, [log in to it](https://id.heroku.com/login). Once you're logged in, create a new app. I named mine `bootiful-angular`.
@@ -149,6 +151,7 @@ Commit your progress to Git from the top-level `okta-angular-deployment-example`
 git commit -am "Add Okta OIDC Configuration"
 ```
 
+<a id="prepare-angular-spring-boot-for-production"></a>
 ## Prepare Angular + Spring Boot for Production
 
 There are a couple of things you should do to make your app ready for production.
@@ -1083,6 +1086,7 @@ If you try to log in, you'll get a 403 when redirecting back to the site. To fix
 
 Now you should be able to authenticate to your Angular app on AWS successfully!
 
+<a id="awesome-security-headers-with-aws-cloudfront-s3"></a>
 ### Awesome Security Headers with AWS CloudFront + S3
 
 If you test your new CloudFront + S3 site on [securityheaders.com](https://securityheaders.com/), you'll get an **F**. To solve this, you can use [Lambda@Edge to add security headers](https://aws.amazon.com/blogs/networking-and-content-delivery/adding-http-security-headers-using-lambdaedge-and-amazon-cloudfront/).

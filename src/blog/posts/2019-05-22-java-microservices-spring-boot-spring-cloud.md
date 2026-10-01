@@ -160,6 +160,7 @@ interface CarRepository extends JpaRepository<Car, Long> {
 }
 ```
 
+<a id="spring-cloud-feign-and-hystrix-in-an-api-gateway"></a>
 ### Spring Cloud + Feign and Hystrix in an API Gateway
 
 [Feign](https://github.com/OpenFeign/feign) makes writing Java HTTP clients easier. Spring Cloud makes it possible to create a Feign client with just a few lines of code. [Hystrix](https://github.com/Netflix/Hystrix) makes it possible to add failover capabilities to your Feign clients so they're more resilient.
@@ -253,6 +254,7 @@ If you run all of these services with `./mvnw spring-boot:run` in separate termi
 
 If you cloned from GitHub to begin, and you navigate to `http://localhost:8080/cool-cars` in your browser, you'll be redirected to Okta. What the?
 
+<a id="secure-java-microservices-with-oauth-2-0-and-oidc"></a>
 ## Secure Java Microservices with OAuth 2.0 and OIDC
 
 I've already configured security in this microservices architecture using OAuth 2.0 and OIDC. What's the difference between the two? OIDC is an extension to OAuth 2.0 that provides identity. It also provides discovery so all the different OAuth 2.0 endpoints can be discovered from a single URL (called an `issuer`).
@@ -281,6 +283,7 @@ Copy these keys and value into the `car-service` project's `application.properti
 
 The Java code in the section below already exists, but I figured I'd explain it so you know what's going on.
 
+<a id="configure-spring-security-for-oauth-2-0-login-and-resource-server"></a>
 ### Configure Spring Security for OAuth 2.0 Login and Resource Server
 
 In `ApiGatewayApplication.java`, I added Spring Security configuration to enable OAuth 2.0 login and enable the gateway as a resource server.

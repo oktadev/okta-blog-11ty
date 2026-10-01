@@ -205,6 +205,7 @@ These classes configure a resource server for your project (so you can pass in a
 
 Ignite JHipster also adds your app's URL scheme, `healthpoints://*`, to `src/main/docker/realm-config/jhipster-realm.json`. This configures Keycloak so it will allow access from your app.
 
+<a id="modify-react-native-app-for-oauth-2-0-oidc-login"></a>
 ## Modify React Native App for OAuth 2.0 / OIDC Login
 
 Ignite JHipster automatically configures your React Native app so OIDC login works. You can see the [details in its documentation](https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md). You will need to restart Keycloak for this configuration to take effect.
@@ -637,6 +638,7 @@ The result? A Spring Boot API running in production on GKE!! _Wahoo!_
 
 {% img {src: "react-native-spring-boot/jhipster-on-gke.png", alt: "JHipster API on GKE", header: "800"} %}
 
+<a id="react-native-spring-boot-on-gcp"></a>
 ### React Native + Spring Boot on GCP
 
 To make your React Native app work with your GCP instance, you just need to modify its `app-config.js` file to point to its URI, then package and deploy.

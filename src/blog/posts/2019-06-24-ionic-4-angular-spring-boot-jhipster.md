@@ -45,6 +45,7 @@ In this brief tutorial, I'll show you to use [Ionic for JHipster](https://github
 <iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/Rc07SUW3gWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
+<a id="create-a-spring-boot-angular-app-with-jhipster"></a>
 ## Create a Spring Boot + Angular App with JHipster
 
 You can install JHipster via [Homebrew](http://brewformulas.org/Jhipster) (`brew install jhipster`) or with npm.

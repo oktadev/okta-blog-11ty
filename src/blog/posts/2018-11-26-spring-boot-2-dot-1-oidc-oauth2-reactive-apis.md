@@ -29,6 +29,7 @@ For those that aren't aware, OIDC is just a thin-layer on top of OAuth 2.0 that 
 
 Before I dive into showing you how to add authentication to a Spring Boot app with OIDC, let's take a look at what's new and noteworthy in this release.
 
+<a id="whats-new-in-spring-boot-2-1"></a>
 ## What's New in Spring Boot 2.1
 
 I think [Philip Riecks](https://twitter.com/rieckpil) does a great job of summarizing the highlights in [What's new in Spring Boot 2.1](https://rieckpil.de/review-whats-new-in-spring-boot-2-1/):
@@ -226,6 +227,7 @@ class Application {
 
 > **TIP:** Learn more about Spring method security from [Baeldung](https://www.baeldung.com/spring-security-method-security).
 
+<a id="angular-react-and-webflux-oh-my"></a>
 ## Angular, React, and WebFlux - Oh My!
 
 I updated a few of my favorite tutorials on this blog to use Spring Boot 2.1 recently.
@@ -240,6 +242,7 @@ I enjoyed writing the full stack reactive tutorial so much, I turned it into a s
 <iframe width="560" height="315" style="max-width: 100%" src="https://www.youtube.com/embed/1xpwYe154Ys" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
+<a id="jhipster-and-spring-boot-2-1"></a>
 ## JHipster and Spring Boot 2.1
 
 Earlier I mentioned [JHipster](https://www.jhipster.tech). The JHipster team is actively working on upgrading its baseline to Spring Boot 2.1. You can watch progress by following [issue #8683](https://github.com/jhipster/generator-jhipster/issues/8683).

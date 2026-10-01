@@ -60,6 +60,7 @@ To use Angular CLI's i18n feature, you simply need to add the `i18n` attribute t
 
 `TestBed.inject(Component)` is the new way to get references to components in tests. `TestBed.get(Component)` is deprecated.
 
+<a id="whats-new-in-spring-boot-2-2"></a>
 ## What's New in Spring Boot 2.2?
 
 Spring Boot 2.2 was released in September 2019 and focuses on performance improvements and reduced memory usage. It adds Java 13 support, RSocket support, and the ability to group health indicators. Grouping indicators can be useful if you're deploying to Kubernetes and want different groups for "liveness" and "readiness" probes.
@@ -222,6 +223,7 @@ Enter valid credentials, and you'll be redirected back to your app. There will n
 
 Now that you've created a secure Angular 9 app let's create a Spring Boot app to serve up data with a REST API.
 
+<a id="create-a-spring-boot-2-2-app"></a>
 ## Create a Spring Boot 2.2 App
 
 The good folks at Pivotal created [start.spring.io](https://start.spring.io) to help you create Spring Boot apps quickly with minimal fuss. This site is a Spring Boot app that has a REST API you can talk to with [HTTPie](https://httpie.org/).
@@ -246,6 +248,7 @@ You can also use [start.spring.io](https://start.spring.io/#!type=gradle-project
 
 {% img {src: "spring-boot-2-angular-9/start.spring.io.png", alt: "Create app with start.spring.io", header: "800"} %}
 
+<a id="secure-spring-boot-with-spring-security-oauth-2-0-and-oidc"></a>
 ### Secure Spring Boot with Spring Security, OAuth 2.0, and OIDC
 
 Because you selected Okta as a dependency, you'll need to create an OIDC app for it to authenticate with Okta. You could use the client ID from your Angular app, but if you ever want to allow people to log in to your Spring Boot app, it'll need its own OIDC app.
@@ -270,6 +273,7 @@ Start your app using `./gradlew bootRun`. Open `http://localhost:8080` in a brow
 
 > **TIP:** If you don't get prompted, it's because you're already logged in. Try it in an incognito window to see the full login flow.
 
+<a id="spring-boot-as-an-oauth-2-0-resource-server"></a>
 ### Spring Boot as an OAuth 2.0 Resource Server
 
 Your Spring Boot API is now secure, but it's not configured to look for an `Authorization` header with an access token in it. You need to write some code to make your Spring Boot API an OAuth 2.0 resource server.

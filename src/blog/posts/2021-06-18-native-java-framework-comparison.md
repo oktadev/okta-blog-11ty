@@ -122,6 +122,7 @@ Stop your Micronaut app with <kbd>Ctrl</kbd>+<kbd>C</kbd> and restart it with <k
 ./mvnw mn:run
 ```
 
+<a id="generate-an-oauth-2-0-access-token"></a>
 ### Generate an OAuth 2.0 Access Token
 
 {{ macro.oidcdebugger({}) }}

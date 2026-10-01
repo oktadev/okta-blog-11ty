@@ -28,6 +28,7 @@ A common OAuth 2.0 question we get: "How do I deal with OAuth in a load-balanced
 - [HTTPie](https://httpie.io/download), a user-friendly HTTP CLI
 - [Okta CLI](https://cli.okta.com/)
 
+<a id="sessions-and-oauth-2-0-applications"></a>
 ## Sessions and OAuth 2.0 Applications
 
 An application that uses an OAuth 2.0 redirect, an ["Authorization Code Grant"](https://oauth.net/2/grant-types/authorization-code/), typically uses a server-side session to temporarily store the state of the login process until it completes. Let's look at a simplified OAuth login flow:
@@ -218,6 +219,7 @@ You should see the same response; if you see a `503 Service Unavailable`, try th
 
 Stop the Spring Boot server using `Ctrl`+`C`. It's time to secure the application with OAuth 2.0.
 
+<a id="secure-spring-boot-with-oauth-2-0"></a>
 ## Secure Spring Boot with OAuth 2.0
 
 {{ macro.cli({type: "web", framework: "Okta Spring Boot Starter"}) }}
@@ -279,6 +281,7 @@ Hello, your server port is: 8082
 
 Easy enough, just a couple of dependencies to configure shared session storage! If Redis isn't your jam, Spring Session also supports [databases](/blog/2020/10/02/spring-session-mysql), [Hazelcast](https://spring.io/projects/spring-session-hazelcast), [MongoDB](https://spring.io/projects/spring-session-data-mongodb), and [Apache Geode](https://spring.io/projects/spring-session-data-geode).
 
+<a id="learn-more-oauth-2-0-and-session-management"></a>
 ## Learn More OAuth 2.0 and Session Management
 
 This post shows how to manage sessions for a simple load-balanced application that uses OAuth 2.0. Our example focused on the Spring Boot portion of the application, but it's far from production-ready. A few other concerns would need to be addressed first:
