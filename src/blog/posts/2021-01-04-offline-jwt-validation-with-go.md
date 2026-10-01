@@ -196,7 +196,7 @@ Now, we can test the application by running the server and pointing a web browse
 go run main.go
 ```
 
-## Introduction to Complex Data Structures in Go
+## Introduction to  Complex Data Structures in Go
 
 For those new to Go, some of the more complex code which we will see later will make more sense if we understand how Go handles lists and maps (also known as dictionaries or hash tables). Here is a short introduction to lists and maps in Go:
 
