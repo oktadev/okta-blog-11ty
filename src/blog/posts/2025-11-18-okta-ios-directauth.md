@@ -79,8 +79,8 @@ After creating the app, you can find the configuration details on the app's **Ge
 - **Issuer**: Found in the **Issuer URI** field for the authorization server that appears by selecting **Security** > **API** from the navigation pane.
 
 ```
-Issuer:    https://dev-133337.okta.com/oauth2/default
-Client ID: 0oab8eb55Kb9jdMIr5d6
+  Issuer:    https://dev-133337.okta.com/oauth2/default
+  Client ID: 0oab8eb55Kb9jdMIr5d6
 ```
 
 **NOTE**: You can also use the [Okta CLI Client](https://github.com/okta/okta-cli-client) or [Okta PowerShell Module](https://github.com/okta/okta-powershell-cli) to automate this process. See this guide for more information about setting up your app.
@@ -149,9 +149,9 @@ Create the property list for your OIDC and app config by following these steps:
 You can edit the file in XML format by right-clicking and selecting **Open As** > **Source Code**. Copy and paste the following code into the file.
 
 ```xml
-<?xml version: "1.0", encoding: "UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version: "1.0">
+<plist version="1.0">
 <dict>
     <key>scopes</key>
     <string>openid profile offline_access</string>

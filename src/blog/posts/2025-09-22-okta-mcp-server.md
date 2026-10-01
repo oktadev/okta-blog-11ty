@@ -1,11 +1,11 @@
 ---
-title: "Introducing the Okta MCP Server"
+title: "Introducing the Okta Open Source MCP Server"
 author: swetha-selvanayagam
 by: advocate
 communities: [security,python]
-description: "Learn how the Okta MCP Server connects AI agents to Okta APIs, enabling secure automation of identity and access management tasks."
+description: "Learn how the Okta Open Source MCP Server connects AI agents to Okta APIs, enabling secure automation of identity and access management tasks."
 tags: [enterprise-ai, agentic-ai, mcp, oauth, sso, cross-app-access]
-image: okta-mcp-server/okta-mcp-server-social-image.jpeg
+image: okta-mcp-server/okta-open-source-mcp-server-social-image.jpeg
 type: conversion
 github: https://github.com/okta/okta-mcp-server
 ---
@@ -14,12 +14,11 @@ As AI agents and AI threats proliferate at an unprecedented rate, it becomes imp
 
 A Model Context Protocol (MCP) server acts as the bridge between an LLM and an external system. It translates natural language intent into structured API calls, enabling agents to perform tasks like provisioning users, managing groups, or pulling reports, all while respecting the system's security model.  Establishing a universal protocol eliminates the need to build custom integrations. Enterprises can now easily connect their AI agents with Okta's backend systems to achieve automation of complex chains of activities, quick resolution of issues, and increased performance throughput.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
-## What the Okta MCP Server brings
+## What the Okta Open Source MCP Server brings
 
-The Okta MCP Server brings this capability to your identity and access management workflows. It connects directly to Okta's Admin Management APIs, giving your LLM agents the ability to safely automate organization management.
+The Okta Open Source MCP Server brings this capability to your identity and access management workflows. It connects directly to Okta's Admin Management APIs, giving your LLM agents the ability to safely automate organization management.
 
 Think of it as unlocking a new interface for Okta, one where you can ask an agent:
 
@@ -46,13 +45,13 @@ Using the above operations as a base, complex real-life actions can also be perf
 * **More Secure Credential Handling**: Your authentication details are managed through scoped API access and environment variables, keeping secrets out of code. Tokens are issued only with the permissions you explicitly grant, following least-privilege best practices.  
 * **Seamless Integration with Okta APIs**: Built on Okta's official SDK, the server is tightly integrated with Okta's Admin Management APIs. That means reliable performance, support for a wide range of identity management tasks, and an extensible foundation for adding more endpoints over time.
 
-## Getting started with the Okta MCP Server
+## Getting started with the Okta Open Source MCP Server
 
-Now that you know what the Okta MCP server is and why it's useful, let's dive into how to set it up and run it. Before you proceed, you will need VS Code, Python environment (Python 3.9 or above), and uv.
+Now that you know what the Okta Open Source MCP server is and why it's useful, let's dive into how to set it up and run it. Before you proceed, you will need VS Code, Python environment (Python 3.9 or above), and uv.
 
 ### Initializing the project
 
-The Okta MCP server comes packaged for quick setup so you can clone and run it. We use `uv` (a fast Python package manager) to help ensure your environment is reproducible and lightweight.
+The Okta Open Source MCP server comes packaged for quick setup so you can clone and run it. We use `uv` (a fast Python package manager) to help ensure your environment is reproducible and lightweight.
 
 * Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
@@ -129,11 +128,9 @@ Use this if you're automating, scheduling jobs, or integrating into infrastructu
 
 5. Disable **Proof of Possession** in the General tab.
 
-6. Grant the necessary API scopes (e.g., `okta.users.read`, `okta.groups.manage`) and provide Super Administrator access.
+6. Grant the necessary API scopes (e.g., `okta.users.read`, `okta.groups.manage`) and provide [administrator access](https://help.okta.com/en-us/content/topics/security/administrators-admin-comparison.htm) as needed.
 
     {% img {src: "okta-mcp-server/image10.jpeg", alt: " ", header: "700"} %}
-
-    {% img {src: "okta-mcp-server/image3.jpeg", alt: " ", header: "700"} %}
 
 ### Configuring your client
 
@@ -141,11 +138,11 @@ You can use Okta's MCP server with any MCP-compatible client. Whether running a 
 
 For this guide, we'll walk through the setup in Visual Studio Code with GitHub Copilot - one of the most popular environments for developers. The steps will be similar if you use another client like Claude Desktop or AWS Bedrock.
 
-## Using the Okta MCP Server with VS Code
+## Using the Okta Open Source MCP Server with VS Code
 
 ### Enable agent mode in GitHub Copilot
 
-The Okta MCP server integrates with VS Code through Copilot's agent mode. 
+The Okta Open Source MCP server integrates with VS Code through Copilot's agent mode. 
 
 1. Install the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) Open the Copilot Chat view in VS Code.
 
@@ -153,7 +150,7 @@ The Okta MCP server integrates with VS Code through Copilot's agent mode.
 
 ### Update your VS Code settings
 
-Next, you'll tell VS Code how to start and communicate with the Okta MCP server. Create a folder named `.vscode` in your project directory, then add a new file inside it called `mcp.json`. Copy and paste the configuration below into that file and save it.
+Next, you'll tell VS Code how to start and communicate with the Okta Open Source MCP server. Create a folder named `.vscode` in your project directory, then add a new file inside it called `mcp.json`. Copy and paste the configuration below into that file and save it.
 
 ```json
 {
@@ -259,7 +256,7 @@ At this point, the MCP server has established a connection between VS Code and y
 
 {% img {src: "okta-mcp-server/image5.jpeg", alt: " ", header: "700"} %}
 
-We invite you to try out our MCP server and experience the future of identity and access management. Meet us at Oktane, and if you run into issues, please open an issue in our [GitHub](https://github.com/okta/okta-mcp-server/) repository.
+We invite you to try out the Okta Open Source MCP Server and experience the future of identity and access management. Meet us at Oktane, and if you run into issues, please open an issue in our [GitHub](https://github.com/okta/okta-mcp-server/) repository.
 
 ## Read more about Cross App Access, OAuth 2.0, and securing your applications
 

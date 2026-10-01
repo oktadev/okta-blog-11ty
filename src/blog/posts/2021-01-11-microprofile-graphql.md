@@ -438,10 +438,14 @@ You'll see something like the following for the JWT Payload.
   "exp": 1610047137,
   "cid": "0oa1mpynrqj5XGGgS4x7",
   "uid": "00u133jktIYEgC5ZR4x6",
-  "scp": ["openid"],
+  "scp": [
+    "openid"
+  ],
   "sub": "andrew.hughes@email.com",
   "upn": "andrew.hughes@email.com",
-  "groups": ["Everyone"]
+  "groups": [
+    "Everyone"
+  ]
 }
 ```
 

@@ -212,9 +212,9 @@ If the `acr` claim value doesn't meet the requirements, the API responds with a 
 
 ```http
 HTTP/1.1 401 Unauthorized
-WWW-Authenticate: Bearer error: "insufficient_user_authentication",
-  error_description: "A different authentication level is required",
-  acr_values: "elevated"
+WWW-Authenticate: Bearer error="insufficient_user_authentication",
+  error_description="A different authentication level is required",
+  acr_values="elevated"
 ```
 
 We'll use this error structure in the API response in NestJS, and when handling the step-up authentication error in the Angular app.
@@ -282,7 +282,7 @@ const acr_values = 'urn:okta:loa:2fa:any';
 const acr = accessToken.claims['acr'] ?? '';
 
 if (acr === '' || acr !== acr_values) {
-  res.setHeader('WWW-Authenticate', `Bearer error: "insufficient_user_authentication",error_description: "A different authentication level is required",acr_values: "${acr_values}"`)
+  res.setHeader('WWW-Authenticate', `Bearer error="insufficient_user_authentication",error_description="A different authentication level is required",acr_values="${acr_values}"`)
   return res.status(HttpStatus.UNAUTHORIZED).send();
 }
 ```

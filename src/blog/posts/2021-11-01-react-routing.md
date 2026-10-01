@@ -205,11 +205,14 @@ const Home = () => {
           <h3>React routing Demo</h3>
 
           <h5>
-            A <a href="https://reactjs.org/">React</a> Demo using <a href="https://github.com/molefrog/wouter">Wouter</a> Secured by <a href="https://www.okta.com/">Okta</a>
+            A <a href="https://reactjs.org/">React</a> Demo using{" "}
+            <a href="https://github.com/molefrog/wouter">Wouter</a> Secured by{" "}
+            <a href="https://www.okta.com/">Okta</a>
           </h5>
 
           <p>
-            A tutorial written by <a href="https://profile.fishbowlllc.com">Nik Fisher</a>
+            A tutorial written by{" "}
+            <a href="https://profile.fishbowlllc.com">Nik Fisher</a>
           </p>
         </Col>
       </Row>
@@ -268,14 +271,19 @@ class App extends React.Component {
     });
 
     this.restoreOriginalUri = async (_oktaAuth, originalUri) => {
-      window.location.replace(toRelativeUrl(originalUri || "/", window.location.origin));
+      window.location.replace(
+        toRelativeUrl(originalUri || "/", window.location.origin)
+      );
     };
   }
 
   render() {
     return (
       <Router>
-        <Security oktaAuth={this.oktaAuth} restoreOriginalUri={this.restoreOriginalUri}>
+        <Security
+          oktaAuth={this.oktaAuth}
+          restoreOriginalUri={this.restoreOriginalUri}
+        >
           <Route path="/" component={Home} />
           <Route path="/callback" component={LoginCallback} />
           <Route path="/Profile" component={Profile} />

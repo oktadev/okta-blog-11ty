@@ -108,12 +108,14 @@ Open up a preferred text editor, create a new file called `OAuth.jslib`, and sav
 Add the following to `OAuth.jslib` and save it.
 
 ```js
-mergeInto(LibraryManager.library, {
-  startAuthentication: function (utf8String) {
-    var authRequest = UTF8ToString(utf8String);
-    var authorizationRequest = authRequest;
-    startAuth(authorizationRequest);
-  },
+mergeInto(LibraryManager.library, 
+{
+        startAuthentication: function (utf8String) 
+        {
+                var authRequest = UTF8ToString(utf8String);
+                var authorizationRequest = authRequest;
+                startAuth(authorizationRequest);
+        }
 });
 ```
 
@@ -145,9 +147,9 @@ Find the `<body>` tags in the HTML and locate the closing `</body>` tag. Right b
 
 ```js
 <script>
-function startAuth(authorizationRequest)
+function startAuth(authorizationRequest) 
 {
-        window.addEventListener('message', function (e)
+        window.addEventListener('message', function (e) 
         {
                 unityInstance.SendMessage("OAuth2", "getAuthResults", data);
         }, false);
@@ -164,13 +166,10 @@ function startAuth(authorizationRequest)
 This is the JavaScript function that the `Sign In` button in the WebGL object will trigger. The button does this by first calling a function in C# on its click event. That function will then call the `OAuth.jslib` which will then call this `startAuth()` function in the page JavaScript. This represents the best way for WebGL to provide browser interaction to the player from within the WebGL object.
 
 ```js
-window.addEventListener(
-  "message",
-  function (e) {
-    unityInstance.SendMessage("OAuth2", "getAuthResults", data);
-  },
-  false,
-);
+window.addEventListener('message', function (e) 
+{
+        unityInstance.SendMessage("OAuth2", "getAuthResults", data);
+}, false);
 ```
 
 `window.addEventListener()` creates an event listener that will be called by a child popup window when authentication is complete. The result of authentication will be an `Auth Code` sent back to the C# in the WebGL object via `unityInstance.SendMessage()`.
@@ -178,7 +177,7 @@ window.addEventListener(
 ```js
 var childwin;
 const childname = "Authenticate";
-childwin = window.open(authorizationRequest, childname, "height=300px, width=500px");
+childwin = window.open(authorizationRequest, childname, 'height=300px, width=500px');
 ```
 
 With the event listener ready, `window.open()` is used to create a popup window to the OAuth authorization request URI.
@@ -195,17 +194,17 @@ In the same folder as `index.html` create a new file called `callback.html` usin
 <head>
     <script>
         //Parse query string helper function
-        function getParameterByName(name, url = window.location.href)
+        function getParameterByName(name, url = window.location.href) 
         {
                 name = name.replace(/[\[\]]/g, '\\$&');
                 var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex.exec(url);
 
-                if (!results)
+                if (!results) 
                 {
                         return null;
                 }
 
-                if (!results[2])
+                if (!results[2]) 
                 {
                         return '';
                 }
@@ -219,18 +218,18 @@ In the same folder as `index.html` create a new file called `callback.html` usin
         var state = getParameterByName('state');
 
         window.opener.postMessage(code + "," + state, "*")
-
-        try
+     
+        try 
         {
                 window.close();
         }
         catch (e) { console.log(e) }
 
-        try
+        try 
         {
                 self.close();
         }
-        catch (e) { console.log(e) }
+        catch (e) { console.log(e) }       
     </script>
 </head>
 <body>
@@ -330,7 +329,7 @@ public void Authenticate()
             code_challenge_method);
 
         startAuthentication(authorizationRequest);
-}
+} 
 ```
 
 The first thing that `Authenticate()` does is prepare the OAuth Authorization request. This is the request sent to the jslib, and then to the JavaScript running in the browser. The player will be redirected to this URI in a browser popup.

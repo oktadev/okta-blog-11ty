@@ -269,7 +269,7 @@ The HTTP response includes information about why the call errored.
 
 ```http
 HTTP/1.1 400 Bad Request
-WWW-Authenticate: Bearer authorization_uri: "http://{yourOktaDomain}/oauth2/v1/authorize", realm: "http://{yourOktaDomain}", scope: "okta.users.read.self", error: "invalid_request", error_description: "The resource request requires a DPoP proof.", resource: "/api/v1/users"
+WWW-Authenticate: Bearer authorization_uri="http://{yourOktaDomain}/oauth2/v1/authorize", realm="http://{yourOktaDomain}", scope="okta.users.read.self", error="invalid_request", error_description="The resource request requires a DPoP proof.", resource="/api/v1/users"
 ```
 
 The current code to make the Users API call adds the access token using the `Bearer` scheme in the `Authorization` header, but that's incorrect for DPoP. We must incorporate the DPoP proof and change the scheme in the HTTP request.
@@ -330,7 +330,7 @@ The API rejected your request! You get back an error stating the DPoP proof isn'
 
 ```http
 HTTP/1.1 400 Bad Request
-WWW-Authenticate: DPoP algs: "RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri: "http://{yourOktaDomain}/oauth2/v1/authorize", realm: "http://{yourOktaDomain}", scope: "okta.apps.read", error: "invalid_dpop_proof", error_description: "'htu' claim in the DPoP proof JWT is invalid."
+WWW-Authenticate: DPoP algs="RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri="http://{yourOktaDomain}/oauth2/v1/authorize", realm="http://{yourOktaDomain}", scope="okta.apps.read", error="invalid_dpop_proof", error_description="'htu' claim in the DPoP proof JWT is invalid."
 ```
 
 If an attacker manages to capture both the proof and the token, they may only be able to make the same request. The proof constrains the calls to the HTTP method and URI, invalidating other HTTP requests. 
@@ -346,7 +346,7 @@ The API rejected your request! You still get back an error stating the DPoP proo
 
 ```http
 HTTP/1.1 400 Bad Request
-WWW-Authenticate: DPoP algs: "RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri: "http://{yourOktaDomain}/oauth2/v1/authorize", realm: "http://{yourOktaDomain}", scope: "okta.users.read.self", error: "invalid_dpop_proof", error_description: "The DPoP proof JWT has already been used.", resource: "/api/v1/users"
+WWW-Authenticate: DPoP algs="RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri="http://{yourOktaDomain}/oauth2/v1/authorize", realm="http://{yourOktaDomain}", scope="okta.users.read.self", error="invalid_dpop_proof", error_description="The DPoP proof JWT has already been used.", resource="/api/v1/users"
 ```
 
 The proof also has two other protection mechanisms: the JWT unique identifier (`jit`) and the issued at time (`iat`). When a resource server enforces the `jit` claim, it tracks previous calls to prevent proof reuse. So, an attacker can't replay the proof and the access token they stole. Enforcing the JWT ID isn't required in the DPoP spec. Another protection mechanism is the proof issue timestamp, the `iat` claim. Resource servers check the issue time on the proofs, and if it exceeds some threshold determined by the resource server, the server will reject the request. 

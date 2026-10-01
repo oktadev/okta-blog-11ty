@@ -230,7 +230,7 @@ Open `Index.cshtml`, replace the contents with the following:
 <div style="display: flex;flex-direction: row">
     <div>
         <h3>Menu</h3>
-        <div style>
+        <div style="">
             <select onchange="show(this.value)">
                 <option value="blank"></option>
                 }

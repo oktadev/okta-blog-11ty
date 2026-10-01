@@ -716,7 +716,7 @@ function App() {
           <Route path="/callback" element={<LoginCallback />} />
           <Route path="/" element={<Login />} />
           <Route path="/facilities" element={<RequiredAuth />}>
-            <Route path element={<Facilities />} />
+            <Route path="" element={<Facilities />} />
           </Route>
         </Routes>
       </Security>

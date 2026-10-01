@@ -77,22 +77,22 @@ You'll see the lightweight IDE already has code scaffolded. Press **Edit** and r
 <html>
 
 <head>
-  <meta http-equiv: "Content-Type", content: "text/html; charset=UTF-8">
-  <meta name: "viewport", content: "width=device-width, initial-scale=1.0" />
-  <meta name: "robots", content: "noindex,nofollow" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
   <!-- Styles generated from theme -->
-  <link href: "{{themedStylesUrl}}", rel: "stylesheet", type: "text/css">
+  <link href="{{themedStylesUrl}}" rel="stylesheet" type="text/css">
   <!-- Favicon from theme -->
-  <link rel: "shortcut icon", href: "{{faviconUrl}}", type: "image/x-icon">
-  <link rel: "preconnect", href: "https://fonts.googleapis.com">
-  <link rel: "preconnect", href: "https://fonts.gstatic.com" crossorigin>
+  <link rel="shortcut icon" href="{{faviconUrl}}" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-      href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap"
-      rel: "stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet">
   <title>{{pageTitle}}</title>
   {{{SignInWidgetResources}}}
 
-  <style nonce: "{{nonceValue}}">
+  <style nonce="{{nonceValue}}">
     :root {
       --font-header: 'Inter Tight', sans-serif;
       --font-body: 'Manrope', sans-serif;
@@ -132,8 +132,8 @@ You'll see the lightweight IDE already has code scaffolded. Press **Edit** and r
 </head>
 
 <body>  
-  <div id: "okta-auth-container">
-    <div id: "okta-login-container"></div>      
+  <div id="okta-auth-container">
+    <div id="okta-login-container"></div>      
   </div>
     
   <!--
@@ -142,7 +142,7 @@ You'll see the lightweight IDE already has code scaffolded. Press **Edit** and r
   -->
   {{{OktaUtil}}}
 
-  <script type: "text/javascript", nonce: "{{nonceValue}}">
+  <script type="text/javascript" nonce="{{nonceValue}}">
     // "config" object contains default widget configuration
     // with any custom overrides defined in your admin settings.
 
@@ -216,7 +216,7 @@ Navigate to **Page Design**, then **Edit** the page. Add the script to load the 
 
 {% raw %}
 ```html
-<script src: "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4", nonce: "{{nonceValue}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" nonce="{{nonceValue}}"></script>
 ```
 {% endraw %}
 
@@ -234,8 +234,8 @@ The two `div` containers look like this:
 
 {% raw %}
 ```html
-<div id: "okta-auth-container", class: "h-screen flex bg-(--color-gray) bg-[{{bgImageUrl}}]">
-  <div id: "okta-login-container", class: "w-full min-w-sm lg:w-2/3 xl:w-1/2 bg-(image:--color-gradient) lg:bg-none bg-(--color-white) flex justify-center items-center"></div>
+<div id="okta-auth-container" class="h-screen flex bg-(--color-gray) bg-[{{bgImageUrl}}]">
+  <div id="okta-login-container" class="w-full min-w-sm lg:w-2/3 xl:w-1/2 bg-(image:--color-gradient) lg:bg-none bg-(--color-white) flex justify-center items-center"></div>
 </div>
 ```
 {% endraw %}
@@ -250,18 +250,18 @@ We want a footer pinned to the bottom of the view, so we'll need a new parent co
 
 {% raw %}
 ```html
-<div class: "flex flex-col min-h-screen">        
-  <div id: "okta-auth-container", class: "flex grow bg-(--color-gray) bg-[{{bgImageUrl}}]">
-    <div class: "w-full min-w-sm lg:w-2/3 xl:w-1/2 bg-(image:--color-gradient) lg:bg-none bg-(--color-white) flex justify-center items-center">
-        <div id: "okta-login-container"></div>
+<div class="flex flex-col min-h-screen">        
+  <div id="okta-auth-container" class="flex grow bg-(--color-gray) bg-[{{bgImageUrl}}]">
+    <div class="w-full min-w-sm lg:w-2/3 xl:w-1/2 bg-(image:--color-gradient) lg:bg-none bg-(--color-white) flex justify-center items-center">
+        <div id="okta-login-container"></div>
     </div>
   </div>
-  <footer class: "font-(family-name:--font-body)">
-    <ul class: "h-12 flex justify-evenly items-center text-(--color-azul)">
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://developer.okta.com">Terms</a></li>
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://developer.okta.com">Docs</a></li>
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://developer.okta.com/blog">Blog</a></li>
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://devforum.okta.com">Community</a></li>
+  <footer class="font-(family-name:--font-body)">
+    <ul class="h-12 flex justify-evenly items-center text-(--color-azul)">
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://developer.okta.com">Terms</a></li>
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://developer.okta.com">Docs</a></li>
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://developer.okta.com/blog">Blog</a></li>
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://devforum.okta.com">Community</a></li>
     </ul>
   </footer>
 </div>
@@ -280,7 +280,7 @@ We'll use Alpine for the heavy lifting because it's a lightweight JavaScript lib
 
 {% raw %}
 ```html
-<script defer src: "https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js", nonce: "{{nonceValue}}"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" nonce="{{nonceValue}}"></script>
 ```
 {% endraw %}
 
@@ -292,44 +292,44 @@ Next, we add the HTML tags to support the modal. Replace the HTML node structure
 
 {% raw %}
 ```html
-<div class: "flex flex-col min-h-screen">
-  <div id: "modal"
+<div class="flex flex-col min-h-screen">
+  <div id="modal"
     x-data
     x-cloak
-    x-show: "$store.modal.open" 
-    x-transition:enter: "transition ease-out duration-300"
-    x-transition:enter-start: "opacity-0"
-    x-transition:enter-end: "opacity-100"
-    x-transition:leave: "transition ease-in duration-200"
-    x-transition:leave-start: "opacity-100"
-    x-transition:leave-end: "opacity-0 hidden"
-    class: "fixed inset-0 z-50 flex items-center justify-center bg-(--color-black)/80 bg-opacity-50">
-    <div x-transition:enter: "transition ease-out duration-300"
-         x-transition:enter-start: "opacity-0 scale-90"
-         x-transition:enter-end: "opacity-100 scale-100"
-         x-transition:leave: "transition ease-in duration-200"
-         x-transition:leave-start: "opacity-100 scale-100"
-         x-transition:leave-end: "opacity-0 scale-90"
-         class: "bg-(--color-white) rounded-(--border-radius) shadow-lg p-8 max-w-md w-full mx-4">
-      <h2 class: "text-2xl font-(family-name:--font-header) text-(--color-black) mb-4 text-center">Welcome to to-do app</h2>
-      <p class: "text-(--color-black) mb-6">This app is in beta. Thank you for agreeing to our terms and conditions.</p>
-      <button @click: "$store.modal.hide()" 
-              class: "w-full bg-(--color-fuchsia) hover:bg-(--color-orange) text-(--color-bright-white) font-medium py-2 px-4 rounded-(--border-radius) transition duration-200">
+    x-show="$store.modal.open" 
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0 hidden"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-(--color-black)/80 bg-opacity-50">
+    <div x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-90"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-90"
+         class="bg-(--color-white) rounded-(--border-radius) shadow-lg p-8 max-w-md w-full mx-4">
+      <h2 class="text-2xl font-(family-name:--font-header) text-(--color-black) mb-4 text-center">Welcome to to-do app</h2>
+      <p class="text-(--color-black) mb-6">This app is in beta. Thank you for agreeing to our terms and conditions.</p>
+      <button @click="$store.modal.hide()" 
+              class="w-full bg-(--color-fuchsia) hover:bg-(--color-orange) text-(--color-bright-white) font-medium py-2 px-4 rounded-(--border-radius) transition duration-200">
           Agree
       </button>
     </div>
   </div>        
-  <div id: "okta-auth-container", class: "flex grow bg-(--color-gray) bg-[{{bgImageUrl}}]">
-    <div class: "w-full min-w-sm lg:w-2/3 xl:w-1/2 bg-(image:--color-gradient) lg:bg-none bg-(--color-white) flex justify-center items-center">
-      <div id: "okta-login-container"></div>
+  <div id="okta-auth-container" class="flex grow bg-(--color-gray) bg-[{{bgImageUrl}}]">
+    <div class="w-full min-w-sm lg:w-2/3 xl:w-1/2 bg-(image:--color-gradient) lg:bg-none bg-(--color-white) flex justify-center items-center">
+      <div id="okta-login-container"></div>
     </div>
   </div>
-  <footer class: "font-(family-name:--font-body)">
-    <ul class: "h-12 flex justify-evenly items-center text-(--color-azul)">
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://developer.okta.com">Terms</a></li>
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://developer.okta.com">Docs</a></li>
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://developer.okta.com/blog">Blog</a></li>
-      <li><a class: "hover:text-(--color-orange) hover:underline", href: "https://devforum.okta.com">Community</a></li>
+  <footer class="font-(family-name:--font-body)">
+    <ul class="h-12 flex justify-evenly items-center text-(--color-azul)">
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://developer.okta.com">Terms</a></li>
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://developer.okta.com">Docs</a></li>
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://developer.okta.com/blog">Blog</a></li>
+      <li><a class="hover:text-(--color-orange) hover:underline" href="https://devforum.okta.com">Community</a></li>
     </ul>
   </footer>
 </div>
@@ -364,7 +364,7 @@ We made the modal fixed even if the user presses <kbd>Esc</kbd> or selects the s
 
 ## Customize Okta-hosted sign-in page behavior using Web APIs
 
-We display the modal as soon as the webpage loads. It works, but we can also display the modal after the Sign-In Widget renders. Doing so allows us to use the nice enter and leave CSS transitions Alpine supports. We want to watch for changes to the DOM within the `<div id: "okta-login-container"></div>`. This is the parent container that renders the SIW. We can use the [`MutationObserver` Web API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) and watch for DOM mutations within the `div`.
+We display the modal as soon as the webpage loads. It works, but we can also display the modal after the Sign-In Widget renders. Doing so allows us to use the nice enter and leave CSS transitions Alpine supports. We want to watch for changes to the DOM within the `<div id="okta-login-container"></div>`. This is the parent container that renders the SIW. We can use the [`MutationObserver` Web API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) and watch for DOM mutations within the `div`.
 
 In the `<script></script>` section, after the event listener for `alpine:init`, add the following code:
 
@@ -405,21 +405,21 @@ We begin by observing the DOM and pass in the element to use as the root, along 
 
 Lastly, let's enable the modal to trigger based on the observer. I intentionally provided you with code snippets that force the modal to display before the SIW renders, so you could take sneak peeks at your work as we went along.
 
-In the HTML node structure, find the `<div id: "modal">`. It's missing a class that hides the modal initially. Add the class `hidden` to the class list. The class list for the `<div>` should look like
+In the HTML node structure, find the `<div id="modal">`. It's missing a class that hides the modal initially. Add the class `hidden` to the class list. The class list for the `<div>` should look like
 
 
 ```html
-<div id: "modal"
+<div id="modal"
     x-data
     x-cloak
-    x-show: "$store.modal.open" 
-    x-transition:enter: "transition ease-out duration-300"
-    x-transition:enter-start: "opacity-0"
-    x-transition:enter-end: "opacity-100"
-    x-transition:leave: "transition ease-in duration-200"
-    x-transition:leave-start: "opacity-100"
-    x-transition:leave-end: "opacity-0 hidden"
-    class: "hidden fixed inset-0 z-50 flex items-center justify-center bg-(--color-black)/80 bg-opacity-50">
+    x-show="$store.modal.open" 
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0 hidden"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center bg-(--color-black)/80 bg-opacity-50">
 
 <!-- Remaining modal structure here. Compare your work to the class list above -->
 

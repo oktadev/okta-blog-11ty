@@ -178,54 +178,58 @@ Next, add two HTML files. Start by adding `index.html`.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>A Brief Electron demo with Okta</title>
-  </head>
 
-  <body>
-    <h1>Electron and Okta</h1>
+<head>
+  <meta charset="UTF-8">
+  <title>A Brief Electron demo with Okta</title>
+</head>
 
-    <div class="container">
-      <h4>Please Login</h4>
+<body>
+<h1>Electron and Okta</h1>
 
-      <div>
-        <label>Username</label>
-        <input type="text" name="username" id="username" />
+<div class="container">
+  <h4>Please Login</h4>
 
-        <label>Password</label>
-        <input type="password" name="password" id="password" />
-      </div>
+  <div>
+    <label>Username</label>
+    <input type="text" name="username" id="username"/>
 
-      <div>
-        <button id="login-button">Login</button>
-      </div>
-      <div>
-        <label id="error-message"></label>
-      </div>
-    </div>
-  </body>
+    <label>Password</label>
+    <input type="password" name="password" id="password"/>
+  </div>
 
-  <style>
-    .container {
-      width: 60%;
-      margin: 0 auto;
-    }
-  </style>
+  <div>
+    <button id="login-button">Login</button>
+  </div>
+  <div>
+    <label id="error-message"></label>
+  </div>
 
-  <script>
-    document.querySelector("#login-button").addEventListener("click", () => {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+</div>
+</body>
 
-      const data = {
-        username: username,
-        password: password,
-      };
+<style>
+  .container {
+    width: 60%;
+    margin: 0 auto;
+  }
+</style>
 
-      window.electron.login(data);
-    });
-  </script>
+<script>
+  document.querySelector("#login-button").addEventListener("click", () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const data = {
+      username: username,
+      password: password,
+    };
+
+    window.electron.login(data);
+  });
+
+</script>
+
 </html>
 ```
 
@@ -236,20 +240,22 @@ Finally, add a `home.html` file and provide a landing page for authenticated use
 ```html
 <h1>Home</h1>
 
-<div>Congratulations <span id="username">test</span>, You've made it to a secure page using Okta.</div>
+<div>
+  Congratulations <span id="username">test</span>, You've made it to a secure page using Okta.
+</div>
 
 <div>
   <button id="logout-button">Logout</button>
 </div>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener('DOMContentLoaded', () => {
     window.electron.getUser().then((user) => {
-      document.getElementById("username").innerHTML = `${user.profile.firstName} ${user.profile.lastName}`;
+      document.getElementById("username").innerHTML = `${user.profile.firstName} ${user.profile.lastName}`
     });
   });
 
-  document.getElementById("logout-button").addEventListener("click", () => {
+  document.getElementById('logout-button').addEventListener('click', () => {
     window.electron.logout();
   });
 </script>
@@ -262,8 +268,8 @@ This page has been left intentionally simple for a very good reason. Electron do
 With your application ready, you can use the command `npm start` or run your debugger to see the application. You will see a warning in your console when starting:
 
 ```
-[okta-auth-sdk] WARN: Memory storage can only support simple single user use case on server
-side, please provide custom storageProvider or storageKey if advanced scenarios need to be
+[okta-auth-sdk] WARN: Memory storage can only support simple single user use case on server 
+side, please provide custom storageProvider or storageKey if advanced scenarios need to be 
 supported.
 ```
 

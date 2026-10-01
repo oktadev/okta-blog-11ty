@@ -82,8 +82,8 @@ spring:
 okta:
   oauth2:
     issuer: https://{yourOktaDomain}/oauth2/default
-    client-id: { clientId }
-    client-secret: { clientSecret }
+    client-id: {clientId}
+    client-secret: {clientSecret}
     scopes: openid, profile, email
 
 eureka:
@@ -340,7 +340,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AirbnbListing {
-
+    
     @Id
     private String id;
     private String name;
@@ -427,7 +427,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticated()
             .and()
             .oauth2ResourceServer().jwt();
-
+        
         Okta.configureResourceServer401ResponseBody(http);
     }
 }
@@ -635,8 +635,8 @@ spring:
       resourceserver:
         opaque-token:
           introspection-uri: https://{yourOktaDomain}/oauth2/default/v1/introspect
-          client-secret: { yourClientSecret }
-          client-id: { yourClientId }
+          client-secret: {yourClientSecret}
+          client-id: {yourClientId}
 eureka:
   client:
     service-url:
@@ -779,7 +779,7 @@ public class JwtOpaqueTokenIntrospector implements ReactiveOpaqueTokenIntrospect
 
     private Mono<OAuth2AuthenticatedPrincipal> enhance(OAuth2AuthenticatedPrincipal principal) {
         Collection<GrantedAuthority> authorities = extractAuthorities(principal);
-        OAuth2AuthenticatedPrincipal enhanced =
+        OAuth2AuthenticatedPrincipal enhanced = 
             new DefaultOAuth2AuthenticatedPrincipal(principal.getAttributes(), authorities);
         return Mono.just(enhanced);
     }
@@ -852,7 +852,7 @@ import java.util.List;
 @ActiveProfiles("test")
 class TheatersApplicationTests {
 
-    private static final MongoDBContainer mongoDBContainer =
+    private static final MongoDBContainer mongoDBContainer = 
         new MongoDBContainer(DockerImageName.parse("mongo:bionic"))
             .withExposedPorts(27017)
             .withEnv("MONGO_INIT_DATABASE", "airbnb");
@@ -862,7 +862,7 @@ class TheatersApplicationTests {
         mongoDBContainer.setPortBindings(List.of("27017:27017"));
         mongoDBContainer.start();
     }
-
+    
     @Test
     void contextLoads() {
     }
@@ -1196,9 +1196,9 @@ Go to `http://localhost:8080/userdata` after the Okta login, and you should see 
 
 ```json
 {
-  "userName": "...",
-  "idToken": "...",
-  "accessToken": "..."
+   "userName":"...",
+   "idToken":"...",
+   "accessToken":"..."
 }
 ```
 
@@ -1216,8 +1216,8 @@ You will see the following response:
 
 ```
 HTTP/1.1 403 Forbidden
-WWW-Authenticate: Bearer error="insufficient_scope",
- error_description="The request requires higher privileges than provided by the access token.",
+WWW-Authenticate: Bearer error="insufficient_scope", 
+ error_description="The request requires higher privileges than provided by the access token.", 
  error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
 ```
 
@@ -1260,7 +1260,7 @@ You will see the following response:
 
 ```
 HTTP/1.1 401 Unauthorized
-WWW-Authenticate: Bearer error="invalid_token",
+WWW-Authenticate: Bearer error="invalid_token", 
  error_description="An error occurred while attempting to decode the Jwt: This aud claim is not equal to the configured audience",
  error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
 ```

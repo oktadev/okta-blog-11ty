@@ -686,7 +686,7 @@ In this directory, we will add a form. This form is the `login.jsp` form used to
                   <input class="form-control" placeholder="Email" name="username" type="text">
                 </div>
                 <div class="form-group">
-                  <input class="form-control" placeholder="Password" name="password" type="password" value>
+                  <input class="form-control" placeholder="Password" name="password" type="password" value="">
                 </div>
                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
               </fieldset>

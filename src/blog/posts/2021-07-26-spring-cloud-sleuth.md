@@ -291,7 +291,7 @@ http :8081/a
 You'll get denied.
 
 ```bash
-HTTP/1.1 401
+HTTP/1.1 401 
 ```
 
 This is expected. You need to include a valid JWT.
@@ -338,7 +338,7 @@ http :8081/a "Authorization: Bearer $TOKEN"
 If all went well, you should see this.
 
 ```bash
-HTTP/1.1 200
+HTTP/1.1 200 
 ...
 
 Hello from /a - Service A, Hello from /b - Service B

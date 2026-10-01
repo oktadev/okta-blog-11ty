@@ -79,17 +79,17 @@ REACT_APP_OKTA_APP_BASE_URL=http://localhost:3000
 Now you want to start building your application by editing the `App.js` file. Open `App.js` and replace the code with the following.
 
 ```jsx
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import AppWithRouterAccess from "./AppWithRouterAccess";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppWithRouterAccess from './AppWithRouterAccess';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 
 const apolloClient = new ApolloClient({
-  uri: "https://api.spacex.land/graphql/",
-  cache: new InMemoryCache(),
+  uri: 'https://api.spacex.land/graphql/',
+  cache: new InMemoryCache()
 });
 
 const App = () => {
@@ -100,7 +100,7 @@ const App = () => {
       </ApolloProvider>
     </Router>
   );
-};
+}
 
 export default App;
 ```
@@ -110,32 +110,32 @@ Most of this should look fairly familiar. You are importing the bootstrap `CSS` 
 Create a new file in your `src` directory called `AppWithRouterAccess.jsx` and add the following code.
 
 ```jsx
-import React from "react";
-import { Route } from "react-router-dom";
-import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import { OktaAuth } from "@okta/okta-auth-js";
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+import { OktaAuth } from '@okta/okta-auth-js';
 
-import Home from "./Pages/Home";
-import Blastoff from "./Pages/Blastoff";
+import Home from './Pages/Home'
+import Blastoff from './Pages/Blastoff'
 
 const AppWithRouterAccess = () => {
-  const issuer = process.env.REACT_APP_OKTA_URL_BASE + "/oauth2/default";
-  const clientId = process.env.REACT_APP_OKTA_CLIENTID;
-  const redirect = process.env.REACT_APP_OKTA_APP_BASE_URL + "/callback";
+    const issuer = process.env.REACT_APP_OKTA_URL_BASE + '/oauth2/default'
+    const clientId = process.env.REACT_APP_OKTA_CLIENTID;
+    const redirect = process.env.REACT_APP_OKTA_APP_BASE_URL + '/callback';
 
-  const oktaAuth = new OktaAuth({
-    issuer: issuer,
-    clientId: clientId,
-    redirectUri: redirect,
-  });
+    const oktaAuth = new OktaAuth({
+        issuer: issuer,
+        clientId: clientId,
+        redirectUri: redirect
+      });      
 
-  return (
-    <Security oktaAuth={oktaAuth}>
-      <Route path="/" exact={true} component={Home}></Route>
-      <SecureRoute path="/Blastoff" component={Blastoff} />
-      <Route path="/callback" component={LoginCallback} />
-    </Security>
-  );
+    return (
+        <Security oktaAuth={oktaAuth}>
+            <Route path='/' exact={true} component={Home} ></Route>
+            <SecureRoute path='/Blastoff' component={Blastoff} />
+            <Route path='/callback' component={LoginCallback} />
+        </Security>
+    );
 };
 export default AppWithRouterAccess;
 ```
@@ -147,72 +147,62 @@ Now you can focus on creating your pages and components. First, add two new fold
 {% raw %}
 
 ```jsx
-import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
-import Header from "../Components/Header";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import Header from '../Components/Header'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 
-import { useOktaAuth } from "@okta/okta-react";
+
+import { useOktaAuth } from '@okta/okta-react';
 
 const Home = () => {
+
   const { authState } = useOktaAuth();
 
-  return authState.isAuthenticated ? (
-    <Redirect to={{ pathname: "/Blastoff" }} />
-  ) : (
+  return (authState.isAuthenticated ?
+    <Redirect to={{ pathname: '/Blastoff' }} /> :
+
     <Container>
+
       <Header></Header>
 
       <Row>
+
         <Col sm={12} className="text-center">
           <h3>BlastOff! </h3>
           <h4> A Look at SpaceX Launch History</h4>
-          <br></br>
-          <h5>
-            A React Demo Using <a target="_blank" rel="noreferer" href="https://www.apollographql.com/docs/react/">
-              Apollo Client{" "}
-            </a>
-            <br />
-            Secured With <a target="_blank" rel="noreferer" href="https://www.okta.com/">
-              Okta{" "}
-            </a>
-          </h5>
-          <h5>
-            <a href="https://api.spacex.land/graphql/" target="_blank" rel="noreferer">
-              GraphQL Data Available here
-            </a>
-          </h5>
+          <br>
+          </br>
+          <h5>A React Demo Using <a target="_blank" rel="noreferer" href="https://www.apollographql.com/docs/react/">Apollo Client </a><br />Secured With <a target="_blank" rel="noreferer" href="https://www.okta.com/">Okta </a></h5>
+          <h5><a href="https://api.spacex.land/graphql/" target="_blank" rel="noreferer">GraphQL Data Available here</a></h5>
         </Col>
       </Row>
 
       <br></br>
 
-      <Row>
+      <Row >
         <Col sm={12} className="text-center">
-          <Card style={{ width: "21.5em", margin: "0 auto" }}>
-            <Card.Header>Already have an Okta Account?</Card.Header>
+          <Card style={{ width: '21.5em', margin: '0 auto' }}>
+            <Card.Header>
+              Already have an Okta Account?
+              </Card.Header>
             <Card.Body>
-              <Link to="/Blastoff">Login Here</Link>
+              <Link to='/Blastoff'>Login Here</Link>
             </Card.Body>
           </Card>
+
         </Col>
+
       </Row>
 
       <footer className="text-muted text-center">
         <div className="container">
-          <p>
-            A Small demo using <a target="_blank" rel="noreferer" href="https://www.apollographql.com/docs/react/">
-              Apollo Client{" "}
-            </a> Secured by <a target="_blank" rel="noreferer" href="https://www.okta.com/">
-              Okta{" "}
-            </a>
-          </p>
-          <p>
-            By <a href="https://profile.fishbowlllc.com">Nik Fisher</a>
-          </p>
+          <p>A Small demo using <a target="_blank" rel="noreferer" href="https://www.apollographql.com/docs/react/">Apollo Client </a> Secured by <a target="_blank" rel="noreferer" href="https://www.okta.com/">Okta </a></p>
+          <p>By <a href="https://profile.fishbowlllc.com">Nik Fisher</a></p>
         </div>
       </footer>
+
     </Container>
   );
 };
@@ -226,68 +216,68 @@ This page serves two major needs. First, it provides a landing page for your use
 Next, you can implement the code for the `Blastoff` page. Add a new file to your `Pages` directory called `Blastoff.jsx` and add the following code.
 
 ```jsx
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import Header from "../Components/Header";
-import { Container } from "react-bootstrap";
+import Header from '../Components/Header'
+import { Container } from 'react-bootstrap'
 
-import Histories from "../Components/Histories";
-import History from "../Components/History";
+import Histories from '../Components/Histories';
+import History from '../Components/History';
 
 class Blastoff extends Component {
-  constructor(props, context) {
-    super(props, context);
 
-    this.state = {
-      loading: false,
-      showHistory: false,
-      shownHistoryId: -1,
-    };
+    constructor(props, context) {
+        super(props, context);
 
-    this.onHistorySelected = this.onHistorySelected.bind(this);
-    this.onReturnToHistories = this.onReturnToHistories.bind(this);
-  }
+        this.state = {
+            loading: false,
+            showHistory: false,
+            shownHistoryId: -1
+        }
 
-  onHistorySelected(id) {
-    this.setState({
-      showHistory: true,
-      shownHistoryId: id,
-    });
-  }
-
-  onReturnToHistories() {
-    this.setState({
-      showHistory: false,
-      shownHistoryId: -1,
-    });
-  }
-
-  render() {
-    if (this.state.loading) {
-      return (
-        <Container>
-          <Header></Header>
-          <h4>Loading, please wait.</h4>
-        </Container>
-      );
+        this.onHistorySelected = this.onHistorySelected.bind(this);
+        this.onReturnToHistories = this.onReturnToHistories.bind(this);
     }
 
-    if (this.state.showHistory) {
-      return (
-        <Container>
-          <Header></Header>
-          <History id={this.state.shownHistoryId} onReturnToHistories={this.onReturnToHistories}></History>
-        </Container>
-      );
+    onHistorySelected (id) {
+        this.setState({
+            showHistory: true,
+            shownHistoryId: id
+        });
     }
 
-    return (
-      <Container>
-        <Header></Header>
-        <Histories onHistorySelected={this.onHistorySelected}></Histories>
-      </Container>
-    );
-  }
+    onReturnToHistories () {
+        this.setState({
+            showHistory: false,
+            shownHistoryId: -1
+        });
+    }
+
+    render () {
+
+        if (this.state.loading) {
+            return <Container>
+                <Header></Header>
+                <h4>Loading, please wait.</h4>
+            </Container>
+        }
+
+        if (this.state.showHistory) {
+            return (
+                <Container>
+                    <Header></Header>
+                    <History id={this.state.shownHistoryId} onReturnToHistories={this.onReturnToHistories}></History>
+                </Container >
+            )
+        }
+
+        return (
+            <Container>
+                <Header></Header>
+                <Histories onHistorySelected={this.onHistorySelected}></Histories>
+            </Container >
+        );
+    }
 }
 
 export default Blastoff;
@@ -298,69 +288,58 @@ This page is the showcase of your application. Users will land on this page and 
 Next, add a new file to your `Components` directory and add a file called `Histories.jsx`. The code for that component is as follows.
 
 ```jsx
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery } from '@apollo/client';
 
-import { Container } from "react-bootstrap";
+import { Container } from 'react-bootstrap'
 
-function Histories({ onHistorySelected }) {
-  const HistoriesQuery = gql`
-    {
-      histories {
-        id
-        details
-        links {
-          article
-        }
-        flight {
-          id
-          mission_name
-        }
-      }
+function Histories ({ onHistorySelected }) {
+
+    const HistoriesQuery = gql`{
+            histories {
+              id
+              details
+              links {
+                article
+              }
+              flight {
+                id
+                mission_name
+              }
+            }
+          }`;
+
+    const { loading, error, data } = useQuery(HistoriesQuery);
+
+    if (loading) {
+
+        return (<Container>
+            <img src="https://media1.tenor.com/images/3f1d85ab9951d0db65e797c7f40e89cc/tenor.gif"></img>
+        </Container>);
     }
-  `;
-
-  const { loading, error, data } = useQuery(HistoriesQuery);
-
-  if (loading) {
-    return (
-      <Container>
-        <img src="https://media1.tenor.com/images/3f1d85ab9951d0db65e797c7f40e89cc/tenor.gif"></img>
-      </Container>
-    );
-  } else {
-    return (
-      <Container>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Mission Name</th>
-              <th>Details</th>
-              <th>Article</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.histories.map((history, i) => {
-              return (
-                <tr key={i}>
-                  <td>
-                    <a href="#" onClick={() => onHistorySelected(history.id)}>
-                      {history.flight == null ? "Unnamed" : history.flight.mission_name}
-                    </a>{" "}
-                  </td>
-                  <td>{history.details}</td>
-                  <td>
-                    <a href={history.links.article} target="_blank" rel="noreferer">
-                      Read Article
-                    </a>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </Container>
-    );
-  }
+    else {
+        return (
+            <Container>
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mission Name</th>
+                            <th>Details</th>
+                            <th>Article</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.histories.map((history, i) => {
+                            return <tr key={i}>
+                                <td><a href="#" onClick={() => onHistorySelected(history.id)}>{history.flight == null ? "Unnamed" : history.flight.mission_name}</a> </td>
+                                <td>{history.details}</td>
+                                <td><a href={history.links.article} target="_blank" rel="noreferer">Read Article</a></td>
+                            </tr>
+                        })}
+                    </tbody>
+                </table>
+            </Container>
+        )
+    }
 }
 
 export default Histories;
@@ -371,83 +350,104 @@ This component does the heavy lifting for displaying the histories to the user. 
 For a detailed history, add a new file called `History.jsx` to the `Components` folder and add the following code.
 
 ```jsx
-import { gql, useQuery } from "@apollo/client";
-import { Container, Row } from "react-bootstrap";
+import { gql, useQuery } from '@apollo/client';
+import { Container, Row } from 'react-bootstrap'
 
-function History({ id, onReturnToHistories }) {
-  const HistoryQuery = gql`
-    query history($historyId: ID!) {
-      history(id: $historyId) {
-        details
-        event_date_unix
-        flight {
-          rocket {
-            rocket_name
-          }
-          launch_date_utc
-          launch_site {
-            site_name
-          }
-          launch_success
-        }
-        event_date_utc
-      }
-    }
-  `;
+function History ({ id, onReturnToHistories }) {
 
-  const { loading, error, data } = useQuery(HistoryQuery, { variables: { historyId: id } });
+  const HistoryQuery = gql`         
+          query history($historyId: ID!) {
+                    history(id: $historyId) {
+                      details
+                      event_date_unix
+                      flight {
+                        rocket {
+                          rocket_name
+                        }
+                        launch_date_utc
+                        launch_site {
+                          site_name
+                        }
+                        launch_success
+                      }
+                      event_date_utc
+                    }
+                  }
+                `;
+
+  const { loading, error, data } = useQuery(HistoryQuery, { variables: { historyId: id }, });
 
   if (loading) {
     return (
       <Container>
         <img src="https://media1.tenor.com/images/3f1d85ab9951d0db65e797c7f40e89cc/tenor.gif"></img>
-      </Container>
-    );
+      </Container>);
   }
   if (error) {
     console.log(JSON.stringify(error, null, 2));
-    return <div>error</div>;
-  } else {
+    return (<div>error</div>);
+  }
+  else {
+
     var successLabel;
 
     if (data.history.flight.launch_success) {
-      successLabel = <span className="text-success">Success!</span>;
-    } else {
-      successLabel = <span className="text-danger"> Failed ):</span>;
+      successLabel = <span className="text-success">Success!</span>
+    }
+    else {
+      successLabel = <span className="text-danger"> Failed ):</span>
     }
 
     return (
       <Container>
         <Row>
           <div className="col-lg-3">
-            <button className="btn btn-primary" onClick={() => onReturnToHistories()}>
-              Return
-            </button>
+            <button className="btn btn-primary" onClick={() => onReturnToHistories()}>Return</button>
           </div>
         </Row>
 
         <Row>
-          <div className="col-lg-3">Launch Time UTC:</div>
-          <div className="col-lg-3">{data.history.event_date_utc}</div>
-          <div className="col-lg-3 text-right">Success?</div>
-          <div className="col-lg-3">{successLabel}</div>
+          <div className="col-lg-3">
+            Launch Time UTC:
+          </div>
+          <div className="col-lg-3">
+            {data.history.event_date_utc}
+          </div>
+          <div className="col-lg-3 text-right">
+            Success?
+           </div>
+          <div className="col-lg-3">
+            {successLabel}
+          </div>
         </Row>
         <Row>
-          <div className="col-lg-3">Launch Site:</div>
-          <div className="col-lg-3">{data.history.flight.launch_site.site_name}</div>
+          <div className="col-lg-3">
+            Launch Site:
+          </div>
+          <div className="col-lg-3">
+            {data.history.flight.launch_site.site_name}
+          </div>
         </Row>
         <Row>
-          <div className="col-lg-3">Rocket Name:</div>
-          <div className="col-lg-3">{data.history.flight.rocket.rocket_name}</div>
+          <div className="col-lg-3">
+            Rocket Name:
+          </div>
+          <div className="col-lg-3">
+            {data.history.flight.rocket.rocket_name}
+          </div>
         </Row>
         <Row>
-          <div className="col-lg-3">Details:</div>
+          <div className="col-lg-3">
+            Details:
+          </div>
         </Row>
         <Row>
-          <div className="col-lg-12">{data.history.details}</div>
+          <div className="col-lg-12">
+            {data.history.details}
+          </div>
         </Row>
       </Container>
-    );
+    )
   }
 }
 
@@ -459,51 +459,39 @@ Again, you obtain the `loading`, `error`, and `data` values from the `useQuery` 
 Finally, in your components folder, add a file called `Header.jsx`. This file will provide links for your users as well as the logic for a login/logout button.
 
 ```jsx
-import React from "react";
-import { useOktaAuth } from "@okta/okta-react";
+import React from 'react';
+import { useOktaAuth } from '@okta/okta-react';
 
-import { Navbar, Nav, Form, Button } from "react-bootstrap";
+import { Navbar, Nav, Form, Button } from 'react-bootstrap'
 
 const Header = () => {
-  const { oktaAuth, authState } = useOktaAuth();
+    const { oktaAuth, authState } = useOktaAuth();
 
-  if (authState.isPending) {
-    return <div>Loading...</div>;
-  }
+    if (authState.isPending) {
+        return <div>Loading...</div>;
+    }
 
-  const button = authState.isAuthenticated ? (
-    <Button
-      variant="secondary"
-      onClick={() => {
-        oktaAuth.signOut("/");
-      }}
-    >
-      Logout
-    </Button>
-  ) : (
-    <Button
-      variant="secondary"
-      onClick={() => {
-        oktaAuth.signInWithRedirect("/Blastoff");
-      }}
-    >
-      Login
-    </Button>
-  );
+    const button = authState.isAuthenticated ?
+        <Button variant="secondary" onClick={() => { oktaAuth.signOut("/") }}>Logout</Button> :
+        <Button variant="secondary" onClick={() => { oktaAuth.signInWithRedirect("/Blastoff") }}>Login</Button>
 
-  return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">BlastOff!</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/Blastoff">History</Nav.Link>
-        </Nav>
-        <Form inline>{button}</Form>
-      </Navbar.Collapse>
-    </Navbar>
-  );
+    return (
+
+        <Navbar bg="light" expand="lg">
+            <Navbar.Brand href="/">BlastOff!</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/Blastoff">History</Nav.Link>
+                </Nav>
+                <Form inline>
+                    {button}
+                </Form>
+            </Navbar.Collapse>
+        </Navbar>
+
+    );
 };
 export default Header;
 ```

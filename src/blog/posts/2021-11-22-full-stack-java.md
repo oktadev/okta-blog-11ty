@@ -534,7 +534,7 @@ Then, in the `return` block, remove the JSX between the `image` property and `al
 />
 {metadataRows}
 <ValidatedField id="photo-album" name="albumId" data-cy="album" label={translate('flickr2App.photo.album')} type="select">
-  <option>
+  <option value="" key="0" />
   {albums
     ? albums.map(otherEntity => (
       <option value={otherEntity.id} key={otherEntity.id}>

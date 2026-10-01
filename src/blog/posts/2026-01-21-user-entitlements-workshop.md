@@ -93,12 +93,16 @@ Create a file named `entitlements.ts`. We'll define the API routes for user enti
 Let's start by hard-coding an API endpoint for `/Roles` that returns a list of roles. In the `entitlements.ts` file, add the following code:
 
 ```ts
-import { Router } from "express";
+import { Router } from 'express';
 
 export const rolesRoute = Router();
 
-rolesRoute.route("/").get(async (req, res) => {
-  const roles = ["Todo-er", "Admin"];
+rolesRoute.route('/')
+.get(async (req, res) => {
+  const roles = [
+    'Todo-er',
+    'Admin'
+  ];
 
   return res.json(roles);
 });
@@ -109,13 +113,13 @@ Open `okta-enterprise-ready-workshops/apps/api/src/scim.ts`. We need to register
 At the top of the file, import `rolesRoutes`
 
 ```ts
-import { rolesRoute } from "./entitlements";
+import { rolesRoute } from './entitlements';
 ```
 
 At the bottom of the file below the existing code, add
 
 ```ts
-scimRoute.use("/Roles", rolesRoute);
+scimRoute.use('/Roles', rolesRoute);
 ```
 
 to register the endpoint. Let's make sure everything works!
@@ -194,67 +198,73 @@ npx prisma migrate reset -f
 It helps to have some seed data so we can get going. Here, we'll define roles available within the Todo app. A user can be a "Todo-er," "Todo Auditor," and "Manager." Open `okta-enterprise-ready-workshops/prisma/seed_script.ts` and replace the entire file with the code below:
 
 ```ts
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function main() {
   const org = await prisma.org.create({
     data: {
-      domain: "gridco.example",
-      apikey: "123123",
-    },
+      domain: 'gridco.example',
+      apikey: '123123'
+    }
   });
-  console.log("Created org Portal", org);
+  console.log('Created org Portal', org);
 
   // Roles defined by the Todo app
-  const roles = [{ name: "Todo-er" }, { name: "Todo Auditor" }, { name: "Manager" }];
+  const roles = [
+    { name: 'Todo-er' },
+    { name: 'Todo Auditor' },
+    { name: 'Manager'}
+  ];
 
-  const createdRoles = await Promise.all(roles.map((data) => prisma.role.create({ data })));
+  const createdRoles = await Promise.all(
+    roles.map(data => prisma.role.create({data}))
+  );
 
   for (const role of createdRoles) {
-    console.log("Created role ", role);
+    console.log('Created role ', role);
   }
 
   const somnusUser = await prisma.user.create({
     data: {
-      name: "Somnus Henderson",
-      email: "somnus.henderson@gridco.example",
-      password: "correct horse battery staple",
+      name: 'Somnus Henderson',
+      email: 'somnus.henderson@gridco.example',
+      password: 'correct horse battery staple',
       orgId: org.id,
-      externalId: "31",
-      active: true,
-    },
+      externalId: '31',
+      active: true
+    }
   });
-  console.log("Created user Somnus", somnusUser);
+  console.log('Created user Somnus', somnusUser)
 
-  const trinityUser = await prisma.user.create({
+ const trinityUser = await prisma.user.create({
     data: {
-      name: "Trinity JustTrinity",
-      email: "trinity@gridco.example",
-      password: "Zion",
+      name: 'Trinity JustTrinity',
+      email: 'trinity@gridco.example',
+      password: 'Zion',
       orgId: org.id,
-      externalId: "32",
+      externalId: '32',
       active: true,
       roles: {
         connect: {
-          id: createdRoles.find((r) => r.name === "Todo-er")?.id,
-        },
-      },
+          id: createdRoles.find(r => r.name === 'Todo-er')?.id
+        }
+      }
     },
-  });
-  console.log("Created user Trinity", trinityUser);
+  })
+  console.log('Created user Trinity', trinityUser)
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   })
   .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
 ```
 
 Save the file and run the npm script in the terminal to seed the database.
@@ -414,7 +424,7 @@ You'll have a new error for `RESOURCE_TYPES`. We'll fix it soon.
 Now, on to the Okta `Role` representation. The role representation extends from the core SCIM resource and adds extra properties. Okta's schema overlaps with the SCIM standard User `roles` field, which includes a property for `display` text. Define the interface and add it to `IMetadata` below.
 
 ```ts
-export interface IOktaRole extends IScimResource {
+export interface IOktaRole extends IScimResource{
   displayName: string;
 }
 ```
@@ -422,31 +432,30 @@ export interface IOktaRole extends IScimResource {
 The `IOktaRole` extends from the core `IScimResource` interface and adds a new required property, `displayName`. Each resource requires a schema, a Uniform Resource Namespace (URN) string. Instead of repeatedly typing the string for each role resource, define it below the `IOktaRole` interface for reusability
 
 ```ts
-export const SCHEMA_OKTA_ROLE = "urn:okta:scim:schemas:core:1.0:Role";
+export const SCHEMA_OKTA_ROLE = 'urn:okta:scim:schemas:core:1.0:Role';
 ```
 
 Let's fix the `RESOURCE_TYPES` error. Below the `SCHEMA_OKTA_ROLE` constant, add the following:
 
 ```ts
-export type RESOURCE_TYPES = "Role";
+export type RESOURCE_TYPES = 'Role';
 ```
 
 You can use the `IOktaRole` interface in the `/Roles` endpoint to ensure the response matches the expected structure. Open `okta-enterprise-ready-workshops/apps/api/src/entitlements.ts`, and update the code to use the interface.
 
 ```ts
-import { Router } from "express";
-import { IOktaRole, SCHEMA_OKTA_ROLE } from "./scim-types";
+import { Router } from 'express';
+import { IOktaRole, SCHEMA_OKTA_ROLE } from './scim-types';
 
 export const rolesRoute = Router();
 
-rolesRoute.route("/").get(async (req, res) => {
-  const roles: IOktaRole[] = [
-    {
-      schemas: [SCHEMA_OKTA_ROLE],
-      id: "one",
-      displayName: "Todo-er",
-    },
-  ];
+rolesRoute.route('/')
+.get(async (req, res) => {
+  const roles: IOktaRole[] = [{
+    schemas: [SCHEMA_OKTA_ROLE],
+    id: 'one',
+    displayName: 'Todo-er'
+  }];
 
   return res.json(roles);
 });
@@ -485,33 +494,32 @@ export interface IListResponse {
 The list response also has a schema URN. Create a constant for this string as you did for the Okta role and add it after the role schema string.
 
 ```ts
-export const SCHEMA_LIST_RESPONSE = "urn:ietf:params:scim:api:messages:2.0:ListResponse";
+export const SCHEMA_LIST_RESPONSE = 'urn:ietf:params:scim:api:messages:2.0:ListResponse';
 ```
 
 The API response must match the list format. Open `okta-enterprise-ready-workshops/apps/api/src/entitlements.ts` and add `IListResponse` and `SCHEMA_LIST_RESPONSE` to the imports from the `scim-types` file:
 
 ```ts
-import { IListResponse, IOktaRole, SCHEMA_LIST_RESPONSE, SCHEMA_OKTA_ROLE } from "./scim-types";
+import { IListResponse, IOktaRole, SCHEMA_LIST_RESPONSE, SCHEMA_OKTA_ROLE } from './scim-types';
 ```
 
 Change `rolesRoute` response to use the list response:
 
 ```ts
-rolesRoute.route("/").get(async (req, res) => {
-  const roles: IOktaRole[] = [
-    {
-      schemas: [SCHEMA_OKTA_ROLE],
-      id: "one",
-      displayName: "Todo-er",
-    },
-  ];
+rolesRoute.route('/')
+.get(async (req, res) => {
+  const roles: IOktaRole[] = [{
+    schemas: [SCHEMA_OKTA_ROLE],
+    id: 'one',
+    displayName: 'Todo-er'
+  }];
 
   const listResponse: IListResponse = {
     schemas: [SCHEMA_LIST_RESPONSE],
     totalResults: roles.length,
     itemsPerPage: roles.length,
     startIndex: 1,
-    Resources: roles,
+    Resources: roles
   };
 
   return res.json(listResponse);
@@ -531,33 +539,34 @@ Each role has an ID and a name. We can retrieve the roles from the database and 
 Open `okta-enterprise-ready-workshops/apps/api/src/entitlements.ts` and make the changes to retrieve the roles from the database and map the database results to the `IOktaRole` properties. You'll need to import some dependencies, so ensure the import statements match. The SCIM `ListResponse` supports pagination, so we'll add the required code to consider the query parameters.
 
 ```ts
-import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
-import { IListResponse, IOktaRole, SCHEMA_LIST_RESPONSE, SCHEMA_OKTA_ROLE } from "./scim-types";
+import { Router } from 'express';
+import { PrismaClient } from '@prisma/client';
+import { IListResponse, IOktaRole, SCHEMA_LIST_RESPONSE, SCHEMA_OKTA_ROLE } from './scim-types';
 
 const prisma = new PrismaClient();
 
 export const rolesRoute = Router();
 
-rolesRoute.route("/").get(async (req, res) => {
-  const startIndex = parseInt((req.query.startIndex as string) ?? "1");
-  const recordLimit = parseInt((req.query.recordLimit as string) ?? "100");
+rolesRoute.route('/')
+.get(async (req, res) => {
+  const startIndex = parseInt(req.query.startIndex as string ?? '1');
+  const recordLimit = parseInt(req.query.recordLimit as string ?? '100');
 
   const roles = await prisma.role.findMany({
     take: recordLimit,
-    skip: startIndex - 1,
+    skip: startIndex - 1
   });
 
-  const listResponse: IListResponse = {
+const listResponse: IListResponse = {
     schemas: [SCHEMA_LIST_RESPONSE],
     totalResults: roles.length,
     startIndex,
     itemsPerPage: recordLimit,
-    Resources: roles.map((role) => ({
+    Resources: roles.map(role => ({
       schemas: [SCHEMA_OKTA_ROLE],
       id: role.id.toString(),
-      displayName: role.name,
-    })),
+      displayName: role.name
+    }))
   };
 
   return res.json(listResponse);
@@ -580,10 +589,10 @@ First, we'll create the interface for the `ResourceType` and define some strings
 export interface IResourceType {
   id?: string;
   schemas: string[];
-  name: string;
+  name: string; 
   description?: string;
   endpoint: string;
-  schema: string;
+  schema: string; 
   meta: IMetadata;
 }
 ```
@@ -609,26 +618,26 @@ You'll see errors in the IDE and, if you're running the API, within the console 
 Resource types have a schema URN and use "ResourceType" as the `resourceType` string in the metadata. Add `SCHEMA_RESOURCE_TYPE` and edit `RESOURCE_TYPES` so your string constants section looks like the code below.
 
 ```ts
-export const SCHEMA_OKTA_ROLE = "urn:okta:scim:schemas:core:1.0:Role";
-export const SCHEMA_LIST_RESPONSE = "urn:ietf:params:scim:api:messages:2.0:ListResponse";
-export const SCHEMA_RESOURCE_TYPE = "urn:ietf:params:scim:schemas:core:2.0:ResourceType";
-export type RESOURCE_TYPES = "Role" | "ResourceType";
+export const SCHEMA_OKTA_ROLE = 'urn:okta:scim:schemas:core:1.0:Role';
+export const SCHEMA_LIST_RESPONSE = 'urn:ietf:params:scim:api:messages:2.0:ListResponse';
+export const SCHEMA_RESOURCE_TYPE = 'urn:ietf:params:scim:schemas:core:2.0:ResourceType';
+export type RESOURCE_TYPES = 'Role' | 'ResourceType';
 ```
 
 Open `okta-enterprise-ready-workshops/apps/api/src/entitlements.ts`. Let's fix the `IListResponse` error for the `/Roles` endpoint and specify the object type in the list, the `IOktaRole` type. The code building out the list changes to
 
 ```ts
-const listResponse: IListResponse<IOktaRole> = {
-  schemas: [SCHEMA_LIST_RESPONSE],
-  totalResults: roles.length,
-  startIndex,
-  itemsPerPage: recordLimit,
-  Resources: roles.map((role) => ({
-    schemas: [SCHEMA_OKTA_ROLE],
-    id: role.id.toString(),
-    displayName: role.name,
-  })),
-};
+  const listResponse: IListResponse<IOktaRole> = {
+    schemas: [SCHEMA_LIST_RESPONSE],
+    totalResults: roles.length,
+    startIndex,
+    itemsPerPage: recordLimit,
+    Resources: roles.map(role => ({
+      schemas: [SCHEMA_OKTA_ROLE],
+      id: role.id.toString(),
+      displayName: role.name
+    }))
+  };
 ```
 
 You shouldn't see errors anymore! 🎉
@@ -636,13 +645,16 @@ You shouldn't see errors anymore! 🎉
 We have a new endpoint to add. Update the imports from the `./scim-types` file and declare a new route for resource types.
 
 ```ts
-import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
-import { IListResponse, IOktaRole, IResourceType, SCHEMA_LIST_RESPONSE, SCHEMA_OKTA_ROLE, SCHEMA_RESOURCE_TYPE } from "./scim-types";
+import { Router } from 'express';
+import { PrismaClient } from '@prisma/client';
+import {
+  IListResponse, IOktaRole, IResourceType, SCHEMA_LIST_RESPONSE, SCHEMA_OKTA_ROLE, SCHEMA_RESOURCE_TYPE
+} from './scim-types';
 
 const prisma = new PrismaClient();
 export const rolesRoute = Router();
 export const resourceTypesRoute = Router();
+
 
 // existing rolesRoute code below
 ```
@@ -650,27 +662,26 @@ export const resourceTypesRoute = Router();
 Then create the `/ResourceTypes` route by adding the code below the `rolesRoute`
 
 ```ts
-resourceTypesRoute.route("/").get((req, res) => {
-  const resourceTypes: IResourceType[] = [
-    {
-      schemas: [SCHEMA_RESOURCE_TYPE],
-      id: "Role",
-      name: "Role",
-      endpoint: "/Roles",
-      description: "Roles you can set on users of Todo App",
-      schema: SCHEMA_OKTA_ROLE,
-      meta: {
-        resourceType: "ResourceType",
-      },
-    },
-  ];
+resourceTypesRoute.route('/')
+.get((req, res) => {
+  const resourceTypes: IResourceType[] = [{
+    schemas: [SCHEMA_RESOURCE_TYPE],
+    id: 'Role',
+    name: 'Role',
+    endpoint: '/Roles',
+    description: 'Roles you can set on users of Todo App',
+    schema: SCHEMA_OKTA_ROLE,
+    meta: {
+      resourceType: 'ResourceType'
+    }
+  }];
 
   const resourceTypesListResponse: IListResponse<IResourceType> = {
     schemas: [SCHEMA_LIST_RESPONSE],
     totalResults: resourceTypes.length,
     startIndex: 1,
     itemsPerPage: resourceTypes.length,
-    Resources: resourceTypes,
+    Resources: resourceTypes
   };
 
   return res.json(resourceTypesListResponse);
@@ -682,14 +693,14 @@ Next, you must register the `/ResourceTypes` route in the API. Open `okta-enterp
 Update the import to include `resourceTypesRoute`
 
 ```ts
-import { resourceTypesRoute, rolesRoute } from "./entitlements";
+import { resourceTypesRoute, rolesRoute } from './entitlements';
 ```
 
 Add the `/ResourceTypes` endpoint to the end of the file. You should have two routes defined.
 
 ```ts
-scimRoute.use("/Roles", rolesRoute);
-scimRoute.use("/ResourceTypes", resourceTypesRoute);
+scimRoute.use('/Roles', rolesRoute );
+scimRoute.use('/ResourceTypes', resourceTypesRoute);
 ```
 
 Double-check your new route by starting the API if it's not running. Use your HTTP client to make the call
@@ -715,19 +726,19 @@ interface IUserSchema {
     givenName: string;
     familyName: string;
   };
-  emails?: { primary: boolean; value: string; type: string }[];
+  emails?: {primary: boolean, value: string, type: string}[];
   displayName?: string;
   locale?: string;
   meta?: {
     resourceType: string;
-  };
+  }
   externalId?: string;
   groups?: [];
   password?: string;
   active?: boolean;
   detail?: string;
   status?: number;
-  roles?: { value: string; display: string }[];
+  roles?: {value: string, display: string}[];
 }
 ```
 
@@ -747,46 +758,43 @@ and update the database command and the as shown.
 // Create the User in the database
 const user = await prisma.user.create({
   data: {
-    org: { connect: { id: ORG_ID } },
+    org : { connect: {id: ORG_ID}},
     name,
     email,
     password,
     externalId,
     active,
     roles: {
-      connect: newUser.roles?.map((role) => ({ id: parseInt(role.value) })) || [],
-    },
+      connect: newUser.roles?.map(role => ({id: parseInt(role.value)})) || []
+    }
   },
   include: {
-    roles: true,
-  },
+    roles: true
+  }
 });
 
-console.log("Account Created ID: ", user.id);
+console.log('Account Created ID: ', user.id);
 ```
 
 One more place to update in the `POST /Users` call. We need to return the roles in the response. Right below the `console.log()` update the `userResponse` to
 
 ```ts
-userResponse = {
-  ...defaultUserSchema,
+userResponse = { ...defaultUserSchema,
   id: `${user.id}`,
   userName: user.email,
   name: {
     givenName,
-    familyName,
+    familyName
   },
-  emails: [
-    {
-      primary: true,
-      value: user.email,
-      type: "work",
-    },
-  ],
+  emails: [{
+    primary: true,
+    value: user.email,
+    type: "work"
+  }],
   displayName: name,
   externalId: user.externalId,
   active: user.active,
-  roles: user.roles.map((role) => ({ display: role.name, value: role.id.toString() })),
+  roles: user.roles.map(role => ({display: role.name, value: role.id.toString()}))
 };
 ```
 
@@ -810,9 +818,9 @@ const users = await prisma.user.findMany({
     name: true,
     externalId: true,
     active: true,
-    roles: true,
+    roles: true
   },
-  where,
+  where
 });
 ```
 
@@ -825,7 +833,7 @@ usersResponse['Resources'] = users.map(user => {...});
 like this.
 
 ```ts
-usersResponse["Resources"] = users.map((user) => {
+usersResponse['Resources'] = users.map(user => {
   const [givenName, familyName] = user.name.split(" ");
   return {
     ...defaultUserSchema,
@@ -833,20 +841,18 @@ usersResponse["Resources"] = users.map((user) => {
     userName: user.email,
     name: {
       givenName,
-      familyName,
+      familyName
     },
-    emails: [
-      {
-        primary: true,
-        value: user.email,
-        type: "work",
-      },
-    ],
+    emails: [{
+      primary: true,
+      value: user.email,
+      type: 'work'
+    }],
     displayName: user.name,
     externalId: user.externalId,
     active: user.active,
-    roles: user.roles.map((role) => ({ display: role.name, value: role.id.toString() })),
-  };
+    roles: user.roles.map(role => ({display: role.name, value: role.id.toString()}))
+  }
 });
 ```
 
@@ -868,12 +874,12 @@ const user = await prisma.user.findFirst({
     name: true,
     externalId: true,
     active: true,
-    roles: true,
+    roles: true
   },
   where: {
     id,
-    org: { id: ORG_ID },
-  },
+    org: {id: ORG_ID},
+  }
 });
 ```
 
@@ -892,19 +898,17 @@ userResponse = {
   userName: email,
   name: {
     givenName,
-    familyName,
+    familyName
   },
-  emails: [
-    {
-      primary: true,
-      value: email,
-      type: "work",
-    },
-  ],
+  emails: [{
+    primary: true,
+    value: email,
+    type: 'work'
+  }],
   displayName: name,
   externalId: user.externalId,
   active: user.active,
-  roles: user.roles.map((role) => ({ display: role.name, value: role.id.toString() })),
+  roles: user.roles.map(role => ({display: role.name, value: role.id.toString()}))
 } satisfies IUserSchema;
 ```
 
@@ -925,18 +929,18 @@ const { name, emails, roles } = updatedUserRequest;
 
 const updatedUser = await prisma.user.update({
   data: {
-    email: emails.find((email) => email.primary).value,
+    email: emails.find(email => email.primary).value,
     name: `${name.givenName} ${name.familyName}`,
     roles: {
-      set: roles?.map((role) => ({ id: parseInt(role.value) })) || [],
-    },
+      set: roles?.map(role => ({id: parseInt(role.value)})) || []
+    }
   },
-  where: {
-    id,
+  where : {
+    id
   },
   include: {
-    roles: true,
-  },
+    roles: true
+  }
 });
 ```
 
@@ -949,19 +953,17 @@ userResponse = {
   userName: updatedUser.email,
   name: {
     givenName,
-    familyName,
+    familyName
   },
-  emails: [
-    {
-      primary: true,
-      value: updatedUser.email,
-      type: "work",
-    },
-  ],
+  emails: [{
+    primary: true,
+    value: updatedUser.email,
+    type: 'work'
+  }],
   displayName: updatedUser.name,
   externalId: updatedUser.externalId,
   active: updatedUser.active,
-  roles: updatedUser.roles?.map((role) => ({ display: role.name, value: role.id.toString() })),
+  roles: updatedUser.roles?.map(role => ({display: role.name, value: role.id.toString()}))
 } satisfies IUserSchema;
 ```
 
@@ -1031,8 +1033,8 @@ In the IDE, open `okta-enterprise-ready-workshops/apps/api/src/scim-types.ts`.
 Add new schema URNs after the `SCHEMA_OKTA_ROLE` definition towards the end of the file:
 
 ```ts
-export const SCHEMA_OKTA_ENTITLEMENT = "urn:okta:scim:schemas:core:1.0:Entitlement";
-export const SCHEMA_CHARACTERISTIC = "urn:bestapps:scim:schemas:extension:todoapp:1.0:Characteristic";
+export const SCHEMA_OKTA_ENTITLEMENT = 'urn:okta:scim:schemas:core:1.0:Entitlement';
+export const SCHEMA_CHARACTERISTIC = 'urn:bestapps:scim:schemas:extension:todoapp:1.0:Characteristic';
 ```
 
 We defined a new schema URN for the characteristic SCIM resource. Following naming conventions for extension schemas, we substituted our company name (Best Apps) and added the app's name (Todo app). The format looks like this
@@ -1044,7 +1046,7 @@ urn:<Company name>:scim:schemas:extension:<App name>:1.0:<Custom entitlement>
 Right now, there's a custom TypeScript type for `RESOURCE_TYPES`. Since we'll have custom schemas as a resource type, update the code.
 
 ```ts
-export type RESOURCE_TYPES = "Role" | "ResourceType" | "Schema";
+export type RESOURCE_TYPES = 'Role' | 'ResourceType' | 'Schema';
 ```
 
 SCIM defines required and optional attributes to describe a schema resource. We'll define the interfaces for a schema resource. Add the following interfaces to the `scim-types.ts` file. I added mine after the other interfaces and before the URNs.
@@ -1081,7 +1083,7 @@ export interface IResourceType {
   description?: string;
   endpoint: string;
   schema: string;
-  schemaExtensions?: { schema: string; required: boolean }[];
+  schemaExtensions?: {schema: string, required: boolean}[];
   meta: IMetadata;
 }
 ```
@@ -1112,7 +1114,18 @@ With all the types and interfaces defined, it's time to write the code for the r
 Update the import array from `./scim-types.ts`:
 
 ```ts
-import { ICharacteristic, IListResponse, IOktaRole, IResourceType, ISchema, SCHEMA_CHARACTERISTIC, SCHEMA_LIST_RESPONSE, SCHEMA_OKTA_ENTITLEMENT, SCHEMA_OKTA_ROLE, SCHEMA_RESOURCE_TYPE } from "./scim-types";
+import {
+  ICharacteristic,
+  IListResponse,
+  IOktaRole,
+  IResourceType,
+  ISchema,
+  SCHEMA_CHARACTERISTIC,
+  SCHEMA_LIST_RESPONSE,
+  SCHEMA_OKTA_ENTITLEMENT,
+  SCHEMA_OKTA_ROLE,
+  SCHEMA_RESOURCE_TYPE
+} from './scim-types';
 ```
 
 Below the other route definitions, add two new route definitions.
@@ -1125,63 +1138,66 @@ export const characteristicsRoute = Router();
 Now, it's time to define the `/Schemas` route. The `/Schemas` endpoint returns a list of schemas. You can return schemas for all the resources you use, even for `User`, but Okta allows us to skip the strict SCIM requirements and only return custom schemas. The custom schema we'll return has metadata about a user characteristic, specifically whether the user is tall. Add the following code at the end of the file.
 
 ```ts
-schemasRoute.route("/").get((_, res) => {
-  const characteristic: ISchema = {
-    id: SCHEMA_CHARACTERISTIC,
-    name: "Characteristic",
-    description: "User characteristics for entitlements",
-    attributes: [
-      {
-        name: "is_tall",
-        description: "Profile entitlement extension for tallness factor",
-        type: "string",
+schemasRoute.route('/')
+  .get((_, res) => {
+    const characteristic: ISchema = {
+      id: SCHEMA_CHARACTERISTIC,
+      name: 'Characteristic',
+      description: 'User characteristics for entitlements',
+      attributes: [{
+        name: 'is_tall',
+        description: 'Profile entitlement extension for tallness factor',
+        type: 'string',
         multiValued: false,
         required: false,
-        mutability: "readWrite",
-        returned: "default",
+        mutability: 'readWrite',
+        returned: 'default',
         caseExact: false,
-        uniqueness: "none",
-      },
-    ],
-    meta: {
-      resourceType: "Schema",
-      location: `/v2/Schemas/${SCHEMA_CHARACTERISTIC}`,
-    },
-  };
+        uniqueness: 'none'
+      }],
+      meta: {
+        resourceType: 'Schema',
+        location: `/v2/Schemas/${SCHEMA_CHARACTERISTIC}`
+      }
+    };
 
-  const schemas = {
-    schemas: [SCHEMA_LIST_RESPONSE],
-    totalResults: 1,
-    startIndex: 1,
-    itemsPerPage: 1,
-    Resources: [characteristic],
-  };
+    const schemas = {
+      schemas: [SCHEMA_LIST_RESPONSE],
+      totalResults: 1,
+      startIndex: 1,
+      itemsPerPage: 1,
+      Resources: [
+        characteristic
+      ]
+    };
 
-  return res.json(schemas);
-});
+    return res.json(schemas);
+  });
 ```
 
 And we must define a route for `/Characteristics`, in the same way one exists for `/Roles`. We won't worry about updating the database for this as I don't want to detract from the SCIM concepts. We'll hardcode the characteristic for now so you can see what this looks like within Okta. Feel free to add the required code to connect it to the database as homework. 🏆 Add the following code below the schemas route:
 
 ```ts
-characteristicsRoute.route("/").get((_, res) => {
-  const characteristicsListResponse: IListResponse<ICharacteristic> = {
-    schemas: [SCHEMA_OKTA_ENTITLEMENT, SCHEMA_CHARACTERISTIC],
-    totalResults: 1,
-    startIndex: 1,
-    itemsPerPage: 1,
-    Resources: [
-      {
+characteristicsRoute.route('/')
+  .get((_, res) => {
+    const characteristicsListResponse: IListResponse<ICharacteristic> = {
+      schemas: [
+        SCHEMA_OKTA_ENTITLEMENT,
+        SCHEMA_CHARACTERISTIC
+      ],
+      totalResults: 1,
+      startIndex: 1,
+      itemsPerPage: 1,
+      Resources: [{
         schemas: [SCHEMA_CHARACTERISTIC],
         type: "Characteristic",
         id: "is_tall",
-        displayName: "This user is so tall",
-      },
-    ],
-  };
+        displayName: "This user is so tall"
+      }]
+    };
 
-  return res.json(characteristicsListResponse);
-});
+    return res.json(characteristicsListResponse);
+  });
 ```
 
 Notice the ID is the string "is_tall". I modeled it to look like an enum here so that it's distinct from roles, but IDs in your system may be a UUID or an integer.
@@ -1189,49 +1205,48 @@ Notice the ID is the string "is_tall". I modeled it to look like an enum here so
 Lastly, we must add the new characteristic resource type to the `/ResourceTypes` response so that Okta knows the resource exists. Find the `resourceTypes.route('/')` definition and update the `resourceTypes` array to include both roles and characteristics.
 
 ```ts
-const resourceTypes: IResourceType[] = [
-  {
+  const resourceTypes: IResourceType[] = [{
     schemas: [SCHEMA_RESOURCE_TYPE],
-    id: "Role",
-    name: "Role",
-    endpoint: "/Roles",
-    description: "Roles you can set on users of Todo App",
+    id: 'Role',
+    name: 'Role',
+    endpoint: '/Roles',
+    description: 'Roles you can set on users of Todo App',
     schema: SCHEMA_OKTA_ROLE,
     meta: {
-      resourceType: "ResourceType",
-    },
+      resourceType: 'ResourceType'
+    }
   },
   {
     schemas: [SCHEMA_RESOURCE_TYPE],
-    id: "Characteristic",
-    name: "Characteristic",
-    endpoint: "/Characteristics",
-    description: "This resource type is user characteristics",
-    schema: "urn:okta:scim:schemas:core:1.0:Entitlement",
+    id: 'Characteristic',
+    name: 'Characteristic',
+    endpoint: '/Characteristics',
+    description: 'This resource type is user characteristics',
+    schema: 'urn:okta:scim:schemas:core:1.0:Entitlement',
     schemaExtensions: [
       {
         schema: SCHEMA_CHARACTERISTIC,
-        required: true,
-      },
+        required: true
+      }
     ],
     meta: {
-      resourceType: "ResourceType",
-    },
-  },
+      resourceType: 'ResourceType'
+    }
+  }
 ];
 ```
 
 Now, we must register the routes in the API. Open `okta-enterprise-ready-workshops/apps/api/src/scim.ts`. At the top of the file, update the imports from `./entitlements` to
 
 ```ts
-import { characteristicsRoute, resourceTypesRoute, rolesRoute, schemasRoute } from "./entitlements";
+import { characteristicsRoute, resourceTypesRoute, rolesRoute, schemasRoute } from './entitlements';
 ```
 
 At the end of the file, add the code to register the `/Schemas` and `/Charactertistics` routes to the API.
 
 ```ts
-scimRoute.use("/Schemas", schemasRoute);
-scimRoute.use("/Characteristics", characteristicsRoute);
+scimRoute.use('/Schemas', schemasRoute);
+scimRoute.use('/Characteristics', characteristicsRoute);
 ```
 
 Serve the API by running `npm run serve-api` in a terminal window. In a second terminal window, run `npx localtunnel --port 3333` to create a local tunnel for the API. Keep track of the tunnel URL.

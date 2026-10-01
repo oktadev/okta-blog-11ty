@@ -76,8 +76,8 @@ Rename `application.properties` to `application.yml`, the following properties m
 okta:
   oauth2:
     issuer: https://{yourOktaDomain}/oauth2/default
-    client-secret: { clientSecret }
-    client-id: { clientId }
+    client-secret: {clientSecret}
+    client-id: {clientId}
     scopes: openid, profile, email
 
 service:
@@ -237,8 +237,8 @@ spring:
       client:
         registration:
           github:
-            client-id: { githubClientID }
-            client-secret: { githubClientSecret }
+            client-id: {githubClientID}
+            client-secret: {githubClientSecret}
 ```
 
 ## Spring WebClient Testing with MockWebServer
@@ -377,7 +377,7 @@ After the GitHub login, then you must authorize the search application for sendi
 After you authorize access, the search result will show:
 
 ```json
-{ "total_count": 114761362 }
+{"total_count":114761362}
 ```
 
 ## Learn More About Reactive Spring Boot and WebClient

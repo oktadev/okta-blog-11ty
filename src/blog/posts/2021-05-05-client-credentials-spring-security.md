@@ -233,7 +233,7 @@ http :8081/secure
 However, the server requires a valid JSON Web Token (JWT).
 
 ```bash
-HTTP/1.1 401
+HTTP/1.1 401 
 ...
 
 401 Unauthorized

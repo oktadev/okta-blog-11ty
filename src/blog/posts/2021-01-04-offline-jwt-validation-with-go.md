@@ -70,25 +70,25 @@ Next, create a file called `client/index.html` which loads the Okta JavaScript, 
 
 ```html
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Offline JWT Validation with Go</title>
-    <script src="https://global.oktacdn.com/okta-signin-widget/4.3.2/js/okta-sign-in.min.js" type="text/javascript"></script>
-    <link href="https://global.oktacdn.com/okta-signin-widget/4.3.2/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="control.js" defer></script>
-  </head>
-  <body>
-    <h1>Offline JWT Validation with Go</h1>
-    <div id="widget-container"></div>
-    <div class="centred">
-      <form id="messageForm">
-        Message: <input id="message" name="message" type="message" />
-        <input type="button" value="Send" onclick="onmessage()" />
-      </form>
-      <textarea id="messages" name="messages" rows="10" cols="50">Messages</textarea><br />
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Offline JWT Validation with Go</title>
+        <script src="https://global.oktacdn.com/okta-signin-widget/4.3.2/js/okta-sign-in.min.js" type="text/javascript"></script>
+        <link href="https://global.oktacdn.com/okta-signin-widget/4.3.2/css/okta-sign-in.min.css" type="text/css" rel="stylesheet"/>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script src="control.js" defer></script>
+    </head>
+    <body>
+        <h1>Offline JWT Validation with Go</h1>
+        <div id="widget-container"></div>
+        <div class="centred">
+            <form id="messageForm">
+                Message: <input id="message" name="message" type="message"/>
+                <input type="button" value="Send" onclick="onmessage()"/>
+            </form>
+            <textarea id="messages" name="messages" rows="10" cols="50">Messages</textarea><br/>
+        </div>
+    </body>
 </html>
 ```
 
@@ -98,56 +98,52 @@ Next, create a file called `client/control.js` containing the following JavaScri
 var accessToken = null;
 
 var signIn = new OktaSignIn({
-  baseUrl: "http://${yourOktaDomain}",
-  clientId: "${yourClientId}",
-  redirectUri: window.location.origin,
-  authParams: {
-    issuer: "https://${yourOktaDomain}/oauth2/default",
-    responseType: ["token", "id_token"],
-  },
+    baseUrl: 'http://${yourOktaDomain}',
+    clientId: '${yourClientId}',
+    redirectUri: window.location.origin,
+    authParams: {
+        issuer: 'https://${yourOktaDomain}/oauth2/default',
+        responseType: ['token', 'id_token']
+    }
 });
 
-signIn.renderEl(
-  {
-    el: "#widget-container",
-  },
-  function success(res) {
-    if (res.status === "SUCCESS") {
-      accessToken = res.tokens.accessToken.accessToken;
-      signIn.hide();
+signIn.renderEl({
+    el: '#widget-container'
+}, function success(res) {
+    if (res.status === 'SUCCESS') {
+        accessToken = res.tokens.accessToken.accessToken;
+        signIn.hide();
     } else {
-      alert("fail);");
+        alert('fail);')
     }
-  },
-  function (error) {
-    alert("error " + error);
-  },
-);
+}, function(error) {
+    alert('error ' + error);
+});
 
 function onmessage() {
-  const url = "/api/messages";
-  var headers = {};
-  if (accessToken != null) {
-    headers = { Authorization: "Bearer " + accessToken };
-  }
-  fetch(url, {
-    method: "POST",
-    mode: "cors",
-    headers: headers,
-    body: new URLSearchParams(new FormData(document.getElementById("messageForm"))),
-  })
+    const url = "/api/messages";
+    var headers = {}
+    if (accessToken != null) {
+        headers = { 'Authorization': 'Bearer ' + accessToken }
+    }
+    fetch(url, {
+        method : "POST",
+        mode: 'cors',
+        headers: headers,
+        body: new URLSearchParams(new FormData(document.getElementById("messageForm"))),
+    })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.error);
-      }
-      return response.text();
+        if (!response.ok) {
+            throw new Error(response.error)
+        }
+        return response.text();
     })
-    .then((data) => {
-      var msgs = JSON.parse(data);
-      document.getElementById("messages").value = msgs.messages.join("\n");
+    .then(data => {
+        var msgs = JSON.parse(data) 
+        document.getElementById('messages').value = msgs.messages.join('\n');
     })
-    .catch(function (error) {
-      document.getElementById("messages").value = "Permission denied";
+    .catch(function(error) {
+        document.getElementById('messages').value = "Permission denied";
     });
 }
 ```
@@ -207,10 +203,8 @@ For those new to Go, some of the more complex code which we will see later will 
 Consider an application which reads a JSON object from a file or a network resource. For example:
 
 ```json
-[
-  { "name": "John", "age": 30, "car": null },
-  { "name": "Jane", "age": 27, "car": "Mini" }
-]
+[{ "name":"John", "age":30, "car":null },
+ { "name":"Jane", "age":27, "car":"Mini" }]
 ```
 
 We want to use the Go JSON decoder to turn the JSON string into a list of maps.

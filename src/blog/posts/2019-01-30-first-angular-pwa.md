@@ -123,7 +123,7 @@ The template for the main component of the application lives in the `src/app/app
   <div fxLayout="row" fxShow="false" fxShow.gt-sm>
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
       <div class="input-group">
-        <input class="input-group-field" type="search" value placeholder="Search" formControlName="search">
+        <input class="input-group-field" type="search" value="" placeholder="Search" formControlName="search">
         <div class="input-group-button">
           <button mat-flat-button color="accent">
             <mat-icon>search</mat-icon>
@@ -144,7 +144,7 @@ The template for the main component of the application lives in the `src/app/app
 
   <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
     <div class="input-group">
-      <input class="input-group-field" type="search" value placeholder="Search" formControlName="search">
+      <input class="input-group-field" type="search" value="" placeholder="Search" formControlName="search">
       <div class="input-group-button">
         <button mat-button routerLink="/">
           <mat-icon>magnify</mat-icon>

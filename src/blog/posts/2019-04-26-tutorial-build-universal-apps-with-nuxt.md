@@ -50,8 +50,8 @@ Everything within that page is rendered only once that final app.js is retrieved
 Look at the same page prepared with Nuxt.
 
 ```html
-<html data-n-head-ssr data-n-head>
-  <head data-n-head>
+<html data-n-head-ssr data-n-head="">
+  <head data-n-head="">
     <title data-n-head="true">intro-to-nuxt</title>
     <meta data-n-head="true" charset="utf-8">
     <meta data-n-head="true" name="viewport" content="width=device-width, initial-scale=1">
@@ -59,7 +59,7 @@ Look at the same page prepared with Nuxt.
     <link data-n-head="true" rel="icon" type="image/x-icon" href="/favicon.ico">
     <link data-n-head="true" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Roboto">
   </head>
-  <body data-n-head>
+  <body data-n-head="">
     <div data-server-rendered="true" id="__nuxt">
         <div id="__layout">
             <div id="defaultLayout">

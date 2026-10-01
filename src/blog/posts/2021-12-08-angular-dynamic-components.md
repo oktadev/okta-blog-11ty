@@ -95,7 +95,9 @@ ng generate component profile
 We can update what we'll first see when loading the application with these components. Open the project in your favorite IDE and open the `src/app/app-routing.module.ts` file to add `HomeComponent` as a default route, as shown below.
 
 ```ts
-const routes: Routes = [{ path: "", component: HomeComponent }];
+const routes: Routes = [  
+ { path: '', component: HomeComponent }  
+];
 ```
 
 Next open `src/app/app.module.ts`. We need to add some modules for the Material components we'll use.
@@ -112,28 +114,23 @@ Now we can update the templates. Open `src/app/app.component.ts` and replace the
 {% raw %}
 
 ```ts
-@Component({
-  selector: "app-root",
-  template: `
+@Component({  
+  selector: 'app-root',  
+  template: `  
     <mat-toolbar color="primary" class="toolbar">
       <h1>My favorite work app</h1>
       <div>
-        <app-profile></app-profile>
-        <app-menu></app-menu>
+        <app-profile></app-profile> 
+        <app-menu></app-menu> 
       </div>
     </mat-toolbar>
-    <router-outlet></router-outlet>
-  `,
-  styles: [
-    `
-      .toolbar {
-        display: flex;
-        justify-content: space-between;
-      }
-    `,
-  ],
-})
-export class AppComponent {}
+    <router-outlet></router-outlet> 
+  `,  
+  styles: [`  
+   .toolbar { display: flex; justify-content: space-between; }
+ `]  
+})  
+export class AppComponent { }
 ```
 
 {% endraw %}
@@ -147,32 +144,25 @@ I added text, an illustration, and styles like below for my tastes.
 {% raw %}
 
 ```ts
-@Component({
-  selector: "app-home",
-  template: `
+@Component({  
+  selector: 'app-home',  
+  template: `  
     <div class="welcome">
       <h2 class="mat-display-1">Welcome! Log in to get started.</h2>
       <img src="assets/welcome.svg" alt="welcome illustration" />
-    </div>
-  `,
-  styles: [
-    `
-      .welcome {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        h2 {
-          margin: 3rem;
-        }
-        img {
-          width: 40%;
-        }
-      }
-    `,
-  ],
-})
-export class HomeComponent {}
+    </div> `,  
+  styles: [`  
+    .welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;  
+ 
+      h2 { margin: 3rem; }  
+      img { width: 40%; } 
+    } 
+  `]  
+})  
+export class HomeComponent { }
 ```
 
 {% endraw %}
@@ -235,32 +225,32 @@ For the `ProtectedComponent`'s template, we'll use Material's List component. Up
 {% raw %}
 
 ```ts
-@Component({
-  selector: 'app-protected',
-  template: `
+@Component({  
+  selector: 'app-protected',  
+  template: `  
     <div class="dashboard">
       <main>
         <h2>My tasks</h2>
         <mat-selection-list #todo class="task-list">
-          <mat-list-option *ngFor="let task of tasks">
-            {{task}}
+          <mat-list-option *ngFor="let task of tasks">  
+            {{task}}  
           </mat-list-option>
         </mat-selection-list>
       </main>
-      <app-department></app-department>
+      <app-department></app-department>  
    </div>
-   `,
-  styles: [`
-    .dashboard {
-      margin-top: 2rem; display: flex;
-      main {
+   `,  
+  styles: [`  
+    .dashboard { 
+      margin-top: 2rem; display: flex;  
+      main { 
         width: 75%;
         h2 { text-align: center; }
         .task-list { width: 80%; margin: auto; }
         mat-selection-list { max-width: 800px; }
       }
     }
-  `]
+  `]  
 })
 ```
 
@@ -284,18 +274,18 @@ Each of the dynamic components needs the same base component interface. In our c
 
 ```ts
 export class ClawesomeComponent implements DynamicComponent {
-  // ...remaining scaffolded code here
+   // ...remaining scaffolded code here
 }
 ```
 
 Open `src/app/protected/department/dynamic.directive.ts` to inject the `ViewContainerRef`. Your code will look like the following.
 
 ```ts
-@Directive({
-  selector: "[appDynamic]",
-})
-export class DynamicDirective {
-  constructor(public viewContainerRef: ViewContainerRef) {}
+@Directive({  
+  selector: '[appDynamic]'  
+})  
+export class DynamicDirective {  
+  constructor(public viewContainerRef: ViewContainerRef) { }  
 }
 ```
 
@@ -304,15 +294,15 @@ Now on to the container component. Open `src/app/protected/department/department
 {% raw %}
 
 ```ts
-@Component({
-  selector: 'app-department',
-  template: `
+@Component({  
+  selector: 'app-department',  
+  template: `  
    <h3 class="mat-headline">Relax, you got this</h3>
    <ng-template appDynamic></ng-template>
-  `,
-  styles: [`
-    h3 { text-align: center; }
-  `]
+  `,  
+  styles: [`  
+    h3 { text-align: center; } 
+  `]  
 })
 ```
 
@@ -323,38 +313,42 @@ In the component class code, we have a bit to do. We need to load the dynamic co
 We use the `ViewChild` decorator on the `Dynamic` directive to access where to insert the component. When creating the component, we pass in the component `Type`. Copy the following class code and replace your `DepartmentComponent` class code.
 
 ```ts
-export class DepartmentComponent implements OnInit, OnDestroy {
-  @ViewChild(DynamicDirective, { static: true }) private dynamicHost!: DynamicDirective;
-  private interval: number | undefined;
-  private currentIndex = 1;
-
-  private messages: { type: Type<DynamicComponent> }[] = [{ type: ClawesomeComponent }, { type: PawesomeComponent }, { type: SmileyComponent }];
-
-  public ngOnInit(): void {
-    this.loadComponent();
-    this.rotateMessages();
-  }
-
-  public ngOnDestroy(): void {
-    clearInterval(this.interval);
-  }
-
-  private loadComponent(): void {
-    if (this.messages.length === 0) return;
-    this.currentIndex = (this.currentIndex + 1) % this.messages.length;
-    const message = this.messages[this.currentIndex];
-
-    const viewContainerRef = this.dynamicHost.viewContainerRef;
-    viewContainerRef.clear();
-
-    const componentRef = viewContainerRef.createComponent<DynamicComponent>(message.type);
-  }
-
-  private rotateMessages(): void {
-    this.interval = window.setInterval(() => {
-      this.loadComponent();
-    }, 10000);
-  }
+export class DepartmentComponent implements OnInit, OnDestroy {  
+  @ViewChild(DynamicDirective, {static: true}) private dynamicHost!: DynamicDirective;  
+  private interval: number|undefined;  
+  private currentIndex = 1;  
+  
+  private messages: { type: Type<DynamicComponent> }[] = [  
+    { type: ClawesomeComponent },  
+    { type: PawesomeComponent },  
+    { type: SmileyComponent }  
+  ];  
+  
+  public ngOnInit(): void {  
+    this.loadComponent();  
+    this.rotateMessages();  
+  }  
+  
+  public ngOnDestroy(): void {  
+    clearInterval(this.interval);  
+  }  
+  
+  private loadComponent(): void {  
+    if (this.messages.length === 0) return;  
+    this.currentIndex = (this.currentIndex + 1) % this.messages.length;  
+    const message = this.messages[this.currentIndex];  
+  
+    const viewContainerRef = this.dynamicHost.viewContainerRef;  
+    viewContainerRef.clear();  
+  
+    const componentRef = viewContainerRef.createComponent<DynamicComponent>(message.type);  
+  }  
+  
+  private rotateMessages(): void {  
+    this.interval = window.setInterval(() => {  
+      this.loadComponent();  
+    }, 10000);  
+  }  
 }
 ```
 
@@ -379,13 +373,13 @@ npm install @okta/okta-angular@4 @okta/okta-auth-js@5.8 --save
 Open `srcs/app/app.module.ts` and create an `OktaAuth` instance by adding the following before the `NgModule` and replacing the placeholders with the `Issuer` and `Client ID` from earlier.
 
 ```ts
-import { OKTA_CONFIG, OktaAuthModule } from "@okta/okta-angular";
-import { OktaAuth } from "@okta/okta-auth-js";
+import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 const oktaAuth = new OktaAuth({
-  issuer: "https://{yourOktaDomain}/oauth2/default",
-  clientId: "{yourClientID}",
-  redirectUri: window.location.origin + "/login/callback",
+  issuer: 'https://{yourOktaDomain}/oauth2/default',
+  clientId: '{yourClientID}',
+  redirectUri: window.location.origin + '/login/callback'
 });
 ```
 
@@ -414,7 +408,7 @@ Okta has a component for the login callback, but we need to add the route. Open 
 We also want to guard the `Protected` component route to authenticated users. Okta has a guard we can use. Open `src/app/protected/protected-routing.module.ts` to add a `canActivate` guard to the default route. Your routes array will look like the code snippet below.
 
 ```ts
-const routes: Routes = [{ path: "", component: ProtectedComponent, canActivate: [OktaAuthGuard] }];
+const routes: Routes = [{ path: '', component: ProtectedComponent, canActivate: [OktaAuthGuard] }];
 ```
 
 For the actual logging in, open `src/app/menu/menu.component.ts` to add a menu with login and logout buttons. We'll use some Okta-provided code to log in, log out, and identify the authenticated state. Update the component code to match the code below.
@@ -422,50 +416,52 @@ For the actual logging in, open `src/app/menu/menu.component.ts` to add a menu w
 {% raw %}
 
 ```ts
-@Component({
-  selector: "app-menu",
-  template: `
-    <button mat-icon-button aria-label="Button to open menu" [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="!isAuthenticated" (click)="login()"><mat-icon>login</mat-icon> <span>Login</span></button>
-      <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()"><mat-icon>logout</mat-icon> <span>Logout</span></button>
+@Component({  
+  selector: 'app-menu',  
+  template: `  
+    <button mat-icon-button aria-label="Button to open menu" [matMenuTriggerFor]="menu">  
+      <mat-icon>menu</mat-icon> 
+    </button> 
+    <mat-menu #menu="matMenu">  
+      <button mat-menu-item *ngIf="!isAuthenticated" (click)="login()">  
+        <mat-icon>login</mat-icon> <span>Login</span> 
+      </button> 
+      <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()">  
+        <mat-icon>logout</mat-icon> <span>Logout</span>
+      </button> 
     </mat-menu>
-  `,
+  `
 })
-export class MenuComponent implements OnInit, OnDestroy {
-  public isAuthenticated = false;
-  private _destroySub$ = new Subject<void>();
-
-  constructor(
-    private _oktaAuth: OktaAuth,
-    private _authStateService: OktaAuthStateService,
-    private _router: Router,
-  ) {}
-
-  public ngOnInit(): void {
-    this._authStateService.authState$
-      .pipe(
-        filter((s: AuthState) => !!s),
-        map((s: AuthState) => s.isAuthenticated ?? false),
-        distinctUntilChanged(),
-        takeUntil(this._destroySub$),
-      )
-      .subscribe((authenticated: boolean) => (this.isAuthenticated = authenticated));
-  }
+export class MenuComponent implements OnInit, OnDestroy {  
+  public isAuthenticated = false;  
+  private _destroySub$ = new Subject<void>();  
+  
+  constructor(private _oktaAuth: OktaAuth, private _authStateService: OktaAuthStateService, private _router: Router) { }  
+  
+  public ngOnInit(): void {  
+   this._authStateService.authState$.pipe(  
+     filter((s: AuthState) => !!s),  
+     map((s: AuthState) => s.isAuthenticated ?? false),  
+     distinctUntilChanged(),  
+     takeUntil(this._destroySub$)
+   ).subscribe(
+     (authenticated: boolean) => this.isAuthenticated = authenticated
+   );  
+  }  
 
   public ngOnDestroy(): void {
     this._destroySub.next();
   }
-
-  public async login(): Promise<void> {
-    await this._oktaAuth.signInWithRedirect().then((_) => this._router.navigate(["/protected"]));
-  }
-
-  public async logout(): Promise<void> {
-    await this._oktaAuth.signOut();
-  }
+  
+  public async login(): Promise<void> {  
+    await this._oktaAuth.signInWithRedirect().then(  
+      _ => this._router.navigate(['/protected'])  
+    );  
+  }  
+  
+  public async logout(): Promise<void> {  
+    await this._oktaAuth.signOut();  
+  }  
 }
 ```
 
@@ -476,21 +472,20 @@ Now that you can log in let's get your name displayed in the toolbar. Open `src/
 {% raw %}
 
 ```ts
-@Component({
-  selector: "app-profile",
-  template: `
-    <ng-container *ngIf="name$ | async as name">
-      <span class="mat-body-1">{{ name }}</span>
-    </ng-container>
-  `,
-})
-export class ProfileComponent {
-  public name$: Observable<string> = this._authStateService.authState$.pipe(
-    filter((s: AuthState) => !!s && !!s.isAuthenticated),
-    map((s: AuthState) => s.idToken?.claims.name ?? ""),
-  );
-
-  constructor(private _authStateService: OktaAuthStateService) {}
+@Component({  
+  selector: 'app-profile',  
+  template: `  
+    <ng-container *ngIf="name$ | async as name ">
+      <span class="mat-body-1">{{name}}</span>  
+    </ng-container> 
+`})  
+export class ProfileComponent {  
+  public name$: Observable<string> = this._authStateService.authState$.pipe( 
+    filter((s: AuthState) => !!s && !!s.isAuthenticated),  
+    map((s: AuthState) => s.idToken?.claims.name ?? '')  
+  );  
+  
+  constructor(private _authStateService: OktaAuthStateService) { }  
 }
 ```
 
@@ -509,18 +504,15 @@ ng generate interface message
 There'll be three different message formats, one for each dynamic component. So we'll define a message type, standardized data properties, and a class that holds the type and data properties. Open `src/app/message.ts` and replace the contents with the following code.
 
 ```ts
-export type MessageType = "Pawesome" | "Clawesome" | "Smiley";
-
-export interface MessageData {
-  url: string;
-  content?: any;
-}
-
-export class MessageItem {
-  constructor(
-    public type: MessageType,
-    public data: MessageData,
-  ) {}
+export type MessageType = 'Pawesome' | 'Clawesome' | 'Smiley';  
+  
+export interface MessageData {  
+  url: string;  
+  content?: any;  
+}  
+  
+export class MessageItem {  
+  constructor(public type: MessageType, public data: MessageData) { }  
 }
 ```
 
@@ -529,8 +521,8 @@ When we created the dynamic components earlier, they all implemented the same ba
 Open `src/app/protected/department/dynamic.component.ts` and add a property named `data` of type `MessageData` to it. The interface now looks like the following.
 
 ```ts
-export interface DynamicComponent {
-  data: MessageData;
+export interface DynamicComponent {  
+  data: MessageData;  
 }
 ```
 
@@ -541,26 +533,20 @@ Start by opening `src/app/protected/department/clawesome.component.ts`. This com
 {% raw %}
 
 ```ts
-@Component({
-  selector: "app-clawesome",
-  template: `
+@Component({  
+  selector: 'app-clawesome',  
+  template:  `  
     <mat-card class="card">
-      <img mat-card-image src="{{ data.url }}" alt="Photo of a clawesome creature" />
+      <img mat-card-image src="{{data.url}}" alt="Photo of a clawesome creature" >  
       <mat-card-content>
-        <p>{{ data.content }}</p>
+        <p>{{data.content}}</p>  
       </mat-card-content>
     </mat-card>
-  `,
-  styles: [
-    `
-      .card {
-        max-width: 300px;
-      }
-    `,
-  ],
-})
-export class ClawesomeComponent implements DynamicComponent {
-  @Input() data!: MessageData;
+  `,  
+  styles: [` .card { max-width: 300px; } `]  
+})  
+export class ClawesomeComponent implements DynamicComponent {  
+ @Input() data!: MessageData;  
 }
 ```
 
@@ -571,30 +557,24 @@ Each component is a Material card control with an image to display. Next open `s
 {% raw %}
 
 ```ts
-@Component({
-  selector: "app-pawesome",
-  template: `
+@Component({  
+  selector: 'app-pawesome',  
+  template: `  
     <mat-card class="card">
       <mat-card-header>
-        <mat-card-title>{{ data.content.name }}</mat-card-title>
+        <mat-card-title>{{data.content.name}}</mat-card-title>  
         <mat-card-subtitle>Good doggo</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="{{ data.url }}" alt="Photo of a pawesome creature" />
+      <img mat-card-image src="{{data.url}}" alt="Photo of a pawesome creature" >  
       <mat-card-content>
-        <p>{{ data.content.about }}</p>
+        <p> {{data.content.about}} </p>
       </mat-card-content>
     </mat-card>
-  `,
-  styles: [
-    `
-      .card {
-        max-width: 300px;
-      }
-    `,
-  ],
-})
-export class PawesomeComponent implements DynamicComponent {
-  @Input() data!: MessageData;
+  `,  
+  styles: [` .card { max-width: 300px; } `]  
+})  
+export class PawesomeComponent implements DynamicComponent {  
+ @Input() data!: MessageData;  
 }
 ```
 
@@ -605,26 +585,19 @@ Finally, open `src/app/protected/department/smiley.component.ts`. The only data 
 {% raw %}
 
 ```ts
-@Component({
-  selector: "app-smiley",
-  template: `
+@Component({  
+  selector: 'app-smiley',  
+  template: `  
     <mat-card class="card">
-      <img mat-card-image src="{{ data.url }}" alt="Photo of a smiley creature" />
+      <img mat-card-image src="{{data.url}}" alt="Photo of a smiley creature" >  
       <mat-card-content>
         <p>SMILE!</p>
       </mat-card-content>
-    </mat-card>
-  `,
-  styles: [
-    `
-      .card {
-        max-width: 300px;
-      }
-    `,
-  ],
-})
-export class SmileyComponent implements DynamicComponent {
-  @Input() public data!: MessageData;
+    </mat-card> `,  
+  styles: [` .card { max-width: 300px; } `]
+})  
+export class SmileyComponent implements DynamicComponent {  
+ @Input() public data!: MessageData;  
 }
 ```
 
@@ -659,70 +632,70 @@ ng generate service message
 The `MessageService` returns messages the company wants to display to its users. All messages have a URL, and some have additional content to display. Open `src/app/message.service.ts` and add the following code to fake out message responses as a private class property.
 
 ```ts
-private messages: MessageItem[] = [
-  {
+private messages: MessageItem[] = [  
+  {  
     type: 'Clawesome',
-    data: {
-      url: 'https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    data: {  
+      url: 'https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',  
       content: 'Cat ipsum dolor sit amet, meow for can opener to feed me',
-    }
-  },
-  {
+    } 
+  },  
+  {  
     type: 'Clawesome',
-    data: {
-      url: 'https://images.pexels.com/photos/1560424/pexels-photo-1560424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    data: {  
+      url: 'https://images.pexels.com/photos/1560424/pexels-photo-1560424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',  
       content: 'Cat ipsum dolor sit amet, find dog bed and sleep all day',
     }
-  },
-  {
+  },  
+  {  
     type: 'Clawesome',
-    data: {
-      url: 'https://images.pexels.com/photos/3687957/pexels-photo-3687957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    data: {  
+      url: 'https://images.pexels.com/photos/3687957/pexels-photo-3687957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',  
       content: 'Cat ipsum dolor sit amet, too cute for human to get mad'
     }
-  },
-  {
+  },  
+  {  
     type: 'Pawesome',
-    data: {
-      url: 'https://images.pexels.com/photos/97082/weimaraner-puppy-dog-snout-97082.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      content: {
-        name: 'Sammy',
-        about: 'Snuggly cloud borker'
-      }
+    data: {  
+      url: 'https://images.pexels.com/photos/97082/weimaraner-puppy-dog-snout-97082.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',  
+      content: {  
+        name: 'Sammy',  
+        about: 'Snuggly cloud borker'  
+      }  
      }
-  },
-  {
+  },  
+  {  
     type: 'Pawesome',
-    data: {
-      url: 'https://images.pexels.com/photos/825949/pexels-photo-825949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      content: {
-        name: 'Pittunia',
-        about: 'Maximum adorable shooberino'
-      }
-    }
-  },
-  {
+    data: {  
+      url: 'https://images.pexels.com/photos/825949/pexels-photo-825949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',  
+      content: {  
+        name: 'Pittunia',  
+        about: 'Maximum adorable shooberino'  
+      }  
+    } 
+  },  
+  {  
     type: 'Pawesome',
-      data: {
-        url: 'https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        content: {
-          name: 'Bay',
-          about: 'Long snoot for pats'
-        }
-      }
-  },
-  {
+      data: {  
+        url: 'https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',  
+        content: {  
+          name: 'Bay',  
+          about: 'Long snoot for pats'  
+        }  
+      } 
+  },  
+  {  
     type: 'Smiley',
-    data: {
-      url: 'https://images.pexels.com/photos/2168831/pexels-photo-2168831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-    }
-  },
-  {
+    data: {  
+      url: 'https://images.pexels.com/photos/2168831/pexels-photo-2168831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'  
+    }  
+  },  
+  {  
     type: 'Smiley',
-    data: {
-      url: 'https://cdn.pixabay.com/photo/2017/06/17/13/11/axolotl-2412189_960_720.jpg'
-    }
-  }
+    data: {  
+      url: 'https://cdn.pixabay.com/photo/2017/06/17/13/11/axolotl-2412189_960_720.jpg'  
+    }  
+  }  
 ];
 ```
 
@@ -731,11 +704,11 @@ There's one more property to add. A real server call should only return the mess
 {% raw %}
 
 ```ts
-private departmentMapping: Map<number, MessageType[]> = new Map<number, MessageType[]>();
-
-constructor() {
- this.departmentMapping.set(1, ['Smiley']);
- this.departmentMapping.set(2, ['Pawesome', 'Clawesome']);
+private departmentMapping: Map<number, MessageType[]> = new Map<number, MessageType[]>();  
+  
+constructor() {  
+  this.departmentMapping.set(1, ['Smiley']);  
+  this.departmentMapping.set(2, ['Pawesome', 'Clawesome']);  
 }
 ```
 
@@ -744,33 +717,30 @@ constructor() {
 Now let's add a method to get the messages. Add the following code to filter the hard-coded messages.
 
 ```ts
-public getMessages(department: number): MessageItem[] {
-  const messageTypes = this.departmentMapping.get(department) ?? [];
-  return this.messages.filter(m => messageTypes.includes(m.type));
+public getMessages(department: number): MessageItem[] {  
+  const messageTypes = this.departmentMapping.get(department) ?? [];  
+  return this.messages.filter(m => messageTypes.includes(m.type));  
 }
 ```
 
 Next, we need to call this service method. To do so, we'll read the claims values of the authenticated user and pass in the department to the `getMessages` method. We'll access the claim through the ID token from Okta's auth state subject. Even though we're in a guarded route, we'll still add the safety measures to verify the user authentication, and to return a default value if the claim isn't on the ID token for some reason. Open `src/app/protected/protected.component.ts` and update to the following code.
 
 ```ts
-export class ProtectedComponent implements OnInit {
-  // ... task list property here don't delete
-
-  public messages: MessageItem[] = [];
-
-  constructor(
-    private _authStateService: OktaAuthStateService,
-    private _messageService: MessageService,
-  ) {}
-
-  public ngOnInit(): void {
-    this._authStateService.authState$
-      .pipe(
-        filter((s: AuthState) => !!s && !!s.isAuthenticated),
-        map((s: AuthState) => +s.idToken?.claims["department"] ?? 0),
-        take(1),
-      )
-      .subscribe((d: number) => (this.messages = this._messageService.getMessages(d)));
+export class ProtectedComponent implements OnInit {  
+  // ... task list property here don't delete 
+  
+  public messages: MessageItem[] = [];  
+  
+  constructor(private _authStateService: OktaAuthStateService, private _messageService: MessageService) { }  
+  
+  public ngOnInit(): void {  
+    this._authStateService.authState$.pipe(  
+      filter((s: AuthState) => !!s && !!s.isAuthenticated),  
+      map((s: AuthState) => +s.idToken?.claims['department'] ?? 0),  
+      take(1)  
+    ).subscribe(  
+      (d: number) => this.messages = this._messageService.getMessages(d)  
+    );  
   }
 }
 ```
@@ -796,16 +766,16 @@ You'll have a new error in the app because our code in the `loadComponent` metho
 {% raw %}
 
 ```ts
-private componentTypeFactory(type: MessageType): Type<DynamicComponent> {
-  let comp: Type<DynamicComponent>;
-  if (type === 'Pawesome') {
-    comp = PawesomeComponent;
-  } else if (type === 'Clawesome') {
-    comp = ClawesomeComponent;
-  } else {
-    comp = SmileyComponent;
-  }
- return comp;
+private componentTypeFactory(type: MessageType): Type<DynamicComponent> {  
+  let comp: Type<DynamicComponent>;  
+  if (type === 'Pawesome') {  
+    comp = PawesomeComponent;  
+  } else if (type === 'Clawesome') {  
+    comp = ClawesomeComponent;  
+  } else {  
+    comp = SmileyComponent;  
+  }  
+ return comp;  
 }
 ```
 
@@ -816,7 +786,7 @@ Then we can update the `loadComponent` method to use the factory method. We also
 {% raw %}
 
 ```ts
-const componentRef = viewContainerRef.createComponent<DynamicComponent>(this.componentTypeFactory(message.type));
+const componentRef = viewContainerRef.createComponent<DynamicComponent>(this.componentTypeFactory(message.type));  
 componentRef.instance.data = message.data;
 ```
 

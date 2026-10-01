@@ -113,28 +113,28 @@ This command displays outcome:
 
 ```text
 > Task :test
-
+ 
  ViewersServiceIntegrationTest
-
+ 
    ✔ insertOrIncrementViews creates a new visitor record when need()
    ✔ insertOrIncrementViews increments counter for existing visitor()
-
+ 
  ViewersRepositoryIntegrationTest
-
+ 
    ✔ insert two visitors and find all()
    ✔ incrementVisit adds single visit()
    ✔ compute average amount of visits per user()
-
+ 
  VisitCounterControllerIntegrationTest
-
+ 
    ✔ signin redirect works()
    ✔ greet authenticated user()
    ✔ renders provided data from the viewersService visiting as a guest()
    ✔ greet guest()
-
+ 
  9 passing (11.3s)
-
-
+ 
+ 
 BUILD SUCCESSFUL in 26s
 ```
 
@@ -162,7 +162,7 @@ class VisitCounterController(
 ) {
 
     @GetMapping("/")
-    fun index(@AuthenticationPrincipal user: AuthenticatedPrincipal?): ModelAndView {
+    fun index(@AuthenticationPrincipal user: AuthenticatedPrincipal?): ModelAndView { 
         val myUsername = user?.name ?: "guest" // ❶
 
         viewersService.insertOrIncrementViews(myUsername) // ❷

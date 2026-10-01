@@ -210,8 +210,8 @@ Rename `application.properties` to `application.yml`, and add the following cont
 okta:
   oauth2:
     issuer: https://{yourOktaDomain}/oauth2/default
-    client-id: { clientId }
-    client-secret: { clientSecret }
+    client-id: {clientId}
+    client-secret: {clientSecret}
 
 spring:
   data:
@@ -576,15 +576,15 @@ The `/mentalStateAverageDamage` test above also verifies that the `MentalStateDa
 
 ```json
 [
-  {
-    "id": "1",
-    "date": "2021-10-21",
-    "timeOfDay": "12:02:34.233944363",
-    "mentalState": "happy",
-    "damageTaken": 1,
-    "damageToPlayers": 1,
-    "damageToStructures": 1
-  }
+   {
+      "id":"1",
+      "date":"2021-10-21",
+      "timeOfDay":"12:02:34.233944363",
+      "mentalState":"happy",
+      "damageTaken":1,
+      "damageToPlayers":1,
+      "damageToStructures":1
+   }
 ]
 ```
 
@@ -764,18 +764,18 @@ Sign in with your Okta credentials, and if successful, it will redirect to the `
 
 ```json
 [
-  {
-    "mentalState": "sober",
-    "damageToPlayers": 604.3777777777777,
-    "damageToStructures": 3373.511111111111,
-    "damageTaken": 246.46666666666667
-  },
-  {
-    "mentalState": "high",
-    "damageToPlayers": 557.547619047619,
-    "damageToStructures": 2953.8571428571427,
-    "damageTaken": 241.71428571428572
-  }
+   {
+      "mentalState":"sober",
+      "damageToPlayers":604.3777777777777,
+      "damageToStructures":3373.511111111111,
+      "damageTaken":246.46666666666667
+   },
+   {
+      "mentalState":"high",
+      "damageToPlayers":557.547619047619,
+      "damageToStructures":2953.8571428571427,
+      "damageTaken":241.71428571428572
+   }
 ]
 ```
 

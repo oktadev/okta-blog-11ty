@@ -302,13 +302,13 @@ Now to create the web pages. Create a file at `src/main/resources/pages/index.ht
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>R2DBC Example - Home</title>
-  </head>
-  <body>
-    Hello!
-  </body>
+</head>
+<body>
+Hello!
+</body>
 </html>
 ```
 
@@ -317,13 +317,13 @@ This is the main page for the application and does not require authentication to
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>R2DBC Example - Protected</title>
-  </head>
-  <body>
-    Okta login successful!
-  </body>
+</head>
+<body>
+Okta login successful!
+</body>
 </html>
 ```
 
@@ -379,7 +379,7 @@ One more step is necessary to get the application running. R2DBC does not automa
 Create a file at `src/main/resources/schema.sql` with the following content:
 
 ```sql
-CREATE TABLE USER_ENTITY
+CREATE TABLE USER_ENTITY 
 (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR2,
@@ -442,14 +442,14 @@ public interface HeartbeatRepository extends R2dbcRepository<HeartbeatEntity, Lo
 Open the initialization SQL file at `src/main/resources/schema.sql` and add the table definition for `HEARTBEAT_ENTITY` so it looks like this:
 
 ```sql
-CREATE TABLE USER_ENTITY
+CREATE TABLE USER_ENTITY 
 (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR2,
     name VARCHAR2
 );
 
-CREATE TABLE HEARTBEAT_ENTITY
+CREATE TABLE HEARTBEAT_ENTITY 
 (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     timestamp BIGINT NOT NULL,
@@ -563,35 +563,36 @@ Open the protected HTML page at `src/main/resources/pages/protected.html` and mo
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>R2DBC Example - Protected</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
-      $(function () {
-        var cnx = new EventSource("http://localhost:8080/heartbeats");
-        cnx.onmessage = function (e) {
-          var data = JSON.parse(e.data);
-          var htmlText = "<tr><td>" + data.id + "</td><td>" + data.timestamp + "</td><td>" + data.text + "</td></tr>";
-          $("#heartbeatTable > tbody").append(htmlText);
-        };
-      });
+        $(function() {
+            var cnx = new EventSource('http://localhost:8080/heartbeats');
+            cnx.onmessage = function (e) {
+                var data = JSON.parse(e.data);
+                var htmlText = '<tr><td>'+data.id+'</td><td>'+data.timestamp+'</td><td>'+data.text+'</td></tr>';
+                $( "#heartbeatTable > tbody" ).append(htmlText);
+            };
+        });
     </script>
-  </head>
-  <body>
-    <h1>Okta login successful!</h1>
-    <h3>Heartbeats</h3>
-    <table id="heartbeatTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Timestamp</th>
-          <th>Text</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </body>
+</head>
+<body>
+<h1>Okta login successful!</h1>
+<h3>Heartbeats</h3>
+<table id="heartbeatTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Timestamp</th>
+        <th>Text</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</body>
 </html>
 ```
 

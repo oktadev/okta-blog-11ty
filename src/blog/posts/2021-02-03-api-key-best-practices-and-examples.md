@@ -67,7 +67,8 @@ Next, select **Restrict key**. Then select **Maps JavaScript API**. Hit **SAVE**
 The API key must be included in every Maps JavaScript API request, replacing `YOUR_API_KEY` with the actual key.
 
 ```javascript
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" type="text/javascript"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+  type="text/javascript"></script>
 ```
 
 ## Issues with API Keys Compiled into Mobile Applications
@@ -79,7 +80,7 @@ class WeatherModel : ObservableObject {
     private let apiKey: String
     private let apiUri: String
     @Published var weatherData: WeatherData
-
+    
     init(location: String) {
         apiKey = "a1b2c33d4e5f6g7h8i9jakblc"
         apiUri = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey
@@ -122,7 +123,7 @@ class WeatherModel:ObservableObject {
     private let apiKey: String
     private let apiUri: String
     @Published var weatherData: WeatherData
-
+    
     init(location: String) {
         guard let filePath = Bundle.main.path(forResource: "Open-Weather-Map-Info", ofType: "plist") else {
             fatalError("Couldn't find file 'Open-Weather-Map-Info.plist'.")
@@ -220,28 +221,28 @@ First, create the web page `WeatherSPA/index.html` with the following content:
 
 ```html
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Weather</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="control.js" defer></script>
-  </head>
-  <body>
-    <h1 id="name">Weather</h1>
-    <div class="centred">
-      <img />
-      <p id="weathermain"></p>
-      <form id="weatherForm">
-        <label for="location">Location</label>
-        <select id="location" name="location">
-          <option value="berlin,de">Berlin, Germany</option>
-          <option value="chicago,us">Chicago, USA</option>
-          <option value="paris,fr">Paris, France</option>
-        </select>
-        <input type="button" value="Get Weather" onclick="onlocation()" />
-      </form>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Weather</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script src="control.js" defer></script>
+    </head>
+    <body>
+        <h1 id="name">Weather</h1>
+        <div class="centred">
+            <img id="icon" src=""/>
+            <p id="weathermain"></p>
+            <form id="weatherForm">
+                <label for="location">Location</label>
+                <select id="location" name="location">
+                    <option value="berlin,de">Berlin, Germany</option>
+                    <option value="chicago,us">Chicago, USA</option>
+                    <option value="paris,fr">Paris, France</option>
+                </select>
+                <input type="button" value="Get Weather" onclick="onlocation()"/>
+            </form>
+        </div>
+    </body>
 </html>
 ```
 
@@ -251,30 +252,30 @@ Next, create a JavaScript file `WeatherSPA/control.js` with the following conten
 
 ```javascript
 function onlocation() {
-  fetch("http://localhost:8000/api/weather", {
-    method: "POST",
-    mode: "cors",
-    body: new URLSearchParams(new FormData(document.getElementById("weatherForm"))),
-  })
+    fetch("http://localhost:8000/api/weather", {
+        method : "POST",
+        mode: 'cors',
+        body: new URLSearchParams(new FormData(document.getElementById("weatherForm"))),
+    })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.error);
-      }
-      return response.json();
+        if (!response.ok) {
+            throw new Error(response.error)
+        }
+        return response.json();
     })
-    .then((data) => {
-      document.getElementById("name").innerHTML = data.name;
-      var weather = data.weather[0];
-      document.getElementById("weathermain").innerHTML = weather.main;
-      seticon(weather.icon);
+    .then(data => {
+        document.getElementById('name').innerHTML = data.name;
+        var weather = data.weather[0];
+        document.getElementById('weathermain').innerHTML = weather.main;
+        seticon(weather.icon);
     })
-    .catch(function (error) {
-      document.getElementById("weathermain").innerHTML = error;
+    .catch(function(error) {
+        document.getElementById('weathermain').innerHTML = error;
     });
 }
 
 function seticon(icon) {
-  document.getElementById("icon").src = "http://openweathermap.org/img/wn/" + icon + "@4x.png";
+    document.getElementById("icon").src = "http://openweathermap.org/img/wn/" + icon + "@4x.png";
 }
 
 seticon("10d");

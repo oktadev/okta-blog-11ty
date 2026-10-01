@@ -203,7 +203,7 @@ When the resource server requires a nonce, the response changes. The resource se
 ```http
 HTTP/1.1 401 Unauthorized
 DPoP-Nonce: server-generated-nonce-value
-WWW-Authenticate: error: "use_dpop_nonce", error_description: "Resource server requires nonce in DPoP proof"
+WWW-Authenticate: error="use_dpop_nonce", error_description="Resource server requires nonce in DPoP proof"
 ```
 
 We want that resource, so it's time for a new proof! The client reacts to the error and generates a new proof with the following info in the payload:

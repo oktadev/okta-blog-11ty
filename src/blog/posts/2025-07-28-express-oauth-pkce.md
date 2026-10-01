@@ -112,26 +112,24 @@ In the next step, you'll get these values from your Okta Admin Console.
 Create an `index.js` file in your project root. It serves as the main entry point for your application. Use it to initialize the Express app, set up the routes, and configure [Passport](https://www.passportjs.org/) to manage user sessions by serializing and deserializing users on each request.
 
 ```javascript
-import express from "express";
-import session from "express-session";
-import passport from "passport";
-import routes from "./routes.js";
-import expressLayouts from "express-ejs-layouts";
+import express from 'express';
+import session from 'express-session';
+import passport from 'passport'; 
+import routes from './routes.js';
+import expressLayouts from 'express-ejs-layouts';
 
 const app = express();
 
-app.set("view engine", "ejs");
-app.use(expressLayouts);
-app.set("layout", "layout");
+app.set('view engine', 'ejs');
+app.use(expressLayouts); 
+app.set('layout', 'layout');
 app.use(express.urlencoded({ extended: false }));
 
-app.use(
-  session({
-    secret: "your-hardcoded-secret",
-    resave: false,
-    saveUninitialized: true,
-  }),
-);
+app.use(session({
+  secret: "your-hardcoded-secret",
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -144,10 +142,10 @@ passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
-app.use("/", routes);
+app.use('/', routes);
 
 app.listen(3000, () => {
-  console.log("Server listening on http://localhost:3000");
+  console.log('Server listening on http://localhost:3000');
 });
 ```
 
@@ -298,11 +296,11 @@ export function getModifiedTeam(team) {
       .trim()
       .split(/\s+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
+      .join(' ');
 
-  const toKebabCase = (str) => str.trim().toLowerCase().split(" ").join("-");
+  const toKebabCase = (str) => str.trim().toLowerCase().split(' ').join('-');
 
-  if (team === "admin") {
+  if (team === 'admin') {
     return ALL_TEAMS_NAME.map((element) => ({
       id: toKebabCase(element),
       label: toPascalCase(element),
@@ -330,7 +328,7 @@ In the auth.js file, add the following code:
 import * as client from "openid-client";
 import "dotenv/config";
 
-import { getModifiedTeam, userTeamMap } from "./utils.js";
+import { getModifiedTeam, userTeamMap } from './utils.js';
 
 async function getClientConfig() {
   return await client.discovery(new URL(process.env.OKTA_ISSUER), process.env.OKTA_CLIENT_ID, process.env.OKTA_CLIENT_SECRET);
@@ -345,7 +343,7 @@ export async function login(req, res) {
     const state = client.randomState();
 
     req.session.pkce = { code_verifier, state };
-    req.session.save();
+    req.session.save(); 
 
     const authUrl = client.buildAuthorizationUrl(openIdClientConfig, {
       scope: "openid profile email offline_access",
@@ -428,7 +426,7 @@ export async function logout(req, res) {
       });
     });
   } catch (error) {
-    res.status(500).send("Something went wrong during logout.");
+    res.status(500).send('Something went wrong during logout.');
   }
 }
 
@@ -461,7 +459,7 @@ import express from "express";
 import "dotenv/config";
 
 import { authCallback, ensureAuthenticated, login, logout } from "./auth.js";
-import { dummyExpenseData } from "./utils.js";
+import { dummyExpenseData } from './utils.js';
 
 const router = express.Router();
 
@@ -531,7 +529,7 @@ Create a folder named `views`, then add the following EJS files:
 <p class="lead">Log your expenses and manage your team's spending on the dashboard.</p>
 
 <% if (user) { %>
-<a href: "/dashboard", class="btn btn-primary">Go to Dashboard</a>
+<a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
 <% } else { %>
 <a href="/login" class="btn btn-success">Login</a>
 <% } %>
@@ -550,12 +548,12 @@ Create a folder named `views`, then add the following EJS files:
 
 ```javascript
 <!DOCTYPE html>
-<html lang: "en">
+<html lang="en">
   <head>
-    <meta charset: "UTF-8" />
-    <meta name: "viewport", content: "width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%= typeof title !== 'undefined' ? title : 'Expense Dashboard' %></title>
-    <link href: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css", rel: "stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
     html, body {
         height: 100%;
@@ -571,7 +569,7 @@ Create a folder named `views`, then add the following EJS files:
       .team-heading {
         display: inline-block;
         font-weight: 600;
-        color: #2c3e50;
+        color: #2c3e50; 
         margin-bottom: 1rem;
       }
     </style>
@@ -579,7 +577,7 @@ Create a folder named `views`, then add the following EJS files:
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
       <div class="container">
-        <a class="navbar-brand", href: "/dashboard">Expense Dashboard</a>
+        <a class="navbar-brand" href="/dashboard">Expense Dashboard</a>
         <div>
           <% if (user) { %>
           <a href="/dashboard" class="btn btn-light btn-sm me-2">Dashboard</a>

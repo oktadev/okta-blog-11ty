@@ -94,25 +94,27 @@ type Species {
 The `Query` type defines the entry point of the schema. It defines three queries: `characters`, `character`, and `species`. The data returned by these queries is defined in separate types in the schema file. Now, create a new file `app.js`, and fill it with the code below.
 
 ```js
-const express = require("express");
-const cors = require("cors");
-const { json } = require("body-parser");
-const fs = require("fs");
-const { graphqlHTTP } = require("express-graphql");
-const { buildSchema } = require("graphql");
-const parse = require("csv-parse/lib/sync");
+const express = require('express');
+const cors = require('cors');
+const { json } = require('body-parser');
+const fs = require('fs');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+const parse = require('csv-parse/lib/sync');
 
-const app = express().use(cors()).use(json());
+const app = express()
+  .use(cors())
+  .use(json());
 
-const schema = buildSchema(fs.readFileSync("schema.graphql", "utf8"));
-const characters = parse(fs.readFileSync("characters.csv", "utf8"), { columns: true });
-const species = parse(fs.readFileSync("species.csv", "utf8"), { columns: true });
+const schema = buildSchema(fs.readFileSync('schema.graphql', 'utf8'));
+const characters = parse(fs.readFileSync('characters.csv', 'utf8'), { columns: true });
+const species = parse(fs.readFileSync('species.csv', 'utf8'), { columns: true });
 
 const root = {
   characters: (args) => {
     return {
       count: characters.length,
-      characters: characters.slice(args.offset, args.offset + args.limit),
+      characters: characters.slice(args.offset, args.offset + args.limit)
     };
   },
   character: (args) => {
@@ -123,20 +125,17 @@ const root = {
   },
 };
 
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema,
-    rootValue: root,
-    graphiql: true,
-  }),
-);
+app.use('/graphql', graphqlHTTP({
+  schema,
+  rootValue: root,
+  graphiql: true,
+}));
 
 app.listen(4201, (err) => {
   if (err) {
     return console.log(err);
   }
-  return console.log("Server listening on port 4201");
+  return console.log('Server listening on port 4201');
 });
 ```
 
@@ -156,7 +155,7 @@ On the left side, you can try out queries. Give it a go by pasting the following
 
 ```graphql
 {
-  characters(offset: 2, limit: 3) {
+  characters(offset: 2, limit:3) {
     count
     characters {
       name
@@ -164,7 +163,7 @@ On the left side, you can try out queries. Give it a go by pasting the following
       species
     }
   }
-  species(name: "Human") {
+  species(name:"Human") {
     classification
     homeworld
   }
@@ -239,7 +238,8 @@ ng generate component browse --module=app
 In an editor of your choice, open `src/app/app.component.html` and replace its content with the following two lines.
 
 ```html
-<app-navbar></app-navbar> <router-outlet></router-outlet>
+<app-navbar></app-navbar>
+<router-outlet></router-outlet>
 ```
 
 There are only two components here. The first will show the navigation bar. The `<router-outlet>` is a special component in Angular. The Angular router is responsible for reading the navigation URL and deciding which component to show based on the requested path. The `<router-outlet>` will then show that component.
@@ -248,7 +248,9 @@ Next, open `src/app/navbar/navbar.component.html` and paste the code below into 
 
 ```html
 <div class="navbar">
-  <div>GraphQL Angular App</div>
+  <div>
+    GraphQL Angular App
+  </div>
   <nav>
     <ul>
       <li><a routerLink="/">Home</a></li>
@@ -359,7 +361,7 @@ export class CharactersService {
   private findCharacterQuery: QueryRef<{character: CharacterDetail}, { name: string}>;
   private findSpeciesQuery: QueryRef<{species: Species}, { name: string}>;
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo) { 
     this.charactersQuery = this.apollo.watchQuery({
       query: gql`query characters($offset: Int!) {
         characters(offset: $offset) {
@@ -497,8 +499,8 @@ The function `updateCharacters()` uses the `CharactersService` to obtain a list 
     </tr>
   </table>
   <div class="pager">
-    <button class="prev" *ngIf="showPrevious()" (click)="onPrevious()">prev</button>
-    <button class="next" *ngIf="showNext()" (click)="onNext()">next</button>
+    <button class="prev" *ngIf="showPrevious()" (click)="onPrevious()"> prev </button>
+    <button class="next" *ngIf="showNext()" (click)="onNext()"> next </button>
   </div>
 </div>
 ```
@@ -533,8 +535,7 @@ tr:nth-child(odd) {
   background-color: #dddddd;
 }
 
-th,
-td {
+th, td {
   padding: 4px 8px;
   border-right: 1px solid #bbbbbb;
   border-left: 1px solid #bbbbbb;
@@ -586,7 +587,7 @@ This is a simple component that reads the character's name from the query parame
 {% raw %}
 
 ```html
-<div *ngIf="character">
+<div *ngIf=character>
   <p><strong>Name:</strong> {{character.name}}</p>
   <p><strong>Mass:</strong> {{character.mass}}</p>
   <p><strong>Hair Color:</strong> {{character.hair_color}}</p>
@@ -630,7 +631,7 @@ Next, open `src/app/species/species.component.html` and paste in the code below.
 {% raw %}
 
 ```html
-<div *ngIf="species">
+<div *ngIf=species>
   <p><strong>Name:</strong> {{species.name}}</p>
   <p><strong>Classification:</strong> {{species.classification}}</p>
   <p><strong>Designation:</strong> {{species.designation}}</p>
@@ -711,22 +712,23 @@ npm i -E @okta/jwt-verifier@2.3.0 express-bearer-token@2.4.0
 Now, create a new file `auth.js` with the content below.
 
 ```js
-const OktaJwtVerifier = require("@okta/jwt-verifier");
+const OktaJwtVerifier = require('@okta/jwt-verifier');
 
 const oktaJwtVerifier = new OktaJwtVerifier({
-  clientId: "{yourClientID}",
-  issuer: "https://{yourOktaDomain}/oauth2/default",
+  clientId: '{yourClientID}',
+  issuer: 'https://{yourOktaDomain}/oauth2/default'
 });
 
 module.exports = async function oktaAuth(req, res, next) {
   try {
     const token = req.token;
     if (!token) {
-      return res.status(401).send("Not Authorized");
+      return res.status(401).send('Not Authorized');
     }
-    await oktaJwtVerifier.verifyAccessToken(token, "api://default");
+    await oktaJwtVerifier.verifyAccessToken(token, 'api://default');
     next();
-  } catch (err) {
+  }
+  catch (err) {
     return res.status(401).send(err.message);
   }
 };
@@ -735,14 +737,18 @@ module.exports = async function oktaAuth(req, res, next) {
 This module exports an Express middleware that checks the bearer token of an incoming request and verifies its validity. To use this middleware, open `app.js` and add the following `require` statements to the top of the file.
 
 ```js
-const bearerToken = require("express-bearer-token");
-const oktaAuth = require("./auth");
+const bearerToken = require('express-bearer-token');
+const oktaAuth = require('./auth');
 ```
 
 Then, update the creation of the Express server with the declaration of the middleware to match the following.
 
 ```js
-const app = express().use(cors()).use(json()).use(bearerToken()).use(oktaAuth);
+const app = express()
+  .use(cors())
+  .use(json())
+  .use(bearerToken())
+  .use(oktaAuth);
 ```
 
 The `bearerToken` middleware extracts the bearer token from a request header. `oktaAuth` then checks the token. You can now run `node app.js` again to start the server. Only now, if you try to access the API you will get a `401 Unauthorized` error response from the server.
@@ -758,14 +764,14 @@ npm install -E @okta/okta-angular@4.1.0 @okta/okta-auth-js@5.6.0
 Open `src/app/app.module.ts` and create an `OktaAuth` instance by adding the following lines after the existing import statements.
 
 ```ts
-import { OKTA_CONFIG, OktaAuthModule } from "@okta/okta-angular";
-import { OktaAuth } from "@okta/okta-auth-js";
+import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 const config = {
-  issuer: "https://{yourOktaDomain}/oauth2/default",
-  clientId: "{yourClientID}",
-  redirectUri: window.location.origin + "/login/callback",
-};
+  issuer: 'https://{yourOktaDomain}/oauth2/default',
+  clientId: '{yourClientID}',
+  redirectUri: window.location.origin + '/login/callback'
+}
 const oktaAuth = new OktaAuth(config);
 ```
 
@@ -793,7 +799,7 @@ providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth }}],
 You now need to configure the router to accept the login callback from Okta. Open `src/app/app-routing.module.ts` and add the following import statement to the top of the file.
 
 ```ts
-import { OktaAuthGuard, OktaCallbackComponent } from "@okta/okta-angular";
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 ```
 
 Update the `routes` configuration object to match the code below.
@@ -801,27 +807,27 @@ Update the `routes` configuration object to match the code below.
 ```ts
 const routes: Routes = [
   {
-    path: "",
-    component: HomeComponent,
+    path: '',
+    component: HomeComponent
   },
   {
-    path: "browse",
+    path: 'browse',
     component: BrowseComponent,
-    canActivate: [OktaAuthGuard],
+    canActivate: [ OktaAuthGuard ]
   },
   {
-    path: "character",
+    path: 'character',
     component: CharacterComponent,
-    canActivate: [OktaAuthGuard],
+    canActivate: [ OktaAuthGuard ]
   },
   {
-    path: "species",
+    path: 'species',
     component: SpeciesComponent,
-    canActivate: [OktaAuthGuard],
+    canActivate: [ OktaAuthGuard ]
   },
   {
-    path: "login/callback",
-    component: OktaCallbackComponent,
+    path: 'login/callback',
+    component: OktaCallbackComponent
   },
 ];
 ```
@@ -834,7 +840,7 @@ In the last section, you added authentication to the server. This means that any
 import { setContext } from '@apollo/client/link/context';
 import { OktaAuth } from '@okta/okta-auth-js';
 
-const uri = 'http://localhost:4201/graphql';
+const uri = 'http://localhost:4201/graphql'; 
 export function createApollo(httpLink: HttpLink, oktaAuth: OktaAuth): ApolloClientOptions<any> {
   const http = httpLink.create({ uri });
   const auth = setContext(async (_, { headers }) => {
@@ -853,26 +859,24 @@ export function createApollo(httpLink: HttpLink, oktaAuth: OktaAuth): ApolloClie
 The function now expects an `OktaAuth` instance as the second argument. This means that you have to add it to the `deps` array in the `NgModule` provider for the Apollo options. Update the `deps` array to match the following.
 
 ```ts
-deps: [HttpLink, OktaAuth];
+deps: [HttpLink, OktaAuth]
 ```
 
 Finally, you want to provide feedback to the user's sign-in status and also provide manual ways of logging in and out of the application. Open `src/app/navbar/navbar.component.ts` and replace its contents with the code below.
 
 ```ts
-import { Component } from "@angular/core";
-import { OktaAuthStateService } from "@okta/okta-angular";
-import { OktaAuth } from "@okta/okta-auth-js";
+import { Component } from '@angular/core';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 @Component({
-  selector: "app-navbar",
-  templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.css"],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(
-    public authStateService: OktaAuthStateService,
-    private oktaAuth: OktaAuth,
-  ) {}
+  
+  constructor(public authStateService: OktaAuthStateService, private oktaAuth: OktaAuth) {}
 
   async login() {
     await this.oktaAuth.signInWithRedirect();
@@ -881,6 +885,7 @@ export class NavbarComponent {
   async logout() {
     await this.oktaAuth.signOut();
   }
+
 }
 ```
 
