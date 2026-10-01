@@ -212,7 +212,7 @@ a.direct-link {
   @apply prose-inline-code:p-0.5 prose-inline-code:before:content-none prose-inline-code:after:content-none;
 
   /* Overrides for tables */
-  @apply prose-table:indent-3 prose-th:py-3 prose-th:bg-okta-cream prose-tr:border-0 prose-td:align-middle;
+  @apply prose-th:p-3 prose-td:px-3 prose-th:bg-okta-cream prose-tr:border-0 prose-td:align-middle;
 
   --tw-prose-body: var(--color-content-text);
   --tw-prose-headings: var(--color-content-text-strong);
