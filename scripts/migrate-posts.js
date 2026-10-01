@@ -33,6 +33,32 @@ import * as yaml from "js-yaml";
 // The site's slug rules, so xrefs land on the anchors markdown-it-anchor generates.
 import { slugify } from "../utils/markdown.js";
 
+// Asciidoctor's section id, as the old site generated it (idprefix "",
+// idseparator "-"): drop tags, entities and everything but letters, digits,
+// underscores, spaces, dots and hyphens, then fold runs of those separators
+// into one hyphen. Duplicates get "-2", "-3".
+export function asciidoctorId(title) {
+  return title
+    .toLowerCase()
+    .replace(
+      /<[^>]+>|&(?:[a-z][a-z]+\d{0,2}|#\d\d\d{0,4}|#x[\da-f][\da-f][\da-f]{0,3});|[^ \p{L}\p{M}\p{Nd}\p{Pc}\-.]+?/gu,
+      "",
+    )
+    .replace(/[ .\-]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+// A heading's text without the Markdown the converter put in it.
+function headingText(md) {
+  return md
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/[`*_]+/g, "")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 const DEST_DIR = "src/blog/posts";
 const IMG_DIR = "public/img/blog";
 const AVATAR_DIR = "public/img/avatar";
@@ -465,6 +491,15 @@ class AsciidocConverter {
     this.examples = 0;
     this.figures = 0;
     this.tables = 0;
+    this.ids = new Map();
+  }
+
+  // Asciidoctor's id for a section title, unique within the document.
+  sectionId(text) {
+    const base = asciidoctorId(headingText(text));
+    const n = (this.ids.get(base) || 0) + 1;
+    this.ids.set(base, n);
+    return n > 1 ? `${base}-${n}` : base;
   }
 
   note(message) {
@@ -603,7 +638,7 @@ class AsciidocConverter {
       .replace(/<<#?([^,>]+?)(?:,([^>]+))?>>/g, (_, target, label) => {
         const plain = target.trim();
         const isId = /^[\w-]+$/.test(plain);
-        const id = isId ? plain : slugify(plain);
+        const id = isId ? plain : asciidoctorId(plain);
         if (!label && !isId) {
           this.note(
             `xref by section title "<<${plain}>>" converted to #${id}; verify the anchor exists`,
@@ -831,14 +866,20 @@ class AsciidocConverter {
       const heading = trimmed.match(/^(={2,6})\s+(.+?)(?:\s+=+)?$/);
       if (heading) {
         const attrs = takeAttrs();
-        const id = pendingAnchor || attrs?.id;
+        const text = this.inline(heading[2]);
+        const explicit = pendingAnchor || attrs?.id;
         pendingAnchor = null;
-        // An explicit id becomes an anchor element: the "{#id}" attrs syntax
-        // would be read by Nunjucks as the start of a template comment.
+        // The heading's own id comes from this site's anchor plugin (kramdown's
+        // rule). Where Asciidoctor's id differs, or the source set one, it
+        // becomes an anchor element so links into the old site's sections keep
+        // resolving. (The "{#id}" attrs syntax would be read by Nunjucks as the
+        // start of a template comment.)
+        const auto = explicit ? null : this.sectionId(text);
+        if (explicit) this.ids.set(explicit, 1);
+        const id =
+          explicit || (auto !== slugify(headingText(text)) ? auto : null);
         const anchor = id ? `<a id="${id}"></a>\n` : "";
-        push(
-          `${anchor}${"#".repeat(heading[1].length)} ${this.inline(heading[2])}`,
-        );
+        push(`${anchor}${"#".repeat(heading[1].length)} ${text}`);
         i++;
         continue;
       }

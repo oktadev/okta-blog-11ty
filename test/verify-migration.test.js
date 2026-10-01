@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   balancedElement,
+  compareAnchors,
   compareCode,
   compareInline,
   compareProse,
@@ -71,9 +72,11 @@ test("needsAttention fails a post for any kind of loss, including inline code", 
     prose: { missing: [], extra: [] },
     code: { liveCount: 2, mineCount: 2, mismatches: [] },
     inline: [],
+    anchors: [],
   };
   assert.equal(needsAttention(clean), false);
   assert.equal(needsAttention({ ...clean, inline: ["okta login"] }), true);
+  assert.equal(needsAttention({ ...clean, anchors: ["setup"] }), true);
   assert.equal(
     needsAttention({ ...clean, prose: { missing: ["gone"], extra: [] } }),
     true,
@@ -136,4 +139,19 @@ test("compareProse accepts merged and split blocks but reports the leftover of a
 test("compareProse and compareInline report short losses too", () => {
   assert.deepEqual(compareProse(["Run it"], []).missing, ["Run it"]);
   assert.deepEqual(compareInline(["x", "y"], ["y"]), ["x"]);
+});
+
+test("extract collects heading ids and every id, and compareAnchors reports live ids that do not resolve", () => {
+  const live = extract(
+    '<h2 id="create-your-vue--go-app">Create</h2><h3 id="run-it">Run</h3><ul id="markdown-toc"></ul>',
+  );
+  assert.deepEqual(live.headingIds, ["create-your-vue--go-app", "run-it"]);
+  const mine = extract(
+    '<a id="create-your-vue--go-app"></a><h2 id="create-your-vue-go-app">Create</h2><h3 id="run">Run</h3>',
+  );
+  assert.deepEqual(
+    [...mine.ids],
+    ["create-your-vue--go-app", "create-your-vue-go-app", "run"],
+  );
+  assert.deepEqual(compareAnchors(live, mine), ["run-it"]);
 });
