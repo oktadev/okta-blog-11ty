@@ -109,7 +109,6 @@ services:
 ```
 {% endraw %}
 
-{:start="2"}
 2. Create a `.env` file in the same project root directory and add the following:
 ```yml
 POSTGRES_USERNAME=postgres
@@ -203,7 +202,6 @@ start();
 
 ```
 
-{:start="7"}
 7. Next, let's create our Fastify API routes along with their appropriate CRUD operations in a new file `routes/facilities.ts`:
 
 ```ts
@@ -293,7 +291,6 @@ export default facilitiesRoutes;
 
 ```
 
-{:start="8"}
 8. To register these routes with our Fastify instance, add the following to `index.ts`:
 ```ts
 fastify.register(facilitiesRoutes);
@@ -301,7 +298,6 @@ fastify.register(facilitiesRoutes);
 
 **NOTE:** Don't forget to also import the `facilitiesRoutes` after adding the above line.
 
-{:start="9"}
 9. Then we'll create a `utils/jwt-verifier.ts` file that will include logic to verify the access token included in API calls from the frontend:
 
 ```ts
@@ -356,7 +352,6 @@ export const jwtVerifier = async (
 
 ```
 
-{:start="10"}
 10. We'll then add a [Fastify Prehandler Hook](https://www.fastify.io/docs/latest/Reference/Hooks/#prehandler) to `index.ts` that will run the `jwtVerifier` logic with each Fastify route:
 
 ```ts

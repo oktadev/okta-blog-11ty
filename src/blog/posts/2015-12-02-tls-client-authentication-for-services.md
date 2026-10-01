@@ -30,10 +30,8 @@ chain without finding a certificate that it trusts, it will reject the
 connection. For an example of what a server might send, see [this
 gist](https://gist.github.com/jpf/9282d558bcc105ae8e1a).
 
-{: style="text-align: center"}
 {% img {src: "2015-10-29-tls-client-authentication-for-services-tls-handshake.png", alt: "TLS handshake", header: "540"} %}
 
-{: style="text-align: center;font-size: x-small;"}
 Image reprinted with permission from
 [CloudFlare](https://blog.cloudflare.com/protecting-the-origin-with-tls-authenticated-origin-pulls/)
 
@@ -79,7 +77,6 @@ meant to be complete, so you may need to modify them to fit in your environment.
 
 ### Certificates and Key Stores
 
-{: style="text-align: center"}
 {% img {src: "2015-10-29-tls-client-authentication-for-services-ca-chain.png", alt: "CA heirarchy", header: "540"} %}
 
 First, let's setup our trust store, which is just a key store that will only
@@ -175,7 +172,6 @@ server:
     allowRenegotiation: false
 ~~~
 
-{: style="text-align: center;font-size: x-small;"}
 Dropwizard code is Copyright &copy; 2010-2013 Coda Hale, Yammer Inc., 2014-2015 Dropwizard Team and/or its affiliates.
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
@@ -265,16 +261,13 @@ SSLContext sslContext = sslConfig.createSSLContext();
 Client client = ClientBuilder.newBuilder().sslContext(sslContext).build();
 ~~~
 
-{: style="text-align: center;font-size: x-small;"}
 Jersey code is Copyright &copy; 2010-2015 Oracle and/or its affiliates.
 [GPL 2.0 Selected](https://jersey.java.net/license.html).
 
 Hooray authentication!
 
-{: style="text-align: center"}
 [![xkcd-identity](https://imgs.xkcd.com/comics/identity.png)](https://xkcd.com/1121/)
 
-{: style="text-align: center;font-size: x-small;"}
 Comic is Copyright &copy; [xkcd.com](https://xkcd.com).
 [CC BY-NC 2.5](http://creativecommons.org/licenses/by-nc/2.5/).
 
@@ -396,7 +389,6 @@ public class CertificateValidationFilter implements ContainerRequestFilter {
 }
 ~~~
 
-{: style="text-align: center;font-size: x-small;"}
 Dropwizard code is Copyright &copy; 2010-2013 Coda Hale, Yammer Inc., 2014-2015 Dropwizard Team and/or its affiliates.
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 Jersey code is Copyright &copy; 2010-2015 Oracle and/or its affiliates.

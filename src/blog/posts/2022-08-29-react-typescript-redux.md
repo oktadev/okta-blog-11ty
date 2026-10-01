@@ -209,7 +209,6 @@ export default userProfileSlice.reducer;
 ```
 {% endraw %}
 
-{:start="3"}
 3. In the `src/app/store.ts` file, add the created Redux slice to the Redux store:
 {% raw %}
 ```ts

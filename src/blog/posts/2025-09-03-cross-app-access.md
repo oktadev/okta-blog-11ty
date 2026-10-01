@@ -18,8 +18,8 @@ changelog:
   - 2026-05-22: Updated the Okta Admin Console steps to reflect the new **XAA Resource App** and **XAA Requesting App** App Catalog integrations, and the new required **Issuer URL** and **Client ID** fields. Changes to this article can be viewed in [oktadev/okta-blog#1641](https://github.com/oktadev/okta-blog/pull/1641).
 ---
 
-## ⚠️ This guide is out of date
-{: .no_toc }
+<!-- omit from toc -->
+## ⚠️ This guide is out of date {.no_toc}
 
 > The Okta Admin Console steps in this guide no longer work: the **XAA Resource App** and **XAA Requesting App** App Catalog integrations, along with the **Manage Connections** tab, have been replaced by AI agent registration under **Directory > AI Agents**.
 >
