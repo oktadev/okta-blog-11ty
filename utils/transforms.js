@@ -36,13 +36,15 @@ function renderMarkdownAttrs(content) {
 }
 
 const TABLE_TAG = /<table[\s>]|<\/table>/gi;
+const HAS_TABLE = /<table[\s>]/i;
+// Deliberate: posts with several tables expose repeated "Table" landmarks.
 const SCROLL_OPEN =
   '<div class="overflow-x-auto" tabindex="0" role="region" aria-label="Table">';
 
 // Depth-tracked rather than a regex pair match: one post nests a table inside a
 // cell, and pair matching would close the wrapper on the inner </table>.
 function wrapTables(content) {
-  if (!content.includes("<table")) return content;
+  if (!HAS_TABLE.test(content)) return content;
 
   let out = "";
   let cursor = 0;
