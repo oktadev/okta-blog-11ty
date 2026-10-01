@@ -39,11 +39,11 @@
 
     <div class="hidden xl:flex items-center gap-6">
       <div class="relative group">
-        <button type="button" class="inline-flex items-center gap-1">
+        <button type="button" id="community-menu-button" class="inline-flex items-center gap-1" aria-expanded="false" aria-controls="community-menu">
           Community
-          <span class="inline-flex items-center relative top-0.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180">{% include "icons/chevron-down.svg" %}</span>
+          <span data-community-chevron class="inline-flex items-center relative top-0.5 transition-transform duration-200 group-hover:rotate-180">{% include "icons/chevron-down.svg" %}</span>
         </button>
-        <div class="absolute right-0 top-8 hidden w-max rounded-sm bg-okta-white p-4 shadow-md group-hover:block group-focus-within:block z-51 before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-['']">
+        <div id="community-menu" class="absolute right-0 top-8 hidden w-max rounded-sm bg-okta-white p-4 shadow-md group-hover:block z-51 before:absolute before:-top-2 before:left-0 before:right-0 before:h-2 before:content-['']">
           <div class="absolute -top-2 right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-okta-white"></div>
           <a href="{{ forumUrl }}" class="block text-okta-carbon">Forum</a>
           <hr class="my-2 border-t border-okta-carbon/50"/>
@@ -170,5 +170,45 @@
   }
   desktop.addEventListener("change", closeIfDesktop);
   window.addEventListener("resize", closeIfDesktop);
+})();
+
+(function () {
+  var button = document.getElementById("community-menu-button");
+  var panel = document.getElementById("community-menu");
+  if (!button || !panel) return;
+
+  var chevron = button.querySelector("[data-community-chevron]");
+
+  function isOpen() {
+    return button.getAttribute("aria-expanded") === "true";
+  }
+
+  function setOpen(open) {
+    panel.classList.toggle("hidden", !open);
+    button.setAttribute("aria-expanded", String(open));
+    if (chevron) chevron.classList.toggle("rotate-180", open);
+  }
+
+  function isOutside(target) {
+    return !panel.contains(target) && !button.contains(target);
+  }
+
+  button.addEventListener("click", function () {
+    setOpen(!isOpen());
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && isOpen()) {
+      setOpen(false);
+      button.focus();
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+    if (isOpen() && isOutside(event.target)) setOpen(false);
+  });
+  document.addEventListener("focusin", function (event) {
+    if (isOpen() && isOutside(event.target)) setOpen(false);
+  });
 })();
 {% endjs %}
