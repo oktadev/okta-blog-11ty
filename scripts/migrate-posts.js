@@ -236,11 +236,27 @@ export function transformProse(text, apply) {
   return apply(masked).replace(MASK_RE, (_, index) => spans[Number(index)]);
 }
 
+// Kramdown attribute lists ("{: ...}" on a line of their own). A heading's
+// "{: .no_toc }" keeps it out of the table of contents: the TOC plugin reads
+// an HTML comment before the heading and markdown-it-attrs sets the class, so
+// the heading keeps its id and its class as on the old site. "{:start="N"}"
+// is implied by the list's own first number. Styling attributes have no
+// equivalent and are dropped; "{:toc}" is handled with the TOC itself.
+export function kramdownAttributes(text) {
+  return text
+    .replace(
+      /^(#{1,6} [^\n]+)\n\{: ?\.no_toc ?\}[ \t]*$/gm,
+      "<!-- omit from toc -->\n$1 {.no_toc}",
+    )
+    .replace(/^\{:start="\d+"\}[ \t]*\n(?=\d+\. )/gm, "")
+    .replace(/^\{:(?!toc\})[^}\n]*\}[ \t]*\n?/gm, "");
+}
+
 function convertMarkdownProse(text) {
   return (
     convertLiquid(
-      text
-        // Kramdown leftovers
+      kramdownAttributes(text)
+        // Kramdown leftovers, inline after a tag
         .replace(/ "no_toc"=""/g, "")
         .replace(/\{: \.center-image \}/g, "")
         .replace(/^\*\*Table of Contents\*\*\{: \.hide \}[ \t]*\r?\n/gm, ""),
@@ -313,6 +329,12 @@ export function convertMarkdown(content) {
     // Each segment holds consecutive lines joined by newlines, so rejoining the
     // segments the same way reproduces the original line structure.
     .join("\n");
+  const styled = body.match(/^\{: ?style=[^}\n]*\}[ \t]*$/gm);
+  if (styled) {
+    notes.push(
+      `dropped ${styled.length} kramdown style attribute line(s), e.g. ${styled[0]}`,
+    );
+  }
   const guarded = protectTemplateSyntax(converted);
   if (guarded.wrapped) {
     notes.push(

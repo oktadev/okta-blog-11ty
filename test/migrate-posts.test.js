@@ -144,6 +144,19 @@ test("markdown: images, embeds, excerpts, post links and the TOC", () => {
   );
 });
 
+test("markdown: kramdown attribute lines", () => {
+  const { markdown, notes } = convertMarkdown(
+    '## Intro\n\n### Smart cards\n{: .no_toc }\n\nText.\n\n{:start="3"}\n3. Third step\n\n{: style="text-align: center"}\n_Caption_\n\n```sh\n{: not touched in code }\n```\n',
+  );
+  assert.equal(
+    markdown,
+    "## Intro\n\n<!-- omit from toc -->\n### Smart cards {.no_toc}\n\nText.\n\n3. Third step\n\n_Caption_\n\n```sh\n{: not touched in code }\n```\n",
+  );
+  assert.deepEqual(notes, [
+    'dropped 1 kramdown style attribute line(s), e.g. {: style="text-align: center"}',
+  ]);
+});
+
 test("markdown: capture/comment tags and empty HTML attributes", () => {
   const out = bodyOf(
     md(
