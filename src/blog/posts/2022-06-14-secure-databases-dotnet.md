@@ -60,7 +60,7 @@ The last thing I want to mention is that different Cosmos DB APIs have different
 {% set note %}
 > Note that the TCP port 5001 must be the same used by the application. You can see it in the messages displayed in the terminal when you start the application with **`dotnet run`**.
 {% endset %}
-{{ macro.cli({type: "web", framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
+{{ macro.cli({note: note, type: "web", framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
 
 ## Create a Cosmos DB account
 
