@@ -35,3 +35,11 @@ export const markdownLibrary = markdownIt({
       `<nav class="${containerClass}" aria-label="Table of contents">${containerHeaderHtml}`,
     transformContainerClose: () => "</nav>",
   });
+
+const renderToken = (tokens, idx, options, env, self) =>
+  self.renderToken(tokens, idx, options);
+
+markdownLibrary.renderer.rules.table_open = (...args) =>
+  `<div class="overflow-x-auto" tabindex="0">${renderToken(...args)}`;
+markdownLibrary.renderer.rules.table_close = (...args) =>
+  `${renderToken(...args)}</div>`;

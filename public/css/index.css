@@ -161,7 +161,7 @@ a.direct-link {
 }
 
 .table-of-contents {
-  @apply rounded-sm border border-okta-gravel px-6 pt-6 pb-3;
+  @apply rounded-sm border border-okta-gravel my-9 px-6 pt-6 pb-3;
 
   .toc-header {
     @apply m-0 text-2xl text-okta-slate;
@@ -193,9 +193,12 @@ a.direct-link {
 .blog-prose {
   @apply prose max-w-none;
   @apply prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-2xl prose-h6:text-xl;
+  @apply prose-h2:leading-9 prose-h3:leading-8 prose-h4:leading-7 prose-h5:leading-6 prose-h6:leading-5;
+  @apply prose-h3:font-medium prose-h4:font-medium prose-h5:font-medium prose-h6:font-medium;
+
   @apply prose-a:font-normal;
-  @apply prose-h1:font-heading prose-h2:font-heading prose-headings:mt-6 prose-headings:mb-3 prose-p:mt-2.5 prose-li:m-0;
-  @apply prose-blockquote:p-1.5 prose-blockquote:m-3 prose-blockquote:font-normal prose-blockquote:not-italic;
+  @apply prose-h1:font-heading prose-h2:font-heading prose-headings:mt-12 prose-headings:mb-6 prose-p:mt-2.5 prose-li:m-0;
+  @apply prose-blockquote:py-1.5 prose-blockquote:m-3 prose-blockquote:font-normal prose-blockquote:not-italic;
 
   /* Code blocks */
   /* Base styles for code blocks and inline code */
@@ -207,6 +210,9 @@ a.direct-link {
 
   /* Overrides for inline code */
   @apply prose-inline-code:p-0.5 prose-inline-code:before:content-none prose-inline-code:after:content-none;
+
+  /* Overrides for tables */
+  @apply prose-table:indent-3 prose-th:py-3 prose-th:bg-okta-cream prose-tr:border-0 prose-td:align-middle;
 
   --tw-prose-body: var(--color-content-text);
   --tw-prose-headings: var(--color-content-text-strong);
@@ -237,6 +243,7 @@ a.direct-link {
       @apply content-none;
     }
   }
+
 }
 
 @theme {
