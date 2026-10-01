@@ -110,6 +110,7 @@ Navigate to `http://localhost:8080` in your favorite browser. You should be able
 
 {% img {src: "microservices-service-to-service-security/school-ui.png", alt: "School UI", header: "800"} %}
 
+<a id="spring-security-and-oauth-2-0"></a>
 ### Spring Security and OAuth 2.0
 
 This example uses [Okta's Spring Boot Starter](https://github.com/okta/okta-spring-boot), which is a thin layer on top of Spring Security. The Okta starter simplifies configuration and does audience validation in the access token. It also allows you to specify the claim that will be used to create Spring Security authorities.
@@ -364,6 +365,7 @@ Now all your apps are running in Docker with HTTPS! Prove it at `https://localho
 
 You can make one more security improvement: use OAuth 2.0 to secure your school-service API.
 
+<a id="api-security-with-oauth-2-0"></a>
 ## API Security with OAuth 2.0
 
 Add the Okta Spring Boot Starter and Spring Cloud Config to `school-service/pom.xml`:
@@ -576,6 +578,7 @@ eureka:
 
 You'll need to make a similar adjustment to the URLs in `docker-compose.yml`.
 
+<a id="enhance-your-knowledge-about-spring-microservices-docker-and-oauth-2-0"></a>
 ## Enhance Your Knowledge about Spring Microservices, Docker, and OAuth 2.0
 
 This tutorial showed you how to make sure your service-to-service communications are secure in a microservices architecture. You learned how to use HTTPS everywhere and lock down your API with OAuth 2.0 and JWTs.

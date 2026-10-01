@@ -27,6 +27,7 @@ I spent the last month upgrading [JHipster](https://www.jhipster.tech) to use Sp
 
 [[toc]]
 
+<a id="logout-with-oauth-2-0-and-oidc"></a>
 ## Logout with OAuth 2.0 and OIDC
 
 Soon after integrating support for Keycloak and Okta in JHipster, the project received a lot of complaints from users that they couldn't log out. JHipster users were familiar with clicking **Logout** (check with latest) and being _completely_ logged out. With the default Spring Security support, users would be logged out of the local app, but not the IdP.
@@ -368,6 +369,7 @@ public class LogoutResourceIT {
 
 Getting the logout functionality properly tested was a big milestone. I moved on to upgrading JHipster's microservices architecture.
 
+<a id="how-to-pass-an-oauth-2-0-access-token-to-downstream-microservices-with-zuul"></a>
 ## How to Pass an OAuth 2.0 Access Token to Downstream Microservices with Zuul
 
 JHipster uses Netflix Zuul to proxy requests from the gateway to downstream microservices. I created an `AuthorizationHeaderFilter` to handle access token propagation.
@@ -481,6 +483,7 @@ Then in classes that use `@SpringBootTest`, I configured this as a configuration
 @SpringBootTest(classes = {MicroApp.class, TestSecurityConfiguration.class})
 ```
 
+<a id="running-end-to-end-tests-on-jhipster-microservices-that-are-secured-with-oauth-2-0"></a>
 ## Running End-to-End Tests on JHipster Microservices that are Secured with OAuth 2.0
 
 The final issue surfaced shortly after. The [jhipster-daily-builds](https://dev.azure.com/hipster-labs/jhipster-daily-builds/_build/results?buildId=1995) (running on Azure DevOps) were failing when they tried to test microservices.
@@ -494,6 +497,7 @@ We don't include Keycloak Docker Compose files for microservices because we don'
 
 The end-to-end tests that were running on Azure where 1) starting the microservice, and 2) hitting its health endpoint to ensure it started successfully. To fix, [Pascal Grimaud](https://twitter.com/pascalgrimaud) [disabled starting/testing microservices](https://github.com/hipster-labs/jhipster-daily-builds/commit/5b8f125131a3d39c190e0572dd60fd4c3d7a44d4). He also created a [new issue](https://github.com/hipster-labs/jhipster-daily-builds/issues/6) to improve the process so a full microservices stack is generated using JHipster's JDL.
 
+<a id="upgrade-to-spring-security-5-1-and-its-first-class-oidc-support"></a>
 ## Upgrade to Spring Security 5.1 and its First-Class OIDC Support
 
 I hope this list of challenges and fixes has helped you. If you're using the deprecated `@EnableOAuth2Sso` or `@EnableResourceServer`, I encourage you to try upgrading to Spring Security 5.1. The [issue I used to track the upgrade](https://github.com/jhipster/generator-jhipster/issues/9276) has links that show all the required code changes.
@@ -501,6 +505,7 @@ I hope this list of challenges and fixes has helped you. If you're using the dep
 - [Code changes required for a monolith](https://github.com/mraible/jhipster-oidc-improved/pull/1)
 - [Code changes required for a microservices architecture](https://github.com/mraible/jhipster-ms-oidc-improved/pull/1)
 
+<a id="use-jhipster-6-to-generate-a-spring-boot-react-app-with-oidc-for-auth"></a>
 ## Use JHipster 6 to Generate a Spring Boot + React app with OIDC for Auth
 
 JHipster 6 uses the latest and greatest versions of Spring Boot and Spring Security. It supports Angular and React for its front-end. It [supports Vue too](https://github.com/jhipster/jhipster-vuejs), it's just not part of the main generator.

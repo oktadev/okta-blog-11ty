@@ -41,6 +41,7 @@ Staying relevant is critical to the job. Focusing only on the technologies your 
 
 2\) Developer advocacy is a lot of fun, and we're often the first people conference organizers reach out to when they're looking for presenters. I noticed a sort of redundancy across speakers, so to balance the scales I'll often pass some of my invitations to underrepresented people. This way, I avoid burnout while also giving someone a well-deserved platform.
 
+<a id="bernd-rücker-co-founder-technologist-of-camunda"></a>
 ## Bernd Rücker, Co-founder & Technologist of Camunda
 
 [<span class="float-right ml-4 mb-2">{% img {src: "devrel-protips-v2/berndruecker.png", alt: "Bernd Rücker", header: "100"} %}</span>](https://twitter.com/berndruecker)

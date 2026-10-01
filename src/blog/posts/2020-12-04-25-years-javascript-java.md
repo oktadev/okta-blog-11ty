@@ -135,6 +135,7 @@ I don't see Kotlin/JS taking off, but TypeScript is definitely here to stay. Ang
 
 Android has fueled the fire of Kotlin greatly, and most Android developers I know prefer it over Java.
 
+<a id="happy-25th-to-us"></a>
 ## Happy 25th to Us! 🥳
 
 The real celebration here is to us as developers! If you're old like me, you've had the privilege of enjoying both JavaScript and Java for quite some time. Both are still very popular and in high-demand.

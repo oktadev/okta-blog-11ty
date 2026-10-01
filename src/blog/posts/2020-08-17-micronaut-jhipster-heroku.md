@@ -137,6 +137,7 @@ docker-compose -f src/main/docker/keycloak.yml up -d
 
 Keycloak is the default OIDC engine that's used by JHipster, and you can run it in a Docker container. In your project's `src/main/docker` folder, there's a Docker Compose file for Keycloak, as well as default users, realms, and applications. Keycloak imports these on startup.
 
+<a id="what-about-react-and-vue-js"></a>
 ### What about React and Vue.js?
 
 You might have noticed I didn't specify a client framework. I didn't need to because Angular is the default. If you want to use React instead, you simply need to add a `clientFramework react` line to the application definition in your JDL. For example:
@@ -255,6 +256,7 @@ You can also deploy your JHipster app as a Docker container! In [Angular + Docke
 
 In the next section, I'll show how to deploy your container to Heroku.
 
+<a id="micronaut-docker-on-heroku"></a>
 ## Micronaut + Docker on Heroku
 
 JHipster uses [Jib](https://github.com/GoogleContainerTools/jib) to build Docker images for your application. Run the following command to create a Docker image.

@@ -290,6 +290,7 @@ Restart your server and you should be able to override your browser's language p
 
 Your language preference will be saved in a cookie, so if you navigate back to `http://localhost:8080`, the page will render in English. If you quit your browser and restart, you'll be back to using your browser's language preference.
 
+<a id="hot-reloading-thymeleaf-templates-and-resource-bundles-in-spring-boot-2-1"></a>
 ### Hot Reloading Thymeleaf Templates and Resource Bundles in Spring Boot 2.1
 
 If you'd like to modify your Thymeleaf templates and see those changes immediately when you refresh your browser, you can add Spring Boot's [Developer Tools](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html) to your `pom.xml`.

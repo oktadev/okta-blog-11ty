@@ -452,6 +452,7 @@ Create a `blog` directory and run `jhipster import-jdl app.jh` inside of it. In 
 
 If you've never heard of JHipster before, you should download the [free JHipster Mini-Book](https://www.infoq.com/minibooks/jhipster-mini-book-5) from InfoQ! It's a book I wrote to help you get started with hip technologies today: Angular, Bootstrap and Spring Boot. The 5.0 version was [recently released](http://www.jhipster-book.com/#!/news/entry/jhipster-mini-book-v5-now-available).
 
+<a id="learn-more-about-angular-7-jhipster-and-oauth-2-0"></a>
 ## Learn More About Angular 7, JHipster, and OAuth 2.0
 
 I hope you've enjoyed learning about Angular 7 and how to add authn/authz to an Angular app. I've written a lot about Angular on this blog. See the following posts to learn more about this modern web framework.

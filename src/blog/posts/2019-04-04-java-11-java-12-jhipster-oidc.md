@@ -77,6 +77,7 @@ npm install -g generator-jhipster@6.0.0
 
 > **NOTE:** The `npm` command is part of [Node.js](https://nodejs.org). You'll need to have Node 10.x to install JHipster and run useful commands.
 
+<a id="create-a-spring-boot-angular-app-that-runs-on-java-11"></a>
 ## Create a Spring Boot + Angular App that runs on Java 11+
 
 The most basic way to get started with JHipster is to create a new directory, cd into it, and run `jhipster`. You'll be prompted to answer a number of questions about the app you'd like to create. Question range from the name of your app, to the authentication type you'd like to use, to SQL vs. NoSQL.

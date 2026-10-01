@@ -60,6 +60,7 @@ Developers often wonder, is it possible to do an OAuth flow _without_ a browser 
 - CLI, TV, etc: use the Device Grant (browser on another device), app uses REST
 - Native app: use a custom URL handler
 
+<a id="javas-oauth-2-0-support"></a>
 ## Java's OAuth 2.0 support
 
 Java, the language, does not have built-in OAuth support. In fact, the JDK doesn't even contain APIs to write a web app. The basic building blocks for constructing web apps are provided by the [Servlet API and Jakarta EE](https://jakarta.ee/specifications/servlet/5.0/).
@@ -181,6 +182,7 @@ Spring Boot will [auto-configure Spring Security's filter chain for a resource s
 
 From this information, I hope you have a decent overview of where Java is regarding OAuth. If you like to learn by watching, reading, or doing&mdash;keep reading!
 
+<a id="watch-oauth-2-0-in-action-with-java-frameworks"></a>
 ## Watch OAuth 2.0 in action with Java frameworks
 
 I've created a few screencasts to show how to build a REST API with Quarkus, Spring Boot, Micronaut, and Helidon. These videos also show how to secure each API with OAuth 2.0.
@@ -255,6 +257,7 @@ OIDC does it better. Just use it!
 
 </div>
 
+<a id="oauth-2-0-authorization-servers"></a>
 ## OAuth 2.0 authorization servers
 
 Up to this point, all the things I've talked about are OAuth clients. They require an identity provider to do OAuth flows. An identity provider has OAuth 2.0 authorization servers. Most of the prominent providers have their own proprietary implementation.

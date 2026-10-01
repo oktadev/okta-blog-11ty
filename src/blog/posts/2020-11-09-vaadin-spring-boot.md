@@ -331,6 +331,7 @@ Here's what this code does:
   - The Add button calls the `add()` method, which submits the form to the backend and adds the saved `Person` to the people array.
 - If any of the server calls fail, `message` gets populated to inform the user.
 
+<a id="start-your-vaadin-spring-boot-app"></a>
 ### Start Your Vaadin + Spring Boot App
 
 Start the application with the following command:

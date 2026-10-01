@@ -221,6 +221,7 @@ public class RestApplication extends Application {
 
 </div>
 
+<a id="configure-apache-shiro-to-use-oauth-2-0"></a>
 ## Configure Apache Shiro to use OAuth 2.0
 
 Apache Shiro can be configured in a few different ways: programmatically, using dependency injection with [Spring](https://shiro.apache.org/spring-boot.html) and [Guice](https://shiro.apache.org/guice.html), or using an "ini" file. To keep things focused, I'll use a simple `shiro.ini` file located in `src/main/resources`:
@@ -240,6 +241,7 @@ oktaJwtRealm.issuer = https://{yourOktaDomain}/oauth2/default
 
 > **TIP:** If you have resources that require anonymous access, use `authcBearer[permissive]`—just make sure all of your endpoints are annotated correctly!
 
+<a id="add-a-web-xml"></a>
 ## Add a `web.xml`
 
 You might be asking yourself, "really, a `web.xml` file?" Technically you don't need one—you could instead configure the [Maven War Plugin to not require a web.xml](https://maven.apache.org/plugins/maven-war-plugin/war-mojo.html#failOnMissingWebXml).
@@ -279,6 +281,7 @@ curl localhost:8000/ -v
 
 The server returned a `401` status code because we did not provide an access token. There are a few ways to get an access token; which option is right for you depends on where and how you access your REST application. Usually, the application that is invoking your REST API already has an access token. For example, a SPA mobile app, or another web app likely already has an authenticated user. For testing purposes, we will set up the [OIDC Debugger](https://oidcdebugger.com/).
 
+<a id="create-an-oauth-2-0-application"></a>
 ## Create an OAuth 2.0 Application
 
 Login in to your Okta admin console. If you just [created a new Okta account](https://developer.okta.com/signup) and have not logged in yet, follow the activation link in your inbox.

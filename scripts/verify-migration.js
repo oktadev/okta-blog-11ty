@@ -213,6 +213,15 @@ export function extract(html) {
     body = body.slice(0, warning.index) + body.slice(warning.index + el.length);
   }
 
+  // Anchors: the ids headings carry (the old site's link targets) and every
+  // id on the page (a heading, or an anchor element placed before one).
+  const headingIds = [...body.matchAll(/<h[1-6]\b[^>]*\bid="([^"]+)"/gi)]
+    .map((m) => m[1])
+    .filter((id) => !/^markdown-toc/.test(id));
+  const ids = new Set(
+    [...body.matchAll(/\bid="([^"]+)"/gi)].map((m) => decodeEntities(m[1])),
+  );
+
   const inline = [];
   body = body.replace(/<code\b[^>]*>([\s\S]*?)<\/code>/gi, (_, c) => {
     inline.push(normalizeText(stripTags(c)));
@@ -249,7 +258,13 @@ export function extract(html) {
         !l.startsWith("There was a 'Moved Permanently' error fetching URL"),
     );
 
-  return { prose, code, inline };
+  return { prose, code, inline, headingIds, ids };
+}
+
+// Every heading id on the live page must resolve on the local one, on the
+// heading itself or on an anchor element.
+export function compareAnchors(live, mine) {
+  return live.headingIds.filter((id) => !mine.ids.has(decodeEntities(id)));
 }
 
 // ---------------------------------------------------------------------------
@@ -411,13 +426,15 @@ function localHtml(site, slug) {
 }
 
 // A post needs a look when anything the live site has is absent here: prose
-// blocks, whole code blocks, a differing code line, or inline code spans.
+// blocks, whole code blocks, a differing code line, inline code spans, or a
+// heading id that no longer resolves.
 export function needsAttention(result) {
   return Boolean(
     result.prose.missing.length ||
     result.code.mismatches.length ||
     result.code.liveCount !== result.code.mineCount ||
-    result.inline.length,
+    result.inline.length ||
+    result.anchors.length,
   );
 }
 
@@ -431,7 +448,8 @@ export async function verify(slug, site) {
   const prose = compareProse(live.prose, mine.prose);
   const code = compareCode(live.code, mine.code);
   const inline = compareInline(live.inline, mine.inline);
-  return { slug, live, mine, prose, code, inline };
+  const anchors = compareAnchors(live, mine);
+  return { slug, live, mine, prose, code, inline, anchors };
 }
 
 async function main() {
@@ -465,7 +483,7 @@ async function main() {
       const bad = needsAttention(r);
       if (bad) failed++;
       rows.push(
-        `${bad ? "✖" : "✓"} ${slug}: prose ${r.live.prose.length}/${r.mine.prose.length} blocks, ${r.prose.missing.length} missing, ${r.prose.extra.length} extra | code ${r.code.liveCount}/${r.code.mineCount}, ${r.code.mismatches.length} differ | inline code missing ${r.inline.length}`,
+        `${bad ? "✖" : "✓"} ${slug}: prose ${r.live.prose.length}/${r.mine.prose.length} blocks, ${r.prose.missing.length} missing, ${r.prose.extra.length} extra | code ${r.code.liveCount}/${r.code.mineCount}, ${r.code.mismatches.length} differ | inline code missing ${r.inline.length} | anchors missing ${r.anchors.length}`,
       );
       if (details || bad) {
         r.prose.missing.forEach((m, i) => {
@@ -488,6 +506,8 @@ async function main() {
           );
         for (const c of r.inline.slice(0, 10))
           rows.push(`    inline code missing: ${c.slice(0, 100)}`);
+        for (const a of r.anchors.slice(0, 10))
+          rows.push(`    anchor missing: #${a}`);
       }
     } catch (err) {
       failed++;

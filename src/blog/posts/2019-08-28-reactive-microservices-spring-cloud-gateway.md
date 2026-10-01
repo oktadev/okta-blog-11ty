@@ -563,6 +563,7 @@ You've built a resilient and reactive microservices architecture with Spring Clo
 
 If you'd like to use Feign in a WebFlux app, see the [feign-reactive](https://github.com/kptfh/feign-reactive) project. I did not have a need for Feign in this particular example.
 
+<a id="secure-spring-cloud-gateway-with-oauth-2-0"></a>
 ## Secure Spring Cloud Gateway with OAuth 2.0
 
 OAuth 2.0 is an authorization framework for delegated access to APIs. OIDC (or OpenID Connect) is a thin layer on top of OAuth 2.0 that provides authentication. Spring Security has excellent support for both frameworks and so does Okta!
@@ -591,6 +592,7 @@ This is all you need to do to add OIDC login with Okta! Restart your gateway app
 
 {% img {src: "spring-cloud-gateway/okta-sign-in.png", alt: "Okta Sign In"} %}
 
+<a id="make-your-gateway-an-oauth-2-0-resource-server"></a>
 ### Make Your Gateway an OAuth 2.0 Resource Server
 
 You likely won't build the UI for your app on the gateway itself. You'll probably use a SPA or mobile app instead. To configure your gateway to operate as a resource server (that looks for an `Authorization` header with a bearer token), add a new `SecurityConfiguration` class in the same directory as your main class.
@@ -901,6 +903,7 @@ public class CarServiceApplicationTests {
 
 Run the test again and everything should pass!
 
+<a id="mock-jwt-support-in-spring-security-5-2"></a>
 ## Mock JWT Support in Spring Security 5.2
 
 Kudos to [Josh Cummings](https://spring.io/team/jzheaux) for his help with JWTs and WebTestClient. Josh gave me a preview of the mock JWT support coming in Spring Security 5.2.

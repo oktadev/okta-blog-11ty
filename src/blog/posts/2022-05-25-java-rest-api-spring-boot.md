@@ -37,6 +37,7 @@ Use SDKMAN to install Java 17 with GraalVM
 sdk install java 22.1.0.r17-grl
 ```
 
+<a id="generate-an-oauth-2-0-access-token"></a>
 ## Generate an OAuth 2.0 access token
 
 1. Install the [Okta CLI](https://cli.okta.com/) and run `okta register` to sign up for a new account. If you already have an account, run `okta login`.

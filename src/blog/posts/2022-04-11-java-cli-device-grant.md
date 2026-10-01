@@ -30,6 +30,7 @@ If you want to skip the text and jump directly into the example code, you can fi
 
 [[toc]]
 
+<a id="how-does-the-oauth-2-0-device-authorization-grant-work"></a>
 ## How does the OAuth 2.0 Device Authorization Grant work?
 
 At a high level, the flow works like this:
@@ -44,6 +45,7 @@ At a high level, the flow works like this:
 
 > **NOTE:** This example will work the same with any Identity Provider (IdP) that supports the flow, but you may need to tweak the URLs.
 
+<a id="oauth-2-0-from-the-command-line"></a>
 ## OAuth 2.0 from the command line
 
 You might not think of your terminal as an "input restricted device", but that doesn't mean you should type a website's passwords into your console. There are a few problems to be aware of related to this:

@@ -55,6 +55,7 @@ As a consultant, I was hired a few times to help solve performance problems. Cli
 
 This brings us to today, where it's commonplace to mix and match your MVC framework with SPAs for more dynamic functionality. If you build the next Photoshop as a web app, you won't want to use server-side rendering; you'll want to build it as a SPA. On the flip side, a SPA approach makes no sense if you're developing something like Wikipedia, where MVC or a static site generator would work well.
 
+<a id="the-microservices-explosion"></a>
 ## The Microservices Explosion 💥
 
 The term "microservices" was first coined in 2007. Many call it Service Oriented Architecture (SOA) reincarnated, and it kinda is.
@@ -91,6 +92,7 @@ How does UI development work in product-centric teams, and is it possible to use
 
 I've worked on a few microservices projects. Even though backend services were split up into separate services, the UI was often a monolith built with a single web framework that made requests to the backend API gateway. The API gateway served as an aggregation layer to expose all the various services at the same base URL.
 
+<a id="state-of-the-art-in-java-javascript"></a>
 ### State of the Art in Java + JavaScript
 
 This design works well and is currently state of the art in the Java space, as evidenced by JHipster. If you haven't heard of JHipster, it's a platform for generating Spring Boot monoliths and microservices with a JavaScript frontend. Current frontend framework options include Angular, React, and Vue.js.

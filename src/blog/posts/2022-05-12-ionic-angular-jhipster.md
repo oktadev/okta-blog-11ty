@@ -41,6 +41,7 @@ Below is a diagram of the app you'll create in this tutorial and its authenticat
 
 {% img {src: "jhipster-ionic-blueprint/ionic-jhipster-flow.png", alt: "JHipster Ionic OAuth 2.0 flow", header: "800"} %}
 
+<a id="introducing-the-jhipster-ionic-blueprint"></a>
 ## ✨ Introducing the JHipster Ionic blueprint!
 
 The JHipster project has supported generating an Ionic app using a `generator-jhipster-ionic` module for the past several years. As the primary maintainer of this module, I'm proud to announce that it has been re-written as a blueprint, and it's _much_ easier to understand now. The previous module relied on the Ionic CLI, the base Angular [starter](https://github.com/ionic-team/starters), the [Ionic JHipster starter](https://github.com/oktadev/ionic-jhipster-starter), and custom code to glue it all together. Now, the source code is all contained in one project.

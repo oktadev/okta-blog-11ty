@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  asciidoctorId,
   convertAsciidoc,
   convertMarkdown,
   liquidArgsToObject,
@@ -410,6 +411,37 @@ test("asciidoc: formatting, quotes, literals and symbols", () => {
   assert.equal(
     out,
     'This is **bold**, **also bold**, _italic_, _also_, `code *kept*`, `{literal}`, a "quoted link [X](https://x.io)", Ionic + JHipster, C++ and 2<sup>nd</sup>, © 2024.\n',
+  );
+});
+
+test("asciidoctorId follows Asciidoctor's section ids", () => {
+  for (const [title, id] of [
+    ["JHipster and Spring Boot 2.1", "jhipster-and-spring-boot-2-1"],
+    ["What about React and Vue.js?", "what-about-react-and-vue-js"],
+    ["Angular, React, and WebFlux - Oh My!", "angular-react-and-webflux-oh-my"],
+    ["Co-founder &amp; Technologist", "co-founder-technologist"],
+    ["The Explosion \u{1F4A5}", "the-explosion"],
+    ["Use <code>okta.env</code>", "use-okta-env"],
+  ]) {
+    assert.equal(asciidoctorId(title), id, title);
+  }
+});
+
+test("asciidoc: a heading gets an anchor when Asciidoctor's id differs from this site's, or when the source set one", () => {
+  const out = bodyOf(
+    adoc(
+      "== Spring Boot 2.1\n\n== Plain Title\n\n== Plain Title\n\n[[custom]]\n== Custom\n\nSee <<Spring Boot 2.1>> and <<Plain Title>>.",
+    ).markdown,
+  );
+  assert.equal(
+    out,
+    [
+      '<a id="spring-boot-2-1"></a>\n## Spring Boot 2.1',
+      "## Plain Title",
+      '<a id="plain-title-2"></a>\n## Plain Title',
+      '<a id="custom"></a>\n## Custom',
+      "See [Spring Boot 2.1](#spring-boot-2-1) and [Plain Title](#plain-title).\n",
+    ].join("\n\n"),
   );
 });
 

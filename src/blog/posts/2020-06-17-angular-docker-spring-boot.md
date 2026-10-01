@@ -53,6 +53,7 @@ I'd like to thank many folks for their help with this post. **Benoit Sautel** fo
 <iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/BKepFaIwCvo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
+<a id="create-an-angular-spring-boot-app"></a>
 ## Create an Angular + Spring Boot App
 
 To begin, clone the GitHub repo from the [most recent tutorial](/blog/2020/05/29/angular-deployment) in this series.
@@ -68,6 +69,7 @@ git clone https://github.com/oktadeveloper/okta-angular-deployment-example.git \
 - [Node.js](https://nodejs.org/) 12+
 - [Java](https://adoptopenjdk.net/) 8+
 
+<a id="secure-your-angular-spring-boot-app-with-openid-connect"></a>
 ### Secure Your Angular + Spring Boot App with OpenID Connect
 
 OAuth 2.0 was finalized in 2012 and has since become the industry-standard protocol for authorization. In 2014, OpenID Connect (OIDC) extended OAuth, adding federated identity to delegated authorization. Together, these two layers offer a standard specification that developers can write code against in a way that will work across multiple identity providers.
@@ -339,6 +341,7 @@ Open your browser to `http://localhost:4200`, log in, and confirm you can add no
 
 Verify the data made it to Heroku by going to `https://<your-heroku-app>.herokuapp.com/api/notes`.
 
+<a id="deploy-angular-docker-to-heroku"></a>
 ## Deploy Angular + Docker to Heroku
 
 Heroku has  [several slick features when it comes to Docker images](https://devcenter.heroku.com/articles/container-registry-and-runtime). If your project has a `Dockerfile`, you can deploy your app directly using the Heroku Container Registry.
@@ -490,6 +493,7 @@ git add .
 git commit -m "Add Docker for Angular"
 ```
 
+<a id="combine-your-angular-spring-boot-app-into-a-single-jar"></a>
 ## Combine Your Angular + Spring Boot App into a Single JAR
 
 In the previous sections, you learned how to deploy your Angular and Spring Boot apps separately. Now I'll show you how to combine them into a single JAR for production. You'll still be able to run them independently in development, but deploying them to production will be easier because you won't have to worry about CORS (cross-origin resource sharing). I'll also convert the OAuth flows so they all happen server-side, which is more secure as the access token won't be stored in the browser.
@@ -958,6 +962,7 @@ git add .
 git commit -m "Combine Angular and Spring Boot"
 ```
 
+<a id="dockerize-angular-spring-boot-with-jib"></a>
 ## Dockerize Angular + Spring Boot with Jib
 
 Since everything is done via Gradle now, you can use plugins to build a Docker container. [Jib](https://github.com/GoogleContainerTools/jib) builds optimized Docker images without the need for deep mastery of Docker best-practices. It reads your Gradle/Maven build files for its metadata.
@@ -1063,6 +1068,7 @@ git add .
 git commit -m "Add Jib to build Docker images"
 ```
 
+<a id="deploy-your-spring-boot-angular-container-to-docker-hub"></a>
 ### Deploy Your Spring Boot + Angular Container to Docker Hub
 
 Jib makes it incredibly easy to deploy your container to Docker Hub. If you don't already have a Docker Hub account, you can [create one](https://hub.docker.com/signup).
@@ -1075,6 +1081,7 @@ Run `docker login` to log into your account, then use the `jib` task to build **
 
 Isn't it cool how Jib makes it so you don't need a `Dockerfile`!? 👍
 
+<a id="heroku-spring-boot-docker"></a>
 ## Heroku 💜 Spring Boot + Docker
 
 To deploy this container to Heroku, create a new Heroku app and add it as a Git remote.
@@ -1155,6 +1162,7 @@ If you test your Dockerfied Angular + Spring Boot app on securityheaders.com, yo
 
 {% img {src: "angular-docker/heroku-jib-headers-a+.png", alt: "A+ Security Headers", header: "800"} %}
 
+<a id="knative-spring-boot-docker"></a>
 ## Knative 💙 Spring Boot + Docker
 
 Heroku is awesome, but sometimes people want more control over their infrastructure. Enter Knative. It's like Heroku in that it's a Platform as a Service (PaaS). Knative is built on top of Kubernetes so you can install a number of services with a bit of YAML and `kubectl` commands.
@@ -1449,6 +1457,7 @@ Then, you'll be able to log into your app running on Knative! Add a note or two 
 
 {% img {src: "angular-docker/knative-works.png", alt: "Angular + Spring Boot in Docker running on Knative", header: "800"} %}
 
+<a id="cloud-foundry-spring-boot-docker"></a>
 ## Cloud Foundry 💚 Spring Boot + Docker
 
 Did you know you can [run Docker containers on Cloud Foundry](https://docs.cloudfoundry.org/adminguide/docker.html)? It's pretty slick.
@@ -1547,6 +1556,7 @@ Unfortunately, `pack` doesn't have great support for monorepos (especially in su
 
 On the upside, Spring Boot 2.3's built-in support for creating Docker images works splendidly!
 
+<a id="easy-docker-images-with-spring-boot-2-3"></a>
 ## Easy Docker Images with Spring Boot 2.3
 
 [Spring Boot 2.3.0 is now available](https://spring.io/blog/2020/05/15/spring-boot-2-3-0-available-now) and with it comes built-in Docker support. It leverages Cloud Native Buildpacks, just like the `pack` CLI.

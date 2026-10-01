@@ -66,6 +66,7 @@ Spring Native provides an API to configure Spring Boot and GraalVM so classes th
 
 As a result of our successful [presentation at the SF JUG](https://youtu.be/F9oydL_MndA), Josh and I were invited to speak at the Garden State JUG in December. We laid low for a few months and rekindled our research in December. I wrote about it in [JHipster works with Spring Native, Part 2!](https://www.linkedin.com/pulse/jhipster-works-spring-native-part-2-matt-raible/)
 
+<a id="announcing-the-jhipster-native-blueprint"></a>
 ## 🔥 Announcing the JHipster Native blueprint!
 
 In late January 2022, we (the JHipster team) upgraded JHipster to use Spring Boot 2.6 and released version [7.6.0](https://www.jhipster.tech/2022/01/23/jhipster-release-7.6.0.html).
