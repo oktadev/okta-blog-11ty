@@ -37,8 +37,8 @@ layout: base
       <div class="last-updated text-content-text">
         Last Updated:&nbsp;<a href="#changelog">{{ changelogList[0].date | readableDate("LLLL d, yyyy") }}</a>
       </div>
-      {% endif %}
       <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
+      {% endif %}
 
       {{ readingTime | readingTimeBadge | safe }}
       <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
@@ -58,7 +58,7 @@ layout: base
       {# Decorative: the <h1> above repeats the title, so alt="" keeps it out of the a11y tree. #}
       {% img {src: image, alt: "", header: true} %}
     {% endif %}
-    <div class="blog-prose">
+    <div class="my-6 blog-prose">
       {{ content | safe }}
 
       {% if changelogList | length %}
