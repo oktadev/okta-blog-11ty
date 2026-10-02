@@ -1,3 +1,38 @@
+import { readFileSync } from "node:fs";
+import { baseUrl } from "./base-url.js";
+
+const closeIcon = readFileSync("src/_includes/icons/close.svg", "utf8")
+  .replace(/\s+/g, " ")
+  .trim();
+
+// Renders the "this post is old" banner. Built as a single-line string
+// (join("")) rather than a multi-line .njk include: markdown-it's HTML-block
+// parsing mangles multi-line raw HTML embedded in markdown body content,
+// splicing in stray <p></p> tags around nested tag boundaries. See the
+// `excerpt` shortcode below for the same workaround.
+const update = (updated, postsCollection) => {
+  const { slug, extra } = updated || {};
+  const post = postsCollection.find((p) => p.fileSlug === slug);
+
+  const updatedLink = post
+    ? `<p class="text-brand-utility-grey-900">For an updated version of this post, see <a href="${new URL(post.url, baseUrl).href}">${post.data.title}</a>.</p>`
+    : "";
+  const extraText = extra
+    ? `<p class="text-brand-utility-grey-900">${extra}</p>`
+    : "";
+
+  return [
+    `<div class="py-2 px-5 mb-6 rounded-sm bg-brand-notifications-900 border border-brand-notifications-1000" role="alert">`,
+    `<div class="flex w-full items-start justify-between gap-3 mb-3">`,
+    `<p class="text-brand-utility-grey-900 text-lg font-semibold">Heads up... this post is old!</p>`,
+    `<button type="button" class="shrink-0 -m-1.5 p-1.5 cursor-pointer text-brand-utility-grey-900" aria-label="Close" title="Close" onclick="this.closest('[role=alert]').style.display='none'">${closeIcon}</button>`,
+    `</div>`,
+    updatedLink,
+    extraText,
+    `</div>`,
+  ].join("");
+};
+
 const youtube = (id, t, w, h) => {
   const width = w || 560;
   const height = h || 315;
@@ -16,4 +51,5 @@ const speakerdeck = (id, width = 600) => {
 export default {
   youtube: (id, t, w, h) => youtube(id, t, w, h),
   speakerdeck: (id, w) => speakerdeck(id, w),
+  update: (updated, postsCollection) => update(updated, postsCollection),
 };

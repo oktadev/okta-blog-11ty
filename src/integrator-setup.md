@@ -31,7 +31,7 @@ The basic call for manual setup instructions is:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "spa", loginRedirectUri: "http://localhost:3000/callback"}) }}
 
@@ -81,7 +81,7 @@ Examples for different app types and frameworks:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "spa", framework: "Angular", loginRedirectUri: "http://localhost:4200/callback"}) }}
 
@@ -99,7 +99,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "spa", framework: "React", loginRedirectUri: "http://localhost:3000/callback"}) }}
 
@@ -117,7 +117,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-brand-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "spa", framework: "Vue", loginRedirectUri: "http://localhost:8080/callback", signup: "false"}) }}
 
@@ -135,7 +135,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "web", loginRedirectUri: "http://localhost:8080/authorization-code/callback"}) }}
 
@@ -153,7 +153,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "native", loginRedirectUri: "[http://localhost:8100/callback,com.okta.dev-133337:/callback]", logoutRedirectUri: "[http://localhost:8100/logout,com.okta.dev-133337:/logout]"}) }}
 
@@ -171,7 +171,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "native", loginRedirectUri: "com.okta.dev-133337:/callback", logoutRedirectUri: "com.okta.dev-133337:/callback"}) }}
 
@@ -189,7 +189,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-brand-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "web", framework: "Okta Spring Boot Starter"}) }}
 
@@ -212,7 +212,7 @@ To print a note after the steps, set a variable first and pass it as `note`:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-brand-primary-blue-200 pl-6 my-4">
 
 {% set note %}
 > Note that the TCP port 5001 must be the same port used by the application. You can see it in the messages displayed in the terminal when you start the application with **`dotnet run`**.
@@ -233,7 +233,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "service"}) }}
 
@@ -253,7 +253,7 @@ This renders the following:
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.oidcdebugger() }}
 
@@ -273,7 +273,7 @@ When the post needs a custom authorization server instead of the org's default o
 
 This renders the following:
 
-<div class="border-l-8 border-okta-cloud pl-6 my-4">
+<div class="border-l-8 border-primary-blue-200 pl-6 my-4">
 
 {{ macro.integrator({type: "spa", framework: "React", loginRedirectUri: "http://localhost:3000/callback", customAuthServer: "default"}) }}
 

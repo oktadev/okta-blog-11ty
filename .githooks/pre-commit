@@ -40,3 +40,7 @@ fi
 
 # 4. Validate front-matter across all posts (~0.2s).
 npm run --silent validate
+
+# 5. Flag opacity modifiers on brand colors outside the design system's
+#    alpha-eligible set.
+npm run --silent validate-brand-alpha

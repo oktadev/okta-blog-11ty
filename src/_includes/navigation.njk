@@ -16,21 +16,21 @@
 ] %}
 
 {%- macro navLink(href, title, external, current) -%}
-<a class="inline-flex items-center gap-1 text-okta-white" href="{{ href }}"{% if external %} target="_blank" rel="noopener"{% endif %}{% if current %} aria-current="page"{% endif %}>{{ title }}{% if external %}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
+<a class="inline-flex items-center gap-1 text-links-contrast" href="{{ href }}"{% if external %} target="_blank" rel="noopener"{% endif %}{% if current %} aria-current="page"{% endif %}>{{ title }}{% if external %}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
 {%- endmacro -%}
 
-<nav class="bg-okta-dark-blue" aria-label="Main">
-  <div class="px-6 lg:px-16 min-h-16 md:min-h-20 flex flex-wrap items-center gap-x-6 gap-y-3 text-okta-white">
+<nav class="bg-brand-utility-blue-800 text-page-text-contrast [&_a]:text-links-contrast" aria-label="Main">
+  <div class="px-6 lg:px-16 min-h-16 md:min-h-20 flex flex-wrap items-center gap-x-6 gap-y-3 text-brand-utility-grey-100">
 
-    <a class="shrink-0 mr-3 text-okta-white [&_svg]:w-40 [&_svg]:h-auto" href="https://developer.okta.com" aria-label="Okta Developer home">{% include "icons/logotype.svg" %}</a>
+    <a class="shrink-0 mr-3 [&_svg]:w-40 [&_svg]:h-auto" href="https://developer.okta.com" aria-label="Okta Developer home">{% include "icons/logotype.svg" %}</a>
 
     {# Coveo searchbox. Keep .CoveoOmnibox and .CoveoAnalytics — Coveo finds them by class; styles in public/css/coveo.css.
        Only one [data-search-bar] may exist: search/index.js mounts via querySelector, so a second copy renders an empty div. #}
-    <div id="nav-search" class="hidden order-last w-full min-w-0 shrink relative mb-3 md:order-none md:mb-0 md:flex md:w-56 2xl:w-72" role="search" aria-label="Search Okta Developer content">
+    <div id="nav-search" class="hidden order-last w-full min-w-0 shrink relative mb-3 md:order-0 md:mb-0 md:flex md:w-56 2xl:w-72" role="search" aria-label="Search Okta Developer content">
       {# Outside [data-search-bar], so Coveo can't overwrite it on init #}
-      <span class="pointer-events-none absolute left-3 top-1/2 z-1 -translate-y-1/2 text-okta-white opacity-60">{% include "icons/search.svg" %}</span>
+      <span class="pointer-events-none absolute left-3 top-1/2 z-1 -translate-y-1/2 opacity-60">{% include "icons/search.svg" %}</span>
       <div data-search-bar data-pipeline="developer-okta-com">
-        <div class="flex h-10 items-center rounded-sm bg-okta-white/10 focus-within:ring-2 focus-within:ring-okta-white/30 lg:h-11">
+        <div class="flex h-10 items-center rounded-sm bg-brand-utility-grey-100/10 focus-within:ring-2 focus-within:ring-brand-utility-grey-100/30 lg:h-11">
           <div class="CoveoOmnibox"></div>
         </div>
         <div class="CoveoAnalytics"></div>
@@ -38,19 +38,19 @@
     </div>
 
     <div class="hidden xl:flex items-center gap-6">
-      <div class="relative">
+      <div class="relative [&_a]:text-page-text">
         <button type="button" id="community-menu-button" class="inline-flex items-center gap-1" aria-expanded="false" aria-controls="community-menu">
           Community
           <span data-community-chevron class="inline-flex items-center relative top-0.5 transition-transform duration-200">{% include "icons/chevron-down.svg" %}</span>
         </button>
-        <div id="community-menu" class="absolute right-0 top-8 hidden w-max rounded-sm bg-okta-white p-4 shadow-md z-51">
-          <div class="absolute -top-2 right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-okta-white"></div>
-          <a href="{{ forumUrl }}" class="block text-okta-carbon">Forum</a>
-          <hr class="my-2 border-t border-okta-carbon/50"/>
+        <div id="community-menu" class="absolute right-0 top-8 hidden w-max rounded-sm text-page-text bg-brand-utility-grey-100 p-4 shadow-md z-51">
+          <div class="absolute -top-2 right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-brand-utility-grey-100"></div>
+          <a href="{{ forumUrl }}" class="block">Forum</a>
+          <hr class="my-2 border-t border-brand-utility-grey-500"/>
           <ul class="flex gap-3" aria-label="Okta Developer social channels">
             {% for channel in socialChannels %}
             <li>
-              <a href="{{ channel.url }}" class="block text-okta-carbon transition-transform hover:scale-110 focus-visible:scale-110" aria-label="{{ channel.label }}">{% include "icons/" + channel.icon %}</a>
+              <a href="{{ channel.url }}" class="block transition-transform hover:scale-110 focus-visible:scale-110" aria-label="{{ channel.label }}">{% include "icons/" + channel.icon %}</a>
             </li>
             {% endfor %}
           </ul>
@@ -72,7 +72,7 @@
         {% endfor %}
       </ul>
 
-      <a class="hidden md:inline-flex shrink-0 items-center whitespace-nowrap font-medium text-okta-white rounded border border-okta-white px-6 py-2" href="{{ signUpUrl }}">Sign Up</a>
+      <a class="hidden md:inline-flex shrink-0 items-center whitespace-nowrap font-medium rounded border border-brand-utility-grey-100 px-6 py-2" href="{{ signUpUrl }}">Sign Up</a>
 
       <button type="button" id="mobile-menu-button" class="xl:hidden inline-flex items-center" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
         <span data-menu-icon="open">{% include "icons/menu.svg" %}</span>
@@ -84,7 +84,7 @@
   {# Mobile menu: the links that are hidden below xl. `relative z-52` puts it above
      the promo banner (z-50) and the desktop Community popup (z-51), and below the
      Coveo suggestions (z-53, set in public/css/coveo.css). #}
-  <div id="mobile-menu" class="hidden relative z-52 bg-okta-dark-blue px-6 pb-6 text-okta-white">
+  <div id="mobile-menu" class="hidden relative z-52 bg-brand-utility-blue-800 px-6 pb-6 text-page-text-contrast [&_a]:text-links-contrast">
     <ul class="flex flex-col gap-4 py-4">
       {% for item in primaryNav %}
       <li>{{ navLink(item.url | url, item.title, item.external, item.url == page.url) }}</li>
@@ -92,9 +92,9 @@
       {% for item in utilityNav %}
       <li>{{ navLink(item.url, item.title, true, false) }}</li>
       {% endfor %}
-      <li><a class="text-okta-white" href="{{ forumUrl }}">Forum</a></li>
+      <li><a href="{{ forumUrl }}">Forum</a></li>
       <li class="md:hidden">
-        <a class="inline-flex items-center gap-1 font-medium text-okta-white" href="{{ signUpUrl }}">
+        <a class="inline-flex items-center gap-1 font-medium" href="{{ signUpUrl }}">
           Sign Up<span class="inline-flex items-center">{% include "icons/external-link.svg" %}</span>
         </a>
       </li>
@@ -102,7 +102,7 @@
     <ul class="flex gap-3" aria-label="Okta Developer social channels">
       {% for channel in socialChannels %}
       <li>
-        <a href="{{ channel.url }}" class="block text-okta-white" aria-label="{{ channel.label }}">{% include "icons/" + channel.icon %}</a>
+        <a href="{{ channel.url }}" class="block" aria-label="{{ channel.label }}">{% include "icons/" + channel.icon %}</a>
       </li>
       {% endfor %}
     </ul>

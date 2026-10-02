@@ -10,38 +10,38 @@ layout: base
     {% if postTags | length %}
       <ul class="tags flex flex-wrap gap-x-3 gap-y-2 mt-4">
         {%- for tag in postTags | sort -%}
-          <li class="flex items-center h-6 px-2 rounded bg-okta-cloud-tint whitespace-nowrap">
-            <a href="/blog/tags/{{ tag | slugify }}/" class="text-okta-blue">{{ tag }}</a>
+          <li class="flex items-center h-6 px-2 rounded bg-brand-utility-blue-100 whitespace-nowrap">
+            <a href="/blog/tags/{{ tag | slugify }}/" class="text-brand-primary-blue-400">{{ tag }}</a>
           </li>
         {%- endfor -%}
       </ul>
     {% endif %}
-    <h1 class="text-5xl leading-tight text-okta-dark-blue font-light">{{ title }}</h1>
+    <h1 class="text-5xl leading-tight text-page-title font-light">{{ title }}</h1>
     {% set postAuthors = authors | authorFilter(author) %}
     {# Stacks one datapoint per row until sm, where it inlines and the separators appear. #}
     <div class="post-byline flex flex-col items-start gap-3 text-base text-content-text sm:flex-row sm:flex-wrap sm:items-center">
       {% if postAuthors | length %}
         <span class="authors flex flex-wrap items-center gap-3">
           {%- for a in postAuthors -%}
-            <a href="/blog/authors/{{ a.slug }}/" class="inline-flex items-center gap-2 text-okta-blue">
+            <a href="/blog/authors/{{ a.slug }}/" class="inline-flex items-center gap-2 text-brand-primary-blue-300">
               {% avatar a.avatar, "small", a.display_name %}
               {{ a.display_name }}
             </a>
           {%- endfor -%}
         </span>
-        <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
+        <span aria-hidden="true" class="hidden text-pipe-delimiter sm:inline">|</span>
       {% endif %}
       <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
-      <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
+      <span aria-hidden="true" class="hidden text-pipe-delimiter sm:inline">|</span>
       {% if changelogList | length %}
       <div class="last-updated text-content-text">
         Last Updated:&nbsp;<a href="#changelog">{{ changelogList[0].date | readableDate("LLLL d, yyyy") }}</a>
       </div>
-      <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
+      <span aria-hidden="true" class="hidden text-pipe-delimiter sm:inline">|</span>
       {% endif %}
 
       {{ readingTime | readingTimeBadge | safe }}
-      <span aria-hidden="true" class="hidden text-okta-slate sm:inline">|</span>
+      <span aria-hidden="true" class="hidden text-pipe-delimiter sm:inline">|</span>
       <span class="flex items-center gap-2 [&_svg]:size-4.5">
         <a href="https://twitter.com/intent/tweet?url={{ (page.url | toAbsoluteUrl) | urlencode }}&amp;text={{ title | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">{% include "icons/x.svg" %}</a>
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (page.url | toAbsoluteUrl) | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">{% include "icons/linkedin.svg" %}</a>
@@ -50,7 +50,7 @@ layout: base
     {% set canonicalUrl = canonical | httpUrl %}
     {% if canonicalUrl %}
       <div class="canonical-note text-content-text">
-        Originally published at <a href="{{ canonicalUrl }}" class="text-okta-blue" target="_blank" rel="noopener noreferrer">{{ canonicalUrl | hostname }}</a>.
+        Originally published at <a href="{{ canonicalUrl }}" class="text-links" target="_blank" rel="noopener noreferrer">{{ canonicalUrl | hostname }}</a>.
       </div>
     {% endif %}
 
@@ -62,7 +62,7 @@ layout: base
       {{ content | safe }}
 
       {% if changelogList | length %}
-        <p id="changelog"><span class="font-semibold">Changelog</span>:</p>
+        <p id="changelog"><span class="text-content-text font-semibold">Changelog</span>:</p>
         <ul class="changelog list-disc pl-5">
           {%- for entry in changelogList %}
             <li>{{ entry.date | readableDate("LLL d, yyyy") }}: {{ entry.text | inlineMarkdown | safe }}</li>
@@ -74,12 +74,12 @@ layout: base
     {% set postAuthors = authors | authorFilter(author) %}
     {% for author in postAuthors %}
       {% if author.full_name %}
-        <div class="author-bio border-t border-okta-gravel pt-6 {{ 'mt-5' if loop.first }}">
+        <div class="author-bio border-t border-brand-utility-grey-400 pt-6 {{ 'mt-5' if loop.first }}">
           <div class="flex items-center gap-3 flex-wrap">
             {% if author.avatar %}
               <a href="/blog/authors/{{ author.slug }}/" class="shrink-0">{% avatar author.avatar, "small", author.full_name %}</a>
             {% endif %}
-            <span class="author-name"><a href="/blog/authors/{{ author.slug }}/" class="text-okta-blue text-base">{{ author.full_name }}</a></span>
+            <span class="author-name"><a href="/blog/authors/{{ author.slug }}/" class="text-links text-base">{{ author.full_name }}</a></span>
             {# The socials root carries mt-4 for the author page, where it stacks; here it sits inline. #}
             <span class="[&>div]:mt-0">{% include "author-socials.njk" %}</span>
           </div>
@@ -92,12 +92,12 @@ layout: base
 
     {% set prevPost = collections.posts | getPreviousCollectionItem %}
     {% set nextPost = collections.posts | getNextCollectionItem %}
-    <nav class="prev-next flex justify-between border-t border-okta-gravel pt-6 text-base" aria-label="Post navigation">
+    <nav class="prev-next flex justify-between border-t border-brand-utility-grey-400 pt-6 text-base" aria-label="Post navigation">
       {% if prevPost %}
-        <a href="{{ prevPost.url }}" class="text-okta-blue" title="{{ prevPost.data.title }}"><span class="inline-flex items-center align-middle rotate-180">{% include "icons/arrow-right.svg" %}</span>&nbsp;Previous post</a>
+        <a href="{{ prevPost.url }}" class="text-links" title="{{ prevPost.data.title }}"><span class="inline-flex items-center align-middle rotate-180">{% include "icons/arrow-right.svg" %}</span>&nbsp;Previous post</a>
       {% else %}<span></span>{% endif %}
       {% if nextPost %}
-        <a href="{{ nextPost.url }}" class="text-okta-blue" title="{{ nextPost.data.title }}">Next post&nbsp;<span class="inline-flex items-center align-middle">{% include "icons/arrow-right.svg" %}</span></a>
+        <a href="{{ nextPost.url }}" class="text-links" title="{{ nextPost.data.title }}">Next post&nbsp;<span class="inline-flex items-center align-middle">{% include "icons/arrow-right.svg" %}</span></a>
       {% endif %}
     </nav>
 

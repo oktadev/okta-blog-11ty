@@ -247,6 +247,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("readingTimeBadge", (minutes) => {
     const text = !minutes || minutes < 1 ? 1 : minutes;
 
-    return `<div class="py-0.5 px-3 bg-okta-cloud-tint rounded-xl content-center text-okta-carbon font-semibold"><p class="text-xs uppercase">${text} min read</p></div>`;
+    return `<div class="py-0.5 px-3 bg-brand-primary-blue-100 rounded-xl content-center text-brand-utility-grey-900 font-semibold"><p class="text-xs uppercase">${text} min read</p></div>`;
   });
 }
