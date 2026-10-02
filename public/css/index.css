@@ -247,13 +247,14 @@ a.direct-link {
 }
 
 @theme {
-  --color-code-bg: #f0f0f0;
-  --color-code-base: #333333;
-  --color-code-comment: #aaaaaa;
-  --color-code-keyword: #4cbf9c;
+  /* --color-code-bg: var(--color-brand-utility-grey-200); */
+  --color-code-bg: color-mix(in oklch, var(--color-brand-utility-grey-200) 75%, #FFF);
+  --color-code-base: var(--color-brand-primary-neutral-600);
+  --color-code-comment: var(--color-brand-utility-grey-500);
+  --color-code-keyword: var(--color-brand-utility-purple-500);
   --color-code-string: #e22866;
   --color-code-number: #990f69;
-  --color-code-identifier: #006399;
+  --color-code-identifier: var(--color-brand-utility-blue-500);
 
   /* New brand colors */
   --color-brand-primary-blue-100: #D9DFFF;
