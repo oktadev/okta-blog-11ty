@@ -15,17 +15,15 @@ const update = (updated, postsCollection) => {
   const post = postsCollection.find((p) => p.fileSlug === slug);
 
   const updatedLink = post
-    ? `<p class="text-brand-utility-grey-900">For an updated version of this post, see <a href="${new URL(post.url, baseUrl).href}">${post.data.title}</a>.</p>`
+    ? `<p>For an updated version of this post, see <a href="${new URL(post.url, baseUrl).href}">${post.data.title}</a>.</p>`
     : "";
-  const extraText = extra
-    ? `<p class="text-brand-utility-grey-900">${extra}</p>`
-    : "";
+  const extraText = extra ? `<p>${extra}</p>` : "";
 
   return [
-    `<div class="py-2 px-5 mb-6 rounded-sm bg-brand-notifications-900 border border-brand-notifications-1000" role="alert">`,
+    `<div class="py-2 px-5 mb-6 rounded-sm text-page-text bg-brand-notifications-900 border border-brand-notifications-1000" role="alert">`,
     `<div class="flex w-full items-start justify-between gap-3 mb-3">`,
-    `<p class="text-brand-utility-grey-900 text-lg font-semibold">Heads up... this post is old!</p>`,
-    `<button type="button" class="shrink-0 -m-1.5 p-1.5 cursor-pointer text-brand-utility-grey-900" aria-label="Close" title="Close" onclick="this.closest('[role=alert]').style.display='none'">${closeIcon}</button>`,
+    `<p class="text-lg font-semibold">Heads up... this post is old!</p>`,
+    `<button type="button" class="shrink-0 -m-1.5 p-1.5 cursor-pointer" aria-label="Close" title="Close" onclick="this.closest('[role=alert]').style.display='none'">${closeIcon}</button>`,
     `</div>`,
     updatedLink,
     extraText,

@@ -4,7 +4,7 @@
     {% if authorsList %}
       <li>
         {# h-full + flex-col lets the "Read more" link pin to the bottom so cards in a row align. #}
-        <article class="flex h-full flex-col overflow-hidden rounded-lg border border-brand-utility-grey-400 transition-shadow hover:shadow-md">
+        <article class="flex h-full flex-col overflow-hidden rounded-lg border border-page-border transition-shadow hover:shadow-md">
           {# ~140 posts have no `image`, so the card has to read well without one. #}
           {% if post.data.image %}
             <div class="aspect-video overflow-hidden">

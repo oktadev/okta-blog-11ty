@@ -13,12 +13,12 @@ permalink: blog/tags/{{ tag | slugify }}/
 
 <div>
   <h1 class="text-page-title text-4xl my-6">Articles tagged {{ tag }}</h1>
-  <hr class="my-8 border-brand-utility-grey-400">
+  <hr class="my-8 border-page-border">
 
   <ol reversed class="flex flex-col">
     {% for post in collections[tag] | reverse %}
       {%- set authorsList = authors | authorFilter(post.data.author) %}
-      <li class="mb-5 pb-6 border-b border-brand-utility-grey-400">
+      <li class="mb-5 pb-6 border-b border-page-border">
         <article class="grid gap-6">
           <div class="grid gap-3">
             {# Colour goes on the <a>: the base `a` rule would override it on the heading. #}

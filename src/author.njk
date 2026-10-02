@@ -23,10 +23,10 @@ permalink: blog/authors/{{ authorKey }}/
   {% endif %}
   <div class="mt-12">
     <h2 class="text-xl font-okta text-page-text">All posts by {{ author.full_name }}</h2>
-    <hr class="my-8 border-brand-utility-grey-400">
+    <hr class="my-8 border-page-border">
     <ol reversed class="flex flex-col">
       {% for post in collections.posts | postsAuthorFilter(authorKey) | reverse %}
-        <li class="mb-5 pb-6 border-b border-brand-utility-grey-400">
+        <li class="mb-5 pb-6 border-b border-page-border">
           <article class="grid gap-6">
             <div class="grid gap-3">
               {# Colour goes on the <a>: the base `a` rule would override it on the heading. #}

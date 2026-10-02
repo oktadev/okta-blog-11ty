@@ -20,7 +20,7 @@
 {%- endmacro -%}
 
 <nav class="bg-brand-utility-blue-800 text-page-text-contrast [&_a]:text-links-contrast" aria-label="Main">
-  <div class="px-6 lg:px-16 min-h-16 md:min-h-20 flex flex-wrap items-center gap-x-6 gap-y-3 text-brand-utility-grey-100">
+  <div class="px-6 lg:px-16 min-h-16 md:min-h-20 flex flex-wrap items-center gap-x-6 gap-y-3 text-page-text-contrast">
 
     <a class="shrink-0 mr-3 [&_svg]:w-40 [&_svg]:h-auto" href="https://developer.okta.com" aria-label="Okta Developer home">{% include "icons/logotype.svg" %}</a>
 
@@ -46,7 +46,7 @@
         <div id="community-menu" class="absolute right-0 top-8 hidden w-max rounded-sm text-page-text bg-brand-utility-grey-100 p-4 shadow-md z-51">
           <div class="absolute -top-2 right-6 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-brand-utility-grey-100"></div>
           <a href="{{ forumUrl }}" class="block">Forum</a>
-          <hr class="my-2 border-t border-brand-utility-grey-500"/>
+          <hr class="my-2 border-t border-page-border"/>
           <ul class="flex gap-3" aria-label="Okta Developer social channels">
             {% for channel in socialChannels %}
             <li>

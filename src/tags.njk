@@ -14,7 +14,7 @@ permalink: /blog/tags/
         id="tag-search"
         placeholder="Try oidc, python, or express"
         autocomplete="off"
-        class="border border-brand-utility-grey-400 rounded pl-3 pr-9 py-2 w-full"
+        class="border border-page-border rounded pl-3 pr-9 py-2 w-full"
       />
       <button
         type="button"
@@ -33,7 +33,7 @@ permalink: /blog/tags/
   <div id="tag-groups" class="grid gap-9">
     {% for group in collections | tagsByLetter %}
       <section class="tag-group grid gap-6" data-letter="{{ group.letter }}">
-        <h2 class="text-brand-primary-blue-400 font-okta text-2xl border-b border-brand-utility-grey-400 pb-1">{{ group.letter }}</h2>
+        <h2 class="text-brand-primary-blue-400 font-okta text-2xl border-b border-page-border pb-1">{{ group.letter }}</h2>
         <div class="flex flex-wrap gap-3">
           {% for tag in group.tags %}
             <a

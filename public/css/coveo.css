@@ -22,7 +22,7 @@
 }
 
 .magic-box .magic-box-input > input {
-  @apply bg-transparent text-brand-utility-grey-100 focus:outline-none;
+  @apply bg-transparent text-page-text-contrast focus:outline-none;
 
   &::placeholder {
     @apply text-brand-utility-grey-100/60;
@@ -48,11 +48,11 @@
 /* z-53 clears the promo banner (z-50), the Community popup (z-51) and the mobile
    menu (z-52) — equal to the menu loses, since the menu comes later in the DOM. */
 .CoveoOmnibox.magic-box .magic-box-suggestions {
-  @apply z-53 mt-1 overflow-hidden rounded-sm border border-brand-utility-grey-400 bg-brand-primary-neutral-100 shadow-lg;
+  @apply z-53 mt-1 overflow-hidden rounded-sm border border-page-border bg-brand-primary-neutral-100 shadow-lg;
 }
 
 .CoveoOmnibox.magic-box .magic-box-suggestion {
-  @apply px-3 py-2 font-okta text-sm font-normal text-brand-utility-grey-900;
+  @apply px-3 py-2 font-okta text-sm font-normal text-page-text;
 
   &.magic-box-selected,
   &:hover {

@@ -336,6 +336,7 @@ a.direct-link {
   --color-pipe-delimiter: var(--color-brand-utility-grey-300);
   --color-links: var(--color-brand-primary-blue-300);
   --color-links-contrast: var(--color-brand-utility-grey-100);
+  --color-page-border: var(--color-brand-utility-grey-400);
 
   --font-okta: "Aeonik", "Helvetica Neue", sans-serif;
   --font-heading: "SeasonMix", serif;
