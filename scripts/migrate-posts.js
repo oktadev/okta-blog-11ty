@@ -139,6 +139,50 @@ function imgShortcode(src, alt = "", width) {
   return `{% img {${parts.join(", ")}} %}`;
 }
 
+// The old stylesheet's image classes: a float, a width, or nothing we can map.
+function imageRoles(roles) {
+  const width = roles
+    .map((r) => r.match(/^(?:img-|w-)(\d+)(?:px)?$/)?.[1])
+    .find(Boolean);
+  const float = roles.includes("pull-right")
+    ? "float-right ml-4 mb-2"
+    : roles.includes("pull-left")
+      ? "float-left mr-4 mb-2"
+      : "";
+  const unmapped = roles.filter(
+    (r) =>
+      !/^(pull-right|pull-left|img-\d+px|w-\d+(px)?|BlogPost-avatar|center-image)$/.test(
+        r,
+      ),
+  );
+  return { float, width, unmapped };
+}
+
+// Kramdown attribute lists right after an image tag: "{: .pull-right }" floats
+// the image the way the old stylesheet did, "{: }" is nothing.
+export function imageAttributes(text, note = () => {}) {
+  return text.replace(
+    /(\{%\s*img\s[^%]*%\})\{:\s*([^}]*)\}/g,
+    (_, img, attrs) => {
+      const roles = attrs
+        .split(/\s+/)
+        .filter((r) => r.startsWith("."))
+        .map((r) => r.slice(1));
+      const { float, width, unmapped } = imageRoles(roles);
+      if (unmapped.length) {
+        note(
+          `image class "${unmapped.join(" ")}" dropped (no equivalent here)`,
+        );
+      }
+      const sized =
+        width && !/\bheader:/.test(img)
+          ? img.replace(/\}\s*%\}$/, `, header: "${width}"} %}`)
+          : img;
+      return float ? `<span class="${float}">${sized}</span>` : sized;
+    },
+  );
+}
+
 // Liquid tags that appear in both Markdown and AsciiDoc posts. Applied to prose
 // only; code is protected by the callers.
 export function convertLiquid(text) {
@@ -278,14 +322,17 @@ export function kramdownAttributes(text) {
     .replace(/^\{:(?!toc\})[^}\n]*\}[ \t]*\n?/gm, "");
 }
 
-function convertMarkdownProse(text) {
+function convertMarkdownProse(text, note) {
   return (
-    convertLiquid(
-      kramdownAttributes(text)
-        // Kramdown leftovers, inline after a tag
-        .replace(/ "no_toc"=""/g, "")
-        .replace(/\{: \.center-image \}/g, "")
-        .replace(/^\*\*Table of Contents\*\*\{: \.hide \}[ \t]*\r?\n/gm, ""),
+    imageAttributes(
+      convertLiquid(
+        kramdownAttributes(text)
+          // Kramdown leftovers, inline after a tag
+          .replace(/ "no_toc"=""/g, "")
+          .replace(/\{: \.center-image \}/g, "")
+          .replace(/^\*\*Table of Contents\*\*\{: \.hide \}[ \t]*\r?\n/gm, ""),
+      ),
+      note,
     )
       // Drop empty attributes but keep the rest of the tag.
       .replace(/<([a-zA-Z][a-zA-Z0-9]*)([^>]*)>/g, (match, tag, attrs) =>
@@ -350,7 +397,11 @@ export function convertMarkdown(content) {
     .map((segment) =>
       segment.code
         ? segment.text
-        : transformProse(segment.text, convertMarkdownProse),
+        : transformProse(segment.text, (t) =>
+            convertMarkdownProse(t, (m) => {
+              if (!notes.includes(m)) notes.push(m);
+            }),
+          ),
     )
     // Each segment holds consecutive lines joined by newlines, so rejoining the
     // segments the same way reproduces the original line structure.
@@ -591,22 +642,9 @@ class AsciidocConverter {
           // Roles carry the float and width the old stylesheet applied:
           // "pull-right img-100px" and the like.
           const roles = a.role ? a.role.split(/\s+/) : [];
-          const width =
-            a.width ??
-            roles
-              .map((r) => r.match(/^(?:img-|w-)(\d+)(?:px)?$/)?.[1])
-              .find(Boolean);
-          const float = roles.includes("pull-right")
-            ? "float-right ml-4 mb-2"
-            : roles.includes("pull-left")
-              ? "float-left mr-4 mb-2"
-              : "";
-          const unmapped = roles.filter(
-            (r) =>
-              !/^(pull-right|pull-left|img-\d+px|w-\d+(px)?|BlogPost-avatar)$/.test(
-                r,
-              ),
-          );
+          const mapped = imageRoles(roles);
+          const width = a.width ?? mapped.width;
+          const { float, unmapped } = mapped;
           if (unmapped.length) {
             this.note(
               `inline image role "${unmapped.join(" ")}" dropped (no equivalent here)`,

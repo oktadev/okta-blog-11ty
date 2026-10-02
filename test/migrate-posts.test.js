@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  imageAttributes,
   convertAsciidoc,
   convertMarkdown,
   liquidArgsToObject,
@@ -142,6 +143,34 @@ test("markdown: images, embeds, excerpts, post links and the TOC", () => {
       "[[toc]]",
       '{% include "integrator-org-warning.njk" %}',
     ].join("\n"),
+  );
+});
+
+test("markdown: kramdown attribute lists after an image float it or vanish", () => {
+  const { markdown, notes } = convertMarkdown(
+    [
+      '{% img blog/d/a.png alt:"A" %}{: .pull-right }',
+      '{% img blog/d/b.png alt:"B" %}{: .BlogPost-avatar .pull-right .img-150px }',
+      '{% img blog/d/c.png alt:"C" %}{: }',
+      '{% img blog/d/d.png alt:"D" %}{: .center-image }',
+      '{% img blog/d/e.png alt:"E" %}{: .fancy }',
+    ].join("\n\n"),
+  );
+  assert.equal(
+    markdown,
+    [
+      '<span class="float-right ml-4 mb-2">{% img {src: "d/a.png", alt: "A"} %}</span>',
+      '<span class="float-right ml-4 mb-2">{% img {src: "d/b.png", alt: "B", header: "150"} %}</span>',
+      '{% img {src: "d/c.png", alt: "C"} %}',
+      '{% img {src: "d/d.png", alt: "D"} %}',
+      '{% img {src: "d/e.png", alt: "E"} %}',
+    ].join("\n\n"),
+  );
+  assert.deepEqual(notes, ['image class "fancy" dropped (no equivalent here)']);
+  // The same rule repairs an already converted post.
+  assert.equal(
+    imageAttributes('{% img {src: "x.png", alt: ""} %}{: .pull-left }'),
+    '<span class="float-left mr-4 mb-2">{% img {src: "x.png", alt: ""} %}</span>',
   );
 });
 

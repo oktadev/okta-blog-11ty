@@ -29,3 +29,12 @@ test("headings and the table of contents share the ids, duplicates get -1", () =
   assert.match(html, /<h2 id="vue--go-1"/);
   assert.match(html, /href="#vue--go"/);
 });
+
+test("footnotes and definition lists render as on the old site", () => {
+  const html = markdownLibrary.render(
+    "Text[^1].\n\n[^1]: The note.\n\nTerm\n: Definition\n",
+  );
+  assert.match(html, /<sup class="footnote-ref"><a href="#fn1"/);
+  assert.match(html, /<section class="footnotes">[\s\S]*The note\./);
+  assert.match(html, /<dl>\s*<dt>Term<\/dt>\s*<dd>Definition<\/dd>/);
+});
