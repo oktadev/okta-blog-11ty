@@ -2,6 +2,8 @@ import markdownIt from "markdown-it";
 import markdownItAttrs from "markdown-it-attrs";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
+import markdownItFootnote from "markdown-it-footnote";
+import markdownItDeflist from "markdown-it-deflist";
 
 // Heading ids follow kramdown's GFM rule, which the old site used for its
 // Markdown posts, so links into its anchors keep resolving here: lowercase,
@@ -30,6 +32,9 @@ export const markdownLibrary = markdownIt({
     slugify,
   })
   .use(markdownItAttrs)
+  // Footnotes and definition lists, which kramdown rendered on the old site.
+  .use(markdownItFootnote)
+  .use(markdownItDeflist)
   .use(markdownItToc, {
     includeLevel: [2, 3],
     listType: "ul",
