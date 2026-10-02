@@ -116,6 +116,7 @@ Shortcodes are `{% name … %}` tags available in every post. Images are the one
 | `{% youtube "VIDEO-ID" %}`                                       | An embedded YouTube player. Optional title, width and height follow the ID: `{% youtube "8vY-9tXlCW4", "Demo", 900, 506 %}`. |
 | `{% speakerdeck "DATA-ID", 600 %}`                               | An embedded Speaker Deck. The ID is the `data-id` from the deck's embed code; the width in pixels is optional.          |
 | `{% excerpt "post-slug" %}`                                      | A card linking to another post on this blog, with its title, description and authors. The slug is the file name without the date prefix and `.md`. |
+| `{% update updated %}`                                           | A dismissible "this post is old" banner linking to its replacement. Requires an `updated` object in front matter: `updated: { slug: "post-slug", extra: "optional note" }`. `slug` is the file name without the date prefix and `.md`; `extra` is optional. |
 | `{% svg {src: "name", alt: "…", widths: [30]} %}`                | An SVG from `public/img/blog/name.svg`. Add `type: "logo"` or `type: "icon"` to read from `public/img/` instead.       |
 | `{% avatar "file.jpg", "small", "Alt text" %}`                   | A round author avatar from `public/img/avatar/`. Sizes: `small`, `medium`, `large`, `xlarge`. Mostly used by templates.  |
 

@@ -1,5 +1,5 @@
 {# The icons ship at 14–24px; size here rather than per-file, since external-link.svg is shared with the nav and footer at 16px. #}
-{% set iconBtn = "inline-flex items-center justify-center w-8 h-8 rounded-full bg-okta-gravel text-okta-white hover:opacity-80 transition-opacity [&_svg]:size-4.5" %}
+{% set iconBtn = "inline-flex items-center justify-center w-8 h-8 rounded-full bg-brand-utility-grey-400 text-brand-utility-grey-100 hover:opacity-80 transition-opacity [&_svg]:size-4.5" %}
 <div class="flex items-center gap-2.5 mt-4">
   {% if author.github %}
     <a href="{{ author.github }}" class="{{ iconBtn }}" aria-label="{{ author.full_name }} on GitHub" title="GitHub Profile" rel="me noopener noreferrer" target="_blank">
