@@ -31,7 +31,7 @@ In this tutorial you will learn how to create a simple Spring WebFlux applicatio
 
 ## What is Thymeleaf?
 
-{% img {src: "thymeleaf-security/thymeleaf-logo-white.png", alt: "Thymeleaf Logo", header: "350"} %}{: .pull-right}
+<span class="float-right ml-4 mb-2">{% img {src: "thymeleaf-security/thymeleaf-logo-white.png", alt: "Thymeleaf Logo", header: "350"} %}</span>
 
 Thymeleaf is an open-source server-side Java template engine for standalone and web applications, that was created by Daniel Fernández. The templates look like HTML and can be integrated with Spring MVC and Spring Security among other popular development frameworks. Although documentation about integration with Spring WebFlux is hard to find, it is currently supported and the Thymeleaf starter dependency performs the [auto-configuration](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html#webflux-view-thymeleaf) of the template engine, template resolver and reactive view resolver.
 

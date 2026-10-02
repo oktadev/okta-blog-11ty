@@ -323,7 +323,7 @@ In this post, you learned two ways to deploy your React app to Heroku. The first
 
 [Cloud Native Buildpacks](https://buildpacks.io/) is an initiative that was started by Pivotal and Heroku in early 2018. It has a [`pack` CLI](https://github.com/buildpacks/pack) that allows you to build Docker images using buildpacks.
 
-{% img {src: "react-docker/joe-kutner.jpg", alt: "Joe Kutner"} %}{: .BlogPost-avatar .pull-right .img-150px }
+<span class="float-right ml-4 mb-2">{% img {src: "react-docker/joe-kutner.jpg", alt: "Joe Kutner", header: "150"} %}</span>
 
 My good friend, [Joe Kutner](https://twitter.com/codefinger), is a Software Architect at Heroku and has been instrumental in making Cloud Native Buildpacks a reality. Joe was formerly the curator of the Java experience at Heroku, is an active committer on the JHipster project, authored [The Healthy Programmer](http://healthyprog.com/), and is a founding member of the Cloud Native Buildpacks core team. His advice when it comes to Docker is "don't use a `Dockerfile` if you don't have to". 
 

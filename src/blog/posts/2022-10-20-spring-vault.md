@@ -317,7 +317,7 @@ In a real environment, the config server should be secured. Spring Cloud Config 
 
 ## Vault as a configuration backend with Spring Cloud Vault
 
-{% img {src: "spring-vault/vault-logo.png", alt: "Vault logo", header: "300"} %}{: .pull-right }
+<span class="float-right ml-4 mb-2">{% img {src: "spring-vault/vault-logo.png", alt: "Vault logo", header: "300"} %}</span>
 
 In the cloud, secrets management has become much more difficult. Vault is a secrets management and data protection tool from HashiCorp that provides secure storage, dynamic secret generation, data encryption, and secret revocation.
 

@@ -1093,7 +1093,7 @@ Run the app using `yarn serve`. Now you'll be able to log in using Okta. And whe
 
 {% img {src: "build-crud-spring-and-vue/login-prompt.png", alt: "Okta Login screenshot", header: "400"} %}
 
-{% img {src: "build-crud-spring-and-vue/todo-app-screenshot-auth.png", alt: "", header: "800"} %}{: .center-http :9000/todosimage }
+{% img {src: "build-crud-spring-and-vue/todo-app-screenshot-auth.png", alt: "", header: "800"} %}
 
 There's still one more step to go, however. You can log in through Okta, but the Spring Boot server app isn't requiring authentication. 
 
