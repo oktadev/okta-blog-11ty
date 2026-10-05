@@ -8,10 +8,6 @@
    beat Coveo's own unlayered CDN stylesheet. See the file for the full why. */
 @import "./coveo.css";
 
-/* Aeonik ships 300–700 here. The lighter (Air 100, Thin 200) and heavier
-   (Black 900) cuts exist in the brand toolkit but are deliberately not
-   declared — nothing used them. Note if you ever add them back: the cut names
-   skew one step lighter than the CSS scale, so Air is 100 and Thin is 200. */
 @font-face {
   font-weight: 300;
   font-style: normal;
