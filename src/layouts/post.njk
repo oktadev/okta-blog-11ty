@@ -23,7 +23,7 @@ layout: base
       {% if postAuthors | length %}
         <span class="authors flex flex-wrap items-center gap-3">
           {%- for a in postAuthors -%}
-            <a href="/blog/authors/{{ a.slug }}/" class="inline-flex items-center gap-2 text-brand-primary-blue-300">
+            <a href="/blog/authors/{{ a.slug }}/" class="inline-flex items-center gap-2 text-brand-primary-blue-400">
               {% avatar a.avatar, "small", a.display_name %}
               {{ a.display_name }}
             </a>
@@ -62,7 +62,7 @@ layout: base
       {{ content | safe }}
 
       {% if changelogList | length %}
-        <p id="changelog"><span class="text-content-text font-semibold">Changelog</span>:</p>
+        <p id="changelog"><span class="text-content-text font-bold">Changelog</span>:</p>
         <ul class="changelog list-disc pl-5">
           {%- for entry in changelogList %}
             <li>{{ entry.date | readableDate("LLL d, yyyy") }}: {{ entry.text | inlineMarkdown | safe }}</li>
@@ -79,7 +79,7 @@ layout: base
             {% if author.avatar %}
               <a href="/blog/authors/{{ author.slug }}/" class="shrink-0">{% avatar author.avatar, "small", author.full_name %}</a>
             {% endif %}
-            <span class="author-name"><a href="/blog/authors/{{ author.slug }}/" class="text-links text-base">{{ author.full_name }}</a></span>
+            <span class="author-name"><a href="/blog/authors/{{ author.slug }}/" class="text-links text-base font-light">{{ author.full_name }}</a></span>
             {# The socials root carries mt-4 for the author page, where it stacks; here it sits inline. #}
             <span class="[&>div]:mt-0">{% include "author-socials.njk" %}</span>
           </div>
@@ -92,7 +92,7 @@ layout: base
 
     {% set prevPost = collections.posts | getPreviousCollectionItem %}
     {% set nextPost = collections.posts | getNextCollectionItem %}
-    <nav class="prev-next flex justify-between border-t border-page-border pt-6 text-base" aria-label="Post navigation">
+    <nav class="prev-next flex justify-between border-t border-page-border pt-6 text-lg font-light" aria-label="Post navigation">
       {% if prevPost %}
         <a href="{{ prevPost.url }}" class="text-links" title="{{ prevPost.data.title }}"><span class="inline-flex items-center align-middle rotate-180">{% include "icons/arrow-right.svg" %}</span>&nbsp;Previous post</a>
       {% else %}<span></span>{% endif %}

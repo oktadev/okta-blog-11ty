@@ -4,10 +4,13 @@ pagination:
   data: collections
   size: 1
   alias: tag
-  # `all` and `posts` are internal collections, not reader-facing tags.
+  # `all`, `posts` and `communities` are internal collections, not reader-facing
+  # tags. Leaving `communities` in generates a bogus /blog/tags/communities/
+  # whose entries are community objects, not posts.
   filter:
     - all
     - posts
+    - communities
 permalink: blog/tags/{{ tag | slugify }}/
 ---
 

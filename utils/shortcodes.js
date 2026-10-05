@@ -22,7 +22,7 @@ const update = (updated, postsCollection) => {
   return [
     `<div class="py-2 px-5 mb-6 rounded-sm text-page-text bg-brand-notifications-900 border border-brand-notifications-1000" role="alert">`,
     `<div class="flex w-full items-start justify-between gap-3 mb-3">`,
-    `<p class="text-lg font-semibold">Heads up... this post is old!</p>`,
+    `<p class="text-lg font-bold">Heads up... this post is old!</p>`,
     `<button type="button" class="shrink-0 -m-1.5 p-1.5 cursor-pointer" aria-label="Close" title="Close" onclick="this.closest('[role=alert]').style.display='none'">${closeIcon}</button>`,
     `</div>`,
     updatedLink,

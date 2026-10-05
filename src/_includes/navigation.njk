@@ -20,7 +20,7 @@
 <a class="inline-flex items-center gap-1 text-links-contrast" href="{{ href }}"{% if external %} target="_blank" rel="noopener"{% endif %}{% if current %} aria-current="page"{% endif %}>{{ title }}{% if external %}<span class="inline-flex items-center opacity-80">{% include "icons/external-link.svg" %}</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
 {%- endmacro -%}
 
-<nav class="bg-brand-utility-blue-800 text-page-text-contrast [&_a]:text-links-contrast" aria-label="Main">
+<nav class="bg-brand-primary-blue-500 text-page-text-contrast [&_a]:text-links-contrast" aria-label="Main">
   <div class="px-6 lg:px-16 min-h-16 md:min-h-20 flex flex-wrap items-center gap-x-6 gap-y-3 text-page-text-contrast">
 
     <a class="shrink-0 mr-3 [&_svg]:w-40 [&_svg]:h-auto" href="https://developer.okta.com" aria-label="Okta Developer home">{% include "icons/logotype.svg" %}</a>

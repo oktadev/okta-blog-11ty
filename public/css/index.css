@@ -9,6 +9,24 @@
 @import "./coveo.css";
 
 @font-face {
+  font-weight: 300;
+  font-style: normal;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-Light.woff2") format("woff2"),
+    url("/fonts/aeonik/Aeonik-Light.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-weight: 300;
+  font-style: italic;
+  font-family: "Aeonik";
+  src: url("/fonts/aeonik/Aeonik-LightItalic.woff2") format("woff2"),
+    url("/fonts/aeonik/Aeonik-LightItalic.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
   font-weight: 400;
   font-style: normal;
   font-family: "Aeonik";
@@ -334,9 +352,29 @@ a.direct-link {
   --color-page-text-contrast: var(--color-brand-utility-grey-100);
   --color-page-title: var(--color-brand-utility-blue-800);
   --color-pipe-delimiter: var(--color-brand-utility-grey-300);
-  --color-links: var(--color-brand-primary-blue-300);
+  --color-links: var(--color-brand-primary-blue-400);
   --color-links-contrast: var(--color-brand-utility-grey-100);
   --color-page-border: var(--color-brand-utility-grey-400);
+
+  /* hero gradient for the landing page, using gradient composition outlined in Okta Brand Toolkit v4 */
+  --hero-gradient:
+    radial-gradient(
+      ellipse 35% 75% at 100% 100% in oklab,
+      color-mix(in oklab, var(--color-brand-primary-orange-300) 95%, transparent) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse 40% 70% at 0% 0% in oklab,
+      color-mix(in oklab, var(--color-brand-primary-blue-400) 92%, transparent) 0%,
+      transparent 52%
+    ),
+    linear-gradient(
+      124deg in oklab,
+      var(--color-brand-utility-blue-1000) 0%,
+      var(--color-brand-utility-blue-1000) 16%,
+      var(--color-brand-primary-blue-400) 66%,
+      var(--color-brand-utility-purple-700) 100%
+    );
 
   --font-okta: "Aeonik", "Helvetica Neue", sans-serif;
   --font-heading: "SeasonMix", serif;
