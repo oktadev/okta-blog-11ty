@@ -11,11 +11,23 @@ const closeIcon = readFileSync("src/_includes/icons/close.svg", "utf8")
 // splicing in stray <p></p> tags around nested tag boundaries. See the
 // `excerpt` shortcode below for the same workaround.
 const update = (updated, postsCollection) => {
-  const { slug, extra } = updated || {};
+  if (!updated) return "";
+  const { slug, url, title, extra } = updated;
   const post = postsCollection.find((p) => p.fileSlug === slug);
 
-  const updatedLink = post
-    ? `<p>For an updated version of this post, see <a href="${new URL(post.url, baseUrl).href}">${post.data.title}</a>.</p>`
+  const href = post
+    ? new URL(post.url, baseUrl).href
+    : url
+      ? new URL(url, baseUrl).href
+      : null;
+  const linkTitle = post ? post.data.title : title;
+
+  const updatedLink = href
+    ? `<p>For an updated version of this post, ${
+        linkTitle
+          ? `see <a href="${href}">${linkTitle}</a>`
+          : `<a href="${href}">click here</a>`
+      }.</p>`
     : "";
   const extraText = extra ? `<p>${extra}</p>` : "";
 

@@ -76,6 +76,21 @@ Two optional keys worth knowing:
 
 - `comments: false` leaves the Discourse comment thread off a post. Posts migrated from the old site carry `discourse_topic_id`, which points at their existing forum topic; a post without one gets a topic created from its URL the first time it's viewed in production.
 
+- `updated` (or the legacy `update-url`/`update-title`/`update-extra` keys carried over from migrated posts) renders a dismissible "this post is old" banner at the top, linking to the replacement post. It's shown automatically — no shortcode call needed in the body.
+
+  ```yaml
+  updated:
+    slug: "post-slug" # file name without the date prefix and .md
+    extra: "optional note"
+  ```
+
+  ```yaml
+  update-url: /blog/2020/06/26/spring-boot-vue-kotlin
+  update-title: "Build a CRUD App with Vue.js, Spring Boot, and Kotlin"
+  ```
+
+  If the replacement post hasn't been migrated into this repo yet, the banner links straight to `update-url`/`update-title` instead of a resolved post.
+
 ### Markdown conventions
 
 - Surround directories and file names with backticks: `filename.txt`, `/src/component/dummy.file`.
@@ -116,7 +131,6 @@ Shortcodes are `{% name … %}` tags available in every post. Images are the one
 | `{% youtube "VIDEO-ID" %}`                                       | An embedded YouTube player. Optional title, width and height follow the ID: `{% youtube "8vY-9tXlCW4", "Demo", 900, 506 %}`. |
 | `{% speakerdeck "DATA-ID", 600 %}`                               | An embedded Speaker Deck. The ID is the `data-id` from the deck's embed code; the width in pixels is optional.          |
 | `{% excerpt "post-slug" %}`                                      | A card linking to another post on this blog, with its title, description and authors. The slug is the file name without the date prefix and `.md`. |
-| `{% update updated %}`                                           | A dismissible "this post is old" banner linking to its replacement. Requires an `updated` object in front matter: `updated: { slug: "post-slug", extra: "optional note" }`. `slug` is the file name without the date prefix and `.md`; `extra` is optional. |
 | `{% svg {src: "name", alt: "…", widths: [30]} %}`                | An SVG from `public/img/blog/name.svg`. Add `type: "logo"` or `type: "icon"` to read from `public/img/` instead.       |
 | `{% avatar "file.jpg", "small", "Alt text" %}`                   | A round author avatar from `public/img/avatar/`. Sizes: `small`, `medium`, `large`, `xlarge`. Mostly used by templates.  |
 
