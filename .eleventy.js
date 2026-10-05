@@ -77,6 +77,39 @@ export default function (eleventyConfig) {
     return postsCollection;
   });
 
+  // Communities: a browsable taxonomy over the `communities` front matter that
+  // 643 posts already carry. The allowlist below is the whole contract — it
+  // supplies the URL slug and the display label, and anything absent from it
+  // (one-off values like `design`, or the stray `announcement`) is left out.
+  // Slugs are explicit rather than slugified because ".net" would otherwise
+  // become "net" implicitly; here that mapping is at least visible.
+  const COMMUNITIES = [
+    { name: "javascript", slug: "javascript", label: "JavaScript" },
+    { name: "java", slug: "java", label: "Java" },
+    { name: ".net", slug: "net", label: ".NET" },
+    { name: "security", slug: "security", label: "Security" },
+    { name: "devops", slug: "devops", label: "DevOps" },
+    { name: "mobile", slug: "mobile", label: "Mobile" },
+    { name: "php", slug: "php", label: "PHP" },
+    { name: "python", slug: "python", label: "Python" },
+    { name: "go", slug: "go", label: "Go" },
+    { name: "ruby", slug: "ruby", label: "Ruby" },
+  ];
+
+  eleventyConfig.addCollection("communities", (collectionApi) => {
+    const posts = collectionApi.getFilteredByGlob("./src/blog/posts/**/*.md");
+
+    return COMMUNITIES.map((community) => ({
+      ...community,
+      // Trimmed because a few posts write `communities: [ java ]` with padding.
+      posts: posts.filter((post) =>
+        (post.data.communities || [])
+          .map((value) => String(value).trim().toLowerCase())
+          .includes(community.name),
+      ),
+    })).filter((community) => community.posts.length > 0);
+  });
+
   // Shortcodes
   Object.keys(shortcodes).forEach((shortcodeName) => {
     eleventyConfig.addNunjucksShortcode(shortcodeName, (...args) =>

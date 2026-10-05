@@ -13,7 +13,7 @@
           {% endif %}
           <div class="flex flex-1 flex-col gap-4 p-6">
             <h2 class="text-2xl font-light"><a class="text-brand-primary-blue-400" href="{{ post.url }}">{{ post.data.title if post.data.title else '<code>' + post.url + '</code>' }}</a></h2>
-            <div class="flex flex-wrap items-center gap-3 text-content-text">
+            <div class="flex flex-wrap items-center gap-3 text-content-text font-light">
               <time datetime="{{ post.date | htmlDateString }}">
                 {{ post.date | readableDate }}
               </time>
@@ -25,7 +25,7 @@
               <p class="text-content-text mt-3">{{ excerpt }}</p>
             {% endif %}
             {# mt-auto pins the author row and the CTA below it to the card bottom so cards in a row line up. #}
-            <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 text-content-text">
+            <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 text-content-text font-light">
               {# No separator between authors: at card width they wrap, and a pipe strands at the line end. #}
               {%- for author in authorsList %}
                 <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-2">
