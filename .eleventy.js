@@ -124,6 +124,7 @@ export default function (eleventyConfig) {
   });
 
   // Use the shared Markdown library (see utils/markdown.js).
+  markdownLibrary.linkify.set({ fuzzyLink: false });
   eleventyConfig.setLibrary("md", markdownLibrary);
 
   // // Layouts
