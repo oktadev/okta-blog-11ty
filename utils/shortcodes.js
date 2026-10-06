@@ -13,7 +13,16 @@ const closeIcon = readFileSync("src/_includes/icons/close.svg", "utf8")
 const update = (updated, postsCollection) => {
   if (!updated) return "";
   const { slug, url, title, extra } = updated;
-  const post = postsCollection.find((p) => p.fileSlug === slug);
+  // Dated post files that share a slug (e.g. two deploy-dotnet-container-aws-fargate
+  // posts from different years) also share a fileSlug, since 11ty strips the date
+  // prefix. When we have a full URL (the update-url case), match on that instead of
+  // fileSlug so we land on the actual target post rather than whichever same-slug
+  // post happens to come first in the collection.
+  const post = url
+    ? postsCollection.find(
+        (p) => p.url.replace(/\/$/, "") === url.replace(/\/$/, ""),
+      )
+    : postsCollection.find((p) => p.fileSlug === slug);
 
   const href = post
     ? new URL(post.url, baseUrl).href
