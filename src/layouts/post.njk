@@ -54,6 +54,10 @@ layout: base
       </div>
     {% endif %}
 
+    {% if updated %}
+      {% update updated %}
+    {% endif %}
+
     {% if image %}
       {# Decorative: the <h1> above repeats the title, so alt="" keeps it out of the a11y tree. #}
       {% img {src: image, alt: "", header: true} %}

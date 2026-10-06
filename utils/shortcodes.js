@@ -11,11 +11,32 @@ const closeIcon = readFileSync("src/_includes/icons/close.svg", "utf8")
 // splicing in stray <p></p> tags around nested tag boundaries. See the
 // `excerpt` shortcode below for the same workaround.
 const update = (updated, postsCollection) => {
-  const { slug, extra } = updated || {};
-  const post = postsCollection.find((p) => p.fileSlug === slug);
+  if (!updated) return "";
+  const { slug, url, title, extra } = updated;
+  // Dated post files that share a slug (e.g. two deploy-dotnet-container-aws-fargate
+  // posts from different years) also share a fileSlug, since 11ty strips the date
+  // prefix. When we have a full URL (the update-url case), match on that instead of
+  // fileSlug so we land on the actual target post rather than whichever same-slug
+  // post happens to come first in the collection.
+  const post = url
+    ? postsCollection.find(
+        (p) => p.url.replace(/\/$/, "") === url.replace(/\/$/, ""),
+      )
+    : postsCollection.find((p) => p.fileSlug === slug);
 
-  const updatedLink = post
-    ? `<p>For an updated version of this post, see <a href="${new URL(post.url, baseUrl).href}">${post.data.title}</a>.</p>`
+  const href = post
+    ? new URL(post.url, baseUrl).href
+    : url
+      ? new URL(url, baseUrl).href
+      : null;
+  const linkTitle = post ? post.data.title : title;
+
+  const updatedLink = href
+    ? `<p>For an updated version of this post, ${
+        linkTitle
+          ? `see <a href="${href}">${linkTitle}</a>`
+          : `<a href="${href}">click here</a>`
+      }.</p>`
     : "";
   const extraText = extra ? `<p>${extra}</p>` : "";
 

@@ -37,5 +37,19 @@ export default {
       const [, year, month, day, slug] = m;
       return `/blog/${year}/${month}/${day}/${slug}/`;
     },
+    // Normalize the legacy Jekyll update-url/update-title/update-extra keys
+    // into the { slug, url, title, extra } shape the `update` shortcode
+    // expects, so posts migrated with the old keys still get a banner.
+    updated: (data) => {
+      if (data.updated) return data.updated;
+      if (!data["update-url"]) return undefined;
+      const slug = data["update-url"].split("/").filter(Boolean).pop();
+      return {
+        slug,
+        url: data["update-url"],
+        title: data["update-title"],
+        extra: data["update-extra"],
+      };
+    },
   },
 };
