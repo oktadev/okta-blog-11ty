@@ -230,12 +230,6 @@ export default function (eleventyConfig) {
   // Cap a collection to the first n items (the feed only carries recent posts).
   eleventyConfig.addFilter("limit", (array, n) => (array || []).slice(0, n));
 
-  eleventyConfig.addFilter("postBySlug", function (posts, slug) {
-    const filtered = posts.find((post) => post.fileSlug === slug);
-
-    return filtered;
-  });
-
   eleventyConfig.addFilter("hashFile", function (url) {
     const filePath = path.join("_site", url);
     try {
