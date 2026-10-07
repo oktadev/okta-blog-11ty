@@ -232,6 +232,9 @@ a.direct-link {
   /* Overrides for tables */
   @apply prose-th:p-3 prose-td:px-3 prose-th:bg-brand-primary-neutral-200 prose-tr:border-0 prose-td:align-middle prose-td:text-base prose-th:text-base;
 
+  /* Overrides for lists */
+  @apply [&_li>p:first-child]:mt-0 [&_li>p:last-child]:mb-0;
+
   --tw-prose-body: var(--color-content-text);
   --tw-prose-headings: var(--color-content-text-strong);
   --tw-prose-lead: var(--color-brand-primary-neutral-400);
