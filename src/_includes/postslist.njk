@@ -29,7 +29,7 @@
               {# No separator between authors: at card width they wrap, and a pipe strands at the line end. #}
               {%- for author in authorsList %}
                 <a href="/blog/authors/{{ author.slug }}/" class="inline-flex items-center gap-2">
-                  {% avatar author.avatar, "small", author.display_name %}
+                  {% avatar author.avatar, "small", "" %}
                   {{ author.display_name }}
                 </a>
               {%- endfor %}

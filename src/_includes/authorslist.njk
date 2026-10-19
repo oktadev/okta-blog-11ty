@@ -5,7 +5,7 @@
     <li>
       <a href="/blog/authors/{{ key }}/" class="inline-flex items-center gap-2">
         {% if author.avatar %}
-          {% avatar author.avatar, "medium", author.full_name %}
+          {% avatar author.avatar, "medium", "" %}
         {% endif %}
         <span class="text-lg">{{ author.full_name }}</span>
       </a>
