@@ -19,6 +19,25 @@ const BY_VALUES = new Set([
   "external-contributor",
 ]);
 
+// Communities that have a browsable page. Keep in sync with the COMMUNITIES
+// list in .eleventy.js — a value absent from both is silently unbrowsable.
+const COMMUNITY_VALUES = new Set([
+  "javascript",
+  "java",
+  ".net",
+  "security",
+  "devops",
+  "mobile",
+  "php",
+  "python",
+  "go",
+  "ruby",
+]);
+
+// Near-misses for `communities`. Each of these shipped in real posts and
+// silently dropped them from their community pages, since nothing reads the key.
+const COMMUNITIES_TYPOS = ["communitites", "community", "communites"];
+
 const authors = yaml.load(readFileSync(AUTHORS_FILE, "utf8")) || {};
 const authorKeys = new Set(Object.keys(authors));
 
@@ -81,6 +100,25 @@ for (const file of files) {
   }
   if (data.communities != null && !Array.isArray(data.communities)) {
     add(file, "warn", `communities is not a list`);
+  }
+
+  for (const typo of COMMUNITIES_TYPOS) {
+    if (data[typo] != null) {
+      add(file, "warn", `misspelled key '${typo}' (should be 'communities')`);
+    }
+  }
+
+  if (Array.isArray(data.communities)) {
+    for (const value of data.communities) {
+      const normalized = String(value).trim().toLowerCase();
+      if (!COMMUNITY_VALUES.has(normalized)) {
+        add(
+          file,
+          "warn",
+          `community ${JSON.stringify(value)} has no community page`,
+        );
+      }
+    }
   }
   if (data.description != null && typeof data.description !== "string") {
     add(file, "warn", `description is not a string`);

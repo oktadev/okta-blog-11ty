@@ -47,6 +47,8 @@ const img = async function ({
   header = false,
   widths = [100, 300, 600, 1000],
   sizes = "",
+  // `class` is reserved, so it can't be destructured under its own name.
+  class: className = "",
 }) {
   const dir = avatar ? "img/avatar" : "img/blog";
 
@@ -71,12 +73,21 @@ const img = async function ({
   // and text. Only raster sources go through WebP conversion.
   const isSvg = /\.svg$/i.test(src);
 
+  const imgClass = [avatar ? "" : "mx-auto", className]
+    .filter(Boolean)
+    .join(" ");
+
   const imgAttributes = {
     alt,
     sizes,
     loading: "lazy",
     decoding: "async",
+    ...(imgClass && { class: imgClass }),
   };
+
+  const classAttr = imgClass
+    ? ` class="${imgClass.replace(/"/g, "&quot;")}"`
+    : "";
 
   try {
     if (isSvg) {
@@ -94,7 +105,7 @@ const img = async function ({
       const displayWidth = headerWidth || width;
       const displayHeight = Math.round(displayWidth * (height / width));
       const altAttr = (alt || "").replace(/"/g, "&quot;");
-      return `<img src="${url}" alt="${altAttr}" width="${displayWidth}" height="${displayHeight}" loading="lazy" decoding="async">`;
+      return `<img${classAttr} src="${url}" alt="${altAttr}" width="${displayWidth}" height="${displayHeight}" loading="lazy" decoding="async">`;
     }
 
     return await Image(`./public/${dir}/${src}`, {
@@ -110,7 +121,7 @@ const img = async function ({
   } catch (err) {
     console.warn(`[img] could not process ${dir}/${src}: ${err.message}`);
     const sizesAttr = sizes ? ` sizes="${sizes}"` : "";
-    return `<img src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
+    return `<img${classAttr} src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
   }
 };
 
@@ -119,6 +130,10 @@ const avatar = async function (filename, size = "small", alt = "") {
   let avatarSize;
 
   switch (size) {
+    case "xsmall":
+      widthClass = "w-8";
+      avatarSize = 40;
+      break;
     case "small":
       widthClass = "w-10";
       avatarSize = 48;
@@ -169,22 +184,21 @@ const excerpt = async function (stemPath, postsCollection) {
       authorKeys.map(async (key) => {
         const author = post.data.authors[key];
         if (!author) return "";
-        const avatarImg = await avatar(
-          author.avatar,
-          "small",
-          author.display_name,
-        );
-        return `<a href="/blog/authors/${key}/" class="inline-flex items-center gap-1">${avatarImg} ${author.display_name}</a>`;
+        const avatarImg = await avatar(author.avatar, "xsmall");
+        return `<a href="/blog/authors/${key}/" class="inline-flex items-center gap-2">${avatarImg} ${author.display_name}</a>`;
       }),
     )
   ).join("");
 
-  return `
-    <div class="flex-col border-1 border-solid px-2">
-      <a href="${post.url}">${post.data.title}</a>
-      <p>${post.data.description}</p>
-      <div class="flex-col">${authorsHtml}</div>
-    </div>`;
+  // Joined with no newlines: markdown-it runs with `breaks: true`, so any line
+  // break in returned HTML becomes a <br>.
+  return [
+    `<div class="flex-col border border-solid border-page-border rounded-sm p-3 not-prose my-9">`,
+    `<a class="text-xl" href="${post.url}">${post.data.title}</a>`,
+    `<p class="text-content-text my-6">${post.data.description}</p>`,
+    `<div class="flex-col flex">${authorsHtml}</div>`,
+    `</div>`,
+  ].join("");
 };
 
 export default {

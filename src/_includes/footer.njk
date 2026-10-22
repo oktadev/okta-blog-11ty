@@ -1,13 +1,13 @@
-<footer class="bg-okta-dark-blue text-okta-white antialiased py-12">
+<footer class="bg-brand-primary-blue-500 text-page-text-contrast antialiased py-12">
   <div class="max-w-8xl px-6 lg:px-12 2xl:px-0 space-y-12 mx-auto">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-12 [&_a]:text-okta-white [&_h4]:font-okta">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-12 [&_a]:text-links-contrast [&_h2]:font-okta">
       <div class="space-y-6 sm:col-span-2 md:col-span-3 lg:col-span-1">
         <a href="/" aria-label="Okta Developer">
           {% include "icons/logotype.svg" %}
         </a>
         <div class="mt-3">
-          <h4 class="text-xl font-medium">Questions?</h4>
+          <h2 class="text-xl font-medium">Questions?</h2>
           <p>
             Ask us on the
             <a href="https://devforum.okta.com/" class="underline">forum</a>.
@@ -15,12 +15,13 @@
         </div>
 
         <div class="space-y-1">
-          <h4 class="text-lg font-medium">Connect with us</h4>
+          <h2 class="text-lg font-medium">Connect with us</h2>
 
           {% set socialChannels = [
             { url: "https://github.com/oktadev", label: "Okta Developers on GitHub", icon: "github.svg" },
             { url: "https://x.com/OktaDev", label: "Okta Developers on X", icon: "x.svg" },
             { url: "https://www.youtube.com/oktadev", label: "Okta Developers on YouTube", icon: "youtube.svg" },
+            { url: "https://www.linkedin.com/company/oktadev/", label: "Okta Developers on LinkedIn", icon: "linkedin.svg" },
             { url: "https://devforum.okta.com/", label: "Okta Developer Forum", icon: "forum.svg" },
             { url: site.baseUrl + "/feed.xml", label: "Okta Developer blog RSS feed", icon: "rss.svg" }
           ] %}
@@ -37,7 +38,7 @@
       </div>
 
       <div>
-        <h4 class="text-okta-cream text-lg font-medium mb-1">Contact &amp; Legal</h4>
+        <h2 class="text-brand-primary-neutral-300 text-lg font-medium mb-1">Contact &amp; Legal</h2>
         {% set contactAndLegal = [
             { url: "https://www.okta.com/contact/", title: "Contact our team" },
             { url: "https://www.okta.com/contact-sales/", title: "Contact sales" },
@@ -56,8 +57,11 @@
       </div>
 
       <div>
-        <h4 class="text-okta-cream text-lg font-medium mb-1">More info</h4>
+        <h2 class="text-brand-primary-neutral-300 text-lg font-medium mb-1">More info</h2>
         {% set infoList = [
+            { url: "/blog/communities/", title: "All Communities" },
+            { url: "/blog/tags/", title: "All Tags" },
+            { url: "/blog/authors/", title: "All Authors" },
             { url: "https://developer.okta.com/pricing/", title: "Pricing" },
             { url: "https://developer.okta.com/okta-integration-network/", title: "Integrate with Okta" },
             { url: "https://developer.okta.com/docs/change-log/", title: "Change Log" },
@@ -89,7 +93,7 @@
     </div>
 
     <div class="space-y-2">
-      <hr class="border-t border-okta-white/50">
+      <hr class="border-t border-brand-utility-grey-100/50">
       <span>Copyright &copy; {{ site.year }} Okta. All rights reserved.</span>
     </div>
   </div>

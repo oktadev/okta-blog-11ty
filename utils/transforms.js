@@ -35,6 +35,46 @@ function renderMarkdownAttrs(content) {
   );
 }
 
+const TABLE_TAG = /<table[\s>]|<\/table>/gi;
+const HAS_TABLE = /<table[\s>]/i;
+// Deliberate: posts with several tables expose repeated "Table" landmarks.
+const SCROLL_OPEN =
+  '<div class="overflow-x-auto" tabindex="0" role="region" aria-label="Table">';
+
+// Depth-tracked rather than a regex pair match: one post nests a table inside a
+// cell, and pair matching would close the wrapper on the inner </table>.
+function wrapTables(content) {
+  if (!HAS_TABLE.test(content)) return content;
+
+  let out = "";
+  let cursor = 0;
+  let depth = 0;
+  let match;
+
+  TABLE_TAG.lastIndex = 0;
+  while ((match = TABLE_TAG.exec(content)) !== null) {
+    const isOpen = match[0][1] !== "/";
+    if (isOpen) {
+      if (depth === 0) {
+        out += content.slice(cursor, match.index) + SCROLL_OPEN;
+        cursor = match.index;
+      }
+      depth += 1;
+    } else {
+      depth -= 1;
+      if (depth < 0) return content; // unbalanced; leave it alone
+      if (depth === 0) {
+        const end = match.index + match[0].length;
+        out += content.slice(cursor, end) + "</div>";
+        cursor = end;
+      }
+    }
+  }
+
+  if (depth !== 0) return content;
+  return out + content.slice(cursor);
+}
+
 export default function (eleventyConfig) {
   // The macro preprocessor prepends a newline; HTML minification hides it, but the
   // unminified feed needs its <?xml> declaration on the first line to parse.
@@ -48,6 +88,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addTransform("markdownInHtml", function (content) {
     if (!(this.page.outputPath || "").endsWith(".html")) return content;
     return renderMarkdownAttrs(content);
+  });
+
+  // A transform, not a markdown-it renderer rule: `html: true` means 65 posts carry
+  // literal <table> markup that never becomes a markdown token.
+  eleventyConfig.addTransform("tableScroll", function (content) {
+    if (!(this.page.outputPath || "").endsWith(".html")) return content;
+    return wrapTables(content);
   });
 
   if (isDev) return; // skip minification in dev for speed

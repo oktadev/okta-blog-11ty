@@ -22,10 +22,10 @@
 }
 
 .magic-box .magic-box-input > input {
-  @apply bg-transparent text-okta-white focus:outline-none;
+  @apply bg-transparent text-page-text-contrast focus:outline-none;
 
   &::placeholder {
-    @apply text-okta-white/60;
+    @apply text-brand-utility-grey-100/60;
   }
 }
 
@@ -42,20 +42,21 @@
 }
 
 .magic-box .magic-box-clear .magic-box-icon::before {
-  @apply text-okta-white/70;
+  @apply text-brand-utility-grey-100/70;
 }
 
-/* z-52 clears the promo banner (z-50) and the Community popup (z-51). */
+/* z-53 clears the promo banner (z-50), the Community popup (z-51) and the mobile
+   menu (z-52) — equal to the menu loses, since the menu comes later in the DOM. */
 .CoveoOmnibox.magic-box .magic-box-suggestions {
-  @apply z-52 mt-1 overflow-hidden rounded-sm border border-okta-gravel/40 bg-okta-white shadow-lg;
+  @apply z-53 mt-1 overflow-hidden rounded-sm border border-page-border bg-brand-primary-neutral-100 shadow-lg;
 }
 
 .CoveoOmnibox.magic-box .magic-box-suggestion {
-  @apply px-3 py-2 font-okta text-sm font-normal text-okta-carbon;
+  @apply px-3 py-2 font-okta text-sm font-normal text-page-text;
 
   &.magic-box-selected,
   &:hover {
-    @apply bg-okta-cream;
+    @apply bg-brand-primary-neutral-200;
   }
 }
 
