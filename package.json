@@ -6,6 +6,7 @@
     "css": "tailwindcss -i ./public/css/index.css -o ./_site/style.css --minify",
     "validate": "node scripts/validate-frontmatter.js",
     "validate-images": "node scripts/validate-images.js",
+    "validate-brand-alpha": "node scripts/validate-brand-alpha.js",
     "smoke": "node scripts/smoke-test.js",
     "test": "npm run test:unit && npm run build && npm run smoke",
     "test:unit": "node --test test/*.test.js",

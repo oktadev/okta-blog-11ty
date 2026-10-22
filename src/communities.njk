@@ -1,0 +1,21 @@
+---
+layout: base
+permalink: /blog/communities/
+---
+
+<div class="grid gap-6">
+  <h1 class="text-page-title text-4xl mt-6">Communities</h1>
+
+  <p class="text-content-text text-2xl font-light max-w-prose mb-6">Browse posts by language, platform, or discipline</p>
+
+  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {% for community in collections.communities %}
+      <li>
+        <a href="/blog/communities/{{ community.slug }}/" class="flex h-full items-baseline justify-between gap-3 rounded-lg border border-page-border p-6 transition-shadow hover:shadow-md hover:bg-brand-primary-neutral-300">
+          <span class="text-2xl">{{ community.label }}</span>
+          <span class="text-content-text shrink-0">{{ community.posts | length }} posts</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
