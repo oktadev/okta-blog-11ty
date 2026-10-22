@@ -49,3 +49,14 @@ markdownLibrary.renderer.rules.footnote_caption = (tokens, idx) => {
   const n = Number(tokens[idx].meta.id + 1).toString();
   return tokens[idx].meta.subId > 0 ? `${n}:${tokens[idx].meta.subId}` : n;
 };
+
+// Eleventy disables indented (four-space) code blocks each time it builds a
+// Markdown engine, but runs amendLibrary only once per library, so a second
+// engine in a full build leaves them off (Eleventy issues #2438 and #3816).
+// The old site rendered them and eight posts rely on them, so that one call
+// is ignored here.
+const disable = markdownLibrary.disable.bind(markdownLibrary);
+markdownLibrary.disable = (rules, ignoreInvalid) => {
+  const kept = [rules].flat().filter((name) => name !== "code");
+  return kept.length ? disable(kept, ignoreInvalid) : markdownLibrary;
+};

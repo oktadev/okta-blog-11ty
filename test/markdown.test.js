@@ -38,3 +38,14 @@ test("footnotes render as on the old site, with a bare number as the marker", ()
   );
   assert.match(html, /<section class="footnotes">[\s\S]*The note\./);
 });
+
+test("indented code blocks stay on even after Eleventy disables them", () => {
+  markdownLibrary.disable("code");
+  assert.match(
+    markdownLibrary.render("Run:\n\n    ls -la\n"),
+    /<pre><code>ls -la/,
+  );
+  markdownLibrary.disable(["code", "table"]);
+  assert.match(markdownLibrary.render("    ls -la\n"), /<pre><code>/);
+  markdownLibrary.enable("table");
+});

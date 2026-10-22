@@ -61,9 +61,6 @@ export default function (eleventyConfig) {
   // Prism doesn't know, unescaped, so a "<token>" in such a sample becomes
   // HTML. Escape those ourselves and keep the same markup.
   eleventyConfig.amendLibrary("md", (md) => {
-    // Eleventy turns off indented (four-space) code blocks; the old site
-    // rendered them, and eight posts rely on them.
-    md.enable("code");
     const highlight = md.options.highlight;
     md.set({
       highlight: (str, lang) => {
