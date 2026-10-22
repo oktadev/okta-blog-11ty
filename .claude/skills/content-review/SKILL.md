@@ -34,7 +34,7 @@ and name the tradeoff so the author can decide.
   or architecture this blog can't link to. Advice a reader can't act on is friction, not help.
 - **Cross-post consistency is a reader benefit, not bookkeeping.** Conventions like the Oxford
   comma, spaced en dashes, `{yourOktaDomain}` placeholders, root-relative `/blog/...` links, and
-  the `setup/integrator.md` include exist so readers meet the same patterns everywhere. Don't
+  the `macro.integrator()` macro exist so readers meet the same patterns everywhere. Don't
   wave off a consistency finding because the payoff isn't visible inside this one post — it
   accumulates, and it lands on the person reading their third.
 - **Judge consistently.** Don't change a finding's severity between review rounds without
@@ -97,7 +97,7 @@ Don't grade the post. No pass/fail verdict — the job is to surface what needs 
 to certify compliance.
 
 Don't report issues with no reader impact that tooling already handles: trailing whitespace,
-blank-line counts, or anything `.editorconfig`, `npm run clean-post`, or Prettier normalizes.
+blank-line counts, or anything `.editorconfig`, or Prettier normalizes.
 Do report formatting that breaks rendering or fails the build — unwrapped `{{ }}`, curly
 quotes, invalid code-fence languages, absolute blog links.
 
@@ -112,7 +112,7 @@ Each guideline category is documented separately for focused review:
 1. **[Editorial Standards](./editorial-standards.md)** — Content quality, tutorials, thought leadership, image markup, diagram guidelines, legal, content updates
 2. **[Writing Principles](./writing-principles.md)** — Conciseness, consistency, clarity, considerateness
 3. **[Voice, Tone, and Tense](./voice-tone-tense.md)** — Active voice, tone, tense, banned words
-4. **[Formatting and Punctuation](./formatting.md)** — Headings, dashes, punctuation, code blocks, Jekyll tags, file names
+4. **[Formatting and Punctuation](./formatting.md)** — Headings, dashes, punctuation, code blocks, shortcodes and macros, file names
 5. **[SEO](./seo.md)** — Title optimization, keyword placement, description length
 6. **[Front Matter Validation](./front-matter.md)** — Required metadata fields for blog posts
 

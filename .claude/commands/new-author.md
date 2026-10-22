@@ -12,20 +12,21 @@ Create a new author entry for the okta-blog. Arguments: $ARGUMENTS
    - GitHub URL (optional)
    - LinkedIn URL (optional)
    - Personal website URL (optional)
+   - Email (optional)
 
 2. **Handle the avatar image.**
-   - The standard avatar size in this project is **600×595 px**.
-   - Determine the source image extension. The destination filename must be `avatar-{slug}.{ext}` placed at `_source/_assets/img/`.
-   - If the source image dimensions differ from 600×595, resize it using `sips`:
+   - Avatars must be in color, head and shoulders only, **max 500×500 px** and **max 40 KB**.
+   - Determine the source image extension. The destination filename must be `avatar-{slug}.{ext}` placed at `public/img/avatar/`. Prefer JPG.
+   - If either dimension is over 500 px, downscale with `sips` (keeps the aspect ratio, longest side becomes 500):
      ```
-     sips -z 595 600 /path/to/source/image
+     sips -Z 500 /path/to/source/image
      ```
-   - Copy (or move if the user prefers) the resized image to `_source/_assets/img/avatar-{slug}.{ext}`.
-   - Confirm the final dimensions with `sips -g pixelWidth -g pixelHeight`.
+   - Copy (or move if the user prefers) the resized image to `public/img/avatar/avatar-{slug}.{ext}`.
+   - Confirm the final dimensions with `sips -g pixelWidth -g pixelHeight` and the size with `ls -l`. If the file is over 40 KB, recompress it (for example `sips -s formatOptions 70 --out <dest> <src>` for JPG) and check again.
 
-3. **Add the author to `_source/_data/authors.yml`.**
-   - Append the new entry at the end of the file (before the final newline if one exists).
-   - Only include optional fields (twitter, github, linkedin, web) if the user supplied them.
+3. **Add the author to `src/_data/authors.yaml`.**
+   - Append the new entry at the end of the file (before the final newline if one exists), separated from the previous entry by a blank line.
+   - Only include optional fields (twitter, github, linkedin, web, email) if the user supplied them.
    - Use this format exactly, matching indentation of existing entries (2-space indent for fields):
 
      ```yaml
@@ -37,14 +38,15 @@ Create a new author entry for the okta-blog. Arguments: $ARGUMENTS
        github: {github_url}          # omit line if not provided
        linkedin: {linkedin_url}      # omit line if not provided
        web: {web_url}                # omit line if not provided
-       bio: {bio text}
+       email: {email}                # omit line if not provided
+       bio: "{bio text}"
      ```
 
 4. **Verify the result.**
-   - Read back the newly added section from `authors.yml` and show it to the user.
-   - Confirm the avatar file exists at the correct path with correct dimensions.
+   - Read back the newly added section from `authors.yaml` and show it to the user.
+   - Confirm the avatar file exists at the correct path with correct dimensions and size.
 
 5. **Summary.** Report what was created:
-   - The YAML key added to `authors.yml`
-   - The avatar path and final dimensions
+   - The YAML key added to `authors.yaml`
+   - The avatar path, final dimensions, and file size
    - Remind the user that blog posts reference this author via `author: {slug}` in their front matter.

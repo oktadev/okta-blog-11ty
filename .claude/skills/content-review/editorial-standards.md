@@ -55,14 +55,14 @@ Anything that interrupts a run of paragraphs counts as a visual break:
 - **Images and diagrams** — `{% img %}`
 - **Lists** — bulleted or numbered
 - **Tables**, blockquote notes, and HTML callout tables
-- **Embedded content**, including every Jekyll include and shortcode:
-  - `{% include toc.md %}` — table of contents
+- **Embedded content**, including every shortcode, macro and include:
+  - `[[toc]]` — table of contents
   - `{% excerpt %}` — cross-post promo card
-  - `{% include setup/integrator.md %}` and the other `setup/` includes
-  - `{% include integrator-org-warning.html %}`
+  - `{{ macro.integrator({...}) }}` — Okta org setup steps
+  - `{% include "integrator-org-warning.njk" %}`
   - `{% youtube %}`, embedded tweets, gists, Speakerdeck
 
-A note on `setup/integrator.md`: it's text-dense, but it renders a numbered step list plus a
+A note on `macro.integrator()`: it's text-dense, but it renders a numbered step list plus a
 collapsible `<details>` block, so it does break up the page. Count it.
 
 **When measuring:** count words of *prose only*, between breaks. Don't measure raw
@@ -113,14 +113,14 @@ out inside the intro, that's usually expected rather than a defect.
 
 ## Image Markup
 
-- ❌ Use the **custom Jekyll image macro**, not standard markdown or asciidoc syntax:
+- ❌ Use the **`img` shortcode**, not standard markdown or asciidoc syntax. `header` is the rendered width in pixels, and `src` is relative to `public/img/blog/`:
   ```
-  {% img blog/<post-images-dir>/<image-file-name> alt:"<alt text>" width:"800" %}{: .center-image }
+  {% img {src: "<post-images-dir>/<image-file-name>", alt: "<alt text>", header: "800"} %}
   ```
-- ❌ All images must have the CSS class `center-image`.
+- ❌ Don't add kramdown attributes such as `{: .center-image }`; they do not work here.
 - ❌ Alt text is required. Never start with "Image of" or "Diagram of."
 - ❌ If the image is decorative, use null alt text `" "`.
-- ❌ Images must be **JPG format**, min **800px wide** (1600px optimal), max **1800px wide**, max **500KB**. Check the image format, not just the file extension.
+- ❌ Images must be **JPG format**, min **800px wide** (1600px optimal), max **1800px wide**, max **500KB** (editorial guidance; no script enforces it yet). Check the image format, not just the file extension.
 
 ---
 
@@ -132,8 +132,8 @@ out inside the intro, that's usually expected rather than a defect.
 - ❌ Min width: 800px (1600px optimal). Max width: 1800px. Max file size: 500KB.
 
 ### Okta Admin Console Screenshots
-- ❌ Limit screenshots of the Okta Admin Console as much as possible. Use the `setup/integrator.md` include or written steps with bolded UI labels instead.
-- ❌ Never recommend *adding* an Admin Console screenshot during review. The Admin Console UI changes, which silently invalidates screenshots and leaves posts describing a product that no longer looks that way. The `setup/integrator.md` include exists so setup instructions stay consistent and maintainable without them.
+- ❌ Limit screenshots of the Okta Admin Console as much as possible. Use the `macro.integrator()` macro or written steps with bolded UI labels instead.
+- ❌ Never recommend *adding* an Admin Console screenshot during review. The Admin Console UI changes, which silently invalidates screenshots and leaves posts describing a product that no longer looks that way. The `macro.integrator()` macro exists so setup instructions stay consistent and maintainable without them.
 - ✅ To break up a long setup section, split it with headings rather than adding a screenshot.
 - ✅ Screenshots of the reader's **own running application** are fine and expected — they show the reader what success looks like.
 
@@ -143,10 +143,10 @@ out inside the intro, that's usually expected rather than a defect.
 - ❌ **No borders** in diagrams.
 - ❌ Do not put titles, descriptions, or captions inside the diagram — use surrounding content text instead.
 - ⚠️ **Strongly prefer SVG** for diagrams.
-- ⚠️ If the diagram was generated from **Mermaid**, include the Mermaid syntax as a Liquid comment (`{% comment %}` / `{% endcomment %}`) before or after the image. This lets the diagram be regenerated or edited on the author's behalf later, and sets the post up for a planned future where Mermaid diagrams render natively. Flag an SVG diagram with no accompanying Mermaid source as a missed opportunity, not a hard failure, if the diagram wasn't Mermaid-generated to begin with.
+- ⚠️ If the diagram was generated from **Mermaid**, include the Mermaid syntax as a Nunjucks comment (`{# ... #}`) before or after the image. This lets the diagram be regenerated or edited on the author's behalf later, and sets the post up for a planned future where Mermaid diagrams render natively. Flag an SVG diagram with no accompanying Mermaid source as a missed opportunity, not a hard failure, if the diagram wasn't Mermaid-generated to begin with.
 
 ### Social Images
-- ❌ 1600x900 JPG at `blog/<post-slug>/social.jpg`, referenced by the `image:` front matter field. Under 400KB.
+- ❌ 1600x900 JPG at `<post-slug>/social.jpg` (under `public/img/blog/`), referenced by the `image:` front matter field. Under 400KB.
 - ❌ Must be professional and safe for work.
 - ✅ There is no required template or house layout. Illustrative, creative, and playful social images are all appropriate. Don't flag a social image for differing in style from other posts.
 - ⚠️ The image should relate to what the post teaches.
@@ -161,8 +161,8 @@ out inside the intro, that's usually expected rather than a defect.
 
 ## Content Update Rules
 
-- ❌ If content materially changes guidance or tutorial instructions → **update the article** and add a changelog entry.
+- ❌ If content materially changes guidance or tutorial instructions → **update the article** and add a `changelog` front matter entry (`- YYYY-MM-DD: text`).
 - ❌ If the technology or standards are superseded → **write a new article**. Do not just update the old one.
   - New article must reference which old article it supersedes.
-  - Old article must have a note at the top pointing to the new article.
-  - Do NOT add a changelog entry to the old article.
+  - Old article must point to the new article through the `updated` front matter field, which renders the banner automatically.
+  - Do NOT add a `changelog` entry to the old article.

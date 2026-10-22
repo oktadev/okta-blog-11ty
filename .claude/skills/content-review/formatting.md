@@ -108,13 +108,13 @@ label. Confirm that before flagging an acronym, a casing choice, or an ALL CAPS 
 - ❌ **Curly/smart quotes** (`"` `"` `'` `'`) are not valid markdown. All quotes must be straight (`"` `'`). Their presence is a telltale sign content was pasted from Google Docs without smart quotes disabled.
 - ❌ **Smart ellipsis** (`…`) must be replaced with three plain periods (`...`).
 - When either is found, remind the user to fix their Google Docs settings before re-pasting: **Tools → Preferences → uncheck "Use smart quotes"**.
-- 💡 Remind the user to run `markdownlint` locally and resolve all linting errors before pushing — curly quotes, smart ellipses, and malformed internal blog links will cause the prepush check to fail.
+- 💡 Curly quotes and smart ellipses break rendering and can corrupt copied commands. Malformed internal blog links break navigation.
 
 ---
 
 ## Code Blocks
 
-- ❌ Tag every code block with a **valid Rouge language identifier**. Flag untagged blocks.
+- ❌ Tag every code block with a **valid Prism language identifier** (this site highlights with Prism). Flag untagged blocks.
 - ❌ Do not use these invalid language tags: `text`, `txt`, `cshtml`, `razor`, `csv`, `dotenv`, `env`, `gql`, `markup`.
   - Use `html` instead of `cshtml`/`razor`
   - Use `csvs` instead of `csv`
@@ -127,14 +127,14 @@ label. Confirm that before flagging an acronym, a casing choice, or an ALL CAPS 
 
 ---
 
-## Custom Jekyll Tags
+## Shortcodes and Macros
 
-- ❌ Always use the **integrator.md** plugin for Okta account creation instructions — not manual steps.
-- 💡 Use Twitter plugin for embedded tweets.
-- 💡 Use Github Gist plugin for embedded code snippets.
-- 💡 Use Youtube plugin for embedded videos.
-- 💡 Use Speakerdeck plugin for embedded slide decks.
-- ⚠️ Urge the user to add the TOC plugin for generating a table of contents when a post exceeds 300 words.
+- ❌ Always use the `macro.integrator()` macro for Okta account creation instructions — not manual steps. See `src/integrator-setup.md`. Never recommend the deprecated `cli()` or `maven()` macros.
+- 💡 Put the bare tweet URL on its own line to embed a tweet.
+- 💡 Prefer fenced code blocks over gists; there is no gist embed here.
+- 💡 Use `{% youtube "<id>" %}` for embedded videos.
+- 💡 Use `{% speakerdeck "<id>" %}` for embedded slide decks.
+- ⚠️ Urge the user to add `[[toc]]` for a generated table of contents when a post exceeds 300 words.
 
 ---
 

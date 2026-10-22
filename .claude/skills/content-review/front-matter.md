@@ -4,18 +4,19 @@ For blog post files, check for the following required fields:
 
 | Field | Rule |
 |-------|------|
-| `layout` | Must be `blog_post` |
+| `layout` | Do not set. Posts get their layout from `posts.11tydata.js`. |
 | `title` | Required. Chicago title case. |
 | `author` | Required. Must match an author slug. |
-| `by` | Required. Must be `advocate`, `contractor`, or from the predefined list. |
+| `by` | Required. Must be `advocate`, `contractor`, `internal-contributor`, or `external-contributor`. |
 | `description` | Required. 150 characters or less. This displays in previews. |
-| `communities` | Required. Must be from the predefined list. |
+| `communities` | Required. Must be one of `javascript`, `java`, `.net`, `security`, `devops`, `mobile`, `php`, `python`, `go`, `ruby`. |
 | `tags` | Required. Any relevant tags. |
 | `type` | Required. Must be `awareness` or `conversion`. |
-| `image` | Required if a banner image exists. |
-| `tweets` | Optional and currently unused |
+| `image` | Required if a banner image exists. Path is relative to `public/img/blog/`, for example `<post-slug>/social.jpg`. |
+| `tweets` | Unused. Leave empty; do not flag it as missing. |
 | `github` | Required if the article includes a code example repo. |
-| `changelog` | Required if this content is a material change to an existing post, otherwise do not include this front matter. |
+| `changelog` | Required if this content is a material change to an existing post, otherwise do not include it. A list of `- YYYY-MM-DD: text` entries. |
+| `updated` | Set on an old post that a newer post supersedes: `slug`, or `url` and `title` if the new post is not in this repo yet, plus optional `extra`. Renders the "this post is old" banner. |
 | `canonical` | Required if syndicated or multiple URLs point to this article. |
 
 ---

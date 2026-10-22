@@ -46,4 +46,4 @@ Core principles that guide all writing on the OktaDev blog.
 ## Be Current
 
 - ⚠️ Content should reflect best practices at the time of writing.
-- 💡 Add a changelog entry if content materially changes guidance or tutorial instructions.
+- 💡 Add a `changelog` front matter entry if content materially changes guidance or tutorial instructions.
