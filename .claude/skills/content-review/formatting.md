@@ -115,13 +115,10 @@ label. Confirm that before flagging an acronym, a casing choice, or an ALL CAPS 
 ## Code Blocks
 
 - ❌ Tag every code block with a **valid Prism language identifier** (this site highlights with Prism). Flag untagged blocks.
-- ❌ Do not use these invalid language tags: `text`, `txt`, `cshtml`, `razor`, `csv`, `dotenv`, `env`, `gql`, `markup`.
-  - Use `html` instead of `cshtml`/`razor`
-  - Use `csvs` instead of `csv`
-  - Use `properties` instead of `dotenv`/`env`
-  - Use `graphql` instead of `gql`
-  - Use `xml` instead of `markup`
-  - If you see invalid language tags, remind the user to build locally and inspect the rendered content to verify syntax highlighting.
+- ❌ Flag code-fence language identifiers only when the site's configured Prism highlighter does not support them. Check supported languages and aliases rather than relying on a fixed list of invalid tags.
+  - `csv` and `markup` are valid identifiers; do not flag them as invalid.
+  - Use `csv` for CSV data, not `csvs`.
+  - If a language tag is unsupported, choose a supported language appropriate to the content, then build locally and inspect the rendered syntax highlighting.
 - ❌ Prefer **code blocks over inline code** for multiple instructions.
 - ❌ If code contains `{{ }}`, wrap the block in `{% raw %}` / `{% endraw %}` tags.
 
