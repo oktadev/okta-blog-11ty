@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  listBreaks,
   imageAttributes,
   convertAsciidoc,
   convertMarkdown,
@@ -172,6 +173,17 @@ test("markdown: kramdown attribute lists after an image float it or vanish", () 
     imageAttributes('{% img {src: "x.png", alt: ""} %}{: .pull-left }'),
     '<span class="float-left mr-4 mb-2">{% img {src: "x.png", alt: ""} %}</span>',
   );
+});
+
+test("markdown: a column-0 <br> between list items stays inside the item", () => {
+  const src =
+    '1. One\n\n    {% img blog/d/a.png alt:"A" %}\n<br>\n2. Two\n\n    {% img blog/d/b.png alt:"B" %}\n';
+  assert.equal(
+    convertMarkdown(src).markdown,
+    '1. One\n\n    {% img {src: "d/a.png", alt: "A"} %}\n    <br>\n2. Two\n\n    {% img {src: "d/b.png", alt: "B"} %}\n',
+  );
+  // A <br> after a paragraph at column 0 is left alone.
+  assert.equal(listBreaks("Text\n<br>\nMore"), "Text\n<br>\nMore");
 });
 
 test("markdown: kramdown attribute lines", () => {
