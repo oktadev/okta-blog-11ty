@@ -85,7 +85,7 @@ Once the app is created, follow these steps:
 1. Grant API scopes (for example: `okta.users.read`, `okta.groups.manage`).
 
     {% img {src: "okta-mcp-server/image10.jpeg", alt: " ", header: "700"} %}
-<br>
+    <br>
 
 2. Copy the Client ID for later use.
 
@@ -112,19 +112,19 @@ Use this if you're automating, scheduling jobs, or integrating into infrastructu
     {% img {src: "okta-mcp-server/image11.jpeg", alt: " ", header: "700"} %}
 
     {% img {src: "okta-mcp-server/image18.jpeg", alt: " ", header: "700"} %}
-<br>
+    <br>
 2. Under Client Authentication, select Public Key / Private Key.
 
     {% img {src: "okta-mcp-server/image19.jpeg", alt: " ", header: "700"} %}
-<br>
+    <br>
 3. Add a public key: either generate it in Okta (recommended) and copy it in PEM format, or upload your own keys.
 
     {% img {src: "okta-mcp-server/image13.jpeg", alt: " ", header: "700"} %}
-<br>
+    <br>
 4. Copy the Client ID and Key ID (KID).
 
     {% img {src: "okta-mcp-server/image12.jpeg", alt: " ", header: "700"} %}
-<br>
+    <br>
 
 5. Disable **Proof of Possession** in the General tab.
 
