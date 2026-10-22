@@ -115,9 +115,13 @@ export default function (eleventyConfig) {
       });
   });
 
+  // Collections that exist for the build, not as reader-facing tags. Keep in
+  // sync with the `filter` list in src/tag.njk.
+  const INTERNAL_COLLECTIONS = new Set(["all", "posts", "communities"]);
+
   eleventyConfig.addFilter("allTagsFilter", function (collections) {
     const filteredTags = Object.keys(collections).filter((key) => {
-      return key !== "all" && key !== "posts" && key;
+      return key && !INTERNAL_COLLECTIONS.has(key);
     });
 
     return filteredTags.sort();
@@ -135,7 +139,7 @@ export default function (eleventyConfig) {
   // ".net", numbers) grouped under "#" and placed last.
   eleventyConfig.addFilter("tagsByLetter", function (collections) {
     const tags = Object.keys(collections)
-      .filter((key) => key !== "all" && key !== "posts")
+      .filter((key) => !INTERNAL_COLLECTIONS.has(key))
       .sort((a, b) => a.localeCompare(b));
 
     const groups = {};
@@ -226,12 +230,6 @@ export default function (eleventyConfig) {
   // Cap a collection to the first n items (the feed only carries recent posts).
   eleventyConfig.addFilter("limit", (array, n) => (array || []).slice(0, n));
 
-  eleventyConfig.addFilter("postBySlug", function (posts, slug) {
-    const filtered = posts.find((post) => post.fileSlug === slug);
-
-    return filtered;
-  });
-
   eleventyConfig.addFilter("hashFile", function (url) {
     const filePath = path.join("_site", url);
     try {
@@ -247,6 +245,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("readingTimeBadge", (minutes) => {
     const text = !minutes || minutes < 1 ? 1 : minutes;
 
-    return `<div class="py-0.5 px-3 bg-okta-cloud-tint rounded-xl content-center text-okta-carbon font-semibold"><p class="text-xs uppercase">${text} min read</p></div>`;
+    return `<div class="py-0.5 px-3 bg-brand-primary-blue-100 rounded-xl content-center text-brand-utility-grey-900 font-bold"><p class="text-xs uppercase">${text} min read</p></div>`;
   });
 }

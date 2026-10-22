@@ -17,6 +17,9 @@ eleventyExcludeFromCollections: true
   <url>
     <loc>{{ "/blog/authors/" | url | toAbsoluteUrl }}</loc>
   </url>
+  <url>
+    <loc>{{ "/blog/communities/" | url | toAbsoluteUrl }}</loc>
+  </url>
 {%- for post in collections.posts %}
   <url>
     <loc>{{ post.url | url | toAbsoluteUrl }}</loc>
@@ -26,6 +29,11 @@ eleventyExcludeFromCollections: true
 {%- for tag in collections | allTagsFilter %}
   <url>
     <loc>{{ ("/blog/tags/" + (tag | slugify) + "/") | url | toAbsoluteUrl }}</loc>
+  </url>
+{%- endfor %}
+{%- for community in collections.communities %}
+  <url>
+    <loc>{{ ("/blog/communities/" + community.slug + "/") | url | toAbsoluteUrl }}</loc>
   </url>
 {%- endfor %}
 {%- for authorKey, author in authors %}
