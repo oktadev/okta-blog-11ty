@@ -322,11 +322,18 @@ export function kramdownAttributes(text) {
     .replace(/^\{:(?!toc\})[^}\n]*\}[ \t]*\n?/gm, "");
 }
 
+// kramdown treats a lone "<br>" at column 0 between list items as inline
+// text, so the list continues; markdown-it reads it as an HTML block that
+// ends the list and swallows the next item. Indent it to the item's content.
+export function listBreaks(text) {
+  return text.replace(/(\n( {2,})\S[^\n]*\n)<br>(?=\n)/g, "$1$2<br>");
+}
+
 function convertMarkdownProse(text, note) {
   return (
     imageAttributes(
       convertLiquid(
-        kramdownAttributes(text)
+        listBreaks(kramdownAttributes(text))
           // Kramdown leftovers, inline after a tag
           .replace(/ "no_toc"=""/g, "")
           .replace(/\{: \.center-image \}/g, "")

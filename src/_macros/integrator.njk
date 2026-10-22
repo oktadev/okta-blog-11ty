@@ -57,9 +57,9 @@
 8. Click **Save**
   {% elif params.type == "native" %}
 6. Configure the redirect URIs:
-    {% if params.loginRedirectUri == params.logoutRedirectUri %}- Use {{ params.loginRedirectUri }} for both the **Redirect URI** and **Post Logout Redirect URI**
-    {% else %}- **Redirect URI**: {{ params.loginRedirectUri }}
-   - **Post Logout Redirect URI**: {{ params.logoutRedirectUri }}
+    {% if params.loginRedirectUri == params.logoutRedirectUri %}- Use `{{ params.loginRedirectUri }}` for both the **Redirect URI** and **Post Logout Redirect URI**
+    {% else %}- **Redirect URI**: `{{ params.loginRedirectUri }}`
+   - **Post Logout Redirect URI**: `{{ params.logoutRedirectUri }}`
     {% endif %}
     {%- if params.loginRedirectUri.includes('com.okta.') -%}
    (where `{{ params.loginRedirectUri.replace('com.okta.', "").replace(':/callback', "").replace('[http://localhost:8100/callback,', "").replace(']', "") }}.okta.com` is your Okta domain name). Your domain name is reversed to provide a unique scheme to open your app on a device.
