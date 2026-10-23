@@ -92,3 +92,30 @@
 .token.entity {
   cursor: help;
 }
+
+/* Code callouts: the <1> markers utils/callouts.js turns into badges.
+   Same rules as the old blog's asciidoctor.css; the <b>(1)</b> fallback only
+   shows without CSS. */
+.conum[data-value] {
+  display: inline-block;
+  width: 1.67em;
+  height: 1.67em;
+  border-radius: 100px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff !important;
+  font-size: 0.75em;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 1.67em;
+  text-align: center;
+}
+.conum[data-value]::after {
+  content: attr(data-value);
+}
+.conum[data-value] + b {
+  display: none;
+}
+pre .conum[data-value] {
+  position: relative;
+  top: -0.125em;
+}

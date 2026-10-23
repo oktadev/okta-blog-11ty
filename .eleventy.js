@@ -8,10 +8,27 @@ import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import embedTwitter from "eleventy-plugin-embed-twitter";
 
+import Prism from "prismjs";
+import loadLanguages from "prismjs/components/index.js";
+import { register as registerLanguages } from "./utils/prism-languages.js";
+import { renderCallouts } from "./utils/callouts.js";
+
 import filters from "./utils/filters.js";
 import transforms from "./utils/transforms.js";
 import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
+
+registerLanguages(Prism);
+
+function prismKnows(lang) {
+  if (Prism.languages[lang]) return true;
+  try {
+    loadLanguages([lang]);
+  } catch {
+    return false;
+  }
+  return Boolean(Prism.languages[lang]);
+}
 
 export default function (eleventyConfig) {
   eleventyConfig.on("eleventy.before", () => {
@@ -39,6 +56,22 @@ export default function (eleventyConfig) {
   // Plugins
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
+
+  // The syntax highlighter returns fences tagged `text`, or with a language
+  // Prism doesn't know, unescaped, so a "<token>" in such a sample becomes
+  // HTML. Escape those ourselves and keep the same markup.
+  eleventyConfig.amendLibrary("md", (md) => {
+    const highlight = md.options.highlight;
+    md.set({
+      highlight: (str, lang) => {
+        const name = (lang || "").split("/")[0];
+        if (name && name !== "text" && prismKnows(name))
+          return renderCallouts(highlight(str, lang));
+        const cls = ` class="language-${name || "text"}"`;
+        return `<pre${cls}><code${cls}>${renderCallouts(md.utils.escapeHtml(str))}</code></pre>`;
+      },
+    });
+  });
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
 
