@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  fenceLanguage,
   convertFrontMatter,
   sourceAsset,
   dedentFences,
@@ -348,6 +349,52 @@ test("front matter: a flow list spread over lines is joined onto its key", () =>
     fm,
     'title: T\ncommunities: [".net", "go", "java"]\ntags: [a, b]',
   );
+});
+
+test("markdown: fence tags, BOM, raw spelling, quoted image paths, script assets, bold next to a bracket", () => {
+  const { markdown } = convertMarkdown(
+    [
+      "\uFEFF---",
+      "title: T   ",
+      "---",
+      "```c#",
+      "var a;",
+      "```",
+      "",
+      "```swift   ",
+      "let b",
+      "```",
+      "",
+      "{%raw%}`{{ x }}`{%endraw%}",
+      '{% img "blog/d/a.png" alt:"A" %}',
+      '<script src="/assets-jekyll/guide/bcrypt.min.js"></script>',
+      "See the [**Configure Your Okta Org ** section](#x) and **> **.",
+      "",
+    ].join("\n"),
+  );
+  assert.equal(
+    markdown,
+    [
+      "---",
+      "title: T",
+      "---",
+      "```csharp",
+      "var a;",
+      "```",
+      "",
+      "```swift",
+      "let b",
+      "```",
+      "",
+      "{% raw %}`{{ x }}`{% endraw %}",
+      '{% img {src: "d/a.png", alt: "A"} %}',
+      '<script src="/js/guide/bcrypt.min.js"></script>',
+      "See the [**Configure Your Okta Org** section](#x) and **> **.",
+      "",
+    ].join("\n"),
+  );
+  assert.equal(fenceLanguage(" tf "), "hcl");
+  assert.equal(fenceLanguage("java"), "java");
 });
 
 test("markdown: kramdown attribute lines", () => {

@@ -88,6 +88,7 @@ export function convertFrontMatter(frontMatter) {
   const redirectTo = /^redirect_to:/m.test(frontMatter);
   const out = frontMatter
     .replace(/^layout: ["']?blog_post["']?[ \t]*\r?\n?/m, "")
+    .replace(/[ \t]+$/gm, "")
     .replace(/^redirect_from:[ \t]*\r?\n(?:[ \t]*-[^\n]*\r?\n?)*/m, "")
     .replace(/^redirect_to:[^\n]*\r?\n?(?:[ \t]*-[^\n]*\r?\n?)*/m, "")
     .replace(/\s*$/, redirectTo ? "\neleventyExcludeFromCollections: true" : "")
@@ -220,6 +221,8 @@ export function imageAttributes(text, note = () => {}) {
 export function convertLiquid(text) {
   return (
     text
+      // "{%raw%}" is a Jekyll habit; Nunjucks wants the spaces.
+      .replace(/\{%-?\s*(raw|endraw)\s*-?%\}/g, "{% $1 %}")
       // Liquid whitespace control isn't needed in Nunjucks
       .replace(/\{%- /g, "{% ")
       .replace(/ -%\}/g, " %}")
@@ -234,7 +237,7 @@ export function convertLiquid(text) {
       .replace(/\{%\s*endcomment\s*%\}/g, "#}")
       // Jekyll images: {% img blog/<src> alt:"..." width:"..." %}
       .replace(
-        /\{%\s*img\s+(?!\{)(?:blog\/)?([^\s%]+)([\s\S]*?)%\}/g,
+        /\{%\s*img\s+(?!\{)["']?(?:blog\/)?([^\s%"']+)["']?([\s\S]*?)%\}/g,
         (_, src, attrs) =>
           imgShortcode(
             src,
@@ -272,8 +275,12 @@ export function convertLiquid(text) {
         (_, p) => `/img/${p.replace(/^\//, "")}`,
       )
       .replace(
-        /\/assets-jekyll\/blog\/([^\s"')]+?)-[0-9a-f]{64}(\.\w+)/g,
+        /\/assets-jekyll\/blog\/([^\s"')]+?)(?:-[0-9a-f]{64})?(\.\w+)/g,
         "/img/blog/$1$2",
+      )
+      .replace(
+        /\/assets-jekyll\/([^\s"')]+?)(?:-[0-9a-f]{64})?\.(js|css)\b/g,
+        "/$2/$1.$2",
       )
       // Includes that became macros or Nunjucks includes
       .replace(
@@ -384,9 +391,12 @@ export function kramdownLeniencies(text) {
   return text
     .replace(/\*\*(.+?)\*\*/g, (m, inner, at, all) => {
       const core = inner.trim();
-      if (!core || core === inner) return m;
+      if (!core || core === inner || !/[\p{L}\p{N}]/u.test(core)) return m;
       // A moved space is dropped where it would double one or precede punctuation.
-      const lead = at === 0 || /\s/.test(all[at - 1]) ? "" : " ";
+      const lead =
+        inner.startsWith(" ") && !(at === 0 || /\s/.test(all[at - 1]))
+          ? " "
+          : "";
       const after = all[at + m.length];
       const trail =
         inner.endsWith(" ") &&
@@ -442,6 +452,22 @@ export function dedentFences(segments) {
       text: lines.map((l) => l.slice(Math.min(common, indent))).join("\n"),
     };
   });
+}
+
+// Fence tags the highlighter does not know, written as the old site's
+// highlighter accepted them; the first migration retagged these by hand.
+const FENCE_ALIASES = { "c#": "csharp", vue: "html", tf: "hcl", jsp: "java" };
+export function fenceLanguage(tag) {
+  const clean = (tag || "").trim();
+  return FENCE_ALIASES[clean.toLowerCase()] ?? clean;
+}
+
+// The opener of a fenced block with its tag normalized and trailing space gone.
+function retagFence(code) {
+  return code.replace(
+    /^([ \t]*(?:>[ \t]*)*(?:`{3,}|~{3,}))[ \t]*([^\n]*?)[ \t]*$/m,
+    (_, open, tag) => open + fenceLanguage(tag),
+  );
 }
 
 function convertMarkdownProse(text, note) {
@@ -513,12 +539,12 @@ export function protectTemplateSyntax(text) {
 export function convertMarkdown(content) {
   const notes = [];
   const { frontMatter, body } = splitFrontMatter(
-    content.replace(/\r\n/g, "\n"),
+    content.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n"),
   );
   const converted = dedentFences(splitSegments(body))
     .map((segment) =>
       segment.code
-        ? segment.text
+        ? retagFence(segment.text)
         : transformProse(fixBackticks(segment.text), (t) =>
             convertMarkdownProse(t, (m) => {
               if (!notes.includes(m)) notes.push(m);
@@ -893,7 +919,7 @@ class AsciidocConverter {
 
   convert(content) {
     const { frontMatter, body } = splitFrontMatter(
-      content.replace(/\r\n/g, "\n"),
+      content.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n"),
     );
     const lines = body.split("\n");
 
@@ -1220,7 +1246,7 @@ class AsciidocConverter {
       );
       return withTitle(
         fence +
-          (fenceLang || sourceLang) +
+          fenceLanguage(fenceLang || sourceLang) +
           "\n" +
           code.join("\n") +
           "\n" +
