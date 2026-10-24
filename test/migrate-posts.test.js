@@ -2,6 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  normalizeSlug,
+  redirectFor,
+  retiredPosts,
   resolveImageRefs,
   listBreaks,
   imageAttributes,
@@ -208,6 +211,37 @@ test("resolveImageRefs points a reference at the file that exists under another 
     "image d/a.jpeg is d/a.jpg in the source; reference updated",
     "image d/a-styles.jpeg is d/a-styles.jpg in the source; reference updated",
   ]);
+});
+
+test("normalizeSlug zero-pads the old repo's dates; retiredPosts and redirectFor drive the retired-post prompt", () => {
+  assert.equal(
+    normalizeSlug("2026-1-19-okta-developer-connect-recap.md"),
+    "2026-01-19-okta-developer-connect-recap",
+  );
+  assert.equal(
+    normalizeSlug("2019-08-28-reactive.adoc"),
+    "2019-08-28-reactive",
+  );
+  assert.deepEqual(
+    retiredPosts(
+      ["2017-03-16-a", "2026-01-19-b", "2020-01-01-c"],
+      ["2026-1-19-b", "2020-01-01-c"].map(normalizeSlug),
+    ),
+    ["2017-03-16-a"],
+  );
+  const redirects = [
+    { source: "/blog/2017/03/16/a/", destination: "/blog/2022/08/05/a/" },
+    { source: "/blog/2020/01/01/c", destination: "/blog/2022/01/01/c" },
+  ];
+  assert.equal(
+    redirectFor(redirects, "2017-03-16-a").destination,
+    "/blog/2022/08/05/a/",
+  );
+  assert.equal(
+    redirectFor(redirects, "2020-01-01-c").destination,
+    "/blog/2022/01/01/c",
+  );
+  assert.equal(redirectFor(redirects, "2019-11-07-d"), undefined);
 });
 
 test("markdown: kramdown attribute lines", () => {

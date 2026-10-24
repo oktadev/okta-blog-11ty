@@ -11,10 +11,12 @@
 //
 // Usage:
 //   node scripts/migrate-posts.js [--src ../okta-blog] [--only slug,slug] [--force]
-//                                 [--dry-run] [--no-assets] [--report file]
+//                                 [--yes] [--dry-run] [--no-assets] [--report file]
 //
 // By default only posts missing from src/blog/posts are written; --force
-// re-converts the existing ones too. Images the
+// re-converts the existing ones too. Posts the old repo no longer has are
+// listed and, after confirmation (or with --yes), removed along with the asset
+// folders only they used, provided vercel.json redirects their URL. Images the
 // posts reference and avatars for new authors are copied when absent; existing
 // files are never overwritten. A report of per-post notes is printed at the end.
 import {
@@ -25,10 +27,12 @@ import {
   writeFileSync,
   copyFileSync,
   statSync,
+  rmSync,
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
+import { createInterface } from "node:readline/promises";
 import * as yaml from "js-yaml";
 // The site's slug rules, so xrefs land on the anchors markdown-it-anchor generates.
 import { slugify } from "../utils/markdown.js";
@@ -1465,6 +1469,7 @@ function parseArgs(argv) {
     src: "../okta-blog",
     only: null,
     force: false,
+    yes: false,
     dryRun: false,
     assets: true,
     report: null,
@@ -1481,6 +1486,7 @@ function parseArgs(argv) {
     } else if (a === "--only")
       args.only = argv[++i].split(",").map((s) => s.trim());
     else if (a === "--force") args.force = true;
+    else if (a === "--yes") args.yes = true;
     else if (a === "--dry-run") args.dryRun = true;
     else if (a === "--no-assets") args.assets = false;
     else if (a === "--report") args.report = argv[++i];
@@ -1602,7 +1608,117 @@ function syncAuthors(srcRepo, markdown, dryRun, report) {
   }
 }
 
-function main() {
+// The old repo's file names are not always zero-padded ("2026-1-19-…");
+// the URL and this site's file name are.
+export function normalizeSlug(file) {
+  return file
+    .replace(/\.(md|adoc)$/, "")
+    .replace(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})-/,
+      (_, y, m, d) => `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}-`,
+    );
+}
+
+// Local posts the old repo no longer has.
+export function retiredPosts(localSlugs, upstreamSlugs) {
+  const upstream = new Set(upstreamSlugs);
+  return [...localSlugs].filter((slug) => !upstream.has(slug)).sort();
+}
+
+// The redirect vercel.json carries for a post's URL, with or without the
+// trailing slash, or undefined.
+export function redirectFor(redirects, slug) {
+  const [, y, m, d, name] = slug.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/) || [];
+  if (!name) return undefined;
+  const url = `/blog/${y}/${m}/${d}/${name}`;
+  return redirects.find((r) => r.source === url || r.source === `${url}/`);
+}
+
+function postUrl(slug) {
+  return `/blog/${slug.slice(0, 10).replace(/-/g, "/")}/${slug.slice(11)}/`;
+}
+
+// Image folders a post uses that no other post does.
+function privateImageDirs(slug, allPosts) {
+  const markdown = readFileSync(path.join(DEST_DIR, `${slug}.md`), "utf8");
+  const dirs = new Set(
+    imageRefs(markdown).map((ref) => ref.split("/").slice(0, -1).join("/")),
+  );
+  return [...dirs].filter(
+    (dir) =>
+      dir &&
+      existsSync(path.join(IMG_DIR, dir)) &&
+      !allPosts.some(
+        (p) =>
+          p !== slug &&
+          readFileSync(path.join(DEST_DIR, `${p}.md`), "utf8").includes(
+            `${dir}/`,
+          ),
+      ),
+  );
+}
+
+// Posts the old repo retired: removed here after confirmation, with the
+// image folders only they used. A post whose URL has no redirect in
+// vercel.json is kept, so a reader lands on the replacement and not a 404.
+async function pruneRetired(existing, postsDir, args, report) {
+  const upstream = readdirSync(postsDir)
+    .filter((f) => /\.(md|adoc)$/.test(f))
+    .map(normalizeSlug);
+  const retired = retiredPosts(existing, upstream);
+  if (!retired.length) return 0;
+  const redirects = JSON.parse(readFileSync("vercel.json", "utf8")).redirects;
+  const all = [...existing];
+  const plan = retired.map((slug) => ({
+    slug,
+    redirect: redirectFor(redirects, slug),
+    dirs: privateImageDirs(slug, all),
+  }));
+  const lines = [`## Retired in the old repo`];
+  for (const p of plan) {
+    lines.push(
+      p.redirect
+        ? `- ${p.slug}.md: ${p.redirect.source} redirects to ${p.redirect.destination}` +
+            (p.dirs.length
+              ? `; with ${p.dirs.map((d) => `${IMG_DIR}/${d}/`).join(", ")}`
+              : "")
+        : `- ${p.slug}.md: kept, no redirect in vercel.json for ${postUrl(p.slug)}; add one to the replacement post first`,
+    );
+  }
+  const removable = plan.filter((p) => p.redirect);
+  if (args.dryRun || !removable.length) {
+    report.push(lines.join("\n"));
+    return 0;
+  }
+  console.log(lines.join("\n"));
+  let go = args.yes;
+  if (!go && process.stdin.isTTY) {
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    const answer = await rl.question(
+      `Remove ${removable.length} retired post(s) and their private image folders? [y/N] `,
+    );
+    rl.close();
+    go = /^y(es)?$/i.test(answer.trim());
+  }
+  if (!go) {
+    lines.push("- nothing removed (answer y, or pass --yes)");
+    report.push(lines.join("\n"));
+    return 0;
+  }
+  for (const p of removable) {
+    for (const dir of p.dirs)
+      rmSync(path.join(IMG_DIR, dir), { recursive: true });
+    rmSync(path.join(DEST_DIR, `${p.slug}.md`));
+  }
+  lines.push(`- removed ${removable.length} post(s)`);
+  report.push(lines.join("\n"));
+  return removable.length;
+}
+
+async function main() {
   const args = parseArgs(process.argv.slice(2));
   const postsDir = path.join(args.src, "_source/_posts");
   if (!existsSync(postsDir)) {
@@ -1617,7 +1733,7 @@ function main() {
     .filter((f) => /\.(md|adoc)$/.test(f))
     .map((f) => ({
       file: f,
-      slug: f.replace(/\.(md|adoc)$/, ""),
+      slug: normalizeSlug(f),
       adoc: f.endsWith(".adoc"),
     }))
     .filter((p) =>
@@ -1682,8 +1798,12 @@ function main() {
     }
     report.push(lines.join("\n"));
   }
+  const pruned = args.only
+    ? 0
+    : await pruneRetired(existing, postsDir, args, report);
   const summary =
     `# Migration report\n\n${sources.length} post(s) processed, ${written} written` +
+    `${pruned ? `, ${pruned} retired post(s) removed` : ""}` +
     `${args.dryRun ? " (dry run)" : ""}.\n\n${report.join("\n\n")}\n`;
   if (args.report) writeFileSync(args.report, summary);
   console.log(summary);
@@ -1696,5 +1816,8 @@ if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  main();
+  main().catch((err) => {
+    console.error(err.message);
+    process.exit(1);
+  });
 }

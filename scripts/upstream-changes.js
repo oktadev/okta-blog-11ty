@@ -104,7 +104,10 @@ function main() {
   };
   show("New posts", r.added);
   show("Changed posts", r.modified);
-  show("Deleted posts (remove here and keep a redirect)", r.deleted);
+  show(
+    "Deleted posts (the migration asks before removing them; each needs a redirect in vercel.json)",
+    r.deleted,
+  );
   show(
     "Images added or replaced (the migration copies new ones; replace changed ones by hand)",
     r.images,
@@ -114,6 +117,11 @@ function main() {
       "authors.yml changed: the migration adds missing authors; check renamed ones.",
     );
   const slugs = [...r.added, ...r.modified];
+  if (!slugs.length && r.deleted.length) {
+    console.log(
+      `\nRun:\n  npm run migrate -- --src ${src}\nand answer the prompt to remove them, then record the commit with:\n  node scripts/upstream-changes.js --src ${src} --update`,
+    );
+  }
   if (slugs.length) {
     console.log(
       `\nRun:\n  npm run migrate -- --src ${src} --force --only ${slugs.join(",")}\nthen build, run npm run verify-migration -- ${slugs.join(" ")}, review the diff, and record the commit with:\n  node scripts/upstream-changes.js --src ${src} --update`,
