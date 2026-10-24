@@ -179,7 +179,7 @@ Origin: http://localhost:8080
 
 Make sure both the frontend and REST servers are running.
 
-Next, point a web browser at `http://localhost:8080` to display the web page. We are going to get JavaScript errors, so open your browser's developer console so that we can see what is going on. In Chrome it is *View** > **Developer** > **Developer Tools**.
+Next, point a web browser at `http://localhost:8080` to display the web page. We are going to get JavaScript errors, so open your browser's developer console so that we can see what is going on. In Chrome it is **View** > **Developer** > **Developer Tools**.
 
 Next, click on the **Send v1** button. You will get a JavaScript error displayed in the console:
 

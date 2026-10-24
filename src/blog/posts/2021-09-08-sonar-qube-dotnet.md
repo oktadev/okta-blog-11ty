@@ -83,7 +83,7 @@ You don't have to run analyses with user credentials, you can generate tokens in
   dotnet tool install --global dotnet-sonarscanner
   ```
 
-> **NOTE:**You can [read more about this setup process](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/) in SonarQube documentation.
+> **NOTE:** You can [read more about this setup process](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/) in SonarQube documentation.
 
 ### Analyze the Code
 

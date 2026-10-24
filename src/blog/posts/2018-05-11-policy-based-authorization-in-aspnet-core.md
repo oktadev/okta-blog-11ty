@@ -255,7 +255,7 @@ The client ID and secret you get from the application settings page.
 
 {% img {src: "policy-based-authz-core/app-client-credentials.png", alt: "Application client credentials", header: "800"} %}
 
-Finally, set up an API token, by hovering over the **API** menu item and choosing **Tokens** from the drop-down menu. Then click the **Create Token** button and name it the same as your application name. Click the **Next** button and copy the token from the box and put it in your settings, then click *OK, got it** to finish.
+Finally, set up an API token, by hovering over the **API** menu item and choosing **Tokens** from the drop-down menu. Then click the **Create Token** button and name it the same as your application name. Click the **Next** button and copy the token from the box and put it in your settings, then click **OK, got it** to finish.
 
 > Note: You won't be able to retrieve this again but if you lose it, you can create a new one and change it in your settings.
 

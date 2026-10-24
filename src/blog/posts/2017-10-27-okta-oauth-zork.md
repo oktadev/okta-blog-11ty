@@ -91,7 +91,7 @@ Click **Applications** along the top menu and click **Add Application**.
 
 {% img {src: "okta-oauth-zork/applications-1.png", alt: "Default AS", header: "700"} %}
 
-Choose **Web** and then click **Next*.
+Choose **Web** and then click **Next**.
 
 Later, you'll be deploying the Zork application to Heroku. Fill in the values for **Base-URIs** and **Login redirect URIs** that match your Heroku app name. That is, if you name your Heroku app: `okta-zork-test`, the URL will be: https://okta-zork-test.herokuapp.com
 
