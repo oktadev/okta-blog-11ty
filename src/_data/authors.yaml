@@ -1016,3 +1016,62 @@ swetha-selvanayagam:
   avatar: avatar-swetha-selvanayagam.jpeg
   linkedin: https://www.linkedin.com/in/swetha-selvanayagam
   bio: Swetha is a Product Manager at Okta who takes care of Developer Products such as the Terraform Provider, SDKs & the Okta MCP server. She's always curious about the latest technologies and enjoys building customer experiences around them. Outside of work, she is a big movie buff, who loves making & watching movies.
+
+emily-wendell:
+  full_name: Emily Wendell
+  display_name: Emily Wendell
+  avatar: avatar-emily-wendell.jpg
+  linkedin: https://www.linkedin.com/in/emily-wendell-8652b051/
+  bio: Emily is a former developer turned product manager. She worked with integrations at different companies for small businesses and enterprise customers. She loves helping customers thrive. Emily has been at Okta for over seven years, focusing initially on the Okta-built provisioning apps and Workflow connectors and now on the Workflows platform.
+
+zahwah-jameel:
+  full_name: Zahwah Jameel
+  display_name: Zahwah Jameel
+  avatar: avatar-zahwah-jameel.jpeg
+  linkedin: https://www.linkedin.com/in/zahwah-jameel
+  github: https://github.com/zhwbubbles
+  twitter: https://twitter.com/zahwahjameel26
+  bio: Zahwah is a Developer Advocacy community manager at Okta with prior experience in technical writing and community engagement in startups. Besides work, she enjoys different creative pursuits like writing poetry, painting, and calligraphy.
+
+aasawari:
+  full_name: Aasawari Sahasrabuddhe
+  display_name: Aasawari
+  avatar: avatar-aasawari.jpg
+  github: https://github.com/aasawariS
+  linkedin: https://www.linkedin.com/in/aasawaris
+  web: https://aasawari.blog/
+  bio: Aasawari Sahasrabuddhe is a Senior Builder Advocate at Okta, a tech enthusiast, community builder, and educator. She specializes in bridging backend engineering with strategic community and content engagement. She is recognized as a MongoDB Champion with a strong foundation in Java, Spring Boot, and cloud-native technologies. She has a proven track record in technical writing and delivering hands-on workshops.
+
+gagan-sikri:
+  full_name: Gagan Sikri
+  display_name: Gagan Sikri
+  avatar: avatar-gagan-sikri.jpg
+  linkedin: https://www.linkedin.com/in/sikrigagan/
+  github: https://github.com/sikrigagan
+  twitter: https://twitter.com/sikrigagan
+  bio: Gagan is a Group Product Manager at Okta, leading integration capabilities and extensibility. He helps enterprise customers, developers and partners build and scale integrations across the Okta ecosystem. A developer turned product leader, Gagan brings over a decade of experience across enterprise SaaS, customer data platforms, marketing technology, analytics and developer platforms. He is passionate about product, customer research and tinkering with new tech, from AI and hardware experiments to homelab projects. Outside work, you'll find him exploring great coffee, whiskeys and new places.
+
+alex-silk:
+  full_name: Alex Silk
+  display_name: Alex Silk
+  avatar: avatar-alex-silk.jpg
+  linkedin: https://www.linkedin.com/in/alex-silk/
+  bio: Alex Silk works on Okta Technology Strategy and AI Ecosystem. With an Okta tenure going on 6 years, Alex is a passionate cloud technologist and an ambassador for identity standards adoption across the ISV ecosystem.
+
+dan-maharry:
+  full_name: Dan Maharry
+  display_name: Dan Maharry
+  avatar: avatar-dan-maharry.jpg
+  github: https://github.com/hmobius
+  linkedin: https://www.linkedin.com/in/danmaharry/
+  web: https://hmobius.com/
+  bio: Dan Maharry is a Content Strategy Manager at Okta. I've worked for Wrox Press, Manning, Microsoft Press, Wiley, APress, and many others for more than 20 years. I love learning how technology works and discovering how best to teach that with words, code, and pictures. In total, I've written 14 books and edited many more with past stints for Oxford University Press, the dotCoop TLD registry, and various web development houses.
+
+vanshika:
+  full_name: Vanshika Pandey
+  display_name: Vanshika Pandey
+  avatar: avatar-vanshika-pandey.jpg
+  twitter: https://x.com/vanshikatech
+  github: https://github.com/Vanshikapandey30
+  linkedin: https://in.linkedin.com/in/vanshikapandeyy
+  bio: Vanshika is a Senior Builder Advocate at Okta passionate about Tech, AI, and community engagement. She connects with 600k+ developers across tech communities worldwide sparking conversations and inspiring innovation. Off the clock, she's either on the pickleball court or deep in her latest gaming session.

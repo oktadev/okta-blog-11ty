@@ -4,7 +4,7 @@ permalink: /blog/tags/
 ---
 
 <div class="grid gap-4">
-  <h1 class="text-okta-cobalt text-4xl my-6">Tags</h1>
+  <h1 class="text-page-title text-4xl my-6">Tags</h1>
 
   <div class="grid gap-1 max-w-md">
     <label for="tag-search" class="text-xl">Filter tags</label>
@@ -14,31 +14,31 @@ permalink: /blog/tags/
         id="tag-search"
         placeholder="Try oidc, python, or express"
         autocomplete="off"
-        class="border border-okta-gravel rounded pl-3 pr-9 py-2 w-full"
+        class="border border-page-border rounded pl-3 pr-9 py-2 w-full"
       />
       <button
         type="button"
         id="tag-clear"
         aria-label="Clear filter"
         style="display: none"
-        class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center cursor-pointer text-okta-slate hover:text-okta-carbon"
+        class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center cursor-pointer text-brand-primary-neutral-400 hover:text-brand-utility-grey-900"
       >
         {% include "icons/close.svg" %}
       </button>
     </div>
   </div>
 
-  <p id="tag-status" role="status" aria-live="polite" aria-atomic="true" class="text-okta-slate min-h-6"></p>
+  <p id="tag-status" role="status" aria-live="polite" aria-atomic="true" class="text-brand-primary-neutral-400 min-h-6"></p>
 
   <div id="tag-groups" class="grid gap-9">
     {% for group in collections | tagsByLetter %}
       <section class="tag-group grid gap-6" data-letter="{{ group.letter }}">
-        <h2 class="text-okta-cobalt font-okta text-2xl border-b border-okta-gravel pb-1">{{ group.letter }}</h2>
+        <h2 class="text-brand-primary-blue-400 font-okta text-2xl border-b border-page-border pb-1">{{ group.letter }}</h2>
         <div class="flex flex-wrap gap-3">
           {% for tag in group.tags %}
             <a
               href="/blog/tags/{{ tag | slugify }}/"
-              class="tag-link inline-flex items-center h-6 px-2 rounded bg-okta-cloud-tint text-okta-blue whitespace-nowrap"
+              class="tag-link inline-flex items-center h-6 px-2 rounded bg-brand-utility-blue-100 text-brand-primary-blue-400 whitespace-nowrap"
             >{{ tag }}</a>
           {% endfor %}
         </div>

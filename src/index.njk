@@ -2,13 +2,67 @@
 layout: base
 pagination:
   data: collections.posts
-  size: 10
+  size: 12
   alias: postslist
   reverse: true
 permalink: "{% if pagination.pageNumber == 0 %}blog/index.html{% else %}blog/page/{{ pagination.pageNumber + 1 }}/index.html{% endif %}"
 ---
 
-<div>
+{# accent carries full hover:* classes, not just color tokens. Tailwind scans
+   this file as plain text to decide which classes to generate — it never
+   executes Nunjucks — so each complete class (variant + utility) has to
+   appear here as an unbroken literal. hover:{{ section.accent }} would only
+   produce that string at render time, after the CSS already shipped without
+   it. Multiple classes in one accent string are fine, space-separated. #}
+{% set browseSections = [
+  {
+    url: "/blog/communities/",
+    title: "Communities",
+    description: "Posts by language, platform, or discipline",
+    accent: "hover:bg-brand-primary-blue-500 hover:text-links-contrast"
+  },
+  {
+    url: "/blog/tags/",
+    title: "Tags",
+    description: "Topics we write about",
+    accent: "hover:bg-brand-primary-neutral-300 hover:text-page-text"
+  },
+  {
+    url: "/blog/authors/",
+    title: "Authors",
+    description: "People behind the posts",
+    accent: "hover:bg-brand-primary-blue-300 hover:text-links-contrast"
+  }
+] %}
+
+<div class="grid gap-15">
+  {# bg-brand-utility-blue-1000 is the fallback, not decoration: the gradient
+     uses `in oklab`, and a browser that rejects it drops background-image
+     entirely, which would put white text on white. #}
+  <div class="rounded-lg bg-brand-utility-blue-1000 bg-(image:--hero-gradient) px-6 py-16 text-page-text-contrast sm:px-12 lg:py-24">
+    <h1 class="font-heading font-light text-4xl sm:text-5xl lg:text-6xl">{{ site.title }}</h1>
+    <p class="mt-6 max-w-prose text-lg sm:text-xl lg:text-2xl font-light">{{ site.description }}</p>
+  </div>
+
+  <nav aria-label="Browse the blog">
+    <ul class="grid gap-6 md:grid-cols-3">
+      {% for section in browseSections %}
+        <li>
+          <a href="{{ section.url | url }}" class="flex h-full flex-col gap-3 rounded-lg text-page-text hover:no-underline {{ section.accent }} hover:border-0 border border-page-border p-3 transition-shadow hover:shadow-lg">
+            <span class="md:text-2xl text-xl">{{ section.title }}</span>
+            <span class="mt-auto inline-flex items-center gap-2 sm:text-base lg:text-lg font-light [&_svg]:w-6 lg:[&_svg]:w-8 [&_svg]:h-auto">
+              {{ section.description }}
+              {% include "icons/arrow-right.svg" %}
+            </span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
+
+<div class="mt-15">
+  <h2 class="text-3xl mb-9">Browse all posts</h2>
   {% include "postslist.njk" %}
   {% include "pagination.njk" %}
 </div>

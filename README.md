@@ -76,6 +76,21 @@ Two optional keys worth knowing:
 
 - `comments: false` leaves the Discourse comment thread off a post. Posts migrated from the old site carry `discourse_topic_id`, which points at their existing forum topic; a post without one gets a topic created from its URL the first time it's viewed in production.
 
+- `updated` (or the legacy `update-url`/`update-title`/`update-extra` keys carried over from migrated posts) renders a dismissible "this post is old" banner at the top, linking to the replacement post. It's shown automatically — no shortcode call needed in the body.
+
+  ```yaml
+  updated:
+    slug: "post-slug" # file name without the date prefix and .md
+    extra: "optional note"
+  ```
+
+  ```yaml
+  update-url: /blog/2020/06/26/spring-boot-vue-kotlin
+  update-title: "Build a CRUD App with Vue.js, Spring Boot, and Kotlin"
+  ```
+
+  If the replacement post hasn't been migrated into this repo yet, the banner links straight to `update-url`/`update-title` instead of a resolved post.
+
 ### Markdown conventions
 
 - Surround directories and file names with backticks: `filename.txt`, `/src/component/dummy.file`.
@@ -83,6 +98,8 @@ Two optional keys worth knowing:
 - Bold button and link names: then click **Done**.
 - Write function names with parentheses inside backticks: this calls the `render()` method.
 - Wrap `http://localhost` URLs in backticks.
+- Fenced code blocks are preferred, but four-space indented code blocks render too (Eleventy turns them off by default; this site turns them back on). Footnotes (`[^1]`) render as on the old site, with a bare number as the marker.
+- To float an image beside the text, wrap the shortcode: `<span class="float-right ml-4 mb-2">{% img {...} %}</span>`. The migration does this for the old site's `{: .pull-right }` markers.
 - Links into developer.okta.com should be relative: `/docs/whatever/` rather than the full URL.
 - Posts are rendered by Nunjucks before Markdown, so code that contains `{{ }}` or `{% %}` must sit inside a raw block or the template engine will try to evaluate it:
 

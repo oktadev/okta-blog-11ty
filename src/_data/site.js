@@ -11,6 +11,11 @@ export default {
   isProduction: baseUrl === PRODUCTION_ORIGIN,
   productionOrigin: PRODUCTION_ORIGIN,
   author: "Okta Developer",
+  // og:image fallback for pages/posts with no image of their own. Okta's own
+  // "Okta Developer" blog-link card (sourced from okta.com's media CDN,
+  // 2026-10-05). Relative to public/img/blog/, same convention as post
+  // front-matter `image:` values — resolved through the `socialImage` filter.
+  image: "og-default.jpg",
   twitter: "@oktadev",
   lang: "en",
   // Current year, resolved at build time (used in the footer copyright line).

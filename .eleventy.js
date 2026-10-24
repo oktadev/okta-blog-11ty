@@ -8,10 +8,27 @@ import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import embedTwitter from "eleventy-plugin-embed-twitter";
 
+import Prism from "prismjs";
+import loadLanguages from "prismjs/components/index.js";
+import { register as registerLanguages } from "./utils/prism-languages.js";
+import { renderCallouts } from "./utils/callouts.js";
+
 import filters from "./utils/filters.js";
 import transforms from "./utils/transforms.js";
 import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
+
+registerLanguages(Prism);
+
+function prismKnows(lang) {
+  if (Prism.languages[lang]) return true;
+  try {
+    loadLanguages([lang]);
+  } catch {
+    return false;
+  }
+  return Boolean(Prism.languages[lang]);
+}
 
 export default function (eleventyConfig) {
   eleventyConfig.on("eleventy.before", () => {
@@ -39,6 +56,22 @@ export default function (eleventyConfig) {
   // Plugins
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
+
+  // The syntax highlighter returns fences tagged `text`, or with a language
+  // Prism doesn't know, unescaped, so a "<token>" in such a sample becomes
+  // HTML. Escape those ourselves and keep the same markup.
+  eleventyConfig.amendLibrary("md", (md) => {
+    const highlight = md.options.highlight;
+    md.set({
+      highlight: (str, lang) => {
+        const name = (lang || "").split("/")[0];
+        if (name && name !== "text" && prismKnows(name))
+          return renderCallouts(highlight(str, lang));
+        const cls = ` class="language-${name || "text"}"`;
+        return `<pre${cls}><code${cls}>${renderCallouts(md.utils.escapeHtml(str))}</code></pre>`;
+      },
+    });
+  });
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
 
@@ -77,6 +110,39 @@ export default function (eleventyConfig) {
     return postsCollection;
   });
 
+  // Communities: a browsable taxonomy over the `communities` front matter that
+  // 643 posts already carry. The allowlist below is the whole contract — it
+  // supplies the URL slug and the display label, and anything absent from it
+  // (one-off values like `design`, or the stray `announcement`) is left out.
+  // Slugs are explicit rather than slugified because ".net" would otherwise
+  // become "net" implicitly; here that mapping is at least visible.
+  const COMMUNITIES = [
+    { name: "javascript", slug: "javascript", label: "JavaScript" },
+    { name: "java", slug: "java", label: "Java" },
+    { name: ".net", slug: "net", label: ".NET" },
+    { name: "security", slug: "security", label: "Security" },
+    { name: "devops", slug: "devops", label: "DevOps" },
+    { name: "mobile", slug: "mobile", label: "Mobile" },
+    { name: "php", slug: "php", label: "PHP" },
+    { name: "python", slug: "python", label: "Python" },
+    { name: "go", slug: "go", label: "Go" },
+    { name: "ruby", slug: "ruby", label: "Ruby" },
+  ];
+
+  eleventyConfig.addCollection("communities", (collectionApi) => {
+    const posts = collectionApi.getFilteredByGlob("./src/blog/posts/**/*.md");
+
+    return COMMUNITIES.map((community) => ({
+      ...community,
+      // Trimmed because a few posts write `communities: [ java ]` with padding.
+      posts: posts.filter((post) =>
+        (post.data.communities || [])
+          .map((value) => String(value).trim().toLowerCase())
+          .includes(community.name),
+      ),
+    })).filter((community) => community.posts.length > 0);
+  });
+
   // Shortcodes
   Object.keys(shortcodes).forEach((shortcodeName) => {
     eleventyConfig.addNunjucksShortcode(shortcodeName, (...args) =>
@@ -91,6 +157,7 @@ export default function (eleventyConfig) {
   });
 
   // Use the shared Markdown library (see utils/markdown.js).
+  markdownLibrary.linkify.set({ fuzzyLink: false });
   eleventyConfig.setLibrary("md", markdownLibrary);
 
   // // Layouts
