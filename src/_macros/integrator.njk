@@ -39,27 +39,27 @@
   {% if params.type == "spa" %}
 6. In the **Grant type** section, ensure that both **Authorization Code** and **Refresh Token** are selected
 7. Configure the redirect URIs:
-   - **Sign-in redirect URIs**: {{ params.loginRedirectUri }}
-   {% if params.logoutRedirectUri %}- **Sign-out redirect URIs**: {{ params.logoutRedirectUri }}{% else %}- **Sign-out redirect URIs**: {{ baseUrl }}{% endif %}
+   - **Sign-in redirect URIs**: `{{ params.loginRedirectUri }}`
+   {% if params.logoutRedirectUri %}- **Sign-out redirect URIs**: `{{ params.logoutRedirectUri }}`{% else %}- **Sign-out redirect URIs**: `{{ baseUrl }}`{% endif %}
 8. In the **Assignments** section, assign a group or keep the default **Everyone** group assigned for all
 9. Click **Save**
   {% elif params.type == "web" %}
 6. Configure the redirect URIs:
-    {% if params.loginRedirectUri and params.logoutRedirectUri %}- **Sign-in redirect URIs**: {{ params.loginRedirectUri }}
-   - **Sign-out redirect URIs**: {{ params.logoutRedirectUri }}
-    {% elif params.loginRedirectUri %}- **Sign-in redirect URIs**: {{ params.loginRedirectUri }}
-   - **Sign-out redirect URIs**: {{ baseUrl }}
+    {% if params.loginRedirectUri and params.logoutRedirectUri %}- **Sign-in redirect URIs**: `{{ params.loginRedirectUri }}`
+   - **Sign-out redirect URIs**: `{{ params.logoutRedirectUri }}`
+    {% elif params.loginRedirectUri %}- **Sign-in redirect URIs**: `{{ params.loginRedirectUri }}`
+   - **Sign-out redirect URIs**: `{{ baseUrl }}`
     {% else %}- Accept the default redirect URI values{% if params.framework and params.framework.includes("Spring Boot") %}:
-     - **Sign-in redirect URIs**: http://localhost:8080/login/oauth2/code/okta
-     - **Sign-out redirect URIs**: http://localhost:8080{% endif %}
+     - **Sign-in redirect URIs**: `http://localhost:8080/login/oauth2/code/okta`
+     - **Sign-out redirect URIs**: `http://localhost:8080`{% endif %}
     {% endif %}
 7. In the **Assignments** section, assign a group or keep the default **Everyone** group assigned for all
 8. Click **Save**
   {% elif params.type == "native" %}
 6. Configure the redirect URIs:
-    {% if params.loginRedirectUri == params.logoutRedirectUri %}- Use {{ params.loginRedirectUri }} for both the **Redirect URI** and **Post Logout Redirect URI**
-    {% else %}- **Redirect URI**: {{ params.loginRedirectUri }}
-   - **Post Logout Redirect URI**: {{ params.logoutRedirectUri }}
+    {% if params.loginRedirectUri == params.logoutRedirectUri %}- Use `{{ params.loginRedirectUri }}` for both the **Redirect URI** and **Post Logout Redirect URI**
+    {% else %}- **Redirect URI**: `{{ params.loginRedirectUri }}`
+   - **Post Logout Redirect URI**: `{{ params.logoutRedirectUri }}`
     {% endif %}
     {%- if params.loginRedirectUri.includes('com.okta.') -%}
    (where `{{ params.loginRedirectUri.replace('com.okta.', "").replace(':/callback', "").replace('[http://localhost:8100/callback,', "").replace(']', "") }}.okta.com` is your Okta domain name). Your domain name is reversed to provide a unique scheme to open your app on a device.
