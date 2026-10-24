@@ -174,6 +174,7 @@ Redirects and the site's security headers live in `vercel.json`.
 
 `npm ci` (through the `prepare` script) points git at the hooks in `.githooks/`, so they run without any setup:
 
+- **`npm run setup`** (called by `npm start` and `npm run build`) compiles the CSS, copies fonts, scripts, avatars and the site's SVGs into `_site`, and runs `scripts/copy-raw-assets.js`, which copies only the files posts reference by plain path (videos, posters, PDFs, raw `<img>` sources, links to full-size images) from `public/img/blog` and `public/files`. Images that go through `{% img %}` are produced by eleventy-img instead, so their originals never ship next to the derivatives.
 - **pre-commit** refuses `.DS_Store` files and anything over 5MB, syntax-checks staged JavaScript, formats staged JS and JSON with Prettier, and runs `npm run validate`. Bypass with `git commit --no-verify` only if you know why it failed.
 - **pre-push** runs a full `npm run build` so a broken template or filter is caught before CI. Skip it with `SKIP_BUILD=1 git push` when you've just built.
 

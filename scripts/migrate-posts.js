@@ -32,6 +32,7 @@ import { createHash } from "node:crypto";
 import * as yaml from "js-yaml";
 // The site's slug rules, so xrefs land on the anchors markdown-it-anchor generates.
 import { slugify } from "../utils/markdown.js";
+import { rawAssetRefs } from "../utils/raw-assets.js";
 
 // Asciidoctor's section id, as the old site generated it (idprefix "",
 // idseparator "-"): drop tags, entities and everything but letters, digits,
@@ -542,7 +543,8 @@ function imageSrc(target) {
 const BOLD = "";
 
 class AsciidocConverter {
-  constructor() {
+  constructor(options = {}) {
+    this.resolveAsset = options.resolveAsset;
     this.attrs = {};
     this.notes = [];
     this.toc = null;
@@ -565,12 +567,15 @@ class AsciidocConverter {
   }
 
   // A raw asset reference (video, pdf, or an <img> in passthrough HTML) that
-  // can't go through the {% img %} shortcode.
+  // can't go through the {% img %} shortcode. jekyll-assets looked the path up
+  // across its asset folders; the resolver does the same against the old repo
+  // when there is one, otherwise the path is assumed to be an image.
   assetUrl(p) {
+    const clean = p.replace(/^\//, "");
     this.note(
-      "raw asset path used outside {% img %}; the file must be served as-is",
+      "raw asset path used outside {% img %}; the file is served as-is (see scripts/copy-raw-assets.js)",
     );
-    return `/img/${p.replace(/^\//, "")}`;
+    return this.resolveAsset ? this.resolveAsset(clean) : `/img/${clean}`;
   }
 
   // An image's link= target, which may itself be an asset path.
@@ -1452,8 +1457,20 @@ function inlineHtml(text) {
     .replace(/(^|[^\w])_([^_]+)_(?!\w)/g, "$1<em>$2</em>");
 }
 
-export function convertAsciidoc(content) {
-  return new AsciidocConverter().convert(content);
+export function convertAsciidoc(content, options) {
+  return new AsciidocConverter(options).convert(content);
+}
+
+// Where an old-repo asset path is served from here: images under /img, the
+// repo's downloads under /files (both mirrored into public/).
+export function assetResolver(src) {
+  return (p) => {
+    const roots = ["img", "files"];
+    const root = roots.find((r) =>
+      existsSync(path.join(src, "_source/_assets", r, p)),
+    );
+    return `/${root || "img"}/${p}`;
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -1511,12 +1528,17 @@ function copyAsset(from, to, report, dryRun) {
   report.push(`copied ${to} (${(statSync(from).size / 1024).toFixed(0)} KB)`);
 }
 
-function imageRefs(markdown) {
+// Every file a post needs from the old repo's asset folders, as paths under
+// public/: shortcode images, the front-matter image, and the videos, posters,
+// PDFs, raw <img> sources and full-size image links it references by path.
+export function assetRefs(markdown) {
   const refs = new Set();
   for (const m of markdown.matchAll(/\{%\s*img\s*\{\s*src:\s*"([^"]+)"/g))
-    refs.add(m[1]);
+    refs.add(`img/blog/${m[1]}`);
+  for (const ref of rawAssetRefs(markdown)) refs.add(ref);
   const fm = markdown.match(/^image:\s*["']?([^"'\n]+?)["']?\s*$/m);
-  if (fm && !/^https?:/.test(fm[1])) refs.add(fm[1].replace(/^\/?blog\//, ""));
+  if (fm && !/^https?:/.test(fm[1]))
+    refs.add(`img/blog/${fm[1].replace(/^\/?blog\//, "")}`);
   return [...refs];
 }
 
@@ -1611,7 +1633,7 @@ function main() {
       "utf8",
     );
     const { markdown, notes } = post.adoc
-      ? convertAsciidoc(content)
+      ? convertAsciidoc(content, { resolveAsset: assetResolver(args.src) })
       : convertMarkdown(content);
     const lines = [
       `## ${post.file} -> ${dest}${existing.has(post.slug) ? " (overwritten)" : ""}`,
@@ -1627,10 +1649,10 @@ function main() {
     }
     if (args.assets) {
       const assetReport = [];
-      for (const ref of imageRefs(markdown)) {
+      for (const ref of assetRefs(markdown)) {
         copyAsset(
-          path.join(args.src, "_source/_assets/img/blog", ref),
-          path.join(IMG_DIR, ref),
+          path.join(args.src, "_source/_assets", ref),
+          path.join("public", ref),
           assetReport,
           args.dryRun,
         );

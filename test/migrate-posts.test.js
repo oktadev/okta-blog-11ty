@@ -2,6 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  assetRefs,
+  assetResolver,
   listBreaks,
   imageAttributes,
   convertAsciidoc,
@@ -184,6 +186,41 @@ test("markdown: a column-0 <br> between list items stays inside the item", () =>
   );
   // A <br> after a paragraph at column 0 is left alone.
   assert.equal(listBreaks("Text\n<br>\nMore"), "Text\n<br>\nMore");
+});
+
+test("assetRefs lists shortcode images, the front-matter image and raw media as public paths", () => {
+  assert.deepEqual(
+    assetRefs(
+      'image: blog/d/social.jpg\n\n{% img {src: "d/a.png", alt: ""} %}\n<video src="/img/blog/d/demo.mp4" poster="/img/blog/d/poster.png"></video>\n<a href="/files/d/guide.pdf">PDF</a>\n',
+    ),
+    [
+      "img/blog/d/a.png",
+      "img/blog/d/demo.mp4",
+      "img/blog/d/poster.png",
+      "files/d/guide.pdf",
+      "img/blog/d/social.jpg",
+    ],
+  );
+});
+
+test("asciidoc: a raw asset path is served from where the old repo keeps it", () => {
+  const src =
+    "image::{% asset_path 'blog/d/thumb.jpg' %}[alt=Thumb, link=\"{% asset_path 'd/guide.pdf' %}\"]";
+  const resolveAsset = (p) =>
+    p.endsWith(".pdf") ? `/files/${p}` : `/img/${p}`;
+  assert.match(
+    convertAsciidoc(src, { resolveAsset }).markdown,
+    /\]\(\/files\/d\/guide\.pdf\)/,
+  );
+  // Without a resolver the path is assumed to be an image, as before.
+  assert.match(convertAsciidoc(src).markdown, /\]\(\/img\/d\/guide\.pdf\)/);
+  // The real resolver looks the path up under the old repo's asset folders.
+  const resolve = assetResolver("../okta-blog");
+  assert.equal(
+    resolve("game-security-pax/info-graphic.pdf"),
+    "/files/game-security-pax/info-graphic.pdf",
+  );
+  assert.equal(resolve("blog/not/there.png"), "/img/blog/not/there.png");
 });
 
 test("markdown: kramdown attribute lines", () => {
