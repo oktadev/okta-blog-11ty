@@ -652,7 +652,7 @@ The CSRF token is displayed, but if you turn on developer tools, you can also fi
 
 You can try the POST request with HTTPie, and you will again verify the POST request is rejected without the CSRF token.
 
- ```shell
+```shell
 $ http POST http://localhost:8080/
 
 HTTP/1.1 403 Forbidden

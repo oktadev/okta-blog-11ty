@@ -356,9 +356,9 @@ To write log statements in the classes you can use the auto-injected `log` prope
 
 I'll simply point out that the root logger in the logback config file is set to only show error messages. If you want to change that, change the following line (changing ERROR to INFO or whatever):
 
- ```groovy
+```groovy
  root(ERROR, ['STDOUT'])
- ```
+```
 
 ## Authenticate the Current User
 

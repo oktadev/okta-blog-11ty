@@ -677,7 +677,7 @@ private messages: MessageItem[] = [
 There's one more property to add. A real server call should only return the messages relevant to the department of the caller. Users of department "1" shouldn't see the messages for department "2" by inspecting the network response. We'll handle this within the service by creating a mapping for message types by the department. Add the `departmentMapping` property and update the constructor for the service as shown below.
  
  {% raw %}
- ```ts
+```ts
 private departmentMapping: Map<number, MessageType[]> = new Map<number, MessageType[]>();  
   
 constructor() {  

@@ -857,7 +857,7 @@ describe('HomePage', () => {
 
 This test uses `jest.spyOn` to *spy* on the methods that should be called, and verify they were. If you want to mock functions and return fake data, you can do this with `jest.fn()` and [mock functions](https://facebook.github.io/jest/docs/en/mock-functions.html).
 
-Add tests to ensure `HoldingsProvider.loadHoldings()`` is called and a list of currencies is shown.
+Add tests to ensure `HoldingsProvider.loadHoldings()` is called and a list of currencies is shown.
 
 ```ts
 it('should call loadHoldings', () => {

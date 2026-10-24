@@ -319,13 +319,13 @@ node okta_bootstrap.js --mulesoft_policy
 
 Two steps need to be done manually in your Okta tenant before launching your app.
 
-1) Add your `REDIRECT_URI` as a Trusted Origin in your Okta tenant:
+1\) Add your `REDIRECT_URI` as a Trusted Origin in your Okta tenant:
 
 Go to API->Trusted Origins->Add Origin (if you are using the classic UI, go to Security->API->Trusted Origins->Add Origin).
 
 {% img {src: "secure-api-mulesoft/okta_trusted_origin.png", alt: "Okta Trusted Origin", header: "650"} %}
 
-2) Assign the Okta client (`AUTHN_CLIENT_ID`) that you created via the Mulesoft UI to Okta users/groups
+2\) Assign the Okta client (`AUTHN_CLIENT_ID`) that you created via the Mulesoft UI to Okta users/groups
 
 For the purposes of this demo, we're going to assign this client to the Everyone group, but in a production environment, you would assign it only to the groups that need to use it.
 
@@ -392,6 +392,7 @@ These instructions assume that you are using the Developer Edition of Okta. If y
 Also, we're going to use the default authorization server that is built in to the developer edition. If you are using an Enterprise edition of Okta, you will need to set up an authorization server.
 
 <div id="step-by-step-list" markdown="1">
+
 1. Set up an introspection client: Mulesoft uses a dedicated client to introspect all tokens.
 
     Click "Applications" and then "Add application".

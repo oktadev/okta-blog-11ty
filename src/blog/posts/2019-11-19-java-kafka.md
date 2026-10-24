@@ -332,7 +332,7 @@ This class is responsible for listening to changes inside the `myTopic` topic. I
 
 Next, let's create an endpoint that displays a list of consumed messages. Go back to the `KafkaController` to add `MyTopicConsumer` as a dependency and a `getMessages()` method. 
 
- ```java
+```java
 import com.okta.javakafka.consumer.MyTopicConsumer;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -363,7 +363,7 @@ public class KafkaController {
     }
 
 }
- ```
+```
 
 This class now has a new endpoint to display the messages stored in your consumer. When this endpoint is called, it sends the current messages it already processed from the Kafka topic. 
 

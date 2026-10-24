@@ -224,7 +224,7 @@ protected void Application_Start()
 }
 ```
 
-Go to **Views/Shared** and open **_Layout.cshtml**. Beneath the <ul> list of ActionLinks add the code below to display the user's name and toggle the Login/Logout link button.
+Go to **Views/Shared** and open **_Layout.cshtml**. Beneath the &lt;ul&gt; list of ActionLinks add the code below to display the user's name and toggle the Login/Logout link button.
 
 ```html
 @if (Context.User.Identity.IsAuthenticated)

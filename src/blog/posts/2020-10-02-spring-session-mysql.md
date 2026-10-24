@@ -447,10 +447,10 @@ services:
 
 Delete the previous containers and previous `webapp` Docker image with the following commands:
 
- ```shell
+```shell
 docker-compose down
 docker rmi webapp
- ```
+```
 
  In the root folder of the project, rebuild the webapp docker image with Maven:
 

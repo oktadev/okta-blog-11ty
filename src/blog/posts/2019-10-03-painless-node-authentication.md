@@ -433,20 +433,20 @@ Now that your app has been fully created, scroll down and take a look at the **C
 Create a file named `.env` in the root directory of your project and copy in the following (*be sure to substitute in the proper values where appropriate*).
 
 {% raw %}
- ```text
+```text
 OKTA_DOMAIN={{ OKTA_DOMAIN }} # this can be found on your dashboard at the top right of the screen
 CLIENT_ID={{ CLIENT_ID }}
 CLIENT_SECRET={{ CLIENT_SECRET }}
 APP_BASE_URL=http://localhost:3000
 APP_SECRET=alongrandomstring
- ```
+```
 {% endraw %}
 
 Next, modify your `server.js` file to make use of the [@okta/oidc-middleware](https://www.npmjs.com/package/@okta/oidc-middleware) package. This will handle all OpenID Connect logic and simplify user authentication and authorization.
 
 Paste the code below into your `server.js` file, overwriting whatever was there before.
 
- ```javascript
+```javascript
 import 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -493,7 +493,7 @@ app.get('/logout', oidc.forceLogoutAndRevoke(), (req, res) => {
 
 const { PORT = 3000 } = process.env;
 app.listen(PORT, () => console.log(`Authentication example app listening on port ${PORT}!`));
- ```
+```
 
 The next step is to update the `getUserIdFromAuthenticatedRequest` function in the `messages.controller.js` file to utilize Okta. Update the `messages.controller.js` file and overwrite it with the code below.
 

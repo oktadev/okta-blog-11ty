@@ -69,11 +69,11 @@ Just like other scopes, the `offline_access` scope must be enabled in both the O
 
 To set the `offline_access` scope on the Authorization Server: 
 
-1) Open the Admin console for your Okta org.
-2) In the side menu of the Admin Console, navigate to **Security** and select **API**.
-3) In the **Authorization Servers** tab, click the pencil-shaped Edit icon to the right of the authorization server that your application uses.
-4) Navigate to the **Scopes** tab of the authorization server's page
-5) Use the **Add Scope** button to add the `offline_access` scope.
+1\) Open the Admin console for your Okta org.
+2\) In the side menu of the Admin Console, navigate to **Security** and select **API**.
+3\) In the **Authorization Servers** tab, click the pencil-shaped Edit icon to the right of the authorization server that your application uses.
+4\) Navigate to the **Scopes** tab of the authorization server's page
+5\) Use the **Add Scope** button to add the `offline_access` scope.
 
 To set the `offline_access` scope in your AuthJS code, add `offline_access` to the `scopes` array in your `OktaAuth` configuration. This configuration is found in the file where you [initialize the SDK](https://developer.okta.com/docs/guides/auth-js/main/#initialize-the-sdk).
 
@@ -93,7 +93,7 @@ Instead of calling `api/v1/sessions/me` for user information, use the OAuth intr
 
 If you ended sessions with
 
- ```http
+```http
 DELETE /api/v1/sessions/me HTTP/1.1
 ```
  

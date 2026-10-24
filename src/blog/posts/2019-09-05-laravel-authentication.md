@@ -22,6 +22,7 @@ Laravel is a clean and modern framework with a vast ecosystem of learning resour
 In this article, I'll show you how to get started with Laravel and quickly build an application with user authentication (using Okta as your identity management provider).
 
 <div markdown="1" style="border: 1px #eedeaa solid; background: #ffffee; padding: 20px; border-radius: 8px;">
+
 **Prerequisites:** Please ensure you have already installed PHP, Composer, and have signed up for a [free Okta developer account](/signup/).
 </div>
 
