@@ -37,9 +37,19 @@ Start the server by running `npm start` and open `http://localhost:8080/blog/`.
 | `npm run test:unit` | Runs the `node:test` suites in `test/`: the migration converters, the live-site verifier, the callout renderer, the Prism grammars and the content lint. | After changing anything in `scripts/` or `utils/`. `npm test` runs them before the build. |
 | `npm run migrate` | Converts posts from a checkout of the old `okta-blog` repo (`--src ../okta-blog`): Markdown posts get this site's shortcodes and macros, AsciiDoc posts are converted to Markdown. Only posts missing here are written unless you pass `--force`; `--only slug,slug` limits the run and `--dry-run` previews it. Prints a per-post report of anything it could not map. | When a post lands in the old repo, or to re-convert one after it changed there. |
 | `npm run verify-migration -- <slug>` | Fetches the post from the live site and compares its prose, code blocks and inline code with the local build in `_site`, reporting anything the live site has that the local page lacks. `--file slugs.txt` checks a list, `--details` prints the pairs. | After `npm run build`, for any post you migrated or re-converted. |
+| `npm run upstream-changes` | Lists the posts, images and authors that changed in the old `okta-blog` repo since this site last reconciled with it (the commit recorded in `scripts/upstream-snapshot.txt`), and prints the `migrate` command for them. `--update` records the current commit once the migration is in. | Whenever the old repo gets a new or edited post, see below. |
 | `npm run sync-code-blocks` | Splices every fenced code block in `src/blog/posts/` back from its `okta-blog` source, byte for byte, leaving front matter, prose and shortcodes alone (the fence lines keep their local language tag). `--dry-run` lists what would change, `--details` shows the first differing line per block. | If a formatter has touched posts, or after the old repo fixes a code sample. |
 
 Never run a formatter over `src/blog/posts/`: the code samples there are copied byte for byte from the authors' sources, and a formatter rewrites quote styles, indentation and line breaks, which breaks prose that refers to line numbers. `.prettierignore` excludes the posts and `.vscode/settings.json` turns off format-on-save for Markdown; if your editor formats Markdown on save through another extension, turn that off for this repo. `npm run sync-code-blocks` repairs any post that has been reformatted.
+
+### Keeping up with the old repo
+
+Posts are still published in the old `okta-blog` repo first, so this site reconciles with it rather than the other way round. With a checkout of `okta-blog` next to this one:
+
+1. `git -C ../okta-blog pull`, then `npm run upstream-changes`. It lists new posts, changed posts, deleted posts and changed images since the last reconciliation.
+2. Run the `npm run migrate -- --force --only …` command it prints. New posts are converted with their images and authors; changed posts are re-converted whole (never edit a migrated post here by hand, the next run would overwrite it). A deleted post is removed here and its redirect checked in `vercel.json`; a replaced image is copied over by hand.
+3. `npm run build`, then `npm run verify-migration -- <slugs>` to compare each post with the live site. A post edited upstream that the live site has not redeployed yet will differ there; that is expected.
+4. Review the diff, then `npm run upstream-changes -- --update` to record the commit, and open the PR.
 
 ## Writing a post
 

@@ -13,6 +13,7 @@
     "migrate": "node scripts/migrate-posts.js",
     "verify-migration": "node scripts/verify-migration.js",
     "sync-code-blocks": "node scripts/sync-code-blocks.js",
+    "upstream-changes": "node scripts/upstream-changes.js",
     "format": "prettier --write \"**/*.{js,mjs,cjs,json}\"",
     "prepare": "git config core.hooksPath .githooks || true",
     "setup": "npm run css && mkdir -p _site/img && ([ -d _site/fonts ] || cp -r public/fonts _site/) && ([ -d _site/js ] || cp -r public/js _site/) && ([ -d _site/img/avatar ] || cp -r public/img/avatar _site/img/) && cp public/img/*.svg _site/img/",
