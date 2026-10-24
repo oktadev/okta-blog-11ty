@@ -439,7 +439,34 @@ export function fixBackticks(text) {
 // is text to kramdown ("<p>" in a sentence), not markup.
 const BLOCK_TAGS =
   "address|article|aside|applet|body|blockquote|caption|col|colgroup|dd|details|div|dl|dt|fieldset|figcaption|figure|footer|form|h[1-6]|header|hgroup|hr|html|head|iframe|legend|menu|li|main|map|nav|ol|optgroup|p|pre|section|summary|table|tbody|td|th|thead|tfoot|tr|ul";
-const BLOCK_START = new RegExp(`^<(${BLOCK_TAGS})\\b|^<!--`, "i");
+const BLOCK_START = new RegExp(`^<(${BLOCK_TAGS})\\b|^<!`, "i");
+// The HTML elements. A tag with any other name in prose ("<identityProviders>",
+// "<App Name>") is a placeholder the author typed; browsers hide it on both
+// sites, so it is escaped to show as text. "<meta>" in a sentence is the same.
+const HTML_ELEMENTS = new Set(
+  "a abbr acronym address area article aside audio b base bdi bdo big blockquote body br button canvas caption center cite code col colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figcaption figure font footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe img input ins kbd label legend li link main map mark marquee menu meter nav nobr noscript object ol optgroup option output p param picture pre progress q rp rt ruby s samp script section select slot small source span strike strong style sub summary sup table tbody td template textarea tfoot th thead time title tr track tt u ul var video wbr svg path g circle rect line polyline polygon text defs use symbol clippath lineargradient stop".split(
+    " ",
+  ),
+);
+const TAG_TYPOS = { kdb: "kbd" };
+const PROSE_TAG = /(?<!\\)<(\/?)([a-zA-Z][\w.-]*)(\s[^<>\n]*|\/?)>/g;
+// A template tag, or the start of one that runs on to later lines.
+const TEMPLATE_TAG = /(\{%[\s\S]*?(?:%\}|$)|\{\{[\s\S]*?(?:\}\}|$))/;
+function escapePlaceholderTags(line) {
+  return line
+    .split(TEMPLATE_TAG)
+    .map((piece, i) =>
+      i % 2
+        ? piece
+        : piece.replace(PROSE_TAG, (m, close, name, rest) => {
+            const lower = name.toLowerCase();
+            if (TAG_TYPOS[lower]) return `<${close}${TAG_TYPOS[lower]}${rest}>`;
+            if (HTML_ELEMENTS.has(lower) && lower !== "meta") return m;
+            return `&lt;${close}${name}${rest}&gt;`;
+          }),
+    )
+    .join("");
+}
 const MID_TAG = new RegExp(`<(/?)(${BLOCK_TAGS})\\b([^<>\\n]*)>`, "gi");
 const MARKERS = /^[ \t]*(?:(?:>|[-*+]|\d+\.)[ \t]+)*/;
 
@@ -453,15 +480,25 @@ const MARKERS = /^[ \t]*(?:(?:>|[-*+]|\d+\.)[ \t]+)*/;
 //   Markdown; a blank line after the opener lets markdown-it do the same.
 // - A brace group at the end of a heading that is not a kramdown attribute
 //   list is escaped, or markdown-it-attrs would read it as attributes.
+// - A tag that is not an HTML element ("<identityProviders>", "<App Name>"),
+//   or "<meta>" in a sentence, is a placeholder the author typed; it is
+//   escaped to show as text instead of being hidden by the browser. "<kdb>"
+//   is the kbd element misspelled. Lines indented four spaces may be code and
+//   are left alone, as is anything inside a template tag.
 export function kramdownBlocks(text) {
   const lines = text.split("\n");
   const out = [];
   let html = false;
+  let inTag = false;
   for (const line of lines) {
     if (!line.trim()) html = false;
     else if (BLOCK_START.test(line)) html = true;
+    // Inside a template tag spread over several lines, nothing is prose.
+    const wasInTag = inTag;
+    if (line.lastIndexOf("{%") > line.lastIndexOf("%}")) inTag = true;
+    else if (line.includes("%}")) inTag = false;
     let result = line;
-    if (!html) {
+    if (!html && !wasInTag) {
       const lead = line.match(MARKERS)[0];
       const rest = line.slice(lead.length);
       if (!rest.startsWith("<")) {
@@ -475,6 +512,7 @@ export function kramdownBlocks(text) {
         /^([ \t]*(?:>[ \t]*)*#{1,6} .*?\S)([ \t]+)\{(?![:%{])([^}\n]*)\}[ \t]*$/,
         "$1$2\\{$3}",
       );
+      if (!/^(?: {4}|\t)/.test(line)) result = escapePlaceholderTags(result);
     }
     out.push(result);
     if (/^<div\b[^>\n]*\bmarkdown="1"[^>\n]*>[ \t]*$/.test(line)) {
@@ -1326,8 +1364,10 @@ class AsciidocConverter {
     while (j < lines.length) {
       const t = lines[j].trim();
       if (t === "" || isDelimiter(t)) break;
-      if (/^(\[[^\]]*\]$|\.[^\s.]|={2,6} |image::|toc::|\/\/)/.test(lines[j]))
-        break;
+      // A ".Title" line here is paragraph text: Asciidoctor only reads a
+      // block title at the start of a block, so the block after the paragraph
+      // gets no title (and no example number).
+      if (/^(\[[^\]]*\]$|={2,6} |image::|toc::|\/\/)/.test(lines[j])) break;
       if (this.listMarker(lines[j])) break;
       j++;
     }
