@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   balancedElement,
+  missingAssets,
   compareAnchors,
   compareCode,
   compareInline,
@@ -73,10 +74,12 @@ test("needsAttention fails a post for any kind of loss, including inline code", 
     code: { liveCount: 2, mineCount: 2, mismatches: [] },
     inline: [],
     anchors: [],
+    assets: [],
   };
   assert.equal(needsAttention(clean), false);
   assert.equal(needsAttention({ ...clean, inline: ["okta login"] }), true);
   assert.equal(needsAttention({ ...clean, anchors: ["setup"] }), true);
+  assert.equal(needsAttention({ ...clean, assets: ["d/demo.mp4"] }), true);
   assert.equal(
     needsAttention({ ...clean, prose: { missing: ["gone"], extra: [] } }),
     true,
@@ -154,4 +157,13 @@ test("extract collects heading ids and every id, and compareAnchors reports live
     ["create-your-vue--go-app", "create-your-vue-go-app", "run"],
   );
   assert.deepEqual(compareAnchors(live, mine), ["run-it"]);
+});
+
+test("missingAssets reports referenced files the build does not contain", () => {
+  const html =
+    '<video src=/img/blog/raw-assets-test/absent.mp4></video><img src="/img/blog/x/y-800.webp">';
+  assert.deepEqual(missingAssets(html, "_site"), [
+    "img/blog/raw-assets-test/absent.mp4",
+    "img/blog/x/y-800.webp",
+  ]);
 });

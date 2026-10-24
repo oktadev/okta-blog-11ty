@@ -2,6 +2,20 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  selectPosts,
+  assetRefs,
+  assetResolver,
+  fenceLanguage,
+  convertFrontMatter,
+  sourceAsset,
+  dedentFences,
+  fixBackticks,
+  kramdownLeniencies,
+  splitSegments,
+  normalizeSlug,
+  redirectFor,
+  retiredPosts,
+  resolveImageRefs,
   listBreaks,
   imageAttributes,
   convertAsciidoc,
@@ -9,7 +23,6 @@ import {
   liquidArgsToObject,
   parseBlockAttrs,
   protectTemplateSyntax,
-  splitSegments,
 } from "../scripts/migrate-posts.js";
 
 const md = (body, fm = "layout: blog_post\ntitle: T\nauthor: a") =>
@@ -184,6 +197,281 @@ test("markdown: a column-0 <br> between list items stays inside the item", () =>
   );
   // A <br> after a paragraph at column 0 is left alone.
   assert.equal(listBreaks("Text\n<br>\nMore"), "Text\n<br>\nMore");
+});
+
+test("resolveImageRefs points a reference at the file that exists under another extension", () => {
+  const notes = [];
+  const lookup = (ref) =>
+    ({
+      "img/blog/d/a.jpeg": "img/blog/d/a.jpg",
+      "img/blog/d/a-styles.jpeg": "img/blog/d/a-styles.jpg",
+      "img/blog/d/social.jpg": "img/blog/d/social.jpg",
+      "img/blog/d/demo.mp4": "img/blog/d/demo.mp4",
+    })[ref] ?? null;
+  const out = resolveImageRefs(
+    'image: d/social.jpg\n\n{% img {src: "d/a.jpeg", alt: "A"} %}\n{% img {src: "d/a-styles.jpeg", alt: "B"} %}\n<video src="/img/blog/d/demo.mp4"></video>\n{% img {src: "d/missing.png", alt: "C"} %}\n',
+    lookup,
+    (n) => notes.push(n),
+  );
+  assert.equal(
+    out,
+    'image: d/social.jpg\n\n{% img {src: "d/a.jpg", alt: "A"} %}\n{% img {src: "d/a-styles.jpg", alt: "B"} %}\n<video src="/img/blog/d/demo.mp4"></video>\n{% img {src: "d/missing.png", alt: "C"} %}\n',
+  );
+  assert.deepEqual(notes, [
+    "image img/blog/d/a.jpeg is img/blog/d/a.jpg in the source; reference updated",
+    "image img/blog/d/a-styles.jpeg is img/blog/d/a-styles.jpg in the source; reference updated",
+  ]);
+});
+
+test("normalizeSlug zero-pads the old repo's dates; retiredPosts and redirectFor drive the retired-post prompt", () => {
+  assert.equal(
+    normalizeSlug("2026-1-19-okta-developer-connect-recap.md"),
+    "2026-01-19-okta-developer-connect-recap",
+  );
+  assert.equal(
+    normalizeSlug("2019-08-28-reactive.adoc"),
+    "2019-08-28-reactive",
+  );
+  assert.deepEqual(
+    retiredPosts(
+      ["2017-03-16-a", "2026-01-19-b", "2020-01-01-c"],
+      ["2026-1-19-b", "2020-01-01-c"].map(normalizeSlug),
+    ),
+    ["2017-03-16-a"],
+  );
+  const redirects = [
+    { source: "/blog/2017/03/16/a/", destination: "/blog/2022/08/05/a/" },
+    { source: "/blog/2020/01/01/c", destination: "/blog/2022/01/01/c" },
+  ];
+  assert.equal(
+    redirectFor(redirects, "2017-03-16-a").destination,
+    "/blog/2022/08/05/a/",
+  );
+  assert.equal(
+    redirectFor(redirects, "2020-01-01-c").destination,
+    "/blog/2022/01/01/c",
+  );
+  assert.equal(redirectFor(redirects, "2019-11-07-d"), undefined);
+});
+
+test("markdown: kramdown leniencies are rewritten so markdown-it renders what kramdown did", () => {
+  // Bold with a space just inside a marker; a code span at the edge is fine.
+  assert.equal(
+    convertMarkdown(
+      "Click **View access details **, then **Unassign**.\nSee ** Continue** and **copy `a` to `b`**.\n",
+    ).markdown,
+    "Click **View access details**, then **Unassign**.\nSee **Continue** and **copy `a` to `b`**.\n",
+  );
+  // An autolink containing spaces.
+  assert.equal(
+    kramdownLeniencies(
+      "access <http://localhost:8080/produce?message=This is my message>.",
+    ),
+    "access [http://localhost:8080/produce?message=This is my message](http://localhost:8080/produce?message=This%20is%20my%20message).",
+  );
+  // One backtick too many on the closer; balanced triple-backtick spans untouched.
+  assert.equal(
+    fixBackticks("press ``Ctrl+F5```. Edit ```styles.css``` now."),
+    "press ``Ctrl+F5``. Edit ```styles.css``` now.",
+  );
+  assert.equal(
+    convertMarkdown("press ``Ctrl+F5```.\n").markdown,
+    "press ``Ctrl+F5``.\n",
+  );
+  // A fence indented four spaces after a paragraph is dedented; inside a list it is left alone.
+  const after = dedentFences(
+    splitSegments(
+      'Update the section:\n    ```json\n    {\n      "a": 1\n    }\n    ```\n\n- item\n    ```json\n    {}\n    ```',
+    ),
+  );
+  assert.equal(after[1].text, '```json\n{\n  "a": 1\n}\n```');
+  assert.equal(after[3].text, "    ```json\n    {}\n    ```");
+});
+
+test("markdown: what the first migration did by hand, the converter now does", () => {
+  const { markdown, notes } = convertMarkdown(
+    [
+      "---",
+      "title: T",
+      "redirect_from:",
+      '  - "/blog/2015-04-14-android-unit-testing-part-2"',
+      "  - /blog/old/",
+      "tags: [a]",
+      "---",
+      '{% img 2015-05-08-wtfs_per_minute.jpg style:"width:50%" alt:"wtfs per minute" %}',
+      '<video src="{% asset_path \'blog/d/demo.mp4\' %}" width="360"></video>',
+      "[full size](/assets-jekyll/blog/d/screen-c4b218091f6549081c063e2eb71af4b1bcf371d49cffd109d3f77e6019ec85ce.png)",
+    ].join("\n"),
+  );
+  assert.equal(
+    markdown,
+    [
+      "---",
+      "title: T",
+      "tags: [a]",
+      "---",
+      '{% img {src: "2015-05-08-wtfs_per_minute.jpg", alt: "wtfs per minute"} %}',
+      '<video src="/img/blog/d/demo.mp4" width="360"></video>',
+      "[full size](/img/blog/d/screen.png)",
+    ].join("\n"),
+  );
+  assert.match(notes[0], /^dropped redirect_from:/);
+  assert.match(
+    convertMarkdown("---\ntitle: T\nredirect_to: /blog/new/\n---\nText")
+      .markdown,
+    /^---\ntitle: T\neleventyExcludeFromCollections: true\n---\n/,
+  );
+  const segs = dedentFences(
+    splitSegments(
+      "3. Do this, and see the\n[docs](x) for more.\n\n    ```\n    cmd\n    ```",
+    ),
+  );
+  assert.equal(segs[1].text, "    ```\n    cmd\n    ```");
+});
+
+test("markdown: an avatar image is flagged for the shortcode, and assets are found where the old repo keeps them", () => {
+  assert.equal(
+    convertMarkdown('{% img avatar-rdegges.jpg alt:"Randall Degges" %}\n')
+      .markdown,
+    '{% img {src: "avatar-rdegges.jpg", alt: "Randall Degges", avatar: true} %}\n',
+  );
+  assert.equal(
+    sourceAsset("../okta-blog", "img/blog/browser_spa_implicit_flow.png"),
+    "../okta-blog/_source/_assets/img/browser_spa_implicit_flow.png",
+  );
+  assert.equal(
+    sourceAsset("../okta-blog", "img/blog/oauth/biketoworkday-fb-login.png"),
+    "../okta-blog/_source/_assets/img/blog/oauth/biketoworkday-fb-login.png",
+  );
+  assert.equal(
+    sourceAsset("../okta-blog", "img/avatar/avatar-rdegges.jpg"),
+    "../okta-blog/_source/_assets/img/avatar-rdegges.jpg",
+  );
+  assert.equal(
+    sourceAsset("../okta-blog", "files/game-security-pax/info-graphic.pdf"),
+    "../okta-blog/_source/_assets/files/game-security-pax/info-graphic.pdf",
+  );
+});
+
+test("assetRefs lists shortcode images, the front-matter image, author photos and raw media as public paths", () => {
+  assert.deepEqual(
+    assetRefs(
+      'image: blog/d/social.jpg\n\n{% img {src: "d/a.png", alt: ""} %}\n{% img {src: "avatar-x.jpg", alt: "", avatar: true} %}\n<video src="/img/blog/d/demo.mp4" poster="/img/blog/d/poster.png"></video>\n<a href="/files/d/guide.pdf">PDF</a>\n',
+    ),
+    [
+      "img/blog/d/a.png",
+      "img/avatar/avatar-x.jpg",
+      "img/blog/d/demo.mp4",
+      "img/blog/d/poster.png",
+      "files/d/guide.pdf",
+      "img/blog/d/social.jpg",
+    ],
+  );
+});
+
+test("asciidoc: a raw asset path is served from where the old repo keeps it", () => {
+  const src =
+    "image::{% asset_path 'blog/d/thumb.jpg' %}[alt=Thumb, link=\"{% asset_path 'd/guide.pdf' %}\"]";
+  const resolveAsset = (p) =>
+    p.endsWith(".pdf") ? `/files/${p}` : `/img/${p}`;
+  assert.match(
+    convertAsciidoc(src, { resolveAsset }).markdown,
+    /\]\(\/files\/d\/guide\.pdf\)/,
+  );
+  assert.match(convertAsciidoc(src).markdown, /\]\(\/img\/d\/guide\.pdf\)/);
+  const resolve = assetResolver("../okta-blog");
+  assert.equal(
+    resolve("game-security-pax/info-graphic.pdf"),
+    "/files/game-security-pax/info-graphic.pdf",
+  );
+  assert.equal(resolve("blog/not/there.png"), "/img/blog/not/there.png");
+});
+
+test("front matter: a flow list spread over lines is joined onto its key", () => {
+  const fm = convertFrontMatter(
+    'title: T\ncommunities: [\n    ".net",\n    "go",\n    "java"\n]\ntags: [a, b]',
+  );
+  assert.equal(
+    fm,
+    'title: T\ncommunities: [".net", "go", "java"]\ntags: [a, b]',
+  );
+});
+
+test("markdown: fence tags, BOM, raw spelling, quoted image paths, script assets, bold next to a bracket", () => {
+  const { markdown } = convertMarkdown(
+    [
+      "\uFEFF---",
+      "title: T   ",
+      "---",
+      "```c#",
+      "var a;",
+      "```",
+      "",
+      "```swift   ",
+      "let b",
+      "```",
+      "",
+      "{%raw%}`{{ x }}`{%endraw%}",
+      '{% img "blog/d/a.png" alt:"A" %}',
+      '<script src="/assets-jekyll/guide/bcrypt.min.js"></script>',
+      "See the [**Configure Your Okta Org ** section](#x) and **> **.",
+      "",
+    ].join("\n"),
+  );
+  assert.equal(
+    markdown,
+    [
+      "---",
+      "title: T",
+      "---",
+      "```csharp",
+      "var a;",
+      "```",
+      "",
+      "```swift",
+      "let b",
+      "```",
+      "",
+      "{% raw %}`{{ x }}`{% endraw %}",
+      '{% img {src: "d/a.png", alt: "A"} %}',
+      '<script src="/js/guide/bcrypt.min.js"></script>',
+      "See the [**Configure Your Okta Org** section](#x) and **> **.",
+      "",
+    ].join("\n"),
+  );
+  assert.equal(fenceLanguage(" tf "), "hcl");
+  assert.equal(fenceLanguage("java"), "java");
+});
+
+test("selectPosts converts what is missing or changed upstream, everything with no snapshot, or what --only names", () => {
+  const existing = new Set(["2020-01-01-a", "2020-01-02-b", "2026-01-19-c"]);
+  const delta = {
+    since: "abc",
+    added: ["2020-01-03-d.md"],
+    modified: ["2026-1-19-c.md"],
+    deleted: [],
+  };
+  const pick = selectPosts(existing, delta, {});
+  assert.deepEqual(
+    [
+      "2020-01-01-a",
+      "2020-01-02-b",
+      "2026-01-19-c",
+      "2020-01-03-d",
+      "2020-01-04-e",
+    ].map(pick),
+    [false, false, true, true, true],
+  );
+  assert.equal(
+    selectPosts(existing, { ...delta, since: null }, {})("2020-01-01-a"),
+    true,
+  );
+  assert.equal(
+    selectPosts(existing, delta, { force: true })("2020-01-01-a"),
+    true,
+  );
+  const only = selectPosts(existing, delta, { only: ["2020-01-01-a"] });
+  assert.deepEqual([only("2020-01-01-a"), only("2020-01-03-d")], [true, false]);
 });
 
 test("markdown: kramdown attribute lines", () => {

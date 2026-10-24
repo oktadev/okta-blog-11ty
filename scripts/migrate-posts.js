@@ -11,12 +11,19 @@
 //
 // Usage:
 //   node scripts/migrate-posts.js [--src ../okta-blog] [--only slug,slug] [--force]
-//                                 [--dry-run] [--no-assets] [--report file]
+//                                 [--yes] [--dry-run] [--no-assets] [--report file]
 //
-// By default only posts missing from src/blog/posts are written; --force
-// re-converts the existing ones too. Images the
-// posts reference and avatars for new authors are copied when absent; existing
-// files are never overwritten. A report of per-post notes is printed at the end.
+// By default the run makes this repo match the old one as of its checkout:
+// posts missing here and posts the old repo added or changed since the commit
+// recorded in scripts/upstream-snapshot.txt are converted, their images are
+// copied (replaced when they changed), posts the old repo no longer has are
+// listed and, after confirmation (or with --yes), removed along with the
+// asset folders only they used, provided vercel.json redirects their URL, and
+// the checkout's commit is recorded. With no snapshot every post counts as
+// new, so an empty src/blog/posts gets the whole site. --force re-converts
+// every post; --only converts the listed slugs and records nothing. Images the
+// posts reference and avatars for new authors are copied; a report of per-post
+// notes is printed at the end.
 import {
   existsSync,
   mkdirSync,
@@ -25,13 +32,17 @@ import {
   writeFileSync,
   copyFileSync,
   statSync,
+  rmSync,
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
+import { createInterface } from "node:readline/promises";
 import * as yaml from "js-yaml";
 // The site's slug rules, so xrefs land on the anchors markdown-it-anchor generates.
 import { slugify } from "../utils/markdown.js";
+import { rawAssetRefs } from "../utils/raw-assets.js";
+import { upstreamDelta, recordSnapshot } from "./upstream-changes.js";
 
 // Asciidoctor's section id, as the old site generated it (idprefix "",
 // idseparator "-"): drop tags, entities and everything but letters, digits,
@@ -79,8 +90,15 @@ export function splitFrontMatter(content) {
 // Front matter edits shared by both formats: drop the Jekyll layout, strip the
 // `blog/` prefix from the social image (this site's {% img %} adds it back).
 export function convertFrontMatter(frontMatter) {
+  // Redirects live in vercel.json here (#82); a redirect_to post is a
+  // placeholder the old site redirected away from, kept out of the listings.
+  const redirectTo = /^redirect_to:/m.test(frontMatter);
   const out = frontMatter
-    .replace(/^layout: blog_post[ \t]*\r?\n?/m, "")
+    .replace(/^layout: ["']?blog_post["']?[ \t]*\r?\n?/m, "")
+    .replace(/[ \t]+$/gm, "")
+    .replace(/^redirect_from:[ \t]*\r?\n(?:[ \t]*-[^\n]*\r?\n?)*/m, "")
+    .replace(/^redirect_to:[^\n]*\r?\n?(?:[ \t]*-[^\n]*\r?\n?)*/m, "")
+    .replace(/\s*$/, redirectTo ? "\neleventyExcludeFromCollections: true" : "")
     .replace(/^image: (["']?)blog\//m, "image: $1")
     // A bare `communities: java` is a one-item list (the validator wants a list).
     .replace(/^communities:[ \t]*([\w.#+-]+)[ \t]*$/m, "communities: [$1]");
@@ -96,7 +114,23 @@ export function convertFrontMatter(frontMatter) {
 // column 0; js-yaml (which this site's validator uses) does not. Indent those
 // continuation lines so both parsers agree.
 export function repairFrontMatter(frontMatter) {
-  const lines = frontMatter.split("\n");
+  // A flow list spread over several lines ("communities: [", one item per
+  // line, "]") is Ruby-only YAML too; join it onto its key's line.
+  const lines = [];
+  let pending = null;
+  for (const line of frontMatter.split("\n")) {
+    if (pending !== null) {
+      pending += ` ${line.trim()}`;
+      if (line.includes("]")) {
+        lines.push(pending.replace(/\[\s+/, "[").replace(/\s+\]/, "]"));
+        pending = null;
+      }
+      continue;
+    }
+    if (/^[\w-]+:\s*\[[^\]]*$/.test(line)) pending = line.trimEnd();
+    else lines.push(line);
+  }
+  if (pending !== null) lines.push(pending);
   let open = false;
   const repaired = lines.map((line) => {
     const wasOpen = open;
@@ -127,15 +161,21 @@ export function liquidArgsToObject(args) {
 
 function jekyllImgAttr(attrs, name) {
   // Values appear as name:"value", name=value and bare name:value.
-  const quoted = attrs.match(new RegExp(`${name}\\s*[:=]\\s*"([^"]*)"`));
+  const quoted = attrs.match(
+    new RegExp(`(?<![\\w:"'])${name}\\s*[:=]\\s*"([^"]*)"`),
+  );
   if (quoted) return quoted[1];
-  const bare = attrs.match(new RegExp(`${name}\\s*[:=]\\s*([^\\s"%]+)`));
+  const bare = attrs.match(
+    new RegExp(`(?<![\\w:"'])${name}\\s*[:=]\\s*([^\\s"%]+)`),
+  );
   return bare ? bare[1] : undefined;
 }
 
 function imgShortcode(src, alt = "", width) {
   const parts = [`src: "${src}"`, `alt: "${(alt || "").replace(/"/g, '\\"')}"`];
   if (width) parts.push(`header: "${String(width).replace(/px$/, "")}"`);
+  // Author photos live in img/avatar here; the shortcode needs to know.
+  if (/^avatar-/.test(src)) parts.push("avatar: true");
   return `{% img {${parts.join(", ")}} %}`;
 }
 
@@ -188,6 +228,8 @@ export function imageAttributes(text, note = () => {}) {
 export function convertLiquid(text) {
   return (
     text
+      // "{%raw%}" is a Jekyll habit; Nunjucks wants the spaces.
+      .replace(/\{%-?\s*(raw|endraw)\s*-?%\}/g, "{% $1 %}")
       // Liquid whitespace control isn't needed in Nunjucks
       .replace(/\{%- /g, "{% ")
       .replace(/ -%\}/g, " %}")
@@ -201,12 +243,14 @@ export function convertLiquid(text) {
       .replace(/\{%\s*comment\s*%\}/g, "{#")
       .replace(/\{%\s*endcomment\s*%\}/g, "#}")
       // Jekyll images: {% img blog/<src> alt:"..." width:"..." %}
-      .replace(/\{%\s*img\s+blog\/([^\s%]+)([\s\S]*?)%\}/g, (_, src, attrs) =>
-        imgShortcode(
-          src,
-          jekyllImgAttr(attrs, "alt"),
-          jekyllImgAttr(attrs, "width"),
-        ),
+      .replace(
+        /\{%\s*img\s+(?!\{)["']?(?:blog\/)?([^\s%"']+)["']?([\s\S]*?)%\}/g,
+        (_, src, attrs) =>
+          imgShortcode(
+            src,
+            jekyllImgAttr(attrs, "alt"),
+            jekyllImgAttr(attrs, "width"),
+          ),
       )
       // Embeds
       .replace(
@@ -230,6 +274,20 @@ export function convertLiquid(text) {
         /\{%\s*post_url\s+(\d{4})-(\d{1,2})-(\d{1,2})-([^\s%]+)\s*%\}/g,
         (_, y, mo, d, slug) =>
           `/blog/${y}/${mo.padStart(2, "0")}/${d.padStart(2, "0")}/${slug}/`,
+      )
+      // Asset paths written by hand (video sources, posters) and the old
+      // site's hashed asset URLs point at the served copy here.
+      .replace(
+        /\{%\s*asset_path\s+["']?([^"'%\s]+)["']?\s*%\}/g,
+        (_, p) => `/img/${p.replace(/^\//, "")}`,
+      )
+      .replace(
+        /\/assets-jekyll\/blog\/([^\s"')]+?)(?:-[0-9a-f]{64})?(\.\w+)/g,
+        "/img/blog/$1$2",
+      )
+      .replace(
+        /\/assets-jekyll\/([^\s"')]+?)(?:-[0-9a-f]{64})?\.(js|css)\b/g,
+        "/$2/$1.$2",
       )
       // Includes that became macros or Nunjucks includes
       .replace(
@@ -329,11 +387,101 @@ export function listBreaks(text) {
   return text.replace(/(\n( {2,})\S[^\n]*\n)<br>(?=\n)/g, "$1$2<br>");
 }
 
+// Kramdown accepted these as written; markdown-it does not.
+// - "**text **" with a space just inside a marker is not bold in CommonMark.
+//   The space moves outside, which is what the author meant (kramdown's own
+//   rendering paired the markers differently).
+// - "<http://host/path?q=a b>" with spaces is not an autolink in CommonMark.
+//   It becomes a link whose text keeps the spaces and whose target encodes
+//   them, as kramdown rendered it.
+export function kramdownLeniencies(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, (m, inner, at, all) => {
+      const core = inner.trim();
+      if (!core || core === inner || !/[\p{L}\p{N}]/u.test(core)) return m;
+      // A moved space is dropped where it would double one or precede punctuation.
+      const lead =
+        inner.startsWith(" ") && !(at === 0 || /\s/.test(all[at - 1]))
+          ? " "
+          : "";
+      const after = all[at + m.length];
+      const trail =
+        inner.endsWith(" ") &&
+        !(after === undefined || /[\s.,;:!?)]/.test(after))
+          ? " "
+          : "";
+      return `${lead}**${core}**${trail}`;
+    })
+    .replace(
+      /<(https?:\/\/[^>\n]*\s[^>\n]*)>/g,
+      (_, url) => `[${url}](${url.replace(/\s/g, "%20")})`,
+    );
+}
+
+// "``code```": a code span closed with one backtick too many, which CommonMark
+// leaves as literal backticks. The extra one is dropped. Runs before code spans
+// are masked, since the span is not recognizable until it is balanced.
+export function fixBackticks(text) {
+  return text.replace(/(?<!`)(`{2,})([^`\s][^`\n]*?)\1`(?!`)/g, "$1$2$1");
+}
+
+// A fence indented four spaces straight after a top-level paragraph: kramdown
+// rendered a code block, CommonMark reads the lines as the paragraph's
+// continuation. The block is dedented to the paragraph's level.
+export function dedentFences(segments) {
+  let lastProse = "";
+  return segments.map((segment) => {
+    if (!segment.code) {
+      lastProse = segment.text;
+      return segment;
+    }
+    const indent = segment.text.match(/^[ \t]*/)[0].length;
+    // The paragraph block just before the fence: a list item anywhere in it
+    // (or an indented line) means the fence belongs to that item.
+    const block = [];
+    for (const line of lastProse.split("\n").reverse()) {
+      if (!line.trim()) {
+        if (block.length) break;
+        continue;
+      }
+      block.push(line);
+    }
+    const inList = block.some(
+      (l) => /^\s/.test(l) || /^\s*([-*+]|\d+\.)\s/.test(l),
+    );
+    if (indent < 4 || !block.length || inList) return segment;
+    const lines = segment.text.split("\n");
+    const common = Math.min(
+      ...lines.filter((l) => l.trim()).map((l) => l.match(/^[ \t]*/)[0].length),
+    );
+    return {
+      ...segment,
+      text: lines.map((l) => l.slice(Math.min(common, indent))).join("\n"),
+    };
+  });
+}
+
+// Fence tags the highlighter does not know, written as the old site's
+// highlighter accepted them; the first migration retagged these by hand.
+const FENCE_ALIASES = { "c#": "csharp", vue: "html", tf: "hcl", jsp: "java" };
+export function fenceLanguage(tag) {
+  const clean = (tag || "").trim();
+  return FENCE_ALIASES[clean.toLowerCase()] ?? clean;
+}
+
+// The opener of a fenced block with its tag normalized and trailing space gone.
+function retagFence(code) {
+  return code.replace(
+    /^([ \t]*(?:>[ \t]*)*(?:`{3,}|~{3,}))[ \t]*([^\n]*?)[ \t]*$/m,
+    (_, open, tag) => open + fenceLanguage(tag),
+  );
+}
+
 function convertMarkdownProse(text, note) {
   return (
     imageAttributes(
       convertLiquid(
-        listBreaks(kramdownAttributes(text))
+        kramdownLeniencies(listBreaks(kramdownAttributes(text)))
           // Kramdown leftovers, inline after a tag
           .replace(/ "no_toc"=""/g, "")
           .replace(/\{: \.center-image \}/g, "")
@@ -398,13 +546,13 @@ export function protectTemplateSyntax(text) {
 export function convertMarkdown(content) {
   const notes = [];
   const { frontMatter, body } = splitFrontMatter(
-    content.replace(/\r\n/g, "\n"),
+    content.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n"),
   );
-  const converted = splitSegments(body)
+  const converted = dedentFences(splitSegments(body))
     .map((segment) =>
       segment.code
-        ? segment.text
-        : transformProse(segment.text, (t) =>
+        ? retagFence(segment.text)
+        : transformProse(fixBackticks(segment.text), (t) =>
             convertMarkdownProse(t, (m) => {
               if (!notes.includes(m)) notes.push(m);
             }),
@@ -417,6 +565,14 @@ export function convertMarkdown(content) {
   if (styled) {
     notes.push(
       `dropped ${styled.length} kramdown style attribute line(s), e.g. ${styled[0]}`,
+    );
+  }
+  const redirects = frontMatter.match(
+    /^redirect_(from|to):[^\n]*(?:\n[ \t]*-[^\n]*)*/gm,
+  );
+  if (redirects) {
+    notes.push(
+      `dropped ${redirects.join("; ").replace(/\s+/g, " ")}; redirects live in vercel.json, check it carries these`,
     );
   }
   const guarded = protectTemplateSyntax(converted);
@@ -542,7 +698,8 @@ function imageSrc(target) {
 const BOLD = "";
 
 class AsciidocConverter {
-  constructor() {
+  constructor(options = {}) {
+    this.resolveAsset = options.resolveAsset;
     this.attrs = {};
     this.notes = [];
     this.toc = null;
@@ -567,10 +724,11 @@ class AsciidocConverter {
   // A raw asset reference (video, pdf, or an <img> in passthrough HTML) that
   // can't go through the {% img %} shortcode.
   assetUrl(p) {
+    const clean = p.replace(/^\//, "");
     this.note(
-      "raw asset path used outside {% img %}; the file must be served as-is",
+      "raw asset path used outside {% img %}; the file is served as-is (see scripts/copy-raw-assets.js)",
     );
-    return `/img/${p.replace(/^\//, "")}`;
+    return this.resolveAsset ? this.resolveAsset(clean) : `/img/${clean}`;
   }
 
   // An image's link= target, which may itself be an asset path.
@@ -770,7 +928,7 @@ class AsciidocConverter {
 
   convert(content) {
     const { frontMatter, body } = splitFrontMatter(
-      content.replace(/\r\n/g, "\n"),
+      content.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n"),
     );
     const lines = body.split("\n");
 
@@ -1097,7 +1255,7 @@ class AsciidocConverter {
       );
       return withTitle(
         fence +
-          (fenceLang || sourceLang) +
+          fenceLanguage(fenceLang || sourceLang) +
           "\n" +
           code.join("\n") +
           "\n" +
@@ -1452,8 +1610,20 @@ function inlineHtml(text) {
     .replace(/(^|[^\w])_([^_]+)_(?!\w)/g, "$1<em>$2</em>");
 }
 
-export function convertAsciidoc(content) {
-  return new AsciidocConverter().convert(content);
+export function convertAsciidoc(content, options) {
+  return new AsciidocConverter(options).convert(content);
+}
+
+// Where an old-repo asset path is served from here: images under /img, the
+// repo's downloads under /files (both mirrored into public/).
+export function assetResolver(src) {
+  return (p) => {
+    const roots = ["img", "files"];
+    const root = roots.find((r) =>
+      existsSync(path.join(src, "_source/_assets", r, p)),
+    );
+    return `/${root || "img"}/${p}`;
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -1465,6 +1635,7 @@ function parseArgs(argv) {
     src: "../okta-blog",
     only: null,
     force: false,
+    yes: false,
     dryRun: false,
     assets: true,
     report: null,
@@ -1481,6 +1652,7 @@ function parseArgs(argv) {
     } else if (a === "--only")
       args.only = argv[++i].split(",").map((s) => s.trim());
     else if (a === "--force") args.force = true;
+    else if (a === "--yes") args.yes = true;
     else if (a === "--dry-run") args.dryRun = true;
     else if (a === "--no-assets") args.assets = false;
     else if (a === "--report") args.report = argv[++i];
@@ -1493,15 +1665,17 @@ function sha(file) {
   return createHash("sha1").update(readFileSync(file)).digest("hex");
 }
 
-// Copy an image if missing; report when an existing copy differs from source.
+// Copy an asset; one that exists here but differs from the source is replaced,
+// since the old repo is the source of truth.
 function copyAsset(from, to, report, dryRun) {
   if (!existsSync(from)) {
     report.push(`missing in source: ${from}`);
     return;
   }
   if (existsSync(to)) {
-    if (sha(from) !== sha(to))
-      report.push(`differs from source, left as is: ${to}`);
+    if (sha(from) === sha(to)) return;
+    if (!dryRun) copyFileSync(from, to);
+    report.push(`replaced ${to} (changed in the source)`);
     return;
   }
   if (!dryRun) {
@@ -1511,13 +1685,74 @@ function copyAsset(from, to, report, dryRun) {
   report.push(`copied ${to} (${(statSync(from).size / 1024).toFixed(0)} KB)`);
 }
 
-function imageRefs(markdown) {
+// Every file a post needs from the old repo, as paths under public/:
+// shortcode images, the front-matter image, author photos, and the videos,
+// posters, PDFs, raw <img> sources and full-size image links it references.
+export function assetRefs(markdown) {
   const refs = new Set();
   for (const m of markdown.matchAll(/\{%\s*img\s*\{\s*src:\s*"([^"]+)"/g))
-    refs.add(m[1]);
+    refs.add(/^avatar-/.test(m[1]) ? `img/avatar/${m[1]}` : `img/blog/${m[1]}`);
+  for (const ref of rawAssetRefs(markdown)) refs.add(ref);
   const fm = markdown.match(/^image:\s*["']?([^"'\n]+?)["']?\s*$/m);
-  if (fm && !/^https?:/.test(fm[1])) refs.add(fm[1].replace(/^\/?blog\//, ""));
+  if (fm && !/^https?:/.test(fm[1]))
+    refs.add(`img/blog/${fm[1].replace(/^\/?blog\//, "")}`);
   return [...refs];
+}
+
+// Where a public path comes from in the old repo. Post images live under
+// img/blog, but a few sit at the img root with the author photos (avatar-*);
+// jekyll-assets searched both. Downloads live under files/.
+export function sourceAsset(src, ref) {
+  const candidates = ref.startsWith("img/avatar/")
+    ? [`_source/_assets/img/${ref.slice("img/avatar/".length)}`]
+    : ref.startsWith("img/blog/")
+      ? [
+          `_source/_assets/${ref}`,
+          `_source/_assets/img/${ref.slice("img/blog/".length)}`,
+        ]
+      : [`_source/_assets/${ref}`];
+  return (
+    candidates.map((c) => path.join(src, c)).find((p) => existsSync(p)) ??
+    path.join(src, candidates[0])
+  );
+}
+
+// A public path whose file the old repo keeps under another extension
+// (".jpeg" written, ".jpg" on disk; jekyll-assets matched by stem), or null.
+function siblingLookup(src) {
+  return (ref) => {
+    if (existsSync(sourceAsset(src, ref))) return ref;
+    const stem = path.basename(ref).replace(/\.[^.]+$/, "");
+    const folder = path.dirname(sourceAsset(src, ref));
+    if (!existsSync(folder)) return null;
+    const matches = readdirSync(folder).filter(
+      (f) => f.replace(/\.[^.]+$/, "") === stem && !f.startsWith("."),
+    );
+    return matches.length === 1
+      ? path.posix.join(path.dirname(ref), matches[0])
+      : null;
+  };
+}
+
+// Point references at the file that exists; ref and actual differ only in
+// their file name, which appears the same way in a shortcode or a raw path.
+export function resolveImageRefs(markdown, findActual, note = () => {}) {
+  let out = markdown;
+  for (const ref of assetRefs(markdown)) {
+    const actual = findActual(ref);
+    if (!actual || actual === ref) continue;
+    const from = path.basename(ref);
+    const to = path.basename(actual);
+    out = out.replace(
+      new RegExp(
+        `(?<=[/"'])${from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=["'\\s)])`,
+        "g",
+      ),
+      to,
+    );
+    note(`image ${ref} is ${actual} in the source; reference updated`);
+  }
+  return out;
 }
 
 // The post's author key(s), read with a regex: a few okta-blog posts carry
@@ -1570,7 +1805,132 @@ function syncAuthors(srcRepo, markdown, dryRun, report) {
   }
 }
 
-function main() {
+// The old repo's file names are not always zero-padded ("2026-1-19-…");
+// the URL and this site's file name are.
+export function normalizeSlug(file) {
+  return file
+    .replace(/\.(md|adoc)$/, "")
+    .replace(
+      /^(\d{4})-(\d{1,2})-(\d{1,2})-/,
+      (_, y, m, d) => `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}-`,
+    );
+}
+
+// Local posts the old repo no longer has.
+export function retiredPosts(localSlugs, upstreamSlugs) {
+  const upstream = new Set(upstreamSlugs);
+  return [...localSlugs].filter((slug) => !upstream.has(slug)).sort();
+}
+
+// The redirect vercel.json carries for a post's URL, with or without the
+// trailing slash, or undefined.
+export function redirectFor(redirects, slug) {
+  const [, y, m, d, name] = slug.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/) || [];
+  if (!name) return undefined;
+  const url = `/blog/${y}/${m}/${d}/${name}`;
+  return redirects.find((r) => r.source === url || r.source === `${url}/`);
+}
+
+function postUrl(slug) {
+  return `/blog/${slug.slice(0, 10).replace(/-/g, "/")}/${slug.slice(11)}/`;
+}
+
+// Image folders a post uses that no other post does.
+function privateImageDirs(slug, allPosts) {
+  const markdown = readFileSync(path.join(DEST_DIR, `${slug}.md`), "utf8");
+  const dirs = new Set(
+    assetRefs(markdown)
+      .filter((ref) => ref.startsWith("img/blog/"))
+      .map((ref) => ref.split("/").slice(0, -1).join("/")),
+  );
+  return [...dirs].filter(
+    (dir) =>
+      dir !== "img/blog" &&
+      existsSync(path.join("public", dir)) &&
+      !allPosts.some(
+        (p) =>
+          p !== slug &&
+          readFileSync(path.join(DEST_DIR, `${p}.md`), "utf8").includes(
+            `${dir.slice("img/blog/".length)}/`,
+          ),
+      ),
+  );
+}
+
+// Posts the old repo retired: removed here after confirmation, with the
+// image folders only they used. A post whose URL has no redirect in
+// vercel.json is kept, so a reader lands on the replacement and not a 404.
+async function pruneRetired(existing, postsDir, args, report) {
+  const upstream = readdirSync(postsDir)
+    .filter((f) => /\.(md|adoc)$/.test(f))
+    .map(normalizeSlug);
+  const retired = retiredPosts(existing, upstream);
+  if (!retired.length) return 0;
+  const redirects = JSON.parse(readFileSync("vercel.json", "utf8")).redirects;
+  const all = [...existing];
+  const plan = retired.map((slug) => ({
+    slug,
+    redirect: redirectFor(redirects, slug),
+    dirs: privateImageDirs(slug, all),
+  }));
+  const lines = [`## Retired in the old repo`];
+  for (const p of plan) {
+    lines.push(
+      p.redirect
+        ? `- ${p.slug}.md: ${p.redirect.source} redirects to ${p.redirect.destination}` +
+            (p.dirs.length
+              ? `; with ${p.dirs.map((d) => `public/${d}/`).join(", ")}`
+              : "")
+        : `- ${p.slug}.md: kept, no redirect in vercel.json for ${postUrl(p.slug)}; add one to the replacement post first`,
+    );
+  }
+  const removable = plan.filter((p) => p.redirect);
+  if (args.dryRun || !removable.length) {
+    report.push(lines.join("\n"));
+    return 0;
+  }
+  console.log(lines.join("\n"));
+  let go = args.yes;
+  if (!go && process.stdin.isTTY) {
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    const answer = await rl.question(
+      `Remove ${removable.length} retired post(s) and their private image folders? [y/N] `,
+    );
+    rl.close();
+    go = /^y(es)?$/i.test(answer.trim());
+  }
+  if (!go) {
+    lines.push("- nothing removed (answer y, or pass --yes)");
+    report.push(lines.join("\n"));
+    return 0;
+  }
+  for (const p of removable) {
+    for (const dir of p.dirs)
+      rmSync(path.join("public", dir), { recursive: true });
+    rmSync(path.join(DEST_DIR, `${p.slug}.md`));
+  }
+  lines.push(`- removed ${removable.length} post(s)`);
+  report.push(lines.join("\n"));
+  return removable.length;
+}
+
+// Which posts a run converts: the ones asked for, or every post with --force,
+// or the ones missing here plus those the old repo added or changed since the
+// recorded commit (all of them when nothing is recorded yet).
+export function selectPosts(existing, delta, args) {
+  if (args.only) return (slug) => args.only.includes(slug);
+  if (args.force) return () => true;
+  const changed = new Set(
+    [...delta.added, ...delta.modified].map((s) => normalizeSlug(s)),
+  );
+  return (slug) =>
+    !existing.has(slug) || delta.since === null || changed.has(slug);
+}
+
+async function main() {
   const args = parseArgs(process.argv.slice(2));
   const postsDir = path.join(args.src, "_source/_posts");
   if (!existsSync(postsDir)) {
@@ -1581,24 +1941,21 @@ function main() {
       .filter((f) => f.endsWith(".md"))
       .map((f) => f.slice(0, -3)),
   );
+  const delta = upstreamDelta(args.src);
+  const wanted = selectPosts(existing, delta, args);
   const sources = readdirSync(postsDir)
     .filter((f) => /\.(md|adoc)$/.test(f))
     .map((f) => ({
       file: f,
-      slug: f.replace(/\.(md|adoc)$/, ""),
+      slug: normalizeSlug(f),
       adoc: f.endsWith(".adoc"),
     }))
-    .filter((p) =>
-      args.only
-        ? args.only.includes(p.slug)
-        : args.force || !existing.has(p.slug),
-    );
+    .filter((p) => wanted(p.slug));
 
   const report = [];
   let written = 0;
   for (const post of sources) {
     const dest = path.join(DEST_DIR, `${post.slug}.md`);
-    if (existing.has(post.slug) && !args.force && !args.only) continue;
     if (!/^\d{4}-\d{2}-\d{2}-/.test(post.slug)) {
       report.push(
         `## ${post.file}\n- skipped: file name is not YYYY-MM-DD-slug`,
@@ -1610,9 +1967,14 @@ function main() {
       override || path.join(postsDir, post.file),
       "utf8",
     );
-    const { markdown, notes } = post.adoc
-      ? convertAsciidoc(content)
+    const { markdown: converted, notes } = post.adoc
+      ? convertAsciidoc(content, { resolveAsset: assetResolver(args.src) })
       : convertMarkdown(content);
+    const markdown = args.assets
+      ? resolveImageRefs(converted, siblingLookup(args.src), (n) =>
+          notes.push(n),
+        )
+      : converted;
     const lines = [
       `## ${post.file} -> ${dest}${existing.has(post.slug) ? " (overwritten)" : ""}`,
     ];
@@ -1627,10 +1989,10 @@ function main() {
     }
     if (args.assets) {
       const assetReport = [];
-      for (const ref of imageRefs(markdown)) {
+      for (const ref of assetRefs(markdown)) {
         copyAsset(
-          path.join(args.src, "_source/_assets/img/blog", ref),
-          path.join(IMG_DIR, ref),
+          sourceAsset(args.src, ref),
+          path.join("public", ref),
           assetReport,
           args.dryRun,
         );
@@ -1643,11 +2005,21 @@ function main() {
     }
     report.push(lines.join("\n"));
   }
+  const pruned = args.only
+    ? 0
+    : await pruneRetired(existing, postsDir, args, report);
   const summary =
     `# Migration report\n\n${sources.length} post(s) processed, ${written} written` +
+    `${pruned ? `, ${pruned} retired post(s) removed` : ""}` +
     `${args.dryRun ? " (dry run)" : ""}.\n\n${report.join("\n\n")}\n`;
   if (args.report) writeFileSync(args.report, summary);
   console.log(summary);
+  if (!args.dryRun && !args.only) {
+    const { head, headDate } = recordSnapshot(args.src);
+    console.log(
+      `Recorded okta-blog ${head.slice(0, 8)} (${headDate}) as the reconciled commit.`,
+    );
+  }
   console.log(
     "Do not run Prettier or any formatter over the migrated files: it reformats the code samples.",
   );
@@ -1657,5 +2029,8 @@ if (
   process.argv[1] &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  main();
+  main().catch((err) => {
+    console.error(err.message);
+    process.exit(1);
+  });
 }
