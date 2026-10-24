@@ -136,7 +136,7 @@ export function extract(html) {
   // Drop tables of contents (both sites list the headings again there) and
   // the changelog this site's layout appends.
   for (const re of [
-    /<div[^>]*(?:id="toc"|class="[^"]*\btoc\b[^"]*"|class="[^"]*table-of-contents[^"]*")[^>]*>/i,
+    /<(?:div|nav)[^>]*(?:id="toc"|class="[^"]*\btoc\b[^"]*"|class="[^"]*table-of-contents[^"]*")[^>]*>/i,
     /<ul[^>]*id="markdown-toc"[^>]*>/i,
     /<p[^>]*class="hide"[^>]*>/i,
   ]) {

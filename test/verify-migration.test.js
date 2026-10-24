@@ -34,6 +34,7 @@ test("normalizeText folds typography, entities and callout markers", () => {
 test("extract separates prose, code and inline code and drops the TOC", () => {
   const html =
     '<div class="table-of-contents"><ul><li><a href="#a">A</a></li></ul></div>' +
+    '<nav class="table-of-contents not-prose"><p class="toc-header">Table of Contents</p><ul><li><a href="#a">A</a><ul><li><a href="#b">B</a></li></ul></li></ul></nav>' +
     "<h2>A heading</h2><p>Para with <code>x</code>.</p>" +
     '<pre class="highlight"><code><span class="k">let</span> a = 1; <i class="conum" data-value="1"></i><b>(1)</b>\n</code></pre>' +
     "<ul><li>item one</li><li>item &amp; two</li></ul>" +

@@ -11,6 +11,8 @@ import {
   dedentFences,
   fixBackticks,
   kramdownLeniencies,
+  kramdownBlocks,
+  standaloneTags,
   splitSegments,
   normalizeSlug,
   redirectFor,
@@ -278,6 +280,28 @@ test("markdown: kramdown leniencies are rewritten so markdown-it renders what kr
     convertMarkdown("press ``Ctrl+F5```.\n").markdown,
     "press ``Ctrl+F5``.\n",
   );
+  // One backtick too many on a single-backtick span.
+  assert.equal(
+    fixBackticks("the `apps/api/scim.ts`` file and `main.ts`."),
+    "the `apps/api/scim.ts` file and `main.ts`.",
+  );
+  // A fence indented one to three spaces at the top level: only the fence lines move.
+  const shallow = dedentFences(
+    splitSegments(
+      'Like this:\n ```gradle\ndependencies {\n    implementation("a")\n}\n ```',
+    ),
+  );
+  assert.equal(
+    shallow[1].text,
+    '```gradle\ndependencies {\n    implementation("a")\n}\n```',
+  );
+  // A raw tag between the paragraph and a shallow fence does not make it a list.
+  const guarded = dedentFences(
+    splitSegments(
+      "Add this:\n \n {% raw %}\n ```ts\nprivate x = new Map();\n ```\n {% endraw %}",
+    ),
+  );
+  assert.equal(guarded[1].text, "```ts\nprivate x = new Map();\n```");
   // A fence indented four spaces after a paragraph is dedented; inside a list it is left alone.
   const after = dedentFences(
     splitSegments(
@@ -394,6 +418,87 @@ test("front matter: a flow list spread over lines is joined onto its key", () =>
   assert.equal(
     fm,
     'title: T\ncommunities: [".net", "go", "java"]\ntags: [a, b]',
+  );
+});
+
+test("markdown: block structure kramdown read differently", () => {
+  // "1)" stays a paragraph; block tags inside a sentence are text; tags that
+  // open a line, or sit in an HTML block, are markup.
+  assert.equal(
+    kramdownBlocks(
+      [
+        "1) First",
+        "2) Second",
+        "> 3) Quoted",
+        '- The field holds HTML. For example, "<p>Hi!</p>".',
+        "(below the closing </Table> tag) and the <ul> list",
+        '> <p style="text-align:right">quote</p>',
+        "<table>",
+        "  <tr><td>cell</td></tr>",
+        "</table>",
+        "",
+        "Text <br> and <img src=x> stay.",
+      ].join("\n"),
+    ),
+    [
+      "1\\) First",
+      "2\\) Second",
+      "> 3\\) Quoted",
+      '- The field holds HTML. For example, "&lt;p&gt;Hi!&lt;/p&gt;".',
+      "(below the closing &lt;/Table&gt; tag) and the &lt;ul&gt; list",
+      '> <p style="text-align:right">quote</p>',
+      "<table>",
+      "  <tr><td>cell</td></tr>",
+      "</table>",
+      "",
+      "Text <br> and <img src=x> stay.",
+    ].join("\n"),
+  );
+  // A markdown="1" div gets a blank line after its opener; a heading's stray braces are escaped.
+  assert.equal(
+    kramdownBlocks(
+      '<div id="s" markdown="1">\n1. Set up\n\n    Click A.\n</div>\n\n>#### `dependencies`  { }\n## Keep {: .no_toc }\n',
+    ),
+    '<div id="s" markdown="1">\n\n1. Set up\n\n    Click A.\n</div>\n\n>#### `dependencies`  \\{ }\n## Keep {: .no_toc }\n',
+  );
+  // A lone image or self-closing tag: a caption joins it, a block gets a blank line
+  // (at the top level only; an indented image already continues its list item).
+  assert.equal(
+    standaloneTags(
+      [
+        '{% img {src: "a.png", alt: ""} %} ',
+        "– Image source: <cite>[A](http://a)</cite>",
+        "",
+        '<a name="test"/>',
+        "### Test",
+        '  {% img {src: "b.png", alt: ""} %}',
+        "3. Next item",
+        '{% img {src: "c.png", alt: ""} %}',
+        "4. Continues the item above, so the image is inline already",
+        "",
+        "Para.",
+      ].join("\n"),
+    ),
+    [
+      '{% img {src: "a.png", alt: ""} %} – Image source: <cite>[A](http://a)</cite>',
+      "",
+      '<a name="test"/>',
+      "",
+      "### Test",
+      '  {% img {src: "b.png", alt: ""} %}',
+      "3. Next item",
+      '{% img {src: "c.png", alt: ""} %}',
+      "4. Continues the item above, so the image is inline already",
+      "",
+      "Para.",
+    ].join("\n"),
+  );
+  // End to end: the Jekyll image tag is converted first, then joined with its caption.
+  assert.equal(
+    convertMarkdown(
+      '{% img blog/d/a.png alt:"A" %}\n– Source: <cite>[X](http://x)</cite>\n',
+    ).markdown,
+    '{% img {src: "d/a.png", alt: "A"} %} – Source: <cite>[X](http://x)</cite>\n',
   );
 });
 
