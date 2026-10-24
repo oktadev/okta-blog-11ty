@@ -59,19 +59,24 @@ export default function (eleventyConfig) {
 
   // The syntax highlight plugin returns fences tagged `text`, or with a
   // language Prism doesn't know, unescaped, so a "<token>" in such a sample
-  // becomes HTML. Wrap its highlighter and register the wrapper the same way
-  // the plugin does: Eleventy re-applies the registered highlighter every time
-  // it constructs a Markdown engine but runs amendLibrary only once, so a
-  // wrapper installed through amendLibrary was lost by a later construction
-  // mid-build and posts rendered after it lost their escaping.
-  const prismHighlight = eleventyConfig.markdownHighlighter;
-  eleventyConfig.addMarkdownHighlighter((str, lang) => {
-    const name = (lang || "").split("/")[0];
-    if (name && name !== "text" && prismKnows(name))
-      return renderCallouts(prismHighlight(str, lang));
-    const cls = ` class="language-${name || "text"}"`;
-    return `<pre${cls}><code${cls}>${renderCallouts(markdownLibrary.utils.escapeHtml(str))}</code></pre>`;
-  });
+  // becomes HTML. Escape those ourselves and keep the same markup. Eleventy
+  // installs the plugin's highlighter with md.set() every time it constructs a
+  // Markdown engine, and runs amendLibrary only once, so the wrapper is applied
+  // inside set() itself: whatever highlighter is installed, whenever, is wrapped.
+  const mdSet = markdownLibrary.set.bind(markdownLibrary);
+  markdownLibrary.set = (options) => {
+    const inner = options?.highlight;
+    if (typeof inner !== "function" || inner.wrapsPrism) return mdSet(options);
+    const highlight = (str, lang) => {
+      const name = (lang || "").split("/")[0];
+      if (name && name !== "text" && prismKnows(name))
+        return renderCallouts(inner(str, lang));
+      const cls = ` class="language-${name || "text"}"`;
+      return `<pre${cls}><code${cls}>${renderCallouts(markdownLibrary.utils.escapeHtml(str))}</code></pre>`;
+    };
+    highlight.wrapsPrism = true;
+    return mdSet({ ...options, highlight });
+  };
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
 
