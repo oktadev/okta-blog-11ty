@@ -295,7 +295,7 @@ The above is a JUnit test configured to run with the `SpringRunner`. The `Contex
 
 WireMock if you haven't already guessed is a nifty little testing lib you can use to mock HTTP responses, it spins up an embedded [Jetty](https://www.eclipse.org/jetty/) instance to handle real HTTP requests/responses. For example, if you wanted to mock a response to `/my/resource` and return the XML content `<hello>still using XML</hello>`, it would be represented in the following syntax:
 
-``` java
+```java
 stubFor(get(urlEqualTo("/my/resource"))
     .withHeader("Accept", equalTo("text/xml"))
     .willReturn(aResponse()

@@ -419,7 +419,7 @@ First, you'll need to create a new web application in Okta to use this service:
 
 {{ macro.cli({type: "web", loginRedirectUri: "https://oidcdebugger.com/debug", logoutRedirectUri: "https://oidcdebugger.com", install: "false"}) }}
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "postgresql-with-spring-boot/openid-connect.jpg", alt: "OpenID Connect", header: "700"} %}
 

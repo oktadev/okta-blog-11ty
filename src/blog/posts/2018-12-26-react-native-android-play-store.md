@@ -597,7 +597,7 @@ state = {
 
 Also add a check for `Go` in the **press** function:
 
-``` javascript
+```javascript
 else if (value === 'Go') {
   this.setState({ processing: true });
 }

@@ -23,7 +23,6 @@ Today, we will use `libsodium` in Python to encrypt messages and decrypt them us
 
 **NOTE**: You can find the code for this project on [GitHub](https://github.com/oktadev/python-go-libsodium-example.git).
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Prerequisites to Building a Libsodium Application

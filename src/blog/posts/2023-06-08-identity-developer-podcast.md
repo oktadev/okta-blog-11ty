@@ -9,7 +9,7 @@ tweets:
 - ""
 - ""
 - ""
-image: identity-developer-podcast/podcast.jpg 
+image: identity-developer-podcast/podcast.jpg
 type: awareness
 ---
 

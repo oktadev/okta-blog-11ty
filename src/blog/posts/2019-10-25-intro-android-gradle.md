@@ -30,7 +30,6 @@ In true Android fashion, you can configure most aspects of Gradle's behavior by 
 
 This article will introduce you to the essential aspects of what Gradle does and how you can configure it I'll also introduce you to a couple more advanced Gradle concepts.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 Your App will also use Okta to safely and easily authenticate users, so you can focus on your business while Okta gives you the security you need, plus services like:

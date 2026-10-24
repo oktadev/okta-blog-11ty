@@ -703,7 +703,7 @@ Create the `./kudo-oos/pkg/http/web/app/src/components/GitHubRepoDetails.js` fil
         <v-textarea
           name="input-7-1"
           label="Show some love"
-          value
+          value=""
           v-model="repo.notes"
           hint="Describe why you love this project"
         ></v-textarea>

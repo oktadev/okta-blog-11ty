@@ -23,7 +23,6 @@ In our third Kong and Okta tutorial, we'll go through the introspection flow imp
 - [Authorization Code for user authentication](/blog/2021/06/02/auth-code-flow-kong-konnect)
 - [Access control based on Okta's groups and planes](/blog/2021/06/28/access-control-policies-kong-konnect)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 You can also [watch this tutorial as a screencast](https://youtu.be/0Gc33A7F2XE).

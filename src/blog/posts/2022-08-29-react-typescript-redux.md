@@ -209,7 +209,6 @@ export default userProfileSlice.reducer;
 ```
 {% endraw %}
 
-{:start="3"}
 3. In the `src/app/store.ts` file, add the created Redux slice to the Redux store:
 {% raw %}
 ```ts
@@ -394,7 +393,7 @@ In this file, we use the Redux selector created earlier to get the current state
 
 #### userProfileExtra.tsx
 
-``` tsx
+```tsx
 import "../App.css";
 import { useContext } from "react";
 import { UserContext } from "./home";

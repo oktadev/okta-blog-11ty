@@ -21,7 +21,6 @@ From a developer's perspective, CORS is often a cause of much grief when it bloc
 
 **NOTE**: The code for this project can be found on [GitHub](https://github.com/oktadev/okta-go-cors-example).
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Prerequisites to Building a Go Application

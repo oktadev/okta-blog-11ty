@@ -28,7 +28,6 @@ This tutorial is a modified and updated version of the "Quarkus - Using JWT RBAC
 
 Let's get started!
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -295,7 +294,7 @@ Not authorized
 
 ## Generate an OAuth 2.0 Access Token to Test Authentication in Quarkus
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "java-quarkus-oidc/oidc-debugger.png", alt: "OIDC Debugger", header: "650"} %}
 

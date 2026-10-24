@@ -9,7 +9,7 @@ author: krasimir-hristozov
 by: contractor
 communities: [php]
 tweets:
-- "Learn how to quickly add authentication to a Symfony project" 
+- "Learn how to quickly add authentication to a Symfony project"
 - "Add authentication to your Symfony project quickly using Okta! 🎉"
 image: featured/okta-php-headphones.jpg
 type: conversion

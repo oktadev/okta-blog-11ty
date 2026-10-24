@@ -10,7 +10,7 @@ description: "Using a Flask SCIM server, learn more about the how & why behind h
 tags: [scim, python, flask]
 tweets:
 - "Want to learn how Okta implements the SCIM provisioning protocol? What better way than setting up your own SCIM server with Flask!"
-- "Take a peek under the hood to see #SCIM in action. Learn how to build a SCIM server with #Flask, #Postgres, and #Okta. #python" 
+- "Take a peek under the hood to see #SCIM in action. Learn how to build a SCIM server with #Flask, #Postgres, and #Okta. #python"
 - ""
 - ""
 image: flask-scim-server/scim-flask-social.jpg

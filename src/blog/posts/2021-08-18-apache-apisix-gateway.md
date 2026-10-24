@@ -11,7 +11,7 @@ tags: [apisix, gateway, api, security, oauth2, oidc, oss]
 tweets:
 - "Use an API gateway to secure your applications. Learn how with Apache APISIX 🔒"
 - "The Apache APISIX Gateway with OpenID Connect can make it easier to secure your APIs. Here's the step-by-step 👣 ‼️ #opensource"
-- "Apache APISIX + Open ID Connect + Okta 👉  Learn how to replace traditional with centralized authentication at the gateway 👉" 
+- "Apache APISIX + Open ID Connect + Okta 👉  Learn how to replace traditional with centralized authentication at the gateway 👉"
 image: apache-apisix-gateway/apisix-social.jpg
 type: conversion
 canonical: https://apisix.apache.org/blog/2021/08/16/Using-the-Apache-APISIX-OpenID-Connect-Plugin-for-Centralized-Authentication
@@ -21,7 +21,6 @@ canonical: https://apisix.apache.org/blog/2021/08/16/Using-the-Apache-APISIX-Ope
 
 > **NOTE:** This post originally appeared on the [Apache APISIX blog](https://apisix.apache.org/blog/2021/08/16/Using-the-Apache-APISIX-OpenID-Connect-Plugin-for-Centralized-Authentication).
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

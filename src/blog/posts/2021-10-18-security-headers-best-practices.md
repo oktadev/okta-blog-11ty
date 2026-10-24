@@ -18,7 +18,6 @@ type: awareness
 
 Many decisions go into the process of creating a secure website. One of these decisions is selecting which HTTP security headers to implement. Today, we'll dive into the most important HTTP security headers and the best practices that will strengthen your website's security.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## The Security Headers

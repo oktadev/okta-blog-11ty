@@ -6,12 +6,12 @@ communities: [java,devops]
 description: "Build a JHipster Microservice on AWS with Amazon Elastic Kubernetes Service and secure it with OAuth 2.0 and OIDC using Okta as a provider"
 tags: [java,jhipster,kubernetes,devops,microservices]
 tweets:
-- "From soup 🍲 to nuts 🥜: here's everything you need to build a microservice stack and deploy it to Amazon Elastic Kubernetes Service #EKS. Not-so-secret ingredients: @jhipster for your generator and @okta for #OIDC"
+- "From soup 🍲 to nuts 🥜: here's everything you need to build a microservice stack and deploy it to Amazon Elastic Kubernetes Service #EKS.
+  Not-so-secret ingredients: @jhipster for your generator and @okta for #OIDC "
 - "Bootstrap complex apps with multiple microservices and domain models. @jhipster makes it easier. And Okta helps with #OAuth #security."
 - ""
 image: kubernetes-jhipster-aws/kubernetes-jhipster-aws-social.jpg
 type: conversion
-
 ---
 
 In this tutorial, you'll use JHipster to build a microservice stack and deploy it to Amazon Elastic Kubernetes Service (EKS). The microservices will use Java and Spring Boot for resource servers and Vue for the frontend. The server-side applications will use Spring's Reactive technology stack. The microservice will include multiple databases and database types: PostgresSQL, MongoDB, and Neo4j. You'll secure the service using OAuth 2.0 and OpenID Connect (OIDC), with Okta as the OIDC provider. With Kubernetes secrets and `kubeseal`, you'll encrypt all of the secrets in the project configuration files. To generate the project, you'll use JHipster CLI and the JHipster Domain Language (JDL).

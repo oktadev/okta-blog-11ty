@@ -35,7 +35,6 @@ This tutorial won't provide the nitty-gritty details on how to write code in Jav
 
 You can skip around between sections of this tutorial using the table of contents below. 
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 You can also clone [the completed example](https://github.com/oktadev/auth0-full-stack-java-example) and following along that way.
@@ -534,7 +533,7 @@ Then, in the `return` block, remove the JSX between the `image` property and `al
 />
 {metadataRows}
 <ValidatedField id="photo-album" name="albumId" data-cy="album" label={translate('flickr2App.photo.album')} type="select">
-  <option>
+  <option value="" key="0" />
   {albums
     ? albums.map(otherEntity => (
       <option value={otherEntity.id} key={otherEntity.id}>

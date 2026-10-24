@@ -28,7 +28,6 @@ In this tutorial, I will show you how to develop an Angular application using My
 
 I will assume that you have some familiarity with Node and the `npm` package manager and that both of these are installed on your system.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

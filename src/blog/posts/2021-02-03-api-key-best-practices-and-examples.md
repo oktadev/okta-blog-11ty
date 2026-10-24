@@ -9,9 +9,9 @@ communities: [go]
 description: "Learn how to avoid accidentally leaking an API key in your code."
 tags: [go]
 tweets:
-  - "Have you ever leaked an API key online by mistake? Learn how to avoid doing that again."
-  - "We've all leaked an API key online by mistake. Right? .. Right?"
-  - "Here are some tips for protecting your API keys."
+- "Have you ever leaked an API key online by mistake? Learn how to avoid doing that again."
+- "We've all leaked an API key online by mistake. Right? .. Right?"
+- "Here are some tips for protecting your API keys."
 image: api-key-best-practices-and-examples/card.png
 type: conversion
 ---
@@ -38,7 +38,7 @@ An API call using the API token can be made using `curl`. Replace `${OKTA_API_KE
 
 ```bash
 curl -s -H "Authorization: SSWS ${OKTA_API_KEY}" https://${OKTA_DOMAIN}/api/v1/meta/types/user
-```
+``` 
 
 After running this command, you should see a JSON string containing one or more user details.
 
@@ -54,11 +54,11 @@ Notice that the request is over HTTP, not HTTPS, and the API key is a query para
 
 Google Maps has an API for embedding maps and location-oriented services in web pages and mobile applications. This service is billable, but you get $200 free usage per month, which is enough for most applications.
 
-First, you need a Google Cloud Platform (GCP) account. There is a free trial [Google Cloud Platform](https://cloud.google.com/gcp) which gives new customers $300 of free credit, valid for 12 months.
+First, you need a Google Cloud Platform (GCP) account. There is a free trial [Google Cloud Platform](https://cloud.google.com/gcp) which gives new customers $300 of free credit, valid for 12 months. 
 
-Next, you need to create a project. Log into the [Cloud Console](https://console.cloud.google.com). From the hamburger menu in the top left select **APIs & Service** > **Dashboard**. Select **+ ENABLE APIS AND SERVICES**. Next, select **Aps JavaScript API**. Click on **ENABLE** and after a short wait, you will be taken to the Google Maps Platform page.
+Next, you need to create a project. Log into the [Cloud Console](https://console.cloud.google.com). From the hamburger menu in the top left select **APIs & Service** > **Dashboard**. Select **+ ENABLE APIS AND SERVICES**. Next, select **Aps JavaScript API**. Click on **ENABLE** and after a short wait, you will be taken to the Google Maps Platform page. 
 
-From the hamburger menu in the top left select **APIs & Service** > **Credentials**. Next, hit **CREATE CREDENTIALS** > **API Keys**. A dialog will pop up displaying the API key. Copy it and store it safely. You will see a warning: _Restrict your key to prevent unauthorized use in production._ This is important. Hit **RESTRICT KEY**.
+From the hamburger menu in the top left select **APIs & Service** > **Credentials**. Next, hit **CREATE CREDENTIALS** > **API Keys**. A dialog will pop up displaying the API key. Copy it and store it safely. You will see a warning: *Restrict your key to prevent unauthorized use in production.* This is important. Hit **RESTRICT KEY**.
 
 Each key can be restricted to one application type. We are going to use the key for a website so, select **HTTP referrers (websites)**. A Website restrictions section will appear. Select **ADD AN ITEM**. Enter your website domain in the form `*.example.com/*`. Hit **DONE**.
 
@@ -67,7 +67,8 @@ Next, select **Restrict key**. Then select **Maps JavaScript API**. Hit **SAVE**
 The API key must be included in every Maps JavaScript API request, replacing `YOUR_API_KEY` with the actual key.
 
 ```javascript
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" type="text/javascript"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+  type="text/javascript"></script>
 ```
 
 ## Issues with API Keys Compiled into Mobile Applications
@@ -79,7 +80,7 @@ class WeatherModel : ObservableObject {
     private let apiKey: String
     private let apiUri: String
     @Published var weatherData: WeatherData
-
+    
     init(location: String) {
         apiKey = "a1b2c33d4e5f6g7h8i9jakblc"
         apiUri = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey
@@ -122,7 +123,7 @@ class WeatherModel:ObservableObject {
     private let apiKey: String
     private let apiUri: String
     @Published var weatherData: WeatherData
-
+    
     init(location: String) {
         guard let filePath = Bundle.main.path(forResource: "Open-Weather-Map-Info", ofType: "plist") else {
             fatalError("Couldn't find file 'Open-Weather-Map-Info.plist'.")
@@ -143,7 +144,6 @@ Finally, and most importantly, add the property file to `.gitignore` so that the
 *.xcodeproj
 Open-WeatheMap-Info.plist
 ```
-
 Although this approach prevents the API key from being checked into GitHub, the key is still present in the compiled application. It can easily be extracted from the application binary. The most secure approach is to use a proxy server so that the key is not required in the application.
 
 ## Issues with API Keys in JavaScript
@@ -214,34 +214,34 @@ Another means of protecting API keys is to use a proxy server. A proxy server im
 
 It is very difficult to build a proxy server for the Google Maps API. The reason for this is that the API is very tightly coupled with the JavaScript embedded in the web page. Google goes to lengths to restrict the API key, so a proxy server adds an unnecessary complication.
 
-We are going to build a single page application (SPA) that accesses the Open Weather API via a proxy server. The SPA consists of an HTML page and JavaScript that makes requests to a proxy server. A simple Go web server will serve this static content. The proxy server is another Go web server that extracts the API key from the environment and forwards the request to the real API.
+We are going to build a single page application (SPA) that accesses the Open Weather API via a proxy server. The SPA consists of an HTML page and JavaScript that makes requests to a proxy server. A simple Go web server will serve this static content. The proxy server is another Go web server that extracts the API key from the environment and forwards the request to the real API. 
 
 First, create the web page `WeatherSPA/index.html` with the following content:
 
 ```html
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Weather</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="control.js" defer></script>
-  </head>
-  <body>
-    <h1 id="name">Weather</h1>
-    <div class="centred">
-      <img />
-      <p id="weathermain"></p>
-      <form id="weatherForm">
-        <label for="location">Location</label>
-        <select id="location" name="location">
-          <option value="berlin,de">Berlin, Germany</option>
-          <option value="chicago,us">Chicago, USA</option>
-          <option value="paris,fr">Paris, France</option>
-        </select>
-        <input type="button" value="Get Weather" onclick="onlocation()" />
-      </form>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Weather</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script src="control.js" defer></script>
+    </head>
+    <body>
+        <h1 id="name">Weather</h1>
+        <div class="centred">
+            <img id="icon" src=""/>
+            <p id="weathermain"></p>
+            <form id="weatherForm">
+                <label for="location">Location</label>
+                <select id="location" name="location">
+                    <option value="berlin,de">Berlin, Germany</option>
+                    <option value="chicago,us">Chicago, USA</option>
+                    <option value="paris,fr">Paris, France</option>
+                </select>
+                <input type="button" value="Get Weather" onclick="onlocation()"/>
+            </form>
+        </div>
+    </body>
 </html>
 ```
 
@@ -251,30 +251,30 @@ Next, create a JavaScript file `WeatherSPA/control.js` with the following conten
 
 ```javascript
 function onlocation() {
-  fetch("http://localhost:8000/api/weather", {
-    method: "POST",
-    mode: "cors",
-    body: new URLSearchParams(new FormData(document.getElementById("weatherForm"))),
-  })
+    fetch("http://localhost:8000/api/weather", {
+        method : "POST",
+        mode: 'cors',
+        body: new URLSearchParams(new FormData(document.getElementById("weatherForm"))),
+    })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.error);
-      }
-      return response.json();
+        if (!response.ok) {
+            throw new Error(response.error)
+        }
+        return response.json();
     })
-    .then((data) => {
-      document.getElementById("name").innerHTML = data.name;
-      var weather = data.weather[0];
-      document.getElementById("weathermain").innerHTML = weather.main;
-      seticon(weather.icon);
+    .then(data => {
+        document.getElementById('name').innerHTML = data.name;
+        var weather = data.weather[0];
+        document.getElementById('weathermain').innerHTML = weather.main;
+        seticon(weather.icon);
     })
-    .catch(function (error) {
-      document.getElementById("weathermain").innerHTML = error;
+    .catch(function(error) {
+        document.getElementById('weathermain').innerHTML = error;
     });
 }
 
 function seticon(icon) {
-  document.getElementById("icon").src = "http://openweathermap.org/img/wn/" + icon + "@4x.png";
+    document.getElementById("icon").src = "http://openweathermap.org/img/wn/" + icon + "@4x.png";
 }
 
 seticon("10d");
@@ -366,6 +366,7 @@ Never hard code API keys into source code. The only exception to this is JavaScr
 When posting questions or answers to websites such as StackOverflow, it is common to post code examples. Make very sure that the code does not contain any secrets.
 
 It is important that developers always follow best practices. Always consider using environment variables, proxy servers, and secret stores when working with secrets such as API keys.
+
 
 If you enjoyed reading this post, you might also like these posts from our blog:
 

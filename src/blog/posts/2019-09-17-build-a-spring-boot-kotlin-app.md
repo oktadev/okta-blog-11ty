@@ -24,7 +24,6 @@ Google then announced official support for Kotlin on Android, further accelerati
 
 In this tutorial, you will build a Spring Boot application from scratch, using Kotlin as the main language. You will learn how Kotlin works with Spring and how to integrate the code with other Java libraries. By the end, you will have a secure Spring application running in Kotlin that authenticates users via OAuth 2.0.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

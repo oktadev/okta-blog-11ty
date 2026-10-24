@@ -14,7 +14,7 @@ type: awareness
 github: https://github.com/oktadev/okta-enterprise-ready-workshops/tree/scim-workshop-complete
 changelog:
 - 2023-08-21: Added a Supplemental section at the end
-- 2023-08-28: Corrected hyperlink to OIDC Workshop blog, provided more clarity in accessing the Prisma web interface. Added a disclaimer for using API tokens. 
+- 2023-08-28: Corrected hyperlink to OIDC Workshop blog, provided more clarity in accessing the Prisma web interface. Added a disclaimer for using API tokens.
 - 2023-08-30: Improved instructions for bearer auth check
 - 2023-09-15: Corrected url typos on SCIM diagram
 - 2023-09-19: Clarified instructions and changed the Bearer auth handling to the SCIM route definition

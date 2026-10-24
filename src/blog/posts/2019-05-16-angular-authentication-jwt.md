@@ -11,7 +11,7 @@ tags: [angular, jwt, authentication, javascript, typescript, nodejs]
 tweets:
 - "Are you interested in using JWTs for authentication in your Angular + Node app? This tutorial shows you how!"
 - "Use JWTs for authentication in @angular + @nodejs to give your app the ability to scale."
-- "Learn how to use JSON Web Tokens (JWT) to add authentication to your @angular app." 
+- "Learn how to use JSON Web Tokens (JWT) to add authentication to your @angular app."
 image: featured/okta-angular-skew.jpg
 type: conversion
 changelog:
@@ -24,7 +24,6 @@ JSON Web Tokens (JWTs) provide one way to solve this issue. Your Angular app can
 
 Another way to solve this issue is with session-based authentication and cookies. In this scenario, the backend will produce what's called a "session cookie." This cookie provides a mechanism for the server to prove the user is authenticated. 
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

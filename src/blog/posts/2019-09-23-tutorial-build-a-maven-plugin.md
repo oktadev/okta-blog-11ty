@@ -9,7 +9,7 @@ author: brian-demers
 by: advocate
 communities: [java]
 tweets:
-- "Learn how to build an @ASFMavenProject plugin" 
+- "Learn how to build an @ASFMavenProject plugin"
 - "Maven plugins are built with Maven plugins 🐢🐢🐢"
 - "Build a simple @ASFMavenProject plugin that will run `git rev-parse`"
 image: tutorial-build-a-maven-plugin/console-usage-example.png

@@ -18,7 +18,6 @@ type: conversion
 
 In the Java world, there are two main build systems: Gradle and Maven.  A build system chiefly manages potentially complex webs of dependencies and compiles the project. It also packages the compiled project along with all the resources and meta files into the final `.war` or `.jar` file. For simple builds, the choice between Maven and Gradle is pretty much one of personal taste, or perhaps the taste of your CTO or technical manager. They both work great. However, for more complex projects, Gradle is a winner. 
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -290,7 +289,7 @@ Generally a task is run like this: `gradle taskName otherTaskName`, or using the
 
 If you open a terminal and `cd` to the base directory of the example project, you can use `gradle tasks` to list all of the tasks defined by the `build.gradle` file. `tasks` is, of course, itself a task defined by the base Gradle API.
 
-``` txt
+```txt
 > Task :tasks
 
 ------------------------------------------------------------
@@ -552,7 +551,7 @@ You need to replace `{yourIssuerUri}` with your Okta issuer.
 
 ## Generate a Token Using OIDC Debugger
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "gradle-tutorial/oidc-debugger.png", alt: "Configure the OIDC Debugger", header: "600"} %}
 

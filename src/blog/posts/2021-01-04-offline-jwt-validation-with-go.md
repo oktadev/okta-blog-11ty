@@ -9,8 +9,8 @@ communities: [go]
 description: "How to validate a JSON Web Token with Go"
 tags: [go]
 tweets:
-  - "Did you know you can use Go to validate a JWT? This post will show you how."
-  - "Learn how to validate JSON Web Tokens with Go"
+- "Did you know you can use Go to validate a JWT? This post will show you how."
+- "Learn how to validate JSON Web Tokens with Go"
 image: offline-jwt-validation-with-go/social.png
 type: conversion
 ---
@@ -19,7 +19,7 @@ Modern authentication systems use and generate JSON Web Tokens (JWT). There are 
 
 A common way to validate OIDC access tokens is to simply make an API request to the issuer with the access token. While this is the simplest method to use, it is far faster to validate tokens "offline".
 
-Today, we are going to build a simple web application that uses the Okta authentication widget to log users in. An access token will be generated and sent to an API written in Go which will validate the token. Let's get started!
+Today, we are going to build a simple web application that uses the Okta authentication widget to log users in. An access token will be generated and sent to an API written in Go which will validate the token. Let's get started! 
 
 **PS**: The code for this project can be found on [GitHub](https://github.com/oktadeveloper/okta-offline-jwt-validation-example).
 
@@ -70,25 +70,25 @@ Next, create a file called `client/index.html` which loads the Okta JavaScript, 
 
 ```html
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Offline JWT Validation with Go</title>
-    <script src="https://global.oktacdn.com/okta-signin-widget/4.3.2/js/okta-sign-in.min.js" type="text/javascript"></script>
-    <link href="https://global.oktacdn.com/okta-signin-widget/4.3.2/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="control.js" defer></script>
-  </head>
-  <body>
-    <h1>Offline JWT Validation with Go</h1>
-    <div id="widget-container"></div>
-    <div class="centred">
-      <form id="messageForm">
-        Message: <input id="message" name="message" type="message" />
-        <input type="button" value="Send" onclick="onmessage()" />
-      </form>
-      <textarea id="messages" name="messages" rows="10" cols="50">Messages</textarea><br />
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Offline JWT Validation with Go</title>
+        <script src="https://global.oktacdn.com/okta-signin-widget/4.3.2/js/okta-sign-in.min.js" type="text/javascript"></script>
+        <link href="https://global.oktacdn.com/okta-signin-widget/4.3.2/css/okta-sign-in.min.css" type="text/css" rel="stylesheet"/>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script src="control.js" defer></script>
+    </head>
+    <body>
+        <h1>Offline JWT Validation with Go</h1>
+        <div id="widget-container"></div>
+        <div class="centred">
+            <form id="messageForm">
+                Message: <input id="message" name="message" type="message"/>
+                <input type="button" value="Send" onclick="onmessage()"/>
+            </form>
+            <textarea id="messages" name="messages" rows="10" cols="50">Messages</textarea><br/>
+        </div>
+    </body>
 </html>
 ```
 
@@ -98,63 +98,59 @@ Next, create a file called `client/control.js` containing the following JavaScri
 var accessToken = null;
 
 var signIn = new OktaSignIn({
-  baseUrl: "http://${yourOktaDomain}",
-  clientId: "${yourClientId}",
-  redirectUri: window.location.origin,
-  authParams: {
-    issuer: "https://${yourOktaDomain}/oauth2/default",
-    responseType: ["token", "id_token"],
-  },
+    baseUrl: 'http://${yourOktaDomain}',
+    clientId: '${yourClientId}',
+    redirectUri: window.location.origin,
+    authParams: {
+        issuer: 'https://${yourOktaDomain}/oauth2/default',
+        responseType: ['token', 'id_token']
+    }
 });
 
-signIn.renderEl(
-  {
-    el: "#widget-container",
-  },
-  function success(res) {
-    if (res.status === "SUCCESS") {
-      accessToken = res.tokens.accessToken.accessToken;
-      signIn.hide();
+signIn.renderEl({
+    el: '#widget-container'
+}, function success(res) {
+    if (res.status === 'SUCCESS') {
+        accessToken = res.tokens.accessToken.accessToken;
+        signIn.hide();
     } else {
-      alert("fail);");
+        alert('fail);')
     }
-  },
-  function (error) {
-    alert("error " + error);
-  },
-);
+}, function(error) {
+    alert('error ' + error);
+});
 
 function onmessage() {
-  const url = "/api/messages";
-  var headers = {};
-  if (accessToken != null) {
-    headers = { Authorization: "Bearer " + accessToken };
-  }
-  fetch(url, {
-    method: "POST",
-    mode: "cors",
-    headers: headers,
-    body: new URLSearchParams(new FormData(document.getElementById("messageForm"))),
-  })
+    const url = "/api/messages";
+    var headers = {}
+    if (accessToken != null) {
+        headers = { 'Authorization': 'Bearer ' + accessToken }
+    }
+    fetch(url, {
+        method : "POST",
+        mode: 'cors',
+        headers: headers,
+        body: new URLSearchParams(new FormData(document.getElementById("messageForm"))),
+    })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.error);
-      }
-      return response.text();
+        if (!response.ok) {
+            throw new Error(response.error)
+        }
+        return response.text();
     })
-    .then((data) => {
-      var msgs = JSON.parse(data);
-      document.getElementById("messages").value = msgs.messages.join("\n");
+    .then(data => {
+        var msgs = JSON.parse(data) 
+        document.getElementById('messages').value = msgs.messages.join('\n');
     })
-    .catch(function (error) {
-      document.getElementById("messages").value = "Permission denied";
+    .catch(function(error) {
+        document.getElementById('messages').value = "Permission denied";
     });
 }
 ```
 
 So, what is this code doing? First, a variable named `accessToken` is created to store the JWT access token.
 
-Next, we have created an `OktaSignIn` object named `signIn`. _Note_ You need to replace both occurrences of `${yourOktaDomain}` with the Okta domain name from the console. Also, replace `${yourClientId}` with the client ID from the application we previously created in the console.
+Next, we have created an `OktaSignIn` object named `signIn`. *Note* You need to replace both occurrences of `${yourOktaDomain}` with the Okta domain name from the console. Also, replace `${yourClientId}` with the client ID from the application we previously created in the console.
 
 The `renderEl()` function displays the authentication UI and performs the authentication. If successful, a JWT access token is returned and saved. The UI is then hidden.
 
@@ -199,26 +195,22 @@ Now, we can test the application by running the server and pointing a web browse
 ```bash
 go run main.go
 ```
-
-## Introduction to Complex Data Structures in Go
+## Introduction to  Complex Data Structures in Go
 
 For those new to Go, some of the more complex code which we will see later will make more sense if we understand how Go handles lists and maps (also known as dictionaries or hash tables). Here is a short introduction to lists and maps in Go:
 
 Consider an application which reads a JSON object from a file or a network resource. For example:
 
 ```json
-[
-  { "name": "John", "age": 30, "car": null },
-  { "name": "Jane", "age": 27, "car": "Mini" }
-]
+[{ "name":"John", "age":30, "car":null },
+ { "name":"Jane", "age":27, "car":"Mini" }]
 ```
 
 We want to use the Go JSON decoder to turn the JSON string into a list of maps.
-
-- Map and list values can be of type nil, int, float, string, list, and map.
-- Go is a compiled language and it is also strongly typed.
-- Map keys are always strings.
-- The values of any map or list can be a mixture of types, so the values of a map or list can't be given an explicit type in the code.
+* Map and list values can be of type nil, int, float, string, list, and map.
+* Go is a compiled language and it is also strongly typed. 
+* Map keys are always strings. 
+* The values of any map or list can be a mixture of types, so the values of a map or list can't be given an explicit type in the code.
 
 For example, In the code above, we declared a list of type `string` with this code:
 
@@ -233,7 +225,9 @@ var persons []interface{}
 var person map[string]interface{}
 ```
 
-This leads to another issue. When writing the code, it is impossible to know for certain what the actual type of the value is. For example, the JSON structure could change. The type can only be determined at runtime. This makes it important to know what the data structure actually is. If you know the type, you can use a type assertion that tells the compiler what the actual type is. In our example above, `persons` is a list of maps and `person` is a map containing a number of attributes.
+
+
+This leads to another issue. When writing the code, it is impossible to know for certain what the actual type of the value is. For example, the JSON structure could change. The type can only be determined at runtime. This makes it important to know what the data structure actually is. If you know the type, you can use a type assertion that tells the compiler what the actual type is. In our example above, `persons` is a list of maps and `person` is a map containing a number of attributes. 
 
 The type assertions become:
 
@@ -317,9 +311,10 @@ func main() {
 }
 ```
 
-What do these changes do? First of all, in `GetPublicKeys()` a GET request is made to the Okta API to get the signing public keys for the Okta domain stored in the $OKTA_DOMAIN environment variable. The response is a JSON object containing a list of keys.
 
-Next, we parse the JSON object to extract one or more of the RSA public keys that we will use to verify access tokens from Okta. The key has two components, a number (called "N"), and an exponent (called "E"). The number is base64 encoded and the exponent is usually 65537 so we just hard-code it.
+What do these changes do? First of all, in `GetPublicKeys()` a GET request is made to the Okta API to get the signing public keys for the Okta domain stored in the $OKTA_DOMAIN environment variable. The response is a JSON object containing a list of keys. 
+
+Next, we parse the JSON object to extract one or more of the  RSA public keys that we will use to verify access tokens from Okta. The key has two components, a number (called "N"), and an exponent (called "E"). The number is base64 encoded and the exponent is usually 65537 so we just hard-code it.
 
 Now we need to add some code to do the actual verification. Update your `import` section so it looks like this:
 
@@ -379,13 +374,12 @@ The function extracts an `Authorization` request header and looks for a `Bearer`
 The token string is then passed to the `jwt.Parse()` function, the second parameter being a function that returns the public key.
 
 Now, we can validate the token. It must be rejected if any of the following are true:
-
-- The parse function returns an error which means that the token can't be decoded, or more likely that the public key can't decrypt the signature.
-- The token is invalid.
-- The cryptographic algorithm must be RSA256.
-- The audience does not match the expected audience.
-- The issuer is not the expected issuer.
-- The token has no key identifier.
+* The parse function returns an error which means that the token can't be decoded, or more likely that the public key can't decrypt the signature.
+* The token is invalid.
+* The cryptographic algorithm must be RSA256.
+* The audience does not match the expected audience.
+* The issuer is not the expected issuer.
+* The token has no key identifier.
 
 Finally, modify the API functions to call `Verify()`.
 
@@ -401,7 +395,7 @@ func Messages(c *gin.Context) {
 
 ## Testing it all out
 
-We can now test end to end. Start by running the server:
+We can now test end to end. Start by  running the server:
 
 ```bash
 go run main.go
@@ -418,3 +412,4 @@ Now, login and try sending another message. This should send a token that gets v
 In this post, we have learned how to authenticate with Okta to get a JWT, how to use that JWT in the `Authentication` header of an HTTP GET request, and how to perform "offline" validation of that JWT in Go.
 
 If you like this topic, be sure to [follow us on Twitter](https://twitter.com/oktadev), subscribe to [our YouTube Channel](https://youtube.com/c/oktadev), and [follow us on Twitch](https://www.twitch.tv/oktadev).
+

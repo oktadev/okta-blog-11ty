@@ -9,9 +9,9 @@ communities: [java]
 description: "Use MicroProfile to create a GraphQL API with Java and secure it with OAuth 2.0."
 tags: [java, microprofile, graphql]
 tweets:
-  - "Did you know @MicroProfileIO includes support for GraphQL? This tutorial shows how to use it."
-  - "Learn how to use #MicroProfile and #OpenLiberty to create a @GraphQL API."
-  - "MicroProfile + GraphQL = 🧡"
+- "Did you know @MicroProfileIO includes support for GraphQL? This tutorial shows how to use it."
+- "Learn how to use #MicroProfile and #OpenLiberty to create a @GraphQL API."
+- "MicroProfile + GraphQL = 🧡"
 image: microprofile-graphql/microprofile-graphql.png
 type: conversion
 ---
@@ -22,7 +22,6 @@ MicroProfile, in essence, is a set of specifications and standards agreed upon b
 
 In this tutorial, the runtime you are going to use is Open Liberty. Open Liberty is an implementation of the MicroProfile specification. Open Liberty bills itself as "a lightweight open framework for building fast and efficient cloud-native Java microservices." It's easily customizable, fast to start, and has a low footprint.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -42,7 +41,7 @@ The app will be secured using OAuth 2.0 and OpenID Connect using Okta as the pro
 Before you get started, you'll need to have a few things installed.
 
 - **Java 11**: This tutorial uses Java 11. [SDKMAN](https://sdkman.io/) is an excellent option for installing and managing Java versions.
-- **Maven**: The MicroProfile starter uses Maven, a dependency management utility. It can be installed according to [the instructions on their website](https://maven.apache.org/install.html). You could also use [SDKMAN](https://sdkman.io/) or [Homebrew](https://brew.sh/).
+- **Maven**: The MicroProfile starter uses Maven, a dependency management utility. It can be installed according to [the instructions on their website](https://maven.apache.org/install.html). You could also use  [SDKMAN](https://sdkman.io/) or [Homebrew](https://brew.sh/).
 - **Okta Developer Account**: You'll be using Okta as an OAuth/OIDC provider to add JWT authentication and authorization to the application. You can go to [our developer site](https://developer.okta.com/signup/) and sign up for a free developer account.
 - **HTTPie**: This is a powerful command-line HTTP request utility that you'll use to test your MicroProfile app. Install it according to [the docs on their site](https://httpie.org/doc#installation).
 
@@ -145,7 +144,6 @@ Second, add the following line under the top-level `<server>` element (this just
 Create a new Java file, `HelloGraphQl.java`. This is a simple GraphQL resource controller.
 
 `src/main/java/com/example/demo/HelloGraphQl.java`
-
 ```java
 package com.example.demo;
 
@@ -202,7 +200,6 @@ Of course, this request is trivial. To do something more interesting, you're goi
 First, create the `SurfController` class that will expose the `surfReport` query.
 
 `src/main/java/com/example/demo/SurfController.java`
-
 ```java
 package com.example.demo;
 
@@ -384,7 +381,7 @@ Click **Create**.
 
 Every request to the secured API will require a valid JWT. Typically, the JWT is generated when a user signs in via a client application. In this case, there is no client application. Instead, you are going to use the OpenID Connect Debugger to generate a token. This web application allows you to perform a request for a JWT against Okta servers and inspect the results.
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "microprofile-graphql/oidcdebugger-settings.png", alt: "OIDC Debugger Settings", header: "650"} %}
 
@@ -394,7 +391,7 @@ You should see a success screen with an authorization code.
 
 {% img {src: "microprofile-graphql/oidcdebugger-success.png", alt: "OIDC Debugger Success", header: "600"} %}
 
-You can use HTTPie to exchange this authorization code for an actual token. Fill in the values in brackets with your values: the **authorization code**, your **Okta domain**, your OIDC app **client ID**, and your OIDC app **client secret**.
+You can use HTTPie to exchange this authorization code for an actual token.  Fill in the values in brackets with your values: the **authorization code**, your **Okta domain**, your OIDC app **client ID**, and your OIDC app **client secret**.
 
 ```bash
 http -f https://{yourOktaDomain}/oauth2/default/v1/token \
@@ -438,10 +435,14 @@ You'll see something like the following for the JWT Payload.
   "exp": 1610047137,
   "cid": "0oa1mpynrqj5XGGgS4x7",
   "uid": "00u133jktIYEgC5ZR4x6",
-  "scp": ["openid"],
+  "scp": [
+    "openid"
+  ],
   "sub": "andrew.hughes@email.com",
   "upn": "andrew.hughes@email.com",
-  "groups": ["Everyone"]
+  "groups": [
+    "Everyone"
+  ]
 }
 ```
 
@@ -504,7 +505,6 @@ Two values are used in `server.xml`: the okta domain and the location of the Jav
 To add security to your GraphQL controller, add the `@RolesAllowed` annotation to the `getSurfReport()` method in the `SurfController` class.
 
 `src/main/java/com/example/demo/SurfController.java`
-
 ```java
 import javax.annotation.security.RolesAllowed;
 

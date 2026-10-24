@@ -26,7 +26,6 @@ Spring Boot is an easy to use web application framework from Spring that can be 
 
 {% img {src: "java-mongodb-crud/duke-cheers-to-mongodb.png", alt: "Duke raises a glass to MongoDB", header: "800"} %}
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 In this tutorial, you will create a simple Java class file to model your data, you will store this data in a MongoDB database, and you will expose the data with a REST API. To do this, you will use Spring Boot and Spring Data.
@@ -451,7 +450,7 @@ This is the expected response. You're REST API is now protected and requires a v
 
 ## Generate a Token Using the OpenID Connect Debugger
 
-To access your now-protected server, you need a valid access token. {{ macro.oidcdebugger() }}
+To access your now-protected server, you need a valid access token. {{ macro.oidcdebugger({}) }}
 
 Scroll down to the bottom and click **Send Request**.
 

@@ -24,7 +24,6 @@ In this tutorial, you are going to build a very simple Spring Boot app that star
 
 This tutorial looks specifically at authentication, leaving authorization for another day. Authentication answers the question: who is making the request. Authorization comes after authentication and answers the question: is the authenticated user allowed to make the specific request?
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 {% include "integrator-org-warning.njk" %}

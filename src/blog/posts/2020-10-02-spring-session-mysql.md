@@ -24,7 +24,6 @@ Session management in multi-node applications presents multiple challenges. When
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Session Persistence

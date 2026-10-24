@@ -27,7 +27,7 @@ Start by cloning the application at <https://github.com/oktadeveloper/aspnetcore
 ## Let ASP.NET Know Where Your Roles Are
 In the `startup.cs` file, where the `OpenIdConfigurationOptions` are set, one of the items being set is the `TokenValidationParameters`. In the new `TokenValidationParameters` add a property called `RoleClaimType` with a value of `ClaimTypes.Role`. This is an enumeration in the `System.Security.Claims` namespace that holds the URL that describes the "role" claim type. Ultimately, your `TokenValidationParameters` property should look like this.
 
-``` csharp
+```csharp
 TokenValidationParameters = new TokenValidationParameters
 {
   ValidateIssuer = true,
@@ -36,11 +36,11 @@ TokenValidationParameters = new TokenValidationParameters
 ```
 
 ## Add a Claims Transformer
-The [Claims Transformer](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.iclaimstransformation) is a way to manipulate the [ClaimsPrincipal](https://msdn.microsoft.com/en-us/library/system.security.claims.claimsprincipal(v=vs.110).aspx), which is the main user in your ASP.NET application, once the user is authenticated.
+The [Claims Tranformer](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.iclaimstransformation) is a way to manipulate the [ClaimsPrincipal](https://msdn.microsoft.com/en-us/library/system.security.claims.claimsprincipal(v=vs.110).aspx), which is the main user in your ASP.NET application, once the user is authenticated.
 
 Add a folder inside the `Domain` folder called `Authorization`. Then add a class called `GroupsToRolesTransformer`. The contents of the transformer should be:
 
-``` csharp
+```csharp
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;

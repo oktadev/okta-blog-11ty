@@ -22,7 +22,6 @@ Why use JSF instead of JavaServer Pages (JSP)? There are two primary reasons: Fi
 
 With that background, let's create a simple application that shows the power of JSF. In this tutorial, we will build a simple web app to manage a list of your favorite books backed by a database and secure access to your app with Okta.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

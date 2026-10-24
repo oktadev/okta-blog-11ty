@@ -24,7 +24,6 @@ Then React introduced Hooks. Hooks allow you to obtain data and a callback funct
 
 In this tutorial, I will be showing you how to create a simple React application using Hooks to add state to a functional component. The application is a simple search form for books by their title and uses the Open Library API to obtain real book data.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

@@ -22,7 +22,6 @@ Okta is a computer security services company that provides a lot of great resour
 
 PKCE is a modification of the authorization code flow that does not require the application to have the client secret, making it suitable for client applications where the code is essentially public. Implementing a secure authorization code flow on a front-end application requires properly handing redirects and the token exchange, which can be a little involved. Fortunately, Okta has simplified this process greatly, handling a lot of the complexity for you.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 **Requirements**

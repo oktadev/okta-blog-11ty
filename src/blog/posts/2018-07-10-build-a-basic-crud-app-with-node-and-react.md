@@ -27,7 +27,6 @@ The tutorial will use [Okta's OpenID Connect (OIDC)](https://developer.okta.com/
 
 The backend will be written with [Express](https://www.expressjs.com/) as a server, with [Sequelize](http://docs.sequelizejs.com/) for modeling and storing data, and [Finale](https://github.com/tommybananas/finale) for quickly creating a REST API without a lot of boilerplate.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

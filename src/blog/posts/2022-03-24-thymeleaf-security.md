@@ -24,14 +24,13 @@ In this tutorial you will learn how to create a simple Spring WebFlux applicatio
 - [Java 11](https://jdk.java.net/java-se-ri/11)
 - [Okta CLI 0.10.0](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
 
 ## What is Thymeleaf?
 
-{% img {src: "thymeleaf-security/thymeleaf-logo-white.png", alt: "Thymeleaf Logo", header: "350"} %}{: .pull-right}
+<span class="float-right ml-4 mb-2">{% img {src: "thymeleaf-security/thymeleaf-logo-white.png", alt: "Thymeleaf Logo", header: "350"} %}</span>
 
 Thymeleaf is an open-source server-side Java template engine for standalone and web applications, that was created by Daniel Fernández. The templates look like HTML and can be integrated with Spring MVC and Spring Security among other popular development frameworks. Although documentation about integration with Spring WebFlux is hard to find, it is currently supported and the Thymeleaf starter dependency performs the [auto-configuration](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html#webflux-view-thymeleaf) of the template engine, template resolver and reactive view resolver.
 
@@ -394,7 +393,7 @@ For the client-side, add a link in the `home.html` template to access the `userP
 ```
 {% endraw %}
 
-**IMPORTANT NOTE:** The authorization conditional is implemented in this way, because authorization-oriented expressions like `${{ '{#' }}authorization.expression('hasRole(''SCOPE_profile'')')}` are restricted in WebFlux applications due to a lack of support in the reactive side of Spring Security (as of Spring Security 5.6). Only a minimal set of security expressions is allowed: [`isAuthenticated()`, `isFullyAuthenticated()`, `isAnonymous()`, `isRememberMe()`].
+**IMPORTANT NOTE:** The authorization conditional is implemented in this way, because authorization-oriented expressions like {% raw %}`${#authorization.expression('hasRole(''SCOPE_profile'')')}`{% endraw %} are restricted in WebFlux applications due to a lack of support in the reactive side of Spring Security (as of Spring Security 5.6). Only a minimal set of security expressions is allowed: [`isAuthenticated()`, `isFullyAuthenticated()`, `isAnonymous()`, `isRememberMe()`].
 
 Run the application again. After signing in, you still won't see the new link, and if you go to `http://localhost:8080/profile`, you will get HTTP ERROR 403, which means forbidden. This is because in `application.yml`, as part of the Okta configuration, only `email` and `openid` scopes are requested, and `profile` scope is not returned in the access token claims. Add the missing scope in the `application.yml`, restart, and the `userProfile` view should now be visible:
 

@@ -17,7 +17,6 @@ PowerShell is a powerful command-line interface for automating tasks, scripting,
 
 You'll need a PowerShell terminal for your OS and the Okta PowerShell module. Install it through the PS Gallery, Chocolatey Package Manager, or the GitHub repository. Follow the instructions in the [GitHub repository's ReadMe](https://github.com/okta/okta-powershell-cli?tab=readme-ov-file#installation) to install the Okta PowerShell Module using your favorite method. 
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Add authorization and authentication to Okta PowerShell module using OAuth 2.0 and OpenID Connect
@@ -59,9 +58,11 @@ to authorize your device, in this case, the PowerShell terminal.
 
 You'll see a prompt similar to the following:
 
+{% raw %}
 ```console
 Open your browser and navigate to the following URL to begin the Okta device authorization for the Powershell CLI:  https://{{yourOktaDomain}}/activate?user_code=KWJDBHSC
 ```
+{% endraw %}
 
 Navigate to the URL provided and submit the code. You must log in to your Okta org to complete the device authorization. Once completed, Okta returns the access token to your PowerShell session, and you will have access to perform actions in your org via PowerShell based on the requested scopes.
 

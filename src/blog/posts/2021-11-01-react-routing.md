@@ -6,9 +6,9 @@ communities: [javascript]
 description: "This tutorial will show you how to quickly build a secure SPA using React, Okta, and Wouter."
 tags: [javascript, react, routing]
 tweets:
-  - "Learn how to use React routing and Wouter to secure your applications quickly!"
-  - "Wouter is a tiny React router that relies on Hooks. Learn how to use it with a secure app today!"
-  - "React has alternatives to the standard React Router. Learn how to use Wouter in this quick tutorial."
+- "Learn how to use React routing and Wouter to secure your applications quickly!"
+- "Wouter is a tiny React router that relies on Hooks. Learn how to use it with a secure app today!"
+- "React has alternatives to the standard React Router. Learn how to use Wouter in this quick tutorial."
 image: react-routing/react-routing.png
 type: conversion
 github: https://github.com/oktadev/okta-react-routing-example
@@ -23,7 +23,6 @@ This tutorial will show you how to quickly build a secure SPA using React, Okta,
 - [Node 14](https://nodejs.org/)
 - [Okta CLI](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -32,7 +31,7 @@ This tutorial will show you how to quickly build a secure SPA using React, Okta,
 
 {{ macro.cli({type: "spa", framework: "React", loginRedirectUri: "http://localhost:3000/callback", logoutRedirectUri: "http://localhost:3000"}) }}
 
-Once Okta is done processing your request it will return an _Issuer_ and a _Client ID_. Make sure you note these, as you will need them in your application.
+Once Okta is done processing your request it will return an *Issuer* and a *Client ID*. Make sure you note these, as you will need them in your application.
 
 ## Create a React application with routing
 
@@ -76,7 +75,7 @@ REACT_APP_OKTA_APP_BASE_URL=http://localhost:3000
 REACT_APP_OKTA_ISSUER=https://{yourOktaDomain}/oauth2/default
 ```
 
-Next, add a folder for `Components` and one for `Pages`.
+Next, add a folder for `Components` and one for `Pages`. 
 
 ```shell
 mkdir src/Components
@@ -181,7 +180,6 @@ This page leverages the `useOktaAuth` hook to determine if the user is logged in
 Finally, add `Home.jsx` to the `Pages` folder with the following code.
 
 {% raw %}
-
 ```jsx
 import React from "react";
 import { Link, Redirect } from "wouter";
@@ -205,11 +203,14 @@ const Home = () => {
           <h3>React routing Demo</h3>
 
           <h5>
-            A <a href="https://reactjs.org/">React</a> Demo using <a href="https://github.com/molefrog/wouter">Wouter</a> Secured by <a href="https://www.okta.com/">Okta</a>
+            A <a href="https://reactjs.org/">React</a> Demo using{" "}
+            <a href="https://github.com/molefrog/wouter">Wouter</a> Secured by{" "}
+            <a href="https://www.okta.com/">Okta</a>
           </h5>
 
           <p>
-            A tutorial written by <a href="https://profile.fishbowlllc.com">Nik Fisher</a>
+            A tutorial written by{" "}
+            <a href="https://profile.fishbowlllc.com">Nik Fisher</a>
           </p>
         </Col>
       </Row>
@@ -232,7 +233,6 @@ const Home = () => {
 
 export default Home;
 ```
-
 {% endraw %}
 
 This page uses the `Redirect` component from wouter combined with the `useOktaAuth` hook to redirect authenticated users to the profile page. The page also serves as a landing page with some additional information about your application.
@@ -268,14 +268,19 @@ class App extends React.Component {
     });
 
     this.restoreOriginalUri = async (_oktaAuth, originalUri) => {
-      window.location.replace(toRelativeUrl(originalUri || "/", window.location.origin));
+      window.location.replace(
+        toRelativeUrl(originalUri || "/", window.location.origin)
+      );
     };
   }
 
   render() {
     return (
       <Router>
-        <Security oktaAuth={this.oktaAuth} restoreOriginalUri={this.restoreOriginalUri}>
+        <Security
+          oktaAuth={this.oktaAuth}
+          restoreOriginalUri={this.restoreOriginalUri}
+        >
           <Route path="/" component={Home} />
           <Route path="/callback" component={LoginCallback} />
           <Route path="/Profile" component={Profile} />
@@ -292,11 +297,11 @@ Version 6.0 of the `@okta/okta-react` library includes a few changes to be aware
 
 First, you must provide the `restoreOriginalUri` property in the `<Security>` component. If you were previously using version 4.x, you will notice that you need to inject the `OktaAuth` object into the `Security` component rather than the issuer, client ID, and other information. You can read more about these changes on [Okta's React GitHub page](https://github.com/okta/okta-react#migrating-between-versions).
 
-Here you are also importing the `bootstrap` CSS.
+Here you are also importing the `bootstrap` CSS.  
 
-Finally, you are setting up the routing by wrapping the wouter `Router` in Okta's `Security` component. This will give your routes access to the Okta API.
+Finally, you are setting up the routing by wrapping the wouter `Router` in Okta's `Security` component. This will give your routes access to the Okta API.  
 
-## Run your React application
+## Run your React application 
 
 Your application is now complete. You can run it using `npm start` and navigate to `http://localhost:3000`. From there you click the **Login** button, which will display the Okta login screen. Once you've logged in successfully you are redirected to the `Profile` page.
 

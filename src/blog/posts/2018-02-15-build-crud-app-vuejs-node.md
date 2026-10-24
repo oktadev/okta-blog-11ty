@@ -28,7 +28,6 @@ This tutorial will take you step by step through scaffolding a Vue.js project, o
 - Vue.js with [Vue CLI](https://github.com/vuejs/vue-cli), [vue-router](https://github.com/vuejs/vue-router), and the [Okta Vue SDK](https://github.com/okta/okta-vue)
 - Node with [Express](https://github.com/expressjs/express), [Okta JWT Verifier](https://github.com/okta/okta-oidc-js/tree/master/packages/jwt-verifier), [Sequelize](https://github.com/sequelize/sequelize), and [Finale](https://github.com/tommybananas/finale)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

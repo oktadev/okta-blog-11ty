@@ -60,7 +60,7 @@ The last thing I want to mention is that different Cosmos DB APIs have different
 {% set note %}
 > Note that the TCP port 5001 must be the same used by the application. You can see it in the messages displayed in the terminal when you start the application with **`dotnet run`**.
 {% endset %}
-{{ macro.cli({type: "web", framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
+{{ macro.cli({type: "web", note: note, framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
 
 ## Create a Cosmos DB account
 
@@ -516,7 +516,7 @@ The first view to edit is the `_Layout.cshtml` in your `Views/Shared` folder.
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area asp-controller="Home" asp-action="Index">Okta - Cosmos DB</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Okta - Cosmos DB</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -524,7 +524,7 @@ The first view to edit is the `_Layout.cshtml` in your `Views/Shared` folder.
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                     </ul>
                     @if ((User?.Identity?.IsAuthenticated ?? false))

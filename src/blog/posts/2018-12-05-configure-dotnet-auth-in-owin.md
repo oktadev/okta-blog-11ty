@@ -8,7 +8,7 @@ by: contractor
 communities: [.net]
 description: "This tutorial walks you through how to configure authentication in an ASP.NET web app using OWIN and Okta."
 tags: [authentication, asp-dot-net-core, web-app, owin]
-tweets: 
+tweets:
 - "Wanna understand OWIN better? Check out this post! #aspnet #owin"
 - "Learn how to configure authentication in ASP.NET with OWIN. #aspnet #owin"
 - "ASP.NET + OWIN + OKTA === <3"

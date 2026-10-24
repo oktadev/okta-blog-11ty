@@ -44,7 +44,6 @@ Thanks to blueprints, the possibilities are infinite. This is why JHipster even 
 
 This post will walk you through the steps to use JHipster, the Quarkus blueprint, and OAuth to build a native and secure full stack application.
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 ## Create a Java Application with Quarkus

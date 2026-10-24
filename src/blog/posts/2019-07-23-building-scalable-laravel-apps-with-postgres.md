@@ -84,7 +84,7 @@ Select **Web** and click **Next**.
 
 Enter a title, and set http://localhost:8000/ as the Initiate Login URI and http://localhost:8000/login/okta/callback as the Login Redirect URI, then click Done. You can leave the rest of the settings as they are.
 
-Copy the **Client ID** and **Client Secret** values from the application settings. Go to **Api > Authorization Servers**, and copy just the host name part of the the `Issuer URI` field (without the `/oauth2/default` part) - this is your Okta Base URL (it looks like `https://{{yourOktaDomain}}` but the numbers may be different in your case).
+Copy the **Client ID** and **Client Secret** values from the application settings. Go to **Api > Authorization Servers**, and copy just the host name part of the the `Issuer URI` field (without the `/oauth2/default` part) - this is your Okta Base URL (it looks like {% raw %}`https://{{yourOktaDomain}}`{% endraw %} but the numbers may be different in your case).
 
 ## Configuring Okta and the Database in Your Application
 

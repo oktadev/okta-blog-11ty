@@ -14,7 +14,7 @@ tweets:
 - "Have you played with the latest release of @angular? Now's your chance!"
 image: featured/okta-angular-bottle-headphones.jpg
 type: conversion
-changelog: 
+changelog:
 - 2020-03-30: Updated to use Angular 11, the Okta Angular SDK 3.0.1, and the Okta Sign-In Widget 5.5.0. You can see the changes in the [example app on GitHub](https://github.com/oktadeveloper/okta-angular-calculator-example/pull/1). Changes to this article can be viewed in [oktadeveloper/okta-blog#610](https://github.com/oktadeveloper/okta-blog/pull/610).
 ---
 
@@ -22,7 +22,6 @@ Single page applications (SPAs) are becoming more and more popular. Their appeal
 
 In this tutorial, I will show you how to implement secure login in a client application using Angular. Okta provides Angular-specific libraries that make it very easy to include authentication and access control.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

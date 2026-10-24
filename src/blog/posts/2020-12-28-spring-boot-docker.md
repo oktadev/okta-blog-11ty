@@ -32,7 +32,6 @@ In this tutorial, you will build and run a simple web application into the Docke
 * [Docker][install-docker] installed
 * [Okta CLI][okta-cli] installed
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 If you'd rather watch a video of this tutorial, check out the screencast below from our [YouTube channel](https://youtu.be/ChYIhEEOfrk).

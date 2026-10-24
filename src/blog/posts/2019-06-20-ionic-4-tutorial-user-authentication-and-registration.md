@@ -28,7 +28,6 @@ If you don't want to code along, feel free to grab the [source code from GitHub]
 <iframe width="600" height="338" style="max-width: 100%" src="https://www.youtube.com/embed/MBAUKQGNx5Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
