@@ -462,6 +462,32 @@ test("markdown: block structure kramdown read differently", () => {
       "Text <br> and <img src=x> stay.",
     ].join("\n"),
   );
+  // Placeholders typed as tags show as text; real elements, template tags,
+  // autolinks, escaped brackets and indented code are untouched.
+  assert.equal(
+    kramdownBlocks(
+      [
+        "In the <identityProviders> section, browse to http://<App Name>.herokuapp.com.",
+        'Has a <meta name="viewport"> tag; see <https://okta.com>, <me@okta.com>, the <kdb>.</kbd> key and \\<debugger/>.',
+        'Keep <br>, <span class="x">y</span> and <kbd>Ctrl</kbd>.',
+        '{% img blog/a.png alt:"Knock? <door opens>" %}',
+        '    <meta charset="utf-8"> in indented code',
+        '{% include setup/cli.md type="spa"',
+        '   loginRedirectUri="https://<your-site>.netlify.app/account" %}',
+        "After the tag, <your-site> is prose again.",
+      ].join("\n"),
+    ),
+    [
+      "In the &lt;identityProviders&gt; section, browse to http://&lt;App Name&gt;.herokuapp.com.",
+      'Has a &lt;meta name="viewport"&gt; tag; see <https://okta.com>, <me@okta.com>, the <kbd>.</kbd> key and \\<debugger/>.',
+      'Keep <br>, <span class="x">y</span> and <kbd>Ctrl</kbd>.',
+      '{% img blog/a.png alt:"Knock? <door opens>" %}',
+      '    <meta charset="utf-8"> in indented code',
+      '{% include setup/cli.md type="spa"',
+      '   loginRedirectUri="https://<your-site>.netlify.app/account" %}',
+      "After the tag, &lt;your-site&gt; is prose again.",
+    ].join("\n"),
+  );
   // A markdown="1" div gets a blank line after its opener; a heading's stray braces are escaped.
   assert.equal(
     kramdownBlocks(
@@ -709,6 +735,20 @@ test("asciidoc: example, collapsible, sidebar, quote and open blocks", () => {
     ].join("\n\n"),
   );
   assert.ok(notes.some((n) => n.startsWith("sidebar block")));
+});
+
+test("asciidoc: a title line inside a paragraph is text, so the next block is unnumbered", () => {
+  const { markdown } = adoc(
+    "Base class.\n.`Base.java`\n====\nOne.\n====\n\n.Second\n====\nTwo.\n====",
+  );
+  assert.equal(
+    bodyOf(markdown),
+    [
+      "Base class. .`Base.java`",
+      '<div class="example">\n\nOne.\n\n</div>',
+      '<div class="example">\n\nExample 1. Second {.example-title}\n\nTwo.\n\n</div>\n',
+    ].join("\n\n"),
+  );
 });
 
 test("asciidoc: passthrough blocks map Liquid and asset paths, comments vanish", () => {
