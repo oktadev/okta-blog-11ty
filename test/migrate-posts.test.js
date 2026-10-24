@@ -2,6 +2,10 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  dedentFences,
+  fixBackticks,
+  kramdownLeniencies,
+  splitSegments,
   normalizeSlug,
   redirectFor,
   retiredPosts,
@@ -13,7 +17,6 @@ import {
   liquidArgsToObject,
   parseBlockAttrs,
   protectTemplateSyntax,
-  splitSegments,
 } from "../scripts/migrate-posts.js";
 
 const md = (body, fm = "layout: blog_post\ntitle: T\nauthor: a") =>
@@ -242,6 +245,40 @@ test("normalizeSlug zero-pads the old repo's dates; retiredPosts and redirectFor
     "/blog/2022/01/01/c",
   );
   assert.equal(redirectFor(redirects, "2019-11-07-d"), undefined);
+});
+
+test("markdown: kramdown leniencies are rewritten so markdown-it renders what kramdown did", () => {
+  // Bold with a space just inside a marker; a code span at the edge is fine.
+  assert.equal(
+    convertMarkdown(
+      "Click **View access details **, then **Unassign**.\nSee ** Continue** and **copy `a` to `b`**.",
+    ).markdown,
+    "Click **View access details**, then **Unassign**.\nSee **Continue** and **copy `a` to `b`**.\n",
+  );
+  // An autolink containing spaces.
+  assert.equal(
+    kramdownLeniencies(
+      "access <http://localhost:8080/produce?message=This is my message>.",
+    ),
+    "access [http://localhost:8080/produce?message=This is my message](http://localhost:8080/produce?message=This%20is%20my%20message).",
+  );
+  // One backtick too many on the closer; balanced triple-backtick spans untouched.
+  assert.equal(
+    fixBackticks("press ``Ctrl+F5```. Edit ```styles.css``` now."),
+    "press ``Ctrl+F5``. Edit ```styles.css``` now.",
+  );
+  assert.equal(
+    convertMarkdown("press ``Ctrl+F5```.").markdown,
+    "press ``Ctrl+F5``.\n",
+  );
+  // A fence indented four spaces after a paragraph is dedented; inside a list it is left alone.
+  const after = dedentFences(
+    splitSegments(
+      'Update the section:\n    ```json\n    {\n      "a": 1\n    }\n    ```\n\n- item\n    ```json\n    {}\n    ```',
+    ),
+  );
+  assert.equal(after[1].text, '```json\n{\n  "a": 1\n}\n```');
+  assert.equal(after[3].text, "    ```json\n    {}\n    ```");
 });
 
 test("markdown: kramdown attribute lines", () => {

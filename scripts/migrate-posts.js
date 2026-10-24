@@ -333,11 +333,74 @@ export function listBreaks(text) {
   return text.replace(/(\n( {2,})\S[^\n]*\n)<br>(?=\n)/g, "$1$2<br>");
 }
 
+// Kramdown accepted these as written; markdown-it does not.
+// - "**text **" with a space just inside a marker is not bold in CommonMark.
+//   The space moves outside, which is what the author meant (kramdown's own
+//   rendering paired the markers differently).
+// - "<http://host/path?q=a b>" with spaces is not an autolink in CommonMark.
+//   It becomes a link whose text keeps the spaces and whose target encodes
+//   them, as kramdown rendered it.
+export function kramdownLeniencies(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, (m, inner) => {
+      const core = inner.trim();
+      if (!core || core === inner) return m;
+      const lead = inner.slice(0, inner.indexOf(core));
+      const trail = inner.slice(inner.indexOf(core) + core.length);
+      return `${lead}**${core}**${trail}`;
+    })
+    .replace(
+      /<(https?:\/\/[^>\n]*\s[^>\n]*)>/g,
+      (_, url) => `[${url}](${url.replace(/\s/g, "%20")})`,
+    );
+}
+
+// "``code```": a code span closed with one backtick too many, which CommonMark
+// leaves as literal backticks. The extra one is dropped. Runs before code spans
+// are masked, since the span is not recognizable until it is balanced.
+export function fixBackticks(text) {
+  return text.replace(/(?<!`)(`{2,})(\S[^`\n]*?)\1`(?!`)/g, "$1$2$1");
+}
+
+// A fence indented four spaces straight after a top-level paragraph: kramdown
+// rendered a code block, CommonMark reads the lines as the paragraph's
+// continuation. The block is dedented to the paragraph's level.
+export function dedentFences(segments) {
+  let lastProse = "";
+  return segments.map((segment) => {
+    if (!segment.code) {
+      lastProse = segment.text;
+      return segment;
+    }
+    const indent = segment.text.match(/^[ \t]*/)[0].length;
+    const prevLine = lastProse
+      .split("\n")
+      .filter((l) => l.trim())
+      .pop();
+    if (
+      indent < 4 ||
+      !prevLine ||
+      /^\s/.test(prevLine) ||
+      /^\s*([-*+]|\d+\.)\s/.test(prevLine)
+    ) {
+      return segment;
+    }
+    const lines = segment.text.split("\n");
+    const common = Math.min(
+      ...lines.filter((l) => l.trim()).map((l) => l.match(/^[ \t]*/)[0].length),
+    );
+    return {
+      ...segment,
+      text: lines.map((l) => l.slice(Math.min(common, indent))).join("\n"),
+    };
+  });
+}
+
 function convertMarkdownProse(text, note) {
   return (
     imageAttributes(
       convertLiquid(
-        listBreaks(kramdownAttributes(text))
+        kramdownLeniencies(listBreaks(kramdownAttributes(text)))
           // Kramdown leftovers, inline after a tag
           .replace(/ "no_toc"=""/g, "")
           .replace(/\{: \.center-image \}/g, "")
@@ -404,11 +467,11 @@ export function convertMarkdown(content) {
   const { frontMatter, body } = splitFrontMatter(
     content.replace(/\r\n/g, "\n"),
   );
-  const converted = splitSegments(body)
+  const converted = dedentFences(splitSegments(body))
     .map((segment) =>
       segment.code
         ? segment.text
-        : transformProse(segment.text, (t) =>
+        : transformProse(fixBackticks(segment.text), (t) =>
             convertMarkdownProse(t, (m) => {
               if (!notes.includes(m)) notes.push(m);
             }),

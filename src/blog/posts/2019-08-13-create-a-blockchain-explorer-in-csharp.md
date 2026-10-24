@@ -46,7 +46,7 @@ Enter "BlockchainExplorer" for **Project name** and click **Create**.
 
 Next, select the template **Web Application**. Note that another template is named "Web Application (Model-View-Controller)". That is not the one you want. Select the one that is only **Web Application**. Make sure the **Configure for HTTPS** is checked and click **Create**.
 
-Visual Studio will scaffold some nice code to start out with. Try to run it by pressing ``Ctrl+F5```. The first time it runs, you should get this warning:
+Visual Studio will scaffold some nice code to start out with. Try to run it by pressing ``Ctrl+F5``. The first time it runs, you should get this warning:
 
 {% img {src: "blockchain-csharp/configure-ssl.png", alt: "Trust Certificate", header: "500"} %}
 

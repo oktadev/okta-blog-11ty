@@ -221,7 +221,7 @@ Let's test if everything is working as expected. Run the `main` method inside th
 
 Your server should be running on port 8080 and you can already make API requests against it!
 
-Go to your web browser and access <http://localhost:8080/kafka/produce?message=This is my message>.
+Go to your web browser and access [http://localhost:8080/kafka/produce?message=This is my message](http://localhost:8080/kafka/produce?message=This%20is%20my%20message).
 
 When you make a call with the command above, your application will execute the `/kafka/produce` endpoint, which sends a message to `myTopic` topic inside Kafka.
 
@@ -233,7 +233,7 @@ Fortunately, there is an easy way to create a consumer to test right away. Insid
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic myTopic
 ```
 
-Access <http://localhost:8080/kafka/produce?message=This is my message> again to see the following message in the terminal running the Kafka consumer:
+Access [http://localhost:8080/kafka/produce?message=This is my message](http://localhost:8080/kafka/produce?message=This%20is%20my%20message) again to see the following message in the terminal running the Kafka consumer:
 
 ```bash
 This is my message
@@ -369,7 +369,7 @@ This class now has a new endpoint to display the messages stored in your consume
 
 Your Java app now has both a Kafka producer and a consumer, so let's test it all together! Restart your application, and go to <http://localhost:8080/kafka/messages>.
 
-Right now, no information is being returned. The reason is pretty simple: your consumer is configured only to receive new messages and you haven't sent a new message yet. Let's fix this problem by going to your web browser and accessing <http://localhost:8080/kafka/produce?message=Message sent by my App!>.
+Right now, no information is being returned. The reason is pretty simple: your consumer is configured only to receive new messages and you haven't sent a new message yet. Let's fix this problem by going to your web browser and accessing [http://localhost:8080/kafka/produce?message=Message sent by my App!](http://localhost:8080/kafka/produce?message=Message%20sent%20by%20my%20App!).
 
 When Kafka receives the message, it will let your consumer know about it right away. Go ahead and go to <http://localhost:8080/kafka/messages> in your browser. You will now see that your message was successfully received!
 

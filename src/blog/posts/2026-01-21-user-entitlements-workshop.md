@@ -6,47 +6,45 @@ communities: [javascript]
 description: "Manage user entitlements with automated user provisioning in this hands-on workshop."
 tags: [express, typescript, workshop, enterprise-ready-workshops, entitlements]
 tweets:
-  - ""
-  - ""
-  - ""
+- ""
+- ""
+- ""
 image: user-entitlements-workshop/social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-enterprise-ready-workshops/tree/entitlements-workshop-complete
 ---
 
-When you work on B2B SaaS apps used by large customer organizations, synchronizing those customers' users within your software system is tricky! You must synchronize user profile information and the user attributes required for access control management. Customers with large workforces may have thousands of users to manage. They demand a speedy onboarding process, including automated user provisioning from their identity provider!
+When you work on B2B SaaS apps used by large customer organizations, synchronizing those customers' users within your software system is tricky! You must synchronize user profile information and the user attributes required for access control management. Customers with large workforces may have thousands of users to manage. They demand a speedy onboarding process, including automated user provisioning from their identity provider! 
 
 Managing users across domains is critical to making B2B apps enterprise-scalable. In the [Enterprise-Ready and Enterprise-Maturity on-demand workshop series](/blog/tags/enterprise-ready-workshops/), we tackle the dilemmas faced by developers of SaaS products wanting to scale their apps to enterprise customers. We iterate on a fictitious B2B Todo app more secure and capable for enterprise customers using industry-recognized standards such as OpenID Connect (OIDC) authentication and System for Cross-Domain Identity Management (SCIM) for user provisioning. In this workshop, you build upon a previous workshop introducing automated user provisioning to add support for users' access management and permissions attributes—their entitlements.
 
 <table>
 <tr>
     <td style="font-size: 3rem;">️ℹ️</td>
-    <td markdown="div">
+    <td markdown="span">
       **Note** <br/>
     This post requires Okta Identity Governance (OIG) features in your Okta org. [Sign up for a new Integrator Free plan](https://developer.okta.com/signup/) to continue.
     </td>
 </tr>
 </table>
 
-| Posts in the on-demand workshop series                                                                          |
-| --------------------------------------------------------------------------------------------------------------- |
+|Posts in the on-demand workshop series|
+| --- |
 | 1. [How to Get Going with the On-Demand SaaS Apps Workshops](/blog/2023/07/27/enterprise-ready-getting-started) |
-| 2. [Enterprise-Ready Workshop: Authenticate with OpenID Connect](/blog/2023/07/28/oidc_workshop)                |
-| 3. [Enterprise-Ready Workshop: Manage Users with SCIM](/blog/2023/07/28/scim-workshop)                          |
-| 4. [Enterprise Maturity Workshop: Terraform](/blog/2023/07/28/terraform-workshop)                               |
-| 5. [Enterprise Maturity Workshop: Automate with no-code Okta Workflows](/blog/2023/09/15/workflows-workshop)    |
-| 6. [How to Instantly Sign a User Out across All Your Apps](/blog/2024/04/30/express-universal-logout)           |
-| 7. **Take User Provisioning to the Next Level with Entitlements**                                               |
+| 2. [Enterprise-Ready Workshop: Authenticate with OpenID Connect](/blog/2023/07/28/oidc_workshop) |
+| 3. [Enterprise-Ready Workshop: Manage Users with SCIM](/blog/2023/07/28/scim-workshop) |
+| 4. [Enterprise Maturity Workshop: Terraform](/blog/2023/07/28/terraform-workshop) |
+| 5. [Enterprise Maturity Workshop: Automate with no-code Okta Workflows](/blog/2023/09/15/workflows-workshop) |
+| 6. [How to Instantly Sign a User Out across All Your Apps](/blog/2024/04/30/express-universal-logout) |
+| 7. **Take User Provisioning to the Next Level with Entitlements** |
 
 This workshop walks you through adding the code to support entitlements in a sample application with three broad sections:
-
-1. Introduction to the base application, tools, and the development process
-2. See your application's user and entitlements information in Okta
-3. Use Okta to manage user roles and custom entitlements
+  1. Introduction to the base application, tools, and the development process
+  2. See your application's user and entitlements information in Okta
+  3. Use Okta to manage user roles and custom entitlements
 
 If you want to skip to the completed code project for this workshop, you can find it in the [`entitlements-completed` branch on the GitHub repo](https://github.com/oktadev/okta-enterprise-ready-workshops/tree/entitlements-workshop-complete).
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Manage users at scale using System for Cross-domain Identity Management (SCIM)
@@ -54,11 +52,10 @@ If you want to skip to the completed code project for this workshop, you can fin
 The Todo app tech stack uses a React frontend and an Express API backend. For this workshop, you need the following required tooling:
 
 **Required tools**
-
-- [Node.js](https://nodejs.org/en) v18 or higher
-- Command-line terminal application
-- A code editor/Integrated development environment (IDE), such as [Visual Studio Code](https://code.visualstudio.com/) (VS Code)
-- An HTTP client testing tool, such as [Postman](https://www.postman.com/) or the [HTTP Client](https://marketplace.visualstudio.com/items?itemName=mkloubert.vscode-http-client) VS Code extension
+ * [Node.js](https://nodejs.org/en) v18 or higher
+ * Command-line terminal application
+ * A code editor/Integrated development environment (IDE), such as [Visual Studio Code](https://code.visualstudio.com/) (VS Code)
+ * An HTTP client testing tool, such as [Postman](https://www.postman.com/) or the [HTTP Client](https://marketplace.visualstudio.com/items?itemName=mkloubert.vscode-http-client) VS Code extension
 
 > VS Code has integrated terminals and HTTP client extensions that allow you to work out of this one application for almost everything required in this workshop. The IDE also supports TypeScript, so you'll get quicker responses on type errors and help with importing modules.
 
@@ -108,7 +105,7 @@ rolesRoute.route('/')
 });
 ```
 
-Open `okta-enterprise-ready-workshops/apps/api/src/scim.ts`. We need to register the endpoint in the Express app by including it as part of the SCIM routes.
+Open `okta-enterprise-ready-workshops/apps/api/src/scim.ts`. We need to register the endpoint in the Express app by including it as part of the SCIM routes. 
 
 At the top of the file, import `rolesRoutes`
 
@@ -153,7 +150,7 @@ Take a look at the terminal output. You'll see output recording the `GET` reques
 
 {% img {src: "user-entitlements-workshop/morgan.jpg", alt: "Terminal output showing the GET request to the /Roles route and a 200OK HTTP response", header: "800"} %}
 
-The project uses [Morgan](https://github.com/expressjs/morgan), a library that automatically adds HTTP logging to the Express API. The terminal output includes `POST` and `PUT` request payloads, so it's an excellent way to track the SCIM calls as you work through the workshop.
+The project uses [Morgan](https://github.com/expressjs/morgan), a library that automatically adds HTTP logging to the Express API. The terminal output includes `POST` and `PUT` request payloads, so it's an excellent way to track the SCIM calls as you work through the workshop. 
 
 The `npm run serve-api` process watches for changes and automatically updates the API, so we don't need to stop and restart it constantly. But we're about to make some significant changes. Stop serving the API by entering <kbd>Ctrl</kbd>+<kbd>c</kbd> in the terminal so we can prepare the database.
 
@@ -267,7 +264,7 @@ main()
   })
 ```
 
-Save the file and run the npm script in the terminal to seed the database.
+Save the file and run the npm script in the terminal to seed the database. 
 
 ```sh
 npm run init-db
@@ -317,7 +314,7 @@ You'll need this tunnel URL to configure the Okta application.
 
 ## Create an Okta SCIM application for entitlements governance
 
-In the prerequisite SCIM workshop, you added a SCIM application in Okta to connect to the Todo app. We must do something similar to connect SCIM with entitlements support.
+In the prerequisite SCIM workshop, you added a SCIM application in Okta to connect to the Todo app. We must do something similar to connect SCIM with entitlements support. 
 
 Sign into your [Okta Integrator Free account](https://developer.okta.com/login/). In the Admin Console, navigate to **Applications** > **Applications**. Press the **Browse App Catalog** button to create a new Okta SCIM application.
 
@@ -330,24 +327,21 @@ You'll navigate to your newly created Okta application to add specific configura
 First, you need to enable Identity Governance. Navigate to the **General** tab and find the **Identity Governance** section. Press **Edit** to select **Enabled** for **Governance Engine**. Remember to **Save** your change.
 
 Navigate to the **Provisioning** tab and press the **Configure API Integration** button. Check the **Enable API integration** checkbox—two more form fields display.
-
-- In **Base URL** field, enter `https://{yourTunnelSubdomain}.loca.lt/scim/v2`.
-
-  It will look like `https://awesome-devs-club.loca.lt/scim/v2`
-
-- In the **API Token** field, enter `Bearer 123123`
+  * In **Base URL** field, enter `https://{yourTunnelSubdomain}.loca.lt/scim/v2`.
+    
+    It will look like `https://awesome-devs-club.loca.lt/scim/v2`
+  * In the **API Token** field, enter `Bearer 123123`
 
 press **Save**.
 
 The **Provisioning** tab has more options to configure within the **Settings** side nav.
 
-Navigate to the **To App** option and press **Edit**.
-
-- Enable **Create Users**
-- Enable **Update User Attributes**
-- Enable **Deactivate Users**
-
-Press **Save**.
+Navigate to the **To App** option and press **Edit**. 
+  * Enable **Create Users**
+  * Enable **Update User Attributes**
+  * Enable **Deactivate Users**
+  
+Press **Save**. 
 
 Import users from the todo app into Okta. Navigate to the **Import** tab and press the **Import Now** button. Okta discovers users in your app and tries to match them with users already defined in Okta. A dialog shows Okta discovered the two users you added using the DB script. Select both users and press the **Confirm Assignments** to confirm the assignments.
 
@@ -355,28 +349,28 @@ You'll see the imported users in the **Assignments** tab. But what about entitle
 
 Stop the tunnel and the API using the <kbd>Ctrl</kbd>+<kbd>c</kbd> command in the terminal windows. We'll make some changes to the API that won't automatically reflect in the local tunnel, so we'll get all our entitlements changes made and resynchronize with Okta.
 
-## SCIM schemas and resources
+## SCIM schemas and resources 
 
 In the first SCIM workshop, you learned about SCIM's `User` resource and built out operations around the user. You updated only a handful of user properties in the workshop, but SCIM is way more powerful thanks to its superpower – _extensibility_. ✨ User is not the only resource type defined in SCIM.
 
-A `Resource` represents an object SCIM operates on, such as a user or group. SCIM identified core properties each `Resource` must define, such as `id` and a link to the resource's schema definition. From there, a user extends from the core properties and adds attributes specific to the object, such as adding `userName` and their emails. A standard published schema exists for all those user-specific attributes within the SCIM spec. You can continue extending resources as needed to represent new resources, such as another SCIM standard-defined schema for Enterprise User.
+A `Resource` represents an object SCIM operates on, such as a user or group. SCIM identified core properties each `Resource` must define, such as `id` and a link to the resource's schema definition. From there, a user extends from the core properties and adds attributes specific to the object, such as adding `userName` and their emails. A standard published schema exists for all those user-specific attributes within the SCIM spec. You can continue extending resources as needed to represent new resources, such as another SCIM standard-defined schema for Enterprise User. 
 
 {% img {src: "user-entitlements-workshop/resource-class-diagram.svg", alt: "Class diagram representing core Resource properties, User class extending from core Resource adds username and emails properties. The Enterprise User class extends from User adds department and costCenter properties. Group class extends from core Resource and adds displayName and members properties. Other class extends from core Resource demonstrating new resource representations.", header: "800"} %}
 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
 classDiagram
-Resource <|-- User
-Resource <|-- Group
-User <|-- Enterprise User
-Resource <|-- Other
-Resource : id
-Resource: schemas
-User : userName
-User : list of emails
-Group: list of members
-EnterpriseUser : department
-EnterpriseUser : costCenter
+    Resource <|-- User
+    Resource <|-- Group
+    User <|-- Enterprise User
+    Resource <|-- Other
+    Resource : id
+    Resource: schemas
+    User : userName
+    User : list of emails
+    Group: list of members
+    EnterpriseUser : department
+    EnterpriseUser : costCenter
 #}
 
 What's an example resource other than a user or group? If you said "role" or an "entitlement," you're correct! Those resource types must have an `id` and `schemas`. Here, Okta used SCIM's extensibility to define a new resource type.
@@ -386,12 +380,12 @@ What's an example resource other than a user or group? If you said "role" or an 
 {#
 Tweak the diagram on https://mermaid.live/ with the following content
 classDiagram
-Resource <|-- User
-Resource <|-- Group
-Resource <|-- OktaRole
-Resource <|-- Other
-Resource : id
-Resource: schemas
+    Resource <|-- User
+    Resource <|-- Group
+    Resource <|-- OktaRole
+    Resource <|-- Other
+    Resource : id
+    Resource: schemas
 #}
 
 Okta defines a schema for the `Role` representation. We can use the schema to ensure we conform to the definition.
@@ -462,7 +456,7 @@ rolesRoute.route('/')
 ```
 
 > **Why use TypeScript and interfaces?**
->
+> 
 > TypeScript, a superset of JavaScript, supports type safety. Type safety means we'll catch errors within the IDE or at build time instead of getting caught by surprise with a runtime error. Here, we state the `roles` array is of type `IOktaRole[]`. Try commenting out the required `schemas` property. You'll see an error in an IDE that supports TypeScript or when you try to serve the API as console output. We can use type safety to ensure we meet the expectations of required SCIM properties in our calls.
 >
 > {% img {src: "user-entitlements-workshop/type-error.jpg", alt: "IDE and terminal showing the type error when `schemas` is commented out", header: "600"} %}
@@ -475,9 +469,9 @@ GET http://localhost:3333/scim/v2/Roles HTTP/1.1
 
 Do you see the one 'Todo-er' role in the response? ✅
 
-### SCIM list response
+### SCIM list response 
 
-We return the array of Okta roles directly in the API response, but this format doesn't match SCIM list responses. SCIM has a structured response format for lists and a defined schema. This way, SCIM structures all communication between the client and the server so each side knows how to format and parse data.
+We return the array of Okta roles directly in the API response, but this format doesn't match SCIM list responses. SCIM has a structured response format for lists and a defined schema. This way, SCIM structures all communication between the client and the server so each side knows how to format and parse data. 
 
 Let's define the `ListResponse` interface. Open `okta-enterprise-ready-workshops/apps/api/src/scim-types.ts`. The list response contains standard information supporting pagination, the schema for the list response, and the list of objects. Add the interface to the file. I like to organize my definitions, so I added the code between the `IOktaRole` interface and `SCHEMA_OKTA_ROLE` string constant.
 
@@ -577,13 +571,14 @@ Run a quick check to ensure everything still works. Serve the API and call the `
 
 You should see three roles matching the roles in the database. 🎉
 
-## SCIM resource types
+## SCIM resource types 
 
 We implemented the `/Roles` endpoint and discussed how SCIM defines a resource. But how would the SCIM client know about this Okta Role type? Enter discovery—learning about a SCIM server's capabilities and supported objects such as resources!
 
-SCIM clients and servers communicate about the types of resources through a standard endpoint, the`/ResourceType` endpoint. SCIM clients call the endpoint to discover what resources they can expect. The endpoint returns a SCIM list response outlining resources. You can add every resource type used, including the standard `User` and `EnterpriseUser` resources, but Okta expects resource definitions only for custom types.
+SCIM clients and servers communicate about the types of resources through a standard endpoint, the`/ResourceType` endpoint. SCIM clients call the endpoint to discover what resources they can expect. The endpoint returns a SCIM list response outlining resources. You can add every resource type used, including the standard `User` and `EnterpriseUser` resources, but Okta expects resource definitions only for custom types. 
 
 First, we'll create the interface for the `ResourceType` and define some strings. Open `okta-enterprise-ready-workshops/apps/api/src/scim-types.ts`. Add the interface for `IResourceType` above the `IListResponse` interface.
+
 
 ```ts
 export interface IResourceType {
@@ -688,7 +683,7 @@ resourceTypesRoute.route('/')
 });
 ```
 
-Next, you must register the `/ResourceTypes` route in the API. Open `okta-enterprise-ready-workshops/apps/api/src/scim.ts`.
+Next, you must register the `/ResourceTypes` route in the API. Open `okta-enterprise-ready-workshops/apps/api/src/scim.ts`. 
 
 Update the import to include `resourceTypesRoute`
 
@@ -824,11 +819,11 @@ const users = await prisma.user.findMany({
 });
 ```
 
-The `GET /Users` response also needs roles, so update the
+The `GET /Users` response also needs roles, so update the 
 
 ```ts
 usersResponse['Resources'] = users.map(user => {...});
-```
+``` 
 
 like this.
 
@@ -916,7 +911,7 @@ userResponse = {
 
 Another endpoint down, but there's one more left, the `PUT /Users/:userId`.
 
-Find the code
+Find the code 
 
 ```ts
 const { name, emails } = updatedUserRequest;
@@ -984,9 +979,9 @@ You'll need to serve the API and create a local tunnel. Serve the API using the 
 
 Sign into your [Okta Developer Edition account](https://developer.okta.com/login/). Navigate to **Applications** > **Applications** and select the "(Header Auth) Governance with SCIM 2.0" app. Navigate to the **Provisioning** tab and select **Integration**. Press **Edit**.
 
-Update the **Base URL** field by replacing the tunnel URL with your new tunnel URL. Make sure you keep the `/scim/v2` path. Your base URL might look something like `https://beep-bop-boop.loca.lt/scim/v2`. Press **Save**.
+Update the **Base URL** field by replacing the tunnel URL with your new tunnel URL. Make sure you keep the `/scim/v2` path. Your base URL might look something like `https://beep-bop-boop.loca.lt/scim/v2`. Press **Save**. 
 
-Updating the API integration kicks off a discovery process. Okta automatically looks for roles as a possible entitlement type. It then matches the roles it discovers for the Todo application and matches them again with roles defined on the users. You can see Okta working by looking at the terminal window serving the API. You can see the calls Okta makes by inspecting the HTTP requests and their payloads written to the console. 🔍
+Updating the API integration kicks off a discovery process. Okta automatically looks for roles as a possible entitlement type. It then matches the roles it discovers for the Todo application and matches them again with roles defined on the users. You can see Okta working by looking at the terminal window serving the API. You can see the calls Okta makes by inspecting the HTTP requests and their payloads written to the console.  🔍 
 
 Make sure to keep the API running! There's more work to do here!
 
@@ -996,7 +991,7 @@ Eventually, you'll see **Role**; when you select it, you'll see metadata about i
 
 {% img {src: "user-entitlements-workshop/entitlements-roles.jpg", alt: "Governance tab with roles discovered by Okta", header: "800"} %}
 
-You can define policies for users that automatically assign their entitlements when adding them to this integration app. While that's pretty nifty, this post focuses on building out the SCIM endpoints for entitlements, so I'll include links to resources that explain this feature in more detail at the end of the post.
+You can define policies for users that automatically assign their entitlements when adding them to this integration app. While that's pretty nifty, this post focuses on building out the SCIM endpoints for entitlements, so I'll include links to resources that explain this feature in more detail at the end of the post. 
 
 Press **< Back to application** to return to the SCIM Okta app.
 
@@ -1004,15 +999,15 @@ Press **< Back to application** to return to the SCIM Okta app.
 
 When you use an identity provider, you want that system to be the source of truth for managing the users' identities and access levels. You want to set the roles you defined for the Todo app onto users within Okta. That would be pretty sweet, right?
 
-Since we last ran our user import with hardcoded roles, let's ensure we've synchronized everything from the starting state of the application before we start managing with Okta.
+Since we last ran our user import with hardcoded roles, let's ensure we've synchronized everything from the starting state of the application before we start managing with Okta. 
 
-Within the SCIM application tab, navigate to **Import** and press the **Import Now** button. Okta scans the users in the todo app, but since there are no new users, there's no confirmation process. The user scan synced the existing users and the roles!
+Within the SCIM application tab, navigate to **Import** and press the **Import Now** button. Okta scans the users in the todo app, but since there are no new users, there's no confirmation process. The user scan synced the existing users and the roles! 
 
-Navigate to **Assignments**. Each user has a vertical 3-dot menu icon to display a context menu allowing you to **Edit user assignment**, **View access details **, and **Unassign**. Find "Trinity" and **View access details ** on them. A panel shows you Trinity's role pre-assigned in the Todo app. 🎉 Exit the side panel by clicking outside the side panel.
+Navigate to **Assignments**. Each user has a vertical 3-dot menu icon to display a context menu allowing you to **Edit user assignment**, **View access details** , and **Unassign**. Find "Trinity" and **View access details**  on them. A panel shows you Trinity's role pre-assigned in the Todo app. 🎉 Exit the side panel by clicking outside the side panel.
 
-Let's assign a new role to "Somnus" using Okta. Open the context menu for "Somnus" and **View access details**. Press the **Edit access** button. You'll see a page titled **Edit access**. Press the **Customize entitlements** button. You'll see a warning followed by a section called **Custom Entitlements**.
+Let's assign a new role to "Somnus" using Okta.  Open the context menu for "Somnus" and **View access details**. Press the **Edit access** button. You'll see a page titled **Edit access**. Press the **Customize entitlements** button. You'll see a warning followed by a section called **Custom Entitlements**.
 
-You'll see **Role** and a dropdown list with values. Select a role, such as "Todo-er," and press **Save** to add the role to the user.
+You'll see **Role** and a dropdown list with values. Select a role, such as "Todo-er," and press **Save** to add the role to the user. 
 
 But how about the Todo app? Take a look at the terminal output where you're serving the API. The HTTP call tracing shows a `PUT` request on the user adding the role. Can you see the role of the user in the database? You can check it out by opening another terminal window, running `npx prisma studio`, and navigating to the website. ✅
 
@@ -1020,15 +1015,15 @@ You can now use Okta to manage user roles centrally and automatically update the
 
 Stop serving the local tunnel and API for this next section.
 
-### Schema discovery for custom entitlements
+### Schema discovery for custom entitlements 
 
 What if we have something other than roles in the application? Can SCIM support custom entitlement strategies? SCIM is extensible, meaning it has the structure for custom schemas and extends beyond the core resources. A SCIM server can publish a custom schema if it defines custom resource types.
 
-Let's say you have user roles but want to add a custom entitlement, such as licenses, profiles, or something else. Let's walk through the example where we want to add a custom entitlement. We will call this "Characteristic," such as whether the user is tall. We know Trinity is tall, so it's logical to note their tallness as part of their user attributes.
+Let's say you have user roles but want to add a custom entitlement, such as licenses, profiles, or something else. Let's walk through the example where we want to add a custom entitlement. We will call this "Characteristic," such as whether the user is tall. We know Trinity is tall, so it's logical to note their tallness as part of their user attributes. 
 
 SCIM clients must discover resources through schemas. So, we first need to define the schema describing "Characteristics." Note that I came up with "Characteristics" as the name of this attribute, but you will need to change it for your user entitlements model, whether it be some sort of permissions system or something else. Custom schemas can extend from an existing schema, such as Okta's entitlement schema, which tracks data as a key-value pair, and add our own flavoring to it.
 
-In the IDE, open `okta-enterprise-ready-workshops/apps/api/src/scim-types.ts`.
+In the IDE, open `okta-enterprise-ready-workshops/apps/api/src/scim-types.ts`. 
 
 Add new schema URNs after the `SCHEMA_OKTA_ROLE` definition towards the end of the file:
 
@@ -1267,12 +1262,12 @@ Check out the terminal serving the API for the HTTP call tracing. You'll see a `
 
 ## Multi-tenant use cases for entitlements
 
-In this workshop, we defined roles for the entire Todo app. But what if your SaaS app supports tenant-configurable roles? You must make structural changes to the Todo app database to support organization roles. Notice that an organization has a unique API key, and we included this API as a `Bearer` token value in the `Authorization` header. All the SCIM calls from Okta can target a specific organization in the Todo app, including the organization's custom roles.
+In this workshop, we defined roles for the entire Todo app. But what if your SaaS app supports tenant-configurable roles? You must make structural changes to the Todo app database to support organization roles. Notice that an organization has a unique API key, and we included this API as a `Bearer` token value in the `Authorization` header. All the SCIM calls from Okta can target a specific organization in the Todo app, including the organization's custom roles. 
 
 <table>
 <tr>
     <td style="font-size: 3rem;">️ℹ️</td>
-    <td markdown="div">
+    <td markdown="span">
       **Note** <br/>
       We used an API key for demonstration purposes, but we recommend using OAuth to secure the calls from Okta to your API for production applications.
     </td>
@@ -1281,20 +1276,20 @@ In this workshop, we defined roles for the entire Todo app. But what if your Saa
 
 ## Use SCIM to manage user provisioning and entitlements
 
-In this workshop, you dived deeper into SCIM and learned about resources and schemas. You also synced users and their pre-existing entitlements from the Todo app and provisioned users within Okta. I hope you enjoyed this workshop and have ideas for using it for your SaaS applications! Check out the [Identity Governance](https://help.okta.com/oie/en-us/content/topics/identity-governance/iga.htm) help docs to learn about Okta Identity Governance.
+In this workshop, you dived deeper into SCIM and learned about resources and schemas. You also synced users and their pre-existing entitlements from the Todo app and provisioned users within Okta. I hope you enjoyed this workshop and have ideas for using it for your SaaS applications! Check out the [Identity Governance](https://help.okta.com/oie/en-us/content/topics/identity-governance/iga.htm) help docs to learn about Okta Identity Governance. 
 
 You can find the completed code project in the [`entitlements-workshop-completed` branch within the GitHub repo](https://github.com/oktadev/okta-enterprise-ready-workshops/tree/entitlements-workshop-complete).
 
 If you want to learn more about what it means to be enterprise-ready and to have enterprise maturity, check out the other workshops in this series
 
-| Posts in the on-demand workshop series                                                                          |
-| --------------------------------------------------------------------------------------------------------------- |
+|Posts in the on-demand workshop series|
+| --- |
 | 1. [How to Get Going with the On-Demand SaaS Apps Workshops](/blog/2023/07/27/enterprise-ready-getting-started) |
-| 2. [Enterprise-Ready Workshop: Authenticate with OpenID Connect](/blog/2023/07/28/oidc_workshop)                |
-| 3. [Enterprise-Ready Workshop: Manage Users with SCIM](/blog/2023/07/28/scim-workshop)                          |
-| 4. [Enterprise Maturity Workshop: Terraform](/blog/2023/07/28/terraform-workshop)                               |
-| 5. [Enterprise Maturity Workshop: Automate with no-code Okta Workflows](/blog/2023/09/15/workflows-workshop)    |
-| 6. [How to Instantly Sign a User Out across All Your Apps](/blog/2024/04/30/express-universal-logout)           |
-| 7. **Take User Provisioning to the Next Level with Entitlements**                                               |
+| 2. [Enterprise-Ready Workshop: Authenticate with OpenID Connect](/blog/2023/07/28/oidc_workshop) |
+| 3. [Enterprise-Ready Workshop: Manage Users with SCIM](/blog/2023/07/28/scim-workshop) |
+| 4. [Enterprise Maturity Workshop: Terraform](/blog/2023/07/28/terraform-workshop) |
+| 5. [Enterprise Maturity Workshop: Automate with no-code Okta Workflows](/blog/2023/09/15/workflows-workshop) |
+| 6. [How to Instantly Sign a User Out across All Your Apps](/blog/2024/04/30/express-universal-logout) |
+| 7. **Take User Provisioning to the Next Level with Entitlements** |
 
 Want to learn about more exciting topics? Let us know by commenting below. To get notified about exciting new content, follow us on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube](https://www.youtube.com/c/oktadev) channel.
