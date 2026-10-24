@@ -234,7 +234,7 @@ Go to [Test your requesting app](https://xaa.dev/developer/test-requesting-app?t
 
 - **IdP issuer URL**: your Okta Integrator account ID (i.e., https://your-okta-domain.okta.com)
 - **Test user identifier**: your email, e.g., name1234...@okta.com
-- **SAML IdP entityID**: from the requesting app's **Sign On** tab > **SAML Setup** > **View SAML setup instructions**, the **Identity Provider Issuer** value (i.e., http://www.okta.com/<app-id>)
+- **SAML IdP entityID**: from the requesting app's **Sign On** tab > **SAML Setup** > **View SAML setup instructions**, the **Identity Provider Issuer** value (i.e., http://www.okta.com/&lt;app-id&gt;)
 
 After all values are entered, click **Register**.
 

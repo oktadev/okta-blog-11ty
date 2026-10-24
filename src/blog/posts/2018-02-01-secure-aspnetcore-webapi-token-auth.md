@@ -259,7 +259,7 @@ private async Task<OktaToken> GetNewAccessToken()
 }
 ```
 
-A lot of this method is setting up the `HttpClient` to make the call to the Authorization Service. The interesting parts are the `clientCreds` value that gets the bytes of a string that has the client ID and secret concatenated with a colon between them as <CLIENT_ID>:<CLIENT_SECRET>. That value is then base64 encoded when it's added to the `Authorization` header with "Basic " in front of it. Note that the word "basic" is **NOT** encoded.
+A lot of this method is setting up the `HttpClient` to make the call to the Authorization Service. The interesting parts are the `clientCreds` value that gets the bytes of a string that has the client ID and secret concatenated with a colon between them as &lt;CLIENT_ID&gt;:&lt;CLIENT_SECRET&gt;. That value is then base64 encoded when it's added to the `Authorization` header with "Basic " in front of it. Note that the word "basic" is **NOT** encoded.
 
 There are also two key-value pairs sent as `FormUrlEncodedContent`: the `grant_type` which has a value of "client_credentials", and the `scope` which has a value of "access_token". This simply tells the Authorization Server that you are sending client credentials and you want to get an access token in exchange.
 

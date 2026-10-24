@@ -215,7 +215,7 @@ When you sign in, you'll see the initial call to the `/token` endpoint fails.
 
 {% img {src: "angular-dpop-jwt/dpop-token-fail.jpg", alt: "Network requests showing the first call fails with HTTP status 400 and the second call succeeds.", header: "800"} %}
 
-Take a look at the call's request headers. You'll see a header called `DPoP`, which contains the DPoP proof in JWT format, which means we can decode it and inspect its contents. You can use a trustworthy online tool such as [JWT.io debugger](jwt.io) or Base64 decode the header and payload sections of the JWT locally. In the JWT format, the content from the beginning up to the first <kdb>.</kbd> character is the header, and the content between the two <kbd>.</kbd> characters is the payload. 
+Take a look at the call's request headers. You'll see a header called `DPoP`, which contains the DPoP proof in JWT format, which means we can decode it and inspect its contents. You can use a trustworthy online tool such as [JWT.io debugger](jwt.io) or Base64 decode the header and payload sections of the JWT locally. In the JWT format, the content from the beginning up to the first <kbd>.</kbd> character is the header, and the content between the two <kbd>.</kbd> characters is the payload. 
 
 The header contains the token type, `dpop+jwt`, the encryption algorithm, and the cryptographic key information tied to this proof. The payload includes minimal HTTP information and other properties to prevent token attack vectors.
 

@@ -1506,8 +1506,8 @@ There is an interface called IDataSource, which abstracts our model of data emit
 
 Note that the two last methods, besides having different names, have exactly the same input type but different return type:
 
-- DownloadCountries returns *IEnumerable<Task<T>>*
-- DownloadCountriesStream returns *IAsyncEnumerable<T>*
+- DownloadCountries returns *IEnumerable<Task&lt;T&gt;>*
+- DownloadCountriesStream returns *IAsyncEnumerable&lt;T&gt;*
 
 Both functions return lazy values, which means that the foreach loops they implement won't be executed when the functions return. And they will be executed only when the last lines of TestBlock() and TestStream() are reached in the Tests class. These two test methods have:
 

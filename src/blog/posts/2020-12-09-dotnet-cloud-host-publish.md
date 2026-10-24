@@ -125,7 +125,7 @@ az appservice plan create --name myPlan --sku F1
 
 Finally, create the App Service itself:
 
-Replace <your_app_name> with your preferred name. This will be the URL of your app, like: `http://<your_app_name>.azurewebsites.net`
+Replace &lt;your_app_name&gt; with your preferred name. This will be the URL of your app, like: `http://<your_app_name>.azurewebsites.net`
 
 ```sh
 az webapp create --name <your_app_name> --plan myPlan --runtime "DOTNETCORE|3.1"

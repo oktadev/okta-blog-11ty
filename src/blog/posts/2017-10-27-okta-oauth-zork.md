@@ -136,7 +136,7 @@ You'll need some information to properly configure the app (you can leave the `O
 | OKTA_AUDIENCE        | api://default          |
 | OKTA_AUTH_SERVER_ID  | default                |
 
-Click **Deploy App**. Once it's finished deploying, you should be able to browse to: http://<App Name>.herokuapp.com and see the app in action using your own users from your Okta tenant.
+Click **Deploy App**. Once it's finished deploying, you should be able to browse to: http://&lt;App Name&gt;.herokuapp.com and see the app in action using your own users from your Okta tenant.
 
 {% img {src: "okta-oauth-zork/zork2.png", alt: "Default AS", header: "700"} %}
 
