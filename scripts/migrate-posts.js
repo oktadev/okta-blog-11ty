@@ -1511,6 +1511,38 @@ function copyAsset(from, to, report, dryRun) {
   report.push(`copied ${to} (${(statSync(from).size / 1024).toFixed(0)} KB)`);
 }
 
+// jekyll-assets found an image by its stem, so a post may say ".jpeg" where
+// the file is ".jpg". Point such references at the file that exists.
+export function resolveImageRefs(markdown, findActual, note = () => {}) {
+  let out = markdown;
+  for (const ref of imageRefs(markdown)) {
+    const actual = findActual(ref);
+    if (!actual || actual === ref) continue;
+    out = out.replace(
+      new RegExp(
+        ref.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?=[\"'\\s])",
+        "g",
+      ),
+      actual,
+    );
+    note(`image ${ref} is ${actual} in the source; reference updated`);
+  }
+  return out;
+}
+
+function siblingLookup(assetsDir) {
+  return (ref) => {
+    if (existsSync(path.join(assetsDir, ref))) return ref;
+    const dir = path.dirname(ref);
+    const stem = path.basename(ref).replace(/\.[^.]+$/, "");
+    if (!existsSync(path.join(assetsDir, dir))) return null;
+    const matches = readdirSync(path.join(assetsDir, dir)).filter(
+      (f) => f.replace(/\.[^.]+$/, "") === stem,
+    );
+    return matches.length === 1 ? path.posix.join(dir, matches[0]) : null;
+  };
+}
+
 function imageRefs(markdown) {
   const refs = new Set();
   for (const m of markdown.matchAll(/\{%\s*img\s*\{\s*src:\s*"([^"]+)"/g))
@@ -1610,9 +1642,16 @@ function main() {
       override || path.join(postsDir, post.file),
       "utf8",
     );
-    const { markdown, notes } = post.adoc
+    const { markdown: converted, notes } = post.adoc
       ? convertAsciidoc(content)
       : convertMarkdown(content);
+    const markdown = args.assets
+      ? resolveImageRefs(
+          converted,
+          siblingLookup(path.join(args.src, "_source/_assets/img/blog")),
+          (n) => notes.push(n),
+        )
+      : converted;
     const lines = [
       `## ${post.file} -> ${dest}${existing.has(post.slug) ? " (overwritten)" : ""}`,
     ];

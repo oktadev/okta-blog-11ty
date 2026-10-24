@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  resolveImageRefs,
   listBreaks,
   imageAttributes,
   convertAsciidoc,
@@ -184,6 +185,29 @@ test("markdown: a column-0 <br> between list items stays inside the item", () =>
   );
   // A <br> after a paragraph at column 0 is left alone.
   assert.equal(listBreaks("Text\n<br>\nMore"), "Text\n<br>\nMore");
+});
+
+test("resolveImageRefs points a reference at the file that exists under another extension", () => {
+  const notes = [];
+  const lookup = (ref) =>
+    ({
+      "d/a.jpeg": "d/a.jpg",
+      "d/a-styles.jpeg": "d/a-styles.jpg",
+      "d/social.jpg": "d/social.jpg",
+    })[ref] ?? null;
+  const out = resolveImageRefs(
+    'image: d/social.jpg\n\n{% img {src: "d/a.jpeg", alt: "A"} %}\n{% img {src: "d/a-styles.jpeg", alt: "B"} %}\n{% img {src: "d/missing.png", alt: "C"} %}\n',
+    lookup,
+    (n) => notes.push(n),
+  );
+  assert.equal(
+    out,
+    'image: d/social.jpg\n\n{% img {src: "d/a.jpg", alt: "A"} %}\n{% img {src: "d/a-styles.jpg", alt: "B"} %}\n{% img {src: "d/missing.png", alt: "C"} %}\n',
+  );
+  assert.deepEqual(notes, [
+    "image d/a.jpeg is d/a.jpg in the source; reference updated",
+    "image d/a-styles.jpeg is d/a-styles.jpg in the source; reference updated",
+  ]);
 });
 
 test("markdown: kramdown attribute lines", () => {
