@@ -106,7 +106,23 @@ export function convertFrontMatter(frontMatter) {
 // column 0; js-yaml (which this site's validator uses) does not. Indent those
 // continuation lines so both parsers agree.
 export function repairFrontMatter(frontMatter) {
-  const lines = frontMatter.split("\n");
+  // A flow list spread over several lines ("communities: [", one item per
+  // line, "]") is Ruby-only YAML too; join it onto its key's line.
+  const lines = [];
+  let pending = null;
+  for (const line of frontMatter.split("\n")) {
+    if (pending !== null) {
+      pending += ` ${line.trim()}`;
+      if (line.includes("]")) {
+        lines.push(pending.replace(/\[\s+/, "[").replace(/\s+\]/, "]"));
+        pending = null;
+      }
+      continue;
+    }
+    if (/^[\w-]+:\s*\[[^\]]*$/.test(line)) pending = line.trimEnd();
+    else lines.push(line);
+  }
+  if (pending !== null) lines.push(pending);
   let open = false;
   const repaired = lines.map((line) => {
     const wasOpen = open;

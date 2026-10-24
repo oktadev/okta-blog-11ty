@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  convertFrontMatter,
   sourceAsset,
   dedentFences,
   fixBackticks,
@@ -336,6 +337,16 @@ test("markdown: an avatar image is flagged for the shortcode, and assets are fou
   assert.equal(
     sourceAsset("../okta-blog", "oauth/biketoworkday-fb-login.png"),
     "../okta-blog/_source/_assets/img/blog/oauth/biketoworkday-fb-login.png",
+  );
+});
+
+test("front matter: a flow list spread over lines is joined onto its key", () => {
+  const fm = convertFrontMatter(
+    'title: T\ncommunities: [\n    ".net",\n    "go",\n    "java"\n]\ntags: [a, b]',
+  );
+  assert.equal(
+    fm,
+    'title: T\ncommunities: [".net", "go", "java"]\ntags: [a, b]',
   );
 });
 
