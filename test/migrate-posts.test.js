@@ -264,6 +264,14 @@ test("markdown: kramdown leniencies are rewritten so markdown-it renders what kr
     ).markdown,
     "Click **View access details**, then **Unassign**.\nSee **Continue** and **copy `a` to `b`**.\n",
   );
+  // A marker short on one side, and a bold run glued to the next word; balanced
+  // pairs, emphasis and intraword bold are untouched.
+  assert.equal(
+    kramdownLeniencies(
+      "click *OK, got it** to finish. It is *View** > **Developer**. Click **Next*.\n> **NOTE:**You can. See **user**s, CRU**D**, *em* and **bold**, a\\*b**c**.",
+    ),
+    "click **OK, got it** to finish. It is **View** > **Developer**. Click **Next**.\n> **NOTE:** You can. See **user**s, CRU**D**, *em* and **bold**, a\\*b**c**.",
+  );
   // An autolink containing spaces.
   assert.equal(
     kramdownLeniencies(

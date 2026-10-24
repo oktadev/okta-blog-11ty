@@ -388,6 +388,10 @@ export function listBreaks(text) {
 }
 
 // Kramdown accepted these as written; markdown-it does not.
+// - "*text**" or "**text*", a bold run with one marker short on one side,
+//   and "**text:**word", a bold run glued to the word after it: neither site
+//   rendered the bold the author meant (the old one showed the asterisks).
+//   The markers are balanced and the word separated.
 // - "**text **" with a space just inside a marker is not bold in CommonMark.
 //   The space moves outside, which is what the author meant (kramdown's own
 //   rendering paired the markers differently).
@@ -396,6 +400,12 @@ export function listBreaks(text) {
 //   them, as kramdown rendered it.
 export function kramdownLeniencies(text) {
   return text
+    .replace(/(?<![*\w\\])\*(?![*\s])([^*\n]+?)(?<=\S)\*\*(?![*\w])/g, "**$1**")
+    .replace(/(?<![*\w\\])\*\*(?![*\s])([^*\n]+?)(?<=\S)\*(?![*\w])/g, "**$1**")
+    .replace(
+      /(?<![*\w\\])\*\*(?![*\s])([^*\n]*?[^\s\w*])\*\*(?=\w)/g,
+      "**$1** ",
+    )
     .replace(/\*\*(.+?)\*\*/g, (m, inner, at, all) => {
       const core = inner.trim();
       if (!core || core === inner || !/[\p{L}\p{N}]/u.test(core)) return m;
