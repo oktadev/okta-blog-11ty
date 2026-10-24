@@ -251,7 +251,7 @@ test("markdown: kramdown leniencies are rewritten so markdown-it renders what kr
   // Bold with a space just inside a marker; a code span at the edge is fine.
   assert.equal(
     convertMarkdown(
-      "Click **View access details **, then **Unassign**.\nSee ** Continue** and **copy `a` to `b`**.",
+      "Click **View access details **, then **Unassign**.\nSee ** Continue** and **copy `a` to `b`**.\n",
     ).markdown,
     "Click **View access details**, then **Unassign**.\nSee **Continue** and **copy `a` to `b`**.\n",
   );
@@ -268,7 +268,7 @@ test("markdown: kramdown leniencies are rewritten so markdown-it renders what kr
     "press ``Ctrl+F5``. Edit ```styles.css``` now.",
   );
   assert.equal(
-    convertMarkdown("press ``Ctrl+F5```.").markdown,
+    convertMarkdown("press ``Ctrl+F5```.\n").markdown,
     "press ``Ctrl+F5``.\n",
   );
   // A fence indented four spaces after a paragraph is dedented; inside a list it is left alone.

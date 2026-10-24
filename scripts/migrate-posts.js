@@ -342,11 +342,17 @@ export function listBreaks(text) {
 //   them, as kramdown rendered it.
 export function kramdownLeniencies(text) {
   return text
-    .replace(/\*\*(.+?)\*\*/g, (m, inner) => {
+    .replace(/\*\*(.+?)\*\*/g, (m, inner, at, all) => {
       const core = inner.trim();
       if (!core || core === inner) return m;
-      const lead = inner.slice(0, inner.indexOf(core));
-      const trail = inner.slice(inner.indexOf(core) + core.length);
+      // A moved space is dropped where it would double one or precede punctuation.
+      const lead = at === 0 || /\s/.test(all[at - 1]) ? "" : " ";
+      const after = all[at + m.length];
+      const trail =
+        inner.endsWith(" ") &&
+        !(after === undefined || /[\s.,;:!?)]/.test(after))
+          ? " "
+          : "";
       return `${lead}**${core}**${trail}`;
     })
     .replace(
@@ -359,7 +365,7 @@ export function kramdownLeniencies(text) {
 // leaves as literal backticks. The extra one is dropped. Runs before code spans
 // are masked, since the span is not recognizable until it is balanced.
 export function fixBackticks(text) {
-  return text.replace(/(?<!`)(`{2,})(\S[^`\n]*?)\1`(?!`)/g, "$1$2$1");
+  return text.replace(/(?<!`)(`{2,})([^`\s][^`\n]*?)\1`(?!`)/g, "$1$2$1");
 }
 
 // A fence indented four spaces straight after a top-level paragraph: kramdown

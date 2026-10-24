@@ -1003,7 +1003,7 @@ Since we last ran our user import with hardcoded roles, let's ensure we've synch
 
 Within the SCIM application tab, navigate to **Import** and press the **Import Now** button. Okta scans the users in the todo app, but since there are no new users, there's no confirmation process. The user scan synced the existing users and the roles! 
 
-Navigate to **Assignments**. Each user has a vertical 3-dot menu icon to display a context menu allowing you to **Edit user assignment**, **View access details** , and **Unassign**. Find "Trinity" and **View access details**  on them. A panel shows you Trinity's role pre-assigned in the Todo app. 🎉 Exit the side panel by clicking outside the side panel.
+Navigate to **Assignments**. Each user has a vertical 3-dot menu icon to display a context menu allowing you to **Edit user assignment**, **View access details**, and **Unassign**. Find "Trinity" and **View access details** on them. A panel shows you Trinity's role pre-assigned in the Todo app. 🎉 Exit the side panel by clicking outside the side panel.
 
 Let's assign a new role to "Somnus" using Okta.  Open the context menu for "Somnus" and **View access details**. Press the **Edit access** button. You'll see a page titled **Edit access**. Press the **Customize entitlements** button. You'll see a warning followed by a section called **Custom Entitlements**.
 
