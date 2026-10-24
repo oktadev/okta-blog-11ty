@@ -57,20 +57,20 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
 
-  // The syntax highlighter returns fences tagged `text`, or with a language
-  // Prism doesn't know, unescaped, so a "<token>" in such a sample becomes
-  // HTML. Escape those ourselves and keep the same markup.
-  eleventyConfig.amendLibrary("md", (md) => {
-    const highlight = md.options.highlight;
-    md.set({
-      highlight: (str, lang) => {
-        const name = (lang || "").split("/")[0];
-        if (name && name !== "text" && prismKnows(name))
-          return renderCallouts(highlight(str, lang));
-        const cls = ` class="language-${name || "text"}"`;
-        return `<pre${cls}><code${cls}>${renderCallouts(md.utils.escapeHtml(str))}</code></pre>`;
-      },
-    });
+  // The syntax highlight plugin returns fences tagged `text`, or with a
+  // language Prism doesn't know, unescaped, so a "<token>" in such a sample
+  // becomes HTML. Wrap its highlighter and register the wrapper the same way
+  // the plugin does: Eleventy re-applies the registered highlighter every time
+  // it constructs a Markdown engine but runs amendLibrary only once, so a
+  // wrapper installed through amendLibrary was lost by a later construction
+  // mid-build and posts rendered after it lost their escaping.
+  const prismHighlight = eleventyConfig.markdownHighlighter;
+  eleventyConfig.addMarkdownHighlighter((str, lang) => {
+    const name = (lang || "").split("/")[0];
+    if (name && name !== "text" && prismKnows(name))
+      return renderCallouts(prismHighlight(str, lang));
+    const cls = ` class="language-${name || "text"}"`;
+    return `<pre${cls}><code${cls}>${renderCallouts(markdownLibrary.utils.escapeHtml(str))}</code></pre>`;
   });
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
