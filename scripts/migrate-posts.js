@@ -418,16 +418,108 @@ export function kramdownLeniencies(text) {
     );
 }
 
-// "``code```": a code span closed with one backtick too many, which CommonMark
-// leaves as literal backticks. The extra one is dropped. Runs before code spans
-// are masked, since the span is not recognizable until it is balanced.
+// "`code``" or "``code```": a code span closed with one backtick too many, which
+// CommonMark leaves as literal backticks. The extra one is dropped. Runs before
+// code spans are masked, since the span is not recognizable until it is balanced.
 export function fixBackticks(text) {
-  return text.replace(/(?<!`)(`{2,})([^`\s][^`\n]*?)\1`(?!`)/g, "$1$2$1");
+  return text.replace(/(?<!`)(`+)([^`\s][^`\n]*?)\1`(?!`)/g, "$1$2$1");
+}
+
+// Kramdown's HTML_BLOCK_ELEMENTS: a tag of one of these inside a line of text
+// is text to kramdown ("<p>" in a sentence), not markup.
+const BLOCK_TAGS =
+  "address|article|aside|applet|body|blockquote|caption|col|colgroup|dd|details|div|dl|dt|fieldset|figcaption|figure|footer|form|h[1-6]|header|hgroup|hr|html|head|iframe|legend|menu|li|main|map|nav|ol|optgroup|p|pre|section|summary|table|tbody|td|th|thead|tfoot|tr|ul";
+const BLOCK_START = new RegExp(`^<(${BLOCK_TAGS})\\b|^<!--`, "i");
+const MID_TAG = new RegExp(`<(/?)(${BLOCK_TAGS})\\b([^<>\\n]*)>`, "gi");
+const MARKERS = /^[ \t]*(?:(?:>|[-*+]|\d+\.)[ \t]+)*/;
+
+// Block structure kramdown read differently from CommonMark:
+// - "1)" is not a list marker to kramdown; the number is escaped so the line
+//   stays a paragraph.
+// - A block-level HTML tag inside a line of text is text to kramdown, so a
+//   quoted "<p>" or a stray "</Table>" is escaped. Tags that open a line (or
+//   sit inside an HTML block that opened at column 0) are left alone.
+// - "<div markdown=\"1\">" at column 0: kramdown parsed the div's content as
+//   Markdown; a blank line after the opener lets markdown-it do the same.
+// - A brace group at the end of a heading that is not a kramdown attribute
+//   list is escaped, or markdown-it-attrs would read it as attributes.
+export function kramdownBlocks(text) {
+  const lines = text.split("\n");
+  const out = [];
+  let html = false;
+  for (const line of lines) {
+    if (!line.trim()) html = false;
+    else if (BLOCK_START.test(line)) html = true;
+    let result = line;
+    if (!html) {
+      const lead = line.match(MARKERS)[0];
+      const rest = line.slice(lead.length);
+      if (!rest.startsWith("<")) {
+        result =
+          lead +
+          rest
+            .replace(/^(\d+)\)(?=[ \t])/, "$1\\)")
+            .replace(MID_TAG, "&lt;$1$2$3&gt;");
+      }
+      result = result.replace(
+        /^([ \t]*(?:>[ \t]*)*#{1,6} .*?\S)([ \t]+)\{(?![:%{])([^}\n]*)\}[ \t]*$/,
+        "$1$2\\{$3}",
+      );
+    }
+    out.push(result);
+    if (/^<div\b[^>\n]*\bmarkdown="1"[^>\n]*>[ \t]*$/.test(line)) {
+      html = false;
+      if (lines[out.length]?.trim()) out.push("");
+    }
+  }
+  return out.join("\n");
+}
+
+// A line holding only an image or a self-closing tag renders as a lone tag,
+// which markdown-it reads as an HTML block running to the next blank line when
+// the line opens a block; the line after it would be swallowed as raw HTML.
+// Kramdown saw an inline tag starting a paragraph: a caption that follows stays
+// in that paragraph, and a block (a heading, a list) that follows starts on its
+// own. A lone tag continuing a paragraph or list item is already inline.
+const LONE_TAG =
+  /^([ \t]*)(?:\{%\s*img\s[^%\n]*%\}|<[a-zA-Z][^<>\n]*\/>|<img\b[^<>\n]*>)[ \t]*$/;
+export function standaloneTags(text) {
+  const lines = text.split("\n");
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const next = lines[i + 1];
+    const lone = line.match(LONE_TAG);
+    const opens =
+      i === 0 || !lines[i - 1].trim() || LONE_TAG.test(lines[i - 1]);
+    if (!lone || !opens || !next?.trim()) {
+      out.push(line);
+      continue;
+    }
+    if (/^[ \t]*(?:<|\{[%{])/.test(next)) {
+      // More HTML or template output: one HTML block or two render the same.
+      out.push(line);
+    } else if (
+      /^[ \t]*(?:#{1,6}[ \t]|>|[-*+][ \t]|\d+[.)][ \t]|```|~~~|\{:|\|)/.test(
+        next,
+      )
+    ) {
+      out.push(line);
+      if (!lone[1]) out.push("");
+    } else {
+      out.push(`${line.trimEnd()} ${next.trim()}`);
+      i++;
+    }
+  }
+  return out.join("\n");
 }
 
 // A fence indented four spaces straight after a top-level paragraph: kramdown
 // rendered a code block, CommonMark reads the lines as the paragraph's
-// continuation. The block is dedented to the paragraph's level.
+// continuation. The block is dedented to the paragraph's level. A top-level
+// fence indented one to three spaces kept its lines verbatim under kramdown,
+// where CommonMark strips the fence's indentation from them: only the fence
+// lines are dedented.
 export function dedentFences(segments) {
   let lastProse = "";
   return segments.map((segment) => {
@@ -444,13 +536,22 @@ export function dedentFences(segments) {
         if (block.length) break;
         continue;
       }
+      // A raw tag guarding the fence says nothing about its indentation.
+      if (/^\s*\{%-?\s*(raw|endraw)\s*-?%\}\s*$/.test(line)) continue;
       block.push(line);
     }
     const inList = block.some(
       (l) => /^\s/.test(l) || /^\s*([-*+]|\d+\.)\s/.test(l),
     );
-    if (indent < 4 || !block.length || inList) return segment;
+    if (!indent || inList) return segment;
     const lines = segment.text.split("\n");
+    if (indent < 4) {
+      const last = lines.length - 1;
+      lines[0] = lines[0].trimStart();
+      lines[last] = lines[last].trimStart();
+      return { ...segment, text: lines.join("\n") };
+    }
+    if (!block.length) return segment;
     const common = Math.min(
       ...lines.filter((l) => l.trim()).map((l) => l.match(/^[ \t]*/)[0].length),
     );
@@ -478,10 +579,10 @@ function retagFence(code) {
 }
 
 function convertMarkdownProse(text, note) {
-  return (
+  return standaloneTags(
     imageAttributes(
       convertLiquid(
-        kramdownLeniencies(listBreaks(kramdownAttributes(text)))
+        kramdownLeniencies(listBreaks(kramdownAttributes(kramdownBlocks(text))))
           // Kramdown leftovers, inline after a tag
           .replace(/ "no_toc"=""/g, "")
           .replace(/\{: \.center-image \}/g, "")
@@ -495,7 +596,7 @@ function convertMarkdownProse(text, note) {
           ? `<${tag}${attrs.replace(/\s+[a-zA-Z-]+=""/g, "")}>`
           : match,
       )
-      .replace(/<([a-zA-Z][a-zA-Z0-9]*) style: /g, "<$1 style=")
+      .replace(/<([a-zA-Z][a-zA-Z0-9]*) style: /g, "<$1 style="),
   );
 }
 
