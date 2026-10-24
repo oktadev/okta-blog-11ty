@@ -1702,7 +1702,7 @@ export function assetRefs(markdown) {
 // Where a public path comes from in the old repo. Post images live under
 // img/blog, but a few sit at the img root with the author photos (avatar-*);
 // jekyll-assets searched both. Downloads live under files/.
-export function sourceAsset(src, ref) {
+function sourceCandidates(src, ref) {
   const candidates = ref.startsWith("img/avatar/")
     ? [`_source/_assets/img/${ref.slice("img/avatar/".length)}`]
     : ref.startsWith("img/blog/")
@@ -1711,10 +1711,12 @@ export function sourceAsset(src, ref) {
           `_source/_assets/img/${ref.slice("img/blog/".length)}`,
         ]
       : [`_source/_assets/${ref}`];
-  return (
-    candidates.map((c) => path.join(src, c)).find((p) => existsSync(p)) ??
-    path.join(src, candidates[0])
-  );
+  return candidates.map((c) => path.join(src, c));
+}
+
+export function sourceAsset(src, ref) {
+  const candidates = sourceCandidates(src, ref);
+  return candidates.find((p) => existsSync(p)) ?? candidates[0];
 }
 
 // A public path whose file the old repo keeps under another extension
@@ -1723,14 +1725,16 @@ function siblingLookup(src) {
   return (ref) => {
     if (existsSync(sourceAsset(src, ref))) return ref;
     const stem = path.basename(ref).replace(/\.[^.]+$/, "");
-    const folder = path.dirname(sourceAsset(src, ref));
-    if (!existsSync(folder)) return null;
-    const matches = readdirSync(folder).filter(
-      (f) => f.replace(/\.[^.]+$/, "") === stem && !f.startsWith("."),
-    );
-    return matches.length === 1
-      ? path.posix.join(path.dirname(ref), matches[0])
-      : null;
+    for (const candidate of sourceCandidates(src, ref)) {
+      const folder = path.dirname(candidate);
+      if (!existsSync(folder)) continue;
+      const matches = readdirSync(folder).filter(
+        (f) => f.replace(/\.[^.]+$/, "") === stem && !f.startsWith("."),
+      );
+      if (matches.length === 1)
+        return path.posix.join(path.dirname(ref), matches[0]);
+    }
+    return null;
   };
 }
 
@@ -1970,11 +1974,9 @@ async function main() {
     const { markdown: converted, notes } = post.adoc
       ? convertAsciidoc(content, { resolveAsset: assetResolver(args.src) })
       : convertMarkdown(content);
-    const markdown = args.assets
-      ? resolveImageRefs(converted, siblingLookup(args.src), (n) =>
-          notes.push(n),
-        )
-      : converted;
+    const markdown = resolveImageRefs(converted, siblingLookup(args.src), (n) =>
+      notes.push(n),
+    );
     const lines = [
       `## ${post.file} -> ${dest}${existing.has(post.slug) ? " (overwritten)" : ""}`,
     ];
