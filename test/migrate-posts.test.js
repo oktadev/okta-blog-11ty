@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   asciidoctorId,
+  sourceAsset,
   dedentFences,
   fixBackticks,
   kramdownLeniencies,
@@ -279,6 +280,63 @@ test("markdown: kramdown leniencies are rewritten so markdown-it renders what kr
   );
   assert.equal(after[1].text, '```json\n{\n  "a": 1\n}\n```');
   assert.equal(after[3].text, "    ```json\n    {}\n    ```");
+});
+
+test("markdown: what the first migration did by hand, the converter now does", () => {
+  const { markdown, notes } = convertMarkdown(
+    [
+      "---",
+      "title: T",
+      "redirect_from:",
+      '  - "/blog/2015-04-14-android-unit-testing-part-2"',
+      "  - /blog/old/",
+      "tags: [a]",
+      "---",
+      '{% img 2015-05-08-wtfs_per_minute.jpg style:"width:50%" alt:"wtfs per minute" %}',
+      '<video src="{% asset_path \'blog/d/demo.mp4\' %}" width="360"></video>',
+      "[full size](/assets-jekyll/blog/d/screen-c4b218091f6549081c063e2eb71af4b1bcf371d49cffd109d3f77e6019ec85ce.png)",
+    ].join("\n"),
+  );
+  assert.equal(
+    markdown,
+    [
+      "---",
+      "title: T",
+      "tags: [a]",
+      "---",
+      '{% img {src: "2015-05-08-wtfs_per_minute.jpg", alt: "wtfs per minute"} %}',
+      '<video src="/img/blog/d/demo.mp4" width="360"></video>',
+      "[full size](/img/blog/d/screen.png)",
+    ].join("\n"),
+  );
+  assert.match(notes[0], /^dropped redirect_from:/);
+  assert.match(
+    convertMarkdown("---\ntitle: T\nredirect_to: /blog/new/\n---\nText")
+      .markdown,
+    /^---\ntitle: T\neleventyExcludeFromCollections: true\n---\n/,
+  );
+  const segs = dedentFences(
+    splitSegments(
+      "3. Do this, and see the\n[docs](x) for more.\n\n    ```\n    cmd\n    ```",
+    ),
+  );
+  assert.equal(segs[1].text, "    ```\n    cmd\n    ```");
+});
+
+test("markdown: an avatar image is flagged for the shortcode, and assets are found at the img root too", () => {
+  assert.equal(
+    convertMarkdown('{% img avatar-rdegges.jpg alt:"Randall Degges" %}\n')
+      .markdown,
+    '{% img {src: "avatar-rdegges.jpg", alt: "Randall Degges", avatar: true} %}\n',
+  );
+  assert.equal(
+    sourceAsset("../okta-blog", "browser_spa_implicit_flow.png"),
+    "../okta-blog/_source/_assets/img/browser_spa_implicit_flow.png",
+  );
+  assert.equal(
+    sourceAsset("../okta-blog", "oauth/biketoworkday-fb-login.png"),
+    "../okta-blog/_source/_assets/img/blog/oauth/biketoworkday-fb-login.png",
+  );
 });
 
 test("markdown: kramdown attribute lines", () => {

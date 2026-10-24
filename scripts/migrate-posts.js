@@ -83,8 +83,14 @@ export function splitFrontMatter(content) {
 // Front matter edits shared by both formats: drop the Jekyll layout, strip the
 // `blog/` prefix from the social image (this site's {% img %} adds it back).
 export function convertFrontMatter(frontMatter) {
+  // Redirects live in vercel.json here (#82); a redirect_to post is a
+  // placeholder the old site redirected away from, kept out of the listings.
+  const redirectTo = /^redirect_to:/m.test(frontMatter);
   const out = frontMatter
-    .replace(/^layout: blog_post[ \t]*\r?\n?/m, "")
+    .replace(/^layout: ["']?blog_post["']?[ \t]*\r?\n?/m, "")
+    .replace(/^redirect_from:[ \t]*\r?\n(?:[ \t]*-[^\n]*\r?\n?)*/m, "")
+    .replace(/^redirect_to:[^\n]*\r?\n?(?:[ \t]*-[^\n]*\r?\n?)*/m, "")
+    .replace(/\s*$/, redirectTo ? "\neleventyExcludeFromCollections: true" : "")
     .replace(/^image: (["']?)blog\//m, "image: $1")
     // A bare `communities: java` is a one-item list (the validator wants a list).
     .replace(/^communities:[ \t]*([\w.#+-]+)[ \t]*$/m, "communities: [$1]");
@@ -131,15 +137,21 @@ export function liquidArgsToObject(args) {
 
 function jekyllImgAttr(attrs, name) {
   // Values appear as name:"value", name=value and bare name:value.
-  const quoted = attrs.match(new RegExp(`${name}\\s*[:=]\\s*"([^"]*)"`));
+  const quoted = attrs.match(
+    new RegExp(`(?<![\\w:"'])${name}\\s*[:=]\\s*"([^"]*)"`),
+  );
   if (quoted) return quoted[1];
-  const bare = attrs.match(new RegExp(`${name}\\s*[:=]\\s*([^\\s"%]+)`));
+  const bare = attrs.match(
+    new RegExp(`(?<![\\w:"'])${name}\\s*[:=]\\s*([^\\s"%]+)`),
+  );
   return bare ? bare[1] : undefined;
 }
 
 function imgShortcode(src, alt = "", width) {
   const parts = [`src: "${src}"`, `alt: "${(alt || "").replace(/"/g, '\\"')}"`];
   if (width) parts.push(`header: "${String(width).replace(/px$/, "")}"`);
+  // Author photos live in img/avatar here; the shortcode needs to know.
+  if (/^avatar-/.test(src)) parts.push("avatar: true");
   return `{% img {${parts.join(", ")}} %}`;
 }
 
@@ -205,12 +217,14 @@ export function convertLiquid(text) {
       .replace(/\{%\s*comment\s*%\}/g, "{#")
       .replace(/\{%\s*endcomment\s*%\}/g, "#}")
       // Jekyll images: {% img blog/<src> alt:"..." width:"..." %}
-      .replace(/\{%\s*img\s+blog\/([^\s%]+)([\s\S]*?)%\}/g, (_, src, attrs) =>
-        imgShortcode(
-          src,
-          jekyllImgAttr(attrs, "alt"),
-          jekyllImgAttr(attrs, "width"),
-        ),
+      .replace(
+        /\{%\s*img\s+(?!\{)(?:blog\/)?([^\s%]+)([\s\S]*?)%\}/g,
+        (_, src, attrs) =>
+          imgShortcode(
+            src,
+            jekyllImgAttr(attrs, "alt"),
+            jekyllImgAttr(attrs, "width"),
+          ),
       )
       // Embeds
       .replace(
@@ -234,6 +248,16 @@ export function convertLiquid(text) {
         /\{%\s*post_url\s+(\d{4})-(\d{1,2})-(\d{1,2})-([^\s%]+)\s*%\}/g,
         (_, y, mo, d, slug) =>
           `/blog/${y}/${mo.padStart(2, "0")}/${d.padStart(2, "0")}/${slug}/`,
+      )
+      // Asset paths written by hand (video sources, posters) and the old
+      // site's hashed asset URLs point at the served copy here.
+      .replace(
+        /\{%\s*asset_path\s+["']?([^"'%\s]+)["']?\s*%\}/g,
+        (_, p) => `/img/${p.replace(/^\//, "")}`,
+      )
+      .replace(
+        /\/assets-jekyll\/blog\/([^\s"')]+?)-[0-9a-f]{64}(\.\w+)/g,
+        "/img/blog/$1$2",
       )
       // Includes that became macros or Nunjucks includes
       .replace(
@@ -379,18 +403,20 @@ export function dedentFences(segments) {
       return segment;
     }
     const indent = segment.text.match(/^[ \t]*/)[0].length;
-    const prevLine = lastProse
-      .split("\n")
-      .filter((l) => l.trim())
-      .pop();
-    if (
-      indent < 4 ||
-      !prevLine ||
-      /^\s/.test(prevLine) ||
-      /^\s*([-*+]|\d+\.)\s/.test(prevLine)
-    ) {
-      return segment;
+    // The paragraph block just before the fence: a list item anywhere in it
+    // (or an indented line) means the fence belongs to that item.
+    const block = [];
+    for (const line of lastProse.split("\n").reverse()) {
+      if (!line.trim()) {
+        if (block.length) break;
+        continue;
+      }
+      block.push(line);
     }
+    const inList = block.some(
+      (l) => /^\s/.test(l) || /^\s*([-*+]|\d+\.)\s/.test(l),
+    );
+    if (indent < 4 || !block.length || inList) return segment;
     const lines = segment.text.split("\n");
     const common = Math.min(
       ...lines.filter((l) => l.trim()).map((l) => l.match(/^[ \t]*/)[0].length),
@@ -490,6 +516,14 @@ export function convertMarkdown(content) {
   if (styled) {
     notes.push(
       `dropped ${styled.length} kramdown style attribute line(s), e.g. ${styled[0]}`,
+    );
+  }
+  const redirects = frontMatter.match(
+    /^redirect_(from|to):[^\n]*(?:\n[ \t]*-[^\n]*)*/gm,
+  );
+  if (redirects) {
+    notes.push(
+      `dropped ${redirects.join("; ").replace(/\s+/g, " ")}; redirects live in vercel.json, check it carries these`,
     );
   }
   const guarded = protectTemplateSyntax(converted);
@@ -1605,16 +1639,36 @@ export function resolveImageRefs(markdown, findActual, note = () => {}) {
   return out;
 }
 
-function siblingLookup(assetsDir) {
+// The old repo keeps post images under img/blog, but a few sit at the img
+// root with the author photos (avatar-*); jekyll-assets searched both.
+export function sourceAsset(src, ref) {
+  const roots = ["_source/_assets/img/blog", "_source/_assets/img"];
+  return (
+    roots.map((r) => path.join(src, r, ref)).find((p) => existsSync(p)) ??
+    path.join(src, roots[0], ref)
+  );
+}
+
+function localAsset(ref) {
+  return /^avatar-/.test(ref)
+    ? path.join(AVATAR_DIR, ref)
+    : path.join(IMG_DIR, ref);
+}
+
+function siblingLookup(src) {
   return (ref) => {
-    if (existsSync(path.join(assetsDir, ref))) return ref;
+    if (existsSync(sourceAsset(src, ref))) return ref;
     const dir = path.dirname(ref);
     const stem = path.basename(ref).replace(/\.[^.]+$/, "");
-    if (!existsSync(path.join(assetsDir, dir))) return null;
-    const matches = readdirSync(path.join(assetsDir, dir)).filter(
-      (f) => f.replace(/\.[^.]+$/, "") === stem,
-    );
-    return matches.length === 1 ? path.posix.join(dir, matches[0]) : null;
+    for (const root of ["_source/_assets/img/blog", "_source/_assets/img"]) {
+      const folder = path.join(src, root, dir);
+      if (!existsSync(folder)) continue;
+      const matches = readdirSync(folder).filter(
+        (f) => f.replace(/\.[^.]+$/, "") === stem && !f.startsWith("."),
+      );
+      if (matches.length === 1) return path.posix.join(dir, matches[0]);
+    }
+    return null;
   };
 }
 
@@ -1831,10 +1885,8 @@ async function main() {
       ? convertAsciidoc(content)
       : convertMarkdown(content);
     const markdown = args.assets
-      ? resolveImageRefs(
-          converted,
-          siblingLookup(path.join(args.src, "_source/_assets/img/blog")),
-          (n) => notes.push(n),
+      ? resolveImageRefs(converted, siblingLookup(args.src), (n) =>
+          notes.push(n),
         )
       : converted;
     const lines = [
@@ -1853,8 +1905,8 @@ async function main() {
       const assetReport = [];
       for (const ref of imageRefs(markdown)) {
         copyAsset(
-          path.join(args.src, "_source/_assets/img/blog", ref),
-          path.join(IMG_DIR, ref),
+          sourceAsset(args.src, ref),
+          localAsset(ref),
           assetReport,
           args.dryRun,
         );
