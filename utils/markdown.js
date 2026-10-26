@@ -44,6 +44,54 @@ export const markdownLibrary = markdownIt({
     transformContainerClose: () => "</nav>",
   });
 
+// A bare "{placeholder}" at the end of a prose line is text a reader copies,
+// not an attribute list (the old site only read "{: ...}"). markdown-it-attrs
+// would strip it and leave a bogus attribute, so the word it ends is handed
+// over as a text_special token, which that plugin ignores, linkify leaves
+// alone (so "https://${yourOktaDomain}" is not half a link), and text_join
+// turns back into text. Classes, ids and key=value lists are left for the
+// plugin.
+const PLACEHOLDER_END = /\S*\{[A-Za-z_][\w-]*\}\s*$/;
+markdownLibrary.core.ruler.before(
+  "curly_attributes",
+  "placeholder_text",
+  (state) => {
+    for (const token of state.tokens) {
+      if (token.type !== "inline") continue;
+      const children = token.children;
+      const last = children[children.length - 1];
+      if (!last || last.type !== "text") continue;
+      const m = last.content.match(PLACEHOLDER_END);
+      if (!m) continue;
+      const special = new state.Token("text_special", "", 0);
+      special.content = last.content.slice(m.index);
+      last.content = last.content.slice(0, m.index);
+      children.push(special);
+    }
+  },
+);
+
+// A URL whose host is a template placeholder ("https://${yourOktaDomain}/…")
+// is text to copy, not a link; linkify would otherwise link "https://$" and
+// leave the rest dangling. Same validation as linkify-it's own, minus those.
+markdownLibrary.linkify.add("http:", {
+  validate(text, pos, self) {
+    const tail = text.slice(pos);
+    if (/^\/\/\$?\{/.test(tail)) return 0;
+    if (!self.re.http) {
+      self.re.http = new RegExp(
+        "^\\/\\/" +
+          self.re.src_auth +
+          self.re.src_host_port_strict +
+          self.re.src_path,
+        "i",
+      );
+    }
+    const m = tail.match(self.re.http);
+    return m ? m[0].length : 0;
+  },
+});
+
 // The old site's footnote marker is the bare number, not "[1]".
 markdownLibrary.renderer.rules.footnote_caption = (tokens, idx) => {
   const n = Number(tokens[idx].meta.id + 1).toString();

@@ -15,6 +15,7 @@
 // Exit code 1 when any post has missing prose or mismatched code.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { rawAssetRefs } from "../utils/raw-assets.js";
 
 const LIVE = "https://developer.okta.com";
 const CACHE = "node_modules/.cache/verify-migration";
@@ -135,7 +136,7 @@ export function extract(html) {
   // Drop tables of contents (both sites list the headings again there) and
   // the changelog this site's layout appends.
   for (const re of [
-    /<div[^>]*(?:id="toc"|class="[^"]*\btoc\b[^"]*"|class="[^"]*table-of-contents[^"]*")[^>]*>/i,
+    /<(?:div|nav)[^>]*(?:id="toc"|class="[^"]*\btoc\b[^"]*"|class="[^"]*table-of-contents[^"]*")[^>]*>/i,
     /<ul[^>]*id="markdown-toc"[^>]*>/i,
     /<p[^>]*class="hide"[^>]*>/i,
   ]) {
@@ -425,16 +426,24 @@ function localHtml(site, slug) {
   return readFileSync(file, "utf8");
 }
 
+// Files the built page references by path (videos, posters, PDFs, raw images,
+// links to full-size images) that the build does not contain; see
+// scripts/copy-raw-assets.js.
+export function missingAssets(html, site) {
+  return rawAssetRefs(html).filter((ref) => !existsSync(path.join(site, ref)));
+}
+
 // A post needs a look when anything the live site has is absent here: prose
-// blocks, whole code blocks, a differing code line, inline code spans, or a
-// heading id that no longer resolves.
+// blocks, whole code blocks, a differing code line, inline code spans, a
+// heading id that no longer resolves, or a referenced file the build lacks.
 export function needsAttention(result) {
   return Boolean(
     result.prose.missing.length ||
     result.code.mismatches.length ||
     result.code.liveCount !== result.code.mineCount ||
     result.inline.length ||
-    result.anchors.length,
+    result.anchors.length ||
+    result.assets.length,
   );
 }
 
@@ -442,14 +451,14 @@ export async function verify(slug, site) {
   const live = extract(
     elementByClass(await fetchLive(slug), "BlogPost-content") ?? "",
   );
-  const mine = extract(
-    elementByClass(localHtml(site, slug), "blog-prose") ?? "",
-  );
+  const page = localHtml(site, slug);
+  const mine = extract(elementByClass(page, "blog-prose") ?? "");
   const prose = compareProse(live.prose, mine.prose);
   const code = compareCode(live.code, mine.code);
   const inline = compareInline(live.inline, mine.inline);
   const anchors = compareAnchors(live, mine);
-  return { slug, live, mine, prose, code, inline, anchors };
+  const assets = missingAssets(page, site);
+  return { slug, live, mine, prose, code, inline, anchors, assets };
 }
 
 async function main() {
@@ -483,7 +492,7 @@ async function main() {
       const bad = needsAttention(r);
       if (bad) failed++;
       rows.push(
-        `${bad ? "✖" : "✓"} ${slug}: prose ${r.live.prose.length}/${r.mine.prose.length} blocks, ${r.prose.missing.length} missing, ${r.prose.extra.length} extra | code ${r.code.liveCount}/${r.code.mineCount}, ${r.code.mismatches.length} differ | inline code missing ${r.inline.length} | anchors missing ${r.anchors.length}`,
+        `${bad ? "✖" : "✓"} ${slug}: prose ${r.live.prose.length}/${r.mine.prose.length} blocks, ${r.prose.missing.length} missing, ${r.prose.extra.length} extra | code ${r.code.liveCount}/${r.code.mineCount}, ${r.code.mismatches.length} differ | inline code missing ${r.inline.length} | anchors missing ${r.anchors.length} | files missing ${r.assets.length}`,
       );
       if (details || bad) {
         r.prose.missing.forEach((m, i) => {
@@ -508,6 +517,8 @@ async function main() {
           rows.push(`    inline code missing: ${c.slice(0, 100)}`);
         for (const a of r.anchors.slice(0, 10))
           rows.push(`    anchor missing: #${a}`);
+        for (const f of r.assets.slice(0, 10))
+          rows.push(`    file missing from the build: /${f}`);
       }
     } catch (err) {
       failed++;

@@ -57,21 +57,26 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
 
-  // The syntax highlighter returns fences tagged `text`, or with a language
-  // Prism doesn't know, unescaped, so a "<token>" in such a sample becomes
-  // HTML. Escape those ourselves and keep the same markup.
-  eleventyConfig.amendLibrary("md", (md) => {
-    const highlight = md.options.highlight;
-    md.set({
-      highlight: (str, lang) => {
-        const name = (lang || "").split("/")[0];
-        if (name && name !== "text" && prismKnows(name))
-          return renderCallouts(highlight(str, lang));
-        const cls = ` class="language-${name || "text"}"`;
-        return `<pre${cls}><code${cls}>${renderCallouts(md.utils.escapeHtml(str))}</code></pre>`;
-      },
-    });
-  });
+  // The syntax highlight plugin returns fences tagged `text`, or with a
+  // language Prism doesn't know, unescaped, so a "<token>" in such a sample
+  // becomes HTML. Escape those ourselves and keep the same markup. Eleventy
+  // installs the plugin's highlighter with md.set() every time it constructs a
+  // Markdown engine, and runs amendLibrary only once, so the wrapper is applied
+  // inside set() itself: whatever highlighter is installed, whenever, is wrapped.
+  const mdSet = markdownLibrary.set.bind(markdownLibrary);
+  markdownLibrary.set = (options) => {
+    const inner = options?.highlight;
+    if (typeof inner !== "function" || inner.wrapsPrism) return mdSet(options);
+    const highlight = (str, lang) => {
+      const name = (lang || "").split("/")[0];
+      if (name && name !== "text" && prismKnows(name))
+        return renderCallouts(inner(str, lang));
+      const cls = ` class="language-${name || "text"}"`;
+      return `<pre${cls}><code${cls}>${renderCallouts(markdownLibrary.utils.escapeHtml(str))}</code></pre>`;
+    };
+    highlight.wrapsPrism = true;
+    return mdSet({ ...options, highlight });
+  };
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
 
