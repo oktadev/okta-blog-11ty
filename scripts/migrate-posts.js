@@ -289,6 +289,11 @@ export function convertLiquid(text) {
         /\/assets-jekyll\/([^\s"')]+?)(?:-[0-9a-f]{64})?\.(js|css)\b/g,
         "/$2/$1.$2",
       )
+      // A folder a script loads from (a Brython path) lives under /js as well.
+      .replace(
+        /\/assets-jekyll\/((?!blog\/)[^\s"')]+\/[^\s"').]+)(?=[\s"')])/g,
+        "/js/$1",
+      )
       // Includes that became macros or Nunjucks includes
       .replace(
         /\{%\s*include setup\/(integrator|cli|oidcdebugger)\.md([^%]*)%\}/g,
