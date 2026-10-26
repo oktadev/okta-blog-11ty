@@ -627,6 +627,6 @@ And lastly, special thanks to Gabriel Sroka for his help reviewing drafts of thi
 <script src="/js/ultimate-guide-to-password-hashing-in-python/brython_stdlib.js"></script>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(){
-    brython({debug: 1, pythonpath:['/assets-jekyll/ultimate-guide-to-password-hashing-in-python/Lib/site-packages']})
+    brython({debug: 1, pythonpath:['/js/ultimate-guide-to-password-hashing-in-python/Lib/site-packages']})
 });
 </script>
