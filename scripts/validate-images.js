@@ -10,6 +10,10 @@ import path from "node:path";
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const MAX_WIDTH = 4000;
+// Advisory thresholds carried over from the old blog: they print a warning
+// and never fail, since eleventy-img serves resized WebP derivatives anyway.
+const WARN_BYTES = 500 * 1024;
+const WARN_WIDTH = 1800;
 const RASTER = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp"]);
 
 function git(...args) {
@@ -104,6 +108,7 @@ try {
   process.exit(2);
 }
 const errors = [];
+const warnings = [];
 let checked = 0;
 for (const file of files) {
   if (path.basename(file) === ".DS_Store") {
@@ -128,13 +133,32 @@ for (const file of files) {
   }
   const ext = path.extname(file).toLowerCase();
   if (!RASTER.has(ext)) continue;
-  const width = imageWidth(readFileSync(file));
+  const buf = readFileSync(file);
+  const width = imageWidth(buf);
   if (width === undefined) {
     errors.push(`${file}: not a readable image`);
-  } else if (width > MAX_WIDTH) {
+    continue;
+  }
+  if (width > MAX_WIDTH) {
     errors.push(`${file}: ${width}px wide is over the ${MAX_WIDTH}px limit`);
+    continue;
+  }
+  const kb = (bytes / 1024).toFixed(0);
+  if (bytes > WARN_BYTES && ext !== ".gif") {
+    warnings.push(
+      buf.subarray(0, 8).equals(PNG_SIGNATURE)
+        ? `${file}: ${kb}KB PNG; a photo or screenshot this size is usually smaller as JPEG or WebP`
+        : `${file}: ${kb}KB; consider compressing (the old blog's ceiling was 500KB)`,
+    );
+  }
+  if (width > WARN_WIDTH) {
+    warnings.push(
+      `${file}: ${width}px wide; the content column is 900px, so 1800px is plenty`,
+    );
   }
 }
+
+for (const warning of warnings) console.warn(`⚠ ${warning}`);
 
 for (const error of errors) console.error(`✖ ${error}`);
 if (errors.length) {
@@ -143,4 +167,6 @@ if (errors.length) {
   );
   process.exit(1);
 }
-console.log(`validate-images: checked ${checked} file(s), no problems`);
+console.log(
+  `validate-images: checked ${checked} file(s), no problems${warnings.length ? `, ${warnings.length} warning(s)` : ""}`,
+);

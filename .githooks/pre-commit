@@ -12,7 +12,12 @@ fail=0
 #    push or PR changes, so the hook is a convenience, not the enforcement.
 node scripts/validate-images.js --staged || fail=1
 
-# 2. Syntax-check staged JS (no dependencies required). Split on newlines only,
+# 2. Content lint on staged posts: placeholder domains, curly quotes, absolute
+#    links to this blog. CI runs the same script on the files a push or PR
+#    changes.
+node scripts/lint-content.js --staged || fail=1
+
+# 3. Syntax-check staged JS (no dependencies required). Split on newlines only,
 #    so a path with spaces stays one item.
 IFS='
 '
@@ -31,16 +36,16 @@ if [ "$fail" -ne 0 ]; then
   exit 1
 fi
 
-# 3. Format staged code with Prettier via lint-staged.
+# 4. Format staged code with Prettier via lint-staged.
 if [ -x node_modules/.bin/lint-staged ]; then
   node_modules/.bin/lint-staged
 else
   echo "› lint-staged not installed; skipping formatting (run 'npm install')"
 fi
 
-# 4. Validate front-matter across all posts (~0.2s).
+# 5. Validate front-matter across all posts (~0.2s).
 npm run --silent validate
 
-# 5. Flag opacity modifiers on brand colors outside the design system's
+# 6. Flag opacity modifiers on brand colors outside the design system's
 #    alpha-eligible set.
 npm run --silent validate-brand-alpha
