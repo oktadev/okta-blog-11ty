@@ -939,11 +939,9 @@ We've seen two implementations of the same HTTP endpoints in this application. T
 
 We should test both, even if they're just for demonstration purposes. I've extracted all the tests into a base class that I'll extend twice, activating each of the two profiles to test in isolation each of the HTTP endpoint styles. See [ClassicProfileEndpointsTest.java](https://github.com/oktadeveloper/okta-spring-webflux-react-example/blob/master/reactive-web/src/test/java/com/example/demo/ClassicProfileEndpointsTest.java) and [FunctionalProfileEndpointsTest.java](https://github.com/oktadeveloper/okta-spring-webflux-react-example/blob/master/reactive-web/src/test/java/com/example/demo/FunctionalProfileEndpointsTest.java) to see how each profile is activated.
 
-The `abstract` base class contains the most important aspects for testing our HTTP endpoints.
+The `abstract` base class contains the most important aspects for testing our HTTP endpoints. .`src/test/java/com/example/demo/AbstractBaseProfileEndpoints.java`
 
 <div class="example">
-
-Example 16. `src/test/java/com/example/demo/AbstractBaseProfileEndpoints.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1121,7 +1119,7 @@ Let's look at the skeletal configuration in a configuration class, `WebSocketCon
 
 <div class="example">
 
-Example 17. `src/main/java/com/example/demo/WebSocketConfiguration.java` {.example-title}
+Example 16. `src/main/java/com/example/demo/WebSocketConfiguration.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1227,7 +1225,7 @@ The `Consumer<T>.accept(FluxSink<ProfileCreatedEvent> sink)` method, in this cas
 
 <div class="example">
 
-Example 18. `src/main/java/com/example/demo/ProfileCreatedEventPublisher.java` {.example-title}
+Example 17. `src/main/java/com/example/demo/ProfileCreatedEventPublisher.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1293,7 +1291,7 @@ You don't really need much JavaScript to connect an HTML 5 client to a browser. 
 
 <div class="example">
 
-Example 19. `src/main/resources/static/ws.html` {.example-title}
+Example 18. `src/main/resources/static/ws.html` {.example-title}
 
 ```html
 <!DOCTYPE html>
@@ -1326,7 +1324,7 @@ Couldn't be simpler! You can drive new results into the system using the followi
 
 <div class="example">
 
-Example 20. `create.sh` {.example-title}
+Example 19. `create.sh` {.example-title}
 
 ```shell
 #!/bin/bash
@@ -1348,7 +1346,7 @@ We just did an end-to-end test. And that's satisfying! But, it's not substitute 
 
 <div class="example">
 
-Example 21. `src/test/java/com/example/demo/WebSocketConfigurationTest.java` {.example-title}
+Example 20. `src/test/java/com/example/demo/WebSocketConfigurationTest.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1565,7 +1563,7 @@ Then create a `SecurityConfiguration.java` class to configure the resource serve
 
 <div class="example">
 
-Example 22. `src/main/java/com/example/demo/SecurityConfiguration.java` {.example-title}
+Example 21. `src/main/java/com/example/demo/SecurityConfiguration.java` {.example-title}
 
 ```java
 package com.example.demo;
@@ -1614,7 +1612,7 @@ Once you have an access token, you can modify `create.sh` to use it.
 
 <div class="example">
 
-Example 23. `create.sh` {.example-title}
+Example 22. `create.sh` {.example-title}
 
 ```shell
 #!/bin/bash

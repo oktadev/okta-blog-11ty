@@ -27,13 +27,13 @@ are now testing just one class at a time.
 
     Add the following code under the dependency section:
 
-    ~~~ conf
+    ~~~conf
     androidTestCompile 'org.easymock:easymock:3.1'
     ~~~
 
 -   Replace `FooTest` with the following code:
 
-    ~~~ java
+    ~~~java
     package com.example.myapplication;
 
     import junit.framework.Assert;
@@ -83,7 +83,7 @@ are now testing just one class at a time.
 
     (I believe the original code for injecting fields is from **Spring**; however, it was modified afterwards.)
 
-    ~~~ java
+    ~~~java
     package com.example.myapplication;
 
     import java.lang.reflect.Field;

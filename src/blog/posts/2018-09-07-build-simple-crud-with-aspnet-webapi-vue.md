@@ -457,6 +457,7 @@ header span {
 
 While you are changing the files for layout, you should also clean up your `Hello` component which is used for the main page. Replace the content of `Hello.vue` with the following:
 
+{% raw %}
 ```html
 <template>
   <div class="hello">
@@ -497,6 +498,7 @@ a {
 }
 </style>
 ```
+{% endraw %}
 
 
 ## Add Authentication to Your Vue Application
@@ -772,6 +774,7 @@ export default {
 
 With `WeightRecordsApiService` now available you can create a component for weight records. Inside the `src/components` folder create a new file called `WeightRecords.vue` and paste the following code: 
 
+{% raw %}
 ```html
 <template>
   <div class="container-fluid mt-4">
@@ -884,6 +887,7 @@ export default {
 }
 </script>
 ```
+{% endraw %}
 
 Now you need to add this component to the main menu and make sure your router renders the component once you navigate to `/weight-trackings`. Inside your Vue application, update the `src/router/index.js` file. Add the following import
 

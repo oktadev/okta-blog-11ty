@@ -158,7 +158,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - {% raw %}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{% endraw %}
+            - {%raw%}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{%endraw%}
             # Perform a Partial Cache Restore (https://circleci.com/docs/2.0/caching/#restoring-cache)
             - v1-dependencies-
       - run:
@@ -178,7 +178,7 @@ jobs:
             - node
             - node_modules
             - ~/.gradle
-          key: {% raw %}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{% endraw %}
+          key: {%raw%}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{%endraw%}
       - run:
           name: Give Executable Power
           command: 'chmod +x gradlew'
@@ -219,7 +219,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - {% raw %}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{% endraw %}
+            - {%raw%}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{%endraw%}
             # Perform a Partial Cache Restore (https://circleci.com/docs/2.0/caching/#restoring-cache)
             - v1-dependencies-
       - run:
@@ -240,7 +240,7 @@ jobs:
             - node_modules
             - ~/.gradle
             - ~/.cache/Cypress
-          key: {% raw %}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{% endraw %}
+          key: {%raw%}v1-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{%endraw%}
       - run:
           name: Give Executable Power
           command: 'chmod +x gradlew'
@@ -283,7 +283,7 @@ Once a project is set up in CircleCI, a pipeline is triggered each time a commit
 **NOTE**: If you modify the configuration, and encounter CircleCI cache errors, the only way I found to recreate the cache is to update the version prefix, for example:
 
 ```yaml
-{% raw %}v2-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{% endraw %}
+{%raw%}v2-dependencies-{{ checksum "build.gradle" }}-{{ checksum "package-lock.json" }}{%endraw%}
 ```
 
 ## Install Spinnaker on Google Kubernetes Engine

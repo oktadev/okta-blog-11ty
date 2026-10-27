@@ -9,9 +9,9 @@ communities: [java]
 description: "This tutorial shows how to integrate third-party secure resources with Spring WebClient."
 tags: [spring, spring-webclient, java, integration-testing, webtestclient, testing, oauth2, mockwebserver]
 tweets:
-  - "Spring ẀebClient was added as part of the reactive web stack WebFlux in Spring Framework 5.0. Learn more! 👇"
-  - "Spring WebClient provides a slick API for connecting to OAuth-protected resources. 💪"
-  - "Spring WebClient - it's the bees knees! 🐝"
+- "Spring ẀebClient was added as part of the reactive web stack WebFlux in Spring Framework 5.0. Learn more! 👇"
+- "Spring WebClient provides a slick API for connecting to OAuth-protected resources. 💪"
+- "Spring WebClient - it's the bees knees! 🐝"
 image: spring-webclient/spring-webclient.png
 type: conversion
 ---
@@ -35,7 +35,6 @@ In this tutorial, you will learn how to:
 - [Java 11+](https://openjdk.java.net/install/index.html)
 - [Okta CLI](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -58,7 +57,6 @@ http -d https://start.spring.io/starter.zip type==maven-project \
   javaVersion==11 \
   dependencies==webflux,okta,lombok
 ```
-
 **NOTE:** The [Lombok](https://projectlombok.org/features/all) dependency allows reducing boilerplate code with annotations, but requires additional configuration in your IDE to work. Check out the instructions at [projectlombok.org](https://projectlombok.org/)
 
 Unzip the project:
@@ -76,8 +74,8 @@ Rename `application.properties` to `application.yml`, the following properties m
 okta:
   oauth2:
     issuer: https://{yourOktaDomain}/oauth2/default
-    client-secret: { clientSecret }
-    client-id: { clientId }
+    client-secret: {clientSecret}
+    client-id: {clientId}
     scopes: openid, profile, email
 
 service:
@@ -119,6 +117,7 @@ public class SecurityConfiguration {
 In the configuration above, any request must be authenticated, and the authentication entry point will redirect to Okta. The entry point definition is required as a second client registration will be configured later in the tutorial for the third-party requests. For this example, login is enabled, to verify the flow with the browser.
 
 Create a `com.okta.developer.search.controller` package and add a `SearchCount` class for the `totalCount` result:
+
 
 ```java
 package com.okta.developer.search.controller;
@@ -212,7 +211,6 @@ public class WebClientConfiguration {
     }
 }
 ```
-
 The `ServerOAuth2AuthorizedClientExchangeFilterFunction` provides a mechanism for using an `OAuth2AuthorizedClient` to make requests including a Bearer Token, and supports the following features:
 
 - **setDefaultOAuth2AuthorizedClient**: explicitly opt into using `oauth2Login()` to provide an access token implicitly. For this use case, the `WebClient` is used to access a third-party service, so the tokens obtained from Okta are not valid for accessing GitHub.
@@ -237,9 +235,9 @@ spring:
       client:
         registration:
           github:
-            client-id: { githubClientID }
-            client-secret: { githubClientSecret }
-```
+            client-id: {githubClientID}
+            client-secret: {githubClientSecret}
+```            
 
 ## Spring WebClient Testing with MockWebServer
 
@@ -377,7 +375,7 @@ After the GitHub login, then you must authorize the search application for sendi
 After you authorize access, the search result will show:
 
 ```json
-{ "total_count": 114761362 }
+{"total_count":114761362}
 ```
 
 ## Learn More About Reactive Spring Boot and WebClient

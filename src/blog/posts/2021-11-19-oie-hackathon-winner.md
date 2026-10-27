@@ -10,7 +10,7 @@ tweets:
 - "Video interview with Matt McKenzie, who built the p2p platform @GooseClip, and won 1st prize in the Okta Identity Engine Hackathon🏆 "
 - "🗣 Meet the maker of GooseClip, #Okta's 1st place hackathon winner, in conversation with @briandemers and @Quorralyne "
 image: oie-hackathon-winner/social.jpg
-type: awareness 
+type: awareness
 ---
 
 ## Okta Early Access Hackathon revisited

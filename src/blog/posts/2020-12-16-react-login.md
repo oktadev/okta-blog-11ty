@@ -29,7 +29,6 @@ For this tutorial, I will assume that you are familiar with JavaScript and have 
 - [Node 14](https://nodejs.org/)
 - [Okta CLI](https://github.com/okta/okta-cli)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

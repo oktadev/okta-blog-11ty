@@ -9,14 +9,14 @@ communities: [.net, gaming]
 description: "Learn how to authenticate users in Unity WebGL and authorize them to Azure Playfab"
 tags: [unity, webgl, playfab, oauth, oidc]
 tweets:
-  - "Need to authenticate users in your @unity3d WebGL project? Looking to authorize users to @AzurePlayFab? Let's build it in 20 minutes! ->"
-  - "User Authorization for @unity3d WebGL and @AzurePlayFab can be easy. Lets step through it in as little as 20 minutes!->"
-  - "Friends don't let friends skimp on security! Secure your players identities in your @unity3d WebGL + @AzurePlayFab project in 20 minutes or less."
+- "Need to authenticate users in your @unity3d WebGL project? Looking to authorize users to @AzurePlayFab? Let's build it in 20 minutes! ->"
+- "User Authorization for @unity3d WebGL and @AzurePlayFab can be easy. Lets step through it in as little as 20 minutes!->"
+- "Friends don't let friends skimp on security! Secure your players identities in your @unity3d WebGL + @AzurePlayFab project in 20 minutes or less."
 Image: blog/unity-webgl-playfab-authorization/Webgl_OAuth_Thumb.png
 type: conversion
 ---
 
-As game creators, we hold a fundamental responsibility to protect and secure any and all data that our players entrust to us. Historically, security in games has not been high on the priority list because games were enjoyed anonymously and offline. But with our society becoming ever more connected, demand for social gaming experiences and online gaming features has increased exponentially. This has led to the development of cloud-based gaming platforms, such as [PlayFab](https://docs.microsoft.com/en-us/gaming/playfab/what-is-playfab), that handle everything from multiplayer server hosting, leaderboard tracking, virtual economy, data/analytics, and much more. Even games that are mostly considered "offline" are seeing increased demand for some connected functionality. As more games are developed in the cloud (or developed with cloud-based platforms) and track an increasingly large amount of user data, security is becoming one of the highest priorities for the games community.
+As game creators, we hold a fundamental responsibility to protect and secure any and all data that our players entrust to us. Historically, security in games has not been high on the priority list because games were enjoyed anonymously and offline. But with our society becoming ever more connected, demand for social gaming experiences and online gaming features has increased exponentially. This has led to the development of cloud-based gaming platforms, such as [PlayFab](https://docs.microsoft.com/en-us/gaming/playfab/what-is-playfab), that handle everything from multiplayer server hosting, leaderboard tracking, virtual economy, data/analytics, and much more. Even games that are mostly considered "offline" are seeing increased demand for some connected functionality. As more games are developed in the cloud (or developed with cloud-based platforms) and track an increasingly large amount of user data, security is becoming one of the highest priorities for the games community.  
 
 {% img {src: "unity-webgl-playfab-authorization/p_soti_stuffing.jpeg", alt: "SOTI Credential Stuffing", header: "800"} %}
 
@@ -41,7 +41,7 @@ In [Identity Security for Games in C# with Unity](/blog/2020/08/21/unity-csharp-
 
 For this project, I will be targeting [Unity WebGL](https://docs.unity3d.com/Manual/webgl-gettingstarted.html). The build target is important because different platforms will require different means of facilitating user interaction.
 
-In [Identity Security for Games in C# with Unity](/blog/2020/08/21/unity-csharp-games-security), I described both native and [OAuth](/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc) design concepts. While building out a user interface for authentication natively in the engine might seem like the best approach because of user experience, it is not the preferred approach for security, and it typically adds much more effort for the developer. This is because it requires the developer to build out logic supporting the entire [authentication state machine](https://developer.okta.com/docs/reference/api/authn/#transaction-state); securely handling every event, every MFA state, registration, MFA enrollment, user self service (account unlock and password reset), etc.
+In [Identity Security for Games in C# with Unity](/blog/2020/08/21/unity-csharp-games-security ), I described both native and [OAuth](/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc) design concepts. While building out a user interface for authentication natively in the engine might seem like the best approach because of user experience, it is not the preferred approach for security, and it typically adds much more effort for the developer. This is because it requires the developer to build out logic supporting the entire [authentication state machine](https://developer.okta.com/docs/reference/api/authn/#transaction-state); securely handling every event, every MFA state, registration, MFA enrollment, user self service (account unlock and password reset), etc.
 
 {% img {src: "unity-webgl-playfab-authorization/p_state_model.png", alt: "Auth Model", header: "800"} %}
 
@@ -85,7 +85,7 @@ Right-click in the `Scene Hierarchy` panel and click **UI**, **Button**.
 
 This will be the button that triggers the authentication request.
 
-Right click the button in the `Hierarchy` panel, click **Rename** and name the button `Sign In.`
+Right click the button in the `Hierarchy` panel,  click **Rename** and name the button `Sign In.`
 
 {% img {src: "unity-webgl-playfab-authorization/6_RenameButton.png", alt: "Rename Button", header: "400"} %}
 
@@ -108,12 +108,14 @@ Open up a preferred text editor, create a new file called `OAuth.jslib`, and sav
 Add the following to `OAuth.jslib` and save it.
 
 ```js
-mergeInto(LibraryManager.library, {
-  startAuthentication: function (utf8String) {
-    var authRequest = UTF8ToString(utf8String);
-    var authorizationRequest = authRequest;
-    startAuth(authorizationRequest);
-  },
+mergeInto(LibraryManager.library, 
+{
+        startAuthentication: function (utf8String) 
+        {
+                var authRequest = UTF8ToString(utf8String);
+                var authorizationRequest = authRequest;
+                startAuth(authorizationRequest);
+        }
 });
 ```
 
@@ -145,9 +147,9 @@ Find the `<body>` tags in the HTML and locate the closing `</body>` tag. Right b
 
 ```js
 <script>
-function startAuth(authorizationRequest)
+function startAuth(authorizationRequest) 
 {
-        window.addEventListener('message', function (e)
+        window.addEventListener('message', function (e) 
         {
                 unityInstance.SendMessage("OAuth2", "getAuthResults", data);
         }, false);
@@ -164,13 +166,10 @@ function startAuth(authorizationRequest)
 This is the JavaScript function that the `Sign In` button in the WebGL object will trigger. The button does this by first calling a function in C# on its click event. That function will then call the `OAuth.jslib` which will then call this `startAuth()` function in the page JavaScript. This represents the best way for WebGL to provide browser interaction to the player from within the WebGL object.
 
 ```js
-window.addEventListener(
-  "message",
-  function (e) {
-    unityInstance.SendMessage("OAuth2", "getAuthResults", data);
-  },
-  false,
-);
+window.addEventListener('message', function (e) 
+{
+        unityInstance.SendMessage("OAuth2", "getAuthResults", data);
+}, false);
 ```
 
 `window.addEventListener()` creates an event listener that will be called by a child popup window when authentication is complete. The result of authentication will be an `Auth Code` sent back to the C# in the WebGL object via `unityInstance.SendMessage()`.
@@ -178,7 +177,7 @@ window.addEventListener(
 ```js
 var childwin;
 const childname = "Authenticate";
-childwin = window.open(authorizationRequest, childname, "height=300px, width=500px");
+childwin = window.open(authorizationRequest, childname, 'height=300px, width=500px');
 ```
 
 With the event listener ready, `window.open()` is used to create a popup window to the OAuth authorization request URI.
@@ -195,17 +194,17 @@ In the same folder as `index.html` create a new file called `callback.html` usin
 <head>
     <script>
         //Parse query string helper function
-        function getParameterByName(name, url = window.location.href)
+        function getParameterByName(name, url = window.location.href) 
         {
                 name = name.replace(/[\[\]]/g, '\\$&');
                 var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex.exec(url);
 
-                if (!results)
+                if (!results) 
                 {
                         return null;
                 }
 
-                if (!results[2])
+                if (!results[2]) 
                 {
                         return '';
                 }
@@ -219,18 +218,18 @@ In the same folder as `index.html` create a new file called `callback.html` usin
         var state = getParameterByName('state');
 
         window.opener.postMessage(code + "," + state, "*")
-
-        try
+     
+        try 
         {
                 window.close();
         }
         catch (e) { console.log(e) }
 
-        try
+        try 
         {
                 self.close();
         }
-        catch (e) { console.log(e) }
+        catch (e) { console.log(e) }       
     </script>
 </head>
 <body>
@@ -253,7 +252,6 @@ With the browser portion of the project complete, the next step is to create the
 ### Configure an Authorization Server
 
 {% set note %}
-
 > The `appName` in the redirect URIs is just meant to be a placeholder. You should replace it with a name that will be used later when deploying the Unity project to Azure App Services.
 {% endset %}
 {{ macro.cli({type: "spa", note: note, loginRedirectUri: "https://appName.azurewebsites.net/callback.html", logoutRedirectUri: "https://appName.azurewebsites.net/index.html"}) }}
@@ -330,7 +328,7 @@ public void Authenticate()
             code_challenge_method);
 
         startAuthentication(authorizationRequest);
-}
+} 
 ```
 
 The first thing that `Authenticate()` does is prepare the OAuth Authorization request. This is the request sent to the jslib, and then to the JavaScript running in the browser. The player will be redirected to this URI in a browser popup.
@@ -628,4 +626,4 @@ To keep learning, check out some of our other great guides and tips:
 - [What the Heck is OAuth?](/blog/2017/06/21/what-the-heck-is-oauth)
 - [Nobody Cares About OAuth or OpenID Connect](/blog/2019/01/23/nobody-cares-about-oauth-or-openid-connect)
 
-Comment below if you have any questions. Be sure to follow [@oktadev](https://twitter.com/oktadev) on Twitter, follow us on [Twitch](https://www.twitch.tv/oktadev), like us on [Facebook](https://www.facebook.com/oktadevelopers/) and subscribe to our [YouTube Channel](https://youtube.com/c/oktadev) for more!
+Comment below if you have any questions. Be sure to follow [@oktadev](https://twitter.com/oktadev) on Twitter, follow us on [Twitch](https://www.twitch.tv/oktadev), like us on [Facebook](https://www.facebook.com/oktadevelopers/ ) and subscribe to our [YouTube Channel](https://youtube.com/c/oktadev) for more!

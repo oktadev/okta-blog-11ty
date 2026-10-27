@@ -25,7 +25,6 @@ In this tutorial post, you will learn how to ...
 * Enable monitoring with JHipster Console
 * Configure OpenID Connect authentication for microservices
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

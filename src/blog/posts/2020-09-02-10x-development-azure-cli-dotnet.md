@@ -246,7 +246,7 @@ To fix this I need to set up a proper configuration in Okta and bind my ASP.NET 
 > Note that the TCP port 5001 must be the same used by the application. You can see it in the messages displayed in the terminal when you start the application with **`dotnet run`**.
 {% endset %}
 
-{{ macro.cli({type: "web", framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
+{{ macro.cli({type: "web", note: note, framework: "ASP.NET Core", loginRedirectUri: "http://localhost:5001/authorization-code/callback", logoutRedirectUri: "http://localhost:5001/signout/callback"}) }}
 
 Insert your Okta domain, client ID, and client secret in the **appsettings.json** file in the ASP.NET Core project:
 

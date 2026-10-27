@@ -9,7 +9,7 @@ image: developer-edition-changes/social.png
 type: awareness
 changelog:
 - 2025-05-28: Added info on determining org type
-- 2025-07-09: Added "Migrating published integrations" section 
+- 2025-07-09: Added "Migrating published integrations" section
 ---
 
 

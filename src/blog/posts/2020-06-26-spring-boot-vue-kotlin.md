@@ -14,7 +14,7 @@ tweets:
 - "Build an app with Vue + @springboot and @kotlin. We think you'll 💚 the experience!"
 image: spring-boot-vue/kotlin-spring-boot-vue.png
 type: conversion
-changelog: 
+changelog:
 - 2020-08-31: Updated GitHub repo to have proper starter files and fixed logout in Vue. You can see the changes in the [example app on GitHub](https://github.com/oktadeveloper/okta-kotlin-spring-boot-vue-example/pull/4). Changes to this article can be viewed in [oktadeveloper/okta-blog#392](https://github.com/oktadeveloper/okta-blog/pull/392).
 ---
 
@@ -38,7 +38,6 @@ The example application you're going to build here is a todo app. The client-sid
 - [Node 12+](https://nodejs.org)
 - [Yarn](https://yarnpkg.com/)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

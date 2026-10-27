@@ -26,7 +26,7 @@ I'm embarking on a new adventure and entering the wide world of Developer Advoca
  
 I'm a military brat who grew up in Japan and then moved to Kansas City. When I'm not diving deep into technical docs or hacking on a project, I love engaging with dev communities and relaxing at home. You might find me sharing knowledge as a [Google Developer Expert](https://developers.google.com/community/experts) in Angular, organizing [ngGirls](https://www.ng-girls.org/) workshops as a core team member, co-organizing [AngularKC meetups](https://www.meetup.com/angularkc/), or creating a curriculum for women to learn web development skills at [Coding & Cocktails](https://codingandcocktails.kcwomenintech.org/). You might also find me leaning into my homebody ways by reading, enjoying a glass of wine, playing word puzzle games, or watching K-Dramas. Oh, and yes, I do love watching [Studio Ghibli](https://www.ghibli.jp/) films. 
 
-{% img {src: "alisaduncan-intro/totoro.jpeg", alt: "Totoro figurines", header: "800"} %}
+{% img {src: "alisaduncan-intro/totoro.jpg", alt: "Totoro figurines", header: "800"} %}
 
 <p style="text-align:center">Photo by <a href="https://unsplash.com/@wx1993">Raychan</a> on <a href="https://unsplash.com">Unsplash</a></p>
 
@@ -36,7 +36,7 @@ I'm a military brat who grew up in Japan and then moved to Kansas City. When I'm
 
 My professional technical background is over ten years of enterprise software development working on B2B products in various languages, from C++, C#, Java, and JavaScript. From image rendering to creating web services and APIs to implementing event orchestration to developing mobile-friendly web apps, I've had an opportunity to learn a lot. But I took a shine to all things JavaScript. Of course, I love [Angular](https://angular.io) and am also excited about both front-end and back-end JavaScript frameworks. It's incredible what we can create with code, and I am always in awe of all the innovations in software development! We, as devs, are pretty magical! ✨
 
-{% img {src: "alisaduncan-intro/alisa-djangogirls.jpeg", alt: "Mentoring at a DjangoGirls workshop"} %}
+{% img {src: "alisaduncan-intro/alisa-djangogirls.jpg", alt: "Mentoring at a DjangoGirls workshop"} %}
 
 > "I came to deliver this letter."
 > 

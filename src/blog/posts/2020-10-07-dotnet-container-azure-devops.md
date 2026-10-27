@@ -234,7 +234,7 @@ Luckily, there is an easy solution. ([ASP.NET Core passing HTTP (not HTTPS) redi
 
 Simply add this code in your Startup.cs/Configure
 
-```C#
+```csharp
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
       ForwardedHeaders = ForwardedHeaders.XForwardedProto

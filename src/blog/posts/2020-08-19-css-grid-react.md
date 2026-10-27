@@ -26,7 +26,6 @@ The CSS grid layout allows you to specify a grid system on your web page and pla
 
 In this tutorial, I will show you how to create a single page application that uses CSS grids to create a responsive layout without using media queries. The application will be a simple Unicode character browser implemented with React.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

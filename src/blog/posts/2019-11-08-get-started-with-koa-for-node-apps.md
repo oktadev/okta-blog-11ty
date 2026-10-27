@@ -121,7 +121,6 @@ You can change this behavior by adding a controller!
 Start by creating a view to generate HTML for the client. Create a new file named `src/dashboard/dashboard.handlebars`. This handlebars template contains some expressions to render data dynamically.
 
 {% raw %}
-{% raw %}
 ```handlebars
 <!DOCTYPE html>
 <html lang="en">
@@ -275,7 +274,6 @@ Start by creating a view to generate HTML for the client. Create a new file name
 </body>
 </html>
 ```
-{% endraw %}
 {% endraw %}
 
 Next, you'll add the controller to render the handlebars template. Create a new file named `src/dashboard/dashboard-controller.ts` and add the following code.
@@ -595,12 +593,14 @@ Now your Okta app has been created, scroll down and take a look at the Client Cr
 
 Create a file named `.env` in the root directory of your project and copy in the following (be sure to substitute in the proper values where appropriate).
 
+{% raw %}
 ```sh
 OKTA_DOMAIN={{ OKTA_DOMAIN }} # this is the hostname part of the URL of the Okta's dashboard but without the "-admin" part
 CLIENT_ID={{ CLIENT_ID }}
 CLIENT_SECRET={{ CLIENT_SECRET }}
 APP_SECRET=alongrandomstring # this is not copied from Okta, you can put a random string here
 ```
+{% endraw %}
 
 ## Integrate Koa with Okta through Passport
 

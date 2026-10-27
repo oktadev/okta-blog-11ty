@@ -22,6 +22,7 @@ Laravel is a clean and modern framework with a vast ecosystem of learning resour
 In this article, I'll show you how to get started with Laravel and quickly build an application with user authentication (using Okta as your identity management provider).
 
 <div markdown="1" style="border: 1px #eedeaa solid; background: #ffffee; padding: 20px; border-radius: 8px;">
+
 **Prerequisites:** Please ensure you have already installed PHP, Composer, and have signed up for a [free Okta developer account](/signup/).
 </div>
 
@@ -87,7 +88,7 @@ Select **Web** and click **Next**.
 
 Enter a title, set `http://localhost:8000/` as the Base URI and `http://localhost:8000/login/okta/callback` as the Login Redirect URI, then click Done. You can leave the rest of the settings as they are.
 
-Copy the **Client ID** and **Client Secret** values from the application settings. Go to **API** > **Authorization Servers**, and copy just the hostname part of the `Issuer URI` field (without the `/oauth2/default` part) - this is your Okta Base URL (it looks like `https://{{yourOktaDomain}}`).
+Copy the **Client ID** and **Client Secret** values from the application settings. Go to **API** > **Authorization Servers**, and copy just the hostname part of the `Issuer URI` field (without the `/oauth2/default` part) - this is your Okta Base URL (it looks like {% raw %}`https://{{yourOktaDomain}}`{% endraw %}).
 
 ## Connect Okta to the Laravel Project
 

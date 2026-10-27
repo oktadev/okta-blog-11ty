@@ -6,7 +6,7 @@ communities: [.net]
 description: "This tutorial shows you how to call Azure Cognitive Services to verify faces and store profiles pics in Azure Storage in a .NET MVC app."
 tags: [dotnet, dotnetcore, csharp, aspnet, aspnetcore, dotnet5, azure]
 tweets:
-- "Snap a selfie! 📸  Analyze and detect faces using #azure cognitive services in this #dotnet app!" 
+- "Snap a selfie! 📸  Analyze and detect faces using #azure cognitive services in this #dotnet app!"
 - "Are you who you say you are? Analyze and detect faces using #azure cognitive services in this #dotnet app! 💻"
 image: net-azure-cognitive-services/azure-cognitive-services-social.jpg
 type: conversion

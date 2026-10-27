@@ -28,7 +28,6 @@ How can be Elasticsearch integrated into a Spring Boot application? What are the
 - [Okta CLI 0.9.0](https://cli.okta.com)
 - [Docker 20.10.7](https://docs.docker.com/engine/install/)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

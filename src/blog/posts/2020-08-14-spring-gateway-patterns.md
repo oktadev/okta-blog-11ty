@@ -30,7 +30,6 @@ In this tutorial, you will use Spring Cloud Gateway for routing to traditional S
 - [Java 11](https://adoptopenjdk.net/)+
 - cURL
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

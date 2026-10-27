@@ -99,7 +99,7 @@ Save the file, then click on the Hammerspoon menu icon, and select **Reload conf
 
 At this point, should see the Hammerspoon console, and it should look like this:
 
-{% img {src: "zoom-hammerspoon/console-zoom-inmeeting-micah.png", alt: "Image of the Hammerspoon preferences window", header: "512px"} %}
+{% img {src: "zoom-hammerspoon/console-zoom-inmeeting-micah.png", alt: "Image of the Hammerspoon preferences window", header: "512"} %}
 
 Now, at first glance, this console appears to be just a message log. Not so! You can also interactively run Lua in this console, which is exactly what we're going to do now.
 
@@ -111,7 +111,7 @@ spoon.Zoom:inMeeting()
 
 If Zoom is already open, and in a meeting, this command should return `true` otherwise, it'll return `false`
 
-{% img {src: "zoom-hammerspoon/console-more.png", alt: "Image of the Hammerspoon preferences window", header: "512px"} %}
+{% img {src: "zoom-hammerspoon/console-more.png", alt: "Image of the Hammerspoon preferences window", header: "512"} %}
 
 If the command returned `false` like in the image above, then quit and reopen Zoom, start a meeting, and re-run the command. This time around, it should return `true`
 

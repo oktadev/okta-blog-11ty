@@ -28,7 +28,6 @@ The last piece of the microservice architecture is **Google Cloud and GKE**. Thi
 
 We're going to assume you're familiar with Spring Boot and Java. If not, take a look at the end of the tutorial for some links to get you started.
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 {% include "integrator-org-warning.njk" %}
@@ -799,7 +798,7 @@ docker build -t kayak-app-auth:1.0 .
 
 Tag and push your Docker image to the Google Cloud container registry. Change the project name in the repo path, if necessary.
 
-```bash  
+```bash
 docker tag kayak-app-auth:1.0 gcr.io/$PROJECT_NAME/kayak-app-auth:1.0;  
 docker push gcr.io/$PROJECT_NAME/kayak-app-auth:1.0;  
 ```
@@ -847,7 +846,7 @@ So close! The last thing you need to do is to use the OIDC Debugger tool to gene
 
 ## Generate A JWT and Test OAuth 2.0
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 At the bottom, click **Send Request**.
 

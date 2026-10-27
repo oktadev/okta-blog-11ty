@@ -44,7 +44,7 @@ my summary is below:
 
     Add the following code under the dependency section:
 
-    ~~~ conf
+    ~~~conf
     compile 'com.squareup.dagger:dagger:1.2.1'
     provided 'com.squareup.dagger:dagger-compiler:1.2.1'
     ~~~
@@ -52,14 +52,14 @@ my summary is below:
 
     Add the following code to the Application tags:
 
-    ~~~ conf
+    ~~~conf
     android:name=".MyApplication"
     ~~~
 -   Create the classes
 
     Add the `MyApplication` class.
 
-    ~~~ java
+    ~~~java
     public class MyApplication extends Application {
         private ObjectGraph applicationGraph;
 
@@ -82,7 +82,7 @@ my summary is below:
     ~~~
 -   Add the `MyModule` class.
 
-    ~~~ java
+    ~~~java
     package com.example.myapplication;
 
     import dagger.Module;
@@ -104,7 +104,7 @@ my summary is below:
 -   Modify `MainActivity` and replace code `private Foo
     foo = new Foo();` with:
 
-    ~~~ java
+    ~~~java
     @Inject
     Foo foo;
     ~~~
@@ -118,14 +118,14 @@ my summary is below:
     ~~~
 -   Modify the `Foo` class and replace code `Bar bar = new Bar();` with:
 
-    ~~~ java
+    ~~~java
     @Inject
     Bar bar;
     ~~~
 
     Modify Bar class and add
 
-    ~~~ java
+    ~~~java
     @Inject
     Bar() {
     }

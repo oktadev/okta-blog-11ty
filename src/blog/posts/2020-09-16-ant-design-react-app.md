@@ -14,7 +14,7 @@ tweets:
 - "Need to quickly institute ANT design principles to your React app? We've got you covered!"
 image: featured/okta-react-skew.jpg
 type: conversion
-changelog: 
+changelog:
 - 2021-04-13: Updated to streamline setup with the Okta CLI and add to add screenshots. [okta-blog#706](https://github.com/oktadeveloper/okta-blog/pull/706) shows what changed.
 ---
 

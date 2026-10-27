@@ -169,13 +169,13 @@ Now, add a menu item for the family tree page. Expand the folder **Views**, and 
 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
   <ul class="navbar-nav flex-grow-1">
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Privacy">Privacy</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="People" asp-action="Index">Family tree</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="People" asp-action="Index">Family tree</a>
     </li>
   </ul>
 </div>

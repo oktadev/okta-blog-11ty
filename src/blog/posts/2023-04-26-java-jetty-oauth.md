@@ -765,7 +765,7 @@ HTTP/1.1 403 Forbidden
 
 ### Generate a JWT using the OIDC Debugger
 
-To access the protected endpoints, you need to generate an access token JWT. {{ macro.oidcdebugger() }}
+To access the protected endpoints, you need to generate an access token JWT. {{ macro.oidcdebugger({}) }}
 
 {% img {src: "java-jetty/oidc-debugger.png", alt: "OIDC Debugger Configuration", header: "650"} %}
 

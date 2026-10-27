@@ -24,7 +24,6 @@ The main advantage of using the Spring Framework is the ability to inject your d
 
 > NOTE: For this post, I will be using Eclipse, as it is my preferred IDE. If you are using Eclipse as well, you will need to [install a version of Oxygen](https://www.eclipse.org/downloads/packages/installer) or beyond in order to have JUnit 5 (Jupiter) test support included. 
 
-**Table of Contents**{: .hide }
 [[toc]]
  
 {% include "integrator-org-warning.njk" %}
@@ -501,7 +500,7 @@ public class SpringBootRestApiApplication {
 
 In order to test, you will need to be able to generate a valid token. Typically, the client application would be responsible for generating the tokens that it would use for authentication in the API. However, since you have no client application, you need a way to generate tokens in order to test the application.
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "junit5-spring-boot/oidc-debugger.png", alt: "OIDC Debugger", header: "475"} %}
 

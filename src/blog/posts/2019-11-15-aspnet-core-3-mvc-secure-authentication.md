@@ -231,10 +231,10 @@ This will give you a little "chunk" of UI that you can inject into your main pag
 <div class="navbar-collapse collapse justify-content-between">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Privacy">Privacy</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </li>
   </ul>
   <partial name="_LoginPartial" />
@@ -273,7 +273,7 @@ Make sure to add a menu item. I just copied the existing privacy link in `_Layou
 
 ```html
 <li class="nav-item">
-    <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Everyone">Everyone</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Everyone">Everyone</a>
 </li>
 ```
 

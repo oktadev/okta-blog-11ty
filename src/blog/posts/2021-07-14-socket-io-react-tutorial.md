@@ -9,14 +9,14 @@ communities: [javascript]
 description: "This tutorial shows you how to create a real-time chat application using JavaScript and Socket.IO."
 tags: [socketio, websocket, react, express, javascript]
 tweets:
-  - "Learn how to use WebSockets and create a secure real-time chat app with @SocketIO!"
-  - "Giddyup with @SocketIO and @reactjs in our latest JavaScript tutorial."
-  - "React, Express.js, and Socket.IO for all your real-time chat needs!"
+- "Learn how to use WebSockets and create a secure real-time chat app with @SocketIO!"
+- "Giddyup with @SocketIO and @reactjs in our latest JavaScript tutorial."
+- "React, Express.js, and Socket.IO for all your real-time chat needs!"
 image: socket-io-react-tutorial/socket-io-tutorial.png
 type: conversion
 github: https://github.com/oktadev/okta-socket-io-chat-example
 changelog:
-  - 2021-12-15: Updated to use Socket.IO v4.4.0 and Okta React v6.3.0. See this post's changes in [okta-blog#1001](https://github.com/oktadev/okta-blog/pull/1001) and the example app changes in [okta-socket-io-chat-example#3](https://github.com/oktadev/okta-socket-io-chat-example/pull/3).
+- 2021-12-15: Updated to use Socket.IO v4.4.0 and Okta React v6.3.0. See this post's changes in [okta-blog#1001](https://github.com/oktadev/okta-blog/pull/1001) and the example app changes in [okta-socket-io-chat-example#3](https://github.com/oktadev/okta-socket-io-chat-example/pull/3).
 ---
 
 The HTTP protocol powers the web. Traditionally, HTTP is a request-response protocol. This means that a client requests data from a server, and the server responds to that request. In this model, a server will never send data to a client without having been queried first.
@@ -34,7 +34,6 @@ This tutorial will show you how to create a simple chat application using Socket
 - [Node 14](https://nodejs.org/)
 - [Okta CLI](https://github.com/okta/okta-cli)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 If you would rather follow along by watching a video, check out the screencast below from our [YouTube channel](https://youtu.be/449z_p6rkP8).
@@ -61,35 +60,35 @@ npm install -E socket.io@4.4.0 uuid@8.3.2 cors@2.8.5
 The one dependency to note here is `socket.io`. This is the Socket.IO library that you will be using to provide the communication between client and server. Now, open up an editor of your choice and create a new file `chat.js` in the project folder. Paste the following contents into the file.
 
 ```js
-const uuidv4 = require("uuid").v4;
+const uuidv4 = require('uuid').v4;
 
 const messages = new Set();
 const users = new Map();
 
 const defaultUser = {
-  id: "anon",
-  name: "Anonymous",
+  id: 'anon',
+  name: 'Anonymous',
 };
 
-const messageExpirationTimeMS = 5 * 60 * 1000;
+const messageExpirationTimeMS = 5*60 * 1000;
 
 class Connection {
   constructor(io, socket) {
     this.socket = socket;
     this.io = io;
 
-    socket.on("getMessages", () => this.getMessages());
-    socket.on("message", (value) => this.handleMessage(value));
-    socket.on("disconnect", () => this.disconnect());
-    socket.on("connect_error", (err) => {
+    socket.on('getMessages', () => this.getMessages());
+    socket.on('message', (value) => this.handleMessage(value));
+    socket.on('disconnect', () => this.disconnect());
+    socket.on('connect_error', (err) => {
       console.log(`connect_error due to ${err.message}`);
     });
   }
-
+  
   sendMessage(message) {
-    this.io.sockets.emit("message", message);
+    this.io.sockets.emit('message', message);
   }
-
+  
   getMessages() {
     messages.forEach((message) => this.sendMessage(message));
   }
@@ -99,16 +98,19 @@ class Connection {
       id: uuidv4(),
       user: users.get(this.socket) || defaultUser,
       value,
-      time: Date.now(),
+      time: Date.now()
     };
 
     messages.add(message);
     this.sendMessage(message);
 
-    setTimeout(() => {
-      messages.delete(message);
-      this.io.sockets.emit("deleteMessage", message.id);
-    }, messageExpirationTimeMS);
+    setTimeout(
+      () => {
+        messages.delete(message);
+        this.io.sockets.emit('deleteMessage', message.id);
+      },
+      messageExpirationTimeMS,
+    );
   }
 
   disconnect() {
@@ -117,10 +119,10 @@ class Connection {
 }
 
 function chat(io) {
-  io.on("connection", (socket) => {
-    new Connection(io, socket);
+  io.on('connection', (socket) => {
+    new Connection(io, socket);   
   });
-}
+};
 
 module.exports = chat;
 ```
@@ -134,8 +136,8 @@ When a new message arrives, `handleMessage()` creates a message object and adds 
 To use the `chat` module, open the `bin/www` file in your editor. At the top of the file, add the following two imports.
 
 ```js
-var chat = require("../chat");
-var socketio = require("socket.io");
+var chat = require('../chat');
+var socketio = require('socket.io');
 ```
 
 Now modify the section under the comment `Create HTTP Server` to look like the code below.
@@ -146,11 +148,11 @@ Now modify the section under the comment `Create HTTP Server` to look like the c
  */
 
 var server = http.createServer(app);
-var io = socketio(server, {
+var io = socketio(server,{
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
 });
 chat(io);
 ```
@@ -158,7 +160,7 @@ chat(io);
 Finally, you need to add CORS support to the Express server. Open `app.js` and add the `cors` import to the top of the file.
 
 ```js
-var cors = require("cors");
+var cors = require('cors');
 ```
 
 Then, add the `cors` middleware to the Express server by adding the following line directly after the `app` instance has been created.
@@ -194,12 +196,12 @@ npm install -E socket.io-client@4.4.0
 In the editor of your choice, open the file `src/App.js` and replace its contents with the code below.
 
 ```jsx
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
-import Messages from "./Messages";
-import MessageInput from "./MessageInput";
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
+import Messages from './Messages';
+import MessageInput from './MessageInput';
 
-import "./App.css";
+import './App.css';
 
 function App() {
   const [socket, setSocket] = useState(null);
@@ -212,8 +214,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="app-header">React Chat</header>
-      {socket ? (
+      <header className="app-header">
+        React Chat
+      </header>
+      { socket ? (
         <div className="chat-container">
           <Messages socket={socket} />
           <MessageInput socket={socket} />
@@ -257,8 +261,8 @@ To give the component some styling, open `src/App.css` and replace its contents 
 Now it's time to start creating the `Messages` and `MessageInput` components. Start by creating a file `src/Messages.js`. Paste the following code into it.
 
 ```jsx
-import React, { useEffect, useState } from "react";
-import "./Messages.css";
+import React, { useEffect, useState } from 'react';
+import './Messages.css';
 
 function Messages({ socket }) {
   const [messages, setMessages] = useState({});
@@ -266,27 +270,27 @@ function Messages({ socket }) {
   useEffect(() => {
     const messageListener = (message) => {
       setMessages((prevMessages) => {
-        const newMessages = { ...prevMessages };
+        const newMessages = {...prevMessages};
         newMessages[message.id] = message;
         return newMessages;
       });
     };
-
+  
     const deleteMessageListener = (messageID) => {
       setMessages((prevMessages) => {
-        const newMessages = { ...prevMessages };
+        const newMessages = {...prevMessages};
         delete newMessages[messageID];
         return newMessages;
       });
     };
-
-    socket.on("message", messageListener);
-    socket.on("deleteMessage", deleteMessageListener);
-    socket.emit("getMessages");
+  
+    socket.on('message', messageListener);
+    socket.on('deleteMessage', deleteMessageListener);
+    socket.emit('getMessages');
 
     return () => {
-      socket.off("message", messageListener);
-      socket.off("deleteMessage", deleteMessageListener);
+      socket.off('message', messageListener);
+      socket.off('deleteMessage', deleteMessageListener);
     };
   }, [socket]);
 
@@ -295,12 +299,17 @@ function Messages({ socket }) {
       {[...Object.values(messages)]
         .sort((a, b) => a.time - b.time)
         .map((message) => (
-          <div key={message.id} className="message-container" title={`Sent at ${new Date(message.time).toLocaleTimeString()}`}>
+          <div
+            key={message.id}
+            className="message-container"
+            title={`Sent at ${new Date(message.time).toLocaleTimeString()}`}
+          >
             <span className="user">{message.user.name}:</span>
             <span className="message">{message.value}</span>
             <span className="date">{new Date(message.time).toLocaleTimeString()}</span>
           </div>
-        ))}
+        ))
+      }
     </div>
   );
 }
@@ -325,8 +334,7 @@ This component also needs some styling. Create a new file `src/Messages.css` wit
   border-bottom: 1px solid #eeeeee;
 }
 
-.user,
-.date {
+.user, .date {
   font-size: 0.625rem;
   color: #888888;
 }
@@ -343,15 +351,15 @@ This component also needs some styling. Create a new file `src/Messages.css` wit
 The last component is the `MessageInput` component. This will be the text input you can use to send messages. Create a file `src/MessageInput.js` and add the code below.
 
 ```jsx
-import React, { useState } from "react";
-import "./MessageInput.css";
+import React, { useState } from 'react';
+import './MessageInput.css';
 
-const NewMessage = ({ socket }) => {
-  const [value, setValue] = useState("");
+const NewMessage = ({socket}) => {
+  const [value, setValue] = useState('');
   const submitForm = (e) => {
     e.preventDefault();
-    socket.emit("message", value);
-    setValue("");
+    socket.emit('message', value);
+    setValue('');
   };
 
   return (
@@ -424,36 +432,34 @@ npm install -E @okta/jwt-verifier@2.3.0 @okta/okta-sdk-nodejs@6.1.0
 Open your editor in the project folder and open `chat.js`. Add the following code after the imports at the top of the file.
 
 ```js
-const OktaJwtVerifier = require("@okta/jwt-verifier");
-const okta = require("@okta/okta-sdk-nodejs");
+const OktaJwtVerifier = require('@okta/jwt-verifier');
+const okta = require('@okta/okta-sdk-nodejs');
 
 const jwtVerifier = new OktaJwtVerifier({
-  clientId: "{yourClientID}",
-  issuer: "https://{yourOktaDomain}/oauth2/default",
+  clientId: '{yourClientID}',
+  issuer: 'https://{yourOktaDomain}/oauth2/default',
 });
 
 const oktaClient = new okta.Client({
-  orgUrl: "https://{yourOktaDomain}",
-  token: "{yourOktaAPIToken}",
+  orgUrl: 'https://{yourOktaDomain}',
+  token: '{yourOktaAPIToken}',
 });
 
 async function authHandler(socket, next) {
-  const { token = null } = socket.handshake.query || {};
+  const {token = null} = socket.handshake.query || {};
   if (token) {
     try {
-      const [authType, tokenValue] = token.trim().split(" ");
-      if (authType !== "Bearer") {
-        throw new Error("Expected a Bearer token");
+      const [authType, tokenValue] = token.trim().split(' ');
+      if (authType !== 'Bearer') {
+        throw new Error('Expected a Bearer token');
       }
 
-      const {
-        claims: { sub },
-      } = await jwtVerifier.verifyAccessToken(tokenValue, "api://default");
+      const {claims: {sub}} = await jwtVerifier.verifyAccessToken(tokenValue, 'api://default');
       const user = await oktaClient.getUser(sub);
 
       users.set(socket, {
         id: user.id,
-        name: [user.profile.firstName, user.profile.lastName].filter(Boolean).join(" "),
+        name: [user.profile.firstName, user.profile.lastName].filter(Boolean).join(' '),
       });
     } catch (error) {
       console.log(error);
@@ -493,9 +499,9 @@ REACT_APP_OKTA_CLIENT_ID={yourClientID}
 Any definitions here starting with `REACT_APP_` will become available in the client code through the `process.env` global. Make sure you don't add the API token here. The token should be kept secret, and these properties will be visible to the client. Now, open `src/index.js` and add the following code just after the existing module imports.
 
 ```jsx
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
-import { LoginCallback, Security } from "@okta/okta-react";
-import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
+import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
+import { LoginCallback, Security } from '@okta/okta-react';
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 
 const oktaAuth = new OktaAuth({
   issuer: `${process.env.REACT_APP_OKTA_ORG_URL}/oauth2/default`,
@@ -506,9 +512,9 @@ const oktaAuth = new OktaAuth({
 function SecuredRoutes(props) {
   const history = useHistory();
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
-    history.replace(toRelativeUrl(originalUri || "/", window.location.origin));
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
   };
-
+  
   return (
     <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
       <Route path="/" exact component={App} />
@@ -527,7 +533,7 @@ ReactDOM.render(
       <SecuredRoutes />
     </Router>
   </React.StrictMode>,
-  document.getElementById("root"),
+  document.getElementById('root')
 );
 ```
 
@@ -536,8 +542,8 @@ The `Security` component wraps any components that want to use Okta authenticati
 Next, create a new file `src/auth.js` and paste the following contents into it.
 
 ```js
-import { useEffect, useState } from "react";
-import { useOktaAuth } from "@okta/okta-react";
+import { useEffect, useState } from 'react';
+import { useOktaAuth } from '@okta/okta-react';
 
 export const useAuth = () => {
   const { oktaAuth, authState } = useOktaAuth();
@@ -563,8 +569,8 @@ export const useAuth = () => {
 The function `useAuth()` will be used as a React hook in the main application component to set the user information and the JWT token value. Now, open the `App.js` file and import the handler at the top of the file.
 
 ```js
-import { useOktaAuth } from "@okta/okta-react";
-import { useAuth } from "./auth";
+import { useOktaAuth } from '@okta/okta-react';
+import { useAuth } from './auth';
 ```
 
 In the same file, at the start of the `App` function add the following code.
@@ -572,8 +578,8 @@ In the same file, at the start of the `App` function add the following code.
 ```js
 const { oktaAuth, authState } = useOktaAuth();
 
-const login = async () => oktaAuth.signInWithRedirect("/");
-const logout = async () => oktaAuth.signOut("/");
+const login = async () => oktaAuth.signInWithRedirect('/');
+const logout = async () => oktaAuth.signOut('/');
 
 const [user, token] = useAuth();
 ```
@@ -584,29 +590,30 @@ Now, modify the `useEffect()` hook to send the token when connecting to the serv
 
 ```js
 useEffect(() => {
-  const newSocket = io(`http://${window.location.hostname}:3000`, token && { query: { token } });
-  setSocket(newSocket);
-  return () => newSocket.close();
-}, [setSocket, token]);
+    const newSocket = io(`http://${window.location.hostname}:3000`, token && { query: { token } });
+    setSocket(newSocket);
+    return () => newSocket.close();
+  }, [setSocket, token]);
 ```
 
 Finally, replace the `<header>` component with the following code.
 
 ```jsx
 <header className="app-header">
-  {!authState ? (
+{ !authState? (
     <div>Loading...</div>
-  ) : user ? (
+) : (user ? (
     <div>
       <div>Signed in as {user.name}</div>
       <button onClick={logout}>Sign out</button>
     </div>
-  ) : (
+) : (
     <div>
       <div>Not signed in</div>
       <button onClick={login}>Sign in</button>
     </div>
-  )}
+)
+)}
 </header>
 ```
 
@@ -626,10 +633,10 @@ This tutorial shows you how to create a simple real-time chat application using 
 
 The chat application in this tutorial is split into two parts. The client makes use of React for rendering the user interface. The server uses Express to manage connections and configure the HTTP server. The use of Express shows that you can combine Socket.IO based communication with traditional REST-style APIs in the same server. If you want to learn more about any of these topics, feel free to follow the links below.
 
-- [Build a React App with Styled Components](/blog/2020/03/16/react-styled-components)
-- [Use TypeScript to Build a Node API with Express](/blog/2018/11/15/node-express-typescript)
-- [Develop Secure Apps with WebSockets and Node.js](/blog/2020/10/28/secure-web-apps-websockets-nodejs)
-- [Build a Next.js Application with TypeScript](/blog/2020/11/13/nextjs-typescript)
+* [Build a React App with Styled Components](/blog/2020/03/16/react-styled-components)
+* [Use TypeScript to Build a Node API with Express](/blog/2018/11/15/node-express-typescript)
+* [Develop Secure Apps with WebSockets and Node.js](/blog/2020/10/28/secure-web-apps-websockets-nodejs)
+* [Build a Next.js Application with TypeScript](/blog/2020/11/13/nextjs-typescript)
 
 You can find the code for this tutorial on GitHub at <https://github.com/oktadev/okta-socket-io-chat-example>.
 

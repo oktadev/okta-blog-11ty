@@ -18,7 +18,7 @@ Hi, I'm edunham, and I'm an infra person. Our buzzwords include DevOps, Cloud Op
 
 I got my start in open source and the tech industry as a student software developer and sysadmin at the [OSU Open Source Lab](https://osuosl.org/). The OSL gives students hands-on expertise with skills essential to those careers, and there weren't enough of us to satisfy all the companies who wanted to hire us as interns! To help address this problem, I created the first iteration of our [DevOps Bootcamp](http://devopsbootcamp.osuosl.org/) training program. I was amazed by how good it felt to take information I was lucky enough to have special access to and share it with others who found it useful. When looking at where to steer my career after university, I considered building on my growing resume of talks to pursue evangelism roles, but it wasn't time yet. I wanted to go out and apply my skills at scale, rather than just talking about them. 
 
-{% img {src: "edunham-intro/ferrises.jpeg", alt: "Ferris plushies and Rust stickers", header: "800"} %}
+{% img {src: "edunham-intro/ferrises.jpg", alt: "Ferris plushies and Rust stickers", header: "800"} %}
 
 As ops for the Rust and Servo teams at [Mozilla](https://research.mozilla.org/), I was again able to play the positive-sum game of sharing the most interesting and useful insights I learned from my unique access to fantastic engineers. But as the sysadmin and speaker roads diverged in that forest of mercurial trees, I stuck with the ops route. 
 

@@ -25,7 +25,6 @@ Using Kong's [OpenID Connect (OIDC) plugin](https://docs.konghq.com/hub/kong-inc
 
 The OIDC plugin enables Kong, as the [API gateway](https://konghq.com/learning-center/api-gateway/), to communicate with Okta via the OAuth/OIDC flows. That way, your app teams don't have to configure and diagnose authentication and authorization for each service individually. With these challenges solved, app teams have more time to build and innovate.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 This series will show you how to implement service authentication and authorization for [Kong Konnect](https://konghq.com/kong-konnect/) and Okta using the OIDC plugin. In this tutorial, we'll cover client credentials flow for application authentication. Parts 2-4 will cover:

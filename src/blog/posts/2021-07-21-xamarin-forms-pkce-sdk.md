@@ -241,7 +241,8 @@ Next, add the markup for a second tab to the `MoviesPage.xaml`:
        Command="{Binding SearchMoviesCommand}" CommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
        StoppedTypingTimeThreshold="500" MinimumLengthThreshold="3"
        ShouldDismissKeyboardAutomatically="True" />
-     <xct>
+     <xct:EventToCommandBehavior EventName="TextChanged"
+       Command="{Binding SearchMoviesCommand}" CommandParameter="" />
    </SearchBar.Behaviors>
  </SearchBar>
  <RefreshView x:DataType="local:MoviesViewModel" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">

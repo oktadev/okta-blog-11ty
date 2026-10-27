@@ -24,7 +24,6 @@ This expectation is met by Progressive Web Applications (or PWAs). A PWA is a no
 
 In this tutorial, I will show you how to develop a small PWA using the Vue framework. Vue is a framework that has been around for some time. It has recently gained in popularity as developers have come to realize that Vue strikes a good balance between a low-level hackability and high-level over-design. The application will allow the user to browse through a catalog of books. It will be making use of the OpenLibrary API to provide the data.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

@@ -46,7 +46,7 @@ npm install -g @angular/cli@10
 
 After this command completes, you can create a new application.
 
-``` bash
+```bash
 ng new angular-okta-example --routing --style css
 ```
 

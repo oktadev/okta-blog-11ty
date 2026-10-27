@@ -66,7 +66,7 @@ In your project's root folder, create a folder called **Model**. Inside that fil
 #### OktaSettings
 The `OktaSettings` object will be used to store your Okta domain and the API token that enables programmatic access to your Okta account. Notice that these members - `Domain` and `ApiToken` - match the attributes in our **appSettings.json** file under the `Okta` heading. When the program is initiated, the config file will be read and the values will be stored in memory, where they will then be accessible via `IOptions<OktaSettings>`.
 
-``` csharp
+```csharp
 namespace AuthenticationService.Model
 {
     public class OktaSettings
@@ -83,7 +83,7 @@ This class is used to send data to the Okta Authentication API at `https://{your
 
 For more information on Okta's authentication API, including postman examples of HTTP requests, click [here](https://developer.okta.com/docs/api/resources/authn).
 
-``` csharp
+```csharp
 namespace AuthenticationService.Model
 {
     public class OktaAuthenticationRequest
@@ -98,7 +98,7 @@ namespace AuthenticationService.Model
 
 Our `AuthenticationController` will expose a single action - `Authenticate`. That method accepts a single input - `Credentials`. `Credentials` is used to pass the username and password in need of authentication to our microservice.
 
-``` csharp
+```csharp
 namespace AuthenticationService.Model
 {
     public class Credentials
@@ -117,7 +117,7 @@ Just like `Credentials` is used to pass data to the `Authenticate` action, `Auth
 
 In the event of success, you will also define the `User` and `Session` members.
 
-``` csharp
+```csharp
 using System;
 
 namespace AuthenticationService.Model
@@ -137,7 +137,7 @@ namespace AuthenticationService.Model
 
 The `AuthenticatedSession` class is made to encapsulate details about the user's session if they are successfully authenticated. This will be used to return that data to the client calling your microservice.
 
-``` csharp
+```csharp
 using System;
 
 namespace AuthenticationService.Model
@@ -154,7 +154,7 @@ namespace AuthenticationService.Model
 
 Much like `AuthenticatedSession`, `AuthenticatedUser` is made to encapsulate details about the user, if they are successfully authenticated. This will be used to return that data to the client calling our microservice.
 
-``` csharp
+```csharp
 using System;
 
 namespace AuthenticationService.Model
@@ -304,7 +304,7 @@ All your configuration for the service can be found in the **appSettings.json** 
 
 You'll have to populate the below settings from your Okta account.
 
-``` json
+```json
   "Okta": {
     "Domain": "https://{yourOktaDomain}",
     "ApiToken": "{yourApiToken}"

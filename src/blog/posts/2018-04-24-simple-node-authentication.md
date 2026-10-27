@@ -357,7 +357,6 @@ module.exports = router
 
 I added `lodash`, so you'll need to install that as a dependency with `npm i lodash@4.17.5`. You'll also want to add a view to describe how to render the data in `views/dashboard.hbs`.
 
-{% raw %}
 ```hbs
 {% raw %}
 <h1>{{userinfo.given_name}}'s Dashboard</h1>
@@ -371,13 +370,11 @@ I added `lodash`, so you'll need to install that as a dependency with `npm i lod
 </dl>
 {% endraw %}
 ```
-{% endraw %}
 
 ## Clean Up the Styling
 
 You can add a header in `views/layout.hbs` that will be visible on every page. As long as the routers pass in `userinfo` to the `render` function, you'll know if the user is signed in. You also want to pass in `title` to set the page's title and set the header.
 
-{% raw %}
 ```hbs
 {% raw %}
 <!DOCTYPE html>
@@ -407,7 +404,6 @@ You can add a header in `views/layout.hbs` that will be visible on every page. A
 </html>
 {% endraw %}
 ```
-{% endraw %}
 
 The CSS lives in `public/stylesheets/style.css`. Here's how mine looks after making a few changes.
 
@@ -464,7 +460,6 @@ In `routes/index.js` you want to know if the user's authenticated or not, so you
 
 In `views/index.hbs`, let's add a link to the dashboard.
 
-{% raw %}
 ```hbs
 {% raw %}
 <p>Welcome to {{title}}</p>
@@ -478,7 +473,6 @@ In `views/index.hbs`, let's add a link to the dashboard.
 </p>
 {% endraw %}
 ```
-{% endraw %}
 
 Now when you run the app, you get a page that looks like this:
 
@@ -628,7 +622,6 @@ If Okta returns any errors, they will be shown in the form.
 If a user forgets their password, they will need a way to reset it. Okta's API allows you to send a recovery link to a user's email address. You just need a simple page to ask the user for their email address.
 
 **`views/reset-password.hbs`**
-{% raw %}
 ```javascript
 {% raw %}
 {{#if success}}
@@ -647,7 +640,6 @@ If a user forgets their password, they will need a way to reset it. Okta's API a
 </form>
 {% endraw %}
 ```
-{% endraw %}
 
 **`routes/reset-password.js`**
 ```javascript

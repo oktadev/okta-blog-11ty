@@ -14,7 +14,7 @@ tweets:
 - "Still confused about what a #JWT is? This post will help‼️"
 image: beginners-guide-to-jwt/jwt-101-social.png
 type: awareness
-changelog: 
+changelog:
 - 2023-08-03: Add clarification to JWT Claims section about `scp` and `aud`
 ---
 JSON Web Tokens (JWT) are used everywhere (even places they shouldn't be). This post will cover the basics of what you need to know about JWT and the related specifications in the **J**avascript **O**bject **S**igning and **E**ncryption (JOSE) family.

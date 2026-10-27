@@ -9,7 +9,7 @@ communities: [java]
 description: "You know that sci-fi movie trope in which you have a centralized hub that jumps you to other places in the galaxy? It's the same with Kong (and other API gateways)."
 tags: [kong, api-gateway, api, gateway, spring, spring-boot]
 type: conversion
-changelog: 
+changelog:
 - 2021-03-25: Updated with refreshed video and new GitHub repo reference. Changes to this article can be viewed in [oktadeveloper/okta-blog#570](https://github.com/oktadeveloper/okta-blog/pull/570).
 update-url: /blog/2021/03/26/use-kong-gateway-to-centralize-authentication
 update-title: "Use Kong Gateway to Centralize Authentication"

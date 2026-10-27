@@ -2,11 +2,12 @@
 title: "Hello Developers, Time to Get Your Oktane On"
 author: havi-hoffman
 by: advocate
-communities: [security] 
-description: "Oktane 2022 happens in San Francisco from November 8-10 and we'd love to meet you there at the Developer Hub. We've designed presentations and workshops with developers in mind." 
-tags: [announcement, conference] 
-tweets: 
-- "In person or live online, Oktane 22 happens November 8-10 in San Francisco, and you're invited. 🧿 Come for the content 🧿 Stay for the conversation 🧿 Leave with useful learnings! #Oktane22"
+communities: [security]
+description: "Oktane 2022 happens in San Francisco from November 8-10 and we'd love to meet you there at the Developer Hub. We've designed presentations and workshops with developers in mind."
+tags: [announcement, conference]
+tweets:
+- "In person or live online, Oktane 22 happens November 8-10 in San Francisco, and you're invited.
+  🧿 Come for the content 🧿 Stay for the conversation 🧿 Leave with useful learnings! #Oktane22 "
 image: oktane22/oktane-schedule.jpg
 type: awareness
 ---

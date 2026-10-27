@@ -50,8 +50,8 @@ Everything within that page is rendered only once that final app.js is retrieved
 Look at the same page prepared with Nuxt.
 
 ```html
-<html data-n-head-ssr data-n-head>
-  <head data-n-head>
+<html data-n-head-ssr data-n-head="">
+  <head data-n-head="">
     <title data-n-head="true">intro-to-nuxt</title>
     <meta data-n-head="true" charset="utf-8">
     <meta data-n-head="true" name="viewport" content="width=device-width, initial-scale=1">
@@ -59,7 +59,7 @@ Look at the same page prepared with Nuxt.
     <link data-n-head="true" rel="icon" type="image/x-icon" href="/favicon.ico">
     <link data-n-head="true" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Roboto">
   </head>
-  <body data-n-head>
+  <body data-n-head="">
     <div data-server-rendered="true" id="__nuxt">
         <div id="__layout">
             <div id="defaultLayout">
@@ -162,6 +162,7 @@ export default {
 
 This page is now referencing a standard Vue component in our component directory, so you must create the file `userAgent.vue` in that directory with the following content:
 
+{% raw %}
 ```html
 <template>
     <span class="userAgent">{{userbrowser}}</span>
@@ -198,6 +199,7 @@ function detectAgent(){
 <style>
 </style>
 ```
+{% endraw %}
 
 One of the difficulties of handling components originally built for SPAs in a universal application is managing how to detect and behave when the user's browser isn't present. Nuxt exposes `process.client`, `process.server` and `process.static` globally to determine the context the renderer is running in. In `userAgent.vue` you're using the `process.client` conditional to ensure that the navigator is never referenced during the server side render. If you were to remove this conditional logic, you would get an error during build like this:
 
@@ -281,6 +283,7 @@ npm install axios
 
 You are now ready to create your page. Create `progress.vue` in the pages directory and populate it with the following content:
 
+{% raw %}
 ```html
 <template>
   <div>
@@ -312,8 +315,9 @@ export default {
 </style>
 
 ```
+{% endraw %}
 
-On this page, you are using the `asyncData` component to make the Axios call. On the server side, the result is then parsed and made available to the template using the `{{ variable }}` syntax. The difference between `asyncData` and the data syntax is where the call is executed. With data, the call is always made from the client side after the page reaches the client a further call is made to replace values that came with the page. With `asyncData`, the request is made by the server and the result is then merged with the values already in data.
+On this page, you are using the `asyncData` component to make the Axios call. On the server side, the result is then parsed and made available to the template using the {% raw %}`{{ variable }}`{% endraw %} syntax. The difference between `asyncData` and the data syntax is where the call is executed. With data, the call is always made from the client side after the page reaches the client a further call is made to replace values that came with the page. With `asyncData`, the request is made by the server and the result is then merged with the values already in data.
 
 Better, but what about the structure which will be common between pages? 
 

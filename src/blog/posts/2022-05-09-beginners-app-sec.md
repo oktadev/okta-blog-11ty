@@ -3,11 +3,11 @@ title: "A Beginner's Guide to Application Security"
 author: alex-doukas
 by: contractor
 communities: [security]
-description: "Learn the basics of building and maintaining security for your applications, including elements like authentication and user management." 
+description: "Learn the basics of building and maintaining security for your applications, including elements like authentication and user management."
 tags: [access-control, api-security, appsec, authentication]
 tweets:
-- "This tutorial will teach you the basics of application security and offer resources to continue your education."  
-- "Application security needs to be a top priority for developers. Discover ways to implement AppSec in your project and achieve great results."  
+- "This tutorial will teach you the basics of application security and offer resources to continue your education."
+- "Application security needs to be a top priority for developers. Discover ways to implement AppSec in your project and achieve great results."
 image: beginners-app-sec/beginners-app-sec.jpg
 type: awareness
 ---
