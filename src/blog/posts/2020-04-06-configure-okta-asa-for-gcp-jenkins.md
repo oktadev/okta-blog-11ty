@@ -26,7 +26,6 @@ Below is the target architecture you'll be deploying:
 
 {% img {src: "asa-gcp-jenkins/architecture.png", alt: "architecture for ASA + GCP + Jenkins"} %}
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## What is Okta's Advanced Server Access (ASA)?

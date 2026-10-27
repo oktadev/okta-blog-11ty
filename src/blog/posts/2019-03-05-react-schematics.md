@@ -22,7 +22,6 @@ Developers love to automate things. It's what we do for a living for the most pa
 
 Schematics is a library from the Angular CLI project that allows you to manipulate projects with code. You can create/update files and add dependencies to any project that has a `package.json` file. That's right, Schematics aren't just for Angular projects! 
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 Do you have a minute? I'd love to show you how can use a Schematic I wrote to add authentication to a React app. You'll need Node.js 10+ installed; then run:

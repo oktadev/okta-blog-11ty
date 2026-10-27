@@ -24,7 +24,6 @@ Here you'll be starting with the code from a [previous monster Okta blog post](/
 
 For this post, you'll first get the Android app to work well on iOS, as well as adding a splash screen and app icon. Then you'll go through the signing process and publishing onto the App Store.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 Start by cloning the repo and installing all the required libraries.

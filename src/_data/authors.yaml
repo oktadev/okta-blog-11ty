@@ -999,12 +999,6 @@ sohail-pathan:
   twitter: https://twitter.com/iamspathan
   bio: Sohail is a Senior Developer Advocate at Okta with roots in mobile app development and hands-on experience designing, building, and publishing APIs. Now, he helps developers secure their apps by turning complex OAuth and API topics into clear, actionable guides. When he's not coding or speaking at conferences, you'll find him on a quest for the perfect plate of biryani.
 
-emmanuel-folaranmi:
-  full_name: Emmanuel Folaranmi
-  display_name: Emmanuel Folaranmi
-  avatar: avatar-emmanuel-folaranmi.jpg
-  bio: Emmanuel is a software engineer @toptal. He enjoys trying out and learning new technologies and has written articles on a small number of topics. In his free time he learns the guitar and plays video games.
-
 darko-spasovski:
   full_name: Darko Spasovski
   display_name: Darko Spasovski
@@ -1075,3 +1069,9 @@ vanshika:
   github: https://github.com/Vanshikapandey30
   linkedin: https://in.linkedin.com/in/vanshikapandeyy
   bio: Vanshika is a Senior Builder Advocate at Okta passionate about Tech, AI, and community engagement. She connects with 600k+ developers across tech communities worldwide sparking conversations and inspiring innovation. Off the clock, she's either on the pickleball court or deep in her latest gaming session.
+
+layo-folaranmi:
+  full_name: Emmanuel Jesulayomi Folaranmi
+  display_name: Layo Folaranmi
+  avatar: avatar-emmanuel-folaranmi.jpg
+  bio: Layo is a software engineer @toptal. He enjoys trying out and learning new technologies and has written articles on a small number of topics. In his free time he learns the guitar and plays video games.

@@ -18,7 +18,6 @@ type: conversion
 
 In the Java world, there are two main build systems: Gradle and Maven.  A build system chiefly manages potentially complex webs of dependencies and compiles the project. It also packages the compiled project along with all the resources and meta files into the final `.war` or `.jar` file. For simple builds, the choice between Maven and Gradle is pretty much one of personal taste, or perhaps the taste of your CTO or technical manager. They both work great. However, for more complex projects, Gradle is a winner. 
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -127,16 +126,16 @@ However, the real power comes because `build.gradle` is a Groovy script. Thus it
 
 Let's look at the script from the top down:
 
-1) The `buildscript` closure configures the properties, dependencies, and source repositories required for the build script itself (as opposed to the application).
+1\) The `buildscript` closure configures the properties, dependencies, and source repositories required for the build script itself (as opposed to the application).
 
-2) Next, `apply plugin`, shockingly, applies plugins. These extend the basic capability of the Gradle-Groovy DSL framework: the `java` plugin is applied, along with Spring Boot and Spring dependency management. The Java plugin configures Gradle to expect the standard Java project directory structure: `src/main/java`, `src/main/resources`, `src/test/java`, etc. These can be configured to change the default directories or adding new directories. 
+2\) Next, `apply plugin`, shockingly, applies plugins. These extend the basic capability of the Gradle-Groovy DSL framework: the `java` plugin is applied, along with Spring Boot and Spring dependency management. The Java plugin configures Gradle to expect the standard Java project directory structure: `src/main/java`, `src/main/resources`, `src/test/java`, etc. These can be configured to change the default directories or adding new directories. 
 The [Gradle Java plugin docs](https://docs.gradle.org/current/userguide/building_java_projects.html) are a good place to peruse more info.
 
-3) Next, some standard properties are applied to the build. 
+3\) Next, some standard properties are applied to the build. 
 
-4) The `repositories` block defines where the build script will look for dependencies. Maven Central is most common (`mavenCentral()`), but other repositories can be configured as well, including custom and local ones. A local Maven cache can be configured as a repository using `mavenLocal()`. This is helpful if a team wants to coordinate builds between projects but doesn't want to actually tie the project build files together.
+4\) The `repositories` block defines where the build script will look for dependencies. Maven Central is most common (`mavenCentral()`), but other repositories can be configured as well, including custom and local ones. A local Maven cache can be configured as a repository using `mavenLocal()`. This is helpful if a team wants to coordinate builds between projects but doesn't want to actually tie the project build files together.
 
-5) Finally, the project dependencies are defined. 
+5\) Finally, the project dependencies are defined. 
 
 The order of the standard, pre-defined closures doesn't matter, since most `build.gradle` files only define dependencies, set project properties, and use predefined tasks, the order of the elements in the file doesn't matter. There is no reason the `repositories` block has to go before the `dependencies` block, for example. You can think of the `build.gradle` file as simply a configuration file that Gradle reads before executing whatever tasks it was assigned by the shell command that called it.
 
@@ -214,7 +213,7 @@ As you can see, these functions pass in a series of dependencies as strings. So 
 
 The definition of this block from the [docs for the Project class on the Gradle website](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:dependencies%28groovy.lang.Closure%29):
 
->#### `dependencies`  { }
+>#### `dependencies`  \{ }
 >
 >Configures the dependencies for this project.
 >
@@ -290,7 +289,7 @@ Generally a task is run like this: `gradle taskName otherTaskName`, or using the
 
 If you open a terminal and `cd` to the base directory of the example project, you can use `gradle tasks` to list all of the tasks defined by the `build.gradle` file. `tasks` is, of course, itself a task defined by the base Gradle API.
 
-``` txt
+```txt
 > Task :tasks
 
 ------------------------------------------------------------
@@ -552,7 +551,7 @@ You need to replace `{yourIssuerUri}` with your Okta issuer.
 
 ## Generate a Token Using OIDC Debugger
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "gradle-tutorial/oidc-debugger.png", alt: "Configure the OIDC Debugger", header: "600"} %}
 

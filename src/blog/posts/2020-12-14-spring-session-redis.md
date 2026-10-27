@@ -31,7 +31,6 @@ If you're using Spring Security's default authorization code flow with OIDC, it'
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Okta CLI 0.10.0+](https://github.com/okta/okta-cli)
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 You can also [watch a video of this tutorial](https://youtu.be/3kGrkVUZ_Fo).

@@ -2,16 +2,15 @@
 title: "Superheroes, Startups, and Security: Sohail's Path to Developer Advocacy at Okta"
 author: sohail-pathan
 by: advocate
-communities: [javascript, security, java, mobile]
+communities: [javascript,security,java,mobile]
 description: "Join Sohail Pathan's journey from Android dev to Okta's Sr. Developer Advocate. Discover his passion for tech, DevRel, APIs, and community building."
 tags: [advocacy, javascript, kotlin, okta]
 image: sohail-pathan-intro/sohail-pathan-social-image.png
 type: awareness
 ---
+> *"Sometimes, all it takes is a spark of curiosity to ignite a lifelong journey."* - Unknown
 
-> _"Sometimes, all it takes is a spark of curiosity to ignite a lifelong journey."_ - Unknown
-
-Hello OktaDev community 👋! Let me tell you a story – a story of dreams, passion, and the continuous pursuit of curiosity. My name is Sohail Pathan, and I'm thrilled to join Okta as a Senior Developer Advocate.
+Hello OktaDev community 👋! Let me tell you a story – a story of dreams, passion, and the continuous pursuit of curiosity. My name is Sohail Pathan, and I'm thrilled to join Okta as a Senior Developer Advocate. 
 
 It all started in Nagpur, a quaint city nestled in central India. As a child, I eagerly peered through my window, convinced superheroes were real and that someday Superman himself would swing by. While superheroes never appeared, another hero soon took their place – **technology**.
 
@@ -24,7 +23,7 @@ My professional path started at an EdTech startup. Here, my first role as an And
 {% img {src: "sohail-pathan-intro/image2.jpg", alt: "Me standing with an amazing group of students and developers, all smiles and ready to learn", header: "782"} %}
 <cite style="display: block; text-align: center;">Image: Post meetup group photo with attendees (I'm the one in black blazer 🕴️).</cite>
 
-One fine afternoon, the founders approached me. They said – **\*You have a gift for connecting with our users. We'd like you to be our first Developer Community Manager**.\* That moment changed everything. I started organizing meetups where we taught about open-source opportunities like [GSOC](https://summerofcode.withgoogle.com/) and [Hacktoberfest](https://hacktoberfest.com/). I used to spend most of my time answering questions on our forums, helping learners one-on-one, and cheering them on as they built their first projects.
+One fine afternoon, the founders approached me. They said – ***You have a gift for connecting with our users. We'd like you to be our first Developer Community Manager**.* That moment changed everything. I started organizing meetups where we taught about open-source opportunities like [GSOC](https://summerofcode.withgoogle.com/) and [Hacktoberfest](https://hacktoberfest.com/). I used to spend most of my time answering questions on our forums, helping learners one-on-one, and cheering them on as they built their first projects.
 
 **I didn't realize it then, but I was doing the heart of a Developer Relations job** – talking to upcoming developers, understanding their struggles, and sharing my own code. The community started growing, and I loved it so much that I decided to make community work my fulltime role without giving up my passion for coding. It was a win-win for me 🎉.
 
@@ -74,3 +73,4 @@ Ready to dive in! I'm excited to share my knowledge of APIs and identity, and ev
 Beyond tech, I'm an enthusiastic foodie – especially when it comes to biryani (a mixed rice dish made with rice, meat, and spices). I've explored almost every regional variety in India and, according to my friends, I'm quite the cook myself\! Connect with me on [LinkedIn](https://linkedin.com/in/iamspathan), and perhaps we can discover the best biryani spots together 🍗🎉.
 
 I'm eager to engage with you all, learn your stories, and build amazing things together at Okta\!
+

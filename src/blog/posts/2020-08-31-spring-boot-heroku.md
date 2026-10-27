@@ -31,7 +31,6 @@ While there are many options available to bootstrap a new project, sometimes it 
 * A free [Heroku account](https://signup.heroku.com/) and the [Heroku CLI][setup-heroku]
 * 15 minutes of your time
 
-**Table of Contents**{: .hide }
 [[toc]]
  
 ## Build a Secure Spring Boot Application

@@ -20,7 +20,6 @@ Amazon Web Services is one of the most popular cloud computing platforms on the 
 
 In this article, you will build an ASP.Net MVC web application on .Net 5 using Visual Studio 2019. You will secure this application using Okta. Okta makes it easy to create a secure application with their SSO provider. Once your application is complete you will publish it to a production Elastic Beanstalk instance using the AWS Toolkit.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -195,7 +194,7 @@ Next, you can begin to work on your views. The first thing to edit is `Layout.cs
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a>Home</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -229,7 +228,7 @@ Next, you can begin to work on your views. The first thing to edit is `Layout.cs
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Okta_AWSToolkit - <a>Privacy</a>
+            &copy; 2021 - Okta_AWSToolkit - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

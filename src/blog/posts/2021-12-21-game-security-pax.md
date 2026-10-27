@@ -66,7 +66,7 @@ A key takeaway: It's a little bleak out there in the gaming ecosystem. No one is
 
 In the end, our findings from PAX West this year suggest that everyone is feeling the pain, and looking to others for the solution. Game developers and players alike would benefit from an open discussion of the security features and standards the industry aims to evaluate and implement. Here at Okta, we care deeply about security and identity. With this report, we'd like to jumpstart a dialogue, and engage all industry participants in a conversation around making gaming better and more secure for everyone.
 
-[{% img {src: "game-security-pax/info-graphic-thumbnail.jpg", alt: "Thumbnail of PDF info graphic"} %}](/img/game-security-pax/info-graphic.pdf)
+[{% img {src: "game-security-pax/info-graphic-thumbnail.jpg", alt: "Thumbnail of PDF info graphic"} %}](/files/game-security-pax/info-graphic.pdf)
 
 _Figure 1. Info Graphic - Click to open full PDF_
 

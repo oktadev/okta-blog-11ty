@@ -20,7 +20,6 @@ In this post, you're going to work through various options for implementing a lo
 
 The assumptions for this tutorial are pretty basic. I'm assuming that you've got a basic familiarity with Spring and Spring Boot, but not necessarily an in-depth understanding of Spring Security or Spring's various security features. You'll want to have `git` installed, and `gradle` would be nice, but you can use the Gradle wrapper for all of the `gradle` commands, so that's not strictly necessary.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 Go ahead and clone the [the repository](https://github.com/oktadeveloper/okta-spring-boot-login-options-example) I created for this tutorial:

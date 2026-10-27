@@ -438,7 +438,7 @@ The code above adds two endpoints. The first one will fetch all JoggingRecords f
 
 Unfortunately, ASP.NET Web API 2 is set to use XML as default formatter. Remove it and make sure JSON formatter is the default one. Add the following code at the end of the `Register()` method inside of `WebApiConfig.cs` file:
 
-``` cs
+```cs
 // Set JSON formatter as default one and remove XmlFormatter
 
 var jsonFormatter = config.Formatters.JsonFormatter;

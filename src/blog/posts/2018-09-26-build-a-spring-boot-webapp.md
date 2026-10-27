@@ -290,7 +290,7 @@ And is included in the template file as an XML namespace attribute on the main `
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 ```
 
-This plugin is what allows us to check if a user is authenticated using the `th:if` attribute with a custom SPEL expression (Spring Expression Language). It also allows us to insert authentication properties. Below you see a span `<span th:text="${{ '{#' }}authentication.name}"></span>` that is used to insert the name of the authenticated user. 
+This plugin is what allows us to check if a user is authenticated using the `th:if` attribute with a custom SPEL expression (Spring Expression Language). It also allows us to insert authentication properties. Below you see a span {% raw %}`<span th:text="${#authentication.name}"></span>`{% endraw %} that is used to insert the name of the authenticated user. 
 
 {% raw %}
 ```html

@@ -100,7 +100,7 @@ The Web Forms markup and underlying code looks like this:
    <asp:DropDownList runat="server" ID="foodDropDown" ItemType="CaloriesTracker.WebForms.Data.Food"
      DataValueField="Id" DataTextField="Name" AppendDataBoundItems="True">
      <Items>
-       <asp></asp:ListItem>
+       <asp:ListItem Selected="True" Value="-1" Text=""></asp:ListItem>
      </Items>
    </asp:DropDownList>
    <asp:Button runat="server" Text="Add" OnCommand="AddFoodClicked" />
@@ -111,7 +111,7 @@ The Web Forms markup and underlying code looks like this:
    <asp:DropDownList runat="server" ID="exerciseDropDown" ItemType="CaloriesTracker.WebForms.Data.Exercise"
      DataValueField="Id" DataTextField="Name" AppendDataBoundItems="True">
      <Items>
-       <asp></asp:ListItem>
+       <asp:ListItem Selected="True" Value="-1" Text=""></asp:ListItem>
      </Items>
    </asp:DropDownList>
    <asp:Button runat="server" Text="Add" OnCommand="AddExerciseClicked" />
@@ -442,7 +442,7 @@ Next, add the `CaloriesTracking` component to the menu in `NavMenu` component:
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
   <ul class="nav flex-column">
     <li class="nav-item px-3">
-    <NavLink>
+    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
         <span class="oi oi-home" aria-hidden="true"></span> Home
     </NavLink>
     </li>

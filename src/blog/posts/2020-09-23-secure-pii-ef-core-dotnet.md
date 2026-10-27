@@ -309,10 +309,10 @@ Before running the app, open the `_Layout.cshtml` file in `Views/Shared` folder 
 
 ```html
 <li class="nav-item">
-  <a class="nav-link text-dark" asp-area asp-controller="asp-action="Index">Categories</a>
+  <a class="nav-link text-dark" asp-area="" asp-controller="asp-action="Index">Categories</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link text-dark" asp-area asp-controllerasp-action="Index">Expenses</a>
+  <a class="nav-link text-dark" asp-area="" asp-controllerasp-action="Index">Expenses</a>
 </li>
 ```
 

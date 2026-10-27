@@ -30,7 +30,6 @@ Kotlin is often considered a "better Java" and often becomes an easy, efficient 
 * A Free [Okta Developer account][okta-signup]
 * 15 mins of your time
  
-**Table of Contents**{: .hide }
 [[toc]]
  
 {% include "integrator-org-warning.njk" %}

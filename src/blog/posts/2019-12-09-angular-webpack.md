@@ -11,10 +11,10 @@ tags: [angular, webpack, typescript, javascript]
 tweets:
 - "Angular uses webpack to build projects when you create them with @AngularCLI. Learn how to extend @webpack in this tutorial."
 - "Extend the @webpack configuration in your @angular project to allow feature flags."
-- "Feature flags are a useful feature for developers. Learn how to add experimental features to your @angular app with a custom @wepack build." 
+- "Feature flags are a useful feature for developers. Learn how to add experimental features to your @angular app with a custom @wepack build."
 image: angular-webpack/angular-webpack.png
 type: conversion
-changelog: 
+changelog:
 - 2021-04-01: Updated to use Okta Angular SDK v3.0.1. You can see the changes in the [example app on GitHub](https://github.com/oktadeveloper/okta-angular-webpack-example/pull/2). Changes to this article can be viewed in [oktadeveloper/okta-blog#652](https://github.com/oktadeveloper/okta-blog/pull/652).
 ---
 
@@ -28,7 +28,6 @@ In earlier versions of Angular, it was possible to eject the webpack configurati
 
 **Prerequisites:** [Node.js](https://nodejs.org/) v12+.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

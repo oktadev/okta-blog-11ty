@@ -24,7 +24,6 @@ Google then announced official support for Kotlin on Android, further accelerati
 
 In this tutorial, you will build a Spring Boot application from scratch, using Kotlin as the main language. You will learn how Kotlin works with Spring and how to integrate the code with other Java libraries. By the end, you will have a secure Spring application running in Kotlin that authenticates users via OAuth 2.0.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -243,7 +242,7 @@ implementation("com.okta.spring:okta-spring-boot-starter:2.0.1")
 
 Your `dependencies` object should look like this:
 
- ```gradle
+```gradle
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -252,7 +251,7 @@ dependencies {
     implementation("com.okta.spring:okta-spring-boot-starter:2.0.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
- ```
+```
 
 This dependency adds both Okta and Spring Security to your project. They make it simple to ensure only authenticated users can access protected areas of your application.
 
@@ -297,9 +296,9 @@ That's it! You now have an application with secure authentication out of the box
 
 Once the user enters their username and password they'll be redirected to your greeting page again. In my case, I see the following:
 
- ```txt
+```txt
  Hello, Daniel!
- ```
+```
 
 Congratulations! You just finished your first app written in Kotlin. You also took advantage of the JVM ecosystem by adding authentication in a  simple, secure way. Take a look at the final code [on GitHub](https://github.com/oktadeveloper/okta-spring-boot-kotlin-example).
 

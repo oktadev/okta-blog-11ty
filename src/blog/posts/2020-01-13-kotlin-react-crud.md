@@ -30,7 +30,6 @@ If you'd prefer to watch a video, you can [watch this tutorial as a screencast](
 <iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/PR6Gw4Ca-sE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

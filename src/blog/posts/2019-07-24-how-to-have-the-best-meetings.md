@@ -30,7 +30,7 @@ Does this sound like something you and your development team could use? Somethin
 
 ## Lean Coffee to the Rescue!
 
-{% img {src: "how-to-have-the-best-meetings/lean-coffee.jpg", alt: "Lean Coffee", header: "415"} %}{: .pull-right }
+<span class="float-right ml-4 mb-2">{% img {src: "how-to-have-the-best-meetings/lean-coffee.jpg", alt: "Lean Coffee", header: "415"} %}</span>
 
 Lean Coffee is an effective way to conduct a meeting where an agenda is created democratically at the start. Every person can suggest discussion topics and is empowered to vote on the topics that are most important to them. More people are engaged because the topics are more relevant and valuable. And, discussions are "time-boxed" to help prevent a single topic from devouring the entire meeting.
 
@@ -59,7 +59,7 @@ It's also useful to have someone act as a facilitator to ensure the Lean Coffee 
 
 ### Getting Started: Bootstrap Your Meeting Agenda
 
-{% img {src: "how-to-have-the-best-meetings/meeting-bootstrap.jpg", alt: "Bootstrap Your Meeting", header: "415"} %}{: .pull-right }
+<span class="float-right ml-4 mb-2">{% img {src: "how-to-have-the-best-meetings/meeting-bootstrap.jpg", alt: "Bootstrap Your Meeting", header: "415"} %}</span>
 
 1. Each person generates ideas and writes them on sticky notes.
 1. Take a couple of minutes to quickly discuss what each sticky note represents as a group.

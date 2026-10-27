@@ -91,7 +91,7 @@ Click **Applications** along the top menu and click **Add Application**.
 
 {% img {src: "okta-oauth-zork/applications-1.png", alt: "Default AS", header: "700"} %}
 
-Choose **Web** and then click **Next*.
+Choose **Web** and then click **Next**.
 
 Later, you'll be deploying the Zork application to Heroku. Fill in the values for **Base-URIs** and **Login redirect URIs** that match your Heroku app name. That is, if you name your Heroku app: `okta-zork-test`, the URL will be: https://okta-zork-test.herokuapp.com
 
@@ -136,7 +136,7 @@ You'll need some information to properly configure the app (you can leave the `O
 | OKTA_AUDIENCE        | api://default          |
 | OKTA_AUTH_SERVER_ID  | default                |
 
-Click **Deploy App**. Once it's finished deploying, you should be able to browse to: http://<App Name>.herokuapp.com and see the app in action using your own users from your Okta tenant.
+Click **Deploy App**. Once it's finished deploying, you should be able to browse to: http://&lt;App Name&gt;.herokuapp.com and see the app in action using your own users from your Okta tenant.
 
 {% img {src: "okta-oauth-zork/zork2.png", alt: "Default AS", header: "700"} %}
 

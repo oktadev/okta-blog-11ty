@@ -206,7 +206,7 @@ Now that you've created a controller, you can delete the sample `ValuesControlle
 ### Configure the Database Connection on Startup
 Another thing the controller scaffold did was alter the `appsettings.json` file which holds the settings. Specifically, it added this section:
 
-```js 
+```js
 "ConnectionStrings": {
     "WorkoutContext": "Server=(localdb)\\mssqllocaldb;Database=WorkoutContext-96b0f43c-71bb-4887-b9e3-cf768e432412;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
@@ -611,6 +611,7 @@ tbody td {
 
 Now we need to create the component to add new data. In our `add-or-update-jogging.component.html` add this HTML:
 
+{% raw %}
 ```html
 <div>
     <h2>{{ title }}</h2>
@@ -632,6 +633,7 @@ Now we need to create the component to add new data. In our `add-or-update-joggi
     </form>
    </div>
 ```
+{% endraw %}
 
 You will notice the `[(ngModel)]` tag. This indicates a two-way binding between the value of the HTML element and the object provided. In other words: as you type, the value of the object changes instantly and if you change the object's value from another place, the input box value will be updated immediately.
 
@@ -754,10 +756,12 @@ import * as _ from 'lodash';
 
 Update the `AddOrUpdateJoggingComponent` to change the title based on whether a record ID is provided. If there is an ID provided, the title will be "Add a record", otherwise it will be "Update a record".
 
+{% raw %}
 ```html
 <h2 *ngIf="!joggingInfo || joggingInfo.id === undefined">Add record</h2>
 <h2 *ngIf="joggingInfo && joggingInfo.id !== undefined">Update record (ID: {{joggingInfo.id}})</h2>
 ```
+{% endraw %}
 
 So, from your grid component there are a few more things missing. The "New" button does not do anything, nor do the links for Edit and Delete. To solve for this, add these functions:
 ```js

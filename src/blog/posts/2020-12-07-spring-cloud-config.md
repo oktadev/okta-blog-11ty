@@ -15,7 +15,7 @@ tweets:
 image: spring-cloud-config/spring-cloud-config.png
 type: conversion
 changelog:
-- 2021-08-10: Updated post to use Spring Boot 2.5.3 and Spring Cloud 2020.0.3. See the code changes in the [example on GitHub](https://github.com/oktadev/okta-spring-cloud-config-example/pull/3). Changes to this post can be viewed in [okta-blog#855](https://github.com/oktadev/okta-blog/pull/855). 
+- 2021-08-10: Updated post to use Spring Boot 2.5.3 and Spring Cloud 2020.0.3. See the code changes in the [example on GitHub](https://github.com/oktadev/okta-spring-cloud-config-example/pull/3). Changes to this post can be viewed in [okta-blog#855](https://github.com/oktadev/okta-blog/pull/855).
 ---
 
 The [microservice](https://www.okta.com/blog/2021/02/microservices/) architecture pattern, in which business functionality is distributed among many small atomic applications as opposed to one or two monolithic chunks, is very powerful and in wide use across large and small tech companies. Each piece has a narrow, well-defined task and communicates with other services via a shared channel (usually REST APIs).
@@ -30,7 +30,6 @@ Spring Boot is a very popular framework for creating microservices quickly and e
 
 It's easy to create several, dozens, or even hundreds of microservices for your project with Spring Boot. One speed bump with this approach, however, is the configuration of all these services. Typically in Spring Boot, configuration is bundled with the application. This works fine for small, monolithic applications, but when dealing with dozens of services and potentially hundreds of configuration files, managing all of them can be a headache.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

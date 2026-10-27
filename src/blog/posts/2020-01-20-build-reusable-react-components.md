@@ -3,7 +3,7 @@ disqus_thread_id: 7827413677
 discourse_topic_id: 17202
 discourse_comment_url: https://devforum.okta.com/t/17202
 title: "Build Reusable React Components"
-author: lee-brandt 
+author: lee-brandt
 by: advocate
 communities: [javascript]
 description: "Build a reusable star rating component in React."

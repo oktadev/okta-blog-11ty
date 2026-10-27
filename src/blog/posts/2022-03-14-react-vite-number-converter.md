@@ -24,7 +24,6 @@ Vite was originally developed for Vue, but you can also create React and Svelte 
 - [Node 14](https://nodejs.org/)
 - [Okta CLI](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 

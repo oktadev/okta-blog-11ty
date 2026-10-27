@@ -49,3 +49,37 @@ test("indented code blocks stay on even after Eleventy disables them", () => {
   assert.match(markdownLibrary.render("    ls -la\n"), /<pre><code>/);
   markdownLibrary.enable("table");
 });
+
+test("a trailing {placeholder} stays text while classes, ids and attributes still apply", () => {
+  const render = (s) => markdownLibrary.render(s).trim().replace(/\n/g, "");
+  assert.equal(
+    render("Set it to {yourOktaDomain}"),
+    "<p>Set it to {yourOktaDomain}</p>",
+  );
+  assert.equal(
+    render("- issuer = https://${yourOktaDomain}"),
+    "<ul><li>issuer = https://${yourOktaDomain}</li></ul>",
+  );
+  assert.equal(
+    render("* PublicKey = {YOURUSERNAME}"),
+    "<ul><li>PublicKey = {YOURUSERNAME}</li></ul>",
+  );
+  assert.equal(render("para {.hide}"), '<p class="hide">para</p>');
+  assert.equal(render("x {#anchor}"), '<p id="anchor">x</p>');
+  assert.equal(render("y {data-x=1}"), '<p data-x="1">y</p>');
+  assert.equal(
+    render("Use `{yourOktaDomain}` here"),
+    "<p>Use <code>{yourOktaDomain}</code> here</p>",
+  );
+  // A templated host is never linked, mid-line either; a real URL still is.
+  assert.equal(
+    render(
+      "Open https://${yourOktaDomain}/oauth2/default in a tab, or https://{yourOktaDomain}/x too.",
+    ),
+    "<p>Open https://${yourOktaDomain}/oauth2/default in a tab, or https://{yourOktaDomain}/x too.</p>",
+  );
+  assert.equal(
+    render("See https://developer.okta.com/ now"),
+    '<p>See <a href="https://developer.okta.com/">https://developer.okta.com/</a> now</p>',
+  );
+});

@@ -36,7 +36,6 @@ You will write your application in Visual Studio Code and use the Azure extensio
 
 If you want to see the code, you can download it or fork it [from the example on GitHub](https://github.com/oktadev/okta-react-azure-functions-example).
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

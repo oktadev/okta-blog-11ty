@@ -35,7 +35,6 @@ For this tutorial, you need the following tools:
   * Terminal window (if you aren't using an IDE with a built-in terminal)
   * [Git](https://git-scm.com/) and an optional [GitHub account](https://github.com/) if you want to track your changes using a source control manager
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Prepare the Angular and NestJS web application
@@ -121,7 +120,7 @@ sequenceDiagram
     You->>Your app: Make a new transaction.
     Your app-->Your app: Check ID token: acr = "low"
     Your app-->>You: insufficient_user_authentication! acr_value = "elevated" required
-    You->>Okta: Sign me in with acr_values: "elevated"
+    You->>Okta: Sign me in with acr_values="elevated"
     Okta-->>You: Here are your new tokens with acr = "elevated"
     You->>Your app: Make a new transaction.
     Your app-->Your app: Check ID token: acr = "elevated"
@@ -201,7 +200,7 @@ sequenceDiagram
     Your app->>API: GET sensitive resource
     API-->API: Check access token: acr = "low"
     API-->Your app: HTTP status 401 insufficient_user_authentication!
-    Your app-->Okta: Sign in with acr_values: "elevated"
+    Your app-->Okta: Sign in with acr_values="elevated"
     Okta-->>Your app: Here are your new tokens with acr = "elevated"
     Your app->>API: GET sensitive resource again
     API-->API: Check access token: acr = "elevated"
@@ -212,9 +211,9 @@ If the `acr` claim value doesn't meet the requirements, the API responds with a 
 
 ```http
 HTTP/1.1 401 Unauthorized
-WWW-Authenticate: Bearer error: "insufficient_user_authentication",
-  error_description: "A different authentication level is required",
-  acr_values: "elevated"
+WWW-Authenticate: Bearer error="insufficient_user_authentication",
+  error_description="A different authentication level is required",
+  acr_values="elevated"
 ```
 
 We'll use this error structure in the API response in NestJS, and when handling the step-up authentication error in the Angular app.
@@ -282,7 +281,7 @@ const acr_values = 'urn:okta:loa:2fa:any';
 const acr = accessToken.claims['acr'] ?? '';
 
 if (acr === '' || acr !== acr_values) {
-  res.setHeader('WWW-Authenticate', `Bearer error: "insufficient_user_authentication",error_description: "A different authentication level is required",acr_values: "${acr_values}"`)
+  res.setHeader('WWW-Authenticate', `Bearer error="insufficient_user_authentication",error_description="A different authentication level is required",acr_values="${acr_values}"`)
   return res.status(HttpStatus.UNAUTHORIZED).send();
 }
 ```

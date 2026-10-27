@@ -6,9 +6,9 @@ communities: [javascript]
 description: "Use the Okta Angular SDK to add flexible runtime configuration loading. Check out how to do so in a standalone Angular application!"
 tags: [angular, oidc, sdk, configuration]
 tweets:
-  - ""
-  - ""
-  - ""
+- ""
+- ""
+- ""
 image: okta-authentication-angular/social.jpg
 type: conversion
 github: https://github.com/oktadev/okta-angular-standalone-runtime-config-example
@@ -21,14 +21,13 @@ Are you ready to hear about the ultimate flexibility in configuring authenticati
 ## Configuring authentication properties using Okta in Angular applications
 
 There are three main ways you can add configuration information to Angular applications:
-
-1. **Define the value within the app** - The easiest, most straightforward route is directly defining the configuration within the `AppModule` or `app.config.ts`. Sure, it's direct, but it can be limiting since the value can always stay the same.
-2. **Add it into `env` files** - You can take the configuration definitions out of the application and pull the values during build time. But this means you'll need to build separate applications for each environment requiring unique configs.
-3. **Populate configuration at runtime** - In this pattern, you'd retrieve the configuration in an HTTP call from an API when the app starts and populate the configuration values upon receiving the HTTP response. Runtime configuration means you can change the config values without building and redeploying the Angular application! It's the ultimate flexibility and the awesome new feature I hinted at in the Okta Angular SDK!
+  1. **Define the value within the app** - The easiest, most straightforward route is directly defining the configuration within the `AppModule` or `app.config.ts`. Sure, it's direct, but it can be limiting since the value can always stay the same.
+  2. **Add it into `env` files** - You can take the configuration definitions out of the application and pull the values during build time. But this means you'll need to build separate applications for each environment requiring unique configs.
+  3. **Populate configuration at runtime** - In this pattern, you'd retrieve the configuration in an HTTP call from an API when the app starts and populate the configuration values upon receiving the HTTP response. Runtime configuration means you can change the config values without building and redeploying the Angular application! It's the ultimate flexibility and the awesome new feature I hinted at in the Okta Angular SDK!
 
 💡 You can read more about these three ways, along with examples, in [Three Ways to Configure Modules in Your Angular App](/blog/2022/02/24/angular-async-config).
 
-The best way to experiment with loading authentication configuration at runtime is to try it out yourself. Pull out your machine and warm up your fingers! If you want to jump to the completed project, you can find it in the [okta-angular-standalone-config-example](https://github.com/oktadev/okta-angular-standalone-runtime-config-example) GitHub repository. Otherwise, let's get coding!
+The best way to experiment with loading authentication configuration at runtime is to try it out yourself. Pull out your machine and warm up your fingers! If you want to jump to the completed project, you can find it in the [okta-angular-standalone-config-example](https://github.com/oktadev/okta-angular-standalone-runtime-config-example) GitHub repository. Otherwise, let's get coding! 
 
 > **Note**
 >
@@ -37,19 +36,19 @@ The best way to experiment with loading authentication configuration at runtime 
 **Prerequisites**
 
 For this tutorial, you will need the following tools:
+  * [Node.js](https://nodejs.org/en) v18 or greater
+  * [Angular CLI](https://angular.io/cli)
+  * A web browser with good debugging capabilities
+  * Your favorite IDE. Still on the hunt? I like VS Code and WebStorm because they have integrated terminal windows.
+  * Terminal window (if you aren't using an IDE with a built-in terminal)
 
-- [Node.js](https://nodejs.org/en) v18 or greater
-- [Angular CLI](https://angular.io/cli)
-- A web browser with good debugging capabilities
-- Your favorite IDE. Still on the hunt? I like VS Code and WebStorm because they have integrated terminal windows.
-- Terminal window (if you aren't using an IDE with a built-in terminal)
 
-**Table of Contents**{: .hide }
 [[toc]]
+
 
 ## Scaffold an Angular standalone application
 
-Angular introduced standalone components as a developer preview in v14. Since then, the Angular team continued building support for the architecture. It's now the default when using the Angular CLI in v17, so we'll use standalone components, functional interceptors, and control flow in this sample.
+Angular introduced standalone components as a developer preview in v14. Since then, the Angular team continued building support for the architecture. It's now the default when using the Angular CLI in v17, so we'll use standalone components, functional interceptors, and control flow in this sample. 
 
 In the terminal, run the following commands to generate the app and add the components:
 
@@ -63,21 +62,23 @@ ng generate component protected --inline-template --inline-style
 Open the `okta-angular-example` project in your IDE. You'll first define all the routes for the project. Open the `protected` folder and add `routes.ts`. We will treat this component as an entrance to a lazy-loaded route. Add the following code to the `routes.ts`:
 
 ```ts
-import { Route } from "@angular/router";
-import { ProtectedComponent } from "./protected.component";
+import { Route } from '@angular/router';
+import { ProtectedComponent } from './protected.component';
 
-export const PROTECTED_FEATURE_ROUTES: Route[] = [{ path: "", component: ProtectedComponent }];
+export const PROTECTED_FEATURE_ROUTES: Route[] = [
+    { path: '', component: ProtectedComponent }
+];
 ```
 
 Open `app.routes.ts`. Add the following routes:
 
 ```ts
-import { Routes } from "@angular/router";
-import { ProfileComponent } from "./profile/profile.component";
+import { Routes } from '@angular/router';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
-  { path: "profile", component: ProfileComponent },
-  { path: "protected", loadChildren: () => import("./protected/routes").then((m) => m.PROTECTED_FEATURE_ROUTES) },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'protected', loadChildren: () => import('./protected/routes').then(m => m.PROTECTED_FEATURE_ROUTES)},
 ];
 ```
 
@@ -99,28 +100,28 @@ We'll use the [Okta Angular](https://www.npmjs.com/package/@okta/okta-angular) a
 npm install @okta/okta-angular@6.3 @okta/okta-auth-js@7.5
 ```
 
-## Use the Okta Angular SDK for authentication
+## Use the Okta Angular SDK for authentication 
 
 You'll start by directly adding the Okta configuration to the application, which is the first and most straightforward method of adding configuration to Angular applications. Open `app.config.ts`, and make the following modifications to import the `OktaAuthModule` and define the configuration:
 
 ```ts
-import { OktaAuthModule } from "@okta/okta-angular";
-import { OktaAuth } from "@okta/okta-auth-js";
+import { OktaAuthModule } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(
       OktaAuthModule.forRoot({
         oktaAuth: new OktaAuth({
-          issuer: "https://{yourOktaDomain}/oauth2/default",
-          clientId: "{yourClientId}",
+          issuer: 'https://{yourOktaDomain}/oauth2/default',
+          clientId: '{yourClientId}',
           redirectUri: `${window.location.origin}/login/callback`,
-          scopes: ["openid", "offline_access", "profile"],
-        }),
-      }),
+          scopes: ['openid', 'offline_access', 'profile']
+        })
+      })
     ),
-    provideRouter(routes),
-  ],
+    provideRouter(routes)
+  ]
 };
 ```
 
@@ -129,14 +130,14 @@ Don't forget to replace `{yourOktaDomain}` and `{yourClientId}` with the values 
 With Okta added to the project, let's return to the route definitions. You can define the sign-in redirect route and add guards to those routes. Open `app.routes.ts` and make the changes so that your route definitions look like this:
 
 ```ts
-import { Routes } from "@angular/router";
-import { OktaAuthGuard, OktaCallbackComponent } from "@okta/okta-angular";
-import { ProfileComponent } from "./profile/profile.component";
+import { Routes } from '@angular/router';
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
-  { path: "profile", component: ProfileComponent, canActivate: [OktaAuthGuard] },
-  { path: "protected", loadChildren: () => import("./protected/routes").then((m) => m.PROTECTED_FEATURE_ROUTES), canActivate: [OktaAuthGuard] },
-  { path: "login/callback", component: OktaCallbackComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [OktaAuthGuard] },
+  { path: 'protected', loadChildren: () => import('./protected/routes').then(m => m.PROTECTED_FEATURE_ROUTES), canActivate: [OktaAuthGuard] },
+  { path: 'login/callback', component: OktaCallbackComponent }
 ];
 ```
 
@@ -149,9 +150,9 @@ Open `app.component.html`. Copy the following code into the file.
   @if (isAuthenticated$ | async) {
   <div>
     <nav class="routes">
-      <a routerLink: "/">Home</a>
-      <a routerLink: "/profile">Profile</a>
-      <a routerLink: "/protected">Protected</a>
+      <a routerLink="/">Home</a>
+      <a routerLink="/profile">Profile</a>
+      <a routerLink="/protected">Protected</a>
     </nav>
   </div>
   <a class="auth" (click)="signOut()">Sign out</a>
@@ -160,7 +161,7 @@ Open `app.component.html`. Copy the following code into the file.
   }
 </div>
 
-<p>Learn more about Okta at <a href: "https://developer.okta.com">developer.okta.com</a></p>
+<p>Learn more about Okta at <a href="https://developer.okta.com">developer.okta.com</a></p>
 
 <router-outlet></router-outlet>
 ```
@@ -195,8 +196,8 @@ a:hover {
   padding: 4px 8px;
 
   &:hover {
-    background-color: #2d8c9e;
-    color: #fff;
+  background-color: #2d8c9e;
+  color: #fff;
   }
 }
 
@@ -212,19 +213,19 @@ Finally, we can get to the interesting authentication components. Open `app.comp
 You'll use two classes and libraries from Okta, so inject the `OktaAuthStateService` and `OKTA_AUTH` injection tokens. The `OktaAuthStateService.authState$` observable stream emits an authenticated state. You can use this to watch for whether you show the sign-in or sign-out buttons and add the functionality to sign in and sign out using Okta:
 
 ```ts
-import { AsyncPipe } from "@angular/common";
-import { Component, inject } from "@angular/core";
-import { RouterLink, RouterOutlet } from "@angular/router";
-import { OktaAuthStateService, OKTA_AUTH } from "@okta/okta-angular";
-import { AuthState } from "@okta/okta-auth-js";
-import { filter, map } from "rxjs";
+import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { AuthState } from '@okta/okta-auth-js';
+import { filter, map } from 'rxjs';
 
 @Component({
-  selector: "app-root",
+  selector: 'app-root',
   standalone: true,
   imports: [AsyncPipe, RouterOutlet, RouterLink],
-  templateUrl: "./app.component.html",
-  styleUrl: "./app.component.scss",
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   private oktaStateService = inject(OktaAuthStateService);
@@ -232,7 +233,7 @@ export class AppComponent {
 
   public isAuthenticated$ = this.oktaStateService.authState$.pipe(
     filter((s: AuthState) => !!s),
-    map((s: AuthState) => s.isAuthenticated ?? false),
+    map((s: AuthState) => s.isAuthenticated ?? false)
   );
 
   public async signIn(): Promise<void> {
@@ -252,7 +253,7 @@ npm start
 ```
 
 > **Note**
->
+> 
 > If you have app initialization errors, double-check your Okta configuration and replace the placeholders.
 
 You should see something like this when you start the application:
@@ -261,13 +262,14 @@ You should see something like this when you start the application:
 {% img {src: "okta-authentication-angular/app-start.jpg", alt: "Screenshot of application start showing a sign in button and a link to the Okta Developer site", header: "800"} %}
 </div>
 
+
 The links for the profile and protected routes display after you sign in.
 
 <div style="border: 1px silver solid; display: flex; justify-content: center">
 {% img {src: "okta-authentication-angular/app-authenticated.jpg", alt: "Screenshot of application after authenticating showing a sign out button, links to profile and protected routes, and a link to the Okta Developer site", header: "800"} %}
 </div>
 
-I made no claims about building a _beautiful_ app.
+I made no claims about building a _beautiful_ app. 
 
 The profile and protected routes display the default text from Angular CLI. It's time to add something a little more interesting!
 
@@ -278,15 +280,13 @@ The profile should display something about the profile! So, let's add the code t
 You'll add the `AsyncPipe` to the imports array and the following template code, replacing the existing template:
 
 {% raw %}
-
 ```html
-<p>
-  You're logged in! @if(name$ | async; as name) {
-  <span>Welcome, {{name}} </span>
+<p>You're logged in!
+  @if(name$ | async; as name) {
+    <span>Welcome, {{name}} </span>
   }
 </p>
 ```
-
 {% endraw %}
 
 Time to pretty up the template. Check out the styles, and add this stylistic marvel into the component declaration for the inline styles. Feel free to add some extra flair if you'd like and make this project your own. 🎉
@@ -304,7 +304,7 @@ export class ProfileComponent {
   private oktaAuthStateService = inject(OktaAuthStateService);
   public name$ = this.oktaAuthStateService.authState$.pipe(
     filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
-    map((authState: AuthState) => authState.idToken?.claims.name ?? ""),
+    map((authState: AuthState) => authState.idToken?.claims.name ?? '')
   );
 }
 ```
@@ -327,31 +327,31 @@ In a new terminal, use Angular CLI to scaffold an interceptor using the followin
 ng generate interceptor auth
 ```
 
-Open the `auth.interceptor.ts` file to make the required changes. You'll see Angular CLI created the interceptor function. The `Authorization` header contains highly sensitive information, the access token!
+Open the `auth.interceptor.ts` file to make the required changes. You'll see Angular CLI created the interceptor function. The `Authorization` header contains highly sensitive information, the access token! 
 
 <table>
 <tr>
     <td style="font-size: 3rem;">⚠️</td>
-    <td markdown="div">
+    <td markdown="span">
       **Heads up!** <br/>
       The access token grants the caller permission to access resources, perform actions, and potentially make devastating changes in the name of the user to whom the access token belongs. You don't want the token to fall into the wrong hands!
     </td>
 </tr>
 </table>
 
-In other words, we must protect the token by sending the token to allowed origins. Change the interceptor code to look like this:
+ In other words, we must protect the token by sending the token to allowed origins. Change the interceptor code to look like this:
 
 ```ts
-import { HttpInterceptorFn } from "@angular/common/http";
-import { inject } from "@angular/core";
-import { OKTA_AUTH } from "@okta/okta-angular";
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { OKTA_AUTH } from '@okta/okta-angular';
 
 export const authInterceptor: HttpInterceptorFn = (req, next, oktaAuth = inject(OKTA_AUTH)) => {
   let request = req;
-  const allowedOrigins = ["/api"];
+  const allowedOrigins = ['/api'];
   const accessToken = oktaAuth.getAccessToken();
-  if (accessToken && !!allowedOrigins.find((origin) => req.url.includes(origin))) {
-    request = req.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } });
+  if(accessToken && !!allowedOrigins.find(origin => req.url.includes(origin))) {
+    request = req.clone({ setHeaders: { 'Authorization': `Bearer ${accessToken}` } });
   }
 
   return next(request);
@@ -361,16 +361,18 @@ export const authInterceptor: HttpInterceptorFn = (req, next, oktaAuth = inject(
 You've completed the interceptor code, but you have to register the interceptor in the application and bring in the HTTP libraries. Open `app.config.ts` and add the following code to the `providers` array after the `provideRouter(routes)` line:
 
 ```ts
-provideHttpClient(withInterceptors([authInterceptor]));
+provideHttpClient(withInterceptors([
+  authInterceptor
+]))
 ```
 
-When you make HTTP calls to allowed origins, you'll now see the access token in the header. Feel free to try this out on your own by calling an API such as this [sample Express API from Okta](https://github.com/okta/samples-nodejs-express-4/tree/master/resource-server), which verifies the access token, too.
+When you make HTTP calls to allowed origins, you'll now see the access token in the header. Feel free to try this out on your own by calling an API such as this [sample Express API from Okta](https://github.com/okta/samples-nodejs-express-4/tree/master/resource-server), which verifies the access token, too. 
 
 We've done a lot, but the application still contains the hard-coded Okta configuration. What if you want to load the configuration at runtime from an external source? We can emulate this process!
 
 ## Add runtime authentication configuration to an Okta Angular app
 
-Stop the application by typing `ctrl+c` in the command line. You'll change the `angular.json` file, which requires a restart of the application.
+Stop the application by typing `ctrl+c` in the command line. You'll change the `angular.json` file, which requires a restart of the application. 
 
 Emulate the response from calling an external API by creating a folder called `api` inside the existing `src` folder. Then, create a file called `config.json` within the `api` folder. Your project file structure will look like this:
 
@@ -389,8 +391,8 @@ Open `config.json` and add the following JSON properties. We'll use this format 
 
 ```json
 {
-  "issuer": "https://{yourOktaDomain}.okta.com/oauth2/default",
-  "clientId": "{yourClientId}"
+    "issuer": "https://{yourOktaDomain}.okta.com/oauth2/default",
+    "clientId": "{yourClientId}"
 }
 ```
 
@@ -400,7 +402,11 @@ The Angular project doesn't recognize this API path and config file, so if you t
 
 ```json
 {
-  "assets": ["src/favicon.ico", "src/assets", "src/api"]
+  "assets": [
+    "src/favicon.ico",
+    "src/assets",
+    "src/api"
+  ]
 }
 ```
 
@@ -411,28 +417,37 @@ Open `app.config.ts`. Add a function before the `export const appConfig` to call
 ```ts
 function configInitializer(httpBackend: HttpBackend, configService: OktaAuthConfigService): () => void {
   return () =>
-    new HttpClient(httpBackend).get("api/config.json").pipe(
-      tap((authConfig: any) =>
-        configService.setConfig({
-          oktaAuth: new OktaAuth({
-            ...authConfig,
-            redirectUri: `${window.location.origin}/login/callback`,
-            scopes: ["openid", "offline_access", "profile"],
-          }),
-        }),
-      ),
-      take(1),
-    );
+  new HttpClient(httpBackend)
+  .get('api/config.json')
+  .pipe(
+    tap((authConfig: any) => configService.setConfig({
+      oktaAuth: new OktaAuth({
+        ...authConfig,
+        redirectUri: `${window.location.origin}/login/callback`,
+        scopes: ['openid', 'offline_access', 'profile']
+      })
+    })),
+    take(1)
+  );
 }
 ```
 
-Let's talk through the code. The function takes two parameters - the `HttpBackend` class and the `OktaAuthConfigService` classes. You first create a new `HttpClient`. Notice we're not using the `HttpClient` we can get from Angular dependency injection. We want our auth interceptor to skip _this_ HTTP call. Once you get the `config.json` response, you set the `OktaAuthConfigService` with those properties.
+Let's talk through the code. The function takes two parameters - the `HttpBackend` class and the `OktaAuthConfigService` classes. You first create a new `HttpClient`. Notice we're not using the `HttpClient` we can get from Angular dependency injection. We want our auth interceptor to skip *this* HTTP call. Once you get the `config.json` response, you set the `OktaAuthConfigService` with those properties.
 
 Next, you can change the `ApplicationConfig`, by removing the configuration from the `OktaAuthModule` by deleting the `.forRoot` method call. You also need this function to run when the application starts. The `APP_INITIALIZER` injection token exists precisely for this need. Provide the `APP_INITIALIZER` injection token with the `configInitializer` function and the necessary dependencies, and add it to the providers array. The `appConfig` now looks like this:
 
 ```ts
 export const appConfig: ApplicationConfig = {
-  providers: [importProvidersFrom(OktaAuthModule), provideRouter(routes), provideHttpClient(withInterceptors([authInterceptor])), { provide: APP_INITIALIZER, useFactory: configInitializer, deps: [HttpBackend, OktaAuthConfigService], multi: true }],
+  providers: [
+    importProvidersFrom(
+      OktaAuthModule
+    ),
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([
+      authInterceptor
+    ])),
+    { provide: APP_INITIALIZER, useFactory: configInitializer, deps: [HttpBackend, OktaAuthConfigService], multi: true },
+  ]
 };
 ```
 
@@ -450,10 +465,10 @@ Complete code projects include testing. I didn't walk through the steps of addin
 
 Ready to read other interesting posts? Check out the following links.
 
-- [Practical Uses of Dependency Injection in Angular](/blog/2022/10/11/angular-dependency-injection)
-- [Loading Components Dynamically in an Angular App](/blog/2021/12/08/angular-dynamic-loading)
-- [How to Build Micro Frontends Using Module Federation in Angular](/blog/2022/05/17/angular-microfrontend-auth)
-- [Defend Your SPA from Security Woes](/blog/2022/07/06/spa-web-security)
-- [Streamline Your Okta Configuration in Angular Apps](/blog/2023/03/07/angular-forroot)
+* [Practical Uses of Dependency Injection in Angular](/blog/2022/10/11/angular-dependency-injection)
+* [Loading Components Dynamically in an Angular App](/blog/2021/12/08/angular-dynamic-loading)
+* [How to Build Micro Frontends Using Module Federation in Angular](/blog/2022/05/17/angular-microfrontend-auth)
+* [Defend Your SPA from Security Woes](/blog/2022/07/06/spa-web-security)
+* [Streamline Your Okta Configuration in Angular Apps](/blog/2023/03/07/angular-forroot)
 
 Don't forget to follow us on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube channel](https://www.youtube.com/c/OktaDev/) for more exciting content. We also want to hear about what tutorials you want to see. Leave us a comment below!

@@ -33,7 +33,6 @@ With all these choices, there is a very important question to ask: how easy it i
 
 In this tutorial, you'll create a secure REST application using Spring, Micronaut, and Quarkus to see how they differ from one another, and which one best suits your needs.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 If you'd like, you can [watch this tutorial as a screencast](https://youtu.be/pR_MBNL7cFI). 👇

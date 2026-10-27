@@ -39,7 +39,7 @@ To get started, it's important to get your head around two main terms: Images an
 ## Listing and Getting Images
 To list the images you have downloaded to your host machine, run a simple command:
 
-``` bash
+```bash
 docker image list
 ```
 
@@ -95,7 +95,7 @@ As you can see the nginx-based container is now stopped and it exited with a cod
 ### Cleaning Up Your Docker Environment
 Just because the container isn't running, doesn't mean it's gone. It's still there in a stopped state. If you want to actually delete a container from your host machine you use the `rm` command like so:
 
-``` bash
+```bash
 docker rm determined_banach
 ```
 You could also use the `Container ID` to remove a container, but you actually only have to give it as much of the ID as you need to make it unique in the list of containers. So if there are three containers on the host that all start with `41...` you would just have to type the first three characters of the `Container ID` (`416` for example) to remove it.

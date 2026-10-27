@@ -9,20 +9,19 @@ communities: [java]
 description: "Use Spring Cloud Sleuth to set up distributed tracing in your Spring Boot apps."
 tags: [springcloud, springcloudsleuth, springboot, java]
 tweets:
-  - "🔎 Aggregate and track log entries as requests move through Spring Boot with Spring Cloud Sleuth. "
-  - "Sherlock Holmes your way to better data using @springcloud Sleuth! 🔍"
-  - "Get 'yer distributed tracing right here with @SpringCloud Sleuth! 🤠"
+- "🔎 Aggregate and track log entries as requests move through Spring Boot with Spring Cloud Sleuth. "
+- "Sherlock Holmes your way to better data using @springcloud Sleuth! 🔍"
+- "Get 'yer distributed tracing right here with @SpringCloud Sleuth! 🤠"
 image: spring-cloud-sleuth/spring-cloud-sleuth.png
 type: conversion
 changelog:
-  - 2021-09-17: Based on feedback in comments, fixed a typo, updated the sleuth-example-diagram.png file, and more clearly explained about custom spans. See the updates in [okta-blog#889](https://github.com/oktadev/okta-blog/pull/889).
+- 2021-09-17: Based on feedback in comments, fixed a typo, updated the sleuth-example-diagram.png file, and more clearly explained about custom spans. See the updates in [okta-blog#889](https://github.com/oktadev/okta-blog/pull/889).
 ---
 
 Spring Cloud Sleuth allows you to aggregate and track log entries as requests move through a distributed software system. In a monolithic system, it's relatively easy to track requests as they move through the codebase because all requests can easily be logged to the same log file. You can generally just filter the log by the thread ID. But in a distributed system, a single client request may sprawl across any number of discrete cloud services. Any given service may have multiple instances handling different parts of the request. There is no single log file, with a request spread across multiple server instances. How do you use logs in this situation? How do you trace a request flow across a service mesh?
 
 In this tutorial, you will see how Spring Cloud Sleuth can be integrated into a Spring Boot application. The Spring Boot application will be secured using Okta as an OAuth 2.0 & OIDC provider. You'll use the Okta CLI to configure Okta and Spring Boot. You'll also download and run a Zipkin server to collect the Spring Cloud Sleuth entires and visualize them.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -122,7 +121,6 @@ These two properties will allow you to specify the application name and port fro
 To configure the Spring Boot application as a resource server, create a `SecurityConfiguration` class. The following class tells Spring Boot to authenticate all requests and use JWT-based auth for the resource server.
 
 `src/main/java/com/example/demo/SecurityConfiguration.java`
-
 ```java
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -143,7 +141,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 Replace the `DemoApplication` class with the code listed below. I'll explain the code below.
 
 `src/main/java/com/example/demo/DemoApplication.java`
-
 ```java
 package com.example.demo;
 
@@ -257,18 +254,17 @@ There's nothing to see yet, but you can open the Zipkin dashboard in a browser: 
 
 {% img {src: "spring-cloud-sleuth/zipkin-dashboard.png", alt: "Zipkin dashboard", header: "715"} %}
 
+
 ## Launch Two App Instances
 
 Now you're ready to launch the instances of your app. First, you need to run the following commands in two separate shells. Notice that you're using the environment variables to pass the application name and port to the Spring Boot app.
 
 Service A:
-
 ```bash
 APP_NAME="Service A" APP_PORT=8081 ./mvnw spring-boot:run
 ```
 
 Service B:
-
 ```bash
 APP_NAME="Service B" APP_PORT=8082 ./mvnw spring-boot:run
 ```
@@ -291,14 +287,14 @@ http :8081/a
 You'll get denied.
 
 ```bash
-HTTP/1.1 401
+HTTP/1.1 401 
 ```
 
 This is expected. You need to include a valid JWT.
 
 ## Create a Valid JWT with OIDC Debugger
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 Scroll down and click **SEND REQUEST**.
 
@@ -338,7 +334,7 @@ http :8081/a "Authorization: Bearer $TOKEN"
 If all went well, you should see this.
 
 ```bash
-HTTP/1.1 200
+HTTP/1.1 200 
 ...
 
 Hello from /a - Service A, Hello from /b - Service B
@@ -348,14 +344,12 @@ Hello from /a - Service A, Hello from /b - Service B
 Take a look at the console output from the two services.
 
 Service A
-
 ```bash
 2021-06-21 15:28:38.800  INFO [Service A,ef0fe81ff18325ff,ef0fe81ff18325ff] 14429 --- [nio-8081-exec-1] e.d.DemoApplication$SimpleRestController : Handling a - Service A
 2021-06-21 15:28:39.577  INFO [Service A,ef0fe81ff18325ff,ef0fe81ff18325ff] 14429 --- [nio-8081-exec-1] e.d.DemoApplication$SimpleRestController : Reply = Hello from /b - Service B
 ```
 
 Service B
-
 ```bash
 2021-06-21 15:28:39.556  INFO [Service B,ef0fe81ff18325ff,76b95441dd8d0300] 14466 --- [nio-8082-exec-1] e.d.DemoApplication$SimpleRestController : Handling b - Service B
 ```

@@ -28,7 +28,6 @@ In this tutorial, you will build a simple Spring Boot REST API and use Jib to do
 
 Let's get started!
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -301,7 +300,7 @@ Content-Length: 0
 
 Success! Of sorts. You still need to get a valid token. Fortunately, OpenID Connect debugger allows you to do that easily (remember when you added this URL to the list of authorized redirect URLs in your OIDC app on Okta?).
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 Scroll down and click **Send Request**.
 

@@ -27,7 +27,6 @@ Packages may be grouped into modules that serve as building blocks in the constr
 
 While we have the visibility modifiers—public, private, protected, and _default_—they are not enough to provide external visibility. A common example used to illustrate the problem is a "Util" class, this class may be used throughout a library from various packages within a JAR file but is NOT meant to be used outside of the library. JPMS can help with this type of situation.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

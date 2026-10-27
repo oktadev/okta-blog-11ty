@@ -8,7 +8,7 @@ by: contractor
 communities: [java]
 description: "Build a resource server using Spring Boot and Spring Data JPA and implement Group-based authorization using Okta OAuth."
 tags: [security, jwt, token, authentication, sessions, jpa, spring, spring-data]
-tweets: 
+tweets:
 - "Want to learn how to build an app with @springboot and JPA? This tutorial is for you!"
 - "Spring Data makes JPA pretty darn easy. This tutorial shows you how to make it work with PostgreSQL >"
 - "Spring Boot + JPA - a match made in heaven!"
@@ -519,7 +519,7 @@ Content-Type: application/json;charset=UTF-8
 
 ## Generate an Access Token
 
-To access the server now, you need a valid access token. {{ macro.oidcdebugger() }}
+To access the server now, you need a valid access token. {{ macro.oidcdebugger({}) }}
 
 {% img {src: "basic-app-spring-boot-jpa/oidc-debugger.png", alt: "Generate an Access Token", header: "600"} %}
 

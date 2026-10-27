@@ -83,7 +83,7 @@ This will allow you to use [JSON Web Tokens](https://www.jsonwebtoken.io/) for a
 
 Now, open the `Startup.cs` file, and on the first line of the Configure method add:
 
-``` csharp
+```csharp
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
@@ -91,7 +91,7 @@ using Microsoft.IdentityModel.Tokens;
 
 Then, between the `app.UseStaticFiles();` and `app.UseMvc(...);` add:
 
-``` csharp
+```csharp
 app.UseCookieAuthentication(new CookieAuthenticationOptions(){
   AuthenticationScheme = "Cookies",
   AutomaticAuthenticate = true
@@ -100,7 +100,7 @@ app.UseCookieAuthentication(new CookieAuthenticationOptions(){
 
 This tells the application that you want to store your session tokens in cookies. Then, you just need to add the authentication instructions.
 
-``` csharp
+```csharp
 app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions()
 {
   AuthenticationScheme = "oidc",
@@ -135,13 +135,13 @@ All you really need to do is add an [Authorize] attribute to a controller method
 
 First, add a using statement to the `HomeController.cs` for the `Authorize` attribute.
 
-``` csharp
+```csharp
 using Microsoft.AspNetCore.Authorization;
 ```
 
 Then add a "Secure" method to the `HomeController.cs` controller.
 
-``` csharp
+```csharp
 [Authorize]
 public IActionResult Secure()
 {

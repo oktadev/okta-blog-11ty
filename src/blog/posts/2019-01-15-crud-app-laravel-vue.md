@@ -774,6 +774,7 @@ export const TRIVIA_ENDPOINT = 'http://jservice.io/api/random?count=1';
 
 `components/TriviaGame.vue` (pasting the full contents of the file)
 
+{% raw %}
 ```html
 <template>
     <div class="columns">
@@ -889,6 +890,7 @@ export default {
 }
 </script>
 ```
+{% endraw %}
 ### Add Buttons in Vue to Indicate Right and Wrong Answers
 
 Now, let's add two more buttons next to the **Delete Player** button and implement the handlers:

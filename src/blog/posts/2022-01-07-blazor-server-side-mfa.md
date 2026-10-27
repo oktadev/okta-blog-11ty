@@ -33,7 +33,7 @@ I'll show you how to integrate Okta with a server-side Blazor app. Then you will
 
 Using the Okta CLI, [create a new Okta app](https://cli.okta.com/manual/apps/create/) for .NET Blazor. Or, use your Okta admin portal to accomplish this: Navigate to **Applications**, click on `Create App Integration`, select **OIDC** for `Sign in Type`, **Web** for `Application Type`, and fill out the specifics for your localhost environment.
 
-{{ macro.cli({type: "web", framework: "ASP.NET Core", loginRedirectUri: "https://localhost:44378/authorization-code/callback", logoutRedirectUri: "https://localhost:44378/signout/callback"}) }}
+{{ macro.cli({type: "web", note: note, framework: "ASP.NET Core", loginRedirectUri: "https://localhost:44378/authorization-code/callback", logoutRedirectUri: "https://localhost:44378/signout/callback"}) }}
 
 Once you have completed an Okta application setup you will need to enable multi-factor authentication and then enable it on your application. Now, navigate to the admin portal and under *Applications* select the application you just created. Click on **Sign on** and under the *Sign on Policy* section click on **Add Rule**.  
 

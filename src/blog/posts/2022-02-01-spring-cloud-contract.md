@@ -599,7 +599,7 @@ To generate a valid JWT, you need to create an OpenID Connect (OIDC) application
 
 {{ macro.cli({type: "spa", install: "false", loginRedirectUri: "https://oidcdebugger.com/debug", logoutRedirectUri: "https://oidcdebugger.com/"}) }}
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 Click **Send Request** to continue.
 

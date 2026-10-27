@@ -112,9 +112,9 @@ Navigate to `Views\Shared\_Layout.cshtml` file and locate the following section:
 
 ```html
 <ul class="nav navbar-nav">
-  <li><a asp-area asp-controller="Home" asp-action="Index">Home</a></li>         	 
-  <li><a asp-area asp-controller="Home" asp-action="About">About</a></li>
-  <li><a asp-area asp-controller="Home" asp-action="Contact">Contact</a></li>
+  <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>         	 
+  <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+  <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 </ul>
 ```
 
@@ -122,10 +122,10 @@ Replace that section with following code:
 
 ```html
 <ul class="nav navbar-nav">
-  <li><a asp-area asp-controller="Home" asp-action="Index">Home</a></li>
+  <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
   @if (User.Identity.IsAuthenticated)
   {          	 
-    <li><a asp-area asp-controller="Employees" asp-action="Index">Employees</a></li>
+    <li><a asp-area="" asp-controller="Employees" asp-action="Index">Employees</a></li>
   }         	 
 </ul>
 ```
@@ -185,7 +185,7 @@ using Okta.AspNetCore;
 
 After that, add the details about your identity provider to your application. Inside of `ConfigureServices` method add the following:
 
-```cs 
+```cs
 services.AddAuthentication(options =>
 {
   options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -291,10 +291,10 @@ You should now modify your `Views\Shared\_Layout.cshtml`. Find the following cod
 
 ```html
 <ul class="nav navbar-nav">
-  <li><a asp-area asp-controller="Home" asp-action="Index">Home</a></li>
-  <li><a asp-area asp-controller="Employees" asp-action="Index">Employees</a></li>
-  <li><a asp-area asp-controller="Home" asp-action="About">About</a></li>
-  <li><a asp-area asp-controller="Home" asp-action="Contact">Contact</a></li>
+  <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+  <li><a asp-area="" asp-controller="Employees" asp-action="Index">Employees</a></li>
+  <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+  <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 </ul>
 ```
 

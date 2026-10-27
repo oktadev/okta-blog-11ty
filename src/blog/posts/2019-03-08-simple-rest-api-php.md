@@ -20,7 +20,6 @@ You certainly don't need a complex framework to build a simple but secure API th
 
 There are different authentication flows in OAuth 2.0, depending on if the client application is public or private and if there is a user involved or the communication is machine-to-machine only. The Client Credentials Flow is best suited for machine-to-machine communication where the client application is private (and can be trusted to hold a secret). At the end of the post, I'll show you how to build a test client application as well.
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 {% include "integrator-org-warning.njk" %}

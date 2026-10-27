@@ -384,6 +384,7 @@ export class SugarLevelListComponent implements OnInit {
 
 And the code for `sugarlevel-list.component.html`:
 
+{% raw %}
 ```html
 <mat-card>
   <mat-card-header>Sugar Level List</mat-card-header>
@@ -400,6 +401,7 @@ And the code for `sugarlevel-list.component.html`:
   <button mat-fab color="primary" [routerLink]="['/sugarlevel-add']">Add</button>
 </mat-card>
 ```
+{% endraw %}
 
 We can now use the same command that we used to generate the list component to create and edit component:
 

@@ -701,7 +701,7 @@ After making this change, the score should improve. In my tests, it increased to
 * Does not provide fallback content when JavaScript is not available.
 * Does not redirect HTTP traffic to HTTPS
 * Page load is not fast enough on 3G
-* Has a <meta name="viewport"> tag with width or initial-scale
+* Has a &lt;meta name="viewport"&gt; tag with width or initial-scale
 
 To fix the first issue, add the following HTML in `src/index.html`, just after the `<body>` tag.
 

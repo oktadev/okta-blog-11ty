@@ -26,7 +26,6 @@ In this tutorial, you'll first build an OAuth 2.0 web application and authentica
 
 Let's get started!
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

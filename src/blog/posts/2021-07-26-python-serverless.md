@@ -9,8 +9,8 @@ communities: [python]
 description: "Tutorial: Build a secure serverless app with Python, Tornado, and AWS Lambda."
 tags: [python, serverless, jwt]
 tweets:
-  - "Building serverless functions in Python? Don't forget to secure them! Learn how in this post ☁️"
-  - "No servers❓ No problem❗ Build a serverless function with Python❗"
+- "Building serverless functions in Python? Don't forget to secure them! Learn how in this post ☁️"
+- "No servers❓ No problem❗ Build a serverless function with Python❗"
 image: python-serverless/python-serverless-social.png
 type: conversion
 ---
@@ -19,7 +19,6 @@ Modern authentication systems generate JSON Web Tokens (JWT). While there are se
 
 Today, we are going to build a simple web application that uses the Okta authentication widget to log users in. The access token will be generated and sent to an API written in Python and deployed as an AWS Lambda function, which will validate the token. Let's get started!
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 **NOTE**: The code for this project can be found on [GitHub](https://github.com/oktadev/okta-aws-python-example).
@@ -95,7 +94,7 @@ CORS also adds further restrictions on which request HTTP headers are allowed. I
 Access-Control-Allow-Credentials: true
 ```
 
-There is however a further complication. The browser doesn't know whether the server will allow the authorization header to be sent. To overcome this, the browser will make a _preflight request_ to the server to determine whether the actual request will be allowed. The preflight request is an HTTP OPTIONS request. If the response contains the correct CORS headers then the actual request will be made.
+There is however a further complication. The browser doesn't know whether the server will allow the authorization header to be sent. To overcome this, the browser will make a *preflight request* to the server to determine whether the actual request will be allowed. The preflight request is an HTTP OPTIONS request. If the response contains the correct CORS headers then the actual request will be made.
 
 The application we are going to build has a backend API implemented in Python, which will validate the access token on each request. This function is deployed as an AWS Lambda function. Unfortunately, the container in which the Lambda function is deployed will receive the preflight request. It will attempt to validate the token in the authorization header. This will fail as the container doesn't have the public key required to validate the token, resulting in a `403 Forbidden` response.
 
@@ -111,26 +110,26 @@ Next, create a file called `client/index.html` with the following content:
 
 ```html
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>How to write a secure Python Serverless App on AWS Lambda</title>
-    <script src="https://global.oktacdn.com/okta-signin-widget/5.7.3/js/okta-sign-in.min.js" type="text/javascript"></script>
-    <link href="https://global.oktacdn.com/okta-signin-widget/5.7.3/css/okta-sign-in.min.css" type="text/css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="control.js" defer></script>
-  </head>
-  <body>
-    <h1>How to write a secure Python Serverless App on AWS Lambda</h1>
-    <div id="widget-container"></div>
-    <div class="centred">
-      <form id="messageForm">
-        Message: <input id="message" name="message" type="message" />
-        <input type="hidden" id="token" name="token" />
-        <input type="button" value="Send" onclick="onmessage()" />
-      </form>
-      <textarea id="messages" name="messages" rows="10" cols="50">Messages</textarea><br />
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>How to write a secure Python Serverless App on AWS Lambda</title>
+        <script src="https://global.oktacdn.com/okta-signin-widget/5.7.3/js/okta-sign-in.min.js" type="text/javascript"></script>
+        <link href="https://global.oktacdn.com/okta-signin-widget/5.7.3/css/okta-sign-in.min.css" type="text/css" rel="stylesheet"/>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script src="control.js" defer></script>
+    </head>
+    <body>
+        <h1>How to write a secure Python Serverless App on AWS Lambda</h1>
+        <div id="widget-container"></div>
+        <div class="centred">
+            <form id="messageForm">
+                Message: <input id="message" name="message" type="message"/>
+                <input type="hidden" id="token" name="token"/>
+                <input type="button" value="Send" onclick="onmessage()"/>
+            </form>
+            <textarea id="messages" name="messages" rows="10" cols="50">Messages</textarea><br/>
+        </div>
+    </body>
 </html>
 ```
 
@@ -140,31 +139,31 @@ Now, create a stylesheet called `client/style.css`. Here is an example:
 
 ```css
 body {
-  background-color: #ccccff;
-  text-align: left;
+    background-color: #ccccff;
+    text-align: left;
 }
 
 h1 {
-  text-align: center;
-  font-size: 50pt;
-  font-style: italic;
-  color: #0000ff;
-  clear: both;
+    text-align: center;
+    font-size: 50pt;
+    font-style: italic;
+    color: #0000FF;
+    clear: both;
 }
 
 h2 {
-  text-align: center;
-  font-size: 30pt;
-  font-style: normal;
-  color: #0000ff;
-  clear: both;
+    text-align: center;
+    font-size: 30pt;
+    font-style: normal;
+    color: #0000FF;
+    clear: both;
 }
 
 .centred {
-  text-align: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 ```
 
@@ -174,55 +173,51 @@ Next, create a file called `client/control.js` with the following JavaScript:
 var accessToken = null;
 
 var signIn = new OktaSignIn({
-  baseUrl: "http://{yourOktaDomain}",
-  clientId: "{yourClientId}",
-  redirectUri: window.location.origin,
-  authParams: {
-    issuer: "https://{yourOktaDomain}/oauth2/default",
-    responseType: ["token", "id_token"],
-  },
+    baseUrl: 'http://{yourOktaDomain}',
+    clientId: '{yourClientId}',
+    redirectUri: window.location.origin,
+    authParams: {
+        issuer: 'https://{yourOktaDomain}/oauth2/default',
+        responseType: ['token', 'id_token']
+    }
 });
 
-signIn.renderEl(
-  {
-    el: "#widget-container",
-  },
-  function success(res) {
-    if (res.status === "SUCCESS") {
-      accessToken = res.tokens.accessToken.accessToken;
-      signIn.hide();
+signIn.renderEl({
+    el: '#widget-container'
+}, function success(res) {
+    if (res.status === 'SUCCESS') {
+        accessToken = res.tokens.accessToken.accessToken;
+        signIn.hide();
     } else {
-      alert("fail);");
+        alert('fail);')
     }
-  },
-  function (error) {
-    alert("error " + error);
-  },
-);
+}, function(error) {
+    alert('error ' + error);
+});
 
 function onmessage() {
-  const url = "http://localhost:3000/api/messages";
-  var headers = {};
-  if (accessToken != null) {
-    document.getElementById("token").value = accessToken;
-  }
-  fetch(url, {
-    method: "POST",
-    mode: "cors",
-    body: new URLSearchParams(new FormData(document.getElementById("messageForm"))),
-  })
+    const url = "http://localhost:3000/api/messages";
+    var headers = {}
+    if (accessToken != null) {
+        document.getElementById('token').value = accessToken;
+    }
+    fetch(url, {
+        method : "POST",
+        mode: 'cors',
+        body: new URLSearchParams(new FormData(document.getElementById("messageForm"))),
+    })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.error);
-      }
-      return response.text();
+        if (!response.ok) {
+            throw new Error(response.error)
+        }
+        return response.text();
     })
-    .then((data) => {
-      messages = JSON.parse(data);
-      document.getElementById("messages").value = messages.join("\n");
+    .then(data => {
+        messages = JSON.parse(data)
+        document.getElementById('messages').value = messages.join('\n');
     })
-    .catch(function (error) {
-      document.getElementById("messages").value = error;
+    .catch(function(error) {
+        document.getElementById('messages').value = error;
     });
 }
 ```
@@ -321,7 +316,7 @@ Next, create a simple Lambda function. Create a file called `auth-app/messages/m
 
 ```python
 def message(event, context):
-    return {
+    return { 
         'statusCode': 200,
         'body': 'Hello World!'
     }
@@ -332,7 +327,7 @@ The function has two parameters, which are both dictionaries. You will be using 
 Next, you need to create the deployment template file `auth-app/template.yaml`:
 
 ```yaml
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   auth-app
@@ -351,8 +346,8 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       Environment:
-        Variables:
-          OKTA_KEYS: !Ref OktaKeys
+          Variables:
+              OKTA_KEYS: !Ref OktaKeys
       CodeUri: messages/
       Handler: messages.message
       Runtime: python3.7
@@ -375,7 +370,7 @@ cd auth-app
 sam build --use-container
 ```
 
-The build creates a directory called `auth-app/.aws-sam`. This should be added to your `.gitignore` file.
+The build creates a directory called `auth-app/.aws-sam`.  This should be added to your `.gitignore` file.
 
 Now, you can run the application locally:
 
@@ -401,9 +396,9 @@ Next, create a file called `env` in the `auth-app` directory that overrides envi
 
 ```json
 {
-  "MessagesFunction": {
-    "OKTA_KEYS": "base64 string from key provider"
-  }
+    "MessagesFunction" : {
+        "OKTA_KEYS": "base64 string from key provider"
+    }
 }
 ```
 
@@ -461,14 +456,14 @@ def message(event, context):
     result = verify(body['token'])
     if not bool(result):
         messages.append(body['message'])
-        result = {
+        result = { 
             'statusCode': 200,
             'headers': {
                 'Access-Control-Allow-Headers': 'Content-Type',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
             },
-            'body': json.dumps(messages)
+            'body': json.dumps(messages) 
     }
     return result
 ```
@@ -496,7 +491,7 @@ Now, point a web browser at `http://localhost:8080`. Type in a message and submi
 
 You have now built an application that uses Okta authentication to obtain a JWT access token. A Python API validates the token using a public key before processing any requests.
 
-You only did local deployment as a proof of concept. To deploy a Lambda function into the cloud use:
+You only did local deployment as a proof of concept.  To deploy a Lambda function into the cloud use:
 
 ```bash
 sam deploy --guided

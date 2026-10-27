@@ -186,7 +186,7 @@ performing code:
   enforce limits and design for infinity.
 * Slow query and frequent query monitoring to detect poor access patterns
 
-{% img {src: "2015-05-08-software-engineering-design-principles-more_is_less.jpg", alt: "if less is more, does that mean more is less?"} %}
+{% img {src: "2015-05-08-software-engineering-design-principles-more_is_less.jpg", alt: "if less is more, does that mean more is less?", header: "300"} %}
 
 ### Reference
 
