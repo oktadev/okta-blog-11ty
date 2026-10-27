@@ -170,7 +170,7 @@ CodeIgniter does not use the default PHP sessions so you need to update the conf
 
 `application/config/config.php`
 
- ```php
+```php
 ...
 $config['base_url'] = 'http://localhost:8000';
 ...

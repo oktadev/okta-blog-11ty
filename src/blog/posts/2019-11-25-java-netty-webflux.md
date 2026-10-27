@@ -22,7 +22,6 @@ Netty's asynchronous, non-blocking I/O model is designed for highly scalable arc
 
 All of this power, however, comes at the cost of complexity. Non-blocking code is typically harder to read,to test, and to maintain, although this has improved greatly as the asynchronous paradigm has matured. Since Netty works at the socket level, it also requires a deeper understanding of the nuts and bolts of things like thread loops, byte buffers, and memory management.
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 The Netty.io team has done an admirable job of making Netty easy to use for all its power, but it's still necessarily more complicated than higher-level libraries (such as Spring Boot WebFlux). So why use it? 

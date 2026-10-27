@@ -1,6 +1,6 @@
 ---
 title: "Enterprise Maturity Workshop: Terraform"
-author: edunham 
+author: edunham
 by: advocate
 communities: [devops,go]
 description: "Get started managing your Okta resources with Terraform! Use this hands-on workshop to understand where Terraform fits in the Okta ecosystem and write your first Terraform code using the Okta provider. "

@@ -26,7 +26,6 @@ Netlify is a hosting company for static sites that offers continuous integration
 
 {% img {src: "gatsby-netlify-okta/gatsby-netlify.png", alt: "Gatsby + Netlify", header: "800"} %}
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 In this tutorial, I'll show you how to use Gatsby to create a blog that integrates with Netlify CMS for content. The app you build will support authoring posts in Markdown and adding/editing posts from your browser or via Git! Finally, I'll show you how to secure a section of your app with Okta.

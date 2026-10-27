@@ -25,7 +25,6 @@ TypeScript is an open-source language that is built on JavaScript that allows de
 
 Finally, you will secure your application with Okta Single Sign-On and the built-in functionality of Next.js, as well as the support of the next-auth package.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

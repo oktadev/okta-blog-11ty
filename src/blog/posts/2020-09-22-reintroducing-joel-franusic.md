@@ -23,15 +23,45 @@ type: awareness
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/codemirror.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/theme/neat.css" integrity="sha256-WMLC5bxpwvLiouYZo3maC9cKh1TBNxBNqrSjnlP0JQM=" crossorigin="anonymous" />
 <style type="text/css">
-  .jf-game > ul { list-style: none; }
-  .jf-game > li:before { margin: 0 0.25em; }
-  li.pass:before { content: "\2611" }
-  li.fail:before { content: "\2610" }
-  .jf-game > .alert { border-radius: 4px; padding: 12px 20px 12px 20px; display: none; }
-  .jf-game > .alert > code { font-size: 16px; }
-  .jf-game > .error { background-color: rgb(255, 243, 205); color: rgb(113, 100, 4); }
-  .jf-game > .success { background-color: rgb(212, 237, 218); color: rgb(21, 87, 36); }
-  .CodeMirror { height: auto !important; }
+  .jf-game > ul {
+    list-style: none;
+  }
+
+  .jf-game > li:before {
+    margin: 0 0.25em;
+  }
+
+  li.pass:before {
+    content: "\2611"
+  }
+
+  li.fail:before {
+    content: "\2610"
+  }
+  
+  .jf-game > .alert {
+    border-radius: 4px;
+    padding: 12px 20px 12px 20px;
+    display: none;
+  }
+  
+  .jf-game > .alert > code {
+    font-size: 16px;
+  }
+  
+  .jf-game > .error {
+    background-color: rgb(255, 243, 205);
+    color: rgb(113, 100, 4);
+  }
+  
+  .jf-game > .success {
+    background-color: rgb(212, 237, 218);
+    color: rgb(21, 87, 36);
+  }
+  
+  .CodeMirror {
+    height: auto !important;
+  }
 </style>
 
     

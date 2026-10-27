@@ -10,7 +10,7 @@ description: "Using a Flask SCIM server, learn more about the how & why behind h
 tags: [scim, python, flask]
 tweets:
 - "Want to learn how Okta implements the SCIM provisioning protocol? What better way than setting up your own SCIM server with Flask!"
-- "Take a peek under the hood to see #SCIM in action. Learn how to build a SCIM server with #Flask, #Postgres, and #Okta. #python" 
+- "Take a peek under the hood to see #SCIM in action. Learn how to build a SCIM server with #Flask, #Postgres, and #Okta. #python"
 - ""
 - ""
 image: flask-scim-server/scim-flask-social.jpg
@@ -171,6 +171,7 @@ Okta Examples:
 Let's move on to testing the SCIM server to see some of these calls in action!
 
 <a name="test-the-scim-server"/>
+
 ### Test the SCIM Server
 >**Note**: I am using the SCIM template integration in the steps below. If you are using the AIW version, there may be subtle differences in some of the calls. More info [here](https://developer.okta.com/docs/reference/scim/scim-20/).
 
@@ -523,7 +524,7 @@ PATCH /scim/v2/Groups/b446521a-a65b-4c0b-a5ee-0a15e8e3e908
  200 OK
  ```
  
- ```json
+```json
  {
     "displayName": "Droids",
     "id": "b446521a-a65b-4c0b-a5ee-0a15e8e3e908",
@@ -548,7 +549,7 @@ PATCH /scim/v2/Groups/b446521a-a65b-4c0b-a5ee-0a15e8e3e908
         "urn:ietf:params:scim:schemas:core:2.0:Group"
     ]
  }
- ```
+```
  
 And with this, you should now see your group in the SCIM database after running `select * from groups;`:
  

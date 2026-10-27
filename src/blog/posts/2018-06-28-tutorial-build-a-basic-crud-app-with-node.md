@@ -130,7 +130,7 @@ module.exports = { Post };
 This code initializes a new SQLite database that will be used to store the blog data. It also defines a model called `Post` which stores blog posts in the database. Each post has a title, a body, an author ID, and a slug field.
 
 - The `title` field will hold the title of a post. For example, "A Great Article."
-- The `body` field will hold the body of the article as HTML. For example, "<p>My first post!</p>".
+- The `body` field will hold the body of the article as HTML. For example, "&lt;p&gt;My first post!&lt;/p&gt;".
 - The `authorId` field will store the author's unique ID. This is a common pattern in relational databases: store just the identifier of a linked resource so you can look up the author's most up-to-date information later.
 - The `slug` field will store the URL-friendly version of the post's title. For example, "a-great-article".
 

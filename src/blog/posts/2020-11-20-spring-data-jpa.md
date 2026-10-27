@@ -24,7 +24,6 @@ In this tutorial, you're going to use Spring Boot and Spring Data to build a ful
 
 Before you get started on the actual application, however, let's take a look at Spring Data for a moment.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

@@ -9,13 +9,12 @@ communities: [python]
 description: "How to use Oso with Okta to add authorization to a FastAPI and SQLAlchemy app."
 tags: [oso, authorization]
 tweets:
-  - "Learn how to add simple authorization to your app with Oso and Okta"
-  - "Check out this blog post to learn how to easily secure your FastAPI app with Oso and Okta"
-  - "Easily add role-based access to your FastAPI app with Oso and Okta"
+- "Learn how to add simple authorization to your app with Oso and Okta"
+- "Check out this blog post to learn how to easily secure your FastAPI app with Oso and Okta"
+- "Easily add role-based access to your FastAPI app with Oso and Okta"
 image: oso-fastapi-sqlalchemy/card.png
 type: conversion
 ---
-
 FastAPI is really fast and SQLAlchemy is really...SQL-y. But what good is a fast and SQL-y application if it isn't **secure**?
 
 In this post, we're going to show you how to secure a fast and SQL-y app!
@@ -29,7 +28,6 @@ This post is intended for people who have some familiarity with both FastAPI and
 
 The full example is available on [GitHub][]. Clone the repo and follow along!
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -55,6 +53,7 @@ Okta application configuration:
 Client Id:     <YOUR CLIENT ID>
 Issuer:        https://<YOUR OKTA DOMAIN>/oauth2/default
 ```
+
 
 Create a file named `.env` in the project's root directory with the following contents:
 
@@ -101,7 +100,7 @@ If you reload `http://localhost:8080`, you should see the list of bears populate
 
 Go ahead and create a few new bears of your own.
 
-Our app is now open for business. In fact, it's _too_ open. Every authenticated user can see everyone's bears — even users who have been banned for trying to create koalas. It's time to put a stop to this madness.
+Our app is now open for business. In fact, it's  _too_ open. Every authenticated user can see everyone's bears — even users who have been banned for trying to create koalas. It's time to put a stop to this madness.
 
 ## ABAC, As Easy as 1-2-3 🕺
 
@@ -324,7 +323,7 @@ allow(_: User, "index", _: User);
 
 Do the save-and-reload dance, and the `Owner` column should once again be populated.
 
-Next, let's add some constraints to our `"index"` rule for bears so we can see _Data Filtering in Action_ (coming soon from Manning, probably).
+Next, let's add some constraints to our `"index"` rule for bears so we can see *Data Filtering in Action* (coming soon from Manning, probably).
 
 Perhaps users should only be allowed to see their own bears:
 

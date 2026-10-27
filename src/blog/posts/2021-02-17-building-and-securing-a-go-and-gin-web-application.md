@@ -380,6 +380,7 @@ This will build the application and start listening on port 8080 by default. You
 
 First, we are going to add a placeholder for the actual to-do list. We need to modify `App.vue`. The style element will be omitted in the example as it doesn't change.
 
+{% raw %}
 ```html
 <template>
   <div id="app">
@@ -400,8 +401,9 @@ export default {
 }
 </script>
 ```
+{% endraw %}
 
-So, what has changed? The template has been modified to add the list. The `{{todolist}}` gets replaced with the contents of a variable called `todolist`. 
+So, what has changed? The template has been modified to add the list. The {% raw %}`{{todolist}}`{% endraw %} gets replaced with the contents of a variable called `todolist`. 
 
 There have been two changes to the script element. An object called `appData` has been added which defines the variable `todolist` used in the template and gives it a default value. The default application now has a function called `data()` which returns the `appData` object. 
 
@@ -437,6 +439,7 @@ npm install --save axios
 
 Next, we need to modify `src/App.vue` to make the Ajax call and render it.
 
+{% raw %}
 ```html
 <template>
   <div id="app">
@@ -482,6 +485,7 @@ function getList() {
 }
 </style>
 ```
+{% endraw %}
 
 Let's go through the changes. At the start of the `<script>` tag, the Axios package is imported. At the end of the script the function `getList()` is defined. It makes an Axios `get()` call to the API. The response is a JSON object which gets transformed into a JavaScript object. The JSON object contains an object called `list` which is an array of item strings. The response is in `res.data` and `res.data.list` extracts the array of item strings that are assigned to the `todolist` variable.
 
@@ -539,6 +543,7 @@ You will also need to add the `sendItem` function to the list of methods that ar
 
 Here is how your `Vue.app` file should look:
 
+{% raw %}
 ```html
 <template>
   <div id="app">
@@ -597,6 +602,7 @@ async function sendItem() {
 }
 </style>
 ```
+{% endraw %}
 
 To test the changes: Build the Vue application and start the server using these commands:
 

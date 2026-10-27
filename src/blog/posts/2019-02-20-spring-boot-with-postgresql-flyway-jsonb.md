@@ -413,13 +413,13 @@ Run `curl` (the `-v` attribute will return the response headers):
 < Date: Thu, 20 Dec 2018 04:46:21 GMT
 ```
 
-The server returns a 401 HTTP code, which means you are unauthorized. Now, let's create a valid token. An easy way to achieve a token is to generate one using [OpenID Connect <debugger/>](https://oidcdebugger.com/).
+The server returns a 401 HTTP code, which means you are unauthorized. Now, let's create a valid token. An easy way to achieve a token is to generate one using [OpenID Connect &lt;debugger/&gt;](https://oidcdebugger.com/).
 
 First, you'll need to create a new web application in Okta to use this service:
 
 {{ macro.cli({type: "web", loginRedirectUri: "https://oidcdebugger.com/debug", logoutRedirectUri: "https://oidcdebugger.com", install: "false"}) }}
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "postgresql-with-spring-boot/openid-connect.jpg", alt: "OpenID Connect", header: "700"} %}
 

@@ -249,7 +249,7 @@ using Microsoft.Owin.Security.Cookies;
 
 Now you can add the functions for the events. Inside of the existing `SiteMaster` class, add these two functions:
 
-```cs  
+```cs
 protected void btnLogin_Click(object sender, EventArgs e)
 {
   if (!Request.IsAuthenticated)

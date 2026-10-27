@@ -15,7 +15,7 @@ tweets:
 image: featured/okta-angular-headphones.jpg
 type: conversion
 changelog:
-- 2021-04-14: Updated to Angular 11, Okta Angular 3.1.0, and changed to use the Okta CLI for setup. See the example app's changes in [okta-angular-pwa-example#1](https://github.com/oktadeveloper/okta-angular-pwa-example/pull/1) and this post's changes in [okta-blog#759](https://github.com/oktadeveloper/okta-blog/pull/759). 
+- 2021-04-14: Updated to Angular 11, Okta Angular 3.1.0, and changed to use the Okta CLI for setup. See the example app's changes in [okta-angular-pwa-example#1](https://github.com/oktadeveloper/okta-angular-pwa-example/pull/1) and this post's changes in [okta-blog#759](https://github.com/oktadeveloper/okta-blog/pull/759).
 ---
 
 During the last two years, everybody started talking about Progressive Web Applications, or PWAs for short. But what is this new type of application, and how can it make your life as an Angular developer better? To understand what PWAs are all about, and how you can build them in Angular, let's consider the following scenario. You are out and about in an area with little or no network reception. You are using a cool web app to search for a good book to read. Traditional web applications only work while you are online. Every time you lose the network the application will stall. What's more, a typical app will load all of its scripts before starting up. This means that you might have to wait a minute or more for the first page to load. In conditions like this, you will quickly give up and abandon the application altogether.
@@ -24,7 +24,6 @@ This is where progressive web applications come into play. PWAs leverage a numbe
 
 In this tutorial, I will show you how to create a complete progressive web app in Angular 7. The application will allow the user to search for book titles using the [OpenLibrary](http://openlibrary.org) service. I will be using a Material Design library, Angular Material, to give the application layout a professional appearance and make it responsive.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -123,7 +122,7 @@ The template for the main component of the application lives in the `src/app/app
   <div fxLayout="row" fxShow="false" fxShow.gt-sm>
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
       <div class="input-group">
-        <input class="input-group-field" type="search" value placeholder="Search" formControlName="search">
+        <input class="input-group-field" type="search" value="" placeholder="Search" formControlName="search">
         <div class="input-group-button">
           <button mat-flat-button color="accent">
             <mat-icon>search</mat-icon>
@@ -144,7 +143,7 @@ The template for the main component of the application lives in the `src/app/app
 
   <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
     <div class="input-group">
-      <input class="input-group-field" type="search" value placeholder="Search" formControlName="search">
+      <input class="input-group-field" type="search" value="" placeholder="Search" formControlName="search">
       <div class="input-group-button">
         <button mat-button routerLink="/">
           <mat-icon>magnify</mat-icon>

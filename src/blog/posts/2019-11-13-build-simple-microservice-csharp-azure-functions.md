@@ -54,7 +54,7 @@ Your new project can be deployed as an Azure Function and in the following secti
 
 These types will feed data in and out of the Azure Function.  Add a class to your project named `User.cs`. This class holds data about the logged-in user. Paste the following code into the new file:
 
-``` csharp
+```csharp
 using System;
 
 namespace AuthService
@@ -74,7 +74,7 @@ namespace AuthService
 
 Add a class to your project named `Session.cs`. This class is similar to the `User` class we just created, but holds data related to the user's active session. Paste the following code into the new file:
 
-``` csharp
+```csharp
 using System;
 
 namespace AuthService
@@ -89,7 +89,7 @@ namespace AuthService
 
 Add a class to your project named `AuthResponse.cs`. This class will be used to return the result of the login operation back to the client. It includes information about the success or failure of the login attempt, and will also provide information about the user and session - if the login was successful. Paste the following code into the new file:
 
-``` csharp
+```csharp
 using System;
 
 namespace AuthService
@@ -107,7 +107,7 @@ namespace AuthService
 
 Add one more new class named `OktaAuthenticationRequest.cs`. This class holds the data to send to Okta with the authentication request. Paste the following code into the new file:
 
-``` csharp
+```csharp
 using System;
 
 namespace AuthService
@@ -128,7 +128,7 @@ Install the *Newtonsoft.Json* package as shown in the image below. The latest ve
 
 Next, add the following statements to the top of `Function1.cs`.
 
-``` csharp
+```csharp
 using System.Text;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
@@ -136,7 +136,7 @@ using Newtonsoft.Json;
 
 In this next step, overwrite the code for the `Run()` method of `Function1`. Copy the code below and paste it into your `Function1.cs` file. Be sure to completely replace the existing code there.
 
-``` csharp
+```csharp
 [FunctionName("Function1")]
 public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
 {
@@ -193,7 +193,7 @@ Your API token should then display on the screen. Copy the value so that you can
 
 Once you've generated your API token, go back to the first two lines of the function we copied earlier. Those first lines define values for your `OktaDomain` and your `OktaApiToken`, so replace those values with the settings for your Okta account:
 
-``` csharp
+```csharp
 var OktaDomain = "{yourOktaDomain}";
 var OktaApiToken = "{yourApiToken}";
 ```
@@ -206,7 +206,7 @@ The code below sends your API token, along with the user-provided username and p
 
 Replace the `TODO` in `Function1.cs` with the following code:
 
-``` csharp
+```csharp
 //generate URL for service call using your configured Okta Domain
 string url = string.Format("{0}/api/v1/authn", OktaDomain);
 

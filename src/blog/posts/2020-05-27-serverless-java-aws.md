@@ -28,7 +28,6 @@ What are the ideal use-cases for serverless? My thought is: discrete units of co
 
 Serverless functions should also be stateless (there's no disk to write to) and have relatively short running times. If you need to write to disk, serverless is out - although, with databases, cloud logging, and cloud file repositories, it's hard to imagine too many places where this is a huge problem. Further, serverless systems are optimized for short-running code. You start to lose the cost-benefit if your code runs for long and most of the providers have maximum execution times between 300 and 900 seconds.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -543,7 +542,7 @@ Your request requires a valid JSON Web Token issued by your Okta authorization s
 
 Now you're going to use the OpenID Connect Debugger to generate a valid JWT that you can use to make a request against your serverless function.
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "serverless-java-aws/oidc-debugger.png", alt: "OIDC Debugger", header: "650"} %}
 

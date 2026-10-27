@@ -119,8 +119,8 @@ Create a new file `src/main/resources/static/index.html` and populate it with th
 <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content>
-   <meta name="author" content>
+   <meta name="description" content="">
+   <meta name="author" content="">
    <title>Okta Implicit Spring-Boot</title>
    <base href="/">
    <script src="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.3.0/js/okta-sign-in.min.js" type="text/javascript"></script>

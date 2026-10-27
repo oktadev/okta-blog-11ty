@@ -9,9 +9,9 @@ communities: [javascript]
 description: "A tutorial that shows how to create an Angular GraphQL client for a Node.js GraphQL API."
 tags: [javascript, typescript, angular, graphql, node, expressjs]
 tweets:
-  - "Learn how to use Angular + GraphQL to build an app to get Star Wars characters and species."
-  - "Angular + GraphQL is pretty easy with modern clients from @apollographql."
-  - "Yassss! Angular + GraphQL are a fun combo! Learn how to use them in this quick tutorial."
+- "Learn how to use Angular + GraphQL to build an app to get Star Wars characters and species."
+- "Angular + GraphQL is pretty easy with modern clients from @apollographql."
+- "Yassss! Angular + GraphQL are a fun combo! Learn how to use them in this quick tutorial."
 image: angular-graphql/angular-graphql-social.png
 type: conversion
 github: https://github.com/oktadev/okta-angular-graphql-example
@@ -28,7 +28,6 @@ In this tutorial, I will show you how to consume GraphQL in an Angular client. F
 - [Node 14](https://nodejs.org/)
 - [Okta CLI](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -94,25 +93,27 @@ type Species {
 The `Query` type defines the entry point of the schema. It defines three queries: `characters`, `character`, and `species`. The data returned by these queries is defined in separate types in the schema file. Now, create a new file `app.js`, and fill it with the code below.
 
 ```js
-const express = require("express");
-const cors = require("cors");
-const { json } = require("body-parser");
-const fs = require("fs");
-const { graphqlHTTP } = require("express-graphql");
-const { buildSchema } = require("graphql");
-const parse = require("csv-parse/lib/sync");
+const express = require('express');
+const cors = require('cors');
+const { json } = require('body-parser');
+const fs = require('fs');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+const parse = require('csv-parse/lib/sync');
 
-const app = express().use(cors()).use(json());
+const app = express()
+  .use(cors())
+  .use(json());
 
-const schema = buildSchema(fs.readFileSync("schema.graphql", "utf8"));
-const characters = parse(fs.readFileSync("characters.csv", "utf8"), { columns: true });
-const species = parse(fs.readFileSync("species.csv", "utf8"), { columns: true });
+const schema = buildSchema(fs.readFileSync('schema.graphql', 'utf8'));
+const characters = parse(fs.readFileSync('characters.csv', 'utf8'), { columns: true });
+const species = parse(fs.readFileSync('species.csv', 'utf8'), { columns: true });
 
 const root = {
   characters: (args) => {
     return {
       count: characters.length,
-      characters: characters.slice(args.offset, args.offset + args.limit),
+      characters: characters.slice(args.offset, args.offset + args.limit)
     };
   },
   character: (args) => {
@@ -123,20 +124,17 @@ const root = {
   },
 };
 
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema,
-    rootValue: root,
-    graphiql: true,
-  }),
-);
+app.use('/graphql', graphqlHTTP({
+  schema,
+  rootValue: root,
+  graphiql: true,
+}));
 
 app.listen(4201, (err) => {
   if (err) {
     return console.log(err);
   }
-  return console.log("Server listening on port 4201");
+  return console.log('Server listening on port 4201');
 });
 ```
 
@@ -156,7 +154,7 @@ On the left side, you can try out queries. Give it a go by pasting the following
 
 ```graphql
 {
-  characters(offset: 2, limit: 3) {
+  characters(offset: 2, limit:3) {
     count
     characters {
       name
@@ -164,7 +162,7 @@ On the left side, you can try out queries. Give it a go by pasting the following
       species
     }
   }
-  species(name: "Human") {
+  species(name:"Human") {
     classification
     homeworld
   }
@@ -239,7 +237,8 @@ ng generate component browse --module=app
 In an editor of your choice, open `src/app/app.component.html` and replace its content with the following two lines.
 
 ```html
-<app-navbar></app-navbar> <router-outlet></router-outlet>
+<app-navbar></app-navbar>
+<router-outlet></router-outlet>
 ```
 
 There are only two components here. The first will show the navigation bar. The `<router-outlet>` is a special component in Angular. The Angular router is responsible for reading the navigation URL and deciding which component to show based on the requested path. The `<router-outlet>` will then show that component.
@@ -248,7 +247,9 @@ Next, open `src/app/navbar/navbar.component.html` and paste the code below into 
 
 ```html
 <div class="navbar">
-  <div>GraphQL Angular App</div>
+  <div>
+    GraphQL Angular App
+  </div>
   <nav>
     <ul>
       <li><a routerLink="/">Home</a></li>
@@ -359,7 +360,7 @@ export class CharactersService {
   private findCharacterQuery: QueryRef<{character: CharacterDetail}, { name: string}>;
   private findSpeciesQuery: QueryRef<{species: Species}, { name: string}>;
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo) { 
     this.charactersQuery = this.apollo.watchQuery({
       query: gql`query characters($offset: Int!) {
         characters(offset: $offset) {
@@ -480,7 +481,6 @@ export class BrowseComponent implements OnInit {
 The function `updateCharacters()` uses the `CharactersService` to obtain a list of characters from the server. The functions `onPrevious()` and `onNext()` are callbacks that can be used to page through the results. Now, open `src/app/browse/browse.component.html` and copy the following contents into it.
 
 {% raw %}
-
 ```html
 <div class="browse">
   <h1>Browse Characters</h1>
@@ -497,12 +497,11 @@ The function `updateCharacters()` uses the `CharactersService` to obtain a list 
     </tr>
   </table>
   <div class="pager">
-    <button class="prev" *ngIf="showPrevious()" (click)="onPrevious()">prev</button>
-    <button class="next" *ngIf="showNext()" (click)="onNext()">next</button>
+    <button class="prev" *ngIf="showPrevious()" (click)="onPrevious()"> prev </button>
+    <button class="next" *ngIf="showNext()" (click)="onNext()"> next </button>
   </div>
 </div>
 ```
-
 {% endraw %}
 
 The component displays the character data in a table and provides navigation buttons to page through the results. It also provides links to routes that will display details of a character or its species. You will be implementing those routes later.
@@ -533,8 +532,7 @@ tr:nth-child(odd) {
   background-color: #dddddd;
 }
 
-th,
-td {
+th, td {
   padding: 4px 8px;
   border-right: 1px solid #bbbbbb;
   border-left: 1px solid #bbbbbb;
@@ -584,9 +582,8 @@ export class CharacterComponent implements OnInit {
 This is a simple component that reads the character's name from the query parameters in the URL and then uses `CharactersService` to obtain the character detail. The corresponding template simply shows the queried data. Open `src/app/character/character.component.html` and copy the following contents into it.
 
 {% raw %}
-
 ```html
-<div *ngIf="character">
+<div *ngIf=character>
   <p><strong>Name:</strong> {{character.name}}</p>
   <p><strong>Mass:</strong> {{character.mass}}</p>
   <p><strong>Hair Color:</strong> {{character.hair_color}}</p>
@@ -597,7 +594,6 @@ This is a simple component that reads the character's name from the query parame
 </div>
 <a [routerLink]="['/browse']">Back</a>
 ```
-
 {% endraw %}
 
 The component showing the species information follows the same pattern. Open `src/app/species/species.component.ts` and update the content to match the code below.
@@ -628,9 +624,8 @@ export class SpeciesComponent implements OnInit {
 Next, open `src/app/species/species.component.html` and paste in the code below.
 
 {% raw %}
-
 ```html
-<div *ngIf="species">
+<div *ngIf=species>
   <p><strong>Name:</strong> {{species.name}}</p>
   <p><strong>Classification:</strong> {{species.classification}}</p>
   <p><strong>Designation:</strong> {{species.designation}}</p>
@@ -643,7 +638,6 @@ Next, open `src/app/species/species.component.html` and paste in the code below.
 </div>
 <a [routerLink]="['/browse']">Back</a>
 ```
-
 {% endraw %}
 
 I already mentioned how the Angular router is responsible for deciding which component to render, based on the path in the URL. In the file `src/app/app-routing.module.ts` you can define these associations.
@@ -711,22 +705,23 @@ npm i -E @okta/jwt-verifier@2.3.0 express-bearer-token@2.4.0
 Now, create a new file `auth.js` with the content below.
 
 ```js
-const OktaJwtVerifier = require("@okta/jwt-verifier");
+const OktaJwtVerifier = require('@okta/jwt-verifier');
 
 const oktaJwtVerifier = new OktaJwtVerifier({
-  clientId: "{yourClientID}",
-  issuer: "https://{yourOktaDomain}/oauth2/default",
+  clientId: '{yourClientID}',
+  issuer: 'https://{yourOktaDomain}/oauth2/default'
 });
 
 module.exports = async function oktaAuth(req, res, next) {
   try {
     const token = req.token;
     if (!token) {
-      return res.status(401).send("Not Authorized");
+      return res.status(401).send('Not Authorized');
     }
-    await oktaJwtVerifier.verifyAccessToken(token, "api://default");
+    await oktaJwtVerifier.verifyAccessToken(token, 'api://default');
     next();
-  } catch (err) {
+  }
+  catch (err) {
     return res.status(401).send(err.message);
   }
 };
@@ -735,14 +730,18 @@ module.exports = async function oktaAuth(req, res, next) {
 This module exports an Express middleware that checks the bearer token of an incoming request and verifies its validity. To use this middleware, open `app.js` and add the following `require` statements to the top of the file.
 
 ```js
-const bearerToken = require("express-bearer-token");
-const oktaAuth = require("./auth");
+const bearerToken = require('express-bearer-token');
+const oktaAuth = require('./auth');
 ```
 
 Then, update the creation of the Express server with the declaration of the middleware to match the following.
 
 ```js
-const app = express().use(cors()).use(json()).use(bearerToken()).use(oktaAuth);
+const app = express()
+  .use(cors())
+  .use(json())
+  .use(bearerToken())
+  .use(oktaAuth);
 ```
 
 The `bearerToken` middleware extracts the bearer token from a request header. `oktaAuth` then checks the token. You can now run `node app.js` again to start the server. Only now, if you try to access the API you will get a `401 Unauthorized` error response from the server.
@@ -758,20 +757,20 @@ npm install -E @okta/okta-angular@4.1.0 @okta/okta-auth-js@5.6.0
 Open `src/app/app.module.ts` and create an `OktaAuth` instance by adding the following lines after the existing import statements.
 
 ```ts
-import { OKTA_CONFIG, OktaAuthModule } from "@okta/okta-angular";
-import { OktaAuth } from "@okta/okta-auth-js";
+import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 const config = {
-  issuer: "https://{yourOktaDomain}/oauth2/default",
-  clientId: "{yourClientID}",
-  redirectUri: window.location.origin + "/login/callback",
-};
+  issuer: 'https://{yourOktaDomain}/oauth2/default',
+  clientId: '{yourClientID}',
+  redirectUri: window.location.origin + '/login/callback'
+}
 const oktaAuth = new OktaAuth(config);
 ```
 
 Make sure to replace the `{...}` placeholders with your OIDC app settings.
 
-Next, add `OktaAuthModule` to the array of `imports` in the `NgModule` configuration.
+Next, add `OktaAuthModule` to the array of `imports` in the `NgModule` configuration. 
 
 ```ts
 @NgModule({
@@ -793,7 +792,7 @@ providers: [{ provide: OKTA_CONFIG, useValue: { oktaAuth }}],
 You now need to configure the router to accept the login callback from Okta. Open `src/app/app-routing.module.ts` and add the following import statement to the top of the file.
 
 ```ts
-import { OktaAuthGuard, OktaCallbackComponent } from "@okta/okta-angular";
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 ```
 
 Update the `routes` configuration object to match the code below.
@@ -801,27 +800,27 @@ Update the `routes` configuration object to match the code below.
 ```ts
 const routes: Routes = [
   {
-    path: "",
-    component: HomeComponent,
+    path: '',
+    component: HomeComponent
   },
   {
-    path: "browse",
+    path: 'browse',
     component: BrowseComponent,
-    canActivate: [OktaAuthGuard],
+    canActivate: [ OktaAuthGuard ]
   },
   {
-    path: "character",
+    path: 'character',
     component: CharacterComponent,
-    canActivate: [OktaAuthGuard],
+    canActivate: [ OktaAuthGuard ]
   },
   {
-    path: "species",
+    path: 'species',
     component: SpeciesComponent,
-    canActivate: [OktaAuthGuard],
+    canActivate: [ OktaAuthGuard ]
   },
   {
-    path: "login/callback",
-    component: OktaCallbackComponent,
+    path: 'login/callback',
+    component: OktaCallbackComponent
   },
 ];
 ```
@@ -834,7 +833,7 @@ In the last section, you added authentication to the server. This means that any
 import { setContext } from '@apollo/client/link/context';
 import { OktaAuth } from '@okta/okta-auth-js';
 
-const uri = 'http://localhost:4201/graphql';
+const uri = 'http://localhost:4201/graphql'; 
 export function createApollo(httpLink: HttpLink, oktaAuth: OktaAuth): ApolloClientOptions<any> {
   const http = httpLink.create({ uri });
   const auth = setContext(async (_, { headers }) => {
@@ -853,26 +852,24 @@ export function createApollo(httpLink: HttpLink, oktaAuth: OktaAuth): ApolloClie
 The function now expects an `OktaAuth` instance as the second argument. This means that you have to add it to the `deps` array in the `NgModule` provider for the Apollo options. Update the `deps` array to match the following.
 
 ```ts
-deps: [HttpLink, OktaAuth];
+deps: [HttpLink, OktaAuth]
 ```
 
 Finally, you want to provide feedback to the user's sign-in status and also provide manual ways of logging in and out of the application. Open `src/app/navbar/navbar.component.ts` and replace its contents with the code below.
 
 ```ts
-import { Component } from "@angular/core";
-import { OktaAuthStateService } from "@okta/okta-angular";
-import { OktaAuth } from "@okta/okta-auth-js";
+import { Component } from '@angular/core';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 @Component({
-  selector: "app-navbar",
-  templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.css"],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(
-    public authStateService: OktaAuthStateService,
-    private oktaAuth: OktaAuth,
-  ) {}
+  
+  constructor(public authStateService: OktaAuthStateService, private oktaAuth: OktaAuth) {}
 
   async login() {
     await this.oktaAuth.signInWithRedirect();
@@ -881,6 +878,7 @@ export class NavbarComponent {
   async logout() {
     await this.oktaAuth.signOut();
   }
+
 }
 ```
 
@@ -899,7 +897,7 @@ Congratulations! You have completed the implementation of an Angular app that co
 
 {% img {src: "angular-graphql/angular-graphql-auth.png", alt: "Running the complete application with authentication", header: "800"} %}
 
-## Learn more about Angular, GraphQL, and single-page applications
+## Learn more about Angular, GraphQL, and single-page applications  
 
 In this tutorial, I have shown you how to create a single-page application that consumes a GraphQL API using Angular. You've seen how to create a GraphQL schema that describes the queries and the results that the server supplies.
 
@@ -907,10 +905,10 @@ GraphQL provides a flexible way of implementing APIs that can be extended withou
 
 The app you have written consists of a server and a client. The server uses Express to parse incoming requests before passing them to the GraphQL middleware. The client is built using Angular and uses the Apollo library to interface with the GraphQL API. If you want to learn more about GraphQL, Angular, or single-page apps in general, feel free to follow the links below.
 
-- [What Is Angular Ivy and Why Is It Awesome?](/blog/2020/02/12/angular-ivy)
-- [Quickly Consume a GraphQL API from React](/blog/2020/11/23/quick-graphql-react-app)
-- [Build a secure GraphQL API with Node.js](/blog/2020/11/18/build-a-graphql-nodejs-api)
-- [Stop Writing Server-Based Web Apps](/blog/2020/03/06/stop-writing-server-based-web-apps)
+* [What Is Angular Ivy and Why Is It Awesome?](/blog/2020/02/12/angular-ivy)
+* [Quickly Consume a GraphQL API from React](/blog/2020/11/23/quick-graphql-react-app)
+* [Build a secure GraphQL API with Node.js](/blog/2020/11/18/build-a-graphql-nodejs-api)
+* [Stop Writing Server-Based Web Apps](/blog/2020/03/06/stop-writing-server-based-web-apps)
 
 You can find the code for this tutorial on GitHub at <https://github.com/oktadev/okta-angular-graphql-example>.
 

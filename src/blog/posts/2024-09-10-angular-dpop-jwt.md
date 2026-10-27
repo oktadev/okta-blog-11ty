@@ -18,7 +18,6 @@ The high-level overview of DPoP uses public/private keys to create a signed DPoP
 
 The primary use case for DPoP is for public clients, but the spec elevates token security for all OAuth client types. Public clients are applications where authentication code runs within the end user's browser, such as Single-Page Applications (SPA) and mobile apps. Due to their architecture, public clients inherently have higher risk and less security in authentication and authorization. Public clients can't leverage a client secret used by application types that can communicate to the authorization server through a "back-channel," a network connection opaque to users, network sniffing attackers, and nosy developers. Without proper protection, a SPA may store tokens accessible to the end-user and injection-related attacks. DPoP adds an extra protection layer that makes tokens less usable if stolen.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 In this post, you'll experiment with DPoP and step through migrating a public client application using OAuth bearer tokens compared to DPoP tokens. We'll build upon the existing OAuth 2.0 Authorization Code flow. Need a refresher? Check out this post:
@@ -216,7 +215,7 @@ When you sign in, you'll see the initial call to the `/token` endpoint fails.
 
 {% img {src: "angular-dpop-jwt/dpop-token-fail.jpg", alt: "Network requests showing the first call fails with HTTP status 400 and the second call succeeds.", header: "800"} %}
 
-Take a look at the call's request headers. You'll see a header called `DPoP`, which contains the DPoP proof in JWT format, which means we can decode it and inspect its contents. You can use a trustworthy online tool such as [JWT.io debugger](jwt.io) or Base64 decode the header and payload sections of the JWT locally. In the JWT format, the content from the beginning up to the first <kdb>.</kbd> character is the header, and the content between the two <kbd>.</kbd> characters is the payload. 
+Take a look at the call's request headers. You'll see a header called `DPoP`, which contains the DPoP proof in JWT format, which means we can decode it and inspect its contents. You can use a trustworthy online tool such as [JWT.io debugger](jwt.io) or Base64 decode the header and payload sections of the JWT locally. In the JWT format, the content from the beginning up to the first <kbd>.</kbd> character is the header, and the content between the two <kbd>.</kbd> characters is the payload. 
 
 The header contains the token type, `dpop+jwt`, the encryption algorithm, and the cryptographic key information tied to this proof. The payload includes minimal HTTP information and other properties to prevent token attack vectors.
 
@@ -269,7 +268,7 @@ The HTTP response includes information about why the call errored.
 
 ```http
 HTTP/1.1 400 Bad Request
-WWW-Authenticate: Bearer authorization_uri: "http://{yourOktaDomain}/oauth2/v1/authorize", realm: "http://{yourOktaDomain}", scope: "okta.users.read.self", error: "invalid_request", error_description: "The resource request requires a DPoP proof.", resource: "/api/v1/users"
+WWW-Authenticate: Bearer authorization_uri="http://{yourOktaDomain}/oauth2/v1/authorize", realm="http://{yourOktaDomain}", scope="okta.users.read.self", error="invalid_request", error_description="The resource request requires a DPoP proof.", resource="/api/v1/users"
 ```
 
 The current code to make the Users API call adds the access token using the `Bearer` scheme in the `Authorization` header, but that's incorrect for DPoP. We must incorporate the DPoP proof and change the scheme in the HTTP request.
@@ -330,7 +329,7 @@ The API rejected your request! You get back an error stating the DPoP proof isn'
 
 ```http
 HTTP/1.1 400 Bad Request
-WWW-Authenticate: DPoP algs: "RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri: "http://{yourOktaDomain}/oauth2/v1/authorize", realm: "http://{yourOktaDomain}", scope: "okta.apps.read", error: "invalid_dpop_proof", error_description: "'htu' claim in the DPoP proof JWT is invalid."
+WWW-Authenticate: DPoP algs="RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri="http://{yourOktaDomain}/oauth2/v1/authorize", realm="http://{yourOktaDomain}", scope="okta.apps.read", error="invalid_dpop_proof", error_description="'htu' claim in the DPoP proof JWT is invalid."
 ```
 
 If an attacker manages to capture both the proof and the token, they may only be able to make the same request. The proof constrains the calls to the HTTP method and URI, invalidating other HTTP requests. 
@@ -346,7 +345,7 @@ The API rejected your request! You still get back an error stating the DPoP proo
 
 ```http
 HTTP/1.1 400 Bad Request
-WWW-Authenticate: DPoP algs: "RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri: "http://{yourOktaDomain}/oauth2/v1/authorize", realm: "http://{yourOktaDomain}", scope: "okta.users.read.self", error: "invalid_dpop_proof", error_description: "The DPoP proof JWT has already been used.", resource: "/api/v1/users"
+WWW-Authenticate: DPoP algs="RS256 RS384 RS512 ES256 ES384 ES512", authorization_uri="http://{yourOktaDomain}/oauth2/v1/authorize", realm="http://{yourOktaDomain}", scope="okta.users.read.self", error="invalid_dpop_proof", error_description="The DPoP proof JWT has already been used.", resource="/api/v1/users"
 ```
 
 The proof also has two other protection mechanisms: the JWT unique identifier (`jit`) and the issued at time (`iat`). When a resource server enforces the `jit` claim, it tracks previous calls to prevent proof reuse. So, an attacker can't replay the proof and the access token they stole. Enforcing the JWT ID isn't required in the DPoP spec. Another protection mechanism is the proof issue timestamp, the `iat` claim. Resource servers check the issue time on the proofs, and if it exceeds some threshold determined by the resource server, the server will reject the request. 

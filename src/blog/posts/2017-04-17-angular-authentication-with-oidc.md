@@ -180,11 +180,13 @@ export class AppModule { }
 
 In `src/app/app.component.html`, adjust the placeholder content and add a `<router-outlet>` tag to display routes.
 
+{% raw %}
 ```html
 <h1>Welcome to {{title}}!</h1>
 <!-- Routed views go here -->
 <router-outlet></router-outlet>
 ```
+{% endraw %}
 
 Now that you have routing setup, you can continue writing the search feature.
 

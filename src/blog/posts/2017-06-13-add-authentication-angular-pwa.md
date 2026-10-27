@@ -570,7 +570,6 @@ After I got everything deployed, I used [Lighthouse](https://developers.google.c
 
 {% img {src: "angular-pwa-auth/lighthouse-perfect-score.png", alt: "Lighthouse Perfect Score", header: "800"} %}
 
-
 **TIP:** [Joe Kutner](https://twitter.com/codefinger), Java Languages Owner at [Heroku](https://www.heroku.com/), created a [`heroku.sh`](https://github.com/oktadeveloper/okta-spring-boot-angular-pwa-example/blob/master/heroku.sh) script you can use to deploy this same application to Heroku. Thanks, Joe!
 
 ## Happy Authenticating!

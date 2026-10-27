@@ -32,7 +32,6 @@ Many modern applications make use of single-sign-on services such as Okta. In it
 
 In this tutorial, I'll show you how to create a login form like the one above. You'll create an Angular app, use Material Design, and make it require user login. Okta provides a library specifically for Angular applications, but I will be using the more low-level `okta-auth-js` library. This library allows you to have full control over your HTML and just handles communication with Okta's API. All of Okta's JavaScript libraries are built on top of `okta-auth-js`. To make the application a bit more interesting, I will be creating a small tic-tac-toe game that will be protected using Okta for authentication.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

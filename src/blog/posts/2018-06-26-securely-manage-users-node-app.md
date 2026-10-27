@@ -176,7 +176,6 @@ Some of the syntax is a little different in the new version of the user profile 
 **views/layout.hbs**
 
 {% raw %}
-{% raw %}
 ```diff
        <h1>{{title}}</h1>
 -      {{#if userinfo}}
@@ -190,7 +189,6 @@ Some of the syntax is a little different in the new version of the user profile 
 +      {{#if user}}
          <a href="/logout">Sign out</a>
 ```
-{% endraw %}
 {% endraw %}
 
 **views/dashboard.hbs**
@@ -265,7 +263,6 @@ Handlebars lets you loop through an array of elements, so we can cut down on som
 **views/profile.hbs**
 
 {% raw %}
-{% raw %}
 ```hbs
 <form method="post">
   {{#each fields}}
@@ -286,7 +283,6 @@ Handlebars lets you loop through an array of elements, so we can cut down on som
   <button type="submit">Save</button>
 </form>
 ```
-{% endraw %}
 {% endraw %}
 
 In the context of the loop `this` refers to the item being looped through, so in this case each item of the `fields` array, which you'll need to pass in via the route. It'll assume each item has a `name`, which it uses for the `name` and `id`. If there is a special `type`, it'll use that, otherwise the browser will assume the default value of `text`. Here, you want `birthdate` to be a date, so you can use the datepicker built in to modern browsers (if the browser doesn't support it, you'll just get a text field, which is good enough for this demo). You can also tell the browser that certain fields are required (e.g. first and last name).

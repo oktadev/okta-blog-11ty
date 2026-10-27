@@ -29,7 +29,6 @@ To complete this tutorial, there are a few things you will need:
 
 You will start by creating the backend in Python.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

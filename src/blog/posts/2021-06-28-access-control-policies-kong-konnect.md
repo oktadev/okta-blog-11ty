@@ -23,7 +23,6 @@ In our last Kong and Okta tutorial, we will implement a basic access control pol
 - [Authorization Code for user authentication](/blog/2021/06/02/auth-code-flow-kong-konnect)
 - [Implement introspection flow for token validation](/blog/2021/06/11/access-control-policies-kong-connect-konnect)
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 <Embed video>

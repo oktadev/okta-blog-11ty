@@ -125,7 +125,7 @@ The  screenshot below shows the request body format in Postman with the data set
 
 {% img {src: "pass-hook/postman-create-user.png", alt: "Postman Create User", header: "800"} %}
 
-Once the user is added to your Okta tenant, you can attempt to log in. I've included message outputs via the console of the Glitch application. If you'd like to confirm the service receives the request and the data retrieved, select **Tools > Logs **. For the initial tests with _tinatest@doesnotexist.com_, first type in an incorrect password to confirm the user is blocked from signing in and the password is not stored, requiring the inline hook to be called again during the next user login attempt. Once sign-in is blocked, you can attempt to log in with the correct password: _textPassword_.
+Once the user is added to your Okta tenant, you can attempt to log in. I've included message outputs via the console of the Glitch application. If you'd like to confirm the service receives the request and the data retrieved, select **Tools > Logs**. For the initial tests with _tinatest@doesnotexist.com_, first type in an incorrect password to confirm the user is blocked from signing in and the password is not stored, requiring the inline hook to be called again during the next user login attempt. Once sign-in is blocked, you can attempt to log in with the correct password: _textPassword_.
 
 The user should be signed in, landed on the Okta dashboard. If checking the console, your output should look similar to this:
  

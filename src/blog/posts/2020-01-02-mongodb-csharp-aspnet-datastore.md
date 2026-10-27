@@ -516,7 +516,7 @@ Add a menu option for your new page. Open `_Layout.cshtml` in the folder `Views/
 
 ```html
 <li class="nav-item">
-  <a class="nav-link text-dark" asp-area asp-controller="ExploreDb" asp-action="Index">Explore Db</a>
+  <a class="nav-link text-dark" asp-area="" asp-controller="ExploreDb" asp-action="Index">Explore Db</a>
 </li>
 ```
 

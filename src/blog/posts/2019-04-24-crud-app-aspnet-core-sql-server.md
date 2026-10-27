@@ -230,7 +230,7 @@ In the `Views/Shared` folder open the `Layout.cshtml` file and add a link to the
 
 ```html
 <li class="nav-item">
-  <a class="nav-link text-dark" asp-area asp-controller="FavoriteBands" asp-action="Index">Favorite Bands</a>
+  <a class="nav-link text-dark" asp-area="" asp-controller="FavoriteBands" asp-action="Index">Favorite Bands</a>
 </li>
 ```
 
@@ -417,13 +417,13 @@ Change the main menu in `Views/Shared/_Layout.cshtml` to add this in and move th
 <div class="navbar-collapse collapse justify-content-between">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Privacy">Privacy</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="FavoriteBands" asp-action="Index">Favorite Bands</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="FavoriteBands" asp-action="Index">Favorite Bands</a>
     </li>
   </ul>
   <partial name="_LoginPartial" />

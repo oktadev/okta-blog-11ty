@@ -872,7 +872,7 @@ Microsoft.AspNetCore.Authentication.JwtBearer;
 
 After that, add the details about your identity provider to your application. Inside of `ConfigureServices` method add the following:
 
-```cs 
+```cs
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   .AddJwtBearer(options =>
             	{

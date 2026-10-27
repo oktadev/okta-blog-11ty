@@ -602,14 +602,14 @@ The first handler simply loads the `register` view when the **Register** link is
 <div class="field">
     <label class="label">Password</label>
     <div class="control">
-        <input class="input" name="password" type="password" value>
+        <input class="input" name="password" type="password" value="">
     </div>
 </div>
 
 <div class="field">
     <label class="label">Repeat Password</label>
     <div class="control">
-        <input class="input" name="repeat_password" type="password" value>
+        <input class="input" name="repeat_password" type="password" value="">
     </div>
 </div>
 

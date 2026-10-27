@@ -26,7 +26,6 @@ Making a setup production-ready introduces further complexities:
 
 In this post, we'll use Okta, Terraform, AWS, GitHub, and GitHub actions to create a secure CI/CD pipeline.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 By the end of this post, you'll have a solid understanding of how to set up a CI/CD pipeline tailored for Okta and the knowledge to start implementing infrastructure as code with Terraform.

@@ -148,7 +148,7 @@ What about applications that don't use OIDC?
 
 Typically, the user id is available from the ID token issued during authentication process (`sub` claim), or through [user management API](https://developer.okta.com/docs/reference/api/users/#list-users) 
 
-``` 
+```
 {
     "family_name": "Silverman",
     "given_name": "Indranil",
@@ -160,7 +160,7 @@ Typically, the user id is available from the ID token issued during authenticati
     "zoneinfo": "America/Los_Angeles"
 }
 ``` 
-``` 
+```
 curl -v -X GET \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
@@ -172,7 +172,7 @@ curl -v -X GET \
 
 The Factor ID is available from the [factor management API](https://developer.okta.com/docs/reference/api/factors/#list-enrolled-factors)
 
-``` 
+```
 curl -v -X GET \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
@@ -182,7 +182,7 @@ curl -v -X GET \
 
 * Example: Issue an SMS Factor challenge
 
-``` 
+```
 curl -v -X POST \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \

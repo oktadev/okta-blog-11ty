@@ -210,13 +210,19 @@ In **Configure SAML**:
 >
 > Please note that we're providing these for setup; they don't constitute a working SSO connection to the resource app. Also, don't assume the `NameID` is an email address; it is whatever the customer's SSO emits. Your matching set must remain consistent across your deployment.
 
-After creating the app, you'll see more configuration options for your Okta SAML 2.0 app. You'll make changes in the resource server tab.
+After creating the app, you'll see more configuration options for your Okta SAML 2.0 app. You'll make changes in the **Machine Assignments** tab.
 
-**Resource Server extra configuration**
+**Machine Assignments extra configuration**
 
-[Enable Cross App Access (XAA)](https://developer.okta.com/docs/guides/xaa-agent-to-app/main/#enable-xaa-on-a-custom-app-integration) on the resource app integration from the **Resource Server** tab, and configure:
+[Enable Cross App Access (XAA)](https://developer.okta.com/docs/guides/xaa-agent-to-app/main/#enable-xaa-on-a-custom-app-integration) on the resource app integration:
 
-   1. **Issuer URL**: https://auth.resource.xaa.dev
+1. Select the **Machine Assignments** tab. **Callers** is selected by default.
+2. Under **Access method**, find the **Cross-app access (XAA)** card, which shows **Disabled**, and click **Edit**. The **Edit access method** panel opens on the right.
+3. Set the status dropdown to **Enabled**.
+4. Fill in the fields:
+    - **Issuer URL**: https://auth.resource.xaa.dev
+    - **Scopes**: This is optional and not needed for this walkthrough
+5. Click **Save**.
 
 **Assignments configuration**
 
@@ -228,7 +234,7 @@ Go to [Test your requesting app](https://xaa.dev/developer/test-requesting-app?t
 
 - **IdP issuer URL**: your Okta Integrator account ID (i.e., https://your-okta-domain.okta.com)
 - **Test user identifier**: your email, e.g., name1234...@okta.com
-- **SAML IdP entityID**: from the requesting app's **Sign On** tab > **SAML Setup** > **View SAML setup instructions**, the **Identity Provider Issuer** value (i.e., http://www.okta.com/<app-id>)
+- **SAML IdP entityID**: from the requesting app's **Sign On** tab > **SAML Setup** > **View SAML setup instructions**, the **Identity Provider Issuer** value (i.e., http://www.okta.com/&lt;app-id&gt;)
 
 After all values are entered, click **Register**.
 

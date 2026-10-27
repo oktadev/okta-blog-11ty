@@ -8,7 +8,7 @@ by: contractor
 communities: [java]
 description: "Build a Hibernate app with and without Spring then turn it into a secure webapp."
 tags: [security, authentication, sessions, jpa, spring, spring-data, rest]
-tweets: 
+tweets:
 - "Build a Hibernate app with and without Spring"
 - "Hibernate + Spring, from old school to new"
 image: featured/okta-java-short-bottle-headphones.jpg
@@ -589,7 +589,7 @@ Now, start the application again. It'll be locked and you will be unable to make
 
 First, create a new **SPA** application in Okta. {{ macro.cli({type: "spa", install: "false", loginRedirectUri: "https://oidcdebugger.com/debug", logoutRedirectUri: "https://oidcdebugger.com"}) }}
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "spring-hibernate-guide/oidc-config.png", alt: "OpenID connect", header: "700"} %}
 

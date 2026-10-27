@@ -28,7 +28,6 @@ See [The Baseline Costs of JavaScript Frameworks](https://blog.uncommon.is/the-b
 
 Bootstrap is a popular CSS framework, and Vue has support for it via [BootstrapVue](https://bootstrap-vue.js.org/). In this tutorial, you'll learn how to create a schematic that integrates BootstrapVue. It's a straightforward example, and I'll include unit and integrating testing tips.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

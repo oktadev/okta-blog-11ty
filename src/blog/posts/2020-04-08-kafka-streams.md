@@ -12,7 +12,7 @@ tweets:
 - "This guide shows you how to use @apachekafka streams + @QuarkusIO apps in 2020."
 - "Learn how to leverage the power of @apachekafka in this streaming tutorial."
 - "An Introduction to Secure Kafka Applications."
-image: kafka-streams/kafka-streams.png 
+image: kafka-streams/kafka-streams.png
 type: conversion
 ---
 

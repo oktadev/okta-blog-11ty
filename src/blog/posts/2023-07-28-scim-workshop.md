@@ -14,7 +14,7 @@ type: awareness
 github: https://github.com/oktadev/okta-enterprise-ready-workshops/tree/scim-workshop-complete
 changelog:
 - 2023-08-21: Added a Supplemental section at the end
-- 2023-08-28: Corrected hyperlink to OIDC Workshop blog, provided more clarity in accessing the Prisma web interface. Added a disclaimer for using API tokens. 
+- 2023-08-28: Corrected hyperlink to OIDC Workshop blog, provided more clarity in accessing the Prisma web interface. Added a disclaimer for using API tokens.
 - 2023-08-30: Improved instructions for bearer auth check
 - 2023-09-15: Corrected url typos on SCIM diagram
 - 2023-09-19: Clarified instructions and changed the Bearer auth handling to the SCIM route definition
@@ -191,7 +191,7 @@ A neat feature with Prisma is the option to view the user table locally. To do t
 
 ## Add a SCIM file and create a scimRoute
 
-For maintainability, we'll aim to keep our SCIM implementation code in one place. Let's create a SCIM file, scim.ts, in `apps/api/src`, and import it in `main.ts`. At the top of `apps/api/src/scim.ts`, import Router and create a scimRoute to export to `apps/api/src/main.ts`. Copy paste the following code to the top of your `apps/api/src/scim.ts`` file:
+For maintainability, we'll aim to keep our SCIM implementation code in one place. Let's create a SCIM file, scim.ts, in `apps/api/src`, and import it in `main.ts`. At the top of `apps/api/src/scim.ts`, import Router and create a scimRoute to export to `apps/api/src/main.ts`. Copy paste the following code to the top of your `apps/api/src/scim.ts` file:
 
 ```ts
 import { Router } from 'express';

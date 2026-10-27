@@ -47,7 +47,7 @@ What I like about this is that the template is very easy to follow and to implem
 
 For this blog post, I'll fast track the setup covering the important steps.
 
-First, you'll create an Invocation Name. This allows you to dictate how you invoke the newly created skill later with Alexa (e.g.: "Alexa, ask <Invocation Name>, What is my favorite color?") In this example, I'll name mine as "Sample Quiz Game".
+First, you'll create an Invocation Name. This allows you to dictate how you invoke the newly created skill later with Alexa (e.g.: "Alexa, ask &lt;Invocation Name&gt;, What is my favorite color?") In this example, I'll name mine as "Sample Quiz Game".
 
 {% img {src: "alexa-okta/invocation-name-step.png", alt: "Invocation Name Step", header: "800"} %}
 

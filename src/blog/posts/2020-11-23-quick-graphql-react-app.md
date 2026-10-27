@@ -22,7 +22,6 @@ To secure your application, you will be using Okta's single sign-on provider.  O
 
 In React, you will learn to build an application using the public GraphQL API provided by [Everbase](https://www.everbase.co/editor).  The data in this API contains some information regarding exchange rates in various currencies, as well as information about countries in which those currencies are used.  For this application, you will allow the user to convert his/her money into another currency.  Then you will show the user some information about what countries accept that currency.  
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

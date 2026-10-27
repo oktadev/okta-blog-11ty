@@ -36,6 +36,24 @@ Start the server by running `npm start` and open `http://localhost:8080/blog/`.
 | `npm run css`      | Compiles Tailwind from `public/css/index.css` into `_site/style.css`. `npm start` and `npm run build` call it for you.                            | Rarely by hand.                                                   |
 | `npm run format`   | Runs Prettier over JS and JSON. Posts (`src/blog/posts/`) and Nunjucks templates are excluded on purpose, so it never touches code samples.       | The pre-commit hook formats staged files; run this for a sweep.   |
 | `npm run post`     | Scaffolds a new post, see below.                                                                                                                 |                                                                   |
+| `npm run test:unit` | Runs the `node:test` suites in `test/`: the migration converters, the live-site verifier, the callout renderer, the Prism grammars and the content lint. | After changing anything in `scripts/` or `utils/`. `npm test` runs them before the build. |
+| `npm run migrate` | Makes the posts here match a checkout of the old `okta-blog` repo (`--src ../okta-blog`): converts posts that are missing here or that changed upstream since the recorded commit (Markdown posts get this site's shortcodes and macros, AsciiDoc posts are converted to Markdown), copies and replaces their images, asks before removing posts the old repo retired, and records the commit. `--only slug,slug`, `--force`, `--dry-run`, `--yes`, `--override`; see below. | Whenever the old repo gets a new or edited post. |
+| `npm run verify-migration -- <slug>` | Fetches the post from the live site and compares its prose, code blocks and inline code with the local build in `_site`, reporting anything the live site has that the local page lacks. `--file slugs.txt` checks a list, `--details` prints the pairs. | After `npm run build`, for any post you migrated or re-converted. |
+| `npm run upstream-changes` | Lists the posts, images and authors that changed in the old `okta-blog` repo since the commit recorded in `scripts/upstream-snapshot.txt`, which `npm run migrate` records at the end of each run. | To preview what the next `migrate` run will touch. |
+| `npm run sync-code-blocks` | Splices every fenced code block in `src/blog/posts/` back from its `okta-blog` source, byte for byte, leaving front matter, prose and shortcodes alone (the fence lines keep their local language tag). `--dry-run` lists what would change, `--details` shows the first differing line per block. | If a formatter has touched posts, or after the old repo fixes a code sample. |
+
+Never run a formatter over `src/blog/posts/`: the code samples there are copied byte for byte from the authors' sources, and a formatter rewrites quote styles, indentation and line breaks, which breaks prose that refers to line numbers. `.prettierignore` excludes the posts and `.vscode/settings.json` turns off format-on-save for Markdown; if your editor formats Markdown on save through another extension, turn that off for this repo. `npm run sync-code-blocks` repairs any post that has been reformatted.
+
+### Keeping up with the old repo
+
+Posts are still published in the old `okta-blog` repo first, so this site reconciles with it rather than the other way round. Never edit a migrated post here by hand: the next run would overwrite it, and the fix belongs in the old repo. With a checkout of `okta-blog` next to this one:
+
+1. `git -C ../okta-blog pull`, then `npm run upstream-changes` to see what moved since the commit recorded in `scripts/upstream-snapshot.txt` (optional; the next step works it out itself).
+2. `npm run migrate`. It converts the posts that are missing here and the ones the old repo added or changed since the recorded commit, copies their images and replaces the ones that changed, adds missing authors, lists posts the old repo deleted and asks before removing them (each needs a redirect in `vercel.json`; it keeps any that lack one), then records the checkout's commit. With no posts here at all, every post counts as new and the whole site comes over. `--dry-run` only reports, `--yes` answers the prompt for scripts, `--only slug,slug` converts just those and records nothing, `--force` re-converts everything.
+3. `npm run build`, then `npm run verify-migration -- <slugs>` to compare each converted post with the live site. A post edited upstream that the live site has not redeployed yet will differ there; that is expected.
+4. Review the diff and open the PR.
+
+One post, `2019-08-28-reactive-microservices-spring-cloud-gateway`, is converted from the branch of okta-blog#1611 until that PR merges: pass `--override <slug>=<path to that branch's .adoc>` (see #142).
 
 ## Writing a post
 
@@ -177,6 +195,8 @@ Redirects and the site's security headers live in `vercel.json`.
 `npm ci` (through the `prepare` script) points git at the hooks in `.githooks/`, so they run without any setup:
 
 - **pre-commit** runs `validate-images` and `lint-content` on the staged files, syntax-checks staged JavaScript, formats staged JS and JSON with Prettier, and runs `npm run validate`. Bypass with `git commit --no-verify` only if you know why it failed.
+- **`npm run setup`** (called by `npm start` and `npm run build`) compiles the CSS, copies fonts, scripts, avatars and the site's SVGs into `_site`, and runs `scripts/copy-raw-assets.js`, which copies only the files posts reference by plain path (videos, posters, PDFs, raw `<img>` sources, links to full-size images) from `public/img/blog` and `public/files`. Images that go through `{% img %}` are produced by eleventy-img instead, so their originals never ship next to the derivatives.
+- **pre-commit** refuses `.DS_Store` files and anything over 5MB, syntax-checks staged JavaScript, formats staged JS and JSON with Prettier, and runs `npm run validate`. Bypass with `git commit --no-verify` only if you know why it failed.
 - **pre-push** runs a full `npm run build` so a broken template or filter is caught before CI. Skip it with `SKIP_BUILD=1 git push` when you've just built.
 
 On GitHub, three workflows in `.github/workflows/` cover every push to `main` and every pull request:

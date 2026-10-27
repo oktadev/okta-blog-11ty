@@ -40,26 +40,26 @@ do:
 
     Add the following code to the dependencies section:
 
-    ~~~ conf
+    ~~~conf
     classpath 'org.robolectric:robolectric-gradle-plugin:0.12.+'
     ~~~
 -   Modify the application Gradle file
 
     Add the following code under `apply plugin: 'com.android.application'`:
 
-    ~~~ conf
+    ~~~conf
     apply plugin: 'robolectric'
     ~~~
 -   Add the following under the dependencies section:
 
-    ~~~ conf
+    ~~~conf
     androidTestCompile('junit:junit:4.11')
     androidTestCompile('org.robolectric:robolectric:2.3')
     ~~~
 
 -   Add this section:
 
-    ~~~ conf
+    ~~~conf
     robolectric {
             include '**/*Test.class'
     }
@@ -68,7 +68,7 @@ do:
 
     Modify `MainActivity`. Add the following code to it:
 
-    ~~~ java
+    ~~~java
     private Foo foo = new Foo();
     public int getSomething() {
         return foo.getFoo();
@@ -77,7 +77,7 @@ do:
 
     Add the `Foo` class:
 
-    ~~~ java
+    ~~~java
     package com.example.myapplication;
 
     public class Foo {
@@ -90,7 +90,7 @@ do:
     ~~~
 -   Add the `Bar` class:
 
-    ~~~ java
+    ~~~java
     package com.example.myapplication;
 
     public class Bar {
@@ -106,7 +106,7 @@ do:
 
     Create the following `FooTest` class under your `androidTest`:
 
-    ~~~ java
+    ~~~java
     package com.example.myapplication;
 
     import junit.framework.Assert;

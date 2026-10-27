@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   balancedElement,
+  missingAssets,
   compareAnchors,
   compareCode,
   compareInline,
@@ -33,6 +34,7 @@ test("normalizeText folds typography, entities and callout markers", () => {
 test("extract separates prose, code and inline code and drops the TOC", () => {
   const html =
     '<div class="table-of-contents"><ul><li><a href="#a">A</a></li></ul></div>' +
+    '<nav class="table-of-contents not-prose"><p class="toc-header">Table of Contents</p><ul><li><a href="#a">A</a><ul><li><a href="#b">B</a></li></ul></li></ul></nav>' +
     "<h2>A heading</h2><p>Para with <code>x</code>.</p>" +
     '<pre class="highlight"><code><span class="k">let</span> a = 1; <i class="conum" data-value="1"></i><b>(1)</b>\n</code></pre>' +
     "<ul><li>item one</li><li>item &amp; two</li></ul>" +
@@ -73,10 +75,12 @@ test("needsAttention fails a post for any kind of loss, including inline code", 
     code: { liveCount: 2, mineCount: 2, mismatches: [] },
     inline: [],
     anchors: [],
+    assets: [],
   };
   assert.equal(needsAttention(clean), false);
   assert.equal(needsAttention({ ...clean, inline: ["okta login"] }), true);
   assert.equal(needsAttention({ ...clean, anchors: ["setup"] }), true);
+  assert.equal(needsAttention({ ...clean, assets: ["d/demo.mp4"] }), true);
   assert.equal(
     needsAttention({ ...clean, prose: { missing: ["gone"], extra: [] } }),
     true,
@@ -154,4 +158,13 @@ test("extract collects heading ids and every id, and compareAnchors reports live
     ["create-your-vue--go-app", "create-your-vue-go-app", "run"],
   );
   assert.deepEqual(compareAnchors(live, mine), ["run-it"]);
+});
+
+test("missingAssets reports referenced files the build does not contain", () => {
+  const html =
+    '<video src=/img/blog/raw-assets-test/absent.mp4></video><img src="/img/blog/x/y-800.webp">';
+  assert.deepEqual(missingAssets(html, "_site"), [
+    "img/blog/raw-assets-test/absent.mp4",
+    "img/blog/x/y-800.webp",
+  ]);
 });

@@ -223,12 +223,11 @@ To tell the app to use this router, you'll have to add a few lines to `index.js`
      title: 'Hello, world!',
 ```
 
-Now for the `todo` template. It's a little larger, so I saved it for last. If you're familiar with HTML it shouldn't be too bad to follow. Handlebars adds a few features that let you access variables. In this case, you're using an {% raw %}`{{{ '{#' }}if}}`{% endraw %} block to render something special if there aren't any items, as well as an {% raw %}`{{{ '{#' }}each}}`{% endraw %} block to render each of the list items with minimal markup.
+Now for the `todo` template. It's a little larger, so I saved it for last. If you're familiar with HTML it shouldn't be too bad to follow. Handlebars adds a few features that let you access variables. In this case, you're using an {% raw %}`{{#if}}`{% endraw %} block to render something special if there aren't any items, as well as an {% raw %}`{{#each}}`{% endraw %} block to render each of the list items with minimal markup.
 
 The only JavaScript used here is for automatically submitting the form when you change something. If JavaScript were disabled, this would still work when pressing the "Enter" key on your keyboard, thanks to the hidden button labeled "Autosave".
 
 **views/todo.hbs**
-{% raw %}
 {% raw %}
 ```hbs
 <form method="post">
@@ -273,7 +272,6 @@ The only JavaScript used here is for automatically submitting the form when you 
   </style>
 </form>
 ```
-{% endraw %}
 {% endraw %}
 
 Now go to `http://localhost:3000/todo` and enter some items into your todo list.
@@ -389,7 +387,6 @@ You can also add a welcome message and a log out button to your `layout.hbs`.
 
 **views/layout.hbs**
 {% raw %}
-{% raw %}
 ```diff
 @@ -12,6 +12,12 @@
    </head>
@@ -405,7 +402,6 @@ You can also add a welcome message and a log out button to your `layout.hbs`.
        {{{body}}}
      </main>
 ```
-{% endraw %}
 {% endraw %}
 
 For that to work, you'll need to add `userinfo` to the context when rendering views.

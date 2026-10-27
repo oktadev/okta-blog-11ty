@@ -1273,7 +1273,7 @@ Add a new file to `client` named `App.vue`. Add the following code to this file.
                <div class="input-field col s6">
                    <span class="datetime-label">Time</span>
                    <datetime v-model="endTime" input-id="endTime" type="time" minute-step="5" use12-hour="true" value-zone="local" input-class="validate"></datetime>
-                   <!-- <input v-model="endTime" ref="endTime" placeholder id="endTime" type="text" class="validate"> -->
+                   <!-- <input v-model="endTime" ref="endTime" placeholder="" id="endTime" type="text" class="validate"> -->
                    <!-- <label for="endTime">Time</label> -->
                </div>
            </div>

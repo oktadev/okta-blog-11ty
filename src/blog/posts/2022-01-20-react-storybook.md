@@ -6,7 +6,7 @@ communities: [javascript]
 description: "A tutorial that shows how to create a React app with Storybook."
 tags: [react, storybook, javascript]
 tweets:
-- "Curious about Storybook? Learn how to create a secure React app using Okta and Storybook!" 
+- "Curious about Storybook? Learn how to create a secure React app using Okta and Storybook!"
 - "Build and test UI components quickly using Storybook! 🚀 Learn how to create a secure React app with Storybook."
 image: react-storybook/react-storybook-social.jpg
 type: conversion
@@ -25,7 +25,6 @@ In this tutorial, I will show you how to use Storybook to create a simple [React
 - [Node 14](https://nodejs.org/)
 - [Okta CLI](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

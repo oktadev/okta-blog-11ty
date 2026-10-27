@@ -344,7 +344,7 @@ Content-Type: application/json;charset=UTF-8
 
 To access the server now, you need a valid access token. You can use **OpenID Connect debugger** to help you do this. 
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "spring-boot-mongodb/oidc-debugger.png", alt: "OIDC Debugger", header: "600"} %}
 

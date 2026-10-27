@@ -704,7 +704,7 @@ Your last task is to set up the Views.  ASP.NET Core comes with a `_Layout` file
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area asp-controller="Home" asp-action="Index">V_Okta</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">V_Okta</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -712,7 +712,7 @@ Your last task is to set up the Views.  ASP.NET Core comes with a `_Layout` file
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area asp-controller="Movies" asp-action="Index">Movies</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="~/Movies/Manage">Add A Movie</a>
@@ -730,7 +730,7 @@ Your last task is to set up the Views.  ASP.NET Core comes with a `_Layout` file
  
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - V_Okta - <a asp-area asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - V_Okta - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -9,10 +9,10 @@ communities: [javascript]
 description: "Learn how to run an OAuth 2.0 Device Flow proxy server so you can use the Device Flow with servers that don't have native support."
 tags: [oauth, oauth2, php, device, oauth2-device-flow]
 image: oauth-device-flow-proxy/syfy.jpg
-tweets: 
+tweets:
 - "How to use the #OAuth Device Flow on servers that don't support it"
 - "Here's a way to add the #OAuth Device Flow to servers that don't have native support"
-- "This tutorial from @aaronpk shows you how you can start using the OAuth Device Flow today with any OAuth server!" 
+- "This tutorial from @aaronpk shows you how you can start using the OAuth Device Flow today with any OAuth server!"
 type: awareness
 ---
 
