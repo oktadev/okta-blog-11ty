@@ -74,23 +74,18 @@ markdownLibrary.core.ruler.before(
 // A URL whose host is a template placeholder ("https://${yourOktaDomain}/…")
 // is text to copy, not a link; linkify would otherwise link "https://$" and
 // leave the rest dangling. Same validation as linkify-it's own, minus those.
-markdownLibrary.linkify.add("http:", {
+// linkify-it 6 no longer aliases "https:" to "http:", so both are overridden.
+const placeholderSafeWeb = {
   validate(text, pos, self) {
-    const tail = text.slice(pos);
-    if (/^\/\/\$?\{/.test(tail)) return 0;
-    if (!self.re.http) {
-      self.re.http = new RegExp(
-        "^\\/\\/" +
-          self.re.src_auth +
-          self.re.src_host_port_strict +
-          self.re.src_path,
-        "i",
-      );
-    }
-    const m = tail.match(self.re.http);
+    if (/^\/\/\$?\{/.test(text.slice(pos))) return 0;
+    const re = self.re.get_http_validator();
+    re.lastIndex = pos;
+    const m = re.exec(text);
     return m ? m[0].length : 0;
   },
-});
+};
+markdownLibrary.linkify.add("http:", placeholderSafeWeb);
+markdownLibrary.linkify.add("https:", placeholderSafeWeb);
 
 // The old site's footnote marker is the bare number, not "[1]".
 markdownLibrary.renderer.rules.footnote_caption = (tokens, idx) => {
