@@ -18,9 +18,10 @@ export const slugify = (s) =>
 
 // The site's Markdown library. Shared so anything that renders markdown outside
 // the main pipeline (e.g. the markdown-in-HTML transform) stays consistent.
+// A newline inside a paragraph is a space, as on the old site (kramdown) and
+// in CommonMark; a line break takes two trailing spaces or a backslash (#205).
 export const markdownLibrary = markdownIt({
   html: true,
-  breaks: true,
   linkify: true,
 })
   .use(markdownItAnchor, {

@@ -10,6 +10,6 @@ public/js/
 src/blog/posts/
 
 # Nunjucks templates: prettier-plugin-jinja-template was trialed and rejected —
-# it line-wraps macro prose, which (with markdown breaks:true) injected <br>s and
-# dropped spaces in rendered output. Leave templates alone.
+# it line-wraps macro prose, which dropped spaces in rendered output (and, while
+# markdown ran with breaks:true, injected <br>s). Leave templates alone.
 *.njk
