@@ -13,7 +13,13 @@
 // Usage: npm run build && node scripts/verify-migration.js <slug> [<slug>...]
 //        node scripts/verify-migration.js --file slugs.txt [--details] [--site _site]
 // Exit code 1 when any post has missing prose or mismatched code.
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import path from "node:path";
 import { rawAssetRefs } from "../utils/raw-assets.js";
 
@@ -419,11 +425,25 @@ async function fetchLive(slug) {
   return html;
 }
 
-function localHtml(site, slug) {
+const POSTS = "src/blog/posts";
+
+function localPage(site, slug) {
   const [, y, m, d, name] = slug.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)$/);
-  const file = path.join(site, "blog", y, m, d, name, "index.html");
+  return path.join(site, "blog", y, m, d, name, "index.html");
+}
+
+function localHtml(site, slug) {
+  const file = localPage(site, slug);
   if (!existsSync(file)) throw new Error(`${file} not built`);
   return readFileSync(file, "utf8");
+}
+
+// A page built before its post last changed compares the wrong content (#204:
+// two posts regenerated between a build and the comparison looked like a
+// build that differed from itself).
+export function staleBuild(postFile, pageFile) {
+  if (!existsSync(postFile) || !existsSync(pageFile)) return false;
+  return statSync(postFile).mtimeMs > statSync(pageFile).mtimeMs;
 }
 
 // Files the built page references by path (videos, posters, PDFs, raw images,
@@ -443,7 +463,8 @@ export function needsAttention(result) {
     result.code.liveCount !== result.code.mineCount ||
     result.inline.length ||
     result.anchors.length ||
-    result.assets.length,
+    result.assets.length ||
+    result.stale,
   );
 }
 
@@ -458,7 +479,11 @@ export async function verify(slug, site) {
   const inline = compareInline(live.inline, mine.inline);
   const anchors = compareAnchors(live, mine);
   const assets = missingAssets(page, site);
-  return { slug, live, mine, prose, code, inline, anchors, assets };
+  const stale = staleBuild(
+    path.join(POSTS, `${slug}.md`),
+    localPage(site, slug),
+  );
+  return { slug, live, mine, prose, code, inline, anchors, assets, stale };
 }
 
 async function main() {
@@ -519,6 +544,10 @@ async function main() {
           rows.push(`    anchor missing: #${a}`);
         for (const f of r.assets.slice(0, 10))
           rows.push(`    file missing from the build: /${f}`);
+        if (r.stale)
+          rows.push(
+            "    built before the post last changed: rebuild, then compare again",
+          );
       }
     } catch (err) {
       failed++;
