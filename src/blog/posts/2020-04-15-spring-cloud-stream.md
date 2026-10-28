@@ -568,7 +568,7 @@ http --stream :8080/sse
 
 You'll see streaming data:
 
-``` bash
+```bash
 ...
 data:{"currentValue":60,"total":589}
 data:{"currentValue":22,"total":611}

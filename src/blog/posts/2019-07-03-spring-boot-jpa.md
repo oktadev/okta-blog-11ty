@@ -30,7 +30,6 @@ The application you will build will have two main parts. The first is the authen
 - **Token Date/Time** - When the user starts a session with the application described in this post, a new token is issued by Okta. This token is valid for a certain amount of time and is reused across page refreshes until it expires
 - **Last View Date/Time** - This is the last time the application was viewed. If you refresh the page, this time will update, while the *Token Date/Time* and *Login Date/Time* should remain the same.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

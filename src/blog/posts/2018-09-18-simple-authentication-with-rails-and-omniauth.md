@@ -98,7 +98,7 @@ Now that you've configured the necessary environment variables, let's test it ou
 
 Run the following commands to start a local web server to test against.
 
- ```bash
+```bash
 rake db:migrate
 rails s
 ```

@@ -9,9 +9,9 @@ communities: [java]
 description: "Reactor Schedulers for Spring Reactive Java Applications"
 tags: [spring-boot, spring-framework, spring-security, oidc, oauth2, reactive, webflux, blockhound, java]
 tweets:
-  - "Blocking code got you down? Unleash the #BlockHound 🐕"
-  - "Don't let blocking cause a reactor meltdown. Here are some tips to find the cause ☢️"
-  - "Building a #reactive #java app? Don't let blocking code stop you! 🛑"
+- "Blocking code got you down? Unleash the #BlockHound 🐕"
+- "Don't let blocking cause a reactor meltdown. Here are some tips to find the cause ☢️"
+- "Building a #reactive #java app? Don't let blocking code stop you! 🛑"
 image: reactive-java/reactive-java.png
 type: conversion
 github: https://github.com/oktadev/okta-reactive-service-example
@@ -31,7 +31,6 @@ In this post, we'll summarize some core Reactor concepts, introduce the Schedule
 - [Java 11+](https://openjdk.java.net/install/index.html)
 - [Okta CLI](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -42,7 +41,7 @@ Reactor is an API for doing asynchronous programming. You describe your data pro
 
 {% img {src: "reactive-java/project-reactor.png", alt: "Project Reactor Logo", header: "300"} %}
 
-Using the assembly line analogy, the initial data flow from a source, known as the `Publisher`, goes through transformation steps and eventually the result is pushed to a consumer, known as the `Subscriber`. A `Publisher` produces data, and a `Subscriber` listens to it. Reactor also supports flow control via backpressure, so a `Subscriber` can signal the volume it's able to consume.
+Using the assembly line analogy, the initial data flow from a source, known as the `Publisher`, goes through transformation steps and eventually the result is pushed to a consumer, known as the `Subscriber`. A `Publisher` produces data, and a  `Subscriber` listens to it. Reactor also supports flow control via backpressure, so a `Subscriber` can signal the volume it's able to consume.
 
 ### Nothing Happens Until You Subscribe
 
@@ -52,7 +51,7 @@ A **cold publisher** generates data for each subscription. Then, if you subscrib
 
 ### Operators `map` and `flatMap`
 
-Operators are like workstations in an assembly line. They make it possible to describe transformations or intermediate steps along the processing chain. Each operator is a _decorator_, it wraps the previous `Publisher` into a new instance. To avoid mistakes, **the preferred way of using operators is to chain the calls**. Apply the next operator to the last operator's result. Some operators are instance methods and others are static methods.
+Operators are like workstations in an assembly line. They make it possible to describe transformations or intermediate steps along the processing chain. Each operator is a *decorator*, it wraps the previous `Publisher` into a new instance. To avoid mistakes, **the preferred way of using operators is to chain the calls**. Apply the next operator to the last operator's result. Some operators are instance methods and others are static methods.
 
 Both `map()` and `flatMap()` are instance method **operators**. You might be familiar with the concept of these operations from functional programming or Java Streams. In the reactive world, they have their own semantics.
 
@@ -77,7 +76,7 @@ public class MapTest {
 }
 ```
 
-**Note:** You can find this test and all the code in this tutorial in [GitHub](https://github.com/oktadev/okta-reactive-service-example).
+**Note:** You can find this test and all the code in this tutorial in [GitHub]( https://github.com/oktadev/okta-reactive-service-example).
 
 In the code above, a flux is created from a range of integers from 1 to 5. The `map()` operator is passed a transformation function that formats with leading zeros. Notice that the return type of the transform method is not a publisher and the transformation is synchronous–a simple method call. The transformation function must not introduce latency.
 
@@ -228,7 +227,6 @@ public class FlatMapTest {
     }
 }
 ```
-
 There is a rich vocabulary of operators for `Flux` and `Mono` you can find in the reference documentation. This handy guide can help you choose the right operator: ["Which operator do I need?"](https://projectreactor.io/docs/core/release/reference/#which-operator).
 
 # Reactor Schedulers for Switching the Thread
@@ -254,7 +252,6 @@ public class TestUtils {
     }
 }
 ```
-
 ### No Execution Context
 
 `Schedulers.immediate()` can be seen as the no-op scheduler, which the pipeline executes in the current thread.
@@ -596,7 +593,6 @@ public class SecureRandom {
     }
 }
 ```
-
 Create the `SecureRandomController` class:
 
 ```java
@@ -633,7 +629,6 @@ Add `spring-security-test` dependency to the pom:
 ```
 
 Add a `SecureRandomControllerTest`:
-
 ```java
 package com.okta.developer.reactive.controller;
 
@@ -666,11 +661,9 @@ public class SecureRandomControllerTest {
 ```
 
 Run with:
-
 ```shell
 ./mvnw test -Dtest=SecureRandomControllerTest
 ```
-
 The test should pass, but **how can you make sure the REST call won't freeze up the service's event loop?** Use [BlockHound](https://github.com/reactor/BlockHound)!. Blockhound is a Java agent that detects blocking calls from non-blocking threads, has built-in integration with Project Reactor, and supports the JUnit platform.
 
 Add the Blockhound dependency to the `pom.xml`:
@@ -782,7 +775,6 @@ Sign in with your Okta account and you should see a response similar to this:
   "value": "-611020335"
 }
 ```
-
 ## Learn More About Reactive Java
 
 I hope you've enjoyed this post. Hopefully, you gained a better understanding of Reactor Schedulers and how to encapsulate blocking code correctly, to avoid freezing the event loop in your Reactive Java application. Some important Reactor topics could not be covered in this post, like error handling, work-stealing and `StepVerifier`. To continue learning, check out the links below:

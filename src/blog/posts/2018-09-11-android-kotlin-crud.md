@@ -66,7 +66,7 @@ Anything declared in the primary constructor is automatically declared as a prop
 
 For clarity, this is the equivalent Java:
 
-```java 
+```java
 public static class MovieViewHolder extends RecyclerView.ViewHolder {
     public final View view;
     public MovieViewHolder(View v) {

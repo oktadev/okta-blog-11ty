@@ -708,7 +708,7 @@ import PlayerForm from './PlayerForm';
     }
 ```
 
-(below the closing </Table> tag in the `render()` method):
+(below the closing &lt;/Table&gt; tag in the `render()` method):
 
 ```html
 <PlayerForm onAddition={this.onAddition} />

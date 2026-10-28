@@ -9,13 +9,13 @@ communities: [java]
 description: "Simplify testing your apps secured with Spring Security by using Spring Security Test."
 tags: [spring-security, testing, junit, webtestclient, mockmvc]
 tweets:
-  - "Learn how to test your @SpringSecurity configuration using Spring Security Test."
-  - "Testing your Spring application's that are secured with Spring Security is a whole lot easier with Spring Security Test!"
-  - "Test your @java and @springsecurity apps that use JWT and OAuth. 👇"
+- "Learn how to test your @SpringSecurity configuration using Spring Security Test."
+- "Testing your Spring application's that are secured with Spring Security is a whole lot easier with Spring Security Test!"
+- "Test your @java and @springsecurity apps that use JWT and OAuth. 👇"
 image: spring-security-test/spring-security-testing.png
 type: conversion
 changelog:
-  - 2022-02-15: Updated to use Spring Boot 2.6.3 and Spring Security 5.6.1. See the changes to this post in [okta-blog#1081](https://github.com/oktadev/okta-blog/pull/1081). You can see the updates to the example app in [okta-spring-security-test-example#3](https://github.com/oktadev/okta-spring-security-test-example/pull/3).
+- 2022-02-15: Updated to use Spring Boot 2.6.3 and Spring Security 5.6.1. See the changes to this post in [okta-blog#1081](https://github.com/oktadev/okta-blog/pull/1081). You can see the updates to the example app in [okta-spring-security-test-example#3](https://github.com/oktadev/okta-spring-security-test-example/pull/3).
 ---
 
 {% include "integrator-org-warning.njk" %}
@@ -36,7 +36,6 @@ In this tutorial, you will explore security mocking with `SecurityMockServerConf
 - [Java 11+](https://openjdk.java.net/install/index.html)
 - [Okta CLI](https://cli.okta.com)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 If you prefer to learn visually, you can [watch a screencast of this tutorial](https://youtu.be/H1Un1eDEfGY).
@@ -82,8 +81,8 @@ spring:
 okta:
   oauth2:
     issuer: https://{yourOktaDomain}/oauth2/default
-    client-id: { clientId }
-    client-secret: { clientSecret }
+    client-id: {clientId}
+    client-secret: {clientSecret}
     scopes: openid, profile, email
 
 eureka:
@@ -184,7 +183,6 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
 ```
-
 Update the class `ApiGatewayApplicationTests` to activate the `test` profile:
 
 ```java
@@ -340,7 +338,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AirbnbListing {
-
+    
     @Id
     private String id;
     private String name;
@@ -427,7 +425,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticated()
             .and()
             .oauth2ResourceServer().jwt();
-
+        
         Okta.configureResourceServer401ResponseBody(http);
     }
 }
@@ -587,7 +585,7 @@ http --download https://start.spring.io/starter.zip \
 unzip theaters.zip
 ```
 
-Add the Nimbus `oauth2-oidc-sdk` dependency to the `pom.xml`, required for token introspection, and add the `spring-security-test` dependency.
+Add the Nimbus `oauth2-oidc-sdk` dependency to the `pom.xml`, required for token introspection, and add the  `spring-security-test` dependency. 
 
 ```xml
 <dependency>
@@ -635,8 +633,8 @@ spring:
       resourceserver:
         opaque-token:
           introspection-uri: https://{yourOktaDomain}/oauth2/default/v1/introspect
-          client-secret: { yourClientSecret }
-          client-id: { yourClientId }
+          client-secret: {yourClientSecret}
+          client-id: {yourClientId}
 eureka:
   client:
     service-url:
@@ -779,7 +777,7 @@ public class JwtOpaqueTokenIntrospector implements ReactiveOpaqueTokenIntrospect
 
     private Mono<OAuth2AuthenticatedPrincipal> enhance(OAuth2AuthenticatedPrincipal principal) {
         Collection<GrantedAuthority> authorities = extractAuthorities(principal);
-        OAuth2AuthenticatedPrincipal enhanced =
+        OAuth2AuthenticatedPrincipal enhanced = 
             new DefaultOAuth2AuthenticatedPrincipal(principal.getAttributes(), authorities);
         return Mono.just(enhanced);
     }
@@ -852,7 +850,7 @@ import java.util.List;
 @ActiveProfiles("test")
 class TheatersApplicationTests {
 
-    private static final MongoDBContainer mongoDBContainer =
+    private static final MongoDBContainer mongoDBContainer = 
         new MongoDBContainer(DockerImageName.parse("mongo:bionic"))
             .withExposedPorts(27017)
             .withEnv("MONGO_INIT_DATABASE", "airbnb");
@@ -862,7 +860,7 @@ class TheatersApplicationTests {
         mongoDBContainer.setPortBindings(List.of("27017:27017"));
         mongoDBContainer.start();
     }
-
+    
     @Test
     void contextLoads() {
     }
@@ -1153,7 +1151,7 @@ services:
       - SPRING_DATA_MONGODB_HOST=mongo
 ```
 
-Get the MongoDB dump files `theaters.bson`, `theaters.metadata.json` from [GitHub](https://github.com/huynhsamha/quick-mongo-atlas-datasets/tree/master/dump/sample_mflix).
+Get the MongoDB dump files `theaters.bson`, `theaters.metadata.json` from [GitHub](https://github.com/huynhsamha/quick-mongo-atlas-datasets/tree/master/dump/sample_mflix). 
 
 ```shell
 http -d https://github.com/huynhsamha/quick-mongo-atlas-datasets/blob/master/dump/sample_mflix/theaters.bson?raw=true
@@ -1196,9 +1194,9 @@ Go to `http://localhost:8080/userdata` after the Okta login, and you should see 
 
 ```json
 {
-  "userName": "...",
-  "idToken": "...",
-  "accessToken": "..."
+   "userName":"...",
+   "idToken":"...",
+   "accessToken":"..."
 }
 ```
 
@@ -1213,11 +1211,10 @@ http POST http://localhost:8080/listing name=test "Authorization:Bearer ${ACCESS
 ```
 
 You will see the following response:
-
 ```
 HTTP/1.1 403 Forbidden
-WWW-Authenticate: Bearer error="insufficient_scope",
- error_description="The request requires higher privileges than provided by the access token.",
+WWW-Authenticate: Bearer error="insufficient_scope", 
+ error_description="The request requires higher privileges than provided by the access token.", 
  error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
 ```
 
@@ -1260,7 +1257,7 @@ You will see the following response:
 
 ```
 HTTP/1.1 401 Unauthorized
-WWW-Authenticate: Bearer error="invalid_token",
+WWW-Authenticate: Bearer error="invalid_token", 
  error_description="An error occurred while attempting to decode the Jwt: This aud claim is not equal to the configured audience",
  error_uri="https://tools.ietf.org/html/rfc6750#section-3.1"
 ```

@@ -26,7 +26,6 @@ This tutorial was created with the following frameworks and tools:
 - [k9s v0.25.18](https://k9scli.io/topics/install/)
 - [Docker 20.10.12](https://docs.docker.com/engine/install/)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

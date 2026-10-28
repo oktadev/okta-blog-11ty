@@ -285,7 +285,6 @@ For people who aren't registered yet, they'll need a registration page. At the t
 **views/register.hbs**
 {% raw %}
 
-{% raw %}
 ```hbs
 <form method="post">
   {{#each fields}}
@@ -304,7 +303,6 @@ For people who aren't registered yet, they'll need a registration page. At the t
   <button type="submit" class="btn btn-primary">Register</button>
 </form>
 ```
-{% endraw %}
 
 {% endraw %}
 
@@ -418,7 +416,6 @@ While you're at it, you can also prevent the user from seeing your greeting unle
 **views/index.hbs**
 {% raw %}
 
-{% raw %}
 ```hbs
 {{#if userContext}}
   <h1 class="text-center">Hi {{userContext.userinfo.given_name}}!</h1>
@@ -429,7 +426,6 @@ While you're at it, you can also prevent the user from seeing your greeting unle
   <h1 class="text-center">Please log in</h1>
 {{/if}}
 ```
-{% endraw %}
 
 {% endraw %}
 
@@ -440,7 +436,6 @@ Now to add the buttons. In `views/layout.hbs`, replace the `{{!-- @TODO add auth
 **views/layout.hbs**
 {% raw %}
 
-{% raw %}
 ```hbs
 {{#if userContext}}
   <form method="POST" action="/logout">
@@ -451,7 +446,6 @@ Now to add the buttons. In `views/layout.hbs`, replace the `{{!-- @TODO add auth
   <a class="nav-item nav-link" href="/register">Register</a>
 {{/if}}
 ```
-{% endraw %}
 
 {% endraw %}
 

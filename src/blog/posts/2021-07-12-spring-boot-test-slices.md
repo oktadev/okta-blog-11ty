@@ -9,9 +9,9 @@ communities: [java]
 description: "Spring Boot Test Slices allow you to test a specific part of your application in isolation without loading the whole Spring context."
 tags: [spring, spring-boot, testing, spring-testing, unit-testing, integration-testing, java]
 tweets:
-  - "Unit tests are the most valuable when they are stable, fast, and reproducible. Speed your @springboot tests up with the tips in this tutorial!"
-  - "In this tutorial, you'll learn about Spring Boot testing capabilities to optimize integration tests."
-  - "Are you using @SpringBootTest? You can do better, and make your tests execute faster!"
+- "Unit tests are the most valuable when they are stable, fast, and reproducible. Speed your @springboot tests up with the tips in this tutorial!"
+- "In this tutorial, you'll learn about Spring Boot testing capabilities to optimize integration tests."
+- "Are you using @SpringBootTest? You can do better, and make your tests execute faster!"
 image: spring-boot-test-slices/spring-boot-test-slices.png
 type: conversion
 ---
@@ -22,7 +22,6 @@ Spring Boot is known to reduce boilerplate code and make development extremely e
 
 In this tutorial, you'll learn about Spring Boot testing capabilities to optimize integration tests.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -46,9 +45,9 @@ While it works, there are several downsides:
 End-to-end tests would be the best place for the tests with `@SpringBootTest`, assuming the whole application is a black box.
 Test Slices is a solution for the slowly running tests. Most of the unit tests don't require complete application bootstrap but rather some slices (layers of the application):
 
-- Most MVC layers
-- Database / repositories
-- Whole application
+* Most MVC layers
+* Database / repositories
+* Whole application
 
 ## Spring Boot Test Slices Overview
 
@@ -113,28 +112,28 @@ This command displays outcome:
 
 ```text
 > Task :test
-
+ 
  ViewersServiceIntegrationTest
-
+ 
    ✔ insertOrIncrementViews creates a new visitor record when need()
    ✔ insertOrIncrementViews increments counter for existing visitor()
-
+ 
  ViewersRepositoryIntegrationTest
-
+ 
    ✔ insert two visitors and find all()
    ✔ incrementVisit adds single visit()
    ✔ compute average amount of visits per user()
-
+ 
  VisitCounterControllerIntegrationTest
-
+ 
    ✔ signin redirect works()
    ✔ greet authenticated user()
    ✔ renders provided data from the viewersService visiting as a guest()
    ✔ greet guest()
-
+ 
  9 passing (11.3s)
-
-
+ 
+ 
 BUILD SUCCESSFUL in 26s
 ```
 
@@ -162,7 +161,7 @@ class VisitCounterController(
 ) {
 
     @GetMapping("/")
-    fun index(@AuthenticationPrincipal user: AuthenticatedPrincipal?): ModelAndView {
+    fun index(@AuthenticationPrincipal user: AuthenticatedPrincipal?): ModelAndView { 
         val myUsername = user?.name ?: "guest" // ❶
 
         viewersService.insertOrIncrementViews(myUsername) // ❷
@@ -529,10 +528,10 @@ You can find the source code used in this post on GitHub in the [okta-spring-boo
 
 You might like these other posts too:
 
-- [An Illustrated Guide to OAuth and OpenID Connect](/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
-- [Spring Documentation: auto-configured Spring MVC Tests](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-mvc-tests)
-- [Better Testing with Spring Security Test](/blog/2021/05/19/spring-security-testing)
-- [Test Your Spring Boot Applications with JUnit 5](/blog/2019/03/28/test-java-spring-boot-junit5)
-- [How to GraphQL in Java](/blog/2020/01/31/java-graphql)
+* [An Illustrated Guide to OAuth and OpenID Connect](/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
+* [Spring Documentation: auto-configured Spring MVC Tests](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-mvc-tests)
+* [Better Testing with Spring Security Test](/blog/2021/05/19/spring-security-testing)
+* [Test Your Spring Boot Applications with JUnit 5](/blog/2019/03/28/test-java-spring-boot-junit5)
+* [How to GraphQL in Java](/blog/2020/01/31/java-graphql)
 
 If you have any questions, please ask them in the comments below. Want to learn more Spring Boot tips and tricks? Follow us on [Twitter](https://twitter.com/oktadev) and subscribe to our [YouTube](https://www.youtube.com/c/oktadev) channel.

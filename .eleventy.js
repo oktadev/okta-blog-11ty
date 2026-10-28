@@ -8,10 +8,27 @@ import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import embedTwitter from "eleventy-plugin-embed-twitter";
 
+import Prism from "prismjs";
+import loadLanguages from "prismjs/components/index.js";
+import { register as registerLanguages } from "./utils/prism-languages.js";
+import { renderCallouts } from "./utils/callouts.js";
+
 import filters from "./utils/filters.js";
 import transforms from "./utils/transforms.js";
 import shortcodes from "./utils/shortcodes.js";
 import shortcodesAsync from "./utils/shortcodes-async.js";
+
+registerLanguages(Prism);
+
+function prismKnows(lang) {
+  if (Prism.languages[lang]) return true;
+  try {
+    loadLanguages([lang]);
+  } catch {
+    return false;
+  }
+  return Boolean(Prism.languages[lang]);
+}
 
 export default function (eleventyConfig) {
   eleventyConfig.on("eleventy.before", () => {
@@ -39,6 +56,27 @@ export default function (eleventyConfig) {
   // Plugins
   eleventyConfig.addPlugin(EleventyPluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
+
+  // The syntax highlight plugin returns fences tagged `text`, or with a
+  // language Prism doesn't know, unescaped, so a "<token>" in such a sample
+  // becomes HTML. Escape those ourselves and keep the same markup. Eleventy
+  // installs the plugin's highlighter with md.set() every time it constructs a
+  // Markdown engine, and runs amendLibrary only once, so the wrapper is applied
+  // inside set() itself: whatever highlighter is installed, whenever, is wrapped.
+  const mdSet = markdownLibrary.set.bind(markdownLibrary);
+  markdownLibrary.set = (options) => {
+    const inner = options?.highlight;
+    if (typeof inner !== "function" || inner.wrapsPrism) return mdSet(options);
+    const highlight = (str, lang) => {
+      const name = (lang || "").split("/")[0];
+      if (name && name !== "text" && prismKnows(name))
+        return renderCallouts(inner(str, lang));
+      const cls = ` class="language-${name || "text"}"`;
+      return `<pre${cls}><code${cls}>${renderCallouts(markdownLibrary.utils.escapeHtml(str))}</code></pre>`;
+    };
+    highlight.wrapsPrism = true;
+    return mdSet({ ...options, highlight });
+  };
   eleventyConfig.addPlugin(embedTwitter);
   eleventyConfig.addPlugin(transforms);
 
@@ -124,6 +162,7 @@ export default function (eleventyConfig) {
   });
 
   // Use the shared Markdown library (see utils/markdown.js).
+  markdownLibrary.linkify.set({ fuzzyLink: false });
   eleventyConfig.setLibrary("md", markdownLibrary);
 
   // // Layouts

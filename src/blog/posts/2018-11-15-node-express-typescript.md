@@ -14,7 +14,7 @@ tweets:
 - "Build a @nodejs application using @typescriptlang and #expressjs"
 image: node-express-typescript/node-express-typescript.jpg
 type: conversion
-changelog: 
+changelog:
   - 2021-12-08: Updated GitHub repo and blog post with dependency upgrades. You can see the changes in the [example app on GitHub](https://github.com/oktadev/okta-node-express-typescript-vue-example/pull/11). Changes to this article can be viewed in [oktadev/okta-blog#992](https://github.com/oktadev/okta-blog/pull/992).
 ---
 

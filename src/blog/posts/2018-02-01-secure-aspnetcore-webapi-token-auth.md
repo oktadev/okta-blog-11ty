@@ -20,7 +20,6 @@ changelog:
 
 API security can be complex. In many cases, just because you've built an API that you want to make public, it doesn't mean that you want just anybody accessing it. In most cases, you want fine-grained control over who can access the API, but setting up that kind of user management can be a daunting task: you'd have to create your own authorization service that can create API credentials for your users and have the ability to exchange those API credentials for an access token using OAuth 2.0. I've got good news! With just a few lines of code, Okta can handle all the complicated and time-consuming security elements and let you concentrate on creating a stellar API. =)
 
-**Table of Contents**{: .hide }
 [[toc]]
   
 {% include "integrator-org-warning.njk" %}
@@ -260,7 +259,7 @@ private async Task<OktaToken> GetNewAccessToken()
 }
 ```
 
-A lot of this method is setting up the `HttpClient` to make the call to the Authorization Service. The interesting parts are the `clientCreds` value that gets the bytes of a string that has the client ID and secret concatenated with a colon between them as <CLIENT_ID>:<CLIENT_SECRET>. That value is then base64 encoded when it's added to the `Authorization` header with "Basic " in front of it. Note that the word "basic" is **NOT** encoded.
+A lot of this method is setting up the `HttpClient` to make the call to the Authorization Service. The interesting parts are the `clientCreds` value that gets the bytes of a string that has the client ID and secret concatenated with a colon between them as &lt;CLIENT_ID&gt;:&lt;CLIENT_SECRET&gt;. That value is then base64 encoded when it's added to the `Authorization` header with "Basic " in front of it. Note that the word "basic" is **NOT** encoded.
 
 There are also two key-value pairs sent as `FormUrlEncodedContent`: the `grant_type` which has a value of "client_credentials", and the `scope` which has a value of "access_token". This simply tells the Authorization Server that you are sending client credentials and you want to get an access token in exchange.
 

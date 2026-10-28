@@ -146,7 +146,7 @@ Now you just need a menu item to get you to the `Index` view. In the `_Layout.cs
 
 ```html
 <li class="nav-item">
-    <a class="nav-link text-dark" asp-area asp-controller="LiveShows" asp-action="Index">Live Shows</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="LiveShows" asp-action="Index">Live Shows</a>
 </li>
 ```
 
@@ -318,13 +318,13 @@ Add this partial to the `_Layout.cshtml` file after the existing navigation so t
 <div class="navbar-collapse collapse justify-content-between">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Privacy">Privacy</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark" asp-area asp-controller="LiveShows" asp-action="Index">Live Shows</a>
+      <a class="nav-link text-dark" asp-area="" asp-controller="LiveShows" asp-action="Index">Live Shows</a>
     </li>
   </ul>
   <partial name="_LoginPartial" />

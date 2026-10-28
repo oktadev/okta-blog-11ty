@@ -26,7 +26,6 @@ In addition to evaluating the overall health of an application, SonarQube can hi
 
 SonarQube can help measure progress easily and validate the importance of technical work that's difficult to view or demonstrate, especially with non-technical customers. Let's explore some of the benefits of SonarQube and how you can implement it in your workflow.  
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Key Features of SonarQube
@@ -84,7 +83,7 @@ You don't have to run analyses with user credentials, you can generate tokens in
   dotnet tool install --global dotnet-sonarscanner
   ```
 
-> **NOTE:**You can [read more about this setup process](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/) in SonarQube documentation.
+> **NOTE:** You can [read more about this setup process](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/) in SonarQube documentation.
 
 ### Analyze the Code
 

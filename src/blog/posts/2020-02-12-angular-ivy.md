@@ -32,7 +32,6 @@ With all these massive changes behind the scenes, you might be scared and wonder
 
 In this tutorial, I'll show you how to upgrade an existing application from Angular 8 to Angular 9. By upgrading, the application will automatically use the new Ivy rendering engine. You'll start with the Angular 8 app from [Build a Beautiful App + Login with Angular Material](/blog/2020/01/21/angular-material-login).
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

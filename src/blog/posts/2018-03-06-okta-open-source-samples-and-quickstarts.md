@@ -7,7 +7,7 @@ author: matt-raible
 by: advocate
 description: "The Okta Developer Experience Team not only creates Okta's open source SDKs, but they create samples and documentation too! This blog post shows how to use our sample apps for Angular, React, Vue.js, Express, Django, Flask, and Spring."
 tags: [java, spring, angular, angularjs, react, node, express, python, django, flask, vue]
-tweets: 
+tweets:
   - "Okta's DevEx Team believes in developing great documentation and easy to configure SDKs. Learn more about the awesome samples they've created →"
   - "Developers love sample applications. Open source is awesome! See how we combine the two to make a better developer experience."
 type: awareness
@@ -55,7 +55,7 @@ As a Java Champion, it's my duty to promote Java whenever I can, so let's look a
 
 Wow, that's a lot of options! If you click on the first one, its [README](https://github.com/okta/samples-java-spring/blob/master/okta-hosted-login/README.md) provides some pretty thorough instructions. It does skip the part about cloning the repository, so you'll need to do that to begin.
 
-``` bash
+```bash
 git clone https://github.com/okta/samples-java-spring.git
 ```
 

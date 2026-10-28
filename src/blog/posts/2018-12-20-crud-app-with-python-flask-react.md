@@ -25,7 +25,6 @@ Today's modern web applications are often built with a server-side language serv
 
 In this tutorial you are going to build a JavaScript application using React in the front-end and we are also going to build a ReST API written in Python which is going to persist. Our app will be a GitHub open source bookmark project (a.k.a `kudo`).
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 To complete this tutorial, there are few things you will need:

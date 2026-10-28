@@ -23,7 +23,6 @@ We'll go through the authorization code flow applied to user authentication proc
 - [Implement Introspection Flow With Kong Konnect and Okta](/blog/2021/06/11/introspection-flow-kong-konnect)
 - [Access control based on Okta's groups and planes](blog/2021/06/28/access-control-policies-kong-konnect)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 You can also [watch this tutorial as a screencast](https://youtu.be/WyjSvekzoNk).

@@ -176,7 +176,7 @@ To learn more about Angular and OIDC, check out the following blog posts:
 - [The Things to Keep in Mind about Auth](/blog/2021/10/29/things-to-keep-in-mind-about-auth)
 - [A Quick Guide to Angular and GraphQL](/blog/2021/10/22/angular-graphql)
 
-[{% img {src: "angular-auth0/angular-mini-book.jpg", alt: "The Angular Mini-Book", header: "100"} %}{: .pull-right }](https://www.infoq.com/minibooks/angular-mini-book/)
+[<span class="float-right ml-4 mb-2">{% img {src: "angular-auth0/angular-mini-book.jpg", alt: "The Angular Mini-Book", header: "100"} %}</span>](https://www.infoq.com/minibooks/angular-mini-book/)
 I [just published a mini-book book on Angular](https://raibledesigns.com/rd/entry/the_angular_mini_book_1) that might interest you too. It's called [The Angular Mini-Book](https://www.infoq.com/minibooks/angular-mini-book/) and is available as a free download from InfoQ. The book is written tutorial-style and shows you how to develop a bare-bones application, test it, and deploy it. Then you'll move on to adding Bootstrap, Angular Material, continuous integration, and authentication. You'll also learn how to integrate Angular with Spring Boot (a popular REST API framework) and use security best practices like HTTPS and a content security policy.
 
 If you liked this tutorial, chances are you'll like others we publish. Please follow [Auth0](https://twitter.com/auth0) and [OktaDev](https://twitter.com/oktadev) on Twitter to get notified when we publish new developer tutorials.

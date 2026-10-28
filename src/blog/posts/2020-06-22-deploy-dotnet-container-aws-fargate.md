@@ -228,13 +228,13 @@ Next, you need to make sure you have the pages you need. Go ahead and delete the
 Edit **Shared/_Layout.cshtml** and modify the second nav item from this:
 
 ```html
-<a class="nav-link text-dark" asp-area asp-page="/Privacy">Privacy</a>
+<a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
 ```
 
 To this:
 
 ```html
-<a class="nav-link text-dark" asp-area asp-page="/Chat">Chat</a>
+<a class="nav-link text-dark" asp-area="" asp-page="/Chat">Chat</a>
 ```
 
 At this point, if you build it your application should run and you should be able to navigate to the chat page that just has the heading **"Chat"**. Make sure that runs successfully before moving onto the next step.

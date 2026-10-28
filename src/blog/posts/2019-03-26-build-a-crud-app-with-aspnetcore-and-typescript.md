@@ -137,7 +137,7 @@ Now add a menu item to the application so that you can easily navigate to the li
 
 ```html
 <li class="nav-item">
-    <a class="nav-link text-dark" asp-area asp-controller="Apples" asp-action="Index">Apples</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Apples" asp-action="Index">Apples</a>
 </li>
 ```
 
@@ -469,7 +469,7 @@ Now modify `Views\Shared\_Layout.cshtml`. Find the following code:
 ```html
 <ul class="navbar-nav flex-grow-1">
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area asp-controller="Home" asp-action="Index">Home</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
     <!-- more code here -->
 </ul>

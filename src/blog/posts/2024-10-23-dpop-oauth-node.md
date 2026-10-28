@@ -24,7 +24,6 @@ Increase security by constraining the token to the sender. By constraining the t
 
 To demonstrate this, we will first set up a node application with a service app without requiring DPoP. Then, we'll add the DPoP constraint and make the necessary changes in our app to implement it.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Create a service app with OAuth 2.0 client credentials without DPoP

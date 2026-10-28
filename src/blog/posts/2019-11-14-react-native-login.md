@@ -61,7 +61,6 @@ If you'd rather watch a video, [I created a screencast of this tutorial](https:/
 <iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/mkT_I5tm3Ig" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

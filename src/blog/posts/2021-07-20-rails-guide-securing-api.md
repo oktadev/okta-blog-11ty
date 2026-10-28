@@ -73,7 +73,7 @@ touch anime_controller.rb
 
 Now provide the code for the controller.
 
- ```ruby
+```ruby
 class AnimesController < ApplicationController
     def index
       animes = ["Haikyu", "The Great Pretender", "Jujutsu kaisen", "Dr. Stone", "Attack on Titan"]
@@ -122,7 +122,7 @@ This looks nice! A great list of stuff to watch. Anime aside, let's secure this 
 
 But wait a second. We are still missing a couple of pieces of key logic! For one, when do we call this valid token method? So let us fix that first. We are going to create a public method that will check HTTP headers for a valid JWT. It should look like so:
 
- ```ruby
+```ruby
     def require_jwt
       token = request.headers["HTTP_AUTHORIZATION"]
       if !token

@@ -84,7 +84,7 @@ Comment out the following line:
 </authentication>
 ```
 
-In the same web.config, look for <Episerver.framework> and add the following lines:
+In the same web.config, look for &lt;Episerver.framework&gt; and add the following lines:
 
 ```xml
 <Episerver.framework>

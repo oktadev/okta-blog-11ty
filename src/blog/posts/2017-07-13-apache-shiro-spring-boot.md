@@ -27,7 +27,7 @@ To get started, grab this [Spring Boot example](https://github.com/oktadeveloper
 
 Using the Apache Shiro Spring Boot starter is all you need, just add the dependency to your pom. (where `${shiro.version}` is at least 1.4.0):
 
-``` xml
+```xml
 <dependency>
     <groupId>org.apache.shiro</groupId>
     <artifactId>shiro-spring-boot-web-starter</artifactId>
@@ -37,7 +37,7 @@ Using the Apache Shiro Spring Boot starter is all you need, just add the depende
 
 Jumping into the code we will start with our `StormtrooperController`, and simply add annotations:
 
-``` java
+```java
 @RestController
 @RequestMapping(path = "/troopers",
                 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -103,7 +103,7 @@ Imagine your application has been deployed and is working fine, the following we
 
 Fine, you say, easy enough, you can just make a few small changes to the method signatures:
 
-``` java
+```java
 @GetMapping()
 @RequiresRoles(logical = Logical.OR, value = {"emperor", "admin", "emperor", "officer", "underling"})
 public Collection<Stormtrooper> listTroopers()
@@ -130,7 +130,7 @@ After another round of testing the deployment and you're back in action!
 
 Wait, take a step back. Roles are great for simple use cases and making a change like this would work fine, but you know this will be changed again. Instead of changing your code every time the requirements change slightly, let's decouple the roles and what they represent from your code. Instead, use permissions. Your method signatures will look like this:
 
-``` java
+```java
 @GetMapping()
 @RequiresPermissions("troopers:read")
 public Collection<Stormtrooper> listTroopers()
@@ -158,7 +158,7 @@ By using Shiro's `@RequiresPermissions` annotation, this code would work with th
 
 To meet the original requirements, the role-to-permission mapping would look like this:
 
-``` properties
+```properties
 role.admin = troopers:*
 role.officer = troopers:create, troopers:read
 role.underling = troopers:read
@@ -166,7 +166,7 @@ role.underling = troopers:read
 
 For the updated requirements, you would just change the file slightly to add the new 'emperor' role, and grant officers the 'update' permission:
 
-``` properties
+```properties
 role.emperor = *
 role.admin = troopers:*
 role.officer = troopers:create, troopers:read, troopers:update
@@ -181,7 +181,7 @@ We've already covered the Maven dependencies and the actual REST controller, but
 
 If you take a look at the `SpringBootApp` class you will notice a few things that were NOT in the [original example](https://github.com/stormpath/jaxrs-spring-blog-example/blob/master/spring-boot/src/main/java/com/stormpath/example/springboot/SpringBootApp.java).
 
-``` java
+```java
 @Bean
 public Realm realm() {
     // uses 'classpath:shiro-users.properties' by default
@@ -211,7 +211,7 @@ First you have defined a Shiro `Realm`, a realm  is simply a user-store specific
 
 Next up you have the `ShiroFilterChainDefinition` which you've configured to allow BASIC authentication but NOT required it by using the 'permissive' option. This way your annotations configure everything. Instead of using annotations (or in addition to using them) you could define your [permission to URL mappings](https://shiro.apache.org/web.html#default-filters) with Ant-style paths. This example would look something like:
 
-``` java
+```java
 chainDefinition.addPathDefinition("/troopers/**", "authcBasic, rest[troopers]");
 ```
 
@@ -221,7 +221,7 @@ This would map any resource starting with the path `/troopers` to require BASIC 
 
 The last bit of code you have handles exceptions.
 
-``` java
+```java
 @ExceptionHandler(UnauthenticatedException.class)
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
 public void handleException(UnauthenticatedException e) {
@@ -248,7 +248,7 @@ The first two handle Shiro exceptions and simply set the status to 401 or 403. A
 
 If you put all of this together, or you just grab the code from [GitHub](https://github.com/oktadeveloper/shiro-spring-boot-example), you can start the application using `mvn spring-boot:run`.  Once you have everything running you can start making requests!
 
-``` bash
+```bash
 $ curl http://localhost:8080/troopers
 HTTP/1.1 401
 Content-Length: 0
@@ -258,7 +258,7 @@ WWW-Authenticate: BASIC realm="application"
 
 Don't forget, you need to authenticate!
 
-``` basic
+```basic
 $ curl --user emperor:secret http://localhost:8080/troopers
 HTTP/1.1 200
 Content-Type: application/json;charset=UTF-8
@@ -288,7 +288,7 @@ Transfer-Encoding: chunked
 ```
 
 A `404` looks would look like this:
-``` bash
+```bash
 $ curl --user emperor:secret http://localhost:8080/troopers/TK-421
 HTTP/1.1 404
 Content-Type: application/json;charset=UTF-8

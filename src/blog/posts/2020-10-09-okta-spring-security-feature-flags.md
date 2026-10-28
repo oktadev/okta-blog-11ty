@@ -22,7 +22,6 @@ Okta and Spring Boot already go together like peanut butter and chocolate. Add i
 
 In this post, I start with setting up an Okta org and configuring an OpenID Connect app. Next, I integrate Okta into a simple Spring Boot and Spring Security app. Finally, I add feature flags to deliver a new UI experience for select users - those that belong to a particular group.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

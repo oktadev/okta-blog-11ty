@@ -24,7 +24,6 @@ Session management in multi-node applications presents multiple challenges. When
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 ## Session Persistence
@@ -448,10 +447,10 @@ services:
 
 Delete the previous containers and previous `webapp` Docker image with the following commands:
 
- ```shell
+```shell
 docker-compose down
 docker rmi webapp
- ```
+```
 
  In the root folder of the project, rebuild the webapp docker image with Maven:
 

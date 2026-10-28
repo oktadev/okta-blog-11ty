@@ -213,7 +213,7 @@ First, you'll need to create a new **Web** application in Okta:
 
 Set the _Login redirect URIs_ field to `https://oidcdebugger.com/debug` and _Grant Type Allowed_ to `Hybrid`. Click **Done** and copy the client ID for the next step.
 
-Now, on the OpenID Connect <debugger/> website, fill the form in like the picture below (do not forget to fill in the client ID for your recently created Okta web application):
+Now, on the OpenID Connect &lt;debugger/&gt; website, fill the form in like the picture below (do not forget to fill in the client ID for your recently created Okta web application):
 
 {% img {src: "secure-spring-rest-api/openid-connect.png", alt: "OpenID connect", header: "700"} %}
 

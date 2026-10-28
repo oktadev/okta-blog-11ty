@@ -14,7 +14,7 @@ tweets:
 - "Want to learn the basics of Deno and build your first Deno app? Check this out!"
 image: "first-deno-with-auth/social-image.png"
 type: conversion
-changelog: 
+changelog:
   - 2021-12-10: Updated GitHub repo and blog post with dependency updates. You can see the changes in the [example app on GitHub](https://github.com/oktadev/okta-deno-auth-example/pull/3). Changes to this article can be viewed in [oktadev/okta-blog#991](https://github.com/oktadev/okta-blog/pull/991).
 ---
 

@@ -283,7 +283,7 @@ Next, you will need to modify your nav to show the login/logout buttons. You als
 ```html
 <ul class="navbar-nav flex-grow-1">
     <li class="nav-item">
-            <a class="nav-link text-dark" asp-area asp-page="/Index">Home</a>
+            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
      </li>
     ~
 </ul>
@@ -295,7 +295,7 @@ Remove everything in the `<ul>` after the Home button. Between the `</li>` and t
 @if (((System.Security.Claims.ClaimsIdentity)User.Identity).IsAuthenticated)
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area asp-page="/Claims">SAML Claims</a>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Claims">SAML Claims</a>
     </li>
     <li>
         @if (User.Identity.Name != null)

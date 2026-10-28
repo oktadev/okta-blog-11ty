@@ -14,7 +14,7 @@ tweets:
 - "This guide shows you how to add external identity providers to @okta - in this case, Apple and Google. It's pretty slick!"
 image: ionic-social-login/ionic-social-login.png
 type: conversion
-changelog: 
+changelog:
 - 2021-03-25: Updated to use the Okta CLI and the new Okta Admin Console. Changes to this post can be viewed in [okta-blog#615](https://github.com/oktadeveloper/okta-blog/pull/615/files#diff-ff0651ccde0fe674349d27ce75abf217c00e056447f52369c04e4acad58d70d8).
 ---
 
@@ -27,7 +27,6 @@ Today I'd like to show you how to develop a mobile application with Ionic, add O
 * [Node 12](https://nodejs.org/)+
 * A sense of adventure
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}

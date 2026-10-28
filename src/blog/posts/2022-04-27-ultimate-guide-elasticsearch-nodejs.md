@@ -4,7 +4,7 @@ author: arek-nawo
 by: contractor
 communities: [javascript]
 description: "Learn how to set up a secure Node.js API with search capabilities using Express.js and Elasticsearch. Then secure the API with Okta so it's only accessible to authorized users."
-tags: [api-security, elasticsearch, express, node] 
+tags: [api-security, elasticsearch, express, node]
 tweets:
 - "No matter what software system you're working on, searching capabilities are an expectation of the highest degree. Develop some solutions of your own by leveraging Elasticsearch in Node.js."
 - "The difference between a good search tool and a great search tool is all in the details. In this tutorial, we're teaching you how to build a fully functional Node.js API with searching capabilities."

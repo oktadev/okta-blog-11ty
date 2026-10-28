@@ -308,7 +308,7 @@ The automation you will create later in this workshop will use this API service 
 
 1. At the very top of the file, you will see several import statments. After the last statment, add the following code: 
 
-``` ts
+```ts
 import passportBearer from 'passport-http-bearer';
 ```
 
@@ -318,7 +318,7 @@ This module allows authenticating HTTP requests using bearer tokens.
 
 1. Go to the end of `main.ts` file and add the following code: 
 
-``` ts
+```ts
 // Workshop code start
 const BearerStrategy = passportBearer.Strategy;
 
@@ -343,7 +343,7 @@ We are using the keys to look up the associated orgs. The way this is set up, it
 
 1. Right after the code above, add the following code:
 
-``` ts
+```ts
 app.get('/api/org/todos',
   passport.authenticate('bearer'),
   async (req, res) => {

@@ -614,9 +614,9 @@ The last file to modify is `src/main/resources/templates/index.hml`. Adjust it t
 There are some Thymeleaf properties you should know about in this HTML:
 
 * `@{/logout}` - returns the logout URL defined on the backend
-* `th:if="${{ '{#' }}authorization.expression('isAuthenticated()')}"` - only print the HTML if the user is **logged in**
+* {% raw %}`th:if="${#authorization.expression('isAuthenticated()')}"`{% endraw %} - only print the HTML if the user is **logged in**
 * `@{//oauth2/authorization/okta}` - this is the URL that Spring Security redirects to for Okta. You could link to `/login` as well, but that just renders the same link and you have to click on it. 
-* `th:unless="${{ '{#' }}authorization.expression('isAuthenticated()')}"` - only print the HTML inside the node if the user is **logged off**
+* {% raw %}`th:unless="${#authorization.expression('isAuthenticated()')}"`{% endraw %} - only print the HTML inside the node if the user is **logged off**
 
 Now restart the configuration project and school-ui again. If you navigate to typing `http://localhost:8080`, you should see the following screen:
 

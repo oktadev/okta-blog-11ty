@@ -9,14 +9,14 @@ communities: [java]
 description: "This tutorial shows how to write a reactive Spring Boot application with R2DBC."
 tags: [java, spring-boot, r2dbc, reactive, reactive-api]
 tweets:
-  - "Learn how to connect to your database in a non-blocking way with R2DBC."
-  - "Spring Data R2DBC makes it easy to connect to your database efficiently, without blocking."
-  - "R2DBC + Spring Boot makes it so you can connect to your SQL databases without blocking. Try it today!"
+- "Learn how to connect to your database in a non-blocking way with R2DBC."
+- "Spring Data R2DBC makes it easy to connect to your database efficiently, without blocking."
+- "R2DBC + Spring Boot makes it so you can connect to your SQL databases without blocking. Try it today!"
 image: spring-boot-r2dbc/r2dbc-spring-boot.png
 type: conversion
 github: https://github.com/oktadev/okta-spring-boot-r2dbc-example
 changelog:
-  - 2021-10-26: Updated to use Spring Boot 2.5.6. You can view the changes in this post in [okta-blog#935](https://github.com/oktadev/okta-blog/pull/935); example app changes are in [okta-spring-boot-r2dbc-example#3](https://github.com/oktadev/okta-spring-boot-r2dbc-example/pull/3).
+- 2021-10-26: Updated to use Spring Boot 2.5.6. You can view the changes in this post in [okta-blog#935](https://github.com/oktadev/okta-blog/pull/935); example app changes are in [okta-spring-boot-r2dbc-example#3](https://github.com/oktadev/okta-spring-boot-r2dbc-example/pull/3).
 ---
 
 Reactive APIs are a powerful way to handle and serve large amounts of data and large numbers of requests in a web application. They rely on a "server-side event" model in which the client (e.g. your browser) subscribes to "events" on the server, and the server "pushes" events to the client as they become available.
@@ -25,9 +25,8 @@ For simple CRUD applications this is not very useful. However, in situations wit
 
 Spring Boot 2.0 provided reactive web technology by integrating with [WebFlux](https://spring.io/guides/gs/reactive-rest-service/), a framework built on top of [Project Reactor](https://projectreactor.io/). Using WebFlux you can create reactive APIs easily in Spring Boot. However, because most Spring Boot applications are CRUD-ish and are backed by relational databases, reactive APIs may not provide much benefit because the underlying database transactions (querying, updating, etc) are synchronous/blocking.
 
-**Table of Contents**{: .hide }
 [[toc]]
-
+  
 {% include "integrator-org-warning.njk" %}
 
 ## What is R2DBC?
@@ -35,10 +34,9 @@ Spring Boot 2.0 provided reactive web technology by integrating with [WebFlux](h
 [R2DBC](https://r2dbc.io/) is an API which provides reactive, non-blocking APIs for relational databases. Using this, you can have your reactive APIs in Spring Boot read and write information to the database in a reactive/asynchronous way.
 
 In this tutorial you will develop a Spring Boot application that:
-
-- Communicates with an H2 database using R2DBC
-- Integrates with Okta for security using OAuth 2.0
-- Serves reactive streams of data to a secured web page
+* Communicates with an H2 database using R2DBC
+* Integrates with Okta for security using OAuth 2.0
+* Serves reactive streams of data to a secured web page
 
 Let's get started!
 
@@ -151,9 +149,8 @@ public interface UserRepository extends R2dbcRepository<UserEntity, Long> {
 ```
 
 The `R2dbcRepository` interface abstracts away much of the complexity of managing reactive database connections, but some major differences between this and the non-reactive `JpaRepository` should be noted:
-
-- Methods like `findById()` which return one entity will instead return a `Mono<>` object.
-- Methods like `findAll()` which return lists of entities will instead return a `Flux<>` object.
+* Methods like `findById()` which return one entity will instead return a `Mono<>` object.
+* Methods like `findAll()` which return lists of entities will instead return a `Flux<>` object. 
 
 A thorough explanation of these reactive types is outside the scope of this tutorial. For a more thorough introduction you can check out the official documentation [here](https://projectreactor.io/docs/core/release/reference/#mono). For now it is enough to know that these reactive types represent data that is changing or not-yet-whole, and it is the responsibility of the caller to "react" to the results as they become available.
 
@@ -291,24 +288,23 @@ public class SecurityConfig {
 ```
 
 The `@EnableWebFluxSecurity` annotation secures the application according to the settings defined in `configure()`. There are some small differences between this and the normal security configuration classes usually seen in non-reactive Spring Boot apps, but it should appear familiar. To note:
-
-- The home page (`/` and `/index`) is exposed and not protected by authentication.
-- All other requests/pages are protected
-- OAuth 2.0 login behavior is enabled by `.oauth2Login()`
-- After a successful OAuth 2.0 login, the user is redirected to a protected page: `/protected`.
+* The home page (`/` and `/index`) is exposed and not protected by authentication.
+* All other requests/pages are protected
+* OAuth 2.0 login behavior is enabled by `.oauth2Login()`
+* After a successful OAuth 2.0 login, the user is redirected to a protected page: `/protected`.
 
 Now to create the web pages. Create a file at `src/main/resources/pages/index.html` with the following content:
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>R2DBC Example - Home</title>
-  </head>
-  <body>
-    Hello!
-  </body>
+</head>
+<body>
+Hello!
+</body>
 </html>
 ```
 
@@ -317,13 +313,13 @@ This is the main page for the application and does not require authentication to
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>R2DBC Example - Protected</title>
-  </head>
-  <body>
-    Okta login successful!
-  </body>
+</head>
+<body>
+Okta login successful!
+</body>
 </html>
 ```
 
@@ -368,18 +364,17 @@ public class ApplicationRouter {
 ```
 
 In this class you can see the following:
-
-- The page resources created above are injected as `Resource` objects at (1) and (2).
-- A mapping to the unprotected `index.html` page is defined in (3).
-- A mapping to the protected `protected.html` page is defined in (4).
-- (5) When creating the server response (which is a reactive `Mono`), the `TEXT_HTML` content type is specified. This makes sure your browser renders the content as an HTML page and not plain text.
+* The page resources created above are injected as `Resource` objects at (1) and (2).
+* A mapping to the unprotected `index.html` page is defined in (3).
+* A mapping to the protected `protected.html` page is defined in (4).
+* (5) When creating the server response (which is a reactive `Mono`), the `TEXT_HTML` content type is specified. This makes sure your browser renders the content as an HTML page and not plain text.
 
 One more step is necessary to get the application running. R2DBC does not automatically generate the database schema, so you must do it yourself.
 
 Create a file at `src/main/resources/schema.sql` with the following content:
 
 ```sql
-CREATE TABLE USER_ENTITY
+CREATE TABLE USER_ENTITY 
 (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR2,
@@ -442,14 +437,14 @@ public interface HeartbeatRepository extends R2dbcRepository<HeartbeatEntity, Lo
 Open the initialization SQL file at `src/main/resources/schema.sql` and add the table definition for `HEARTBEAT_ENTITY` so it looks like this:
 
 ```sql
-CREATE TABLE USER_ENTITY
+CREATE TABLE USER_ENTITY 
 (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR2,
     name VARCHAR2
 );
 
-CREATE TABLE HEARTBEAT_ENTITY
+CREATE TABLE HEARTBEAT_ENTITY 
 (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     timestamp BIGINT NOT NULL,
@@ -459,7 +454,6 @@ CREATE TABLE HEARTBEAT_ENTITY
 ```
 
 The database model for `Heartbeats` is complete, now you'll create:
-
 1. A service to generate and save heartbeats to the database
 2. An HTTP endpoint routing to serve a reactive stream of heartbeats
 3. Simple JavaScript to display the stream on a web page
@@ -552,7 +546,6 @@ public class ApplicationRouter {
 ```
 
 Within the `/heartbeats` routing you are:
-
 1. Defining a `Flux` named `interval` which will publish a `Long` object every second (the value of the `Long` is not important here, just that it publishes every second)
 2. Defining `heartbeatEntityFlux` which is a `Flux` of all `HeartbeatEntities` in the database
 3. Creating a "zipped" `Flux` which interpolates items from the two `Flux`. An item will be published from `interval`, and then one from `heartbeatEntityFlux`, and then one from `interval`, etc.
@@ -563,40 +556,40 @@ Open the protected HTML page at `src/main/resources/pages/protected.html` and mo
 ```html
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>R2DBC Example - Protected</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
-      $(function () {
-        var cnx = new EventSource("http://localhost:8080/heartbeats");
-        cnx.onmessage = function (e) {
-          var data = JSON.parse(e.data);
-          var htmlText = "<tr><td>" + data.id + "</td><td>" + data.timestamp + "</td><td>" + data.text + "</td></tr>";
-          $("#heartbeatTable > tbody").append(htmlText);
-        };
-      });
+        $(function() {
+            var cnx = new EventSource('http://localhost:8080/heartbeats');
+            cnx.onmessage = function (e) {
+                var data = JSON.parse(e.data);
+                var htmlText = '<tr><td>'+data.id+'</td><td>'+data.timestamp+'</td><td>'+data.text+'</td></tr>';
+                $( "#heartbeatTable > tbody" ).append(htmlText);
+            };
+        });
     </script>
-  </head>
-  <body>
-    <h1>Okta login successful!</h1>
-    <h3>Heartbeats</h3>
-    <table id="heartbeatTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Timestamp</th>
-          <th>Text</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </body>
+</head>
+<body>
+<h1>Okta login successful!</h1>
+<h3>Heartbeats</h3>
+<table id="heartbeatTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Timestamp</th>
+        <th>Text</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</body>
 </html>
 ```
 
 The JavaScript function:
-
 1. Opens a streaming connection with the `/heartbeats` endpoint defined above
 2. Creates an HTML table row whenever new data is received from the stream
 3. Appends that table row to the body of `heartbeatTable`
@@ -616,7 +609,7 @@ Congratulations! You've created a Spring Boot application using R2DBC and writte
 
 ## Learn More About R2DBC and Reactive Web Technologies
 
-This tutorial provided a very basic setup for how to use reactive frameworks and techniques with Spring Boot. For in-depth examples and use cases not covered in this tutorial, see [Spring's official documentation for R2DBC](https://docs.spring.io/spring-data/r2dbc/docs/current/reference/html/).
+This tutorial provided a very basic setup for how to use reactive frameworks and techniques with Spring Boot.  For in-depth examples and use cases not covered in this tutorial, see [Spring's official documentation for R2DBC](https://docs.spring.io/spring-data/r2dbc/docs/current/reference/html/).
 
 The source code for this example is on GitHub in the [oktadev/okta-spring-boot-r2dbc-example](https://github.com/oktadev/okta-spring-boot-r2dbc-example) repository.
 

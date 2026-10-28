@@ -28,7 +28,6 @@ This tutorial is a modified and updated version of the "Quarkus - Using JWT RBAC
 
 Let's get started!
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -215,7 +214,7 @@ Click **Create**.
 
 Now update the `TokenSecuredResource` class to do two things: 
 
-1) Use CDI dependency injection to inject the `groups` claim from the JWT, if it's available2) Add a default endpoint for the `/secured` path that is protected by OAuth 2.0 and requires the `Everyone` group to access.
+1\) Use CDI dependency injection to inject the `groups` claim from the JWT, if it's available2) Add a default endpoint for the `/secured` path that is protected by OAuth 2.0 and requires the `Everyone` group to access.
 
 Change `TokenSecuredResource.java` to the following:
 
@@ -295,7 +294,7 @@ Not authorized
 
 ## Generate an OAuth 2.0 Access Token to Test Authentication in Quarkus
 
-{{ macro.oidcdebugger() }}
+{{ macro.oidcdebugger({}) }}
 
 {% img {src: "java-quarkus-oidc/oidc-debugger.png", alt: "OIDC Debugger", header: "650"} %}
 
@@ -334,14 +333,14 @@ The first step to building a more realistic REST resource is to create a data mo
 
 To work with Lombok, add the following dependency to your `pom.xml`. 
 
- ```xml
+```xml
  <dependency>
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
     <version>1.18.16</version>
     <scope>provided</scope>
 </dependency>
- ```
+```
 
 **NOTE:** If you're using an IDE to build your project, and not the command line, install the Lombok plugin for it. For example, see the [Lombok IntelliJ plugin](https://projectlombok.org/setup/intellij).
 

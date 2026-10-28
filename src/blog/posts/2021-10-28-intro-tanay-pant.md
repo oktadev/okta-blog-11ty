@@ -27,7 +27,6 @@ I started my journey into the world of tech communities and open source back in 
 During my last years in college, I got the chance to join the Tech Speakers program by Mozilla, and I dove head-first into the realm of public speaking. After wrapping up my studies, I moved to Berlin and worked with start-ups like [ResearchGate](https://www.researchgate.net/), [Crate.io](https://crate.io/), and [n8n](https://n8n.io/).
 
 {% img {src: "intro-tanay-pant/ts19ams-all.jpg", alt: "Tech Speakers in Amsterdam", header: "600"} %} *Image from [Mozilla's blog](https://blog.mozilla.org/community/2020/09/03/five-years-of-tech-speakers/)*
-{: style="text-align: center"}
 
 Before joining Okta, I have been responsible for building a developer relations team from scratch and managing the various facets of developer relations like docs, user on-boarding, support, partnerships, certifications, and community building.
 

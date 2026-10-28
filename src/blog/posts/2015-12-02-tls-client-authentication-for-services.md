@@ -30,10 +30,8 @@ chain without finding a certificate that it trusts, it will reject the
 connection. For an example of what a server might send, see [this
 gist](https://gist.github.com/jpf/9282d558bcc105ae8e1a).
 
-{: style="text-align: center"}
 {% img {src: "2015-10-29-tls-client-authentication-for-services-tls-handshake.png", alt: "TLS handshake", header: "540"} %}
 
-{: style="text-align: center;font-size: x-small;"}
 Image reprinted with permission from
 [CloudFlare](https://blog.cloudflare.com/protecting-the-origin-with-tls-authenticated-origin-pulls/)
 
@@ -79,7 +77,6 @@ meant to be complete, so you may need to modify them to fit in your environment.
 
 ### Certificates and Key Stores
 
-{: style="text-align: center"}
 {% img {src: "2015-10-29-tls-client-authentication-for-services-ca-chain.png", alt: "CA heirarchy", header: "540"} %}
 
 First, let's setup our trust store, which is just a key store that will only
@@ -143,7 +140,7 @@ keytool -importkeystore -destkeystore keystore.jks -srckeystore server.p12 -srcs
 Now that we have our key and trust stores, let's configure the server's
 Dropwizard application connector.
 
-~~~ conf
+~~~conf
 server:
   applicationConnectors:
     - type: https
@@ -175,7 +172,6 @@ server:
     allowRenegotiation: false
 ~~~
 
-{: style="text-align: center;font-size: x-small;"}
 Dropwizard code is Copyright &copy; 2010-2013 Coda Hale, Yammer Inc., 2014-2015 Dropwizard Team and/or its affiliates.
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
@@ -186,7 +182,7 @@ server, telling Java to debug the SSL handshakes, and make sure we see it
 refusing the connection for the right reason. In one terminal start the
 Dropwizard server debugging SSL.
 
-~~~ shell
+~~~shell
 $ java -Djavax.net.debug=SSL,keymanager,trustmanager -jar your/jar.jar server config.yml
 ~~~
 
@@ -194,7 +190,7 @@ In another terminal run the following curl commands and verify you get the
 expected results. First, make sure that the server does not talk HTTP over our
 port.
 
-~~~ shell
+~~~shell
 $ curl localhost:443
 curl: (52) Empty reply from server
 
@@ -206,7 +202,7 @@ Next, check that the server is sending your certificate back over HTTPS.
 curl has a preconfigured list of trusted certs and chances are your
 root certificate is not in there.
 
-~~~ shell
+~~~shell
 $ curl https://localhost:443
 curl: (60) SSL certificate problem: Invalid certificate chain
 
@@ -217,7 +213,7 @@ curl: (60) SSL certificate problem: Invalid certificate chain
 Finally, ensure that the server terminates the connection if no client cert is
 provided.
 
-~~~ shell
+~~~shell
 $ curl -k https://localhost:443
 curl: (35) Server aborted the SSL handshake
 
@@ -230,7 +226,7 @@ curl: (35) Server aborted the SSL handshake
 Now we'll configure our client to talk to the server. I'll use the Jersey 2.X
 API, but there are equivalents in the 1.X as well as in the Apache HTTP library.
 
-~~~ java
+~~~java
 // Assume the following variables are initialized already
 String password;
 RSAPrivateKey clientKey;
@@ -265,16 +261,13 @@ SSLContext sslContext = sslConfig.createSSLContext();
 Client client = ClientBuilder.newBuilder().sslContext(sslContext).build();
 ~~~
 
-{: style="text-align: center;font-size: x-small;"}
 Jersey code is Copyright &copy; 2010-2015 Oracle and/or its affiliates.
 [GPL 2.0 Selected](https://jersey.java.net/license.html).
 
 Hooray authentication!
 
-{: style="text-align: center"}
 [![xkcd-identity](https://imgs.xkcd.com/comics/identity.png)](https://xkcd.com/1121/)
 
-{: style="text-align: center;font-size: x-small;"}
 Comic is Copyright &copy; [xkcd.com](https://xkcd.com).
 [CC BY-NC 2.5](http://creativecommons.org/licenses/by-nc/2.5/).
 
@@ -300,7 +293,7 @@ Several options exist for verifying the hostname on the server side. The first
 is one that Dropwizard supports this verification with a tricky configuration
 change for the underlying Java SSL connection.
 
-~~~ conf
+~~~conf
 server:
   applicationConnectors:
     - type: https
@@ -328,7 +321,7 @@ need to set up a filter in our server and configure a regex to match the DN in
 the certificate(s) that are allowed to communicate with our service or else
 return a 403 response.
 
-~~~ java
+~~~java
 import javax.annotation.Priority;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Priorities;
@@ -396,7 +389,6 @@ public class CertificateValidationFilter implements ContainerRequestFilter {
 }
 ~~~
 
-{: style="text-align: center;font-size: x-small;"}
 Dropwizard code is Copyright &copy; 2010-2013 Coda Hale, Yammer Inc., 2014-2015 Dropwizard Team and/or its affiliates.
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 Jersey code is Copyright &copy; 2010-2015 Oracle and/or its affiliates.

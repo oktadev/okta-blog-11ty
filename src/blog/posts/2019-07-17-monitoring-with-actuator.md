@@ -22,7 +22,6 @@ Have you worked with Spring Boot Actuator yet? It's an immensely helpful library
 
 Let's get started!
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -284,7 +283,7 @@ public class ContentTraceManager {
 
 For modeling the trace with additional data, compose a custom `ContentTrace` class with the built-in `HttpTrace` information, adding properties for storing the body contents.
 
-```java    
+```java
 public class ContentTrace {
 
     protected HttpTrace httpTrace;

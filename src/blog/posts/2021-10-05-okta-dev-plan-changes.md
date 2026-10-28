@@ -3,7 +3,7 @@ disqus_thread_id: 8811463470
 discourse_topic_id: 17420
 discourse_comment_url: https://devforum.okta.com/t/17420
 title: Okta Developer Plan Changes
-author: ryan-stewart 
+author: ryan-stewart
 by: internal-contributor
 communities: [.net,java,javascript,go,php,python,ruby,devops,announcement]
 description: "In light of the Auth0 acquisition, Okta is streamlining our developer product offering by retiring Okta's Developer Advanced plan, and providing Auth0 plans for developers seeking a fully self-service experience."

@@ -80,7 +80,7 @@ To see the structure of posts, run the following SQL script by right-clicking on
 
 {% img {src: "csharp-dapper/05-new-query.png", alt: "New Query", header: "600"} %}
 
-``` sql
+```sql
 SELECT TOP(10)
  *
 FROM
@@ -113,7 +113,7 @@ The ones that stand out to me are:
 
 If we look at the data, we can start to see that the *ParentId* self-references to the *Posts* table. We can also see what our post types are by running the following command:
 
-``` sql
+```sql
 SELECT * FROM PostTypes
 ```
 

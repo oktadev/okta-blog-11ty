@@ -30,3 +30,9 @@ jobs:
       - run: npm run validate-images -- --since "$BASE"
         env:
           BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+
+      # Content lint (placeholder domains, curly quotes, absolute blog links)
+      # on the posts this push or PR changes. Same script as the pre-commit hook.
+      - run: npm run lint-content -- --since "$BASE"
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}

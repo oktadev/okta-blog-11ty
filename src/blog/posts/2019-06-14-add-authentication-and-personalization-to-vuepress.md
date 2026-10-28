@@ -215,6 +215,7 @@ Create a new folder in the `docs` folder named `implicit`. In the `implicit` fol
 
 Next, create a new file under `.vuepress/theme/components` named `LoginLink.vue`. Paste the following code into this file.
 
+{% raw %}
 ```javascript
 <template>
   <div class="nav-item">
@@ -264,6 +265,7 @@ export default {
 };
 </script>
 ```
+{% endraw %}
 
 Next, open the `NavLinks.vue` file in the `theme/components` folder. Make the following changes.
 
@@ -273,6 +275,7 @@ Next, open the `NavLinks.vue` file in the `theme/components` folder. Make the fo
 
 Your code should look similar to the following snippet.
 
+{% raw %}
 ```javascript
       {{ repoLabel }}
       <OutboundLink/>
@@ -290,6 +293,7 @@ import LoginLink from './LoginLink.vue'
 export default {
   components: { NavLink, DropdownLink, LoginLink },
 ```
+{% endraw %}
 
 Now for the moment of truth! Run your dev server again using `npm run dev`, and open your browser to `http://localhost:8080`. You should see a new **Login** link in the navigation!
 

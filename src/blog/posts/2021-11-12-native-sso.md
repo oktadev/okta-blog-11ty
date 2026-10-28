@@ -207,13 +207,13 @@ First construct a configuration for Okta's OIDC library:
   ])
   ``` 
 Then invoke the OIDC flow. On an iOS device:
-  ```swift
+```swift
   oktaOidc.signInWithBrowser(from: self, callback: SignInHelper.oktaOidcCallback)
-  ```
+```
 On a Mac:
-  ```swift
+```swift
   oktaOidc.signInWithBrowser(redirectServerConfiguration: nil, callback: SignInHelper.oktaOidcCallback)
-  ```
+```
 
 1. If the sign-in is successful, we save the login state locally, the same as in step three. In addition, we save the device secret in the iCloud keychain, so that other apps can perform native SSO login.
   ```swift

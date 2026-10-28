@@ -622,11 +622,11 @@ These blog posts are also good resources for learning about other ways to import
 As always, if you have any questions please comment below. Never miss out on any of our awesome content by following us on [Twitter](https://twitter.com/oktadev) and subscribing to our channel on [YouTube](https://www.youtube.com/c/oktadev)!
 
 And lastly, special thanks to Gabriel Sroka for his help reviewing drafts of this post.
-<script src="/js/password-hashing/bcrypt.min.js"></script>
-<script src="/js/password-hashing/brython.min.js"></script>
-<script src="/js/password-hashing/brython_stdlib.js"></script>
+<script src="/js/ultimate-guide-to-password-hashing-in-python/bcrypt.min.js"></script>
+<script src="/js/ultimate-guide-to-password-hashing-in-python/brython.min.js"></script>
+<script src="/js/ultimate-guide-to-password-hashing-in-python/brython_stdlib.js"></script>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(){
-    brython({debug: 1, pythonpath:['/js/password-hashing/Lib/site-packages']})
+    brython({debug: 1, pythonpath:['/js/ultimate-guide-to-password-hashing-in-python/Lib/site-packages']})
 });
 </script>

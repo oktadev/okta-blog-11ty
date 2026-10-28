@@ -24,7 +24,6 @@ In this tutorial, I want to talk about the major two approaches, the Model-View-
 
 I will be developing the ideas and explaining the patterns by example using a browser application written in TypeScript and Angular. TypeScript is an extension of JavaScript that adds type information to the code. The application will mimic the popular Notes application on MacOS/iOS. Angular enforces the MVVM pattern. Let's dive in and see the main differences between the MVC and the MVVM patterns.
 
-**Table of Contents**{: .hide }
 [[toc]]
 
 {% include "integrator-org-warning.njk" %}
@@ -320,7 +319,7 @@ The accompanying `src/app/notes/notes.component.css` should look like this.
 
 So far, so good!
 
-Have a look at `src/app/notes/notes.component.html` which represents the main View of the application. You will notice placeholders such as `{{note.title}}` which look like they can be filled with values. In the version shown above, the View does not seem to refer to any piece of code in the application.
+Have a look at `src/app/notes/notes.component.html` which represents the main View of the application. You will notice placeholders such as {% raw %}`{{note.title}}`{% endraw %} which look like they can be filled with values. In the version shown above, the View does not seem to refer to any piece of code in the application.
 
 If you were to follow the MVC pattern, the View would define slots into which the data could be inserted. It would also provide methods for registering a callback whenever a button is clicked. In this respect, the View would remain completely ignorant of the Controller. The Controller would actively fill the values and register callback methods with the View. Only the Controller would know about both the View and the Model and link the two together.
 
@@ -404,7 +403,7 @@ export class NotesComponent implements OnInit {
 }
 ```
 
-In the `@Component` decorator of the class, you can see the reference to the View `.html` and `.css` files. In the rest of the class, on the other hand, there is no reference to the View whatsoever. Instead, the ViewModel, contained in the `NotesComponent` class, exposes properties and methods that can be accessed by the View. This means that, compared to the MVC architecture, the dependency is reversed. The ViewModel has no knowledge of the View but provides a Model-like API that can be used by the View. If you take another look at `src/app/notes/notes.component.html` you can see that the template interpolation, such as `{{currentNote.text}}` directly accesses the properties of the `NotesComponent`.
+In the `@Component` decorator of the class, you can see the reference to the View `.html` and `.css` files. In the rest of the class, on the other hand, there is no reference to the View whatsoever. Instead, the ViewModel, contained in the `NotesComponent` class, exposes properties and methods that can be accessed by the View. This means that, compared to the MVC architecture, the dependency is reversed. The ViewModel has no knowledge of the View but provides a Model-like API that can be used by the View. If you take another look at `src/app/notes/notes.component.html` you can see that the template interpolation, such as {% raw %}`{{currentNote.text}}`{% endraw %} directly accesses the properties of the `NotesComponent`.
 
 The last step to make your application work is to tell the router which components are responsible for the different routes. Open `src/app/app-routing.module.ts` and edit the content to match the code below.
 

@@ -24,7 +24,7 @@ Let's get started!
 
 ## Set Up a Realtime Database in Firebase for Your ASP.NET MVC App
 
-First you will create a new project in Firebase. Visit https://firebase.google.com, click on **Get Started** and sign in with your Google account. Select **Add Project**, name it "FirebaseMVCSample" and agree to the Terms and Conditions before clicking **Create Project**. When the new project is ready, click** Continue**. You will land directly into the Firebase console dashboard.
+First you will create a new project in Firebase. Visit https://firebase.google.com, click on **Get Started** and sign in with your Google account. Select **Add Project**, name it "FirebaseMVCSample" and agree to the Terms and Conditions before clicking **Create Project**. When the new project is ready, click **Continue**. You will land directly into the Firebase console dashboard.
 
  Expand the **Develop** menu on the left-hand side and select **Database**. Scroll down to Realtime Database and click **Create Database**.
 
@@ -224,7 +224,7 @@ protected void Application_Start()
 }
 ```
 
-Go to **Views/Shared** and open **_Layout.cshtml**. Beneath the <ul> list of ActionLinks add the code below to display the user's name and toggle the Login/Logout link button.
+Go to **Views/Shared** and open **_Layout.cshtml**. Beneath the &lt;ul&gt; list of ActionLinks add the code below to display the user's name and toggle the Login/Logout link button.
 
 ```html
 @if (Context.User.Identity.IsAuthenticated)
