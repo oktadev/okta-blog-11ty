@@ -26,16 +26,14 @@ Use `{{ params.logoutRedirectUri | safe }}` for the Logout Redirect URIs. {% els
 
 {% set details %} {%- if params.type == "jhipster" -%} The Okta CLI streamlines configuring a JHipster app and does several things for you:
 
-    Creates an OIDC app with the correct {% if params.loginRedirectUri %}(see above, below are the default values) {% endif %}redirect URIs:
+1. Creates an OIDC app with the correct {% if params.loginRedirectUri %}(see above, below are the default values) {% endif %}redirect URIs:
+   - login: `http://localhost:8080/login/oauth2/code/oidc` and `http://localhost:8761/login/oauth2/code/oidc`
+   - logout: `http://localhost:8080` and `http://localhost:8761`
+2. Creates `ROLE_ADMIN` and `ROLE_USER` groups that JHipster expects
+3. Adds your current user to the `ROLE_ADMIN` and `ROLE_USER` groups
+4. Creates a `groups` claim in your default authorization server and adds the user's groups to it
 
-    login: http://localhost:8080/login/oauth2/code/oidc and http://localhost:8761/login/oauth2/code/oidc
-    logout: http://localhost:8080 and http://localhost:8761
-
-    Creates ROLE_ADMIN and ROLE_USER groups that JHipster expects
-    Adds your current user to the ROLE_ADMIN and ROLE_USER groups
-    Creates a groups claim in your default authorization server and adds the user's groups to it
-
-NOTE: The http://localhost:8761* redirect URIs are for the JHipster Registry, which is often used when creating microservices with JHipster. The Okta CLI adds these by default.
+**NOTE**: The `http://localhost:8761*` redirect URIs are for the JHipster Registry, which is often used when creating microservices with JHipster. The Okta CLI adds these by default.
 
 You will see output like the following when it's finished: {%- elif params.type != "token" -%} The Okta CLI will create an {% if params.type == "service" %}OAuth 2.0{% else %}OIDC{% endif %} {% if params.type == "spa" %}Single-Page App{% else %}{{ params.type | capitalize }} App{% endif %} in your Okta Org.{% if params.type != "service" %} It will add the redirect URIs you specified and grant access to the Everyone group.{% if params.type == "spa" %} It will also add a trusted origin for {% if params.logoutRedirectUri %}{{ params.logoutRedirectUri | safe }}{% else %}{{ baseUrl }}{% endif %}.{% endif %}{% endif %} You will see output like the following when it's finished: {%- endif -%}
 
