@@ -111,10 +111,10 @@ export SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET="{clientSec
 NOTE: You can also use the Okta Admin Console to create your {% if params.type == "token" %}token{% else %}app{% endif %}. See [Create a{% if (params.framework == "Angular" or params.type == "token") %}n{% endif %} {{ oktaAppType }}{% if (params.type == "jhipster") %} on Okta{% endif %}]({{ docsLink }}) for more information. {% endset %}
 
 {% if params.type == "token" %}
-  {{ details }}
+  {{ details | safe }}
 {% else %}
 <details>
   <summary>What does the Okta CLI do?</summary>
-  {{ details }}
+  {{ details | safe }}
 </details>
 {% endif %}
