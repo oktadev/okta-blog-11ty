@@ -77,8 +77,10 @@ test("needsAttention fails a post for any kind of loss, including inline code", 
     inline: [],
     anchors: [],
     assets: [],
+    stale: false,
   };
   assert.equal(needsAttention(clean), false);
+  assert.equal(needsAttention({ ...clean, stale: true }), true);
   assert.equal(needsAttention({ ...clean, inline: ["okta login"] }), true);
   assert.equal(needsAttention({ ...clean, anchors: ["setup"] }), true);
   assert.equal(needsAttention({ ...clean, assets: ["d/demo.mp4"] }), true);
@@ -185,4 +187,5 @@ test("staleBuild flags a page older than its post, and nothing when either is mi
   utimesSync(post, 3000, 3000);
   assert.equal(staleBuild(post, page), true);
   assert.equal(staleBuild(join(dir, "missing.md"), page), false);
+  assert.equal(staleBuild(post, join(dir, "missing.html")), false);
 });
