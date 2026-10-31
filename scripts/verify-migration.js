@@ -438,7 +438,7 @@ function localHtml(site, slug) {
   return readFileSync(file, "utf8");
 }
 
-// A page built before its post last changed compares the wrong content (#204:
+// A page in _site older than its post compares the wrong content (#204:
 // two posts regenerated between a build and the comparison looked like a
 // build that differed from itself).
 export function staleBuild(postFile, pageFile) {
@@ -546,7 +546,7 @@ async function main() {
           rows.push(`    file missing from the build: /${f}`);
         if (r.stale)
           rows.push(
-            "    built before the post last changed: rebuild, then compare again",
+            "    page in _site is older than the post: run npm run build, then verify again",
           );
       }
     } catch (err) {
