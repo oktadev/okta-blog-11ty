@@ -83,3 +83,13 @@ test("a trailing {placeholder} stays text while classes, ids and attributes stil
     '<p>See <a href="https://developer.okta.com/">https://developer.okta.com/</a> now</p>',
   );
 });
+
+test("a newline inside a paragraph is a space; two trailing spaces or a backslash break the line", () => {
+  assert.equal(
+    markdownLibrary.render("one\ntwo\n"),
+    "<p>one\ntwo</p>\n",
+    "no <br> for a plain newline",
+  );
+  assert.match(markdownLibrary.render("one  \ntwo\n"), /one<br>\s*two/);
+  assert.match(markdownLibrary.render("one\\\ntwo\n"), /one<br>\s*two/);
+});
