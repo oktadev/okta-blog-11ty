@@ -118,6 +118,7 @@ Two optional keys worth knowing:
 - Bold button and link names: then click **Done**.
 - Write function names with parentheses inside backticks: this calls the `render()` method.
 - Wrap `http://localhost` URLs in backticks.
+- A newline inside a paragraph is a space, as on the old site. For a line break, end the line with two spaces or a backslash.
 - Fenced code blocks are preferred, but four-space indented code blocks render too (Eleventy turns them off by default; this site turns them back on). Footnotes (`[^1]`) render as on the old site, with a bare number as the marker.
 - To float an image beside the text, wrap the shortcode: `<span class="float-right ml-4 mb-2">{% img {...} %}</span>`. The migration does this for the old site's `{: .pull-right }` markers.
 - Links into developer.okta.com should be relative: `/docs/whatever/` rather than the full URL.
