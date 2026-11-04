@@ -1,7 +1,7 @@
 {
-  "name": "okta-blog-11ty",
+  "name": "@oktadev/okta-blog-11ty",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "css": "tailwindcss -i ./public/css/index.css -o ./_site/style.css --minify",
     "validate": "node scripts/validate-frontmatter.js",
@@ -24,16 +24,16 @@
     "dev": "DEV_POSTS=25 npm start"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Okta Builder Advocacy <dev-advocacy@okta.com>",
+  "license": "Apache-2.0",
+  "description": "The Okta Developer Blog",
   "type": "module",
   "engines": {
     "node": ">=24"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
-    "@11ty/eleventy-img": "^6.0.4",
+    "@11ty/eleventy-img": "^7.1.1",
     "@11ty/eleventy-plugin-rss": "^3.0.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@11ty/eleventy-plugin-vite": "^8.0.0",
@@ -44,15 +44,17 @@
     "js-yaml": "^5.2.1",
     "lint-staged": "^17.0.8",
     "luxon": "^3.7.2",
-    "markdown-it": "^14.3.0",
-    "markdown-it-anchor": "^9.2.1",
+    "markdown-it": "^15.0.3",
+    "markdown-it-anchor": "^10.0.0",
     "markdown-it-attrs": "^5.0.0",
+    "markdown-it-footnote": "^4.0.0",
     "markdown-it-table-of-contents": "^1.2.0",
     "prettier": "^3.9.4",
     "prismjs": "^1.30.0",
     "tailwindcss": "^4.3.2"
   },
-  "dependencies": {
-    "markdown-it-footnote": "^4.0.0"
+  "allowScripts": {
+    "@parcel/watcher@2.5.1": true,
+    "fsevents@2.3.3": true
   }
 }
