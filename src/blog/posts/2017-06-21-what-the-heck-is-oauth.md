@@ -205,9 +205,9 @@ Below is how this looks in raw HTTP.
 <pre>
 POST /oauth2/v3/token HTTP/1.1
 Host: www.googleapis.com
-Content-Type: application/x-www-form-urlencoded
-
-code=MsCeLvIaQm6bTrgtp7&client_id=812741506391&client_secret={client_secret}&redirect_uri=https://app.example.com/oauth2/callback&grant_type=authorization_code
+Content-Type: application/x-www-form-urlencoded&#10;
+code=MsCeLvIaQm6bTrgtp7&client_id=812741506391&client_secret=
+{client_secret}&redirect_uri=https://app.example.com/oauth2/callback&grant_type=authorization_code
 </pre>
 <p>The grant_type is the extensibility part of OAuth. It's an authorization code from a precomputed perspective. It opens up the flexibility to have different ways to describe these grants. This is the most common type of OAuth flow.
 </p>
@@ -354,8 +354,7 @@ And the authorization grant for tokens response contains an ID token.
 <pre>
 POST /oauth2/v3/token HTTP/1.1
 Host: www.googleapis.com
-Content-Type: application/x-www-form-urlencoded
-
+Content-Type: application/x-www-form-urlencoded&#10;
 code=MsCeLvIaQm6bTrgtp7&client_id=812741506391&
   client_secret={client_secret}&
   redirect_uri=https://app.example.com/oauth2/callback&
