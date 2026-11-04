@@ -190,8 +190,7 @@ const excerpt = async function (stemPath, postsCollection) {
     )
   ).join("");
 
-  // Joined with no newlines: markdown-it runs with `breaks: true`, so any line
-  // break in returned HTML becomes a <br>.
+  // Joined with no newlines so the HTML never carries stray whitespace.
   return [
     `<div class="flex-col border border-solid border-page-border rounded-sm p-3 not-prose my-9">`,
     `<a class="text-xl" href="${post.url}">${post.data.title}</a>`,
