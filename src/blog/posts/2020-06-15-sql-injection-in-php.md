@@ -163,7 +163,7 @@ To find out if the marks table exists, simply enter `Test'); select * from marks
 
 And we'll get the following result:
 
-{% img {src: "sql-injection-in-php/no-such-table.png", alt: "Error&#58; no such table&#58; marks", header: "800"} %}
+{% img {src: "sql-injection-in-php/no-such-table.png", alt: "Error: no such table: marks", header: "800"} %}
 
 So we know that the marks table doesn't exist.
 

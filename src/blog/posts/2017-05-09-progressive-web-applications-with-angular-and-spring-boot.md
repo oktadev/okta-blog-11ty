@@ -47,7 +47,7 @@ Google engineer Addy Osmani describes [the PRPL pattern](https://developers.goog
 
 The [Progressive Web App Checklist](https://developers.google.com/web/progressive-web-apps/checklist) lists all the things you'll need to make a progressive webapp. However, I like the simple list that Alex Russell lists on [What, Exactly, Makes Something A Progressive Web App?](https://infrequently.org/2016/09/what-exactly-makes-something-a-progressive-web-app/)
 
-{% img {src: "angular-spring-boot-pwa/alex-russell-pwas.png", alt: "Alex Russell&#039;s PWA Checklist", header: "800"} %}
+{% img {src: "angular-spring-boot-pwa/alex-russell-pwas.png", alt: "Alex Russell's PWA Checklist", header: "800"} %}
 
 This article will show you how to build a PWA with a Spring Boot backend and an Angular frontend. It'll work offline and I'll show how to deploy it to the cloud.
 
