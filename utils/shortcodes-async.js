@@ -1,4 +1,12 @@
 import Image from "@11ty/eleventy-img";
+import fs from "node:fs/promises";
+import path from "node:path";
+import sharp from "sharp";
+
+const GIF_MAX_WIDTH = 800;
+// sharp stacks every frame into one image and refuses past ~268M pixels, but a
+// GIF just under that still decodes to ~1 GB per resize. Stay well below it.
+const GIF_MAX_PIXELS = 100_000_000;
 
 const svg = async function ({
   src,
@@ -73,6 +81,8 @@ const img = async function ({
   // and text. Only raster sources go through WebP conversion.
   const isSvg = /\.svg$/i.test(src);
 
+  const isGif = /\.gif$/i.test(src);
+
   const imgClass = [avatar ? "" : "mx-auto", className]
     .filter(Boolean)
     .join(" ");
@@ -88,6 +98,27 @@ const img = async function ({
   const classAttr = imgClass
     ? ` class="${imgClass.replace(/"/g, "&quot;")}"`
     : "";
+
+  // Too many frames to re-encode: serve the original file, capped in display
+  // width. The catch below can't do this because nothing copies the GIF into
+  // _site for a bare <img src>.
+  const passThroughGif = async () => {
+    const file = `./public/${dir}/${src}`;
+    const name = path.basename(src);
+    await fs.mkdir(outputDir, { recursive: true });
+    await fs.copyFile(file, `${outputDir}/${name}`);
+    // Logical screen size is little-endian uint16s at bytes 6 and 8.
+    const handle = await fs.open(file);
+    const header = Buffer.alloc(10);
+    await handle.read(header, 0, 10, 0);
+    await handle.close();
+    const naturalWidth = header.readUInt16LE(6);
+    const naturalHeight = header.readUInt16LE(8);
+    const width = Math.min(naturalWidth, GIF_MAX_WIDTH);
+    const height = Math.round(naturalHeight * (width / naturalWidth));
+    const altAttr = (alt || "").replace(/"/g, "&quot;");
+    return `<img${classAttr} src="${urlPath}/${name}" alt="${altAttr}" width="${width}" height="${height}" loading="lazy" decoding="async">`;
+  };
 
   try {
     if (isSvg) {
@@ -108,9 +139,28 @@ const img = async function ({
       return `<img${classAttr} src="${url}" alt="${altAttr}" width="${displayWidth}" height="${displayHeight}" loading="lazy" decoding="async">`;
     }
 
+    if (isGif) {
+      // Not `animated: true`: that stacks the frames and throws on the very
+      // files this check exists to catch. Plain metadata reports one frame's
+      // size plus the page count.
+      const {
+        width,
+        height,
+        pages = 1,
+      } = await sharp(`./public/${dir}/${src}`).metadata();
+
+      if (width * height * pages > GIF_MAX_PIXELS) {
+        return await passThroughGif();
+      }
+    }
+
     return await Image(`./public/${dir}/${src}`, {
-      widths,
+      widths: isGif
+        ? [...new Set(widths.map((w) => Math.min(w, GIF_MAX_WIDTH)))]
+        : widths,
       formats: ["webp"],
+      // Without this, GIFs are flattened to their first frame.
+      ...(isGif && { sharpOptions: { animated: true } }),
       returnType: "html",
       outputDir,
       urlPath,
@@ -120,6 +170,7 @@ const img = async function ({
     });
   } catch (err) {
     console.warn(`[img] could not process ${dir}/${src}: ${err.message}`);
+    if (isGif) return await passThroughGif();
     const sizesAttr = sizes ? ` sizes="${sizes}"` : "";
     return `<img${classAttr} src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
   }
