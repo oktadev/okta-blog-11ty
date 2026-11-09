@@ -197,6 +197,11 @@ a.direct-link {
   a {
     @apply text-brand-primary-blue-300 no-underline hover:underline;
   }
+
+  /* Same as inline code in .blog-prose, which the not-prose container opts out of. */
+  code {
+    @apply bg-code-bg p-0.5 text-base font-normal font-code text-code-base;
+  }
 }
 
 /* widgets.js swaps the blockquote for a cross-origin iframe, so this wrapper is the

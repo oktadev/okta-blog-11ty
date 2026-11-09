@@ -38,6 +38,24 @@ export const markdownLibrary = markdownIt({
     includeLevel: [2, 3],
     listType: "ul",
     slugify,
+    // The default drops the backticks, and the plugin re-renders this string as
+    // Markdown, so inline code in a heading would come out as plain text (#219).
+    // slugify strips the backticks again, so anchors still match the headings.
+    getTokensText: (tokens) =>
+      tokens
+        .filter((t) => ["text", "code_inline"].includes(t.type))
+        .map((t) => {
+          if (t.type !== "code_inline") return t.content;
+          const fence = "`".repeat(
+            Math.max(
+              0,
+              ...(t.content.match(/`+/g) || []).map((r) => r.length),
+            ) + 1,
+          );
+          return `${fence}${t.content}${fence}`;
+        })
+        .join("")
+        .trim(),
     containerClass: "table-of-contents not-prose",
     containerHeaderHtml: '<p class="toc-header">Table of Contents</p>',
     transformContainerOpen: (containerClass, containerHeaderHtml) =>
