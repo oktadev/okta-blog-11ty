@@ -114,7 +114,11 @@ const img = async function ({
     await handle.close();
     const naturalWidth = header.readUInt16LE(6);
     const naturalHeight = header.readUInt16LE(8);
-    const width = Math.min(naturalWidth, GIF_MAX_WIDTH);
+    const width = Math.min(
+      naturalWidth,
+      headerWidth || GIF_MAX_WIDTH,
+      GIF_MAX_WIDTH,
+    );
     const height = Math.round(naturalHeight * (width / naturalWidth));
     const altAttr = (alt || "").replace(/"/g, "&quot;");
     return `<img${classAttr} src="${urlPath}/${name}" alt="${altAttr}" width="${width}" height="${height}" loading="lazy" decoding="async">`;
@@ -170,7 +174,17 @@ const img = async function ({
     });
   } catch (err) {
     console.warn(`[img] could not process ${dir}/${src}: ${err.message}`);
-    if (isGif) return await passThroughGif();
+    if (isGif) {
+      try {
+        return await passThroughGif();
+      } catch (passThroughErr) {
+        // A missing or unreadable file lands here too; fall through to the
+        // bare <img> instead of failing the build.
+        console.warn(
+          `[img] could not pass through ${dir}/${src}: ${passThroughErr.message}`,
+        );
+      }
+    }
     const sizesAttr = sizes ? ` sizes="${sizes}"` : "";
     return `<img${classAttr} src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
   }
