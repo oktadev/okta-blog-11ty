@@ -288,7 +288,7 @@ gunicorn -b :8080 server.Application:Application
 
 A more flexible solution is to use an Apache web server which has the `mod_wsgi` module installed. This allows URIs to be mapped to WSGI applications. A single server can run multiple applications each one handling a different URI.
 
-# How to Implement a WSGI Server
+## How to Implement a WSGI Server
 
 It may sometimes be necessary to implement the WSGI server side of the interface. A typical use case is writing a middleware layer that needs to perform transformation or forward requests to other servers.
 

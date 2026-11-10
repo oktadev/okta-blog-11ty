@@ -133,7 +133,7 @@ Furthermore, keep these infrastructure best practices also in mind when securing
 - Rotate infrastructure credentials frequently.
 - Restrict cloud metadata API access when running in a PaaS like AWS, Azure, or GCP.
 
-# Learn more about Kubernetes and security
+## Learn more about Kubernetes and security
 
 If you want to learn more about Kubernetes, OIDC, or using OIDC with Kubernetes, and security in general, check out these additional resources.
 
