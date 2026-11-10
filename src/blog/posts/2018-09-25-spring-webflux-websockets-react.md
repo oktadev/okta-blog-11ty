@@ -22,7 +22,7 @@ Spring WebFlux can be used to create a REST API with streaming data. Spring WebF
 
 React is a UI toolkit (similar to GWT) that lets you build components with JavaScript (or TypeScript) and JSX. JSX is how you define elements in React and it looks very similar to XML. React's API and JSX are the core of the framework; everything else is an add-on. I won't go into nitty-gritty details about React, we'll assume you've heard of it and are eager to learn how to make it even _more_ reactive!
 
-<span class="float-right ml-4 mb-2">{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long", header: "100"} %}</span> I teamed up with [Josh Long](https://twitter.com/starbuxman) to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around excellent guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like this series!
+<span class="float-right ml-4 mb-2">{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long", header: "100", class: "rounded-full"} %}</span> I teamed up with [Josh Long](https://twitter.com/starbuxman) to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around excellent guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like this series!
 
 Today, we'll show you how to build a _full-stack_ application using Spring WebFlux for the API, WebSockets for notifications, and React for the UI. This article is the third in a three-part series about reactive programming and Spring WebFlux. The first two are listed below.
 

@@ -23,7 +23,7 @@ In this blog post, you'll learn how to use Vaadin Fusion, Spring Boot, and Okta 
 - Secure server endpoints with Okta
 - Use Okta Auth JS for logging in and securing Vaadin routes
 
-<span class="float-right ml-4 mb-2">{% img {src: "vaadin-spring-boot/marcus-hellberg.jpg", alt: "Marcus Hellberg", header: "100"} %}</span>
+<span class="float-right ml-4 mb-2">{% img {src: "vaadin-spring-boot/marcus-hellberg.jpg", alt: "Marcus Hellberg", header: "100", class: "rounded-full"} %}</span>
 
 I collaborated on this post with [Marcus Hellberg](https://twitter.com/marcushellberg), Head of Community at Vaadin. Marcus and I met years ago on the conference circuit, and we're both from Finland. My great grandparents were Finnish and built the sauna and cabin I grew up in in Montana's remote woods. Marcus and I share a passion for using Java and web technologies to build fast, efficient applications.
 
