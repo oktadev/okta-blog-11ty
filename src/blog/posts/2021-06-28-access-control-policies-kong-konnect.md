@@ -29,9 +29,7 @@ In our last Kong and Okta tutorial, we will implement a basic access control pol
 
 You can also [watch this tutorial as a screencast](https://youtu.be/5TCRTXbeVLM).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/5TCRTXbeVLM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "5TCRTXbeVLM" %}
 
 ## How Access Control Works
 

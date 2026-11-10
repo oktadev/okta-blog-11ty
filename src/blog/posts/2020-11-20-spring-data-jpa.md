@@ -62,9 +62,7 @@ You'll need a free Okta developer account to complete this tutorial. However, th
 
 If you would rather follow along by watching a video, check out the screencast below from our [YouTube channel](https://www.youtube.com/watch?v=1i96a_0wCFM).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/1i96a_0wCFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "1i96a_0wCFM" %}
 
 **NOTE**: This video puts your settings in `src/main/resources/application.properties`. We've since changed the default behavior to use [spring-dotenv](https://github.com/okta-samples/okta-spring-boot-sample/pull/22).
 

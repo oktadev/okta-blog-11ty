@@ -49,9 +49,7 @@ I'd like to thank many folks for their help with this post. **Benoit Sautel** fo
 
 > **NOTE:** You can also [watch this tutorial as a screencast](https://youtu.be/BKepFaIwCvo)!
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/BKepFaIwCvo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "BKepFaIwCvo" %}
 
 <a id="create-an-angular-spring-boot-app"></a>
 ## Create an Angular + Spring Boot App

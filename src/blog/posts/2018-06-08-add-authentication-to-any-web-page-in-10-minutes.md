@@ -52,9 +52,7 @@ So, with that in mind, today I'm going to show you how to easily add authenticat
 
 You can also watch this tutorial as a [video on YouTube](https://youtu.be/uPFirakhBtQ).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/uPFirakhBtQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "uPFirakhBtQ" %}
 
 {% include "integrator-org-warning.njk" %}
 

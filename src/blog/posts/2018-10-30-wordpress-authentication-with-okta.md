@@ -56,7 +56,7 @@ In your WordPress admin page, you'll see the Okta plugin listed. Click "activate
 
 Now log out of WordPress and try to log back in! When you visit the WordPress login page, instead of the default WordPress username and password fields, you'll see your Okta Sign-In Widget! Enter your Okta account credentials and you will be logged in to WordPress!
 
-<iframe width="800" height="500" src="https://www.youtube.com/embed/l8fWJTSDlWo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% youtube "l8fWJTSDlWo", "", 800, 500 %}
 
 ## Enable Multi-Factor Authentication for WordPress
 

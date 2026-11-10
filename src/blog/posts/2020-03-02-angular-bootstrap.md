@@ -42,9 +42,7 @@ Together, these frameworks have had quite a run. It's hard to believe that they'
 
 > **TIP:** [Watch this tutorial as a screencast](https://youtu.be/r_4Gpa8Qk8A). 👇
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/r_4Gpa8Qk8A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "r_4Gpa8Qk8A" %}
 
 ## Isn't Angular Dead?
 

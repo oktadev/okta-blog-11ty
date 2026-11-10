@@ -37,9 +37,7 @@ You will create a simple resource server that will be secured using Okta as an O
 
 If you would rather follow along by watching a video, check out the screencast below from our [YouTube channel](https://youtu.be/Dy7vAhKkiGo).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="800" height="450" style="max-width: 100%" src="https://www.youtube.com/embed/Dy7vAhKkiGo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "Dy7vAhKkiGo", "", 800, 450 %}
 
 {% include "integrator-org-warning.njk" %}
 

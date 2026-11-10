@@ -19,9 +19,7 @@ On September 19, 2019, we held our first Okta Developer office hours. Our goal w
 
 We [streamed the session live on YouTube](https://youtu.be/nGi8x5XppHI), so you can watch it below if you like.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/nGi8x5XppHI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "nGi8x5XppHI" %}
 
 We received around 60 questions during our live-stream and did not get a chance to answer them all. After close examination, we determined that many questions overlapped and ended up with 40 unique questions.
 

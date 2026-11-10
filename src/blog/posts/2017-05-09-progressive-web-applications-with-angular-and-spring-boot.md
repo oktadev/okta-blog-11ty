@@ -451,9 +451,7 @@ You can find the source code associated with this article [on GitHub](https://gi
 
 In April 2017, I did a talk on Cloud Native PWAs at Devoxx France with Josh Long. The video below is a recording of that talk and shows me writing similar code to what's listed in this article.
 
-<div style="max-width: 560px; margin: 0 auto">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xo7djiUBMpU" frameborder="0" allowfullscreen></iframe>
-</div>
+{% youtube "xo7djiUBMpU", "", 560, 315 %}
 
 ## What's Next?
 

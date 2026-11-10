@@ -930,9 +930,7 @@ The source code for this tutorial is [available on GitHub](https://github.com/ok
 See its [README](https://github.com/oktadeveloper/jhipster-microservices-example) if you simply want to clone the project
 and run it. Or, you can [watch a screencast of building microservices with JHipster and deploying to Google Cloud](https://youtu.be/dgVQOYEwleA).
 
-<div style="max-width: 560px; margin: 0 auto">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dgVQOYEwleA?ecver=1" frameborder="0" allowfullscreen></iframe>
-</div>
+{% youtube "dgVQOYEwleA?ecver=1", "", 560, 315 %}
 
 ## Learn More about JHipster and Microservices
 

@@ -142,9 +142,7 @@ Create a `ROLE_ADMIN` and `ROLE_USER` group (**Users** > **Groups** > **Add Grou
 
 To make things easier to understand, I created a screencast that shows you how to create a JHipster app with the new OAuth support. After building it and explaining how it works with Keycloak, I deploy it to Cloud Foundry, set its configuration to point to Okta, and demonstrate how that works. Easy peasy!
 
-<div style="max-width: 560px; margin: 0 auto">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MaqIsQB1yeQ" frameborder="0" allowfullscreen></iframe>
-</div>
+{% youtube "MaqIsQB1yeQ", "", 560, 315 %}
 
 The source code for the project created in this screencast can be [found on GitHub](https://github.com/mraible/jhipster-oidc-example).
 

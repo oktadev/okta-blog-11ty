@@ -33,9 +33,7 @@ I wrote about [how to build native Java apps with Micronaut, Quarkus, and Spring
 
 To solve this desire, I scheduled a Twitch stream with [Brian Demers](/blog/authors/brian-demers) and [Josh Long](https://joshlong.com/). We spent 90+ minutes figuring things out. You can watch our struggles, collaborations, and ultimate joy in the [video below](https://youtu.be/8vY-9tXlCW4). I added a detailed table of contents to the video's description on YouTube, so you can skip around if you like.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/8vY-9tXlCW4" title="Spring Native and the Okta Spring Boot Starter" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "8vY-9tXlCW4", "Spring Native and the Okta Spring Boot Starter" %}
 
 This stream originally aired on June 22, 2021. Since then, there have been a few Spring Boot releases and several Spring Native releases. And don't forget, there was another [SpringOne](https://twitter.com/mraible/status/1433072410182357000)!
 

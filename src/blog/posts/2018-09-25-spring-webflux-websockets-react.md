@@ -1037,9 +1037,7 @@ git clone -b react-app https://github.com/oktadeveloper/okta-spring-webflux-reac
 
 I also created a screencast of all the code created in this series. Bonus: I used Java 11 _and_ Node 11 while creating it.
 
-<div style="text-align: center; margin-bottom: 10px">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/1xpwYe154Ys" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "1xpwYe154Ys" %}
 
 To learn more about Spring WebFlux, Reactive Programming, and React, I invite you to check out some of our other blog posts.
 

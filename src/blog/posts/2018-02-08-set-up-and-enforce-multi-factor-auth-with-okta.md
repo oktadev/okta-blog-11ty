@@ -24,9 +24,7 @@ Okta has a push-based verification app called Okta Verify. It's available on the
 
 I created a screencast to demonstrate how you can manage the whole MFA enrollment and enforcement process using the Okta API [here](https://www.youtube.com/embed/EVL3gnt7BYo) or you can watch below:
 
-<div style="width: 800px; margin: 0 auto">
-  <iframe width="800" height="450" src="https://www.youtube.com/embed/EVL3gnt7BYo" frameborder="0" allowfullscreen></iframe>
-</div>
+{% youtube "EVL3gnt7BYo", "", 800, 450 %}
 
 Interested in learning more about secure authentication with Okta? Check out our [Product Documentation](https://developer.okta.com/documentation/), our hands-on [Platform for Developers](https://www.okta.com/services/training/) course, or any of these great posts from our developer blog:
 * [Build an App for iOS and Android with Xamarin](/blog/2018/01/10/build-app-for-ios-android-with-xamarin)

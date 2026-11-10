@@ -41,9 +41,7 @@ And here, without further ado, are the winners and their projects:
 
 **Bubble Connect**, from Avi Wolicki, shows the idea of allowing a user to prove their identity when dealing with a chatbot. It's described by its creator as "an easy-to-use integration providing authentication in chatbots and other messaging services such as WhatsApp and SMS." We'd love to see how this application evolves further.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/Ns6niZHtE-w" title="Bubble Connect - Okta Hackathon Prjoject" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "Ns6niZHtE-w", "Bubble Connect - Okta Hackathon Prjoject" %}
 
 ## Third Place
 
@@ -55,9 +53,7 @@ Folks from Okta's Developer Relations team love to build with and create tools t
 
 Sameera Perera, who developed **App_builder_**, was motivated by curiosity, and by the desire to share what he'd learned. With his collection of starter templates, Sameera succeeds magnificently in his goal of "facilitating an easiest path for new users who need a lot of references to build up their first project." We can't wait to see what new templates are next.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/a9gfivJ8wHU" title="Template Application Builder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "a9gfivJ8wHU", "Template Application Builder" %}
 
 ## Second Place
 
@@ -69,9 +65,7 @@ Bill Panda is one of the nicest custom-themed implementations of the [Okta Sign-
 
 Marco Ledesma made Bill Panda to satisfy a personal itch. Learning about Okta auth has given him ideas for new features, and other ways to extend his project. We can't wait to see what's next for the panda, and look forward to hearing about the Laravel package mentioned by Marco for integrating Okta.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/N3O5F5EaHE8" title="Okta Hackathon Demo Video of Bill Panda" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "N3O5F5EaHE8", "Okta Hackathon Demo Video of Bill Panda" %}
 
 ## First Place
 
@@ -83,9 +77,7 @@ Matthew Mckenzie's GooseClip submission was in a league of its own. The project 
 
 Matthew has big plans to evolve GooseClip, and we plan to follow along. Here's hoping the grand prize will help this goose take flight!
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/KLOtyv_yDSA" title="GooseClip - Okta Hackathon Submission" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "KLOtyv_yDSA", "GooseClip - Okta Hackathon Submission" %}
 
 ## Most Supportive Hackers
 

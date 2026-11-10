@@ -777,9 +777,7 @@ If it works, excellent! 👍
 
 This tutorial showed you how to build an app that uses modern frameworks like Spring Boot and Vue. You learned how to add authentication with OIDC and protect routes using Okta's Vue SDK. If you'd like to watch a video of this tutorial, I [published it as a screencast to YouTube](https://youtu.be/aBXmi-J4LQs).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/aBXmi-J4LQs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "aBXmi-J4LQs" %}
 
 If you want to learn more about the Vue phenomenon, I have a couple of recommended articles. First of all, I think it's awesome it's not sponsored by a company (like Angular + Google and React + Facebook), and that's it's mostly community driven. [The Solo JavaScript Developer Challenging Google and Facebook](https://www.wired.com/story/the-solo-javascript-developer-challenging-google-facebook/) is an article in Wired that explains why this is so amazing.
 

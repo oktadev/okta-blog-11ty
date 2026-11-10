@@ -57,9 +57,7 @@ You can sign up for an Okta developer account at [developer.okta.com/signup](htt
 
 If you'd rather watch a video, [I created a screencast of this tutorial](https://youtu.be/mkT_I5tm3Ig).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/mkT_I5tm3Ig" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "mkT_I5tm3Ig" %}
 
 [[toc]]
 

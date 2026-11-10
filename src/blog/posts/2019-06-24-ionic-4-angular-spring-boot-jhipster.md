@@ -41,9 +41,7 @@ In this brief tutorial, I'll show you to use [Ionic for JHipster](https://github
 
 > **TIP:** [Watch this tutorial as a screencast](https://youtu.be/Rc07SUW3gWQ). 👇
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/Rc07SUW3gWQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "Rc07SUW3gWQ" %}
 
 <a id="create-a-spring-boot-angular-app-with-jhipster"></a>
 ## Create a Spring Boot + Angular App with JHipster

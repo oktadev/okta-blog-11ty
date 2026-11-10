@@ -747,8 +747,6 @@ Jenkins X also includes a [DevPods](https://jenkins.io/blog/2018/06/21/jenkins-x
 
 To get an excellent overview and demo of Jenkins X, watch [James Strachan's](https://twitter.com/jstrachan) [Jenkins X: Continuous Delivery for Kubernetes](https://youtu.be/53AtxQGXnMk) from the June 2018 [Virtual JUG](https://virtualjug.com/) meetup.
 
-<div style="text-align: center">
-<iframe width="700" height="400" style="max-width: 100%" src="https://www.youtube.com/embed/53AtxQGXnMk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+{% youtube "53AtxQGXnMk", "", 700, 400 %}
 
 If you have any questions, please add a comment below, hit [me up on Twitter](https://twitter.com/mraible), or post a question to our [Developer Forums](https://devforum.okta.com). To be notified of future blog posts and developer wisdom, you can follow [my whole team on Twitter](https://twitter.com/oktadev).

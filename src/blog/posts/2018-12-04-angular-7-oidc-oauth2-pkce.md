@@ -418,9 +418,7 @@ I updated a few of my tutorials to use Angular 7 recently.
 
 In fact, I enjoyed playing with Angular 7 so much, I turned the basic CRUD app tutorial into a screencast!
 
-<div style="text-align: center">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/HoDzatvGDlI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "HoDzatvGDlI" %}
 
 ## JHipster and Angular 7
 

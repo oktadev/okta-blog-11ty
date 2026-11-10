@@ -31,9 +31,7 @@ It wasn't until the early 2000s that I found an IDE that wasn't painful to use. 
 
 In addition to plugins that support virtually every language, IDEA has a killer feature that I use in my demos: [Live Templates](https://www.jetbrains.com/help/idea/using-live-templates.html). Live templates allow you to record code snippets and recall them with a quick shortcut that you define. You can see them in action in my recent [Full Stack Reactive screencast](https://youtu.be/1xpwYe154Ys).
 
-<div style="text-align: center">
-<iframe width="560" height="315" style="max-width: 100%" src="https://www.youtube.com/embed/1xpwYe154Ys" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "1xpwYe154Ys", "", 560, 315 %}
 
 ## Oh My Zsh
 

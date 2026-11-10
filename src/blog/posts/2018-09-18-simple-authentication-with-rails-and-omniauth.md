@@ -113,6 +113,6 @@ As you can see, getting your Rails app setup to handle user authentication with 
 
 If you'd like to see how this app works in more detail, check out the screencast below. It walks through the process of adding Okta and OmniAuth to an existing Rails application.
 
-<div style="text-align: center;"><iframe width="560" height="315" src="https://www.youtube.com/embed/8_Yt4U2lJJM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="max-width: 100%"></iframe></div>
+{% youtube "8_Yt4U2lJJM", "", 560, 315 %}
 
 If you're interested in learning more about web security, please [follow us on Twitter](https://twitter.com/oktadev) -- we publish lots of interested articles on the topic. And if you have any questions, please leave a comment below and I'll do my best to get back to you.

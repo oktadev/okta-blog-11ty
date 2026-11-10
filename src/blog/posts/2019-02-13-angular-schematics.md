@@ -23,9 +23,7 @@ Did you know that Angular CLI uses Schematics to generate this code? "What the h
 
 If you'd rather watch a video, I [created a screencast of this tutorial](https://youtu.be/ANwZIt3Ni2s).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/ANwZIt3Ni2s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "ANwZIt3Ni2s" %}
 
 {% include "integrator-org-warning.njk" %}
 

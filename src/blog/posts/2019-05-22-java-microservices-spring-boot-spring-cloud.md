@@ -30,9 +30,7 @@ The Java ecosystem has some well-established patterns for developing microservic
 
 If you'd rather watch a video, [I created a screencast of this blog post](https://youtu.be/rH-FnPC_xCA).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/rH-FnPC_xCA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "rH-FnPC_xCA" %}
 
 ## Create Java Microservices with Spring Cloud and Spring Boot
 

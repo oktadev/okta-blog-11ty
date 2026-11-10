@@ -401,9 +401,7 @@ SAML is implemented by Okta with its SSO chiclets. If you're an Okta customer, l
 
 If you'd rather watch a video to learn about OAuth, please see the presentation below from [Nate Barbettini](https://twitter.com/nbarbettini), Product Manager at Okta.
 
-<div style="text-align: center">
-<iframe width="560" height="315" style="max-width: 100%" src="https://www.youtube.com/embed/996OiexHze0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "996OiexHze0", "", 560, 315 %}
 
 ## OAuth 2.0 Summary
 
