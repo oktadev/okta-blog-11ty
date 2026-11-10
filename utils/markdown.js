@@ -16,6 +16,34 @@ export const slugify = (s) =>
     .replace(/[^\p{L}\p{M}\p{Nd}\p{Pc}\- \t]/gu, "")
     .replace(/[ \t]/g, "-");
 
+const headingText = (tokens) =>
+  tokens
+    .filter((t) => ["text", "code_inline"].includes(t.type))
+    .map((t) => t.content)
+    .join("")
+    .trim();
+
+// The TOC plugin re-renders a heading's text as Markdown, and the default drops
+// the backticks, so inline code in a heading came out as plain text (#219). Put
+// them back: a fence longer than any backtick run inside, padded with a space
+// when the content starts or ends with a backtick or space, or the fence would
+// merge with it.
+export const headingMarkdown = (tokens) =>
+  tokens
+    .filter((t) => ["text", "code_inline"].includes(t.type))
+    .map((t) => {
+      if (t.type !== "code_inline") return t.content;
+      const longestRun = Math.max(
+        0,
+        ...(t.content.match(/`+/g) || []).map((run) => run.length),
+      );
+      const fence = "`".repeat(longestRun + 1);
+      const pad = /^[` ]|[` ]$/.test(t.content) ? " " : "";
+      return `${fence}${pad}${t.content}${pad}${fence}`;
+    })
+    .join("")
+    .trim();
+
 // The site's Markdown library. Shared so anything that renders markdown outside
 // the main pipeline (e.g. the markdown-in-HTML transform) stays consistent.
 // A newline inside a paragraph is a space, as on the old site (kramdown) and
@@ -37,25 +65,10 @@ export const markdownLibrary = markdownIt({
   .use(markdownItToc, {
     includeLevel: [2, 3],
     listType: "ul",
-    slugify,
-    // The default drops the backticks, and the plugin re-renders this string as
-    // Markdown, so inline code in a heading would come out as plain text (#219).
-    // slugify strips the backticks again, so anchors still match the headings.
-    getTokensText: (tokens) =>
-      tokens
-        .filter((t) => ["text", "code_inline"].includes(t.type))
-        .map((t) => {
-          if (t.type !== "code_inline") return t.content;
-          const fence = "`".repeat(
-            Math.max(
-              0,
-              ...(t.content.match(/`+/g) || []).map((r) => r.length),
-            ) + 1,
-          );
-          return `${fence}${t.content}${fence}`;
-        })
-        .join("")
-        .trim(),
+    // The slug comes from the plain text, as for the headings' own ids: the
+    // padding getTokensText adds below would otherwise become hyphens.
+    slugify: (_text, token) => slugify(headingText(token.children)),
+    getTokensText: headingMarkdown,
     containerClass: "table-of-contents not-prose",
     containerHeaderHtml: '<p class="toc-header">Table of Contents</p>',
     transformContainerOpen: (containerClass, containerHeaderHtml) =>
