@@ -9,8 +9,6 @@ image: identity-developer-podcast/podcast.jpg
 type: awareness
 ---
 
-# Approaching automation in identity
-
 Product Manager Jeff Taylor joins us for the first time to discuss the principles behind successful automation. 
 
 What's the automation journey, and how does it relate to organizational maturity? How can you scale your work with automation while avoiding the pitfalls of premature optimization? 

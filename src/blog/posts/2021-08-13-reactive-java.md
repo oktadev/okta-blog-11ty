@@ -229,7 +229,7 @@ public class FlatMapTest {
 ```
 There is a rich vocabulary of operators for `Flux` and `Mono` you can find in the reference documentation. This handy guide can help you choose the right operator: ["Which operator do I need?"](https://projectreactor.io/docs/core/release/reference/#which-operator).
 
-# Reactor Schedulers for Switching the Thread
+## Reactor Schedulers for Switching the Thread
 
 Project Reactor provides the tools for fine-tuning the asynchronous processing in terms of threads and execution context.
 

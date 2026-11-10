@@ -199,6 +199,17 @@ a.direct-link {
   }
 }
 
+/* Live Python editors in the password-hashing post. The textarea is what shows
+   until Brython swaps in CodeMirror, and a bare one is ~20 columns wide. */
+.live-code {
+  @apply w-full min-h-64 px-5 py-2.5 rounded-sm border border-brand-utility-grey-400 font-code text-base leading-relaxed;
+}
+
+.CodeMirror {
+  @apply my-6 min-h-64 rounded-sm border border-brand-utility-grey-400 font-code text-base;
+  height: auto;
+}
+
 /* widgets.js swaps the blockquote for a cross-origin iframe, so this wrapper is the
    only styleable part. Centring here works on both the blockquote and the iframe. */
 .eleventy-plugin-embed-twitter {
