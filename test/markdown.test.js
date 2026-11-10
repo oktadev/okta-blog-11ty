@@ -30,6 +30,54 @@ test("headings and the table of contents share the ids, duplicates get -1", () =
   assert.match(html, /href="#vue--go"/);
 });
 
+test("inline code in a heading stays code in the table of contents (#219)", () => {
+  const html = markdownLibrary.render(
+    "[[toc]]\n\n## Build a `GroupList` component\n",
+  );
+  assert.match(
+    html,
+    /<a href="#build-a-grouplist-component">Build a <code>GroupList<\/code> component<\/a>/,
+  );
+  assert.match(html, /<h2 id="build-a-grouplist-component"/);
+});
+
+test("table of contents keeps code spans that start or end with a backtick", () => {
+  for (const [heading, code] of [
+    ["## Use `` `value `` here", "`value"],
+    ["## Use `` value` `` here", "value`"],
+    ["## Use `` `both` `` here", "`both`"],
+    ["## Use ```a``b``` here", "a``b"],
+  ]) {
+    const html = markdownLibrary.render(`[[toc]]\n\n${heading}\n`);
+    const toc = html.match(/<nav class="table-of-contents[\s\S]*?<\/nav>/)[0];
+    const id = html.match(/<h2 id="([^"]*)"/)[1];
+    assert.ok(toc.includes(`<code>${code}</code>`), heading);
+    assert.ok(toc.includes(`href="#${id}"`), `${heading}: link matches id`);
+  }
+});
+
+test("table of contents leaves a whitespace-only code span as it was", () => {
+  const html = markdownLibrary.render("[[toc]]\n\n## A ` ` character\n");
+  const toc = html.match(/<nav class="table-of-contents[\s\S]*?<\/nav>/)[0];
+  assert.ok(toc.includes("A <code> </code> character"), toc);
+});
+
+test("table of contents merges adjacent code spans instead of fusing their fences", () => {
+  const html = markdownLibrary.render("[[toc]]\n\n## `foo`**`bar`**\n");
+  const toc = html.match(/<nav class="table-of-contents[\s\S]*?<\/nav>/)[0];
+  assert.ok(toc.includes("<code>foobar</code>"), toc);
+  assert.ok(!toc.includes("`"), "no stray backticks");
+});
+
+test("table of contents escapes a literal backtick or backslash before a code span", () => {
+  const html = markdownLibrary.render(
+    "[[toc]]\n\n## a\\``x`\n\n## C:\\dir `y`\n",
+  );
+  const toc = html.match(/<nav class="table-of-contents[\s\S]*?<\/nav>/)[0];
+  assert.ok(toc.includes("a`<code>x</code>"), toc);
+  assert.ok(toc.includes("C:\\dir <code>y</code>"), toc);
+});
+
 test("footnotes render as on the old site, with a bare number as the marker", () => {
   const html = markdownLibrary.render("Text[^1].\n\n[^1]: The note.\n");
   assert.match(
