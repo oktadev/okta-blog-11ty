@@ -27,22 +27,34 @@ const headingText = (tokens) =>
 // the backticks, so inline code in a heading came out as plain text (#219). Put
 // them back: a fence longer than any backtick run inside, padded with a space
 // when the content starts or ends with a backtick or space, or the fence would
-// merge with it.
-export const headingMarkdown = (tokens) =>
-  tokens
-    .filter((t) => ["text", "code_inline"].includes(t.type))
-    .map((t) => {
-      if (t.type !== "code_inline") return t.content;
+// merge with it. Formatting tokens between two spans are dropped, which would
+// leave their fences touching, so adjacent spans become one; a literal backtick
+// or backslash in plain text is escaped so it can't join the next fence.
+export const headingMarkdown = (tokens) => {
+  const parts = [];
+  for (const t of tokens) {
+    if (t.type === "code_inline") {
+      const last = parts.at(-1);
+      if (last?.code) last.content += t.content;
+      else parts.push({ code: true, content: t.content });
+    } else if (t.type === "text" && t.content) {
+      parts.push({ code: false, content: t.content });
+    }
+  }
+  return parts
+    .map(({ code, content }) => {
+      if (!code) return content.replace(/[\\`]/g, "\\$&");
       const longestRun = Math.max(
         0,
-        ...(t.content.match(/`+/g) || []).map((run) => run.length),
+        ...(content.match(/`+/g) || []).map((run) => run.length),
       );
       const fence = "`".repeat(longestRun + 1);
-      const pad = /^[` ]|[` ]$/.test(t.content) ? " " : "";
-      return `${fence}${pad}${t.content}${pad}${fence}`;
+      const pad = /^[` ]|[` ]$/.test(content) ? " " : "";
+      return `${fence}${pad}${content}${pad}${fence}`;
     })
     .join("")
     .trim();
+};
 
 // The site's Markdown library. Shared so anything that renders markdown outside
 // the main pipeline (e.g. the markdown-in-HTML transform) stays consistent.

@@ -56,6 +56,22 @@ test("table of contents keeps code spans that start or end with a backtick", () 
   }
 });
 
+test("table of contents merges adjacent code spans instead of fusing their fences", () => {
+  const html = markdownLibrary.render("[[toc]]\n\n## `foo`**`bar`**\n");
+  const toc = html.match(/<nav class="table-of-contents[\s\S]*?<\/nav>/)[0];
+  assert.ok(toc.includes("<code>foobar</code>"), toc);
+  assert.ok(!toc.includes("`"), "no stray backticks");
+});
+
+test("table of contents escapes a literal backtick or backslash before a code span", () => {
+  const html = markdownLibrary.render(
+    "[[toc]]\n\n## a\\``x`\n\n## C:\\dir `y`\n",
+  );
+  const toc = html.match(/<nav class="table-of-contents[\s\S]*?<\/nav>/)[0];
+  assert.ok(toc.includes("a`<code>x</code>"), toc);
+  assert.ok(toc.includes("C:\\dir <code>y</code>"), toc);
+});
+
 test("footnotes render as on the old site, with a bare number as the marker", () => {
   const html = markdownLibrary.render("Text[^1].\n\n[^1]: The note.\n");
   assert.match(
