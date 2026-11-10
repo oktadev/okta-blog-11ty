@@ -49,7 +49,9 @@ export const headingMarkdown = (tokens) => {
         ...(content.match(/`+/g) || []).map((run) => run.length),
       );
       const fence = "`".repeat(longestRun + 1);
-      const pad = /^[` ]|[` ]$/.test(content) ? " " : "";
+      // An all-space span is kept verbatim, so padding it would add spaces.
+      const pad =
+        /[^ ]/.test(content) && /^[` ]|[` ]$/.test(content) ? " " : "";
       return `${fence}${pad}${content}${pad}${fence}`;
     })
     .join("")
