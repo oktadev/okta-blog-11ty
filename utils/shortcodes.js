@@ -55,13 +55,14 @@ const update = (updated, postsCollection) => {
 // The id may carry a query string ("abc123?start=60"). Most posts predate the
 // shortcode and use 700x394, so that is the default; max-w-full and the
 // aspect-ratio keep it from overflowing a narrow screen, as the old
-// "max-width: 100%" iframes did.
+// "max-width: 100%" iframes did. The single column is minmax(0, 1fr); an
+// auto track would grow to the iframe's declared width and defeat max-w-full.
 const youtube = (id, t, w, h) => {
   const width = w || 700;
   const height = h || 394;
   const title = (t || "YouTube video player").replace(/"/g, "&quot;");
 
-  return `<div class="grid justify-center m-4"><iframe class="max-w-full h-auto" style="aspect-ratio: ${width} / ${height}" width="${width}" height="${height}" src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
+  return `<div class="grid grid-cols-1 m-4"><iframe class="justify-self-center max-w-full h-auto" style="aspect-ratio: ${width} / ${height}" width="${width}" height="${height}" src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
 };
 
 const speakerdeck = (id, width = 600) => {
