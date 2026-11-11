@@ -8,6 +8,7 @@
   <title>{{ title }}</title>
   <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
   {% include "meta.njk" %}
+  {% include "analytics.njk" %}
   {# Must load before our stylesheet, or the overrides in public/css/coveo.css lose. #}
   <link rel="stylesheet"
         href="https://static.cloud.coveo.com/searchui/v2.8959/14/css/CoveoFullSearch.min.css"
@@ -27,6 +28,7 @@
   <script type="module" src="/js/search/index.js"></script>
 </head>
 <body class="w-full min-w-3xs">
+  {% include "analytics-noscript.njk" %}
   <!-- Follow existing for this entire file -->
   {% include "header.njk" %}
   <main class="mt-12 mb-28 mx-auto max-w-8xl px-6 lg:px-12 2xl:px-0">
