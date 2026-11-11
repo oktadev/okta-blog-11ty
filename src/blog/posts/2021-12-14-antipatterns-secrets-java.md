@@ -18,9 +18,7 @@ Most applications require some sort of secret or password to enable access: data
 
 If you would rather watch a video, [Micah Silverman](/blog/authors/micah-silverman/)'s [JWTs for CSRF & Microservices](https://www.youtube.com/watch?v=BJlfrAicVtc&start=1000&end=1262) (at 16:42) talk covers some of these topics too!
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/BJlfrAicVtc?start=1002" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "BJlfrAicVtc?start=1002" %}
 
 ## 1. Checking secrets into source control
 

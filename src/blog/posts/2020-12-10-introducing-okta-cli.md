@@ -303,16 +303,16 @@ We've created a few screencasts to show the Okta CLI in action. The videos below
 
 <div class="video-grid">
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/dURkaz0kBSU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "dURkaz0kBSU", "", 267, 150 %}
   </div>
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/aMmTcLnoZzc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "aMmTcLnoZzc", "", 267, 150 %}
   </div>
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/jUOjIw-NBJ0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "jUOjIw-NBJ0", "", 267, 150 %}
   </div>
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/ThytrcxL31s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "ThytrcxL31s", "", 267, 150 %}
   </div>
 </div>
 

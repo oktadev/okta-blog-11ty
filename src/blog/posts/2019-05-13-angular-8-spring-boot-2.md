@@ -56,9 +56,7 @@ This post describes how to build a simple CRUD application that displays a list 
 
 You will need [Java 11](https://adoptopenjdk.net/) and [Node.js 10+](https://nodejs.org/) installed to complete this tutorial. If you'd rather watch a video, [I created a screencast](https://youtu.be/PvdFCjWD4Bw).
 
-<div style="text-align: center">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/PvdFCjWD4Bw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+{% youtube "PvdFCjWD4Bw" %}
 
 ## Build an API with Spring Boot 2.2
 

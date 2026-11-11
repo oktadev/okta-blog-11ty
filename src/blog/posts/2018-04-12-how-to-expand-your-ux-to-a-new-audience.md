@@ -84,9 +84,7 @@ To keep the feedback cycle going, ship as soon as you can. Maybe that's a small 
 <p></p>
 </div>
 
-<div style="max-width: 560px; margin: 0 auto">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/53jnHhfS00o?start=4170" frameborder="0" allowfullscreen></iframe>
-</div>
+{% youtube "53jnHhfS00o?start=4170", "", 560, 315 %}
 
 **Celebrate!** It wasn't easy getting to this point, so make sure to enjoy it. Even if you start hearing criticisms and shortcomings from your new audience, that's a huge accomplishment – take all the feedback and start addressing it.
 

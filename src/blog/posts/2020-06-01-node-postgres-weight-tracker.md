@@ -26,9 +26,7 @@ In this tutorial, you are going to create a modern Node.js application to keep t
 
 By the way, this tutorial is also available on our [YouTube channel](https://www.youtube.com/watch?v=LWPIdzeiThs), if you would rather follow along by watching a video!
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/LWPIdzeiThs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "LWPIdzeiThs" %}
 
 Before we begin, let's first check some requirements.
 

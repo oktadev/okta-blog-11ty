@@ -27,9 +27,7 @@ In our third Kong and Okta tutorial, we'll go through the introspection flow imp
 
 You can also [watch this tutorial as a screencast](https://youtu.be/0Gc33A7F2XE).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/0Gc33A7F2XE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "0Gc33A7F2XE" %}
 
 ## Konnect and Okta Integration Topology
 

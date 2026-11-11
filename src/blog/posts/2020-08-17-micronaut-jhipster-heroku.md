@@ -31,9 +31,7 @@ Today, I'd like to show you how to use the new and shiny [Micronaut blueprint fo
 
 > **NOTE:** You can also [watch this tutorial as a screencast](https://youtu.be/zg2UtuD3-RE). 🤓
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/zg2UtuD3-RE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "zg2UtuD3-RE" %}
 
 ## Build a Micronaut app with JHipster
 

@@ -32,9 +32,7 @@ Spring Boot 2.0 introduced a new web framework called Spring WebFlux. Previous v
 
 You can also [watch this tutorial as a screencast](https://youtu.be/clkEUHWT9-M).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/clkEUHWT9-M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "clkEUHWT9-M" %}
 
 ## Why Reactive Java?
 
@@ -471,9 +469,7 @@ JHipster has a [Kubernetes](https://www.jhipster.tech/kubernetes/) sub-generator
 
 In the meantime, you can watch a presentation that [Ray Tsang](https://twitter.com/saturnism) and I did recently that shows how to deploy JHipster microservices with Kubernetes. If you start watching from [46:18](https://youtu.be/AG4z18qePEw?t=2778), you'll see Ray show how to deploy to Google Cloud using Kubernetes.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" src="https://www.youtube.com/embed/AG4z18qePEw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "AG4z18qePEw" %}
 
 ## Should You Go Reactive?
 

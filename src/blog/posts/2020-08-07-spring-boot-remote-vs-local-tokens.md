@@ -21,9 +21,7 @@ In this post, you will build a simple application that takes advantage of both t
 
 If you would rather follow along by watching a video, check out our [YouTube channel](https://www.youtube.com/watch?v=8Z7giG2-GZM).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/8Z7giG2-GZM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "8Z7giG2-GZM" %}
 
 **Prerequisites**
 * [Java 8+](https://adoptopenjdk.net/)

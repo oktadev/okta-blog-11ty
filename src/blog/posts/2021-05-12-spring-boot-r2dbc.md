@@ -44,9 +44,7 @@ Let's get started!
 
 If you would rather follow along by watching a video, check out the screencast below from our [YouTube channel](https://www.youtube.com/watch?v=Zkcy0tlYJpI).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="800" height="450" style="max-width: 100%" src="https://www.youtube.com/embed/Zkcy0tlYJpI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "Zkcy0tlYJpI", "", 800, 450 %}
 
 ## Create a Spring Boot Project with R2DBC
 

@@ -21,9 +21,7 @@ Today, I'd like to show you the power of Node.js with a simple login example. Ex
 
 To show how it all works, I created a screencast: [Node.js Login with Express and OIDC](https://youtu.be/BgpsNi_6mzg).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" src="https://www.youtube.com/embed/BgpsNi_6mzg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "BgpsNi_6mzg" %}
 
 > **NOTE:** [OktaDev Schematics](https://github.com/oktadeveloper/schematics) was used in the making of this video. See its [Express documentation](https://github.com/oktadeveloper/schematics#express) to reproduce the steps yourself, or follow the instructions below.
 

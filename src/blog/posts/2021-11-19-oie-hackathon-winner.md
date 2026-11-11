@@ -19,9 +19,7 @@ In August, Okta's developer relations team invited intrepid developers to partic
 
 In October, we sat down with UK-based developer [Matthew McKenzie, the creator of GooseClip](https://devpost.com/software/gooseclip), our first prize winner. 
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/aLSda4LMgy8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "aLSda4LMgy8" %}
 
 ## Introducing peer-to-peer GooseClip 
 
