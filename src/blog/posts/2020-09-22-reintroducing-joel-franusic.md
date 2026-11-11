@@ -22,6 +22,7 @@ type: awareness
 <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/addon/edit/matchbrackets.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/codemirror.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/theme/neat.css" integrity="sha256-WMLC5bxpwvLiouYZo3maC9cKh1TBNxBNqrSjnlP0JQM=" crossorigin="anonymous" />
+
 <style type="text/css">
   .jf-game > ul {
     list-style: none;
@@ -250,7 +251,7 @@ ourselves and each other.
 
 One example of something I've made is a page that lets
 you [edit the code of the Okta Sign-In Widget with instant feedback, from inside
-your web browser](https://developer.okta.com/live-widget/). However, it uses JavaScript and, since I'm focusing
+your web browser](https://web.archive.org/web/20220520000130/https://developer.okta.com/live-widget). However, it uses JavaScript and, since I'm focusing
 on Python and Go, I wanted to make an example of running Python from inside of
 the browser. So, I wrote a game for you to play which I have included below:
 
@@ -295,7 +296,6 @@ Sequence checklist:
   </div>
   <textarea id="editor">def answer(a, b, c):
     return True
-
 play(answer)</textarea>
 </div>
 <script type="text/javascript">
