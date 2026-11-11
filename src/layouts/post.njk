@@ -42,6 +42,11 @@ layout: base
 
       {{ readingTime | readingTimeBadge | safe }}
       <span aria-hidden="true" class="hidden text-pipe-delimiter sm:inline">|</span>
+      {% set sampleRepo = github | httpUrl %}
+      {% if sampleRepo %}
+      <a href="{{ sampleRepo }}" class="text-links inline-flex items-center gap-1.5 py-0.75 px-3 bg-brand-primary-blue-100 rounded-xl text-xs uppercase font-bold [&_svg]:size-3.5" target="_blank" rel="noopener noreferrer" title="Sample code on GitHub">{% include "icons/github.svg" %} Code</a>
+      <span aria-hidden="true" class="hidden text-pipe-delimiter sm:inline">|</span>
+      {% endif %}
       <span class="flex items-center gap-2 [&_svg]:size-4.5">
         <a href="https://twitter.com/intent/tweet?url={{ (page.url | toAbsoluteUrl) | urlencode }}&amp;text={{ title | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">{% include "icons/x.svg" %}</a>
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ (page.url | toAbsoluteUrl) | urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">{% include "icons/linkedin.svg" %}</a>

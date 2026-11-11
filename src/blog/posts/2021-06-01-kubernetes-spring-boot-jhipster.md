@@ -54,9 +54,7 @@ spring:
 
 You can also [watch this tutorial as a screencast](https://youtu.be/SQFl7ggNYIE).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/SQFl7ggNYIE" title="Kubernetes to the Cloud with Spring Boot and JHipster" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "SQFl7ggNYIE", "Kubernetes to the Cloud with Spring Boot and JHipster" %}
 
 ## A Brief Intro to Kubernetes (K8s)
 

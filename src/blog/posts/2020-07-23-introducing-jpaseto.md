@@ -24,7 +24,7 @@ Today, I'm going to introduce you to [JPaseto](https://github.com/paseto-toolkit
 
 Before we get into that, however, let's talk about JWTs.
 
-# What's wrong with JWTs?
+## What's wrong with JWTs?
 
 The simple answer to this question is "nothing." It is *technically* possible to build and use JWTs correctly. However, due to the complexities of the JWT spec, it's easy to misuse them, which results in the large number of JWT vulnerabilities we've seen lately. While many of these vulnerabilities are specific to a given JWT implementation, part of the fault lies with the JWT specification itself.
  
@@ -36,7 +36,7 @@ You can browse through a list of JWT vulnerabilities in the [NIST CVE database](
 
 Why is this so important? JWTs have become a critical part of web authentication. They're used in nearly every modern web application to secure user sessions. Their widespread adoption paired with their inherent security issues has caused a perfect storm of widespread vulnerabilities.
 
-# Enter PASETO: A Secure Alternative to JWTs
+## Enter PASETO: A Secure Alternative to JWTs
 
 PASETOs were designed to improve upon the design of JWTs, making them more cryptographically resilient and far simpler to use.
 
@@ -59,7 +59,7 @@ version.purpose.payload.footer
 
 All PASETO tokens formats are tamper proof and the entire message is authenticated, meaning if you change anything in the token, validation fails.
 
-# JPaseto: A PASETO Library for Java/JVM Developers
+## JPaseto: A PASETO Library for Java/JVM Developers
 
 At Okta, we developed an open-source Java-based PASETO library named [JPaseto](https://github.com/paseto-toolkit/jpaseto) to make getting started with PASETO even easier. We took everything we loved and learned from the popular [JJWT](https://github.com/jwtk/jjwt/) project and put it into JPaseto (JJWT is the most popular JWT library for Java developers).
 
@@ -113,7 +113,7 @@ Paseto paseto = parser.parse(token);
 int diceRole = paseto.claims.get("1d20");
 ```
 
-# What's Next for PASETO?
+## What's Next for PASETO?
 
 Software bugs are inevitable; it's a fact of life in the software world. The more complex the code, the more likely there is an issue. This is doubly so with security. The JWT spec attempts to cover more use-cases than it should. This leads to complex code which, of course, leads to bugs and, in a security world, that means vulnerabilities. 
 
@@ -121,7 +121,7 @@ As security professionals, it falls on to us to help improve the security postur
 
 If you're using PASETOs in any projects, we'd love to hear about it!
 
-# Learn More About PASETO
+## Learn More About PASETO
 
 This post has given you an introduction to the PASETO specification and demonstrated how easy and intuitive the JPaseto library is to use. If you want to learn more about security tokens in Java, check out some of our other posts below!
 

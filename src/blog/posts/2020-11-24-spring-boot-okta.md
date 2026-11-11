@@ -21,9 +21,7 @@ The Okta CLI is a new tool we've created here at Okta. It's designed to streamli
 
 To show you how much fun it is, I [created a screencast that shows you how to use it](https://youtu.be/dURkaz0kBSU).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/dURkaz0kBSU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "dURkaz0kBSU" %}
 
 > **NOTE:** This video puts your settings in `src/main/resources/application.properties`. We've since changed the default behavior to use [spring-dotenv](https://github.com/okta-samples/okta-spring-boot-sample/pull/22).
 

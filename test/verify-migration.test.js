@@ -11,6 +11,7 @@ import {
   extract,
   needsAttention,
   normalizeText,
+  staleBuild,
 } from "../scripts/verify-migration.js";
 
 test("balancedElement and elementByClass find the whole article", () => {
@@ -76,8 +77,10 @@ test("needsAttention fails a post for any kind of loss, including inline code", 
     inline: [],
     anchors: [],
     assets: [],
+    stale: false,
   };
   assert.equal(needsAttention(clean), false);
+  assert.equal(needsAttention({ ...clean, stale: true }), true);
   assert.equal(needsAttention({ ...clean, inline: ["okta login"] }), true);
   assert.equal(needsAttention({ ...clean, anchors: ["setup"] }), true);
   assert.equal(needsAttention({ ...clean, assets: ["d/demo.mp4"] }), true);
@@ -167,4 +170,22 @@ test("missingAssets reports referenced files the build does not contain", () => 
     "img/blog/raw-assets-test/absent.mp4",
     "img/blog/x/y-800.webp",
   ]);
+});
+
+test("staleBuild flags a page older than its post, and nothing when either is missing", async () => {
+  const { mkdtempSync, writeFileSync, utimesSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const { join } = await import("node:path");
+  const dir = mkdtempSync(join(tmpdir(), "verify-"));
+  const post = join(dir, "post.md");
+  const page = join(dir, "index.html");
+  writeFileSync(post, "");
+  writeFileSync(page, "");
+  utimesSync(post, 1000, 1000);
+  utimesSync(page, 2000, 2000);
+  assert.equal(staleBuild(post, page), false);
+  utimesSync(post, 3000, 3000);
+  assert.equal(staleBuild(post, page), true);
+  assert.equal(staleBuild(join(dir, "missing.md"), page), false);
+  assert.equal(staleBuild(post, join(dir, "missing.html")), false);
 });

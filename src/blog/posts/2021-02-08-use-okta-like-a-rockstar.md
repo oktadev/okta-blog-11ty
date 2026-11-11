@@ -27,7 +27,7 @@ Rockstar is a Chrome extension that adds features to the Okta dashboard. What so
 You'll need to be an Okta administrator to use rockstar. If you don't already have an Okta account where you're an administrator, you can [sign up for a free developer account from Okta here](https://developer.okta.com/signup/).
 
 Once you're logged in to your Okta account, you can follow along with the rest of this blog post to learn how to use rockstar!
-# CSV Export for Okta Users, Groups, and Apps
+## CSV Export for Okta Users, Groups, and Apps
 
 While Okta can import users from a CSV, it doesn't have the ability to export them in that same way. 
 
@@ -60,7 +60,7 @@ Note that rockstar is able to export more than just users, groups, and apps from
 
 {% include "integrator-org-warning.njk" %}
 
-## Exporting Apps
+### Exporting Apps
 
 For another example of exporting data from Okta using rockstar; here is how you can use rockstar to export a list of your Okta apps. This is useful when you want to have a holistic view of what apps are currently being used, what type of sign-on Method they're using (SAML, OIDC, SWA, etc), and whether the app is active. On a deeper level, you can see what the template of the user name is. 
 
@@ -68,7 +68,7 @@ For another example of exporting data from Okta using rockstar; here is how you 
 
 Having an overview of the apps in your Okta tenant allows for easy auditing and management.  Because the file is exported in .CSV format, you can manipulate it to make it easy for you to read and use. 
 
-# SAML Debugger
+## SAML Debugger
 
 If a SAML application isn't working as expected, the typical approach is to use a tool like "SAML Tracer" to decode the SAML Assertion that Okta is sending to another application. However, there are two issues with using SAML Tracer to debug SAML: 
 
@@ -89,7 +89,7 @@ Once you click on the "Show SSO" link, rockstar will fetch a SAML assertion for 
 
 {% img {src: "use-okta-like-a-rockstar/image11.png", alt: "An example SAML assertion with highlighting from rockstar"} %}
 
-# Exploring the Okta API
+## Exploring the Okta API
 
 Learning a RESTful API like the Okta API can be daunting, especially if you haven't spent time with a RESTful API before. The usual way to learn an API is to use a tool like Postman, or maybe even open a terminal on your computer and use a command-line tool like `curl`.  However, doing either of those things requires setting up your environment, putting in variables, your API keys, client secret, client id, etc. And for someone starting out, that is a very intimidating thing to do. 
 
@@ -106,7 +106,7 @@ To open the API explorer, simply click on the "API Explorer" link in the rocksta
 
 Here are some examples of using rockstar to explore the Okta API:
 
-## Getting a list of users
+### Getting a list of users
 
 To get a list of users, open the API Explorer, click on the URL endpoint box, select `/api/v1/users` from the menu, then click the *Send* button. You should see a list of users, like in the screenshot below:
 
@@ -118,7 +118,7 @@ As you might have noticed, every Okta API endpoint returns data in the JSON form
 {% img {src: "use-okta-like-a-rockstar/image1.png", alt: "Example JSON output from rockstar"} %}
 
 
-## Getting information on a single user
+### Getting information on a single user
 
 To get detailed information on a particular user, navigate to that user in the Okta interface, and then click the "Show User" link in rockstar
 
@@ -130,14 +130,14 @@ Clicking that link will provide you with the API response for that user, which c
 {% img {src: "use-okta-like-a-rockstar/image2.png", alt: "Example of JSON returned by rockstar"} %}
 
 
-## Getting group membership for a user
+### Getting group membership for a user
 
 To make an API request that fetches the group membership information for a user, navigate to a user in the Okta interface, click the "API Explorer" link in rockstar, then select the `/api/v1/users/${userId}/groups` URL. You will now see a list of groups that your user is a member of:
 
 {% img {src: "use-okta-like-a-rockstar/image4.png", alt: "Example of group membership information for a user"} %}
 
 
-# Easier assignment of admin privileges to users
+## Easier assignment of admin privileges to users
 In Okta, assignment of admin privileges is a multi-step process, requiring you to open the *Security* menu, select *Administrators*, click the "Add Administrator" button, enter in the user you want to grant privileges to, select which privileges you want to grant the user, then clicking the "Add Administrator" button. I'm feeling exhausted just typing all of that!
 
 With rockstar, we address this by directly granting the user administrator privileges directly from within the user's individual profile page!
@@ -157,7 +157,7 @@ In addition to granting permissions, rockstar also allows you to instantly revok
 
 Simpler and quicker workflows make rockstar a very handy tool to have when administering a large set of users in Okta. Reducing the need to deep dive into the product menus is continuing to prove to be a beneficial feature for Okta admins out there. 
 
-# How do you get it?
+## How do you get it?
 
 Now that you have an idea of some of the things that you can do with rockstar, it's time for you to install it and try it out for yourself! Here's how:
 

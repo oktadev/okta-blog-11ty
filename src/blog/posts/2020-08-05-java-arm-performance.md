@@ -56,9 +56,7 @@ In the Spark Naive Bayes algorithm test, the m6g.medium was 8% faster than the t
 
 **Winner:** m6g.medium. This was almost too close to call, but in the words of Meat Loaf, "Two Out of Three Ain't Bad."
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/k5hWWe-ts2s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "k5hWWe-ts2s" %}
 
 ## Processing Power
 

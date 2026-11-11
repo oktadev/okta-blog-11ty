@@ -26,9 +26,7 @@ This tutorial will show you how to internationalize a simple Java app, a Spring 
 
 If you'd rather watch a video, [I created a screencast of this tutorial](https://youtu.be/nw4X42CefbI).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/nw4X42CefbI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "nw4X42CefbI" %}
 
 ## Java i18n with Resource Bundles
 

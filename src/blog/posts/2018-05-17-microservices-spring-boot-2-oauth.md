@@ -55,15 +55,11 @@ It's not too hard, so I'll break it down for you:
 
 If a picture is worth a thousand words, [a video is worth 1.8 million words](https://idearocketanimation.com/4293-video-worth-1-million-words/). For this reason, I created a screencast showing how to build a microservices architecture for microbrews with Spring Boot.
 
-<div style="text-align: center">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/IsVgIuUcMQQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+{% youtube "IsVgIuUcMQQ" %}
 
 I also created a screencast that shows how to secure this architecture with OAuth 2.0 and Okta.
 
-<div style="text-align: center">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/MY5m_s_U2H4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+{% youtube "MY5m_s_U2H4" %}
 
 ## What About Spring WebFlux?
 

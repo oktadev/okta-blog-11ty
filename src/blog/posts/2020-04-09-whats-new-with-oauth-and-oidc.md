@@ -15,7 +15,7 @@ comments: false
 summary: "In this video you'll learn about the latest developments in the OAuth and OpenID Connect specs from Aaron Parecki, a regular contributor to the OAuth working group. The latest additions to the specs enable richer experiences and better security for applications using OAuth."
 ---
 
-<iframe width="100%" height="480" src="https://www.youtube.com/embed/g_aVPdwBTfw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% youtube "g_aVPdwBTfw" %}
 
 In this video you'll learn about the latest developments in the OAuth and OpenID Connect specs from Aaron Parecki, a regular contributor to the OAuth working group. The latest additions to the specs enable richer experiences and better security for applications using OAuth.
 

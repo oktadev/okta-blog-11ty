@@ -94,6 +94,12 @@ Two optional keys worth knowing:
   canonical: https://auth0.com/blog/full-stack-java-with-react-spring-boot-and-jhipster/
   ```
 
+- `github` is the URL of the post's sample code repository. It adds a "Code" pill with the GitHub icon to the byline, next to the reading time. Anything that isn't an absolute `http(s)` URL is ignored.
+
+  ```yaml
+  github: https://github.com/oktadev/okta-spring-vault-example
+  ```
+
 - `comments: false` leaves the Discourse comment thread off a post. Posts migrated from the old site carry `discourse_topic_id`, which points at their existing forum topic; a post without one gets a topic created from its URL the first time it's viewed in production.
 
 - `updated` (or the legacy `update-url`/`update-title`/`update-extra` keys carried over from migrated posts) renders a dismissible "this post is old" banner at the top, linking to the replacement post. It's shown automatically — no shortcode call needed in the body.
@@ -118,6 +124,7 @@ Two optional keys worth knowing:
 - Bold button and link names: then click **Done**.
 - Write function names with parentheses inside backticks: this calls the `render()` method.
 - Wrap `http://localhost` URLs in backticks.
+- A newline inside a paragraph is a space, as on the old site. For a line break, end the line with two spaces or a backslash.
 - Fenced code blocks are preferred, but four-space indented code blocks render too (Eleventy turns them off by default; this site turns them back on). Footnotes (`[^1]`) render as on the old site, with a bare number as the marker.
 - To float an image beside the text, wrap the shortcode: `<span class="float-right ml-4 mb-2">{% img {...} %}</span>`. The migration does this for the old site's `{: .pull-right }` markers.
 - Links into developer.okta.com should be relative: `/docs/whatever/` rather than the full URL.
@@ -144,13 +151,15 @@ Shortcodes are `{% name … %}` tags available in every post. Images are the one
 {% img {src: "my-post/diagram.png", alt: "…", header: "600"} %}
 ```
 
+`class` adds Tailwind classes to the `<img>`. Use `class: "rounded-full"` for a square headshot of a person: `{% img {src: "my-post/jane.jpg", alt: "Jane Doe", header: "100", class: "rounded-full"} %}`. Crop the source to a square first, or it renders as an oval.
+
 `header` takes a display width in pixels, or `true` to render at the responsive hero sizes. The post's social `image` from front matter is rendered as the hero automatically, so you don't need to add it to the body.
 
 **Other shortcodes:**
 
 | Shortcode                                                        | Renders                                                                                                                |
 | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `{% youtube "VIDEO-ID" %}`                                       | An embedded YouTube player. Optional title, width and height follow the ID: `{% youtube "8vY-9tXlCW4", "Demo", 900, 506 %}`. |
+| `{% youtube "VIDEO-ID" %}`                                       | An embedded YouTube player, centered, 700×394 by default and shrinking on narrow screens. Use this for every YouTube video, not a pasted `<iframe>`. Title, width and height are optional overrides that follow the ID, in that order, so a size needs an empty title: `{% youtube "8vY-9tXlCW4", "", 560, 315 %}`. Add a start time to the ID: `"8vY-9tXlCW4?start=60"`. |
 | `{% speakerdeck "DATA-ID", 600 %}`                               | An embedded Speaker Deck. The ID is the `data-id` from the deck's embed code; the width in pixels is optional.          |
 | `{% excerpt "post-slug" %}`                                      | A card linking to another post on this blog, with its title, description and authors. The slug is the file name without the date prefix and `.md`. |
 | `{% svg {src: "name", alt: "…", widths: [30]} %}`                | An SVG from `public/img/blog/name.svg`. Add `type: "logo"` or `type: "icon"` to read from `public/img/` instead.       |

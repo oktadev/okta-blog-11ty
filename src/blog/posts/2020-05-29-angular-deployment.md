@@ -33,9 +33,7 @@ There are lots of tutorials and information in the Java community on how to depl
 
 You can also [watch this tutorial as a screencast](https://youtu.be/Hx9SbQ1ANLk). 👇
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/Hx9SbQ1ANLk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "Hx9SbQ1ANLk" %}
 
 <a id="create-an-angular-spring-boot-app"></a>
 ## Create an Angular + Spring Boot App

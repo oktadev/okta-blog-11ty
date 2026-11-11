@@ -21,9 +21,7 @@ In this post, you will learn basics about vulnerabilities, how they relate to Co
 
 If you'd rather watch a video, [I created a screencast of this tutorial](https://youtu.be/ZAEJ3iHXPl0).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/ZAEJ3iHXPl0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "ZAEJ3iHXPl0" %}
 
 ## What is a Vulnerability?
 

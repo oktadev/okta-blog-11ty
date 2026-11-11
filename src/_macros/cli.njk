@@ -18,7 +18,7 @@
 {{ params.loginRedirectUri | safe }}
 ```
 
-Use `{{ params.logoutRedirectUri | safe }}` for the Logout Redirect URIs. {% else %}Accept the default Redirect URI values provided for you. {% endif %} {% elif params.type == "token" %} Next, create an API token. Run `okta login` and open the resulting URL in your browser. Log in and go to Security > API > Tokens. Create a new token and store the value somewhere safe. Make sure you don't check it into GitHub! {% else %} {% if params.install == "false" %}Run {% else %}Then, run{% endif %} `okta apps create{% if params.type == "service" %} service{% endif %}`. Select the default app name, or change it as you see fit. {% if params.type != "service" %}Choose ** {%- if params.type == "spa" -%}Single-Page App {%- else -%}{{ params.type | capitalize }} {%- endif -%} ** and press Enter. {% endif %} {% if params.type == "spa" %} Use `{{ params.loginRedirectUri | safe }}` for the Redirect URI and {% if params.logoutRedirectUri %}set the Logout Redirect URI to `{{ params.logoutRedirectUri | safe }}`{% else %}accept the default Logout Redirect URI of `{{ baseUrl }}`{% endif %}. {% elif params.type == "web" %} Select ** {%- if params.framework -%}{{ params.framework }} {%- else -%}Other {%- endif -%}**. {% if params.loginRedirectUri and params.logoutRedirectUri %}Then, change the Redirect URI to `{{ params.loginRedirectUri | safe }}` and use `{{ params.logoutRedirectUri | safe }}` for the Logout Redirect URI. {% elif params.loginRedirectUri %}Then, change the Redirect URI to `{{ params.loginRedirectUri | safe }}` and accept the default Logout Redirect URI of `{{ baseUrl }}`. {% else %}Accept the default Redirect URI values provided for you.{% if params.framework and "Spring Boot" in params.framework %} That is, a Login Redirect of `http://localhost:8080/login/oauth2/code/okta` and a Logout Redirect of `http://localhost:8080`.{% endif %} {% endif %} {% elif params.type == "native" %} {% if params.loginRedirectUri == params.logoutRedirectUri %} Use `{{ params.loginRedirectUri | safe }}` for the Redirect URI and the Logout Redirect URI {% else %} Use `{{ params.loginRedirectUri | safe }}` for the Redirect URI and set the Logout Redirect URI to `{{ params.logoutRedirectUri | safe }}` {% endif %} {%- if 'com.okta.' in params.loginRedirectUri -%} (where `{{ params.loginRedirectUri.replace('com.okta.', '').replace(':/callback', '').replace('[http://localhost:8100/callback,', '').replace(']', '') }}.okta.com` is your Okta domain name). Your domain name is reversed to provide a unique scheme to open your app on a device. {% else %}.{% endif %} {% endif %} {% endif %}
+Use `{{ params.logoutRedirectUri | safe }}` for the Logout Redirect URIs. {% else %}Accept the default Redirect URI values provided for you. {% endif %} {% elif params.type == "token" %} Next, create an API token. Run `okta login` and open the resulting URL in your browser. Log in and go to **Security** > **API** > **Tokens**. Create a new token and store the value somewhere safe. Make sure you don't check it into GitHub! {% else %} {% if params.install == "false" %}Run {% else %}Then, run{% endif %} `okta apps create{% if params.type == "service" %} service{% endif %}`. Select the default app name, or change it as you see fit. {% if params.type != "service" %}Choose ** {%- if params.type == "spa" -%}Single-Page App {%- else -%}{{ params.type | capitalize }} {%- endif -%} ** and press **Enter**. {% endif %} {% if params.type == "spa" %} Use `{{ params.loginRedirectUri | safe }}` for the Redirect URI and {% if params.logoutRedirectUri %}set the Logout Redirect URI to `{{ params.logoutRedirectUri | safe }}`{% else %}accept the default Logout Redirect URI of `{{ baseUrl }}`{% endif %}. {% elif params.type == "web" %} Select ** {%- if params.framework -%}{{ params.framework }} {%- else -%}Other {%- endif -%}**. {% if params.loginRedirectUri and params.logoutRedirectUri %}Then, change the Redirect URI to `{{ params.loginRedirectUri | safe }}` and use `{{ params.logoutRedirectUri | safe }}` for the Logout Redirect URI. {% elif params.loginRedirectUri %}Then, change the Redirect URI to `{{ params.loginRedirectUri | safe }}` and accept the default Logout Redirect URI of `{{ baseUrl }}`. {% else %}Accept the default Redirect URI values provided for you.{% if params.framework and "Spring Boot" in params.framework %} That is, a Login Redirect of `http://localhost:8080/login/oauth2/code/okta` and a Logout Redirect of `http://localhost:8080`.{% endif %} {% endif %} {% elif params.type == "native" %} {% if params.loginRedirectUri == params.logoutRedirectUri %} Use `{{ params.loginRedirectUri | safe }}` for the Redirect URI and the Logout Redirect URI {% else %} Use `{{ params.loginRedirectUri | safe }}` for the Redirect URI and set the Logout Redirect URI to `{{ params.logoutRedirectUri | safe }}` {% endif %} {%- if 'com.okta.' in params.loginRedirectUri -%} (where `{{ params.loginRedirectUri.replace('com.okta.', '').replace(':/callback', '').replace('[http://localhost:8100/callback,', '').replace(']', '') }}.okta.com` is your Okta domain name). Your domain name is reversed to provide a unique scheme to open your app on a device. {% else %}.{% endif %} {% endif %} {% endif %}
 
 {% if params.note %}
   {{ params.note | safe }}
@@ -26,61 +26,73 @@ Use `{{ params.logoutRedirectUri | safe }}` for the Logout Redirect URIs. {% els
 
 {% set details %} {%- if params.type == "jhipster" -%} The Okta CLI streamlines configuring a JHipster app and does several things for you:
 
-    Creates an OIDC app with the correct {% if params.loginRedirectUri %}(see above, below are the default values) {% endif %}redirect URIs:
+1. Creates an OIDC app with the correct {% if params.loginRedirectUri %}(see above, below are the default values) {% endif %}redirect URIs:
+   - login: `http://localhost:8080/login/oauth2/code/oidc` and `http://localhost:8761/login/oauth2/code/oidc`
+   - logout: `http://localhost:8080` and `http://localhost:8761`
+2. Creates `ROLE_ADMIN` and `ROLE_USER` groups that JHipster expects
+3. Adds your current user to the `ROLE_ADMIN` and `ROLE_USER` groups
+4. Creates a `groups` claim in your default authorization server and adds the user's groups to it
 
-    login: http://localhost:8080/login/oauth2/code/oidc and http://localhost:8761/login/oauth2/code/oidc
-    logout: http://localhost:8080 and http://localhost:8761
+**NOTE**: The `http://localhost:8761*` redirect URIs are for the JHipster Registry, which is often used when creating microservices with JHipster. The Okta CLI adds these by default.
 
-    Creates ROLE_ADMIN and ROLE_USER groups that JHipster expects
-    Adds your current user to the ROLE_ADMIN and ROLE_USER groups
-    Creates a groups claim in your default authorization server and adds the user's groups to it
-
-NOTE: The http://localhost:8761* redirect URIs are for the JHipster Registry, which is often used when creating microservices with JHipster. The Okta CLI adds these by default.
-
-You will see output like the following when it's finished: {%- elif params.type != "token" -%} The Okta CLI will create an {% if params.type == "service" %}OAuth 2.0{% else %}OIDC{% endif %} {% if params.type == "spa" %}Single-Page App{% else %}{{ params.type | capitalize }} App{% endif %} in your Okta Org.{% if params.type != "service" %} It will add the redirect URIs you specified and grant access to the Everyone group.{% if params.type == "spa" %} It will also add a trusted origin for {% if params.logoutRedirectUri %}{{ params.logoutRedirectUri | safe }}{% else %}{{ baseUrl }}{% endif %}.{% endif %}{% endif %} You will see output like the following when it's finished: {%- endif -%}
+You will see output like the following when it's finished: {%- elif params.type != "token" -%} The Okta CLI will create an {% if params.type == "service" %}OAuth 2.0{% else %}OIDC{% endif %} {% if params.type == "spa" %}Single-Page App{% else %}{{ params.type | capitalize }} App{% endif %} in your Okta Org.{% if params.type != "service" %} It will add the redirect URIs you specified and grant access to the Everyone group.{% if params.type == "spa" %} It will also add a trusted origin for `{% if params.logoutRedirectUri %}{{ params.logoutRedirectUri | safe }}{% else %}{{ baseUrl }}{% endif %}`.{% endif %}{% endif %} You will see output like the following when it's finished: {%- endif -%}
 
 {% if params.type == "spa" or params.type == "native" %}
 
+```shell
 Okta application configuration:
 Issuer:    https://dev-133337.okta.com/oauth2/default
 Client ID: 0oab8eb55Kb9jdMIr5d6
+```
 
 {% elif params.type == "web" or params.type == "jhipster" or params.type == "service" %} {% if params.framework and "Spring Boot" in params.framework %}
 
+```shell
 Okta application configuration has been written to:
   /path/to/app/src/main/resources/application.properties
+```
 
 {% elif params.type != "token" %}
 
+```shell
 Okta application configuration has been written to: /path/to/app/.okta.env
+```
 
 {% endif %}
 
-{% if params.framework and params.framework == "Spring Boot" %} Open src/main/resources/application.properties to see the issuer and credentials for your app.
+{% if params.framework and params.framework == "Spring Boot" %} Open `src/main/resources/application.properties` to see the issuer and credentials for your app.
 
+```properties
 spring.security.oauth2.client.provider.okta.issuer-uri=https://dev-133337.okta.com/oauth2/default
 spring.security.oauth2.client.registration.okta.client-id=0oab8eb55Kb9jdMIr5d6
 spring.security.oauth2.client.registration.okta.client-secret=NEVER-SHOW-SECRETS
+```
 
-{% elif include.framework == "Okta Spring Boot Starter" %} Open src/main/resources/application.properties to see the issuer and credentials for your app.
+{% elif include.framework == "Okta Spring Boot Starter" %} Open `src/main/resources/application.properties` to see the issuer and credentials for your app.
 
+```properties
 okta.oauth2.issuer=https://dev-133337.okta.com/oauth2/default
 okta.oauth2.client-id=0oab8eb55Kb9jdMIr5d6
 okta.oauth2.client-secret=NEVER-SHOW-SECRETS
+```
 
 {% elif include.type != "token" %} Run `cat .okta.env` (or `type .okta.env` on Windows) to see the issuer and credentials for your app.{% if params.type == "jhipster" %} It will look like this (except the placeholder values will be populated):{% endif %}
 
 {% if params.type == "web" or params.type == "service" %}
 
+```shell
 export OKTA_OAUTH2_ISSUER="https://dev-133337.okta.com/oauth2/default"
 export OKTA_OAUTH2_CLIENT_ID="0oab8eb55Kb9jdMIr5d6"
 export OKTA_OAUTH2_CLIENT_SECRET="NEVER-SHOW-SECRETS"
+```
 
-Your Okta domain is the first part of your issuer, before /oauth2/default. {% elif params.type == "jhipster" %}
+Your Okta domain is the first part of your issuer, before `/oauth2/default`. {% elif params.type == "jhipster" %}
 
+```shell
 export SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI="https://{yourOktaDomain}/oauth2/default"
 export SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID="{clientId}"
 export SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET="{clientSecret}"
+```
 
 {% endif %}
 
@@ -97,10 +109,12 @@ export SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET="{clientSec
 NOTE: You can also use the Okta Admin Console to create your {% if params.type == "token" %}token{% else %}app{% endif %}. See [Create a{% if (params.framework == "Angular" or params.type == "token") %}n{% endif %} {{ oktaAppType }}{% if (params.type == "jhipster") %} on Okta{% endif %}]({{ docsLink }}) for more information. {% endset %}
 
 {% if params.type == "token" %}
-  {{ details }}
+{{ details | safe }}
 {% else %}
 <details>
   <summary>What does the Okta CLI do?</summary>
-  {{ details }}
+
+{{ details | safe }}
+
 </details>
 {% endif %}

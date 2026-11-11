@@ -197,6 +197,22 @@ a.direct-link {
   a {
     @apply text-brand-primary-blue-300 no-underline hover:underline;
   }
+
+  /* Same as inline code in .blog-prose, which the not-prose container opts out of. */
+  code {
+    @apply bg-code-bg p-0.5 text-base font-normal font-code text-code-base;
+  }
+}
+
+/* Live Python editors in the password-hashing post. The textarea is what shows
+   until Brython swaps in CodeMirror, and a bare one is ~20 columns wide. */
+.live-code {
+  @apply w-full min-h-64 px-5 py-2.5 rounded-sm border border-brand-utility-grey-400 font-code text-base leading-relaxed;
+}
+
+.CodeMirror {
+  @apply my-6 min-h-64 rounded-sm border border-brand-utility-grey-400 font-code text-base;
+  height: auto;
 }
 
 /* widgets.js swaps the blockquote for a cross-origin iframe, so this wrapper is the
@@ -248,6 +264,7 @@ a.direct-link {
   --tw-prose-captions: var(--color-content-text);
   --tw-prose-code: var(--color-brand-utility-grey-900);
 
+  --tw-prose-pre-code: var(--color-code-base);
   --tw-prose-pre-bg: var(--color-code-bg);
   --tw-prose-th-borders: var(--color-brand-utility-grey-400);
   --tw-prose-td-borders: var(--color-brand-primary-neutral-300);

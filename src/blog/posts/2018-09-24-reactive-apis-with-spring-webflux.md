@@ -27,7 +27,7 @@ If you're not familiar with reactive programming, or just want to see how you ca
 
 Spring Boot 2.1 is just around the corner, and with it comes Spring Security 5.1 (released this week!). There's excellent OpenID Connect (OIDC) support in Spring Security 5.1, so we'll highlight how to use it near the end of this article.
 
-<span class="float-right ml-4 mb-2">{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long", header: "100"} %}</span> I joined forced with Josh Long to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around fun guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like what we've put together for you!
+<span class="float-right ml-4 mb-2">{% img {src: "spring-webflux-apis/starbuxman.jpg", alt: "Josh Long", header: "100", class: "rounded-full"} %}</span> I joined forced with Josh Long to write this post. Josh is a fellow Java Champion, Spring Developer Advocate, and all around fun guy at Pivotal. Josh and I've been good friends for a while now, sharing the same passion for Java, developers, and building bleeding-edge applications. We hope you like what we've put together for you!
 
 Josh (a.k.a. [@starbuxman](https://twitter.com/starbuxman)) authored the Java code in this post, I added the part about securing your API with OIDC. Even though I show how to do it with Okta, it should work with any OIDC provider.
 

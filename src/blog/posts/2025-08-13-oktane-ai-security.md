@@ -15,7 +15,7 @@ We can't wait to meet you and hear about your application needs and challenges. 
 
 We planned engaging events to help you navigate the evolving world of AI and identity. Stop by and chat with us at these activities: 
 
-# Stop by the Oktane Developer Lounge
+## Stop by the Oktane Developer Lounge
 
 Find our lounge in the Oktane Expo Hall, where you'll discover the ways Okta can help you create secure applications with human and non-human identities. 🤖
 

@@ -41,9 +41,7 @@ Below are 11 patterns I recommend to secure microservice architectures.
 
 > **TIP:** [Watch this blog post as a presentation on YouTube](https://youtu.be/xPlmRSWqSso). 👇
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/xPlmRSWqSso" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "xPlmRSWqSso" %}
 
 ## 1. Be Secure by Design
 

@@ -27,9 +27,7 @@ JHipster 6 uses Spring Boot 2.1 for its backend API, which means you can use Jav
 
 If you'd rather watch a video, [I created a screencast of this blog post](https://youtu.be/Ktnvqoouulg).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/Ktnvqoouulg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "Ktnvqoouulg" %}
 
 {% include "integrator-org-warning.njk" %}
 

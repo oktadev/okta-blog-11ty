@@ -51,9 +51,7 @@ Let's get started!
 
 **Tip:** If you'd rather watch a video of this tutorial, check out the screencast below from our [YouTube channel](https://www.youtube.com/watch?v=uFPbUqrbanc).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" frameborder="0" src="https://www.youtube.com/embed/uFPbUqrbanc"  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "uFPbUqrbanc" %}
 
 ## Create a Spring Cloud Config Server
 

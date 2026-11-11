@@ -101,9 +101,7 @@ When you generate a microservices architecture with JHipster, the resulting proj
 
 Below is a video showing where the frontend code resides in a JHipster-generated microservices architecture.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/-QCuWgLQmdg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "-QCuWgLQmdg" %}
 
 JHipster 6 generates a frontend monolith for microservices by default. It also leverages lazy-loading for Angular, React, and Vue to make the initial download and render fast (it could be even faster with server-side rendering support, but I digress).
 

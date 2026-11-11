@@ -24,9 +24,7 @@ In this tutorial, I'll give you a quick overview of the WebSockets protocol and 
 
 If you would rather follow along by watching a video, check out the screencast below from our [YouTube channel](https://www.youtube.com/watch?v=OJMBg2bSXIU).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/OJMBg2bSXIU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "OJMBg2bSXIU" %}
 
 {% include "integrator-org-warning.njk" %}
 

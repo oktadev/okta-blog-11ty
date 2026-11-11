@@ -21,9 +21,7 @@ I wrote some intentionally bad code to demo these tools (which was harder than y
 
 If you'd rather watch a video, I [created a screencast too](https://youtu.be/_VCJ8jCRVWo)!
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/_VCJ8jCRVWo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "_VCJ8jCRVWo" %}
 
 First, it's always a good idea to start with tests!
 

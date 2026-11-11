@@ -49,7 +49,7 @@ Once you have Node.js and npm installed, you can now install Vue.js with this co
 npm install --global @vue/cli
 ```
 
-# How to Build a Simple Go/Gin Application
+## How to Build a Simple Go/Gin Application
 
 We will start by creating a simple Gin application. Create a file called `simple.go` containing the following Go code:
 

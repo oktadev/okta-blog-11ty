@@ -19,9 +19,7 @@ type: awareness
 
 Last month I came out with a video tutorial on Blazor WebAssembly and I thought it would be good to follow up with a written tutorial as well.
 
-<div style="text-align: center">
-<iframe width="600" height="338" src="https://www.youtube.com/embed/qN1vSk8lPtU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "qN1vSk8lPtU", "", 600, 338 %}
 [Youtube Link](https://www.youtube.com/watch?v=qN1vSk8lPtU)
 
 Because of the JS Interop, Blazor WASM has some key differences in the world of OAuth. Instead of thinking of this as a normal .NET back end application, you have to think of what Blazor resolves to in the browser - and that's Javascript. Therefore, all of the security vulnerabilities that come along with browser-based languages apply here. Many have been handled by the team that built Blazor WebAssembly already, but they cannot code for you and make decisions about how to handle your token. We can help with that!

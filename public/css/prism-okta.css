@@ -63,8 +63,7 @@
 .token.selector,
 .token.attr-name,
 .token.variable,
-.token.constant,
-.token.inserted {
+.token.constant {
   color: var(--color-code-identifier);
 }
 
@@ -118,4 +117,12 @@
 pre .conum[data-value] {
   position: relative;
   top: -0.125em;
+}
+
+/* Diff: inline, so the tint stops at the end of each line of text. */
+.token.inserted-sign {
+  background-color: color-mix(in oklch, var(--color-brand-notifications-700) 50%, transparent);
+}
+.token.deleted-sign {
+  background-color: color-mix(in oklch, var(--color-brand-notifications-300) 50%, transparent);
 }

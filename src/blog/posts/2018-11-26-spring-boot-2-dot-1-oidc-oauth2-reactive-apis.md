@@ -238,9 +238,7 @@ I updated a few of my favorite tutorials on this blog to use Spring Boot 2.1 rec
 
 I enjoyed writing the full stack reactive tutorial so much, I turned it into a screencast! _A keen eye will notice I'm using Java 11 **and** Node 11 in this video._ 😃
 
-<div style="text-align: center">
-<iframe width="560" height="315" style="max-width: 100%" src="https://www.youtube.com/embed/1xpwYe154Ys" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "1xpwYe154Ys", "", 560, 315 %}
 
 <a id="jhipster-and-spring-boot-2-1"></a>
 ## JHipster and Spring Boot 2.1

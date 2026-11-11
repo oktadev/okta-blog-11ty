@@ -24,7 +24,7 @@ If you weren't lucky enough to attend Iterate, don't worry – we'll most defini
 
 Want to know what Iterate was like? Check out our cool new recap video!
 
-<div style="text-align: center"><iframe style="max-width: 100%" width="560" height="315" src="https://www.youtube.com/embed/R4P_8bi8s9M" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+{% youtube "R4P_8bi8s9M", "", 560, 315 %}
 
 ## Why Host a Developer Conference?
 
@@ -108,7 +108,7 @@ The intro video is a story in and of itself, but imagine a huge LED wall and a p
 
 [Jeff Atwood](https://blog.codinghorror.com/), co-founder of [StackOverflow](https://stackoverflow.com/) and [Discourse](https://www.discourse.org/), as well as one of the most influential developers of all time then gave an [amazing keynote](https://www.youtube.com/watch?v=vrKTSg5gWN4) about crafting software. If you're a software developer, you really owe it to yourself to watch his talk: it was absolutely fantastic for anyone who's building programs that people interact with.
 
-<div style="text-align: center"><iframe style="max-width: 100%" width="560" height="315" src="https://www.youtube.com/embed/vrKTSg5gWN4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+{% youtube "vrKTSg5gWN4", "", 560, 315 %}
 
 Once the keynote had finished, attendees split up into the two tracks (Build and Evolve) and the first round of talks got started.
 

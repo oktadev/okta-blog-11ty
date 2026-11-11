@@ -36,9 +36,7 @@ In this tutorial, you will build and run a simple web application into the Docke
 
 If you'd rather watch a video of this tutorial, check out the screencast below from our [YouTube channel](https://youtu.be/ChYIhEEOfrk).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" frameborder="0" src="https://www.youtube.com/embed/ChYIhEEOfrk"  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "ChYIhEEOfrk" %}
 
 {% include "integrator-org-warning.njk" %}
 
