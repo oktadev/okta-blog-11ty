@@ -347,11 +347,11 @@ Run your app with `react-native run-ios`.
 
 You should see a screen that says "Hello, stranger." Click on **Authorize**, and you'll be prompted to continue or cancel.
 
-| {% img {src: "react-native-app-auth/hello.png", alt: "Hello, stranger", header: "400"} %} | {% img {src: "react-native-app-auth/continue.png", alt: "Cancel or Continue", header: "400"} %} |
+{% img {src: "react-native-app-auth/hello.png", alt: "Hello, stranger", header: "400"} %} {% img {src: "react-native-app-auth/continue.png", alt: "Cancel or Continue", header: "400"} %}
 
 Click **Continue** and you should see an Okta sign-in form. Enter your credentials, and you'll be redirected back to the application.
 
-| {% img {src: "react-native-app-auth/okta-login.png", alt: "Okta Sign-In", header: "400"} %} | {% img {src: "react-native-app-auth/access-token.png", alt: "Access Token Info", header: "400"} %} |
+{% img {src: "react-native-app-auth/okta-login.png", alt: "Okta Sign-In", header: "400"} %} {% img {src: "react-native-app-auth/access-token.png", alt: "Access Token Info", header: "400"} %}
 
 You can click **Refresh** to watch the values for the access token and expire date change.
 
@@ -430,7 +430,7 @@ To create a new AVD, navigate to **Tools** > **Android** > **AVD Manager**. Crea
 
 Run `npm run android` again. You should see a welcome screen and be able to authorize successfully.
 
-| {% img {src: "react-native-app-auth/android-hello.png", alt: "Hello, stranger", header: "280"} %} | {% img {src: "react-native-app-auth/android-sign-in.png", alt: "Okta Sign-In", header: "280"} %} | {% img {src: "react-native-app-auth/android-access-token.png", alt: "Access Token on Android", header: "280"} %} |
+{% img {src: "react-native-app-auth/android-hello.png", alt: "Hello, stranger", header: "280"} %} {% img {src: "react-native-app-auth/android-sign-in.png", alt: "Okta Sign-In", header: "280"} %} {% img {src: "react-native-app-auth/android-access-token.png", alt: "Access Token on Android", header: "280"} %}
 
 ### Get and View an ID Token
 
@@ -582,7 +582,7 @@ Modify the row where you display the ID token to show the JSON from the API.
 
 In iOS Simulator, press **Command + R** to reload everything and you should see the JSON when you click on the **Good Beers** button. You can reload in Android using **Command + M** (on Mac, **CTRL + M** on other operating systems).
 
-| {% img {src: "react-native-app-auth/good-beers-ios.png", alt: "Good Beers on iOS", header: "400"} %} | {% img {src: "react-native-app-auth/good-beers-android.png", alt: "Good Beers on Android", header: "350"} %} |
+{% img {src: "react-native-app-auth/good-beers-ios.png", alt: "Good Beers on iOS", header: "400"} %} {% img {src: "react-native-app-auth/good-beers-android.png", alt: "Good Beers on Android", header: "350"} %}
 
 ## Learn More about React Native and React
 
