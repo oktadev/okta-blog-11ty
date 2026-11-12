@@ -41,11 +41,17 @@ export default function (eleventyConfig) {
     );
   });
 
-  // Entries are single-key { <date>: <text> } objects; sort newest-first.
+  // Entries are single-key { <date>: <text> } objects, or "<date> => <text>"
+  // strings, the old site's other form (YAML reads those as plain strings).
+  // Sort newest-first.
   eleventyConfig.addFilter("changelogEntries", function (changelog) {
     if (!Array.isArray(changelog)) return [];
     return changelog
       .map((entry) => {
+        if (typeof entry === "string") {
+          const [date, ...text] = entry.split("=>");
+          return { date: new Date(date.trim()), text: text.join("=>").trim() };
+        }
         const key = Object.keys(entry)[0];
         return { date: new Date(key), text: entry[key] };
       })
