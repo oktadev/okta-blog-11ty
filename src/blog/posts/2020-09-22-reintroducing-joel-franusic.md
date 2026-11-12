@@ -294,10 +294,13 @@ Sequence checklist:
     and why Donald Knuth says you can use it to
     <a href="https://youtu.be/BxQw4CdxLr8?t=1187">"compute your way into the literature"</a>.
   </div>
-  <textarea id="editor">def answer(a, b, c):
-    return True
-play(answer)</textarea>
 </div>
+
+<textarea id="editor" class="live-code">def answer(a, b, c):
+    return True
+
+play(answer)</textarea>
+
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(){
     brython(1)
