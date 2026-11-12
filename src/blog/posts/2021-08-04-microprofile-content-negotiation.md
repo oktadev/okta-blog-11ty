@@ -243,7 +243,7 @@ Make another HTTP request and include the `Accept-Encoding` header, and this tim
 http :8080/roll dice==2d6 "Accept-Encoding: gzip"
 ```
 
-```http
+```text
 HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Encoding: gzip // <1>
@@ -321,7 +321,7 @@ Try it out! Make a request to `/roll/lang`:
 http :8080/roll/lang "Accept-Language: de"
 ```
 
-```http
+```text
 HTTP/1.1 200 OK
 Content-Language: de // <1>
 Content-Type: text/plain;charset=UTF-8
