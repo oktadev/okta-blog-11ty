@@ -89,7 +89,7 @@ Next up I need to define a few dependencies on `maven-core`, `maven-plugin-api`,
 
 Plugins are what actually give Maven its power, at its core Maven is just a plugin framework, so naturally, I will use a Maven plugin to build a Maven plugin with the [Maven Plugin Plugin](https://maven.apache.org/plugin-tools/maven-plugin-plugin/). Turtles all the way down!
 
-{% img {src: "tutorial-build-a-maven-plugin/turtles.png", alt: "Turtle on turtle on turtle", header: "600"} %}
+{% img {src: "tutorial-build-a-maven-plugin/turtles.png", alt: "Turtle on turtle on turtle", header: "600", class: "w-[600px]"} %}
 
 The `maven-plugin-plugin` is actually defined automatically because I used the packaging type of `maven-plugin` above, to use a newer version I can update the plugin in the `pluginManagment` section:
 
