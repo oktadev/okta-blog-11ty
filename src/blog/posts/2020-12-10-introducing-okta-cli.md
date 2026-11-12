@@ -301,18 +301,18 @@ We'd love your contributions! If you want to set up a new sample, create a new r
 
 We've created a few screencasts to show the Okta CLI in action. The videos below show how to use `okta start` with Spring Boot, Angular, React Native, and JHipster!
 
-<div class="video-grid">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 my-6">
   <div class="video">
-    {% youtube "dURkaz0kBSU", "", 267, 150 %}
+    {% youtube "dURkaz0kBSU", "", 560, 315 %}
   </div>
   <div class="video">
-    {% youtube "aMmTcLnoZzc", "", 267, 150 %}
+    {% youtube "aMmTcLnoZzc", "", 560, 315 %}
   </div>
   <div class="video">
-    {% youtube "jUOjIw-NBJ0", "", 267, 150 %}
+    {% youtube "jUOjIw-NBJ0", "", 560, 315 %}
   </div>
   <div class="video">
-    {% youtube "ThytrcxL31s", "", 267, 150 %}
+    {% youtube "ThytrcxL31s", "", 560, 315 %}
   </div>
 </div>
 
