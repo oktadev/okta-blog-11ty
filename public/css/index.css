@@ -215,23 +215,6 @@ a.direct-link {
   height: auto;
 }
 
-/* Screencast grid in the oauth-java and introducing-okta-cli posts, two videos
-   per row as on the old site. Each cell holds the youtube shortcode's wrapper,
-   whose margin and fixed iframe width suit a lone video, so both are made to
-   fill the cell; the iframe keeps its inline aspect ratio. One column on
-   narrow screens. */
-.video-grid {
-  @apply my-6 grid grid-cols-1 gap-5 sm:grid-cols-2;
-
-  .video > div {
-    @apply m-0;
-  }
-
-  iframe {
-    @apply w-full rounded-lg;
-  }
-}
-
 /* widgets.js swaps the blockquote for a cross-origin iframe, so this wrapper is the
    only styleable part. Centring here works on both the blockquote and the iframe. */
 .eleventy-plugin-embed-twitter {
