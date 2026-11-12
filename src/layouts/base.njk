@@ -6,7 +6,7 @@
   <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>{{ title }}</title>
-  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/blog/img/favicon.svg">
   {% include "meta.njk" %}
   {% include "analytics.njk" %}
   {# Must load before our stylesheet, or the overrides in public/css/coveo.css lose. #}
@@ -15,7 +15,7 @@
         integrity="sha512-DzuDVtX/Dud12HycdAsm2k9D1UQ8DU7WOj7cBRnSsOKQbKfkI94g0VM9hplM0BkQ0VXdDiQYU9GvUzMmw2Khaw=="
         crossorigin="anonymous">
 
-  <link rel="stylesheet" href="{{ '/style.css' | hashFile }}">
+  <link rel="stylesheet" href="{{ '/blog/style.css' | hashFile }}">
   <style>{% getBundle "css" %}</style>
 
   {# Keep class="coveo-script" — the Lazy build reads its own tag to find its runtime
@@ -25,7 +25,7 @@
           integrity="sha512-RV1EooPduQhwl0jz+hmjBw/nAtfeXNm6Dm/hlCe5OR1jAlG4RErUeYfX1jaaM88H8DiyCJDzEWZkOR0Q13DtrA=="
           crossorigin="anonymous"
           defer></script>
-  <script type="module" src="/js/search/index.js"></script>
+  <script type="module" src="/blog/js/search/index.js"></script>
 </head>
 <body class="w-full min-w-3xs">
   {% include "analytics-noscript.njk" %}

@@ -21,7 +21,11 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import { rawAssetRefs } from "../utils/raw-assets.js";
+import {
+  builtAssetRefs,
+  publishedPath,
+  rawAssetRefs,
+} from "../utils/raw-assets.js";
 
 const LIVE = "https://developer.okta.com";
 const CACHE = "node_modules/.cache/verify-migration";
@@ -450,7 +454,10 @@ export function staleBuild(postFile, pageFile) {
 // links to full-size images) that the build does not contain; see
 // scripts/copy-raw-assets.js.
 export function missingAssets(html, site) {
-  return rawAssetRefs(html).filter((ref) => !existsSync(path.join(site, ref)));
+  return [
+    ...rawAssetRefs(html).map(publishedPath),
+    ...builtAssetRefs(html),
+  ].filter((ref) => !existsSync(path.join(site, "blog", ref)));
 }
 
 // A post needs a look when anything the live site has is absent here: prose
