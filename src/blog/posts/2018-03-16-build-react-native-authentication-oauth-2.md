@@ -33,15 +33,8 @@ Today I'm going to show you how to develop a React Native app with the latest an
 
 > AppAuth is a client SDK for native apps to authenticate and authorize end-users using OAuth 2.0 and OpenID Connect. Available for iOS, macOS, Android and Native JS environments, it implements modern security and usability [best practices](https://tools.ietf.org/html/rfc8252) for native app authentication and authorization.
 
-<div class="integrator-org-warning text-base">
-  <blockquote>
-    <p>
-    Note: In May 2025, the <a href="/blog/2025/05/13/okta-developer-edition-changes">Okta Integrator Free Plan</a> replaced Okta Developer Edition Accounts, and the Okta CLI was deprecated.
-      <br>
-      We preserved this post for reference, but the instructions no longer work as written. Replace the Okta CLI commands by manually configuring Okta following the instructions in our <a href="/docs/guides/redirect-authentication/">Developer Documentation</a>.
-    </p>
-  </blockquote>
-</div>
+
+{% include "integrator-org-warning.njk" %}
 
 ## Create Your React Native Application
 
