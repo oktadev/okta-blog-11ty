@@ -41,62 +41,54 @@ In server-driven content negotiation, the client makes a request to a server wit
 
 At a high level, the conversation looks like this:
 
-<div class="example">
+> **Client:**\
+> Hey Server!\
+> I'd like to look at `https://api.example.com/user/123`.\
+> I need your response in JSON.
 
-**Client:**
-Hey Server!
-I'd like to look at `https://api.example.com/user/123`.
-I need your response in JSON.
-
-</div>
-
-<div class="example">
-
-**Server:**
-No Problem Client!  Here is that response... {.text-right}
-
-</div>
+> **Server:**\
+> No Problem Client!  Here is that response... {.text-right}
 
 Another more verbose example might be:
 
-<div class="example">
+> **Client:**\
+> Hey Server!  I need `https://api.example.com/user/123`, preferably in JSON!\
+> But, 😩 I'll take XML if that's all you have.\
+> I also need the info in English or French.\
+> Oh, please zip up the contents too.
+>
+> <div class="w-fit max-w-full">
+>
+> ```http
+> GET /user/123 HTTP/1.1
+> Accept: application/json,application/xml;q=0.9
+> Accept-Encoding: gzip
+> Accept-Language: en,fr
+> Host: api.example.com
+> User-Agent: Client/2.0
+> ```
+>
+> </div>
 
-**Client:**
-Hey Server!  I need `https://api.example.com/user/123`, preferably in JSON!
-But, 😩 I'll take XML if that's all you have.
-I also need the info in English or French.
-Oh, please zip up the contents too.
-
-```http
-GET /user/123 HTTP/1.1
-Accept: application/json,application/xml;q=0.9
-Accept-Encoding: gzip
-Accept-Language: en,fr
-Host: api.example.com
-User-Agent: Client/2.0
-```
-
-</div>
-
-<div class="example">
-
-**Server:**
-Hey Client!
-All I have is XML (sorry about that), the response is in English,
-and I was able to zip it; here you go... {.text-right}
-
-```http
-HTTP/1.1 200 OK
-Content-Type: application/xml
-Content-Encoding: gzip
-Content-Language: en
-
-<user id="123">
-  ...
-</user>
-```
-
-</div>
+> **Server:**\
+> Hey Client!\
+> All I have is XML (sorry about that), the response is in English,\
+> and I was able to zip it; here you go... {.text-right}
+>
+> <div class="ml-auto w-fit max-w-full">
+>
+> ```http
+> HTTP/1.1 200 OK
+> Content-Type: application/xml
+> Content-Encoding: gzip
+> Content-Language: en
+>
+> <user id="123">
+>   ...
+> </user>
+> ```
+>
+> </div>
 
 I'd like to take this opportunity to apologize for using XML in this example 🤪
 
@@ -243,7 +235,7 @@ Make another HTTP request and include the `Accept-Encoding` header, and this tim
 http :8080/roll dice==2d6 "Accept-Encoding: gzip"
 ```
 
-```http
+```text
 HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Encoding: gzip // <1>
@@ -321,7 +313,7 @@ Try it out! Make a request to `/roll/lang`:
 http :8080/roll/lang "Accept-Language: de"
 ```
 
-```http
+```text
 HTTP/1.1 200 OK
 Content-Language: de // <1>
 Content-Type: text/plain;charset=UTF-8

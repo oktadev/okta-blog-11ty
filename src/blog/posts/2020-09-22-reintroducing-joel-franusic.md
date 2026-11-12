@@ -22,6 +22,7 @@ type: awareness
 <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/addon/edit/matchbrackets.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/codemirror.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.37.0/theme/neat.css" integrity="sha256-WMLC5bxpwvLiouYZo3maC9cKh1TBNxBNqrSjnlP0JQM=" crossorigin="anonymous" />
+
 <style type="text/css">
   .jf-game > ul {
     list-style: none;
@@ -254,7 +255,6 @@ your web browser](https://developer.okta.com/live-widget/). However, it uses Jav
 on Python and Go, I wanted to make an example of running Python from inside of
 the browser. So, I wrote a game for you to play which I have included below:
 
-
 ## Running Python in a Web Browser
 
 This is a simple game where the goal is to write a Python function (`answer()`) that takes
@@ -293,11 +293,13 @@ Sequence checklist:
     and why Donald Knuth says you can use it to
     <a href="https://youtu.be/BxQw4CdxLr8?t=1187">"compute your way into the literature"</a>.
   </div>
-  <textarea id="editor">def answer(a, b, c):
+</div>
+
+<textarea id="editor" class="live-code">def answer(a, b, c):
     return True
 
 play(answer)</textarea>
-</div>
+
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(){
     brython(1)
