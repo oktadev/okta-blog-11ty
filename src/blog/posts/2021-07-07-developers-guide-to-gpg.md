@@ -176,12 +176,12 @@ Run the following commands to export the keys and trust store.
 <div class="example">
 
 ```bash
-gpg --armor --export > public-keys.asc <1>
-gpg --armor --export-secret-keys > private-keys.asc <2>
-gpg --export-ownertrust > ownertrust.asc <3>
+gpg --armor --export > public-keys.asc # <1>
+gpg --armor --export-secret-keys > private-keys.asc # <2>
+gpg --export-ownertrust > ownertrust.asc # <3>
 
 # Create a revocation certificate, in case you need lose your key
-gpg --armor --gen-revoke {your-key-id} > revocation.asc <4>
+gpg --armor --gen-revoke {your-key-id} > revocation.asc # <4>
 # Select 1 for "Key has been compromised"
 ```
 

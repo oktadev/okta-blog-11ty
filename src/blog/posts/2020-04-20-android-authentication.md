@@ -152,7 +152,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.okta.android:oidc-androidx:1.0.17' <5>
+    implementation 'com.okta.android:oidc-androidx:1.0.17' // <5>
 
     // Dependency required for Biometric-Authentication (which we will detail how to implement later on in this same article)
     implementation 'androidx.biometric:biometric:1.0.1'
