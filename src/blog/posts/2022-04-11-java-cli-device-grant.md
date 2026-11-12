@@ -243,12 +243,12 @@ Assuming all went well, the response returned from the IdP will be a JSON block 
 
 ```json
 {
-  "device_code": "a-random-device-code", # <1>
-  "user_code": "ABCD1234", # <2>
-  "verification_uri": "https:/dev-l33337.okta.com/activate", # <3>
-  "verification_uri_complete": "https:/dev-l33337.okta.com/activate?user_code=ABCD1234", # <4>
-  "expires_in": 600, # <5>
-  "interval": 5 # <6>
+  "device_code": "a-random-device-code", // <1>
+  "user_code": "ABCD1234", // <2>
+  "verification_uri": "https:/dev-l33337.okta.com/activate", // <3>
+  "verification_uri_complete": "https:/dev-l33337.okta.com/activate?user_code=ABCD1234", // <4>
+  "expires_in": 600, // <5>
+  "interval": 5 // <6>
 }
 ```
 
