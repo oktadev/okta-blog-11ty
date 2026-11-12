@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "css": "tailwindcss -i ./public/css/index.css -o ./_site/style.css --minify",
+    "css": "tailwindcss -i ./public/css/index.css -o ./_site/blog/style.css --minify",
     "validate": "node scripts/validate-frontmatter.js",
     "validate-images": "node scripts/validate-images.js",
     "lint-content": "node scripts/lint-content.js",
@@ -17,7 +17,7 @@
     "upstream-changes": "node scripts/upstream-changes.js",
     "format": "prettier --write \"**/*.{js,mjs,cjs,json}\"",
     "prepare": "git config core.hooksPath .githooks || true",
-    "setup": "npm run css && mkdir -p _site/img && ([ -d _site/fonts ] || cp -r public/fonts _site/) && ([ -d _site/js ] || cp -r public/js _site/) && ([ -d _site/img/avatar ] || cp -r public/img/avatar _site/img/) && cp public/img/*.svg _site/img/ && node scripts/copy-raw-assets.js",
+    "setup": "mkdir -p _site/blog/img && npm run css && ([ -d _site/blog/fonts ] || cp -r public/fonts _site/blog/) && ([ -d _site/blog/js ] || cp -r public/js _site/blog/) && ([ -d _site/blog/img/avatar ] || cp -r public/img/avatar _site/blog/img/) && cp public/img/*.svg _site/blog/img/ && node scripts/copy-raw-assets.js",
     "start": "ELEVENTY_ENV=development npm run setup && ELEVENTY_ENV=development eleventy --serve --incremental",
     "build": "ELEVENTY_ENV=production npm run setup && ELEVENTY_ENV=production eleventy",
     "post": "node scripts/post.js",

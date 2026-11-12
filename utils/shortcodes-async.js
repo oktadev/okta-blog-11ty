@@ -38,8 +38,8 @@ const svg = async function ({
   return await Image(`./public/${dir}${src}.svg`, {
     widths,
     formats: ["svg"],
-    outputDir: `_site/${dir}`,
-    urlPath: `/${dir}`,
+    outputDir: "_site/blog/img",
+    urlPath: "/blog/img",
     returnType: "html", // new in v6.0
     htmlOptions: {
       imgAttributes,
@@ -59,6 +59,8 @@ const img = async function ({
   class: className = "",
 }) {
   const dir = avatar ? "img/avatar" : "img/blog";
+  // Post images are published as /blog/img/<post>/..., not /blog/img/blog/...
+  const outDir = avatar ? dir : "img";
 
   // A numeric `header` is a width hint migrated from Jekyll's `width:`; render one
   // image at that size. `header: true` (the hero) uses the responsive defaults.
@@ -74,8 +76,10 @@ const img = async function ({
   const subdir = src.includes("/")
     ? src.substring(0, src.lastIndexOf("/"))
     : "";
-  const outputDir = subdir ? `_site/${dir}/${subdir}` : `_site/${dir}`;
-  const urlPath = subdir ? `/${dir}/${subdir}` : `/${dir}`;
+  const outputDir = subdir
+    ? `_site/blog/${outDir}/${subdir}`
+    : `_site/blog/${outDir}`;
+  const urlPath = subdir ? `/blog/${outDir}/${subdir}` : `/blog/${outDir}`;
 
   // Keep vector sources as SVG; rasterizing a diagram to WebP blurs its lines
   // and text. Only raster sources go through WebP conversion.
@@ -186,7 +190,7 @@ const img = async function ({
       }
     }
     const sizesAttr = sizes ? ` sizes="${sizes}"` : "";
-    return `<img${classAttr} src="/${dir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
+    return `<img${classAttr} src="/blog/${outDir}/${src}" alt="${alt || ""}"${sizesAttr} loading="lazy" decoding="async">`;
   }
 };
 

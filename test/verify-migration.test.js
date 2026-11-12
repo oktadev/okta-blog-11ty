@@ -165,10 +165,10 @@ test("extract collects heading ids and every id, and compareAnchors reports live
 
 test("missingAssets reports referenced files the build does not contain", () => {
   const html =
-    '<video src=/img/blog/raw-assets-test/absent.mp4></video><img src="/img/blog/x/y-800.webp">';
+    '<video src=/img/blog/raw-assets-test/absent.mp4></video><img src="/blog/img/x/y-800.webp">';
   assert.deepEqual(missingAssets(html, "_site"), [
-    "img/blog/raw-assets-test/absent.mp4",
-    "img/blog/x/y-800.webp",
+    "img/raw-assets-test/absent.mp4",
+    "img/x/y-800.webp",
   ]);
 });
 

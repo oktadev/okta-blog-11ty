@@ -14,3 +14,21 @@ export function rawAssetRefs(text) {
   for (const m of text.matchAll(RAW_REF)) refs.add(m[1] ?? m[2] ?? m[3]);
   return [...refs];
 }
+
+// public/img/blog/<post>/x is published as /blog/img/<post>/x: the build folder
+// already sits under /blog, so the second "blog" would be noise.
+export function publishedPath(ref) {
+  return ref.replace(/^img\/blog\//, "img/");
+}
+
+// The same references as they appear in a built page, where the transform has
+// moved them under /blog and flattened img/blog to img. Returns paths relative
+// to the published root (_site/blog).
+const BUILT_REF =
+  /\b(?:src|href|poster)=(?:['"]\/blog\/((?:img|files)\/[^'"#?]+)['"]|\/blog\/((?:img|files)\/[^\s>'"#?]+))/g;
+
+export function builtAssetRefs(html) {
+  const refs = new Set();
+  for (const m of html.matchAll(BUILT_REF)) refs.add(m[1] ?? m[2]);
+  return [...refs];
+}
