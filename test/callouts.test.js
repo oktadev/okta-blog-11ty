@@ -46,3 +46,17 @@ test("callouts: markers elsewhere on a line, and real code, are untouched", () =
     assert.equal(renderCallouts(html), html);
   }
 });
+
+test("callouts: a marker on the last line of a <pre><code> block becomes a badge", () => {
+  const pre = '<pre class="language-java"><code class="language-java">';
+  assert.equal(
+    renderCallouts(`${pre}a // &lt;1&gt;<br>b // &lt;2&gt;</code></pre>`),
+    `${pre}a ${badge(1)}<br>b ${badge(2)}</code></pre>`,
+  );
+  assert.equal(
+    renderCallouts(
+      `${pre}a <span class="token comment">// &lt;1&gt;</span>\nb <span class="token comment">// &lt;2&gt;</span></code></pre>`,
+    ),
+    `${pre}a ${badge(1)}\nb ${badge(2)}</code></pre>`,
+  );
+});
