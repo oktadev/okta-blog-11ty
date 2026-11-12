@@ -19,7 +19,9 @@ We all know that all software has bugs and that security is hard, but somehow we
 
 <div class="example">
 
-Vulnerability:: A bug, flaw, weakness, or exposure of an application, system, device, or service that could lead to a failure of confidentiality, integrity, or availability.
+**Vulnerability**
+
+A bug, flaw, weakness, or exposure of an application, system, device, or service that could lead to a failure of confidentiality, integrity, or availability.
 
 </div>
 
