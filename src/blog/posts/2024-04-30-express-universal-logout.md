@@ -13,7 +13,7 @@ image: express-universal-logout/social.jpg
 type: awareness
 github: https://github.com/oktadev/okta-enterprise-ready-workshops/tree/ul-workshop-complete
 changelog:
-  - 2026-07-10 => Updated to include OAuth 2.0 Private Key JWT authorization, Okta Admin Console integration for initiating Universal Logout end-to-end, and an optional OIN submission guide. The original post covered building the Global Token Revocation endpoint and securing it with an API key.
+  - 2026-07-10: Updated to include OAuth 2.0 Private Key JWT authorization, Okta Admin Console integration for initiating Universal Logout end-to-end, and an optional OIN submission guide. The original post covered building the Global Token Revocation endpoint and securing it with an API key.
 ---
 
 >**Update**: This post was updated in July 2026 to include OAuth 2.0 Private Key JWT authorization, Okta Admin Console integration for initiating Universal Logout end-to-end, and an optional OIN submission guide. The original post covered building the Global Token Revocation endpoint and securing it with an API key.
