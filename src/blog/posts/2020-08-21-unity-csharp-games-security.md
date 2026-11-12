@@ -44,14 +44,10 @@ The level of effort to build identity security from scratch is massive. Just to 
 Follow along with our companion videos.
 
 NATIVE: [https://youtu.be/9C5xaaLt7Q4](https://youtu.be/9C5xaaLt7Q4)
-<div style="text-align: center">
-<iframe width="600" height="338" src="https://www.youtube.com/embed/9C5xaaLt7Q4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "9C5xaaLt7Q4", "", 600, 338 %}
 
 OAUTH: [https://youtu.be/ciDl0-Wtfvo](https://youtu.be/ciDl0-Wtfvo)
-<div style="text-align: center">
-<iframe width="600" height="338" src="https://www.youtube.com/embed/ciDl0-Wtfvo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "ciDl0-Wtfvo", "", 600, 338 %}
 
 ## Core Concepts
 

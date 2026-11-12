@@ -1104,6 +1104,4 @@ You can find a complete version of the application created in this blog post [on
 
 To learn more about security in Angular, see [Angular's Security documentation](https://angular.io/guide/security). If you'd like to learn more about OpenID Connect, I'd recommend watching the soothing video below.
 
-<div style="max-width: 560px; margin: 0 auto">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Kb56GzQ2pSk" frameborder="0" allowfullscreen></iframe>
-</div>
+{% youtube "Kb56GzQ2pSk", "", 560, 315 %}

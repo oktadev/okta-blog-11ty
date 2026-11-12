@@ -23,9 +23,7 @@ In this tutorial, we will set-up an API endpoint using the HTTP Trigger invocati
 
 If you'd rather watch a video, [I created a screencast of this blog post](https://youtu.be/Db4g34a0Vf4).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/Db4g34a0Vf4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "Db4g34a0Vf4" %}
 
 {% include "integrator-org-warning.njk" %}
 

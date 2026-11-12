@@ -187,18 +187,18 @@ From this information, I hope you have a decent overview of where Java is regard
 
 I've created a few screencasts to show how to build a REST API with Quarkus, Spring Boot, Micronaut, and Helidon. These videos also show how to secure each API with OAuth 2.0.
 
-<div class="video-grid">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 my-6">
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/3J9uFVd3BoY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "3J9uFVd3BoY", "", 560, 315 %}
   </div>
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/w-qKailh3WQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "w-qKailh3WQ", "", 560, 315 %}
   </div>
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/IG2uo4IP1QI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "IG2uo4IP1QI", "", 560, 315 %}
   </div>
   <div class="video">
-    <iframe width="267" height="150" src="https://www.youtube.com/embed/Bj69rOIwQwY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% youtube "Bj69rOIwQwY", "", 560, 315 %}
   </div>
 </div>
 

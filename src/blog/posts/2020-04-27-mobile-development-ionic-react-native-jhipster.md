@@ -19,9 +19,7 @@ Mobile development offers a lot of options. To develop native apps, you can use 
 
 As a web developer, I enjoy using the technologies I know and love to create mobile apps. In [this screencast](https://youtu.be/vNV5P3USoLY), I show you how to use JHipster and its Ionic and React Native modules to create a health tracking application.
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/vNV5P3USoLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "vNV5P3USoLY" %}
 
 The code created in this screencast can be [found on GitHub in mraible/mobile-jhipster](https://github.com/mraible/mobile-jhipster). If you'd like to try and re-create the apps yourself, you can follow my [demo steps](https://github.com/mraible/mobile-jhipster/blob/master/demo.adoc).
 

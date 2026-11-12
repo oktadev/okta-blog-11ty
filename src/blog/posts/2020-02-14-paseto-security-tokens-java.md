@@ -19,9 +19,7 @@ PASETO is the latest trend in security token formats. Its primary goal is to red
 
 If you'd rather watch a video, I [created a screencast too](https://youtu.be/aOyG68jvthM)!
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/aOyG68jvthM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "aOyG68jvthM" %}
 
 ## What is PASETO?
 

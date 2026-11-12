@@ -650,10 +650,7 @@ You can find the source code for this article's applications on GitHub at <https
 
 You can also watch a video of me and [Josh Long](https://twitter.com/starbuxman) developing these applications in a YouTube recording of our Cloud Native PWAs presentation at Devoxx France, 2017.
 
-<div style="text-align: center">
-    <iframe width="560" height="315" style="max-width: 100%" src="https://www.youtube.com/embed/0MBsfdQiS64"
-        frameborder="0" allowfullscreen></iframe>
-</div>
+{% youtube "0MBsfdQiS64", "", 560, 315 %}
 
 If you have any questions about this article, you can email me at matt.raible@okta.com, post a question to Stack Overflow
 [with the Okta tag](http://stackoverflow.com/questions/tagged/okta), post to our [Developer Forums](https://devforum.okta.com/),

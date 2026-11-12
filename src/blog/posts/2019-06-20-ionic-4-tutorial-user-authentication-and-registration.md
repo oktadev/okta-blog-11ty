@@ -24,9 +24,7 @@ Ionic 2 was based on AngularJS. Ionic 3 was based on Angular. Ionic 4 allows you
 
 If you don't want to code along, feel free to grab the [source code from GitHub](https://github.com/oktadeveloper/okta-ionic-4-login-example)! You can also watch a video of this tutorial below.
 
-<div style="text-align: center">
-<iframe width="600" height="338" style="max-width: 100%" src="https://www.youtube.com/embed/MBAUKQGNx5Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+{% youtube "MBAUKQGNx5Y", "", 600, 338 %}
 
 [[toc]]
 

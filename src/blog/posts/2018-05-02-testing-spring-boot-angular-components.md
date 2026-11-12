@@ -1023,9 +1023,7 @@ Setup a basic e2e test of your application's homepage with the following steps:
 
 To execute Protractor tests, run `ionic serve` in one terminal and `npm run e2e` in another. The (silent) video below shows what should happen.
 
-<div style="width: 600px; margin: 0 auto">
-  <iframe width="600" height="338" src="https://www.youtube.com/embed/MO_ZWxI7Yi4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
+{% youtube "MO_ZWxI7Yi4", "", 600, 338 %}
 
 You can also configure Protractor to launch its own web server. To do this, add a devDependency on [node-http-server](https://www.npmjs.com/package/node-http-server):
 

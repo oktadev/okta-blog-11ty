@@ -16,7 +16,7 @@ image: oauth-sketch-notes-livestream/sketch-notes.jpg
 type: awareness
 ---
 
-<iframe width="100%" height="540" src="https://www.youtube.com/embed/td00HpMI3Q8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% youtube "td00HpMI3Q8" %}
 
 Why do we need PKCE in OAuth? How does PKCE work? What's the difference between the front channel and back channel? Can SPAs even use a back channel?
 

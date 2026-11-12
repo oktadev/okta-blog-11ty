@@ -21,9 +21,7 @@ The Okta CLI is a new tool we've created here at Okta. It's designed to streamli
 
 To show you how easy it is, I [created a screencast that shows you how to use it with Angular](https://youtu.be/aMmTcLnoZzc).
 
-<div style="text-align: center; margin-bottom: 1.25rem">
-<iframe width="700" height="394" style="max-width: 100%" src="https://www.youtube.com/embed/aMmTcLnoZzc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+{% youtube "aMmTcLnoZzc" %}
 
 > **IMPORTANT:** To create the same app as the one shown in this video, you'll need to run `okta start angular --branch widget`.
 
