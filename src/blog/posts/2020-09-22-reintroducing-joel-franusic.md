@@ -251,10 +251,9 @@ ourselves and each other.
 
 One example of something I've made is a page that lets
 you [edit the code of the Okta Sign-In Widget with instant feedback, from inside
-your web browser](https://web.archive.org/web/20220520000130/https://developer.okta.com/live-widget). However, it uses JavaScript and, since I'm focusing
+your web browser](https://developer.okta.com/live-widget/). However, it uses JavaScript and, since I'm focusing
 on Python and Go, I wanted to make an example of running Python from inside of
 the browser. So, I wrote a game for you to play which I have included below:
-
 
 ## Running Python in a Web Browser
 
