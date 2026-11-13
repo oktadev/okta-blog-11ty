@@ -22,7 +22,7 @@ function dedent(text) {
   return lines.map((l) => l.slice(min)).join("\n");
 }
 
-function renderMarkdownAttrs(content) {
+export function renderMarkdownAttrs(content) {
   if (!content.includes('markdown="')) return content;
   return content.replace(
     MARKDOWN_ATTR,
