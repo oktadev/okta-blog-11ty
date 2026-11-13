@@ -1,10 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import {
-  builtAssetRefs,
-  publishedPath,
-  rawAssetRefs,
-} from "../utils/raw-assets.js";
+import { publishedPath, rawAssetRefs } from "../utils/raw-assets.js";
 
 test("rawAssetRefs finds media, downloads, full-size links and raw images, quoted or not, once each", () => {
   const refs = rawAssetRefs(
@@ -26,15 +22,6 @@ test("rawAssetRefs finds media, downloads, full-size links and raw images, quote
     "img/blog/d/full.png",
     "img/blog/d/raw.png",
   ]);
-});
-
-test("builtAssetRefs reads the published, /blog-prefixed form of a built page", () => {
-  assert.deepEqual(
-    builtAssetRefs(
-      '<img src="/blog/img/d/a.png"><a href="/blog/files/d/g.pdf">x</a><a href="/blog/tags/">t</a>',
-    ),
-    ["img/d/a.png", "files/d/g.pdf"],
-  );
 });
 
 test("publishedPath drops the doubled blog from post media and leaves downloads alone", () => {
