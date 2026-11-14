@@ -7,7 +7,8 @@ on:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: chonky-builds
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,8 +22,8 @@ jobs:
       - run: npm ci
 
       # Front-matter integrity (required fields, author keys, YAML, types).
-      # The full build is intentionally left to Netlify, which already builds
-      # and fails on broken output for both deploys and PR previews.
+      # The full build is intentionally left to build.yml, which builds and fails
+      # on broken output for both deploys and PR previews.
       - run: npm run validate
 
       # Asset checks (5MB ceiling, .DS_Store, raster width) on the files this

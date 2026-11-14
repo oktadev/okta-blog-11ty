@@ -16,7 +16,8 @@ on:
 
 jobs:
   deploy-preview:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: chonky-builds
     if: github.event.workflow_run.event == 'pull_request'
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
