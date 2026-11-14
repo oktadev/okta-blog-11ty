@@ -186,6 +186,13 @@
           "value": "base-uri 'self'; object-src 'none'; frame-ancestors 'self'"
         }
       ]
+    },
+    {
+      "source": "/blog/:year/:month/:day/:slug.md",
+      "headers": [
+        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
     }
   ],
   "installCommand": "npm ci",

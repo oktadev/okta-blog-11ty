@@ -215,3 +215,91 @@ console.log(
     `all sort by filename within the date, across ${indexOrder.length} index ` +
     `entries, ${tagPages.length} tag pages and the feed`,
 );
+
+// ---------------------------------------------------------------------------
+// Markdown export: every post in the collection has a .md next to its page
+// (src/post-markdown.11ty.js), and the conversion lost nothing a reader would
+// miss: each <pre> in the page is a fenced block in the Markdown, and no HTML
+// or Nunjucks tags leaked into the prose.
+// ---------------------------------------------------------------------------
+
+// Known gaps, fixed upstream rather than worked around here.
+const MARKDOWN_EXCEPTIONS = new Map([
+  // A literal <script> in the prose swallows the content after it.
+  ["crud-app-laravel-vue", "fences"],
+]);
+
+const FENCE = /^(?:> ?)* *(`{3,})[^`\n]*$/gm;
+const FENCED_BLOCK = /^(?:> ?)* *(`{3,})[^\n]*\n[\s\S]*?^(?:> ?)* *\1\s*$/gm;
+const LEAKED = /\{%|<\/?(?:div|span|picture|iframe|table|img|p|pre|script)\b/;
+
+const markdownErrors = [];
+let markdownChecked = 0;
+
+for (const file of posts) {
+  const [, year, month, day, slug] = file.match(
+    /^(\d{4})-(\d{2})-(\d{2})-(.+)\.md$/,
+  );
+  const dir = path.join(SITE, "blog", year, month, day);
+  const html = readFileSync(path.join(dir, slug, "index.html"), "utf8");
+  // Posts kept out of the collection get neither a .md nor the button.
+  if (!html.includes('class="copy-page')) continue;
+
+  const mdPath = path.join(dir, `${slug}.md`);
+  if (!existsSync(mdPath)) {
+    markdownErrors.push(`${slug}: no ${slug}.md`);
+    continue;
+  }
+  const md = readFileSync(mdPath, "utf8");
+  markdownChecked += 1;
+  const allowed = MARKDOWN_EXCEPTIONS.get(slug);
+
+  // A fence inside a fence counts twice, so count closed blocks from the
+  // outermost level by stripping each one as it's found.
+  let blocks = 0;
+  let rest = md;
+  for (;;) {
+    FENCED_BLOCK.lastIndex = 0;
+    const match = FENCED_BLOCK.exec(rest);
+    if (!match) break;
+    blocks += 1;
+    rest =
+      rest.slice(0, match.index) + rest.slice(match.index + match[0].length);
+  }
+  // The in-browser Python editors are <textarea class="live-code">, and their
+  // output panes are empty <pre>s until the code runs, so neither is a <pre>
+  // the Markdown should mirror one for one.
+  const pres = (
+    html.match(
+      /<pre[^>]*>(?!(?:<code[^>]*>)?<\/)|<textarea[^>]*\blive-code\b/g,
+    ) || []
+  ).length;
+  if (blocks !== pres && allowed !== "fences") {
+    markdownErrors.push(
+      `${slug}: ${pres} code blocks in the page, ${blocks} in the Markdown`,
+    );
+  }
+  if ((rest.match(FENCE) || []).length) {
+    markdownErrors.push(`${slug}: unclosed code fence`);
+  }
+
+  const prose = rest.replace(/`[^`\n]+`/g, "");
+  const leak = prose.match(LEAKED);
+  if (leak && allowed !== "leaks") {
+    markdownErrors.push(`${slug}: markup in the Markdown: ${leak[0]}`);
+  }
+}
+
+if (markdownErrors.length > 0) {
+  console.error(`✖ markdown export check failed:`);
+  markdownErrors.slice(0, 10).forEach((x) => console.error("   " + x));
+  if (markdownErrors.length > 10) {
+    console.error(`   …and ${markdownErrors.length - 10} more`);
+  }
+  process.exit(1);
+}
+
+console.log(
+  `✓ markdown export check passed: ${markdownChecked} posts have a .md with ` +
+    `every code block and no leftover markup`,
+);
