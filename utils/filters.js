@@ -209,8 +209,8 @@ export default function (eleventyConfig) {
     const subdir = src.includes("/")
       ? src.substring(0, src.lastIndexOf("/"))
       : "";
-    const outputDir = subdir ? `_site/img/blog/${subdir}` : "_site/img/blog";
-    const urlPath = subdir ? `/img/blog/${subdir}` : "/img/blog";
+    const outputDir = subdir ? `_site/blog/img/${subdir}` : "_site/blog/img";
+    const urlPath = subdir ? `/blog/img/${subdir}` : "/blog/img";
     try {
       const metadata = await Image(`./public/img/blog/${src}`, {
         widths: [1200],

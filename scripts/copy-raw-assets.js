@@ -15,7 +15,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { rawAssetRefs } from "../utils/raw-assets.js";
+import { publishedPath, rawAssetRefs } from "../utils/raw-assets.js";
 
 const SOURCE = "public";
 
@@ -36,7 +36,7 @@ export function copyRawAssets(postsDir, outDir) {
   const result = { copied: 0, kept: 0, missing: [] };
   for (const [ref, posts] of collectRefs(postsDir)) {
     const from = path.join(SOURCE, ref);
-    const to = path.join(outDir, ref);
+    const to = path.join(outDir, publishedPath(ref));
     if (!existsSync(from)) {
       result.missing.push(`${ref} (${posts.join(", ")})`);
       continue;
@@ -55,7 +55,7 @@ export function copyRawAssets(postsDir, outDir) {
 function main() {
   const argv = process.argv.slice(2);
   let postsDir = "src/blog/posts";
-  let outDir = "_site";
+  let outDir = "_site/blog";
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--posts") postsDir = argv[++i];
     else if (argv[i] === "--out") outDir = argv[++i];

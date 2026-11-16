@@ -9,7 +9,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: chonky-builds
     steps:
       - uses: actions/checkout@v5
 
@@ -52,7 +53,8 @@ jobs:
             vercel.json
 
   deploy-production:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: chonky-builds
     needs: build
     if: github.event_name != 'pull_request'
     env:

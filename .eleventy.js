@@ -82,7 +82,7 @@ export default function (eleventyConfig) {
 
   // Vite bundles & optimizes the build output, but it breaks on mounted/synced
   // filesystems (EPERM on rm, ENOTEMPTY on rename) like the local dev setup.
-  // Opt in only where it's known to work — set USE_VITE=1 in netlify.toml.
+  // Opt in only where it's known to work, by setting USE_VITE=1.
   if (process.env.USE_VITE === "1") {
     eleventyConfig.addPlugin(EleventyVitePlugin);
   }
