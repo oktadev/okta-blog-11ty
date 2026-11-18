@@ -5,6 +5,7 @@ by: advocate
 communities: [security, java, devops]
 description: "From backend engineer to AI Builder Advocate at Okta -- how developer relations, identity security, and community brought me here."
 tags: [developer-advocate, developer-relations, identity, okta, java, community]
+image: aasawari-sahasrabuddhe-intro-blog/social.jpg
 tweets:
   - ""
   - ""

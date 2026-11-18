@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { rawAssetRefs } from "../utils/raw-assets.js";
+import { publishedPath, rawAssetRefs } from "../utils/raw-assets.js";
 
 test("rawAssetRefs finds media, downloads, full-size links and raw images, quoted or not, once each", () => {
   const refs = rawAssetRefs(
@@ -22,4 +22,9 @@ test("rawAssetRefs finds media, downloads, full-size links and raw images, quote
     "img/blog/d/full.png",
     "img/blog/d/raw.png",
   ]);
+});
+
+test("publishedPath drops the doubled blog from post media and leaves downloads alone", () => {
+  assert.equal(publishedPath("img/blog/d/demo.mp4"), "img/d/demo.mp4");
+  assert.equal(publishedPath("files/d/guide.pdf"), "files/d/guide.pdf");
 });

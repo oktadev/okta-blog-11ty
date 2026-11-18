@@ -1,5 +1,5 @@
 # Block all indexing
-# This file is only published on the netlify builds
+# This file is only published on vercel
 # and is not copied into the production site at developer.okta.com
 User-agent: *
 Disallow: /

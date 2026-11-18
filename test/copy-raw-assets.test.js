@@ -44,9 +44,9 @@ test("copyRawAssets copies only the referenced files and reports the missing one
       kept: 0,
       missing: ["files/raw-assets-test/gone.pdf (2020-01-01-a.md)"],
     });
-    assert.ok(existsSync(path.join(out, "img/blog/raw-assets-test/demo.mp4")));
+    assert.ok(existsSync(path.join(out, "img/raw-assets-test/demo.mp4")));
     assert.ok(
-      !existsSync(path.join(out, "img/blog/raw-assets-test/unreferenced.mp4")),
+      !existsSync(path.join(out, "img/raw-assets-test/unreferenced.mp4")),
     );
     const second = copyRawAssets(posts, out);
     assert.deepEqual([second.copied, second.kept], [0, 1]);

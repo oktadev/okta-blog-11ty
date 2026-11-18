@@ -256,7 +256,7 @@ The easiest, and most costly, technique you can implement is to poll the server 
 
 <div class="example">
 
-Example 1. Polling With Interval {.example-title}
+**Example 1. Polling With Interval** {.example-title}
 
 ```tsx
 import React, { Component } from 'react';
@@ -371,7 +371,7 @@ You can replace the `fetchData()`, `componentDidMount()`, and `componentWillUnmo
 
 <div class="example">
 
-Example 2. Polling with RxJS {.example-title}
+**Example 2. Polling with RxJS** {.example-title}
 
 ```typescript
 import { interval } from 'rxjs';
@@ -424,7 +424,7 @@ With WebSockets, you just need a single `componentDidMount()` and no additional 
 
 <div class="example">
 
-Example 3. WebSockets {.example-title}
+**Example 3. WebSockets** {.example-title}
 
 ```typescript
 // imports
@@ -481,7 +481,7 @@ One last technique I'd like to show you is server-sent events (SSE). With SSE, i
 
 <div class="example">
 
-Example 4. `reactive-web/src/main/java/com/example/demo/ServerSentEventController.java` {.example-title}
+**Example 4. `reactive-web/src/main/java/com/example/demo/ServerSentEventController.java`** {.example-title}
 
 ```java
 package com.example.demo;
@@ -530,7 +530,7 @@ On the React side of things, you can use [`EventSource`](https://developer.mozil
 
 <div class="example">
 
-Example 5. Server-Sent Events and EventSource {.example-title}
+**Example 5. Server-Sent Events and EventSource** {.example-title}
 
 ```typescript
 // imports
@@ -686,7 +686,7 @@ A `Home` component will be created in `react-app/src/Home.tsx` to serve as your 
 
 <div class="example">
 
-Example 6. `react-app/src/Home.tsx` {.example-title}
+**Example 6. `react-app/src/Home.tsx`** {.example-title}
 
 ```tsx
 import React, { Component } from 'react';
@@ -843,7 +843,7 @@ If you try to make requests to the backend with its current configuration, it'll
 
 <div class="example">
 
-Example 7. Spring Security Configuration for OIDC Login, a Resource Server, and CORS {.example-title}
+**Example 7. Spring Security Configuration for OIDC Login, a Resource Server, and CORS** {.example-title}
 
 ```java
 package com.example.demo;
@@ -935,7 +935,7 @@ Josh and I put our heads together and decided the best workaround would be to mo
 
 <div class="example">
 
-Example 8. WebSocket with ID only {.example-title}
+**Example 8. WebSocket with ID only** {.example-title}
 
 ```java
 Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
@@ -968,7 +968,7 @@ Then you can modify the code in `ProfileList.tsx` to fetch the profile securely.
 
 <div class="example">
 
-Example 9. WebSockets in React {.example-title}
+**Example 9. WebSockets in React** {.example-title}
 
 ```typescript
 async componentDidMount() {

@@ -75,6 +75,18 @@ function wrapTables(content) {
   return out + content.slice(cursor);
 }
 
+// Posts link their own media and scripts by root path (/img/blog/..., /files/...,
+// /js/...). The site is served under /blog, so those need the prefix. Only real
+// attributes match: code samples are escaped by the highlighter, so a
+// `src="/js/app.js"` shown in a fence never looks like one.
+const ROOT_ASSET = /(\b(?:src|href|poster)=['"]?)\/(?=(?:img|files|js)\/)/g;
+
+export function prefixAssetPaths(content) {
+  return content
+    .replace(ROOT_ASSET, "$1/blog/")
+    .replace(/(\b(?:src|href|poster)=['"]?\/blog\/img\/)blog\//g, "$1");
+}
+
 export default function (eleventyConfig) {
   // The macro preprocessor prepends a newline; HTML minification hides it, but the
   // unminified feed needs its <?xml> declaration on the first line to parse.
@@ -95,6 +107,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addTransform("tableScroll", function (content) {
     if (!(this.page.outputPath || "").endsWith(".html")) return content;
     return wrapTables(content);
+  });
+
+  // The feed embeds each post's rendered body, links and all.
+  eleventyConfig.addTransform("assetPrefix", function (content) {
+    const out = this.page.outputPath || "";
+    if (!out.endsWith(".html") && !out.endsWith(".xml")) return content;
+    return prefixAssetPaths(content);
   });
 
   if (isDev) return; // skip minification in dev for speed
