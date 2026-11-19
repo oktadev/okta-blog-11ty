@@ -14,14 +14,14 @@ github: https://github.com/oktadev/okta-go-mcp-xaa-lab
 type: conversion
 ---
 
-Picture this: a salesperson at your company asks the company's AI assistant to book a dinner with a customer and log it against the deal in the sales pipeline app. They're already signed in to the assistant through the company's single sign-on, but the pipeline app's [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server still needs proof that the assistant is acting on that salesperson's behalf, and the company's security team wants a say in what it can touch. That's where Cross App Access (XAA) comes in: the company's identity provider checks its policies and issues the assistant a signed identity assertion, which the assistant exchanges for a scoped access token the pipeline app accepts. No second sign-in and no consent screen.
+Picture this: a salesperson at your company asks the company's AI assistant to book a dinner with a customer and log it against the deal in the sales pipeline app. They're already signed in to the assistant through the company's single sign-on, but the pipeline app's Model Context Protocol (MCP) server still needs proof that the assistant is acting on that salesperson's behalf, and the company's security team wants a say in what it can touch. That's where Cross App Access (XAA) comes in: the company's identity provider checks its policies and issues the assistant a signed identity assertion, which the assistant exchanges for a scoped access token the pipeline app accepts. No second sign-in and no consent screen.
 
 In this post, we'll understand XAA, then run a small Go web app called AI Notes Assistant that uses XAA to fetch a user's to-do items from a protected MCP server and turn them into notes, no OAuth consent screen required. You'll clone the finished project, run it against the [XAA playground](https://xaa.dev), and walk through the Go code behind each step of the flow.
 
 To follow along, you'll need:
 
-- [Git](https://git-scm.com/downloads) to clone the project
-- [Go](https://go.dev/dl/) 1.26 or newer, and some familiarity with reading Go (the [Tour of Go](https://go.dev/tour/) is a good way to get up to speed)
+- Git to clone the project
+- Go 1.26 or newer, and some familiarity with reading Go (the [Tour of Go](https://go.dev/tour/) is a good way to get up to speed)
 - A code editor or IDE, such as VS Code or GoLand, to open the project, edit `config.json`, and read the Go code
 - A terminal (the one built into your IDE works)
 - An email address to use on [xaa.dev](https://xaa.dev), where you'll register AI Notes Assistant as a requester app (xaa.dev doesn't create an account or ask for a password; it uses the email only to show you the apps you've registered)
@@ -38,10 +38,10 @@ You can think of XAA like an agreed process for using a partner company's buildi
 
 While the flow is sophisticated, it relies on two standard interactions, each defined in a Request for Comments (RFC) document published by the Internet Engineering Task Force (IETF):
 
-1. [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) (Token Exchange): the requesting app hands its [OpenID Connect](https://openid.net/connect/) (OIDC) ID token to the enterprise IdP and asks for an [Identity Assertion Authorization Grant](https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/) (ID-JAG)
+1. [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) (Token Exchange): the requesting app hands its OpenID Connect (OIDC) ID token to the enterprise IdP and asks for an [Identity Assertion Authorization Grant](https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/) (ID-JAG)
 2. [RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523) (JSON Web Token (JWT) Bearer Grant): the app hands that ID-JAG to the resource's own authorization server and gets back a scoped access token, ready to use against the real API
 
-Before those two exchanges, the user signs in with OIDC using [Proof Key for Code Exchange](https://www.rfc-editor.org/rfc/rfc7636) (PKCE), which is Step 1 in the diagram below.
+Before those two exchanges, the user signs in with OIDC using Proof Key for Code Exchange (PKCE), which is Step 1 in the diagram below.
 
 {% img {src: "secure-go-mcp-app-cross-app-access/xaa-sequence-diagram.svg", alt: "Sequence diagram in four steps. In step 1 the user signs in through AI Notes Assistant and the enterprise IdP using OIDC and PKCE, and the IdP returns an ID token. In step 2 the app exchanges the ID token for an ID-JAG at the IdP using RFC 8693. In step 3 the app sends the ID-JAG to the resource authorization server using the RFC 7523 JWT bearer grant and receives a scoped access token. In step 4 the app calls the MCP server with the access token and gets resource data back", header: "800"} %}
 
