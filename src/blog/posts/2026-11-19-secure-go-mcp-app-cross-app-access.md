@@ -187,7 +187,7 @@ func (a *Auth) HandleLogin(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-The cookie matters because the app doesn't keep any other record of this login attempt. The IdP authenticates the user and redirects back with a code, and `HandleCallback`, right below `HandleLogin`, reads the cookie to finish the job. It compares the `state` on the redirect to the saved one, redeems the code with the saved `verifier`, verifies the ID token it gets back against the saved `nonce`, and drops the token into the session. If the cookie is missing, the callback can't match the `state`, so it quietly redirects back to `/` and sign-in never completes. Nothing downstream trusts this token yet, though; it only proves identity to this one app.
+> **Note:** The cookie matters because the app doesn't keep any other record of this login attempt. The IdP authenticates the user and redirects back with a code, and `HandleCallback`, right below `HandleLogin`, reads the cookie to finish the job. It compares the `state` on the redirect to the saved one, redeems the code with the saved `verifier`, verifies the ID token it gets back against the saved `nonce`, and drops the token into the session. If the cookie is missing, the callback can't match the `state`, so it quietly redirects back to `/` and sign-in never completes. Nothing downstream trusts this token yet, though; it only proves identity to this one app.
 
 Try it: with the app still running, open a second terminal and run:
 
@@ -281,7 +281,7 @@ Try it: on the dashboard, find the **Step 3, Access Token Request (RFC 7523)** e
 
 ### Call the MCP server with the access token
 
-With that access token in hand, the app finally talks to the MCP server, using the official [MCP Go SDK](https://github.com/modelcontextprotocol/go-sdk). The SDK's `StreamableClientTransport` has no built-in field for a bearer token, so AI Notes Assistant wraps the underlying `http.Client` in a small custom transport.
+With that access token in hand, the app finally talks to the MCP server, using the official MCP Go SDK. The SDK's `StreamableClientTransport` has no built-in field for a bearer token, so AI Notes Assistant wraps the underlying `http.Client` in a small custom transport.
 
 Open `internal/mcpnotes/client.go`. Find `bearerTransport`:
 
@@ -358,9 +358,8 @@ One login, two token trades most users never notice, and a working connection to
 A few places to keep exploring:
 
 - Read through the full source in the [okta-go-mcp-xaa-lab repository](https://github.com/oktadev/okta-go-mcp-xaa-lab)
-- Register your own app and poke at the flow yourself at [xaa.dev](https://xaa.dev)
 - Read the policy and architecture side of this story in [Integrate Your Enterprise AI Tools with Cross App Access](/blog/2025/06/23/enterprise-ai)
 
-XAA is still a young standard, but the parts that matter here, the token exchange and the policy check, are solid enough to build on today. If you're wiring an AI agent to reach past your own app's boundary, this is worth trying before you fall back to a shared API key.
+XAA is an open standard, the parts that matter here are the token exchange and the policy check, solid enough to build on today. If you're wiring an AI agent to reach past your own app's boundary, this is worth trying before you fall back to a shared API key.
 
 Remember to follow us on [X](https://x.com/oktadev) and subscribe to our [YouTube channel](https://www.youtube.com/c/OktaDev/) for more exciting content. We also want to hear from you about the topics you'd like to see and any questions you may have. Leave us a comment below!
